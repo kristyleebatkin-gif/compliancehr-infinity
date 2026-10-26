@@ -8,6 +8,7 @@ import {
   Lock,
   CheckCircle2,
   Pin,
+  Projector,
 } from 'lucide-react';
 import Reveal from '@/components/landing/Reveal';
 import {
@@ -137,16 +138,16 @@ export default function BenefitsSection() {
             style={{ background: getHeaderView(3), color: '#FFFFFF' }}
           >
             <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-              <ShieldCheck className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+              <Projector className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
             </span>
             <span className="text-center" style={{ color: '#FFFFFF' }}>
-              Built For Better Services · Why Providers Choose Us
+              Built For Better Services · Why Providers Choose Us (Projector Screens)
             </span>
           </div>
         </div>
 
-        {/* 6 Tiles Under Built For Better Services + 6 Sticky Notes in the Exact Same Colour with Functions */}
-        <div className="grid w-full grid-cols-1 gap-3.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 auto-rows-fr text-center">
+        {/* 6 Tiles Under Built For Better Services Styled as Pull-Down Projector Screens + 6 Matching Sticky Notes */}
+        <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 auto-rows-fr text-center">
           {BENEFITS.map((b, index) => {
             const sym = getSymbolView(index + 2);
             const borderCol = getAppBorderView(index + 2);
@@ -155,78 +156,108 @@ export default function BenefitsSection() {
               <Reveal
                 key={b.title}
                 delay={(index % 6) * 0.05}
-                className="group flex h-full flex-col rounded-2xl p-[3px] shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
-                style={{ background: TOP_BORDER_GRADIENT }}
+                className="group flex h-full flex-col items-center justify-between"
               >
-                <div
-                  className="flex h-full flex-1 flex-col items-center justify-between rounded-[13px] p-3.5 text-center space-y-2.5"
-                  style={{ background: sprayBg }}
-                >
-                  <div className="flex w-full flex-col items-center space-y-2">
-                    <span
-                      className="flex h-10 w-10 items-center justify-center rounded-full border-2 bg-white shadow-sm transition-transform group-hover:scale-105"
-                      style={{ borderColor: borderCol }}
-                    >
-                      <b.icon className="h-5 w-5" style={{ color: sym.iconColor }} />
-                    </span>
-
-                    <div
-                      className="w-full rounded-xl p-[2.5px] shadow-2xs"
-                      style={{ background: TOP_BORDER_GRADIENT }}
-                    >
-                      <div className="flex min-h-[38px] w-full items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center">
-                        <h3 className="font-editorial text-xs sm:text-sm font-extrabold text-center text-[#0A2B6D]">
-                          {b.title}
-                        </h3>
-                      </div>
-                    </div>
-
-                    <p
-                      className="text-center text-xs font-bold leading-snug text-black"
-                      style={{ color: '#000000' }}
-                    >
-                      {b.desc}
-                    </p>
+                {/* Top Projector Ceiling Mount & Roller Casing Bar */}
+                <div className="flex w-full flex-col items-center">
+                  <div className="flex w-4/5 items-center justify-between px-2">
+                    <span className="h-2 w-2 rounded-t bg-[#0A2B6D]" />
+                    <span className="h-2 w-2 rounded-t bg-[#0A2B6D]" />
                   </div>
-
-                  {/* Sticky Note in the Same Colour Across All 6 Tiles with Live Functions */}
                   <div
-                    className="relative mt-2 flex w-full flex-col justify-between rounded-xl border-2 p-2.5 pt-3.5 text-left shadow-md"
-                    style={{
-                      background: STICKY_NOTE_BG,
-                      borderColor: STICKY_NOTE_BORDER,
-                      borderBottomRightRadius: '18px',
-                    }}
+                    className="flex w-full items-center justify-between rounded-full border-2 border-[#0A2B6D] px-3 py-1 shadow-md"
+                    style={{ background: getHeaderView(index) }}
                   >
-                    {/* Top Sticky Tape Strip + Pin */}
-                    <div
-                      className="absolute -top-2 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full border border-[#0A2B6D] px-2.5 py-0.5 shadow-2xs"
-                      style={{ background: STICKY_NOTE_TAPE }}
-                    >
-                      <Pin className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                    <span className="flex items-center gap-1 text-[9px] font-extrabold uppercase tracking-wider text-white">
+                      <Projector className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
+                      <span style={{ color: '#FFFFFF' }}>SCREEN 0{index + 1}</span>
+                    </span>
+                    <span className="h-2 w-2 rounded-full bg-[#00C6FF]" />
+                  </div>
+                </div>
+
+                {/* Pull-Down Projector Screen Canvas */}
+                <div
+                  className="mx-auto flex w-[96%] flex-1 flex-col border-x-[3px] border-b-[3px] border-[#0A2B6D] bg-white p-[3px] shadow-md transition-all group-hover:shadow-lg"
+                  style={{ background: TOP_BORDER_GRADIENT }}
+                >
+                  <div
+                    className="flex h-full flex-1 flex-col items-center justify-between rounded-b-[10px] p-3 text-center space-y-2.5"
+                    style={{ background: sprayBg }}
+                  >
+                    <div className="flex w-full flex-col items-center space-y-2">
                       <span
-                        className="text-[9px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap"
-                        style={{ color: '#FFFFFF' }}
+                        className="flex h-10 w-10 items-center justify-center rounded-full border-2 bg-white shadow-sm transition-transform group-hover:scale-105"
+                        style={{ borderColor: borderCol }}
                       >
-                        Functions Note
+                        <b.icon className="h-5 w-5" style={{ color: sym.iconColor }} />
                       </span>
+
+                      <div
+                        className="w-full rounded-xl p-[2.5px] shadow-2xs"
+                        style={{ background: TOP_BORDER_GRADIENT }}
+                      >
+                        <div className="flex min-h-[38px] w-full items-center justify-center rounded-[9px] bg-white px-2.5 py-1.5 text-center">
+                          <h3 className="font-editorial text-xs sm:text-sm font-extrabold text-center text-[#0A2B6D]">
+                            {b.title}
+                          </h3>
+                        </div>
+                      </div>
+
+                      <p
+                        className="text-center text-xs font-bold leading-snug text-black"
+                        style={{ color: '#000000' }}
+                      >
+                        {b.desc}
+                      </p>
                     </div>
 
-                    <ul className="space-y-1 pt-0.5">
-                      {b.functions.map((fn) => (
-                        <li
-                          key={fn}
-                          className="flex items-start gap-1.5 text-[10.5px] font-extrabold leading-tight text-[#0A2B6D]"
+                    {/* Sticky Note in the Same Colour Across All 6 Projector Screens with Live Functions */}
+                    <div
+                      className="relative mt-2 flex w-full flex-col justify-between rounded-xl border-2 p-2.5 pt-3.5 text-left shadow-md"
+                      style={{
+                        background: STICKY_NOTE_BG,
+                        borderColor: STICKY_NOTE_BORDER,
+                        borderBottomRightRadius: '18px',
+                      }}
+                    >
+                      {/* Top Sticky Tape Strip + Pin */}
+                      <div
+                        className="absolute -top-2 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full border border-[#0A2B6D] px-2.5 py-0.5 shadow-2xs"
+                        style={{ background: STICKY_NOTE_TAPE }}
+                      >
+                        <Pin className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                        <span
+                          className="text-[9px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap"
+                          style={{ color: '#FFFFFF' }}
                         >
-                          <CheckCircle2
-                            className="mt-0.5 h-3 w-3 shrink-0"
-                            style={{ color: STICKY_NOTE_BORDER }}
-                          />
-                          <span className="text-[#0A2B6D]">{fn}</span>
-                        </li>
-                      ))}
-                    </ul>
+                          Functions Note
+                        </span>
+                      </div>
+
+                      <ul className="space-y-1 pt-0.5">
+                        {b.functions.map((fn) => (
+                          <li
+                            key={fn}
+                            className="flex items-start gap-1.5 text-[10.5px] font-extrabold leading-tight text-[#0A2B6D]"
+                          >
+                            <CheckCircle2
+                              className="mt-0.5 h-3 w-3 shrink-0"
+                              style={{ color: STICKY_NOTE_BORDER }}
+                            />
+                            <span className="text-[#0A2B6D]">{fn}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
+                </div>
+
+                {/* Bottom Projector Weighted Bar & Pull Ring Handle */}
+                <div className="flex w-full flex-col items-center">
+                  <div className="h-2 w-full rounded-full bg-[#0A2B6D] shadow-sm" />
+                  <div className="h-2 w-0.5 bg-[#0A2B6D]" />
+                  <div className="h-3 w-3 rounded-full border-2 border-[#0A2B6D] bg-white shadow-2xs" />
                 </div>
               </Reveal>
             );
