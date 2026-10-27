@@ -26,7 +26,10 @@ export default function LandingCTA({ onBookDemo }) {
                 <span>14-Day Free Trial · Full 46-Module Access</span>
               </span>
 
-              <h2 className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
+              <h2
+                className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight"
+                style={{ color: '#FFFFFF' }}
+              >
                 Ready to Transform Compliance?
               </h2>
 

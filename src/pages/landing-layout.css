@@ -5,6 +5,12 @@
   color: #0A2B6D;
 }
 
+/* Prevent global app-readable / dark-navy heading rule in index.css from overriding white headings on gradient sections */
+.landing-page :is(h1, h2, h3, h4).text-white,
+.landing-page .text-white :is(h1, h2, h3, h4) {
+  color: #ffffff !important;
+}
+
 .landing-page section {
   scroll-margin-top: 5rem;
 }

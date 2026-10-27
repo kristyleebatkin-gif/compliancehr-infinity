@@ -65,7 +65,7 @@ export default function LandingHowItWorks() {
         </p>
       </div>
 
-      <div className="relative mt-10 grid grid-cols-1 gap-6 lg:grid-cols-3">
+      <div className="relative mt-8 grid grid-cols-1 gap-6 md:grid-cols-3 items-stretch">
         {STEPS.map((item, idx) => {
           const Icon = item.icon;
           return (
@@ -124,7 +124,7 @@ export default function LandingHowItWorks() {
               {idx < STEPS.length - 1 && (
                 <div
                   aria-hidden="true"
-                  className="hidden lg:flex absolute -right-4 top-1/2 z-10 -translate-y-1/2 h-8 w-8 items-center justify-center rounded-full border border-slate-200 bg-white text-[#5A00D6] shadow-md"
+                  className="hidden md:flex absolute -right-5 top-1/2 z-20 -translate-y-1/2 h-8 w-8 items-center justify-center rounded-full border border-slate-200 bg-white text-[#5A00D6] shadow-md"
                 >
                   <ArrowRight className="h-4 w-4" />
                 </div>

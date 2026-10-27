@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom';
 import { Menu, X, ArrowRight, Calendar } from 'lucide-react';
 
 const NAV_LINKS = [
-  ['Solution', '#solution'],
-  ['Product', '#showcase'],
+  ['Dashboard', '#showcase'],
+  ['Pillars', '#solution'],
   ['Why Us', '#why-choose'],
   ['How It Works', '#how-it-works'],
-  ['46 Modules', '#blueprint'],
+  ['Reviews', '#testimonials'],
   ['Pricing', '#pricing'],
+  ['46 Modules', '#blueprint'],
   ['FAQ', '#faq'],
 ];
 

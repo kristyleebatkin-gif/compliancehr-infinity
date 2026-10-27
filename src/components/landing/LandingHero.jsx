@@ -75,7 +75,10 @@ export default function LandingHero({ onBookDemo }) {
                 </div>
 
                 {/* Main Headline */}
-                <h1 className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-[1.1]">
+                <h1
+                  className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-[1.1]"
+                  style={{ color: '#FFFFFF' }}
+                >
                   The Complete Compliance &amp; Workforce Management Platform
                 </h1>
 

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   ShieldCheck, GraduationCap, AlertTriangle, CalendarClock,
   BadgeCheck, HeartHandshake, LayoutDashboard, CheckCircle2,
-  ArrowUpRight, Sparkles, TrendingUp, Lock, Users, Activity,
+  ArrowUpRight, Sparkles, TrendingUp, Lock,
 } from 'lucide-react';
 import {
   ResponsiveContainer, AreaChart, Area, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Cell,
@@ -20,93 +20,116 @@ const TRAJECTORY_DATA = [
 ];
 
 const PILLAR_BAR_DATA = [
-  { name: 'Governance', score: 99.2, fill: '#0A2B6D' },
-  { name: 'Workforce', score: 100.0, fill: '#0072FF' },
-  { name: 'Participant', score: 99.1, fill: '#5A00D6' },
-  { name: 'Safety SLA', score: 98.8, fill: '#FF2E9A' },
-  { name: 'Training', score: 98.9, fill: '#0072FF' },
+  { name: 'Gov', score: 99.2, fill: '#0A2B6D' },
+  { name: 'HR', score: 100.0, fill: '#0072FF' },
+  { name: 'Care', score: 99.1, fill: '#5A00D6' },
+  { name: 'WHS', score: 98.8, fill: '#FF2E9A' },
+  { name: 'LMS', score: 98.9, fill: '#0072FF' },
   { name: 'Claims', score: 99.4, fill: '#5A00D6' },
 ];
 
 const SHOWCASE_PANELS = [
   {
     id: 'executive',
+    shortLabel: 'Executive Hub',
     title: 'Executive Dashboard',
     icon: LayoutDashboard,
     badge: 'Command Centre',
     color: '#0A2B6D',
     path: '/dashboard',
-    summary: 'Full-width executive command centre uniting compliance score gauge, workforce KPIs, participant analytics, risk alerts, and training compliance.',
+    summary:
+      'Full-width executive command centre uniting the compliance score gauge, workforce KPIs, participant analytics, risk alerts, and training compliance.',
     kpi: '99.2% Audit Readiness',
-    status: 'All 46 Modules Live',
+    metricValue: '99.2%',
+    metricSub: '46 Modules Synced Live',
   },
   {
     id: 'score',
+    shortLabel: 'Compliance Score',
     title: 'Compliance Score',
     icon: ShieldCheck,
     badge: '99.2% Verified',
     color: '#0072FF',
     path: '/compliance',
-    summary: '17 Audit Categories & 356 Checkpoints continuously scored with attached auditor evidence and 1-click PDF packs.',
+    summary:
+      '17 Audit Categories & 356 Checkpoints continuously scored with attached auditor evidence and 1-click PDF packs.',
     kpi: '356 / 356 Checkpoints',
-    status: 'Audit Pack Ready',
-  },
-  {
-    id: 'training',
-    title: 'Training Compliance',
-    icon: GraduationCap,
-    badge: '98.9% Current',
-    color: '#5A00D6',
-    path: '/training',
-    summary: 'Mandatory NDIS worker orientation, infection control, manual handling, and medication modules tracked automatically.',
-    kpi: '142 Certificates Active',
-    status: 'LMS Auto-Refresher',
-  },
-  {
-    id: 'incidents',
-    title: 'Open Incidents & Risk Alerts',
-    icon: AlertTriangle,
-    badge: '100% On-Time SLA',
-    color: '#FF2E9A',
-    path: '/incidents',
-    summary: 'Statutory 24-hour & 5-day NDIS Commission reportable countdowns paired with ISO 31000 risk controls.',
-    kpi: '0 Overdue Alerts',
-    status: '24h / 5d Timers Armed',
-  },
-  {
-    id: 'reviews',
-    title: 'Upcoming Reviews',
-    icon: CalendarClock,
-    badge: '90/60/30/14d Radar',
-    color: '#0072FF',
-    path: '/review-due',
-    summary: 'Automated horizon radar for 10-weekly participant progress notes, plan renewals, and 6-monthly home risk checks.',
-    kpi: '100% On-Schedule',
-    status: 'Automated Horizon Radar',
+    metricValue: '99.2%',
+    metricSub: '17 NDIS Categories Verified',
   },
   {
     id: 'credentials',
+    shortLabel: 'Staff Credentials',
     title: 'Staff Credentials & Workforce KPIs',
     icon: BadgeCheck,
-    badge: '100-Point Cleared',
+    badge: '100-Pt Cleared',
     color: '#5A00D6',
     path: '/hr',
-    summary: 'NDIS Worker Screening, Blue Card, Police Check, First Aid & CPR verified before roster allocation.',
+    summary:
+      'NDIS Worker Screening, Blue Card, Police Check, First Aid & CPR verified automatically before roster allocation.',
     kpi: 'Zero Unscreened Shifts',
-    status: 'Roster Gate Enforced',
+    metricValue: '100%',
+    metricSub: 'NDIS Screening & Blue Card Gate',
   },
   {
     id: 'participants',
+    shortLabel: 'Participant Care',
     title: 'Participant Activity & Analytics',
     icon: HeartHandshake,
     badge: 'Person-Centred',
     color: '#FF2E9A',
     path: '/our-participants',
-    summary: 'Live shift notes, 3-part informed consents, goal progress milestones, and NDIS plan budget utilisation.',
+    summary:
+      'Live shift notes, 3-part informed consents, goal progress milestones, and NDIS plan budget utilisation.',
     kpi: '99.1% Plan Alignment',
-    status: '3-Part Consents Locked',
+    metricValue: '99.1%',
+    metricSub: '3-Part Consents & Goals Linked',
+  },
+  {
+    id: 'incidents',
+    shortLabel: 'Risk & Incidents',
+    title: 'Open Incidents & Risk Alerts',
+    icon: AlertTriangle,
+    badge: '100% On-Time SLA',
+    color: '#FF2E9A',
+    path: '/incidents',
+    summary:
+      'Statutory 24-hour & 5-day NDIS Commission reportable countdowns paired with ISO 31000 risk controls.',
+    kpi: '0 Overdue Alerts',
+    metricValue: '100% SLA',
+    metricSub: '24h & 5d Commission Timers Armed',
+  },
+  {
+    id: 'training',
+    shortLabel: 'Training & LMS',
+    title: 'Training Compliance',
+    icon: GraduationCap,
+    badge: '98.9% Current',
+    color: '#5A00D6',
+    path: '/training',
+    summary:
+      'Mandatory NDIS worker orientation, infection control, manual handling, and medication modules tracked automatically.',
+    kpi: '142 Certificates Active',
+    metricValue: '98.9%',
+    metricSub: 'LMS Modules, First Aid & CPR',
+  },
+  {
+    id: 'reviews',
+    shortLabel: 'Upcoming Reviews',
+    title: 'Upcoming Reviews',
+    icon: CalendarClock,
+    badge: '90/60/30d Radar',
+    color: '#0072FF',
+    path: '/review-due',
+    summary:
+      'Automated horizon radar for 10-weekly participant progress notes, plan renewals, and 6-monthly home risk checks.',
+    kpi: '100% On-Schedule',
+    metricValue: '90/60/30d',
+    metricSub: '10-Weekly Notes & Risk Radar',
   },
 ];
+
+const TELEMETRY_CARDS = SHOWCASE_PANELS.slice(1);
 
 export default function LandingProductShowcase() {
   const [selectedId, setSelectedId] = useState('executive');
@@ -124,7 +147,7 @@ export default function LandingProductShowcase() {
           <div className="overflow-hidden rounded-[21px] bg-white">
             {/* Top Full-Width Section Banner */}
             <div
-              className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 px-6 py-5 text-white"
+              className="gradient-brand flex flex-col md:flex-row md:items-center justify-between gap-4 px-5 py-5 sm:px-7 text-white"
               style={{
                 background: 'linear-gradient(120deg, #0A2B6D 0%, #0072FF 40%, #5A00D6 75%, #FF2E9A 100%)',
               }}
@@ -132,67 +155,90 @@ export default function LandingProductShowcase() {
               <div className="text-left">
                 <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-white">
                   <Sparkles className="h-3.5 w-3.5 text-[#00C6FF]" />
-                  <span>Full-Width Executive Command Centre</span>
+                  <span style={{ color: '#FFFFFF' }}>Full-Width Executive Command Centre</span>
                 </div>
-                <h2 className="mt-1.5 font-editorial text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white">
+                <h2
+                  className="mt-1.5 font-editorial text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white"
+                  style={{ color: '#FFFFFF' }}
+                >
                   Everything Connected — Live Executive Dashboard Showcase
                 </h2>
               </div>
 
-              <div className="flex flex-wrap items-center gap-2.5">
-                <span className="inline-flex items-center gap-1.5 rounded-xl bg-white/15 px-3.5 py-2 text-xs font-bold text-white backdrop-blur-xs">
+              <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+                <span
+                  className="inline-flex items-center gap-1.5 rounded-xl border border-white/25 bg-white/15 px-3.5 py-2 text-xs font-bold text-white backdrop-blur-xs"
+                  style={{ color: '#FFFFFF' }}
+                >
                   <Lock className="h-3.5 w-3.5 text-[#00C6FF]" />
-                  NDIS Practice Standards 2026
+                  <span style={{ color: '#FFFFFF' }}>NDIS Practice Standards 2026</span>
                 </span>
                 <Link
                   to={activePanel.path}
                   className="inline-flex items-center gap-1.5 rounded-xl bg-white px-4 py-2 text-xs font-extrabold text-[#0A2B6D] shadow-md transition hover:bg-slate-100"
+                  style={{ color: '#0A2B6D' }}
                 >
-                  <span>Open {activePanel.title}</span>
-                  <ArrowUpRight className="h-4 w-4 text-[#0072FF]" />
+                  <span style={{ color: '#0A2B6D' }}>Open {activePanel.shortLabel}</span>
+                  <ArrowUpRight className="h-4 w-4 text-[#0072FF]" style={{ color: '#0072FF' }} />
                 </Link>
               </div>
             </div>
 
-            {/* Horizontal Telemetry Switcher Bar */}
-            <div className="flex flex-wrap items-center gap-2 border-b border-slate-200 bg-slate-50 px-5 py-3">
-              {SHOWCASE_PANELS.map((panel) => {
-                const Icon = panel.icon;
-                const isActive = panel.id === selectedId;
-                return (
-                  <button
-                    key={panel.id}
-                    type="button"
-                    onClick={() => setSelectedId(panel.id)}
-                    className={`inline-flex items-center gap-2 rounded-xl px-3.5 py-2 text-xs font-extrabold transition ${
-                      isActive
-                        ? 'bg-[#0A2B6D] text-white shadow-sm'
-                        : 'border border-slate-200 bg-white text-[#0A2B6D] hover:border-[#0072FF] hover:text-[#0072FF]'
-                    }`}
-                  >
-                    <Icon className="h-3.5 w-3.5" />
-                    <span>{panel.title}</span>
-                  </button>
-                );
-              })}
+            {/* Uniform 7-Tab Telemetry Switcher Grid (Aligned Across All Viewports) */}
+            <div className="border-b border-slate-200 bg-slate-50/80 px-5 py-3 sm:px-7">
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-7">
+                {SHOWCASE_PANELS.map((panel) => {
+                  const Icon = panel.icon;
+                  const isActive = panel.id === selectedId;
+                  return (
+                    <button
+                      key={panel.id}
+                      type="button"
+                      onClick={() => setSelectedId(panel.id)}
+                      className={`flex h-10 w-full items-center justify-center gap-1.5 rounded-xl px-2.5 text-xs font-extrabold transition ${
+                        isActive
+                          ? 'bg-[#0A2B6D] text-white shadow-sm'
+                          : 'border border-slate-200 bg-white text-[#0A2B6D] hover:border-[#0072FF] hover:text-[#0072FF]'
+                      }`}
+                    >
+                      <Icon className="h-3.5 w-3.5 shrink-0" />
+                      <span className="truncate">{panel.shortLabel}</span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
-            {/* Main Landscape Dashboard Grid — Zero Empty Space */}
-            <div className="p-5 sm:p-6 space-y-5 bg-slate-50/40">
-              {/* Top Row: Compliance Score Gauge + Active Telemetry Spotlight + Executive Trajectory Charts */}
-              <div className="grid grid-cols-1 gap-4 lg:grid-cols-12 items-stretch">
-                {/* Col 1-3: Compliance Score Gauge Card */}
-                <div className="lg:col-span-3 flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-5 text-center shadow-xs">
-                  <div className="flex items-center justify-between text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                    <span>Compliance Score</span>
-                    <span className="rounded-full bg-[#0072FF]/10 px-2.5 py-0.5 text-[10px] text-[#0072FF]">
+            {/* Main Landscape Dashboard Grid — Strictly Aligned Columns & Baselines */}
+            <div className="p-5 sm:p-7 space-y-5 bg-white">
+              {/* Top Row: Compliance Score Gauge + Executive Trajectory Chart + Department Benchmarks */}
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-12 items-stretch">
+                {/* Panel 1: Compliance Score Gauge Card */}
+                <div className="md:col-span-4 lg:col-span-3 flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-xs">
+                  <div className="flex items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                    <div>
+                      <span className="block text-[10px] font-extrabold uppercase tracking-wider text-[#0072FF]">
+                        Overall Readiness
+                      </span>
+                      <h3 className="font-editorial text-base font-extrabold text-[#0A2B6D]">
+                        Compliance Score
+                      </h3>
+                    </div>
+                    <span className="shrink-0 rounded-full bg-[#0072FF]/10 px-2.5 py-0.5 text-[10px] font-extrabold text-[#0072FF]">
                       LIVE GAUGE
                     </span>
                   </div>
 
-                  {/* SVG Radial Score Gauge */}
-                  <div className="relative mx-auto my-2 flex h-36 w-36 items-center justify-center">
+                  {/* Centered SVG Radial Score Gauge */}
+                  <div className="relative mx-auto my-3 flex h-36 w-36 items-center justify-center">
                     <svg className="h-full w-full -rotate-90" viewBox="0 0 120 120">
+                      <defs>
+                        <linearGradient id="showcaseGaugeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="#0072FF" />
+                          <stop offset="50%" stopColor="#5A00D6" />
+                          <stop offset="100%" stopColor="#FF2E9A" />
+                        </linearGradient>
+                      </defs>
                       <circle
                         cx="60"
                         cy="60"
@@ -206,64 +252,70 @@ export default function LandingProductShowcase() {
                         cy="60"
                         r="50"
                         fill="none"
-                        stroke="url(#gaugeGrad)"
+                        stroke="url(#showcaseGaugeGrad)"
                         strokeWidth="12"
                         strokeLinecap="round"
                         strokeDasharray="314"
                         strokeDashoffset="4"
                       />
-                      <defs>
-                        <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stopColor="#0072FF" />
-                          <stop offset="50%" stopColor="#5A00D6" />
-                          <stop offset="100%" stopColor="#FF2E9A" />
-                        </linearGradient>
-                      </defs>
                     </svg>
-                    <div className="absolute inset-0 flex flex-col items-center justify-center">
-                      <span className="font-editorial text-3xl font-extrabold text-[#0A2B6D]">
+                    <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                      <span className="font-editorial text-3xl font-extrabold text-[#0A2B6D] leading-none">
                         99.2%
                       </span>
-                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                      <span className="mt-1 text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
                         Audit Ready
                       </span>
                     </div>
                   </div>
 
-                  <div className="rounded-xl bg-slate-50 px-3 py-2 text-xs font-bold text-[#0A2B6D]">
-                    356 / 356 Checkpoints Verified Across 17 Categories
+                  {/* Aligned Footer Strip */}
+                  <div className="grid grid-cols-2 gap-2 border-t border-slate-100 pt-3 text-center">
+                    <div className="rounded-lg bg-slate-50 px-2 py-1.5">
+                      <div className="text-xs font-extrabold text-[#0A2B6D]">356 / 356</div>
+                      <div className="text-[10px] font-semibold text-[#0A2B6D]/70">Checkpoints</div>
+                    </div>
+                    <div className="rounded-lg bg-slate-50 px-2 py-1.5">
+                      <div className="text-xs font-extrabold text-[#5A00D6]">17 / 17</div>
+                      <div className="text-[10px] font-semibold text-[#0A2B6D]/70">Categories</div>
+                    </div>
                   </div>
                 </div>
 
-                {/* Col 4-8: Executive Trajectory Chart */}
-                <div className="lg:col-span-5 flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-xs">
-                  <div className="flex items-center justify-between gap-2">
+                {/* Panel 2: Executive Trajectory Chart */}
+                <div className="md:col-span-8 lg:col-span-5 flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-xs">
+                  <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
                     <div>
-                      <span className="text-xs font-extrabold uppercase tracking-wider text-[#0072FF]">
+                      <span className="block text-[10px] font-extrabold uppercase tracking-wider text-[#0072FF]">
                         Executive Trajectory Chart
                       </span>
-                      <h3 className="font-editorial text-lg font-extrabold text-[#0A2B6D]">
-                        Audit Readiness &amp; NDIS Claim Integrity (%)
+                      <h3 className="font-editorial text-base font-extrabold text-[#0A2B6D]">
+                        Audit Readiness &amp; Claim Integrity (%)
                       </h3>
                     </div>
-                    <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-extrabold text-emerald-700">
-                      <TrendingUp className="h-3.5 w-3.5" />
+                    <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[11px] font-extrabold text-emerald-700">
+                      <TrendingUp className="h-3 w-3" />
                       +5.0% 6-Mo Gain
                     </span>
                   </div>
 
-                  <div className="mt-3 h-40 w-full">
+                  <div className="my-2 h-40 w-full">
                     <ResponsiveContainer width="100%" height="100%">
-                      <AreaChart data={TRAJECTORY_DATA} margin={{ top: 6, right: 8, left: -20, bottom: 0 }}>
+                      <AreaChart data={TRAJECTORY_DATA} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
                         <defs>
                           <linearGradient id="readinessFill" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#0072FF" stopOpacity={0.35} />
+                            <stop offset="5%" stopColor="#0072FF" stopOpacity={0.32} />
                             <stop offset="95%" stopColor="#5A00D6" stopOpacity={0.02} />
                           </linearGradient>
                         </defs>
                         <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                         <XAxis dataKey="month" fontSize={11} tick={{ fill: '#0A2B6D', fontWeight: 700 }} />
-                        <YAxis domain={[92, 100]} fontSize={11} tick={{ fill: '#0A2B6D', fontWeight: 700 }} />
+                        <YAxis
+                          width={34}
+                          domain={[92, 100]}
+                          fontSize={11}
+                          tick={{ fill: '#0A2B6D', fontWeight: 700 }}
+                        />
                         <Tooltip formatter={(v) => `${v}%`} />
                         <Area
                           type="monotone"
@@ -284,32 +336,52 @@ export default function LandingProductShowcase() {
                       </AreaChart>
                     </ResponsiveContainer>
                   </div>
+
+                  {/* Aligned Legend Strip */}
+                  <div className="flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 pt-3 text-xs font-bold text-[#0A2B6D]">
+                    <div className="flex items-center gap-4">
+                      <span className="inline-flex items-center gap-1.5">
+                        <span className="h-2.5 w-2.5 rounded-full bg-[#0072FF]" />
+                        <span>Audit Readiness (99.2%)</span>
+                      </span>
+                      <span className="inline-flex items-center gap-1.5">
+                        <span className="h-2.5 w-2.5 rounded-full bg-[#FF2E9A]" />
+                        <span>3-Way Claim Match (99.4%)</span>
+                      </span>
+                    </div>
+                    <span className="text-[11px] font-extrabold text-[#5A00D6]">PRODA Verified</span>
+                  </div>
                 </div>
 
-                {/* Col 9-12: Departmental Pillar Benchmarks Chart */}
-                <div className="lg:col-span-4 flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-xs">
-                  <div className="flex items-center justify-between gap-2">
+                {/* Panel 3: Department Benchmarks Chart */}
+                <div className="md:col-span-12 lg:col-span-4 flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-xs">
+                  <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
                     <div>
-                      <span className="text-xs font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                      <span className="block text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
                         Department Benchmarks
                       </span>
-                      <h3 className="font-editorial text-lg font-extrabold text-[#0A2B6D]">
-                        6-Domain Live Readiness
+                      <h3 className="font-editorial text-base font-extrabold text-[#0A2B6D]">
+                        6-Domain Live Readiness (%)
                       </h3>
                     </div>
-                    <span className="rounded-full bg-[#5A00D6]/10 px-2.5 py-1 text-xs font-extrabold text-[#5A00D6]">
-                      &gt;98.8% All Pillars
+                    <span className="shrink-0 rounded-full bg-[#5A00D6]/10 px-2.5 py-0.5 text-[10px] font-extrabold text-[#5A00D6]">
+                      &gt;98.8% ALL PILLARS
                     </span>
                   </div>
 
-                  <div className="mt-3 h-40 w-full">
+                  <div className="my-2 h-40 w-full">
                     <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={PILLAR_BAR_DATA} margin={{ top: 6, right: 8, left: -22, bottom: 0 }}>
+                      <BarChart data={PILLAR_BAR_DATA} margin={{ top: 8, right: 10, left: 0, bottom: 0 }}>
                         <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                        <XAxis dataKey="name" fontSize={10} tick={{ fill: '#0A2B6D', fontWeight: 700 }} />
-                        <YAxis domain={[95, 100]} fontSize={10} tick={{ fill: '#0A2B6D', fontWeight: 700 }} />
+                        <XAxis dataKey="name" fontSize={11} tick={{ fill: '#0A2B6D', fontWeight: 700 }} />
+                        <YAxis
+                          width={34}
+                          domain={[95, 100]}
+                          fontSize={11}
+                          tick={{ fill: '#0A2B6D', fontWeight: 700 }}
+                        />
                         <Tooltip formatter={(v) => `${v}%`} />
-                        <Bar dataKey="score" name="Readiness (%)" radius={[6, 6, 0, 0]} barSize={22}>
+                        <Bar dataKey="score" name="Readiness (%)" radius={[6, 6, 0, 0]} barSize={24}>
                           {PILLAR_BAR_DATA.map((entry) => (
                             <Cell key={entry.name} fill={entry.fill} />
                           ))}
@@ -317,119 +389,90 @@ export default function LandingProductShowcase() {
                       </BarChart>
                     </ResponsiveContainer>
                   </div>
+
+                  {/* Aligned Footer Strip */}
+                  <div className="flex items-center justify-between gap-2 border-t border-slate-100 pt-3 text-xs font-bold text-[#0A2B6D]">
+                    <span>NDIS Benchmark Threshold: 95.0%</span>
+                    <span className="text-[#0072FF] font-extrabold">All 6 Exceed Target</span>
+                  </div>
                 </div>
               </div>
 
-              {/* Bottom Row: 6 Connected Operational Telemetry Cards */}
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-6">
-                {/* 1. Compliance Score */}
-                <div className="rounded-2xl border border-slate-200 bg-white p-4 text-left shadow-2xs">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#0072FF]">
-                      Compliance Score
-                    </span>
-                    <ShieldCheck className="h-4 w-4 text-[#0072FF]" />
-                  </div>
-                  <div className="mt-2 font-editorial text-2xl font-extrabold text-[#0A2B6D]">
-                    99.2%
-                  </div>
-                  <p className="mt-1 text-xs font-semibold text-[#0A2B6D]/75">
-                    17 NDIS Categories Verified
-                  </p>
-                </div>
+              {/* Bottom Row: 6 Connected Operational Telemetry Cards (Uniform Height & Aligned Baselines) */}
+              <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 items-stretch">
+                {TELEMETRY_CARDS.map((card) => {
+                  const Icon = card.icon;
+                  const isSelected = card.id === selectedId;
+                  return (
+                    <button
+                      key={card.id}
+                      type="button"
+                      onClick={() => setSelectedId(card.id)}
+                      className={`flex h-full flex-col justify-between rounded-2xl border p-4 text-left transition-all ${
+                        isSelected
+                          ? 'border-[#0072FF] bg-[#0072FF]/5 shadow-md ring-2 ring-[#0072FF]/20'
+                          : 'border-slate-200 bg-white shadow-2xs hover:border-[#0072FF]/50 hover:shadow-sm'
+                      }`}
+                    >
+                      <div>
+                        {/* Card Top Row: Icon + Status Badge */}
+                        <div className="flex items-center justify-between gap-2">
+                          <div
+                            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-white"
+                            style={{ backgroundColor: card.color }}
+                          >
+                            <Icon className="h-4 w-4 text-white" />
+                          </div>
+                          <span
+                            className="truncate rounded-full px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider"
+                            style={{
+                              backgroundColor: `${card.color}15`,
+                              color: card.color,
+                            }}
+                          >
+                            {card.badge}
+                          </span>
+                        </div>
 
-                {/* 2. Workforce KPIs / Staff Credentials */}
-                <div className="rounded-2xl border border-slate-200 bg-white p-4 text-left shadow-2xs">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
-                      Staff Credentials
-                    </span>
-                    <BadgeCheck className="h-4 w-4 text-[#5A00D6]" />
-                  </div>
-                  <div className="mt-2 font-editorial text-2xl font-extrabold text-[#0A2B6D]">
-                    100% Cleared
-                  </div>
-                  <p className="mt-1 text-xs font-semibold text-[#0A2B6D]/75">
-                    NDIS Screening &amp; Blue Card Gate
-                  </p>
-                </div>
+                        {/* Card Middle Row: Value & Label */}
+                        <div className="mt-3 font-editorial text-2xl font-extrabold text-[#0A2B6D] leading-none">
+                          {card.metricValue}
+                        </div>
+                        <div className="mt-1.5 text-xs font-extrabold text-[#0A2B6D]">
+                          {card.shortLabel}
+                        </div>
+                      </div>
 
-                {/* 3. Participant Analytics */}
-                <div className="rounded-2xl border border-slate-200 bg-white p-4 text-left shadow-2xs">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#FF2E9A]">
-                      Participant Activity
-                    </span>
-                    <HeartHandshake className="h-4 w-4 text-[#FF2E9A]" />
-                  </div>
-                  <div className="mt-2 font-editorial text-2xl font-extrabold text-[#0A2B6D]">
-                    99.1% Active
-                  </div>
-                  <p className="mt-1 text-xs font-semibold text-[#0A2B6D]/75">
-                    3-Part Consents &amp; Goals Linked
-                  </p>
-                </div>
-
-                {/* 4. Risk Alerts & Open Incidents */}
-                <div className="rounded-2xl border border-slate-200 bg-white p-4 text-left shadow-2xs">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#FF2E9A]">
-                      Open Incidents
-                    </span>
-                    <AlertTriangle className="h-4 w-4 text-[#FF2E9A]" />
-                  </div>
-                  <div className="mt-2 font-editorial text-2xl font-extrabold text-[#0A2B6D]">
-                    100% On-Time
-                  </div>
-                  <p className="mt-1 text-xs font-semibold text-[#0A2B6D]/75">
-                    24h &amp; 5d Commission SLA Armed
-                  </p>
-                </div>
-
-                {/* 5. Training Compliance */}
-                <div className="rounded-2xl border border-slate-200 bg-white p-4 text-left shadow-2xs">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
-                      Training Compliance
-                    </span>
-                    <GraduationCap className="h-4 w-4 text-[#5A00D6]" />
-                  </div>
-                  <div className="mt-2 font-editorial text-2xl font-extrabold text-[#0A2B6D]">
-                    98.9% Current
-                  </div>
-                  <p className="mt-1 text-xs font-semibold text-[#0A2B6D]/75">
-                    LMS Modules, First Aid &amp; CPR
-                  </p>
-                </div>
-
-                {/* 6. Upcoming Reviews */}
-                <div className="rounded-2xl border border-slate-200 bg-white p-4 text-left shadow-2xs">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#0072FF]">
-                      Upcoming Reviews
-                    </span>
-                    <CalendarClock className="h-4 w-4 text-[#0072FF]" />
-                  </div>
-                  <div className="mt-2 font-editorial text-2xl font-extrabold text-[#0A2B6D]">
-                    90/60/30d
-                  </div>
-                  <p className="mt-1 text-xs font-semibold text-[#0A2B6D]/75">
-                    10-Weekly Notes &amp; Risk Radar
-                  </p>
-                </div>
+                      {/* Card Bottom Row: Aligned Subtitle */}
+                      <div className="mt-3 border-t border-slate-100 pt-2.5 text-[11px] font-semibold leading-snug text-[#0A2B6D]/75">
+                        {card.metricSub}
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
 
               {/* Active Selected View Footer Strip */}
-              <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-[#0A2B6D] px-5 py-3.5 text-white">
-                <div className="flex items-center gap-2.5 text-xs sm:text-sm font-bold">
-                  <CheckCircle2 className="h-4 w-4 text-[#00C6FF]" />
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-2xl bg-[#0A2B6D] px-5 py-3.5 text-white">
+                <div className="flex items-start sm:items-center gap-2.5 text-left text-xs sm:text-sm font-bold text-white">
+                  <CheckCircle2 className="mt-0.5 sm:mt-0 h-4 w-4 shrink-0 text-[#00C6FF]" />
                   <span>
-                    <strong>{activePanel.title}:</strong> {activePanel.summary}
+                    <strong className="text-white">{activePanel.title}:</strong>{' '}
+                    <span className="text-white/90">{activePanel.summary}</span>
                   </span>
                 </div>
-                <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-extrabold text-[#00C6FF]">
-                  {activePanel.kpi}
-                </span>
+                <div className="flex items-center gap-2 shrink-0">
+                  <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-extrabold text-[#00C6FF]">
+                    {activePanel.kpi}
+                  </span>
+                  <Link
+                    to={activePanel.path}
+                    className="inline-flex items-center gap-1 rounded-full bg-white px-3 py-1 text-xs font-extrabold text-[#0A2B6D] hover:bg-slate-100"
+                  >
+                    <span>Explore</span>
+                    <ArrowUpRight className="h-3.5 w-3.5 text-[#0072FF]" />
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

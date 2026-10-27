@@ -355,21 +355,26 @@ export default function BlueprintPreviewSection() {
               </span>
             </div>
 
-            {/* 7 Connected Core Nodes Linked by Workflow Lines */}
-            <div className="relative mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-7">
-              {ECOSYSTEM_NODES.map((node, idx) => {
-                const Icon = node.icon;
-                return (
-                  <div key={node.id} className="relative flex items-center">
+            {/* 7 Connected Core Nodes Linked by Workflow Lines (Uniform Width & Alignment) */}
+            <div className="relative mt-5">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none hidden lg:block absolute inset-x-8 top-1/2 -translate-y-1/2 h-0.5 bg-gradient-to-r from-[#00C6FF] via-white/60 to-[#FF6EDB]"
+              />
+              <div className="relative z-10 grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 items-stretch">
+                {ECOSYSTEM_NODES.map((node, idx) => {
+                  const Icon = node.icon;
+                  return (
                     <Link
+                      key={node.id}
                       to={node.route}
-                      className="flex h-full w-full flex-col justify-between rounded-xl border border-white/25 bg-white/15 p-3.5 text-left backdrop-blur-md transition hover:bg-white/25"
+                      className="flex h-full w-full flex-col justify-between rounded-xl border border-white/30 bg-[#0A2B6D]/80 p-3.5 text-left backdrop-blur-md shadow-md transition hover:-translate-y-0.5 hover:bg-[#0A2B6D]"
                     >
                       <div className="flex items-center justify-between gap-1.5">
-                        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-[#0A2B6D] shadow-xs">
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-[#0A2B6D] shadow-xs">
                           <Icon className="h-4 w-4" style={{ color: node.color }} />
                         </span>
-                        <span className="text-[10px] font-extrabold text-[#00C6FF]">
+                        <span className="rounded-full bg-white/15 px-2 py-0.5 text-[10px] font-extrabold text-[#00C6FF]">
                           0{idx + 1}
                         </span>
                       </div>
@@ -380,15 +385,9 @@ export default function BlueprintPreviewSection() {
                         {node.sub}
                       </div>
                     </Link>
-                    {idx < ECOSYSTEM_NODES.length - 1 && (
-                      <ArrowRight
-                        aria-hidden="true"
-                        className="hidden lg:block -mr-2.5 ml-0.5 h-4 w-4 shrink-0 text-[#00C6FF]"
-                      />
-                    )}
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
 
             {/* 4 Cross-Module Pipeline Strips */}
