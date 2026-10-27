@@ -2,15 +2,14 @@ import React, { useEffect, useState } from 'react';
 import './landing-layout.css';
 import LandingNav from '@/components/landing/LandingNav';
 import LandingHero from '@/components/landing/LandingHero';
-import LandingStatsSection from '@/components/landing/LandingStatsSection';
-import LandingProblemSection from '@/components/landing/LandingProblemSection';
-import LandingSolutionSection from '@/components/landing/LandingSolutionSection';
 import LandingProductShowcase from '@/components/landing/LandingProductShowcase';
+import LandingSolutionSection from '@/components/landing/LandingSolutionSection';
+import LandingStatsSection from '@/components/landing/LandingStatsSection';
 import BenefitsSection from '@/components/landing/BenefitsSection';
 import LandingHowItWorks from '@/components/landing/LandingHowItWorks';
-import BlueprintPreviewSection from '@/components/landing/BlueprintPreviewSection';
 import LandingTestimonialsSection from '@/components/landing/LandingTestimonialsSection';
 import PricingSection from '@/components/landing/PricingSection';
+import BlueprintPreviewSection from '@/components/landing/BlueprintPreviewSection';
 import LandingFaqSection from '@/components/landing/LandingFaqSection';
 import LandingCTA from '@/components/landing/LandingCTA';
 import LandingFooter from '@/components/landing/LandingFooter';
@@ -34,41 +33,38 @@ export default function Landing() {
       {/* Top Enterprise SaaS Navigation */}
       <LandingNav onBookDemo={openDemoModal} />
 
-      <main className="landing-main relative z-10 mx-auto w-full max-w-[1440px] bg-white px-4 py-6 sm:px-6 lg:px-8 space-y-12 pb-16">
-        {/* 1. HERO SECTION */}
+      <main className="landing-main relative z-10 mx-auto w-full max-w-[1440px] bg-white px-4 py-6 sm:px-6 lg:px-8 space-y-10 pb-14">
+        {/* 1. Hero Section (Landscape) */}
         <LandingHero onBookDemo={openDemoModal} />
 
-        {/* 2. STATISTICS SECTION (Animated KPI Cards) */}
-        <LandingStatsSection />
-
-        {/* 3. PROBLEM SECTION */}
-        <LandingProblemSection />
-
-        {/* 4. SOLUTION SECTION (4 Large Pillar Cards) */}
-        <LandingSolutionSection />
-
-        {/* 5. PRODUCT SHOWCASE (Everything Connected) */}
+        {/* 2. Dashboard Showcase Section (Landscape) */}
         <LandingProductShowcase />
 
-        {/* 6. WHY CHOOSE COMPLIANCEHR INFINITY (6 Benefit Cards) */}
+        {/* 3. Feature Pillars Section (Landscape) */}
+        <LandingSolutionSection />
+
+        {/* 4. Statistics Section (Landscape) */}
+        <LandingStatsSection />
+
+        {/* 5. Why Choose Us Section (Landscape) */}
         <BenefitsSection />
 
-        {/* 7. HOW IT WORKS (Visual 3-Step Workflow) */}
+        {/* 6. How It Works Section (Landscape) */}
         <LandingHowItWorks />
 
-        {/* 8. PLATFORM EXPLORER (All 46 Modules & Information Flows — Placed Below Main Marketing Content) */}
-        <BlueprintPreviewSection />
-
-        {/* 9. TESTIMONIALS (CEO, Operations Manager, Compliance Manager) */}
+        {/* 7. Testimonials Section (Landscape) */}
         <LandingTestimonialsSection />
 
-        {/* 10. PRICING SECTION (Exact Existing Pricing Preserved) */}
+        {/* 8. Pricing Section (Landscape — Exact Existing Pricing Preserved) */}
         <PricingSection onContactSales={openDemoModal} />
 
-        {/* 11. FAQ SECTION (8 Topics) */}
+        {/* 9. Module Explorer Section (Landscape — 46 Connected Modules Architecture Map) */}
+        <BlueprintPreviewSection />
+
+        {/* FAQ Section */}
         <LandingFaqSection />
 
-        {/* 12. FINAL CTA */}
+        {/* 10. Final CTA Section (Landscape) */}
         <LandingCTA onBookDemo={openDemoModal} />
       </main>
 

@@ -12,7 +12,7 @@ const PILLARS = [
     subtitle: 'Complete 360° lifecycle visibility for every staff member, participant, and volunteer.',
     icon: Users,
     accent: '#0072FF',
-    gradient: 'linear-gradient(135deg, #0072FF 0%, #0A2B6D 100%)',
+    gradient: 'linear-gradient(135deg, #0A2B6D 0%, #0072FF 100%)',
     route: '/our-participants',
     items: [
       { name: 'Staff Records', desc: '100-point HR dossiers, contracts, position descriptions & appraisals' },
@@ -27,7 +27,7 @@ const PILLARS = [
     subtitle: 'Coordinate daily frontline disability support with real-time compliance guardrails.',
     icon: CalendarCheck2,
     accent: '#5A00D6',
-    gradient: 'linear-gradient(135deg, #5A00D6 0%, #0072FF 100%)',
+    gradient: 'linear-gradient(135deg, #0072FF 0%, #5A00D6 100%)',
     route: '/roster',
     items: [
       { name: 'Rostering', desc: 'Smart NDIS shift scheduling with screening & fatigue gatekeepers' },
@@ -42,7 +42,7 @@ const PILLARS = [
     subtitle: 'Continuous audit readiness mapped directly to the NDIS Practice Standards.',
     icon: ShieldCheck,
     accent: '#FF2E9A',
-    gradient: 'linear-gradient(135deg, #FF2E9A 0%, #5A00D6 100%)',
+    gradient: 'linear-gradient(135deg, #5A00D6 0%, #FF2E9A 100%)',
     route: '/compliance',
     items: [
       { name: 'Audits', desc: '17 categories & 356 checkpoints with 2-minute express audit exports' },
@@ -70,45 +70,45 @@ const PILLARS = [
 
 export default function LandingSolutionSection() {
   return (
-    <section id="solution" className="w-full scroll-mt-20 py-6">
-      <div className="mx-auto max-w-3xl text-center">
-        <span className="inline-flex items-center gap-2 rounded-full bg-[#0072FF]/10 px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-[#0072FF]">
-          Four Connected Enterprise Pillars
-        </span>
-        <h2 className="mt-3 font-editorial text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#0A2B6D]">
-          Built for Every Corner of Your Organisation
-        </h2>
-        <p className="mt-3 text-base sm:text-lg text-[#0A2B6D]/75">
-          Four foundational pillars unite frontline care, workforce compliance, clinical governance, and financial operations.
-        </p>
-      </div>
+    <section id="solution" className="w-full scroll-mt-20">
+      <div className="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-8 lg:p-10 shadow-lg space-y-7">
+        {/* Landscape Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-100 pb-5 text-left">
+          <div>
+            <span className="inline-flex items-center gap-2 rounded-full bg-[#0A2B6D] px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider text-white">
+              Four Connected Feature Pillars
+            </span>
+            <h2 className="mt-2.5 font-editorial text-2xl sm:text-4xl font-extrabold tracking-tight text-[#0A2B6D]">
+              One Unified Platform Across Every Department
+            </h2>
+          </div>
+          <p className="max-w-md text-sm font-medium text-[#0A2B6D]/75">
+            Spreadsheets and disconnected software create risk. ComplianceHR Infinity connects People, Service Delivery, Compliance, and Operations in real time.
+          </p>
+        </div>
 
-      <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
-        {PILLARS.map((pillar, idx) => {
-          const Icon = pillar.icon;
-          return (
-            <Reveal
-              key={pillar.title}
-              delay={idx * 0.07}
-              className="group flex flex-col justify-between rounded-3xl p-[2.5px] shadow-lg transition-all hover:-translate-y-1 hover:shadow-xl"
-              style={{
-                background: 'linear-gradient(120deg, #0072FF 0%, #5A00D6 52%, #FF2E9A 100%)',
-              }}
-            >
-              <div className="flex h-full flex-col justify-between rounded-[21px] bg-white p-6 sm:p-8 text-left">
+        {/* 4 Large Pillar Cards */}
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+          {PILLARS.map((pillar, idx) => {
+            const Icon = pillar.icon;
+            return (
+              <Reveal
+                key={pillar.title}
+                delay={idx * 0.06}
+                className="group flex flex-col justify-between rounded-2xl border-2 border-[#0A2B6D]/15 bg-white p-6 text-left shadow-sm transition-all hover:-translate-y-0.5 hover:border-[#0072FF] hover:shadow-xl"
+              >
                 <div>
-                  {/* Pillar Header */}
-                  <div className="flex items-start justify-between gap-4">
+                  <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3.5">
                       <div
-                        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-white shadow-md"
+                        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-white shadow-md"
                         style={{ background: pillar.gradient }}
                       >
                         <Icon className="h-6 w-6 text-white" />
                       </div>
                       <div>
                         <span
-                          className="text-xs font-extrabold uppercase tracking-wider"
+                          className="text-[11px] font-extrabold uppercase tracking-wider"
                           style={{ color: pillar.accent }}
                         >
                           {pillar.badge}
@@ -120,23 +120,22 @@ export default function LandingSolutionSection() {
                     </div>
                     <Link
                       to={pillar.route}
-                      className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-bold text-[#0A2B6D] transition hover:border-[#0072FF] hover:text-[#0072FF]"
+                      className="inline-flex items-center gap-1 rounded-xl bg-[#0A2B6D] px-3.5 py-2 text-xs font-extrabold text-white transition hover:bg-[#0072FF]"
                     >
-                      <span>Explore</span>
+                      <span>Open</span>
                       <ArrowRight className="h-3.5 w-3.5" />
                     </Link>
                   </div>
 
-                  <p className="mt-3 text-sm font-medium leading-relaxed text-[#0A2B6D]/75">
+                  <p className="mt-2.5 text-sm font-medium text-[#0A2B6D]/75">
                     {pillar.subtitle}
                   </p>
 
-                  {/* 4 Sub-Feature Cards */}
-                  <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <div className="mt-5 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
                     {pillar.items.map((item) => (
                       <div
                         key={item.name}
-                        className="rounded-2xl border border-slate-200/90 bg-slate-50/50 p-4 transition group-hover:bg-white group-hover:border-[#0072FF]/30"
+                        className="rounded-xl border border-slate-200/90 bg-slate-50/70 p-3.5 transition group-hover:bg-white group-hover:border-[#0072FF]/35"
                       >
                         <div className="flex items-center gap-2">
                           <CheckCircle2
@@ -147,17 +146,17 @@ export default function LandingSolutionSection() {
                             {item.name}
                           </h4>
                         </div>
-                        <p className="mt-1.5 text-xs font-medium leading-relaxed text-[#0A2B6D]/75">
+                        <p className="mt-1 text-xs font-medium leading-relaxed text-[#0A2B6D]/75">
                           {item.desc}
                         </p>
                       </div>
                     ))}
                   </div>
                 </div>
-              </div>
-            </Reveal>
-          );
-        })}
+              </Reveal>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

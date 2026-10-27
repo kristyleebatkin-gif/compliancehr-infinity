@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Calendar, Check, ShieldCheck } from 'lucide-react';
+import {
+  ArrowRight, Calendar, Check, ShieldCheck, Sparkles, TrendingUp, Users, Award, Activity,
+} from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import HeroDashboardMockup from '@/components/landing/HeroDashboardMockup';
 
@@ -11,6 +13,30 @@ const TRUST_BADGES = [
   '✓ NDIS Focused',
 ];
 
+const GLASS_KPIS = [
+  {
+    icon: ShieldCheck,
+    label: 'NDIS Audit Readiness',
+    value: '99.2%',
+    sub: '356 / 356 Checkpoints Verified',
+    accent: '#00C6FF',
+  },
+  {
+    icon: Users,
+    label: '100-Pt Worker Screening',
+    value: '100%',
+    sub: 'Automated Roster Gate Active',
+    accent: '#FF6EDB',
+  },
+  {
+    icon: Activity,
+    label: '24h / 5d Reportable SLA',
+    value: 'Zero Overdue',
+    sub: 'Statutory Commission Timers',
+    accent: '#00C6FF',
+  },
+];
+
 export default function LandingHero({ onBookDemo }) {
   const [authed, setAuthed] = useState(false);
 
@@ -19,82 +45,111 @@ export default function LandingHero({ onBookDemo }) {
   }, []);
 
   return (
-    <section className="relative w-full pt-4 pb-8">
+    <section className="relative w-full">
       <div
-        className="rounded-3xl p-[3px] shadow-xl"
+        className="relative overflow-hidden rounded-3xl border border-white/20 shadow-2xl"
         style={{
-          background: 'linear-gradient(120deg, #0072FF 0%, #0A2B6D 25%, #5A00D6 60%, #FF2E9A 100%)',
+          background:
+            'linear-gradient(125deg, #0A2B6D 0%, #0072FF 34%, #5A00D6 68%, #FF2E9A 100%)',
         }}
       >
-        <div className="rounded-[21px] bg-white px-5 py-8 sm:px-10 sm:py-12 lg:py-14">
-          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12">
-            {/* Left Column: Headline, Subheading, CTAs & Trust Badges */}
-            <div className="lg:col-span-6 text-left space-y-6">
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#0072FF]/25 bg-[#0072FF]/8 px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-[#0072FF]">
-                <ShieldCheck className="h-4 w-4 text-[#5A00D6]" />
-                <span>Purpose-Built for NDIS &amp; Disability Support Providers</span>
-              </div>
+        {/* Subtle Enterprise Grid & Ambient Radial Highlights */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-20"
+          style={{
+            backgroundImage:
+              'radial-gradient(circle at 18% 20%, rgba(255,255,255,0.45) 0%, transparent 45%), radial-gradient(circle at 85% 80%, rgba(0,198,255,0.45) 0%, transparent 50%)',
+          }}
+        />
 
-              <h1 className="font-editorial text-3xl sm:text-5xl lg:text-[3.25rem] font-extrabold tracking-tight text-[#0A2B6D] leading-[1.12]">
-                The Complete{' '}
-                <span className="bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                  Compliance &amp; Workforce
-                </span>{' '}
-                Management Platform
-              </h1>
+        <div className="relative z-10 px-5 py-8 sm:px-8 sm:py-10 lg:px-10 lg:py-12">
+          <div className="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-12">
+            {/* Left Column: High-Converting SaaS Hero Copy + Glassmorphism KPI Strip */}
+            <div className="flex flex-col justify-between lg:col-span-6 text-left text-white space-y-6">
+              <div className="space-y-5">
+                {/* Top Enterprise Pill */}
+                <div className="inline-flex flex-wrap items-center gap-2 rounded-full border border-white/30 bg-white/15 px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-white backdrop-blur-md">
+                  <Sparkles className="h-3.5 w-3.5 text-[#00C6FF]" />
+                  <span>Enterprise NDIS &amp; Disability Support Super-Platform</span>
+                </div>
 
-              <p className="max-w-xl text-base sm:text-lg font-medium leading-relaxed text-[#0A2B6D]/80">
-                Manage participants, staff, compliance, incidents, rostering, HR, invoicing and audit readiness from one connected platform.
-              </p>
+                {/* Main Headline */}
+                <h1 className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-[1.1]">
+                  The Complete Compliance &amp; Workforce Management Platform
+                </h1>
 
-              {/* Primary Call-To-Action Buttons */}
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-1">
-                <button
-                  type="button"
-                  onClick={() => onBookDemo && onBookDemo('Book a Live Platform Demo')}
-                  className="inline-flex items-center justify-center gap-2.5 rounded-2xl border-2 border-[#0A2B6D] bg-[#0A2B6D] px-7 py-4 text-base font-extrabold text-white shadow-lg transition hover:bg-[#0072FF] hover:border-[#0072FF]"
-                >
-                  <Calendar className="h-5 w-5 text-[#00C6FF]" />
-                  <span>Book a Demo</span>
-                </button>
+                {/* Subheading */}
+                <p className="text-base sm:text-lg font-medium leading-relaxed text-white/90">
+                  Manage participants, staff, compliance, incidents, rostering, HR, invoicing and audit readiness from one connected platform.
+                </p>
 
-                <Link
-                  to={authed ? '/dashboard' : '/register'}
-                  className="inline-flex items-center justify-center gap-2.5 rounded-2xl px-7 py-4 text-base font-extrabold text-white shadow-lg transition hover:opacity-95"
-                  style={{
-                    background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 52%, #FF2E9A 100%)',
-                  }}
-                >
-                  <span>Start Free Trial</span>
-                  <ArrowRight className="h-5 w-5 text-white" />
-                </Link>
-              </div>
+                {/* Two Primary CTA Buttons */}
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-1">
+                  <button
+                    type="button"
+                    onClick={() => onBookDemo && onBookDemo('Book a Demo')}
+                    className="inline-flex items-center justify-center gap-2.5 rounded-2xl border-2 border-white bg-white px-7 py-3.5 text-base font-extrabold text-[#0A2B6D] shadow-xl transition hover:-translate-y-0.5 hover:bg-slate-50"
+                  >
+                    <Calendar className="h-5 w-5 text-[#5A00D6]" />
+                    <span>Book a Demo</span>
+                  </button>
 
-              {/* 4 Required Trust Badges */}
-              <div className="pt-2">
-                <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+                  <Link
+                    to={authed ? '/dashboard' : '/register'}
+                    className="inline-flex items-center justify-center gap-2.5 rounded-2xl border-2 border-white/40 bg-[#0A2B6D]/85 px-7 py-3.5 text-base font-extrabold text-white shadow-xl backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-[#0A2B6D]"
+                  >
+                    <span>Start Free Trial</span>
+                    <ArrowRight className="h-5 w-5 text-[#00C6FF]" />
+                  </Link>
+                </div>
+
+                {/* 4 Trust Badges */}
+                <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 pt-1">
                   {TRUST_BADGES.map((badge) => (
                     <div
                       key={badge}
-                      className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50/80 px-3 py-2.5 text-xs font-extrabold text-[#0A2B6D] shadow-2xs"
+                      className="flex items-center gap-2 rounded-xl border border-white/25 bg-white/15 px-3 py-2 text-xs font-extrabold text-white backdrop-blur-md shadow-xs"
                     >
-                      <span
-                        className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-white text-[11px]"
-                        style={{
-                          background: 'linear-gradient(135deg, #0072FF 0%, #5A00D6 60%, #FF2E9A 100%)',
-                        }}
-                      >
-                        <Check className="h-3 w-3 text-white" />
+                      <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#00C6FF] text-[#0A2B6D]">
+                        <Check className="h-3 w-3 stroke-[3]" />
                       </span>
-                      <span>{badge}</span>
+                      <span className="truncate">{badge.replace(/^✓\s*/, '')}</span>
                     </div>
                   ))}
                 </div>
               </div>
+
+              {/* Glassmorphism KPI Cards Row (No Empty Space) */}
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 pt-2">
+                {GLASS_KPIS.map((kpi) => {
+                  const Icon = kpi.icon;
+                  return (
+                    <div
+                      key={kpi.label}
+                      className="rounded-2xl border border-white/30 bg-white/15 p-3.5 text-left text-white backdrop-blur-md shadow-lg"
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-white/85">
+                          {kpi.label}
+                        </span>
+                        <Icon className="h-4 w-4 shrink-0" style={{ color: kpi.accent }} />
+                      </div>
+                      <div className="mt-1 font-editorial text-2xl font-extrabold text-white">
+                        {kpi.value}
+                      </div>
+                      <div className="mt-0.5 flex items-center gap-1 text-[11px] font-semibold text-white/85">
+                        <TrendingUp className="h-3 w-3 text-[#00C6FF]" />
+                        <span className="truncate">{kpi.sub}</span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
 
-            {/* Right Column: Premium Executive Dashboard Mockup */}
-            <div className="lg:col-span-6">
+            {/* Right Column: Modern Executive Dashboard Mockup with Glassmorphism Accents */}
+            <div className="lg:col-span-6 flex items-stretch">
               <HeroDashboardMockup />
             </div>
           </div>
