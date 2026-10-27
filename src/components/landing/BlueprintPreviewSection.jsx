@@ -33,7 +33,7 @@ const TOP_BORDER_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
 
 const UNIFORM_SPRAY_BG =
-  'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF';
+  '#FFFFFF';
 
 const FLOW_TILE_STYLES = [
   { bg: '#FF2E9A', text: '#FFFFFF' },
