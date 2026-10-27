@@ -23,7 +23,7 @@ export default function LandingCTA() {
         className="flex w-full flex-col items-center justify-center rounded-[14px] px-3 py-4 sm:px-4 sm:py-5 text-center space-y-3"
         style={{
           background:
-            'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.65) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.65) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.65) 0%, transparent 52%), #FFFFFF',
+            '#FFFFFF',
         }}
       >
         {/* 1. "Why ComplianceHR Infinity" 25% Smaller */}
