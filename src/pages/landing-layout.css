@@ -65,3 +65,50 @@
   .business-nav-actions { width: 100%; justify-content: flex-end; gap: 1rem; }
   .business-sign-in { margin-right: auto; }
 }
+
+/* Professional landing composition: white canvas, existing brand accents. */
+.landing-page .landing-main { max-width: 1240px; padding-top: 2rem; padding-bottom: 4rem; }
+.landing-page .professional-hero { padding: clamp(1.5rem, 5vw, 4rem) 0 1rem; }
+.professional-intro { max-width: 920px; margin: 0 auto; text-align: center; }
+.landing-page .professional-eyebrow { margin: 0 auto 1.5rem; color: #5A00D6; font-size: .75rem; font-weight: 700; letter-spacing: .16em; line-height: 1.7; }
+.landing-page .professional-intro h1 { font-family: inherit; font-size: clamp(2.25rem, 5vw, 4.25rem); font-weight: 750; letter-spacing: -.045em; line-height: 1.1; margin: 0; }
+.professional-intro h1 span { color: #5A00D6; }
+.landing-page .professional-lead { max-width: 660px; margin: 1.75rem auto; font-size: 1.125rem; line-height: 1.8; font-weight: 400; }
+.professional-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: .875rem; margin-top: 2rem; }
+.professional-primary, .professional-secondary { display: inline-flex; align-items: center; justify-content: center; gap: .75rem; min-height: 50px; padding: .875rem 1.25rem; border-radius: 12px; font-size: .9375rem; font-weight: 700; text-decoration: none; }
+.professional-primary { background: #5A00D6; color: white !important; border: 1px solid #5A00D6; }
+.professional-secondary { background: white; color: #5A00D6; border: 1px solid #E9D5FF; }
+.professional-primary:hover { background: #0072FF; }
+.professional-secondary:hover { background: #F5F0FF; }
+.landing-page .professional-terms { margin: 1rem auto 0; font-size: .8125rem; line-height: 1.6; }
+.professional-terms a { text-decoration: underline; text-underline-offset: 3px; }
+.professional-pillars { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; margin-top: 3.5rem; }
+.professional-pillar { border: 1px solid #E9D5FF; border-radius: 20px; padding: 1.75rem; background: white; text-align: left; }
+.professional-pillar-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+.professional-icon { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 14px; }
+.professional-icon-0 { background: #E0F2FE; color: #0072FF; }
+.professional-icon-1 { background: #F5F0FF; color: #5A00D6; }
+.professional-icon-2 { background: #FFF3FA; color: #FF2E9A; }
+.professional-number { color: #5A00D6; font-size: .75rem; font-weight: 700; letter-spacing: .1em; }
+.professional-pillar h2 { font-family: inherit; font-size: 1.125rem; font-weight: 700; letter-spacing: -.02em; }
+.landing-page .professional-pillar p { font-size: .9375rem; line-height: 1.75; margin: .75rem 0 1.25rem; }
+.professional-pillar ul { display: grid; gap: .75rem; list-style: none; padding: 0; }
+.professional-pillar li { display: flex; align-items: flex-start; gap: .5rem; font-size: .8125rem; line-height: 1.6; }
+.professional-pillar li svg { flex-shrink: 0; margin-top: .15rem; color: #5A00D6; }
+.landing-page main :is(p, li, span, button)[class*="text-[6"] { font-size: .8125rem; line-height: 1.5; }
+.landing-page main .truncate { white-space: normal; overflow: visible; text-overflow: clip; }
+.landing-page main .line-clamp-2 { display: block; -webkit-line-clamp: unset; overflow: visible; }
+.landing-page #features .grid, .landing-page #benefits .grid { gap: 1rem; }
+.landing-page #features [class*="lg:grid-cols-"], .landing-page #benefits [class*="lg:grid-cols-"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.landing-page #why .professional-actions { margin-top: 1rem; }
+@media (max-width: 767px) {
+  .professional-pillars { grid-template-columns: 1fr; margin-top: 2rem; }
+  .professional-pillar { padding: 1.5rem; }
+  .landing-page #features [class*="lg:grid-cols-"], .landing-page #benefits [class*="lg:grid-cols-"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 479px) {
+  .professional-actions { flex-direction: column; }
+  .professional-primary, .professional-secondary { width: 100%; }
+  .landing-page #features [class*="lg:grid-cols-"], .landing-page #benefits [class*="lg:grid-cols-"] { grid-template-columns: 1fr; }
+}
+
