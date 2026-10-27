@@ -1,88 +1,68 @@
 import React from 'react';
-import { Sparkles, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { ArrowRight, Calendar, ShieldCheck, Sparkles } from 'lucide-react';
 import Reveal from '@/components/landing/Reveal';
-import {
-  getHeaderView,
-  getSymbolView,
-  getAppBorderView,
-} from '@/lib/fullColourTiles';
 
-const TOP_BORDER_GRADIENT =
-  'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
-
-export default function LandingCTA() {
-  const sym = getSymbolView(0);
-
+export default function LandingCTA({ onBookDemo }) {
   return (
-    <section
-      id="why"
-      className="w-full scroll-mt-16 rounded-3xl p-[9px] shadow-md"
-      style={{ background: TOP_BORDER_GRADIENT }}
-    >
+    <section id="final-cta" className="w-full scroll-mt-20 py-6">
       <Reveal
-        className="flex w-full flex-col items-center justify-center rounded-[14px] px-3 py-4 sm:px-4 sm:py-5 text-center space-y-3"
+        className="overflow-hidden rounded-3xl p-[3px] shadow-2xl"
         style={{
-          background:
-            '#FFFFFF',
+          background: 'linear-gradient(120deg, #0072FF 0%, #0A2B6D 28%, #5A00D6 62%, #FF2E9A 100%)',
         }}
       >
-        {/* 1. "Why ComplianceHR Infinity" 25% Smaller */}
         <div
-          className="w-full rounded-full p-[2.5px] shadow-2xs"
-          style={{ background: TOP_BORDER_GRADIENT }}
+          className="rounded-[21px] px-6 py-12 sm:px-12 sm:py-16 text-center text-white"
+          style={{
+            background: 'linear-gradient(125deg, #0A2B6D 0%, #0072FF 42%, #5A00D6 78%, #FF2E9A 100%)',
+          }}
         >
-          <div
-            className="gradient-brand flex min-h-[34px] w-full items-center justify-center gap-2 rounded-full px-4 py-1 text-xs sm:text-sm font-extrabold tracking-wide text-white"
-            style={{ background: getHeaderView(7), color: '#FFFFFF' }}
-          >
-            <span
-              className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 bg-white shadow-2xs"
-              style={{ borderColor: getAppBorderView(0) }}
-            >
-              <Sparkles className="h-3 w-3" style={{ color: sym.iconColor }} />
+          <div className="mx-auto max-w-3xl space-y-6">
+            <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-white backdrop-blur-xs">
+              <Sparkles className="h-3.5 w-3.5 text-[#00C6FF]" />
+              Start Your 14-Day Free Trial Today
             </span>
-            <span className="text-center" style={{ color: '#FFFFFF' }}>
-              Why ComplianceHR Infinity
-            </span>
-          </div>
-        </div>
 
-        {/* 2. "Ready to simplify your NDIS & Aged Care compliance?" on One Line With Clean White Background + Join Sentence on Two Even Rows */}
-        <div
-          className="w-full rounded-2xl p-[3px] shadow-2xs"
-          style={{ background: TOP_BORDER_GRADIENT }}
-        >
-          <div className="flex w-full flex-col items-center justify-center rounded-[10px] bg-white px-4 py-3 sm:px-6 sm:py-4 text-center space-y-2">
-            <div className="w-full rounded-xl bg-white px-3 py-1.5 text-center">
-              <h2 className="mx-auto text-center font-editorial text-sm sm:text-xl md:text-2xl lg:text-3xl font-extrabold tracking-tight leading-snug whitespace-nowrap">
-                <span className="text-[#0A2B6D]">Ready to </span>
-                <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                  simplify
-                </span>{' '}
-                <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                  your NDIS &amp; Aged Care compliance?
-                </span>
-              </h2>
+            <h2 className="font-editorial text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+              Ready to Transform Compliance?
+            </h2>
+
+            <p className="mx-auto max-w-2xl text-base sm:text-lg font-medium leading-relaxed text-white/90">
+              Manage compliance, workforce, participants and business operations from one connected platform.
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 pt-2">
+              <button
+                type="button"
+                onClick={() => onBookDemo && onBookDemo('Book a Personal Demo')}
+                className="inline-flex items-center justify-center gap-2.5 rounded-2xl border-2 border-white bg-white px-7 py-4 text-base font-extrabold text-[#0A2B6D] shadow-lg transition hover:bg-slate-100"
+              >
+                <Calendar className="h-5 w-5 text-[#5A00D6]" />
+                <span>Book a Personal Demo</span>
+              </button>
+
+              <Link
+                to="/register"
+                className="inline-flex items-center justify-center gap-2.5 rounded-2xl border-2 border-white/40 bg-[#0A2B6D]/90 px-7 py-4 text-base font-extrabold text-white shadow-lg transition hover:bg-[#0A2B6D]"
+              >
+                <span>Start Free Trial</span>
+                <ArrowRight className="h-5 w-5 text-white" />
+              </Link>
             </div>
 
-            <div className="mx-auto w-full max-w-3xl rounded-xl bg-white px-3 py-1 text-center">
-              <p className="text-center text-[10.5px] sm:text-xs md:text-sm font-extrabold leading-snug text-[#0A2B6D]">
-                <span className="block">
-                  Bring your records, team and improvement actions together
-                </span>
-                <span className="block">
-                  and take the next step towards a more organised business.
-                </span>
-              </p>
+            <div className="pt-2 flex flex-wrap items-center justify-center gap-6 text-xs font-bold text-white/85">
+              <span className="inline-flex items-center gap-1.5">
+                <ShieldCheck className="h-4 w-4 text-[#00C6FF]" />
+                All 46 Connected Modules Included
+              </span>
+              <span>•</span>
+              <span>356 NDIS Audit Checkpoints</span>
+              <span>•</span>
+              <span>Dedicated Australian Onboarding Support</span>
             </div>
           </div>
         </div>
-        <div className="professional-actions">
-          <Link to="/register" className="professional-primary">Start your 14-day free trial <ArrowRight size={18} aria-hidden="true" /></Link>
-          <a href="#pricing" className="professional-secondary">View pricing and plans</a>
-        </div>
-        <p className="professional-terms">Credit card required. Review plan details before registering.</p>
       </Reveal>
     </section>
   );

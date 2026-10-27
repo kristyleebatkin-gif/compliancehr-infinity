@@ -2,22 +2,10 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight, Check, Sparkles, ShieldCheck, Zap, Layers,
-  ClipboardCheck, Lock, RefreshCw, Award,
+  ClipboardCheck, Lock, RefreshCw, Award, PhoneCall, HelpCircle,
 } from 'lucide-react';
-import {
-  getHeaderView,
-  getTitleGradientView,
-  getSymbolView,
-  getAppBorderView,
-} from '@/lib/fullColourTiles';
 
-const TOP_BORDER_GRADIENT =
-  'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
-
-const UNIFORM_SPRAY_BG =
-  '#FFFFFF';
-
-// Updated Monthly Tier Prices ($760, $820, $920, $999, $1,100, $1,220) — No Yearly Sums, Includes Elite Package Tokens ($160/mo), Full Access to App & All Documents, 1,200 Message Credits, 50,000 Integration Credits & Support
+// Exact Pricing Configured Within ComplianceHR Infinity — Preserved Unchanged
 export const COMPLIANCE_HR_PACKAGES = [
   {
     id: 'tier-20',
@@ -181,299 +169,270 @@ export const CORE_PLATFORM_BENEFITS = [
   },
 ];
 
-export default function PricingSection() {
+const FEATURE_COMPARISON_ROWS = [
+  { feature: 'All 46 Connected Platform Modules', included: 'Included in Every Tier' },
+  { feature: '100+ Tailored Business Details Documents', included: 'Included in Every Tier' },
+  { feature: '17 Audit Categories & 356 NDIS Checkpoints', included: 'Included in Every Tier' },
+  { feature: 'Elite Package Tokens ($160/mo value)', included: 'Included in Every Tier' },
+  { feature: 'Monthly Message Credits', included: '1,200 message credits / mo' },
+  { feature: 'Monthly Integration Credits', included: '50,000 integration credits / mo' },
+  { feature: 'Consent-Gated External NDIS Auditor Portal', included: 'Included in Every Tier' },
+  { feature: 'Dedicated Compliance & Technical Support', included: 'Included in Every Tier' },
+];
+
+export default function PricingSection({ onContactSales }) {
   const [billing, setBilling] = useState('monthly');
+  const [showComparison, setShowComparison] = useState(true);
 
   return (
-    <section
-      id="pricing"
-      className="w-full scroll-mt-16 rounded-3xl p-[12px] shadow-lg"
-      style={{ background: TOP_BORDER_GRADIENT }}
-    >
+    <section id="pricing" className="w-full scroll-mt-20 py-6">
       <div
-        className="flex w-full flex-col items-center justify-center rounded-[16px] px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4"
-        style={{ background: UNIFORM_SPRAY_BG }}
+        className="rounded-3xl p-[3px] shadow-xl"
+        style={{
+          background: 'linear-gradient(120deg, #0072FF 0%, #0A2B6D 28%, #5A00D6 62%, #FF2E9A 100%)',
+        }}
       >
-        {/* Top Package Title Header on One Line + Border & Colour Removed From Writing Underneath */}
-        <div
-          className="w-full rounded-2xl p-[3px] shadow-sm"
-          style={{ background: TOP_BORDER_GRADIENT }}
-        >
-          <div className="flex flex-col items-center justify-center rounded-[11px] bg-white px-3 py-2 sm:px-5 sm:py-2.5 text-center space-y-1.5">
-            {/* Smart Enhanced Sentence on 2 Balanced Lines */}
-            <h2 className="font-editorial text-lg sm:text-2xl md:text-3xl font-extrabold tracking-tight leading-tight text-center">
-              <span className="block">
-                <span className="text-[#0A2B6D]">Smart Enhanced </span>
-                <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                  All-In-One
-                </span>
-              </span>
-              <span className="block bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                Elite Packages &amp; Master Audit Suite
+        <div className="rounded-[21px] bg-white p-6 sm:p-10 lg:p-12 space-y-10">
+          {/* Header & Billing Toggle */}
+          <div className="mx-auto max-w-3xl text-center space-y-4">
+            <span className="inline-flex items-center gap-2 rounded-full bg-[#5A00D6]/10 px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-[#5A00D6]">
+              <Award className="h-3.5 w-3.5 text-[#FF2E9A]" />
+              Transparent All-In-One NDIS Provider Pricing
+            </span>
+
+            <h2 className="font-editorial text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#0A2B6D]">
+              Smart Enhanced{' '}
+              <span className="bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                All-In-One Elite Packages
               </span>
             </h2>
 
-            {/* Dark Writing Reduced to Exactly Four Lines */}
-            <p className="mx-auto text-center text-[8.5px] sm:text-[9.5px] font-extrabold leading-snug text-[#0A2B6D] bg-white">
-              <span className="block text-[#0A2B6D]">
-                Every Smart Enhanced tier includes full access to the ComplianceHR app &amp; 100+ tailored Business Details documents:
-              </span>
-              <span className="block text-[#0A2B6D]">
-                WHS, Risk, Incident, Medication, Waste, Support Plan, Service Delivery, Infection Control &amp; Continuity,
-              </span>
-              <span className="block text-[#0A2B6D]">
-                Staff Training, Consents, Intake, Progress, Skills, Review, Policies, Procedures, Registers &amp; Business Plans,
-              </span>
-              <span className="block text-[#0A2B6D]">
-                plus 1,200 Message Credits, 50,000 Integration Credits, dedicated support &amp; $160/mo Elite Tokens.
-              </span>
+            <p className="text-sm sm:text-base font-medium leading-relaxed text-[#0A2B6D]/80">
+              Every Smart Enhanced tier includes full access to all 46 connected modules, 100+ tailored Business Details documents, $160/mo Elite Package Tokens, 1,200 message credits, 50,000 integration credits, and dedicated support.
             </p>
-          </div>
-        </div>
 
-        {/* Smaller Monthly, Annual & Smart Enhanced Tiles */}
-        <div className="w-full space-y-1.5">
-          <div className="grid w-full grid-cols-2 gap-1.5">
-            <div
-              className="rounded-full p-[2px] shadow-2xs"
-              style={{ background: TOP_BORDER_GRADIENT }}
-            >
-              <button
-                type="button"
-                onClick={() => setBilling('monthly')}
-                className={`gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1.5 rounded-full px-3 py-0.5 text-[10px] sm:text-[11px] font-extrabold text-white transition-all ${
-                  billing === 'monthly' ? 'ring-2 ring-[#0A2B6D] shadow-sm' : 'opacity-95 hover:opacity-100'
-                }`}
-                style={{ background: getHeaderView(0), color: '#FFFFFF' }}
-              >
-                <span
-                  className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white shadow-2xs"
-                  style={{ borderColor: getAppBorderView(0) }}
+            {/* Monthly / Annual Pricing Toggle */}
+            <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
+              <div className="inline-flex items-center rounded-2xl border border-slate-200 bg-slate-100/80 p-1.5">
+                <button
+                  type="button"
+                  onClick={() => setBilling('monthly')}
+                  className={`rounded-xl px-5 py-2 text-xs sm:text-sm font-extrabold transition ${
+                    billing === 'monthly'
+                      ? 'bg-[#0A2B6D] text-white shadow-sm'
+                      : 'text-[#0A2B6D] hover:text-[#0072FF]'
+                  }`}
                 >
-                  <Sparkles className="h-2.5 w-2.5" style={{ color: getSymbolView(0).iconColor }} />
-                </span>
-                <span style={{ color: '#FFFFFF' }}>Monthly Subscription</span>
-              </button>
-            </div>
-
-            <div
-              className="rounded-full p-[2px] shadow-2xs"
-              style={{ background: TOP_BORDER_GRADIENT }}
-            >
-              <button
-                type="button"
-                onClick={() => setBilling('yearly')}
-                className={`gradient-brand flex min-h-[24px] w-full items-center justify-center gap-1.5 rounded-full px-3 py-0.5 text-[10px] sm:text-[11px] font-extrabold text-white transition-all ${
-                  billing === 'yearly' ? 'ring-2 ring-[#0A2B6D] shadow-sm' : 'opacity-95 hover:opacity-100'
-                }`}
-                style={{ background: getHeaderView(2), color: '#FFFFFF' }}
-              >
-                <span
-                  className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border bg-white shadow-2xs"
-                  style={{ borderColor: getAppBorderView(2) }}
+                  Monthly Subscription
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setBilling('yearly')}
+                  className={`rounded-xl px-5 py-2 text-xs sm:text-sm font-extrabold transition ${
+                    billing === 'yearly'
+                      ? 'bg-[#5A00D6] text-white shadow-sm'
+                      : 'text-[#0A2B6D] hover:text-[#5A00D6]'
+                  }`}
                 >
-                  <ShieldCheck className="h-2.5 w-2.5" style={{ color: getSymbolView(2).iconColor }} />
-                </span>
-                <span style={{ color: '#FFFFFF' }}>Annual Billing</span>
-              </button>
+                  Annual Billing (Billed Monthly Equivalent)
+                </button>
+              </div>
             </div>
           </div>
 
-          <div
-            className="w-full rounded-full p-[2px] shadow-2xs"
-            style={{ background: TOP_BORDER_GRADIENT }}
-          >
-            <div
-              className="gradient-brand flex min-h-[26px] w-full items-center justify-center gap-1.5 rounded-full px-4 py-0.5 text-[10.5px] sm:text-xs font-extrabold tracking-wide text-white"
-              style={{ background: getHeaderView(6), color: '#FFFFFF' }}
-            >
-              <span
-                className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border bg-white shadow-2xs"
-                style={{ borderColor: getAppBorderView(6) }}
-              >
-                <Award className="h-2.5 w-2.5" style={{ color: getSymbolView(6).iconColor }} />
-              </span>
-              <span className="text-center" style={{ color: '#FFFFFF' }}>
-                Smart Enhanced All-In-One Compliance Packages
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* 6 Smart Enhanced Subscription Cards Grid — 50% Smaller & Lit Up in Glowing White Lights + Includes $999 Document Suite Words */}
-        <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 items-stretch text-center">
-          {COMPLIANCE_HR_PACKAGES.map((pkg, pIdx) => {
-            return (
-              <div
-                key={pkg.id}
-                className="flex h-full rounded-2xl p-[3px] transition-all hover:-translate-y-0.5"
-                style={{
-                  background: TOP_BORDER_GRADIENT,
-                  boxShadow:
-                    '0 0 18px 4px rgba(255, 255, 255, 0.98), 0 0 12px 2px rgba(0, 198, 255, 0.55)',
-                }}
-              >
-                <div className="flex h-full w-full flex-col justify-between rounded-[12px] bg-white p-2 text-center space-y-1.5">
-                  <div className="flex flex-1 flex-col justify-between space-y-1.5">
-                    {/* Glowing White Lights Bar at Top of Subscription Card */}
-                    <div className="flex items-center justify-center gap-1.5">
-                      {[0, 1, 2].map((b) => (
+          {/* 6 Smart Enhanced Subscription Cards Grid */}
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 items-stretch">
+            {COMPLIANCE_HR_PACKAGES.map((pkg) => {
+              const isFeatured = Boolean(pkg.featured);
+              return (
+                <div
+                  key={pkg.id}
+                  className={`relative flex flex-col justify-between rounded-3xl p-[2.5px] transition-all hover:-translate-y-1 ${
+                    isFeatured ? 'shadow-2xl' : 'shadow-md hover:shadow-xl'
+                  }`}
+                  style={{
+                    background: isFeatured
+                      ? 'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)'
+                      : 'linear-gradient(120deg, #cbd5e1 0%, #94a3b8 100%)',
+                  }}
+                >
+                  <div className="flex h-full flex-col justify-between rounded-[21px] bg-white p-6 sm:p-7 text-left">
+                    <div>
+                      {/* Top Badge & User Capacity */}
+                      <div className="flex items-center justify-between gap-2">
                         <span
-                          key={b}
-                          className="h-2 w-2 rounded-full border border-[#0A2B6D]/30 bg-white"
-                          style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF' }}
-                        />
-                      ))}
-                      <span className="rounded-full border border-[#0A2B6D]/25 bg-white px-2 py-0 text-[7.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                        WHITE LIGHTS ON
-                      </span>
-                    </div>
-
-                    {/* 50% Smaller Top Header */}
-                    <div
-                      className="gradient-brand flex min-h-[34px] w-full flex-col items-center justify-center gap-0.5 rounded-[7px] px-2 py-1 text-center text-white"
-                      style={{ background: getHeaderView(pIdx), color: '#FFFFFF' }}
-                    >
-                      <div className="flex items-center justify-center gap-1.5">
-                        <span
-                          className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border bg-white shadow-2xs"
-                          style={{ borderColor: getAppBorderView(pIdx) }}
+                          className={`rounded-full px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-white ${
+                            isFeatured ? 'bg-[#FF2E9A]' : 'bg-[#0A2B6D]'
+                          }`}
                         >
-                          <Award className="h-2.5 w-2.5" style={{ color: getSymbolView(pIdx).iconColor }} />
+                          {pkg.badge}
                         </span>
-                        <span
-                          className="text-[10.5px] font-extrabold tracking-wide leading-tight text-white"
-                          style={{ color: '#FFFFFF' }}
-                        >
-                          {pkg.packageName}
+                        <span className="rounded-full border border-[#0072FF]/30 bg-[#0072FF]/10 px-3 py-1 text-xs font-extrabold text-[#0072FF]">
+                          {pkg.users}
                         </span>
                       </div>
-                      <span className="rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0 text-[9px] font-extrabold leading-none text-[#0A2B6D]">
-                        {pkg.users}
-                      </span>
-                    </div>
 
-                    {/* Package Title & Monthly Price — Pure White Inside Text Box */}
-                    <div className="flex min-h-[46px] flex-col items-center justify-center gap-0.5 rounded-[7px] border border-[#0A2B6D]/25 bg-white px-2 py-1 text-center">
-                      <h3 className="font-editorial text-xs font-extrabold leading-tight text-[#0A2B6D] text-center">
+                      <h3 className="mt-4 font-editorial text-xl font-extrabold text-[#0A2B6D] leading-snug">
                         {pkg.name}
                       </h3>
-                      <span className="font-editorial text-sm font-extrabold text-[#0A2B6D]">
-                        ${pkg.monthly.toLocaleString()} per a month
-                      </span>
-                      <span className="text-[8px] font-extrabold text-[#0A2B6D] leading-tight">
-                        Includes 100+ Tailored Docs (WHS, Risk, Incident, Medication, Intake, Policies &amp; Registers)
-                      </span>
-                    </div>
 
-                    {/* Credit Pills — Pure White Inside Text Boxes */}
-                    <div className="grid grid-cols-2 gap-1">
-                      <div className="flex min-h-[24px] items-center justify-center gap-1 rounded-[6px] border border-[#0A2B6D]/25 bg-white px-1.5 py-0.5">
-                        <Zap className="h-2.5 w-2.5 shrink-0 text-[#0A2B6D]" />
-                        <span className="text-[8.5px] font-extrabold text-[#0A2B6D] leading-tight">
+                      {/* Exact Configured Price */}
+                      <div className="mt-4 rounded-2xl border border-slate-200/80 bg-slate-50/70 p-4">
+                        <div className="flex items-baseline gap-2">
+                          <span className="font-editorial text-3xl sm:text-4xl font-extrabold text-[#0A2B6D]">
+                            ${pkg.monthly.toLocaleString()}
+                          </span>
+                          <span className="text-xs font-bold text-[#0A2B6D]/75">
+                            per a month
+                          </span>
+                        </div>
+                        <div className="mt-1 text-xs font-bold text-[#5A00D6]">
+                          Base ${pkg.previousMonthly}/mo + ${pkg.eliteAddon}/mo Elite Package Tokens Included
+                        </div>
+                      </div>
+
+                      {/* Credit Allowances */}
+                      <div className="mt-4 grid grid-cols-2 gap-2">
+                        <div className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-[#0A2B6D]">
+                          <Zap className="mb-1 h-3.5 w-3.5 text-[#0072FF]" />
                           {pkg.messageCredits}
-                        </span>
-                      </div>
-                      <div className="flex min-h-[24px] items-center justify-center gap-1 rounded-[6px] border border-[#0A2B6D]/25 bg-white px-1.5 py-0.5">
-                        <Layers className="h-2.5 w-2.5 shrink-0 text-[#0A2B6D]" />
-                        <span className="text-[8.5px] font-extrabold text-[#0A2B6D] leading-tight">
+                        </div>
+                        <div className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-[#0A2B6D]">
+                          <Layers className="mb-1 h-3.5 w-3.5 text-[#5A00D6]" />
                           {pkg.integrationCredits}
-                        </span>
+                        </div>
                       </div>
+
+                      {/* Benefits List */}
+                      <ul className="mt-5 space-y-2.5">
+                        {pkg.benefits.map((b) => (
+                          <li key={b} className="flex items-start gap-2.5 text-xs font-semibold leading-relaxed text-[#0A2B6D]">
+                            <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#0072FF]" />
+                            <span>{b}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
 
-                    {/* Benefits List — Pure White Inside Text Boxes */}
-                    <ul className="grid flex-1 grid-cols-1 gap-1 pt-0.5">
-                      {pkg.benefits.slice(0, 4).map((b) => (
-                        <li
-                          key={b}
-                          className="flex min-h-[26px] items-center gap-1.5 rounded-[6px] border border-[#0A2B6D]/25 bg-white px-2 py-0.5 text-center text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]"
-                        >
-                          <Check className="h-2.5 w-2.5 shrink-0 text-[#0A2B6D]" />
-                          <span className="flex-1 text-center text-[#0A2B6D]">{b}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* 50% Smaller Bottom CTA */}
-                  <div className="pt-1 border-t border-[#0A2B6D]/20">
-                    <div
-                      className="rounded-full p-[1.5px] shadow-2xs"
-                      style={{ background: TOP_BORDER_GRADIENT }}
-                    >
+                    {/* Card CTAs */}
+                    <div className="mt-6 space-y-2.5 border-t border-slate-100 pt-5">
                       <Link
                         to="/register"
-                        className="gradient-brand inline-flex h-[26px] w-full items-center justify-center gap-1.5 rounded-full px-3 py-0.5 text-[9.5px] font-extrabold text-white transition-all hover:-translate-y-0.5"
-                        style={{ background: getHeaderView(pIdx + 1), color: '#FFFFFF' }}
+                        className="inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3.5 text-sm font-extrabold text-white shadow-md transition hover:opacity-95"
+                        style={{
+                          background: isFeatured
+                            ? 'linear-gradient(115deg, #0072FF 0%, #5A00D6 52%, #FF2E9A 100%)'
+                            : '#0A2B6D',
+                        }}
                       >
-                        <ArrowRight className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
-                        <span style={{ color: '#FFFFFF' }}>Start 14-Day Free Trial</span>
+                        <span>Start 14-Day Free Trial</span>
+                        <ArrowRight className="h-4 w-4 text-white" />
                       </Link>
+
+                      <button
+                        type="button"
+                        onClick={() =>
+                          onContactSales &&
+                          onContactSales(`Sales Enquiry — ${pkg.users} (${pkg.priceLabel})`)
+                        }
+                        className="inline-flex w-full items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs font-extrabold text-[#0A2B6D] transition hover:border-[#0072FF] hover:text-[#0072FF]"
+                      >
+                        <PhoneCall className="h-3.5 w-3.5 text-[#5A00D6]" />
+                        <span>Contact Sales</span>
+                      </button>
                     </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
 
-        {/* 6 Included Platform Pillar Benefits — White Background & App-Design Coloured Borders */}
-        <div className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 text-center items-stretch">
-          {CORE_PLATFORM_BENEFITS.map((b, idx) => {
-            const Icon = b.icon;
-            const sym = getSymbolView(idx);
-            return (
-              <div
-                key={b.title}
-                className="flex h-full rounded-2xl p-[3px] shadow-2xs"
-                style={{ background: getHeaderView(idx) }}
-              >
-                <div className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[12px] bg-white p-1.5 text-center">
-                  {/* App-Design Coloured Pillar Header Bar With Number & Symbol */}
-                  <div
-                    className="gradient-brand flex min-h-[22px] w-full items-center justify-between gap-1 rounded-full px-2 py-0.5 text-white"
-                    style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
-                  >
-                    <span className="inline-flex items-center gap-1">
-                      <span
-                        className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-white text-[6.5px] font-extrabold"
-                        style={{ color: sym.iconColor }}
-                      >
-                        0{idx + 1}
-                      </span>
-                      <span className="text-[7px] font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
-                        Pillar 0{idx + 1}
-                      </span>
-                    </span>
-                    <span className="text-[6.5px] font-extrabold text-white" style={{ color: '#FFFFFF' }}>
-                      100%
-                    </span>
-                  </div>
-
-                  {/* App-Design Coloured Title Bar */}
-                  <div
-                    className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1 rounded-md px-1.5 py-0.5 text-center text-white"
-                    style={{ background: getHeaderView(idx + 1), color: '#FFFFFF' }}
-                  >
-                    <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-white">
-                      <Icon className="h-2 w-2" style={{ color: sym.iconColor }} />
-                    </span>
-                    <span className="text-[7.5px] font-extrabold leading-tight text-white" style={{ color: '#FFFFFF' }}>
+          {/* 6 Core Platform Benefits Included in Every Plan */}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {CORE_PLATFORM_BENEFITS.map((b) => {
+              const Icon = b.icon;
+              return (
+                <div
+                  key={b.title}
+                  className="rounded-2xl border border-slate-200/90 bg-slate-50/60 p-5 text-left"
+                >
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-white"
+                      style={{
+                        background: 'linear-gradient(135deg, #0072FF 0%, #5A00D6 100%)',
+                      }}
+                    >
+                      <Icon className="h-5 w-5 text-white" />
+                    </div>
+                    <h4 className="text-sm font-extrabold text-[#0A2B6D]">
                       {b.title}
-                    </span>
+                    </h4>
                   </div>
-
-                  {/* Pure White Inside Writing Box */}
-                  <div className="flex w-full flex-1 items-center justify-center rounded-[6px] border border-[#0A2B6D]/25 bg-white px-1.5 py-1 text-center">
-                    <p className="text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
-                      {b.desc}
-                    </p>
-                  </div>
+                  <p className="mt-2.5 text-xs leading-relaxed text-[#0A2B6D]/75">
+                    {b.desc}
+                  </p>
                 </div>
+              );
+            })}
+          </div>
+
+          {/* Feature Comparison Table + Contact Sales Banner */}
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-7 space-y-5">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div className="text-left">
+                <h3 className="font-editorial text-xl sm:text-2xl font-extrabold text-[#0A2B6D]">
+                  Full Feature Comparison Across All Tiers
+                </h3>
+                <p className="text-xs sm:text-sm text-[#0A2B6D]/75">
+                  Every tier unlocks the complete 46-module platform—simply choose your active user capacity.
+                </p>
               </div>
-            );
-          })}
+              <div className="flex flex-wrap items-center gap-2.5">
+                <button
+                  type="button"
+                  onClick={() => setShowComparison((v) => !v)}
+                  className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 text-xs font-extrabold text-[#0A2B6D] transition hover:bg-slate-100"
+                >
+                  {showComparison ? 'Hide Comparison' : 'Show Feature Comparison'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onContactSales && onContactSales('Enterprise & Multi-Site Sales Enquiry')}
+                  className="inline-flex items-center gap-2 rounded-xl bg-[#0A2B6D] px-4 py-2 text-xs font-extrabold text-white transition hover:bg-[#0072FF]"
+                >
+                  <PhoneCall className="h-3.5 w-3.5 text-[#00C6FF]" />
+                  <span>Contact Sales</span>
+                </button>
+              </div>
+            </div>
+
+            {showComparison && (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="border-b border-slate-200 text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                      <th className="py-3 pr-4">Platform Capability</th>
+                      <th className="py-3 px-4">Inclusion Across Tiers (Up to 20 → 101+ Users)</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 text-xs sm:text-sm">
+                    {FEATURE_COMPARISON_ROWS.map((row) => (
+                      <tr key={row.feature}>
+                        <td className="py-3 pr-4 font-bold text-[#0A2B6D]">{row.feature}</td>
+                        <td className="py-3 px-4 font-extrabold text-[#0072FF]">
+                          <span className="inline-flex items-center gap-1.5">
+                            <Check className="h-4 w-4 text-[#0072FF]" />
+                            {row.included}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </section>

@@ -1,90 +1,25 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight,
-  FileSpreadsheet,
   LayoutDashboard,
   ShieldCheck,
-  Sparkles,
   ChevronDown,
   ChevronUp,
   Workflow,
   Lock,
   Layers,
-  Tv,
-  Radio,
-  Music,
-  Volume2,
-  VolumeX,
-  Laptop,
-  Play,
-  Youtube,
-  CheckCircle2,
+  Search,
+  ArrowUpRight,
 } from 'lucide-react';
-
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
-import {
-  getHeaderView,
-  getSymbolView,
-  getAppBorderView,
-} from '@/lib/fullColourTiles';
 
-const TOP_BORDER_GRADIENT =
-  'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
+const BRAND_GRADIENT =
+  'linear-gradient(120deg, #0072FF 0%, #0A2B6D 28%, #5A00D6 62%, #FF2E9A 100%)';
 
-const UNIFORM_SPRAY_BG =
-  '#FFFFFF';
-
-const FLOW_TILE_STYLES = [
-  { bg: '#FF2E9A', text: '#FFFFFF' },
-  { bg: '#0072FF', text: '#FFFFFF' },
-  { bg: '#9333EA', text: '#FFFFFF' },
-  { bg: '#5A00D6', text: '#FFFFFF' },
-  { bg: '#C80064', text: '#FFFFFF' },
-];
-
-const POP_SONGS = [
-  {
-    title: 'Neon Compliance Pop Anthem',
-    bpm: 124,
-    notes: [523.25, 659.25, 783.99, 659.25, 587.33, 698.46, 783.99, 880.0],
-  },
-  {
-    title: 'Sunshine Shift Groove',
-    bpm: 128,
-    notes: [440.0, 554.37, 659.25, 880.0, 783.99, 659.25, 587.33, 659.25],
-  },
-  {
-    title: 'Infinity Synth-Pop Beat',
-    bpm: 120,
-    notes: [587.33, 739.99, 880.0, 739.99, 659.25, 783.99, 987.77, 880.0],
-  },
-];
-
-// Curated YouTube Music Clips so every laptop displays a distinct music clip screen at the bottom
-const YOUTUBE_CLIPS = [
-  { title: 'Dua Lipa — Levitating', videoId: 'TUVcZfQe-Kw', channel: 'YouTube Pop HD' },
-  { title: 'The Weeknd — Blinding Lights', videoId: '4NRXx6U8ABQ', channel: 'YouTube Synthwave' },
-  { title: 'Bruno Mars — 24K Magic', videoId: 'UqyT8IEBkvY', channel: 'YouTube Funk Hits' },
-  { title: 'Mark Ronson ft. Bruno Mars — Uptown Funk', videoId: 'OPf0YbXqDm0', channel: 'YouTube Party HD' },
-  { title: 'Justin Timberlake — Can’t Stop the Feeling!', videoId: 'ru0K8uYEZWw', channel: 'YouTube Feel-Good' },
-  { title: 'Pharrell Williams — Happy', videoId: 'ZbZSe6N_BXs', channel: 'YouTube Sunshine' },
-  { title: 'Katy Perry — Roar', videoId: 'CevxZvSJLk8', channel: 'YouTube Anthems' },
-  { title: 'Taylor Swift — Shake It Off', videoId: 'nfWlot6h_JM', channel: 'YouTube Chart HD' },
-  { title: 'Ed Sheeran — Shape of You', videoId: 'JGwWNGJdvx8', channel: 'YouTube Acoustic' },
-  { title: 'Harry Styles — As It Was', videoId: 'H5v3kku4y6Q', channel: 'YouTube Indie Pop' },
-  { title: 'Coldplay — Higher Power', videoId: '3lfnR7OhZY8', channel: 'YouTube Arena HD' },
-  { title: 'Daft Punk — Get Lucky', videoId: '5NV6Rdv1a3I', channel: 'YouTube Disco' },
-  { title: 'Calvin Harris — Feel So Close', videoId: 'dGghkjpNCQ8', channel: 'YouTube Dance HD' },
-  { title: 'Miley Cyrus — Flowers', videoId: 'G7KNmW9a75Y', channel: 'YouTube Global' },
-  { title: 'OneRepublic — Counting Stars', videoId: 'hT_nvWreIhg', channel: 'YouTube Pop Rock' },
-  { title: 'Maroon 5 — Sugar', videoId: '09R8_2nJtjg', channel: 'YouTube Spotlight' },
-];
-
-// Expanded, consistent-length descriptions for every laptop so the white areas look balanced and uniform
-const EXPANDED_LAPTOP_DESCRIPTIONS = {
+const EXPANDED_MODULE_DESCRIPTIONS = {
   dashboard:
-    'Unified executive & role command hub featuring the interactive Office Wall, live compliance score ring, morning shift brief & instant module launcher.',
+    'Unified executive & role command hub featuring live compliance score rings, morning shift brief & instant module launcher.',
   'operations-centre':
     'One-click operational command deck with 12 armed compliance, roster & risk sweeps, live execution audit trails and benchmark suites.',
   'my-profile':
@@ -96,15 +31,15 @@ const EXPANDED_LAPTOP_DESCRIPTIONS = {
   'our-participants':
     'Person-centred participant profiles with NDIS plan budgets, locked 3-part consents, support teams, risk assessments & 10-weekly reviews.',
   'visual-boards':
-    'Accessible daily visual routines, text-to-speech communication pads, weather boards, Auslan sign prompts & multilingual translation tools.',
+    'Accessible daily visual routines, communication pads, weather boards, Auslan sign prompts & multilingual translation tools.',
   'key-contacts':
-    'Centralised register of key management personnel, financial & clinical delegations, authority expiry alerts & auto-attached email signatures.',
+    'Centralised register of key management personnel, financial & clinical delegations, authority expiry alerts & email signatures.',
   'volunteering-placements':
     'Complete volunteer & student placement lifecycle covering applications, screening clearances, induction training & supervised buddy shifts.',
   users:
     'Granular role-based access control (RLS) hub with 15 permission levels, 1-click portal invitations, pending approval gates & user audit logs.',
   communications:
-    '16-modular communication command centre uniting shift handover notes, branded emails, inbox, broadcasts, video calls & team banter.',
+    '16-modular communication command centre uniting shift handover notes, branded emails, inbox, broadcasts & team diary.',
   incidents:
     'NDIS reportable incident clinic with statutory 24-hour & 5-day Commission countdown timers, root-cause investigations & photo evidence.',
   'incident-analytics':
@@ -116,7 +51,7 @@ const EXPANDED_LAPTOP_DESCRIPTIONS = {
   goals:
     'Interactive participant & staff goal tracking with 0–100% progress sliders, linked shift notes, NDIS funding outcome charts & AI Goal Coach.',
   tasks:
-    'Shared To-Do command board featuring priority Kanban lanes, digital supervisor sign-off, team competition leaderboards & 30-task PDF batches.',
+    'Shared To-Do command board featuring priority Kanban lanes, digital supervisor sign-off, team leaderboards & 30-task PDF batches.',
   'emergency-response':
     '24/7 emergency readiness suite covering Personal Emergency Evacuation Plans (PEEPs), 6-monthly fire drills, safety kit logs & quick-dial.',
   compliance:
@@ -166,7 +101,7 @@ const EXPANDED_LAPTOP_DESCRIPTIONS = {
   'community-referral':
     'Postcode-matched allied health, advocacy & crisis service directory with 1-click warm referral letters and consent transfers.',
   programs:
-    'Group programs & accessible events calendar featuring AI promotional flyer generation, staffing ratio calculators & RSVP invitations.',
+    'Group programs & accessible events calendar featuring promotional flyer generation, staffing ratio calculators & RSVP invitations.',
   'suggestions-hub':
     'Whole-of-platform AI module auditor scanning all 46 screens for overdue items, expiring records & 1-click continuous improvements.',
   help:
@@ -184,7 +119,7 @@ const pick = (...keys) =>
     .filter(Boolean)
     .map((m) => ({
       label: m.label,
-      blurb: EXPANDED_LAPTOP_DESCRIPTIONS[m.key] || m.blurb,
+      blurb: EXPANDED_MODULE_DESCRIPTIONS[m.key] || m.blurb,
       key: m.key,
       path: m.key === 'dashboard' ? '/dashboard' : m.path,
       icon: m.icon,
@@ -193,6 +128,7 @@ const pick = (...keys) =>
 const APP_MODULE_GROUPS = [
   {
     title: 'People, Intake & Profiles',
+    accent: '#0072FF',
     modules: pick(
       'dashboard',
       'operations-centre',
@@ -205,27 +141,10 @@ const APP_MODULE_GROUPS = [
       'volunteering-placements',
       'users'
     ),
-    youtubeFillers: [
-      {
-        id: 'yt-filler-1',
-        label: 'YouTube Stage 01',
-        blurb: 'Live YouTube Pop Stream synced to your workspace beat — Dua Lipa · Levitating (Official Studio Music Clip).',
-        clipTitle: 'Dua Lipa — Levitating (Official Clip)',
-        videoId: 'TUVcZfQe-Kw',
-        visibilityClass: 'flex',
-      },
-      {
-        id: 'yt-filler-2',
-        label: 'YouTube Stage 02',
-        blurb: 'Official YouTube Synthwave HD Music Clip — The Weeknd · Blinding Lights (1080p Live Workspace Stream).',
-        clipTitle: 'The Weeknd — Blinding Lights (Official Clip)',
-        videoId: '4NRXx6U8ABQ',
-        visibilityClass: 'flex',
-      },
-    ],
   },
   {
     title: 'Service Delivery & Workforce',
+    accent: '#5A00D6',
     modules: pick(
       'communications',
       'incidents',
@@ -236,27 +155,10 @@ const APP_MODULE_GROUPS = [
       'tasks',
       'emergency-response'
     ),
-    youtubeFillers: [
-      {
-        id: 'yt-filler-3',
-        label: 'YouTube Stage 03',
-        blurb: 'Service Delivery Groove & Workforce Energy — Mark Ronson ft. Bruno Mars · Uptown Funk (Official Music Clip).',
-        clipTitle: 'Mark Ronson ft. Bruno Mars — Uptown Funk',
-        videoId: 'OPf0YbXqDm0',
-        visibilityClass: 'flex',
-      },
-      {
-        id: 'yt-filler-4',
-        label: 'YouTube Stage 04',
-        blurb: 'Feel-Good Shift Pop Channel — Justin Timberlake · Can’t Stop the Feeling! (Official HD Music Video).',
-        clipTitle: 'Justin Timberlake — Can’t Stop the Feeling!',
-        videoId: 'ru0K8uYEZWw',
-        visibilityClass: 'hidden sm:flex lg:hidden',
-      },
-    ],
   },
   {
     title: 'Compliance, Safety & Evidence',
+    accent: '#FF2E9A',
     modules: pick(
       'compliance',
       'auditor-portal',
@@ -268,19 +170,10 @@ const APP_MODULE_GROUPS = [
       'feedback',
       'meetings'
     ),
-    youtubeFillers: [
-      {
-        id: 'yt-filler-5',
-        label: 'YouTube Stage 05',
-        blurb: 'Audit-Ready Celebration Music Clip — Pharrell Williams · Happy (Official Studio HD Music Video).',
-        clipTitle: 'Pharrell Williams — Happy (Official Clip)',
-        videoId: 'ZbZSe6N_BXs',
-        visibilityClass: 'hidden sm:flex lg:hidden',
-      },
-    ],
   },
   {
     title: 'Business, Finance & Growth',
+    accent: '#0A2B6D',
     modules: pick(
       'invoicing',
       'quotes',
@@ -292,19 +185,10 @@ const APP_MODULE_GROUPS = [
       'crm',
       'projects'
     ),
-    youtubeFillers: [
-      {
-        id: 'yt-filler-6',
-        label: 'YouTube Stage 06',
-        blurb: 'Executive Finance & Growth Pop Stream — Bruno Mars · 24K Magic (Official HD Music Video Clip).',
-        clipTitle: 'Bruno Mars — 24K Magic (Official Clip)',
-        videoId: 'UqyT8IEBkvY',
-        visibilityClass: 'hidden sm:flex lg:hidden',
-      },
-    ],
   },
   {
     title: 'Information, Providers & Access',
+    accent: '#0072FF',
     modules: pick(
       'ndis-provider',
       'ndis-news',
@@ -317,24 +201,6 @@ const APP_MODULE_GROUPS = [
       'user-guides',
       'assistant'
     ),
-    youtubeFillers: [
-      {
-        id: 'yt-filler-7',
-        label: 'YouTube Stage 07',
-        blurb: 'Provider Network Indie Pop Stream — Harry Styles · As It Was (Official Studio HD Music Clip).',
-        clipTitle: 'Harry Styles — As It Was (Official Clip)',
-        videoId: 'H5v3kku4y6Q',
-        visibilityClass: 'flex',
-      },
-      {
-        id: 'yt-filler-8',
-        label: 'YouTube Stage 08',
-        blurb: 'Infinity Assistant Live Arena Clip — Coldplay · Higher Power (Official HD Music Video Stream).',
-        clipTitle: 'Coldplay — Higher Power (Official Clip)',
-        videoId: '3lfnR7OhZY8',
-        visibilityClass: 'flex',
-      },
-    ],
   },
 ];
 
@@ -363,648 +229,270 @@ const DATA_FLOWS = [
 
 const ACCESS_LEVELS = [
   {
-    channelBadge: 'CHANNEL 7 · LIVE HD',
-    channelProgram: 'Ch 7 · Executive Governance',
+    tier: 'TIER 01 · EXECUTIVE GOVERNANCE',
     title: 'Provider Admin, Compliance Admin & Management',
-    scopeBadge: 'FULL_ACCESS · All 46 Connected Modules',
+    scopeBadge: 'FULL ACCESS · All 46 Connected Modules',
     desc: 'Unrestricted access across all 46 modules, Company Safe, Users & Permissions, Invoicing, Quotes, Procurement, My Payroll & Business Analytics.',
   },
   {
-    channelBadge: 'CHANNEL 9 · LIVE HD',
-    channelProgram: 'Ch 9 · Daily Operations',
+    tier: 'TIER 02 · DAILY OPERATIONS',
     title: 'Administration & Team Leaders',
     scopeBadge: 'OPERATIONS · 40 Operational Modules',
     desc: 'Operational access to Staff & Participant Profiles, Compliance Hub, Quality, Meetings, Assets, Volunteers, CRM, Projects & Checklists.',
   },
   {
-    channelBadge: 'CHANNEL 10 · LIVE HD',
-    channelProgram: 'Ch 10 · Frontline Workforce',
+    tier: 'TIER 03 · FRONTLINE WORKFORCE',
     title: 'Employees, Support Workers & Specialist Officers',
-    scopeBadge: 'EMPLOYEE / PERSONAL · 31 Workforce Modules',
+    scopeBadge: 'WORKFORCE · 31 Frontline Modules',
     desc: 'Standardised Employee access to My Profile, Employee Directory, Roster & Shifts, Communications, Incidents, Risks, Training, Documents, Receipts & Tasks.',
   },
   {
-    channelBadge: 'CHANNEL 2 (ABC) · LIVE HD',
-    channelProgram: 'Ch 2 · Participant Portal',
+    tier: 'TIER 04 · PARTICIPANT PORTAL',
     title: 'Participants & Nominees',
     scopeBadge: 'PARTICIPANT · 22 Personal & Support Modules',
     desc: 'Personal access to My Profile, Participant Profiles, Goal Progress, Visual Boards, Roster & Shifts, Programs & Events, Feedback, Community Hub & NDIS News.',
   },
   {
-    channelBadge: 'CHANNEL 29 · LIVE HD',
-    channelProgram: 'Ch 29 · Verification & Guest',
+    tier: 'TIER 05 · EXTERNAL VERIFICATION',
     title: 'External NDIS Auditors & Guests',
     scopeBadge: 'AUDITOR & GUEST · Consent-Gated Access',
     desc: 'Auditors have dedicated, consent-verified read-only access in the External Auditor Portal, while Guests explore public tools and request role approval.',
   },
 ];
 
-// Reusable uniform section/group header bar — Reduced to One Single Line
-function UniformBlueprintHeader({ icon: Icon, title, secondLine, badgeText, viewIndex = 0 }) {
-  return (
-    <div
-      className="w-full rounded-xl p-[2px] shadow-2xs"
-      style={{ background: TOP_BORDER_GRADIENT }}
-    >
-      <div
-        className="gradient-brand flex min-h-[30px] w-full flex-wrap items-center justify-between gap-1.5 rounded-[10px] px-3 py-1 text-center text-white"
-        style={{ background: getHeaderView(viewIndex), color: '#FFFFFF' }}
-      >
-        <div className="flex items-center justify-center gap-1.5 mx-auto">
-          <span className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-            <Icon className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
-          </span>
-          <span
-            className="text-[9.5px] sm:text-[11px] font-extrabold tracking-wide text-white whitespace-nowrap"
-            style={{ color: '#FFFFFF' }}
-          >
-            {title}{secondLine ? ` · ${secondLine}` : ''}
-          </span>
-          {badgeText ? (
-            <span
-              className="shrink-0 rounded-full border border-white bg-white/20 px-2 py-0 text-[8px] font-extrabold text-white whitespace-nowrap"
-              style={{ color: '#FFFFFF' }}
-            >
-              {badgeText}
-            </span>
-          ) : null}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default function BlueprintPreviewSection() {
-  const [expandConnections, setExpandConnections] = useState(true);
-  const [isPlayingPop, setIsPlayingPop] = useState(false);
-  const [soundEnabled, setSoundEnabled] = useState(false);
-  const [songIndex] = useState(0);
-  const [beatStep, setBeatStep] = useState(0);
-  const [activeVideoLaptopKey, setActiveVideoLaptopKey] = useState(null);
-  const audioCtxRef = useRef(null);
+  const [activeGroup, setActiveGroup] = useState('ALL');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showFlows, setShowFlows] = useState(true);
 
-  const moduleCount = MODULE_DIRECTORY.length;
-  const currentSong = POP_SONGS[songIndex % POP_SONGS.length];
-
-  useEffect(() => {
-    if (!isPlayingPop) return undefined;
-    const intervalMs = Math.round(((60 / currentSong.bpm) * 1000) / 2);
-    const timer = setInterval(() => {
-      setBeatStep((prev) => {
-        const next = (prev + 1) % 8;
-        if (soundEnabled && typeof window !== 'undefined') {
-          try {
-            const AudioCtx = window.AudioContext || window.webkitAudioContext;
-            if (AudioCtx) {
-              if (!audioCtxRef.current) {
-                audioCtxRef.current = new AudioCtx();
-              }
-              const ctx = audioCtxRef.current;
-              if (ctx.state === 'suspended') {
-                ctx.resume();
-              }
-              const now = ctx.currentTime;
-              const osc = ctx.createOscillator();
-              const gain = ctx.createGain();
-              osc.type = next % 2 === 0 ? 'triangle' : 'sine';
-              osc.frequency.setValueAtTime(currentSong.notes[next], now);
-              gain.gain.setValueAtTime(0.06, now);
-              gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
-              osc.connect(gain);
-              gain.connect(ctx.destination);
-              osc.start(now);
-              osc.stop(now + 0.19);
-            }
-          } catch {
-            // Ignore autoplay restriction until user clicks sound button
-          }
-        }
-        return next;
-      });
-    }, intervalMs);
-
-    return () => clearInterval(timer);
-  }, [isPlayingPop, soundEnabled, currentSong]);
-
-  const togglePopSound = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setSoundEnabled((prev) => !prev);
-    setIsPlayingPop(true);
-  };
+  const filteredGroups = APP_MODULE_GROUPS.map((g) => ({
+    ...g,
+    modules: g.modules.filter((m) => {
+      if (activeGroup !== 'ALL' && g.title !== activeGroup) return false;
+      if (!searchQuery.trim()) return true;
+      const q = searchQuery.toLowerCase();
+      return (
+        m.label.toLowerCase().includes(q) ||
+        m.blurb.toLowerCase().includes(q)
+      );
+    }),
+  })).filter((g) => g.modules.length > 0);
 
   return (
-    <section
-      id="blueprint"
-      className="w-full scroll-mt-16 rounded-3xl p-[12px] shadow-lg"
-      style={{ background: TOP_BORDER_GRADIENT }}
-    >
-      <style>{`
-        @keyframes flowSlideLeftToRight {
-          0% { transform: translateX(-14px); }
-          50% { transform: translateX(14px); }
-          100% { transform: translateX(-14px); }
-        }
-        .flow-glide-ltr {
-          animation: flowSlideLeftToRight 7.5s ease-in-out infinite;
-          will-change: transform;
-        }
-        @keyframes laptopDanceA {
-          0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
-          25% { transform: translateY(-2.5px) rotate(-0.6deg) scale(1.006); }
-          50% { transform: translateY(-1px) rotate(0deg) scale(1.01); }
-          75% { transform: translateY(-2.5px) rotate(0.6deg) scale(1.006); }
-        }
-        @keyframes laptopDanceB {
-          0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
-          25% { transform: translateY(-2.5px) rotate(0.6deg) scale(1.006); }
-          50% { transform: translateY(-1px) rotate(0deg) scale(1.01); }
-          75% { transform: translateY(-2.5px) rotate(-0.6deg) scale(1.006); }
-        }
-        .laptop-beat-a {
-          animation: laptopDanceA 1.15s infinite ease-in-out;
-        }
-        .laptop-beat-b {
-          animation: laptopDanceB 1.15s infinite ease-in-out;
-        }
-        @keyframes clockwiseWalk {
-          0%   { transform: translate(0px, -2px); }
-          25%  { transform: translate(2.5px, 0px); }
-          50%  { transform: translate(0px, 2px); }
-          75%  { transform: translate(-2.5px, 0px); }
-          100% { transform: translate(0px, -2px); }
-        }
-        .laptop-clockwise-walk {
-          animation: clockwiseWalk 6s linear infinite;
-        }
-      `}</style>
-
+    <section id="blueprint" className="w-full scroll-mt-20 py-6">
       <div
-        className="flex w-full flex-col items-center justify-center rounded-[16px] px-4 py-5 sm:px-6 sm:py-6 text-center space-y-4"
-        style={{ background: UNIFORM_SPRAY_BG }}
+        className="rounded-3xl p-[3px] shadow-xl"
+        style={{ background: BRAND_GRADIENT }}
       >
-        {/* "An accurate map of the ComplianceHR Infinity app" in Two Neat Lines on Clean White Background */}
-        <div
-          className="w-full rounded-2xl p-[3px] shadow-sm"
-          style={{ background: TOP_BORDER_GRADIENT }}
-        >
-          <div className="w-full rounded-[11px] bg-white px-4 py-2.5 sm:px-6 sm:py-3 text-center space-y-1">
-            <h2 className="font-editorial text-lg sm:text-2xl md:text-3xl font-extrabold tracking-tight leading-tight">
-              <span className="block text-[#0A2B6D]">An accurate map of the</span>
-              <span className="block">
-                <span className="text-[#0A2B6D]">Compliance</span>
-                <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                  HR
-                </span>{' '}
-                <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-                  Infinity app
-                </span>
-              </span>
+        <div className="rounded-[21px] bg-white p-6 sm:p-10 space-y-8">
+          {/* Header */}
+          <div className="mx-auto max-w-3xl text-center">
+            <span className="inline-flex items-center gap-2 rounded-full bg-[#0072FF]/10 px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-[#0072FF]">
+              <Layers className="h-3.5 w-3.5 text-[#5A00D6]" />
+              ComplianceHR Infinity Blueprint Explorer
+            </span>
+            <h2 className="mt-3 font-editorial text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#0A2B6D]">
+              Explore All 46 Modules
             </h2>
-            <p className="mx-auto w-full text-xs sm:text-sm font-extrabold leading-snug text-[#0A2B6D]">
-              All {moduleCount} current modules, their purpose, access model and connected information flows in one view.
+            <p className="mt-3 text-base sm:text-lg text-[#0A2B6D]/75">
+              See how information flows throughout your entire organisation.
             </p>
           </div>
-        </div>
 
-        {/* How Information Connects & Role-Based Access Model — With Current, How & Access Headers Stacked Neatly Above */}
-        <div
-          className="w-full rounded-2xl p-[4px] shadow-sm"
-          style={{ background: TOP_BORDER_GRADIENT }}
-        >
-          <div
-            className="w-full rounded-[12px] p-3.5 text-left space-y-2"
-            style={{ background: UNIFORM_SPRAY_BG }}
-          >
-            {/* 1. Current Platform Blueprint Moved Above How Information Connects */}
-            <UniformBlueprintHeader
-              icon={Layers}
-              title="Current Platform Blueprint"
-              secondLine={`${moduleCount} Connected Modules`}
-              badgeText="100% Connected Architecture"
-              viewIndex={1}
-            />
-
-            {/* 2. How Information Connects & Role-Based Access Model */}
-            <UniformBlueprintHeader
-              icon={Workflow}
-              title="How Information Connects"
-              secondLine="& Role-Based Access Model"
-              badgeText="5 Live Pipelines + 5 TV Channels"
-              viewIndex={2}
-            />
-
-            {expandConnections && (
-              <div className="grid gap-3 lg:grid-cols-12 items-stretch">
-                {/* Left Column: How Information Connects Automatically */}
+          {/* Information Flows & Role-Based Access Architecture */}
+          <div className="rounded-2xl border border-slate-200 bg-slate-50/60 p-5 sm:p-6 space-y-5">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center gap-2.5 text-left">
                 <div
-                  className="lg:col-span-6 rounded-2xl p-[3px] shadow-2xs flex"
-                  style={{ background: TOP_BORDER_GRADIENT }}
+                  className="flex h-10 w-10 items-center justify-center rounded-xl text-white"
+                  style={{ background: BRAND_GRADIENT }}
                 >
-                  <div
-                    className="flex w-full flex-col justify-between rounded-[12px] p-3 space-y-2"
-                    style={{ background: UNIFORM_SPRAY_BG }}
-                  >
-                    <UniformBlueprintHeader
-                      icon={Workflow}
-                      title="How Information Connects Automatically"
-                      badgeText="Live Left → Right Sync"
-                      viewIndex={0}
-                    />
+                  <Workflow className="h-5 w-5" />
+                </div>
+                <div>
+                  <h3 className="text-base sm:text-lg font-extrabold text-[#0A2B6D]">
+                    Automated Cross-Module Pipelines &amp; Role-Based Security
+                  </h3>
+                  <p className="text-xs font-medium text-[#0A2B6D]/70">
+                    5 end-to-end data pipelines paired with 5 strict NDIS role permission tiers
+                  </p>
+                </div>
+              </div>
 
-                    <div className="grid flex-1 grid-cols-1 grid-rows-5 gap-1.5">
-                      {DATA_FLOWS.map((flow, fIdx) => (
-                        <div
-                          key={flow.label}
-                          className="flex h-full rounded-xl p-[2.5px] shadow-2xs overflow-hidden"
-                          style={{ background: getHeaderView(fIdx) }}
-                        >
-                          <div
-                            className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[9px] p-1 text-center"
-                            style={{ background: UNIFORM_SPRAY_BG }}
-                          >
-                            <div
-                              className="gradient-brand flex w-full items-center justify-center gap-1.5 rounded-full px-2.5 py-0.5 text-[8px] font-extrabold uppercase tracking-wider text-white"
-                              style={{ background: getHeaderView(fIdx), color: '#FFFFFF' }}
-                            >
-                              <span
-                                className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-white text-[6.5px] font-extrabold"
-                                style={{ color: getSymbolView(fIdx).iconColor }}
-                              >
-                                0{fIdx + 1}
-                              </span>
-                              <span style={{ color: '#FFFFFF' }}>{flow.label}</span>
-                            </div>
+              <button
+                type="button"
+                onClick={() => setShowFlows((v) => !v)}
+                className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-extrabold text-[#0A2B6D] transition hover:bg-slate-100"
+              >
+                <span>{showFlows ? 'Hide Architecture Map' : 'Show Architecture Map'}</span>
+                {showFlows ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+              </button>
+            </div>
 
-                            {/* Colours Restored in Flow Step Tiles Inside Pure White Writing Box */}
-                            <div
-                              className="w-full flex-1 rounded-lg p-[1.5px]"
-                              style={{ background: TOP_BORDER_GRADIENT }}
-                            >
-                              <div className="flex h-full w-full items-center justify-center rounded-[5px] bg-white px-2 py-0.5">
-                                <div
-                                  className="flow-glide-ltr flex flex-wrap items-center justify-center gap-1"
-                                  style={{ animationDelay: `${fIdx * 0.6}s` }}
-                                >
-                                  {flow.steps.map((item, index) => {
-                                    const idx = fIdx * 5 + index;
-                                    const tileStyle = FLOW_TILE_STYLES[idx % FLOW_TILE_STYLES.length];
-                                    return (
-                                      <React.Fragment key={item}>
-                                        <span
-                                          className="rounded-full border border-white px-2 py-0 text-[7.5px] font-extrabold text-white shadow-2xs whitespace-nowrap"
-                                          style={{
-                                            backgroundColor: tileStyle.bg,
-                                            color: '#FFFFFF',
-                                          }}
-                                        >
-                                          {item}
-                                        </span>
-                                        {index < flow.steps.length - 1 && (
-                                          <ArrowRight
-                                            className="h-2.5 w-2.5 shrink-0"
-                                            style={{ color: getSymbolView(idx).iconColor }}
-                                          />
-                                        )}
-                                      </React.Fragment>
-                                    );
-                                  })}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+            {showFlows && (
+              <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                {/* 5 Information Flow Pipelines */}
+                <div className="space-y-3 text-left">
+                  <div className="text-xs font-extrabold uppercase tracking-wider text-[#0072FF]">
+                    How Information Connects Automatically (5 Pipelines)
                   </div>
+                  {DATA_FLOWS.map((flow, fIdx) => (
+                    <div
+                      key={flow.label}
+                      className="rounded-2xl border border-slate-200 bg-white p-4 shadow-2xs"
+                    >
+                      <div className="text-xs font-extrabold text-[#0A2B6D]">
+                        {flow.label}
+                      </div>
+                      <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
+                        {flow.steps.map((step, sIdx) => (
+                          <React.Fragment key={step}>
+                            <span
+                              className="rounded-lg px-2.5 py-1 text-[11px] font-bold text-white"
+                              style={{
+                                backgroundColor:
+                                  (fIdx + sIdx) % 3 === 0
+                                    ? '#0072FF'
+                                    : (fIdx + sIdx) % 3 === 1
+                                      ? '#5A00D6'
+                                      : '#0A2B6D',
+                              }}
+                            >
+                              {step}
+                            </span>
+                            {sIdx < flow.steps.length - 1 && (
+                              <ArrowRight className="h-3.5 w-3.5 text-[#FF2E9A]" />
+                            )}
+                          </React.Fragment>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
                 </div>
 
-                {/* Right Column: Access Follows Role — 5 Live HD Flat Screen TVs Lined Up Row-for-Row With Left Flows */}
-                <div
-                  className="lg:col-span-6 rounded-2xl p-[3.5px] shadow-2xs flex"
-                  style={{ background: TOP_BORDER_GRADIENT }}
-                >
-                  <div className="flex w-full flex-col justify-between rounded-[13px] bg-white p-3.5 space-y-3">
-                    <UniformBlueprintHeader
-                      icon={Lock}
-                      title="Access Follows Role (Live TV Channels)"
-                      badgeText="Channels 7 · 9 · 10 · 2 · 29"
-                      viewIndex={5}
-                    />
-
-                    {/* 5 Role Permission Levels Lined Up in 5 Equal Grid Rows With Dark Blue Writing */}
-                    <div className="grid flex-1 grid-cols-1 grid-rows-5 gap-1.5">
-                      {ACCESS_LEVELS.map((lvl, idx) => {
-                        const borderCol = getAppBorderView(idx + 2);
-                        return (
-                          <div
-                            key={lvl.title}
-                            className="flex h-full w-full flex-col justify-between rounded-xl border-2 bg-[#0072FF] p-1 ring-1 ring-[#00C6FF]/80 shadow-sm"
-                            style={{ borderColor: borderCol }}
-                          >
-                            {/* App-Coloured Flat Screen TV Bezel Header */}
-                            <div
-                              className="gradient-brand mb-0.5 flex items-center justify-between rounded-full px-2 py-0 text-white"
-                              style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
-                            >
-                              <span className="flex items-center gap-1 text-[7px] font-extrabold uppercase tracking-wider text-white">
-                                <Tv className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
-                                <span style={{ color: '#FFFFFF' }}>{lvl.channelBadge} · LIT UP ✦</span>
-                              </span>
-                              <span className="inline-flex items-center gap-1 text-[7px] font-extrabold text-white">
-                                <Radio className="h-2 w-2 text-white" style={{ color: '#FFFFFF' }} />
-                                <span style={{ color: '#FFFFFF' }}>{lvl.channelProgram}</span>
-                              </span>
-                            </div>
-
-                            {/* Inner Flat Screen TV Display — Spray Between Borders & Pure White Inside Writing Box */}
-                            <div
-                              className="flex flex-1 rounded-lg p-[1.5px]"
-                              style={{ background: TOP_BORDER_GRADIENT }}
-                            >
-                              <div
-                                className="flex h-full w-full flex-col items-center justify-between gap-0.5 rounded-[6px] px-1.5 py-0.5 text-center"
-                                style={{ background: UNIFORM_SPRAY_BG }}
-                              >
-                                <div
-                                  className="gradient-brand flex w-full items-center justify-between gap-1 rounded px-1.5 py-0 text-[7.5px] font-extrabold text-white"
-                                  style={{ background: getHeaderView(idx + 2), color: '#FFFFFF' }}
-                                >
-                                  <span className="inline-flex items-center gap-1 text-white">
-                                    <ShieldCheck className="h-2 w-2 text-white" style={{ color: '#FFFFFF' }} />
-                                    <span style={{ color: '#FFFFFF' }}>{lvl.title}</span>
-                                  </span>
-                                  <span className="text-[6.5px] font-extrabold text-white/95" style={{ color: '#FFFFFF' }}>
-                                    {lvl.scopeBadge}
-                                  </span>
-                                </div>
-
-                                <div
-                                  className="flex flex-1 w-full rounded p-[1px]"
-                                  style={{ background: TOP_BORDER_GRADIENT }}
-                                >
-                                  <div className="flex flex-1 w-full items-center justify-center rounded-[3px] bg-white px-1.5 py-0.5 text-center">
-                                    <p className="mx-auto text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
-                                      {lvl.desc}
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
+                {/* 5 Enterprise Role-Based Access Levels */}
+                <div className="space-y-3 text-left">
+                  <div className="text-xs font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                    Role-Based Access Control (5 Permission Tiers)
                   </div>
+                  {ACCESS_LEVELS.map((lvl) => (
+                    <div
+                      key={lvl.title}
+                      className="rounded-2xl border border-slate-200 bg-white p-4 shadow-2xs"
+                    >
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <span className="inline-flex items-center gap-1.5 text-xs font-extrabold text-[#0A2B6D]">
+                          <Lock className="h-3.5 w-3.5 text-[#5A00D6]" />
+                          {lvl.title}
+                        </span>
+                        <span className="rounded-full bg-[#5A00D6]/10 px-2.5 py-0.5 text-[10px] font-extrabold text-[#5A00D6]">
+                          {lvl.scopeBadge}
+                        </span>
+                      </div>
+                      <p className="mt-1.5 text-xs leading-relaxed text-[#0A2B6D]/75">
+                        {lvl.desc}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
-
-            {/* Smaller Minimise Button on Bottom Right of Section */}
-            <div className="flex w-full justify-end pt-1">
-              <div
-                className="rounded-full p-[2px] shadow-2xs"
-                style={{ background: TOP_BORDER_GRADIENT }}
-              >
-                <button
-                  type="button"
-                  onClick={() => setExpandConnections((v) => !v)}
-                  className="gradient-brand inline-flex min-h-[26px] items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold text-white transition-all hover:opacity-95"
-                  style={{ background: getHeaderView(2), color: '#FFFFFF' }}
-                >
-                  <span style={{ color: '#FFFFFF' }}>
-                    {expandConnections ? 'Minimise' : 'Expand'}
-                  </span>
-                  {expandConnections ? (
-                    <ChevronUp className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
-                  ) : (
-                    <ChevronDown className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
-                  )}
-                </button>
-              </div>
-            </div>
           </div>
-        </div>
 
-        {/* Organisation Live Workspace — "& YouTube Music Clips" Moved to Line 2 Under Header */}
-        <div
-          className="w-full rounded-2xl p-[4px] shadow-sm"
-          style={{ background: TOP_BORDER_GRADIENT }}
-        >
-          <div className="w-full rounded-[12px] bg-white p-4 space-y-4 text-left">
-            {/* Uniform Header #5: Line 1 = Organisation Live Workspace · Interactive Laptops, Line 2 = & YouTube Music Clips */}
-            <UniformBlueprintHeader
-              icon={LayoutDashboard}
-              title="Organisation Live Workspace · Interactive Laptops"
-              secondLine="& YouTube Music Clips"
-              badgeText="All Laptops Designed Identically"
-              viewIndex={7}
-            />
-
-            {/* 50% Smaller Symmetrical 3-Tile Action Row Below Header (Play, Spreadsheet & 24/7) */}
-            <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-3">
-              <div
-                className="rounded-full p-[1.5px] shadow-2xs"
-                style={{ background: TOP_BORDER_GRADIENT }}
+          {/* Filter & Search Bar for All 46 Modules */}
+          <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setActiveGroup('ALL')}
+                className={`rounded-xl px-3.5 py-2 text-xs font-extrabold transition ${
+                  activeGroup === 'ALL'
+                    ? 'bg-[#0A2B6D] text-white shadow-xs'
+                    : 'border border-slate-200 bg-white text-[#0A2B6D] hover:bg-slate-50'
+                }`}
               >
+                All 46 Modules
+              </button>
+              {APP_MODULE_GROUPS.map((g) => (
                 <button
+                  key={g.title}
                   type="button"
-                  onClick={togglePopSound}
-                  className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1 rounded-full px-2.5 py-0.5 text-[9px] font-extrabold text-white"
-                  style={{ background: getHeaderView(4), color: '#FFFFFF' }}
+                  onClick={() => setActiveGroup(g.title)}
+                  className={`rounded-xl px-3.5 py-2 text-xs font-extrabold transition ${
+                    activeGroup === g.title
+                      ? 'bg-[#0072FF] text-white shadow-xs'
+                      : 'border border-slate-200 bg-white text-[#0A2B6D] hover:bg-slate-50'
+                  }`}
                 >
-                  {soundEnabled ? (
-                    <Volume2 className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
-                  ) : (
-                    <VolumeX className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
-                  )}
-                  <span style={{ color: '#FFFFFF' }}>
-                    {soundEnabled ? 'Pop Beat Audio: ON ♫' : 'Play Pop Song Audio ♫'}
-                  </span>
+                  {g.title} ({g.modules.length})
                 </button>
-              </div>
-
-              <div
-                className="rounded-full p-[1.5px] shadow-2xs"
-                style={{ background: TOP_BORDER_GRADIENT }}
-              >
-                <div
-                  className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1 rounded-full px-2.5 py-0.5 text-[9px] font-extrabold text-white"
-                  style={{ background: getHeaderView(0), color: '#FFFFFF' }}
-                >
-                  <FileSpreadsheet className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
-                  <span style={{ color: '#FFFFFF' }}>Spreadsheet Exchange</span>
-                </div>
-              </div>
-
-              <div
-                className="rounded-full p-[1.5px] shadow-2xs"
-                style={{ background: TOP_BORDER_GRADIENT }}
-              >
-                <div
-                  className="gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1 rounded-full px-2.5 py-0.5 text-[9px] font-extrabold text-white"
-                  style={{ background: getHeaderView(1), color: '#FFFFFF' }}
-                >
-                  <Sparkles className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
-                  <span style={{ color: '#FFFFFF' }}>24/7 AI Assistant</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-2.5">
-              {APP_MODULE_GROUPS.map((group, gIdx) => (
-                <div
-                  key={group.title}
-                  className="rounded-xl p-[2.5px] shadow-2xs"
-                  style={{ background: TOP_BORDER_GRADIENT }}
-                >
-                  <div className="rounded-[10px] bg-white p-2 space-y-1.5">
-                    <UniformBlueprintHeader
-                      icon={Laptop}
-                      title={group.title}
-                      badgeText={`${group.modules.length} Live Modules + YouTube Stage Laptops`}
-                      viewIndex={gIdx}
-                    />
-
-                    {/* Slightly Reduced Grid of MOD Tiles */}
-                    <div className="grid gap-1.5 grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 auto-rows-fr pt-0.5 items-stretch">
-                      {group.modules.map((mod, mIdx) => {
-                        const Icon = mod.icon || ShieldCheck;
-                        const idx = gIdx * 10 + mIdx;
-                        const borderCol = getAppBorderView(idx);
-                        const ytClip = YOUTUBE_CLIPS[idx % YOUTUBE_CLIPS.length];
-                        const isEmbedOpen = activeVideoLaptopKey === mod.key;
-                        const danceClass = isPlayingPop
-                          ? idx % 2 === 0
-                            ? 'laptop-beat-a'
-                            : 'laptop-beat-b'
-                          : '';
-
-                        return (
-                          <div
-                            key={mod.key}
-                            className={`flex h-full flex-col items-center justify-between laptop-clockwise-walk ${danceClass}`}
-                            style={{
-                              animationDelay: `${(idx % 8) * 0.45}s`,
-                            }}
-                          >
-                            {/* Slightly Reduced Live Module Laptop */}
-                            <div
-                              className="group flex w-full flex-1 flex-col rounded-t-lg border p-0.5 shadow-2xs"
-                              style={{
-                                borderColor: borderCol,
-                                background: getHeaderView(idx),
-                                boxShadow:
-                                  '0 0 10px 2px rgba(255, 255, 255, 0.95), 0 0 8px 1px rgba(0, 198, 255, 0.45)',
-                              }}
-                            >
-                              <div className="mb-0.5 flex h-[12px] w-full flex-nowrap items-center justify-between px-1 whitespace-nowrap">
-                                <span
-                                  className="inline-flex items-center gap-0.5 rounded-full bg-white px-1 py-0 text-[5.5px] font-extrabold uppercase tracking-wider whitespace-nowrap"
-                                  style={{ color: getSymbolView(idx).iconColor }}
-                                >
-                                  <span>MOD #{String(idx + 1).padStart(2, '0')}</span>
-                                </span>
-                                <span className="inline-flex items-center gap-0.5 text-[5.5px] font-extrabold text-white whitespace-nowrap">
-                                  <span
-                                    className="h-1 w-1 rounded-full bg-white"
-                                    style={{ boxShadow: '0 0 5px 1px #FFFFFF' }}
-                                  />
-                                  <span style={{ color: '#FFFFFF' }}>WHITE LIT ✦</span>
-                                </span>
-                              </div>
-
-                              {/* Inner Minimised Laptop Screen — Pure White Inside Writing Box */}
-                              <div className="flex h-full w-full flex-col justify-between gap-0.5 rounded-[4px] bg-white p-0.5 text-center">
-                                <Link
-                                  to={mod.path}
-                                  className="gradient-brand flex min-h-[15px] w-full items-center justify-center gap-0.5 rounded px-1 py-0 text-center text-white"
-                                  style={{ background: getHeaderView(idx + 1), color: '#FFFFFF' }}
-                                >
-                                  <span className="flex h-2.5 w-2.5 shrink-0 items-center justify-center rounded-full bg-white">
-                                    <Icon className="h-1.5 w-1.5" style={{ color: getSymbolView(idx).iconColor }} />
-                                  </span>
-                                  <span className="truncate text-[6.5px] font-extrabold leading-tight text-white" style={{ color: '#FFFFFF' }}>
-                                    {mod.label}
-                                  </span>
-                                </Link>
-
-                                <Link
-                                  to={mod.path}
-                                  className="flex flex-1 w-full items-center justify-center rounded border border-[#0A2B6D]/20 bg-white px-1 py-0 text-center"
-                                >
-                                  <p className="text-center text-[6px] font-extrabold leading-tight text-[#0A2B6D] line-clamp-1">
-                                    {mod.blurb}
-                                  </p>
-                                </Link>
-
-                                {/* Compact YouTube Clip Strip */}
-                                <div className="w-full">
-                                  {isEmbedOpen ? (
-                                    <div className="w-full overflow-hidden rounded border border-white bg-white aspect-video">
-                                      <iframe
-                                        title={ytClip.title}
-                                        src={`https://www.youtube-nocookie.com/embed/${ytClip.videoId}?autoplay=1&mute=1&rel=0`}
-                                        className="h-full w-full"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowFullScreen
-                                      />
-                                    </div>
-                                  ) : (
-                                    <button
-                                      type="button"
-                                      onClick={() => setActiveVideoLaptopKey(mod.key)}
-                                      className="gradient-brand flex h-[13px] w-full items-center justify-between gap-0.5 rounded-full px-1 py-0 text-center text-[5.5px] font-extrabold text-white"
-                                      style={{ background: getHeaderView(idx + 2), color: '#FFFFFF' }}
-                                    >
-                                      <span className="truncate text-white" style={{ color: '#FFFFFF' }}>
-                                        ♫ {ytClip.title}
-                                      </span>
-                                      <Play className="h-1.5 w-1.5 shrink-0 fill-white text-white" />
-                                    </button>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="flex w-[104%] flex-col items-center">
-                              <div
-                                className="flex h-0.5 w-full items-center justify-center rounded-b-lg"
-                                style={{ background: getHeaderView(idx + 3) }}
-                              />
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </div>
               ))}
             </div>
 
-            {/* Minimise Button Under Live Workspace on Bottom Right */}
-            <div className="flex w-full justify-end pt-1">
-              <div
-                className="rounded-full p-[2px] shadow-2xs"
-                style={{ background: TOP_BORDER_GRADIENT }}
-              >
-                <button
-                  type="button"
-                  onClick={() => setExpandConnections((v) => !v)}
-                  className="gradient-brand inline-flex min-h-[24px] items-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold text-white transition-all hover:opacity-95"
-                  style={{ background: getHeaderView(2), color: '#FFFFFF' }}
-                >
-                  <span style={{ color: '#FFFFFF' }}>
-                    {expandConnections ? 'Minimise' : 'Expand'}
-                  </span>
-                  {expandConnections ? (
-                    <ChevronUp className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
-                  ) : (
-                    <ChevronDown className="h-3 w-3 text-white" style={{ color: '#FFFFFF' }} />
-                  )}
-                </button>
-              </div>
+            <div className="relative min-w-[240px]">
+              <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#0A2B6D]/50" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search 46 modules..."
+                className="w-full rounded-xl border border-slate-200 bg-white pl-10 pr-4 py-2 text-xs font-semibold text-[#0A2B6D] focus:border-[#0072FF] focus:outline-none"
+              />
             </div>
+          </div>
+
+          {/* Grouped 46-Module Directory Grid */}
+          <div className="space-y-8">
+            {filteredGroups.map((group) => (
+              <div key={group.title} className="space-y-4 text-left">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+                  <div className="flex items-center gap-2.5">
+                    <LayoutDashboard className="h-5 w-5" style={{ color: group.accent }} />
+                    <h3 className="font-editorial text-xl font-extrabold text-[#0A2B6D]">
+                      {group.title}
+                    </h3>
+                  </div>
+                  <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-extrabold text-[#0A2B6D]">
+                    {group.modules.length} Modules
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                  {group.modules.map((mod) => {
+                    const Icon = mod.icon || ShieldCheck;
+                    return (
+                      <Link
+                        key={mod.key}
+                        to={mod.path}
+                        className="group flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white p-4 text-left shadow-2xs transition-all hover:-translate-y-0.5 hover:border-[#0072FF] hover:shadow-md"
+                      >
+                        <div>
+                          <div className="flex items-center justify-between gap-2">
+                            <div
+                              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-white"
+                              style={{ background: BRAND_GRADIENT }}
+                            >
+                              <Icon className="h-4 w-4 text-white" />
+                            </div>
+                            <ArrowUpRight className="h-4 w-4 text-slate-400 transition group-hover:text-[#0072FF]" />
+                          </div>
+                          <h4 className="mt-3 text-sm font-extrabold text-[#0A2B6D] group-hover:text-[#0072FF]">
+                            {mod.label}
+                          </h4>
+                          <p className="mt-1.5 text-xs leading-relaxed text-[#0A2B6D]/75 line-clamp-3">
+                            {mod.blurb}
+                          </p>
+                        </div>
+                        <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] font-bold text-[#0072FF]">
+                          <span>Open Module</span>
+                          <span>→</span>
+                        </div>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
