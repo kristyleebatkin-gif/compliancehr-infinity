@@ -15,7 +15,7 @@ const TOP_BORDER_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
 
 const UNIFORM_SPRAY_BG =
-  'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF';
+  '#FFFFFF';
 
 // Updated Monthly Tier Prices ($760, $820, $920, $999, $1,100, $1,220) — No Yearly Sums, Includes Elite Package Tokens ($160/mo), Full Access to App & All Documents, 1,200 Message Credits, 50,000 Integration Credits & Support
 export const COMPLIANCE_HR_PACKAGES = [
