@@ -8,7 +8,7 @@ const TOP_BORDER_GRADIENT =
 const BADGE_GRADIENT =
   'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)';
 const UNIFORM_SPRAY_BG =
-  'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF';
+  '#FFFFFF';
 
 export default function LandingFooter() {
   return (
