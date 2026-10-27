@@ -32,13 +32,13 @@ const TOP_BORDER_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
 
 const BRIGHT_PINK_WHITE_SPRAY =
-  'radial-gradient(circle at 18% 22%, rgba(255, 46, 154, 0.78) 0%, rgba(255, 110, 219, 0.52) 38%, rgba(255, 255, 255, 0.98) 74%), radial-gradient(circle at 82% 78%, rgba(255, 46, 154, 0.74) 0%, rgba(255, 133, 224, 0.48) 42%, #FFFFFF 100%)';
+  '#FFFFFF';
 
 const SPRAY_BGS = [
-  'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF',
-  'radial-gradient(circle at 18% 82%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 84% 20%, rgba(192, 132, 252, 0.62) 0%, transparent 48%), radial-gradient(circle at 48% 36%, rgba(255, 133, 224, 0.56) 0%, transparent 50%), #FFFFFF',
-  'radial-gradient(circle at 16% 28%, rgba(192, 132, 252, 0.62) 0%, transparent 48%), radial-gradient(circle at 84% 78%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 54% 18%, rgba(56, 189, 248, 0.58) 0%, transparent 50%), #FFFFFF',
-  'radial-gradient(circle at 84% 22%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 16% 78%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 48% 52%, rgba(192, 132, 252, 0.58) 0%, transparent 52%), #FFFFFF',
+  '#FFFFFF',
+  '#FFFFFF',
+  '#FFFFFF',
+  '#FFFFFF',
 ];
 
 // Pack 1 & Pack 2 — Updated Tier Pricing ($760, $820, $920, $999, $1,100), No Yearly Sums, Two Price Points Per Tile Line
