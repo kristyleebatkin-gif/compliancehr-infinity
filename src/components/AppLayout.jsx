@@ -147,7 +147,7 @@ export default function AppLayout() {
     .join('') || 'CH';
 
   const sidebarContent = (
-    <div className="flex h-full min-h-0 flex-col bg-white p-2 space-y-2">
+    <div className="flex h-full w-full min-w-0 min-h-0 flex-col overflow-hidden bg-white p-2 space-y-2">
       <div
         className="shrink-0 rounded-2xl p-[8px] shadow-md"
         style={{
@@ -212,7 +212,7 @@ export default function AppLayout() {
                       <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white shadow-2xs">
                         <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
                       </span>
-                      <span className="truncate" style={{ color: tile.text }}>{navLabel(item)}</span>
+                      <span className="min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap" style={{ color: tile.text }}>{navLabel(item)}</span>
                     </Link>
                   );
                 })}
@@ -282,7 +282,7 @@ export default function AppLayout() {
 
   return (
     <div className="app-readable flex h-dvh overflow-hidden bg-white">
-      <aside className="hidden w-64 shrink-0 border-r-4 border-[#0A2B6D] bg-white md:flex">
+      <aside className="hidden w-64 shrink-0 overflow-hidden border-r-4 border-[#0A2B6D] bg-white md:flex">
         {sidebarContent}
       </aside>
 
@@ -463,9 +463,8 @@ export default function AppLayout() {
           </div>
         </header>
 
-        <QuickAppBar />
-
         <main className="relative z-0 flex-1 overflow-y-auto pb-20 md:pb-0">
+          <QuickAppBar />
           <div className={location.pathname === '/staff' || location.pathname.startsWith('/staff/') ? 'mx-auto max-w-6xl px-3 md:px-8' : 'mx-auto max-w-6xl px-3 pt-3 md:px-8 md:pt-4'}>
             <PendingApprovalNotice />
             <ModuleGuide />

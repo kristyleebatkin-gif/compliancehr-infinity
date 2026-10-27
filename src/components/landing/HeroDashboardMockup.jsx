@@ -11,10 +11,10 @@ const VIEWS = [
     score: '98.7%',
     scoreLabel: 'NDIS Audit Readiness',
     metrics: [
-      { label: '100-Pt Staff Screening', value: '100%', delta: '32/32 Cleared', color: '#0072FF' },
-      { label: 'Active Participant Plans', value: '48', delta: '3-Part Consents', color: '#5A00D6' },
-      { label: '24h / 5d Reportable SLA', value: '100%', delta: 'Zero Overdue', color: '#FF2E9A' },
-      { label: '3-Way Claim Match', value: '99.4%', delta: 'PRODA Ready', color: '#0A2B6D' },
+      { label: 'Staff Screening', value: '100%', delta: '32/32 Cleared', color: '#0072FF' },
+      { label: 'Active Plans', value: '48', delta: '3-Part Consents', color: '#5A00D6' },
+      { label: 'Reportable SLA', value: '100%', delta: 'Zero Overdue', color: '#FF2E9A' },
+      { label: 'Claim Match', value: '99.4%', delta: 'PRODA Ready', color: '#0A2B6D' },
     ],
     checkpoints: [
       { code: 'CORE 1', title: 'Participant Rights & 3-Part Informed Consents', status: 'Verified · 100%' },
@@ -29,10 +29,10 @@ const VIEWS = [
     score: '100%',
     scoreLabel: 'Worker Screening Gate',
     metrics: [
-      { label: 'NDIS Worker Screening', value: '100%', delta: 'Auto-Gate Active', color: '#0072FF' },
+      { label: 'NDIS Screening', value: '100%', delta: 'Auto-Gate Active', color: '#0072FF' },
       { label: 'First Aid & CPR', value: '98.4%', delta: '14d Auto-Alerts', color: '#5A00D6' },
-      { label: 'Rostered Shift Coverage', value: '99.1%', delta: 'Fatigue Checked', color: '#FF2E9A' },
-      { label: 'Completed Shift Notes', value: '100%', delta: 'Goal Linked', color: '#0A2B6D' },
+      { label: 'Shift Coverage', value: '99.1%', delta: 'Fatigue Checked', color: '#FF2E9A' },
+      { label: 'Shift Notes', value: '100%', delta: 'Goal Linked', color: '#0A2B6D' },
     ],
     checkpoints: [
       { code: 'GATE 01', title: 'Unscreened Worker Shift Block', status: 'Armed · Active' },
@@ -47,9 +47,9 @@ const VIEWS = [
     score: '356 / 356',
     scoreLabel: 'Checkpoints Mapped',
     metrics: [
-      { label: 'Audit Categories', value: '17', delta: 'Full NDIS Scope', color: '#0072FF' },
-      { label: 'Controlled Policies', value: '125+', delta: 'Version Locked', color: '#5A00D6' },
-      { label: 'ISO 31000 Risk Controls', value: '98.2%', delta: '6-Mo Reviews', color: '#FF2E9A' },
+      { label: 'Categories', value: '17', delta: 'Full NDIS Scope', color: '#0072FF' },
+      { label: 'Master Policies', value: '125+', delta: 'Version Locked', color: '#5A00D6' },
+      { label: 'Risk Controls', value: '98.2%', delta: '6-Mo Reviews', color: '#FF2E9A' },
       { label: 'Auditor Portal', value: 'Live', delta: 'Consent-Gated', color: '#0A2B6D' },
     ],
     checkpoints: [
@@ -70,30 +70,30 @@ export default function HeroDashboardMockup() {
       <div className="flex h-full flex-col justify-between overflow-hidden rounded-xl bg-white">
         {/* Top Executive Window Bar */}
         <div
-          className="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 text-white"
+          className="flex items-center justify-between gap-2 px-3.5 py-2.5 text-white"
           style={{
             background: 'linear-gradient(90deg, #0A2B6D 0%, #0072FF 48%, #5A00D6 100%)',
           }}
         >
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-2 min-w-0">
+            <div className="flex shrink-0 items-center gap-1.5">
               <span className="h-2.5 w-2.5 rounded-full bg-[#FF2E9A]" />
               <span className="h-2.5 w-2.5 rounded-full bg-white/80" />
               <span className="h-2.5 w-2.5 rounded-full bg-[#00C6FF]" />
             </div>
-            <span className="ml-1.5 text-xs font-extrabold tracking-wide text-white">
+            <span className="ml-1 truncate text-xs font-extrabold tracking-wide text-white">
               ComplianceHR Infinity · Live Executive Mockup
             </span>
           </div>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-2.5 py-0.5 text-[11px] font-bold text-white">
+          <span className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-white/15 px-2.5 py-0.5 text-[10px] font-bold text-white">
             <span className="h-2 w-2 rounded-full bg-emerald-300 animate-pulse" />
             46 MODULES SYNCED
           </span>
         </div>
 
-        {/* Interactive View Switcher */}
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 bg-slate-50 px-4 py-2">
-          <div className="flex flex-wrap items-center gap-1.5">
+        {/* Interactive View Switcher (Aligned Single Row) */}
+        <div className="flex items-center justify-between gap-2 border-b border-slate-100 bg-slate-50 px-3.5 py-2">
+          <div className="grid grid-cols-3 gap-1.5 flex-1">
             {VIEWS.map((view) => {
               const active = view.id === activeTab;
               return (
@@ -101,7 +101,7 @@ export default function HeroDashboardMockup() {
                   key={view.id}
                   type="button"
                   onClick={() => setActiveTab(view.id)}
-                  className={`rounded-lg px-3 py-1 text-xs font-bold transition ${
+                  className={`truncate rounded-lg px-2 py-1.5 text-[11px] font-extrabold transition ${
                     active
                       ? 'bg-[#0A2B6D] text-white shadow-xs'
                       : 'border border-slate-200 bg-white text-[#0A2B6D] hover:bg-slate-100'
@@ -114,63 +114,63 @@ export default function HeroDashboardMockup() {
           </div>
           <Link
             to="/dashboard"
-            className="inline-flex items-center gap-1 text-xs font-extrabold text-[#0072FF] hover:text-[#5A00D6]"
+            className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-lg bg-[#0072FF]/10 px-2.5 py-1.5 text-[11px] font-extrabold text-[#0072FF] hover:bg-[#0072FF] hover:text-white transition"
           >
-            <span>Open Workspace</span>
+            <span>Workspace</span>
             <ArrowUpRight className="h-3.5 w-3.5" />
           </Link>
         </div>
 
         {/* Main Dashboard Body */}
-        <div className="flex flex-1 flex-col justify-between p-4 space-y-3.5">
+        <div className="flex flex-1 flex-col justify-between p-4 space-y-3">
           {/* Score Hero Banner */}
           <div
-            className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 rounded-2xl p-3.5 text-white shadow-sm"
+            className="flex items-center justify-between gap-3 rounded-2xl p-3.5 text-white shadow-sm"
             style={{
               background: 'linear-gradient(120deg, #0A2B6D 0%, #5A00D6 55%, #FF2E9A 100%)',
             }}
           >
-            <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white/35 bg-white/15 backdrop-blur-xs">
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/35 bg-white/15 backdrop-blur-xs">
                 <ShieldCheck className="h-6 w-6 text-white" />
               </div>
-              <div className="text-left">
-                <div className="flex items-center gap-2">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-white/85">
+              <div className="text-left min-w-0">
+                <div className="flex items-center gap-1.5">
+                  <span className="truncate text-[10px] font-extrabold uppercase tracking-wider text-white/90">
                     {current.scoreLabel}
                   </span>
-                  <span className="rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-extrabold text-white">
-                    LIVE NDIS TELEMETRY
+                  <span className="hidden sm:inline-block shrink-0 whitespace-nowrap rounded-full bg-white/20 px-2 py-0.5 text-[9px] font-extrabold text-white">
+                    LIVE TELEMETRY
                   </span>
                 </div>
                 <div className="mt-0.5 flex items-baseline gap-2">
-                  <span className="font-editorial text-2xl sm:text-3xl font-extrabold text-white">
+                  <span className="font-editorial text-2xl sm:text-3xl font-extrabold text-white leading-none">
                     {current.score}
                   </span>
-                  <span className="text-xs font-semibold text-white/90">
-                    +2.4% vs Q3 · Audit Pack Ready
+                  <span className="truncate text-[11px] font-semibold text-white/90">
+                    +2.4% vs Q3 · Audit Ready
                   </span>
                 </div>
               </div>
             </div>
             <Link
               to="/compliance"
-              className="inline-flex items-center gap-1.5 rounded-xl bg-white px-3 py-2 text-xs font-extrabold text-[#0A2B6D] shadow-xs transition hover:bg-slate-50"
+              className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-xl bg-white px-3 py-2 text-xs font-extrabold text-[#0A2B6D] shadow-xs transition hover:bg-slate-50"
             >
               <Award className="h-3.5 w-3.5 text-[#FF2E9A]" />
-              <span>Export Board Pack</span>
+              <span>Board Pack</span>
             </Link>
           </div>
 
-          {/* 4 Glassmorphism-Styled KPI Mini Cards */}
-          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+          {/* 4 Symmetrical KPI Mini Cards (Aligned Baselines) */}
+          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 items-stretch">
             {current.metrics.map((m) => (
               <div
                 key={m.label}
-                className="rounded-xl border border-slate-200/90 bg-slate-50/70 p-2.5 text-left shadow-2xs"
+                className="flex h-full flex-col justify-between rounded-xl border border-slate-200/90 bg-slate-50/70 p-2.5 text-left shadow-2xs"
               >
                 <div className="flex items-center justify-between gap-1">
-                  <span className="text-[11px] font-bold text-[#0A2B6D]/75 leading-tight">
+                  <span className="truncate text-[11px] font-extrabold text-[#0A2B6D]/80">
                     {m.label}
                   </span>
                   <span
@@ -178,14 +178,14 @@ export default function HeroDashboardMockup() {
                     style={{ backgroundColor: m.color }}
                   />
                 </div>
-                <div className="mt-1 font-editorial text-lg font-extrabold text-[#0A2B6D]">
+                <div className="my-1 font-editorial text-xl font-extrabold text-[#0A2B6D] leading-none">
                   {m.value}
                 </div>
                 <div
-                  className="mt-0.5 inline-flex items-center gap-1 text-[10px] font-bold"
+                  className="inline-flex items-center gap-1 text-[10px] font-bold"
                   style={{ color: m.color }}
                 >
-                  <TrendingUp className="h-2.5 w-2.5" />
+                  <TrendingUp className="h-2.5 w-2.5 shrink-0" />
                   <span className="truncate">{m.delta}</span>
                 </div>
               </div>
@@ -215,7 +215,7 @@ export default function HeroDashboardMockup() {
                       {cp.title}
                     </span>
                   </div>
-                  <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-[#0072FF]/10 px-2 py-0.5 text-[10px] font-extrabold text-[#0072FF]">
+                  <span className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full bg-[#0072FF]/10 px-2 py-0.5 text-[10px] font-extrabold text-[#0072FF]">
                     <CheckCircle2 className="h-3 w-3 text-[#0072FF]" />
                     {cp.status}
                   </span>
@@ -225,12 +225,12 @@ export default function HeroDashboardMockup() {
           </div>
 
           {/* Bottom AI Copilot & Security Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-[#5A00D6]/20 bg-[#5A00D6]/5 px-3 py-2 text-xs">
+          <div className="flex items-center justify-between gap-2 rounded-xl border border-[#5A00D6]/20 bg-[#5A00D6]/5 px-3 py-2 text-xs">
             <div className="flex items-center gap-1.5 font-bold text-[#0A2B6D]">
-              <Sparkles className="h-3.5 w-3.5 text-[#FF2E9A]" />
-              <span>24/7 AI Compliance Copilot active</span>
+              <Sparkles className="h-3.5 w-3.5 shrink-0 text-[#FF2E9A]" />
+              <span className="truncate">24/7 AI Compliance Copilot active</span>
             </div>
-            <div className="flex items-center gap-1 font-extrabold text-[#5A00D6]">
+            <div className="flex shrink-0 items-center gap-1 whitespace-nowrap font-extrabold text-[#5A00D6]">
               <Lock className="h-3.5 w-3.5" />
               <span>Role-Based Security (RLS)</span>
             </div>

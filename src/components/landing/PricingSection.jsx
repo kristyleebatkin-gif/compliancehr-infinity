@@ -277,22 +277,22 @@ export default function PricingSection({ onContactSales }) {
                         {pkg.name}
                       </h3>
 
-                      {/* Exact Configured Price Box (Uniform Height) */}
+                      {/* Exact Configured Price Box (Guaranteed Single-Line Height Across All 6 Tiers) */}
                       <div className="mt-3 rounded-2xl border border-slate-200/90 bg-slate-50/70 p-4">
-                        <div className="flex flex-wrap items-baseline justify-between gap-2">
-                          <div className="flex items-baseline gap-1.5">
-                            <span className="font-editorial text-3xl sm:text-4xl font-extrabold text-[#0A2B6D] leading-none">
+                        <div className="flex items-baseline justify-between gap-2">
+                          <div className="flex items-baseline gap-1.5 whitespace-nowrap">
+                            <span className="font-editorial text-3xl font-extrabold text-[#0A2B6D] leading-none">
                               ${pkg.monthly.toLocaleString()}
                             </span>
                             <span className="text-xs font-bold text-[#0A2B6D]/75">
                               per a month
                             </span>
                           </div>
-                          <span className="rounded-md bg-[#5A00D6]/10 px-2 py-0.5 text-[10px] font-extrabold text-[#5A00D6]">
-                            {billing === 'yearly' ? 'Annual Plan' : 'Monthly Plan'}
+                          <span className="shrink-0 whitespace-nowrap rounded-md bg-[#5A00D6]/10 px-2 py-0.5 text-[10px] font-extrabold text-[#5A00D6]">
+                            {billing === 'yearly' ? 'Annual' : 'Monthly'}
                           </span>
                         </div>
-                        <div className="mt-2 border-t border-slate-200/70 pt-2 text-[11px] font-bold text-[#5A00D6]">
+                        <div className="mt-2 border-t border-slate-200/70 pt-2 text-[11px] font-bold text-[#5A00D6] truncate">
                           Base ${pkg.previousMonthly}/mo + ${pkg.eliteAddon}/mo Elite Tokens Included
                         </div>
                       </div>

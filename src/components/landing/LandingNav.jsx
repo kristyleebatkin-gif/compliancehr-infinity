@@ -21,19 +21,19 @@ export default function LandingNav({ onBookDemo }) {
       id="top-landing"
       className="sticky top-0 z-40 w-full border-b border-slate-200/80 bg-white/95 backdrop-blur-md"
     >
-      <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-4 px-4 py-3.5 sm:px-6">
+      <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-3 px-4 py-3 sm:px-6">
         <Link
           to="/"
-          className="flex items-center gap-3 min-w-0"
+          className="flex shrink-0 items-center gap-2.5"
           aria-label="ComplianceHR Infinity home"
         >
           <img
             src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/6bf497716_generated_image.png"
             alt="ComplianceHR Infinity"
-            className="h-11 w-12 shrink-0 object-contain"
+            className="h-10 w-11 shrink-0 object-contain"
           />
-          <div className="min-w-0 text-left">
-            <div className="font-editorial text-lg sm:text-xl font-extrabold tracking-tight text-[#0A2B6D] leading-none">
+          <div className="text-left">
+            <div className="font-editorial text-lg font-extrabold tracking-tight text-[#0A2B6D] leading-none whitespace-nowrap">
               Compliance
               <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                 HR
@@ -42,28 +42,28 @@ export default function LandingNav({ onBookDemo }) {
                 Infinity
               </span>
             </div>
-            <div className="mt-1 hidden sm:block text-[11px] font-bold text-[#0A2B6D]/70">
+            <div className="mt-1 hidden 2xl:block text-[10px] font-bold text-[#0A2B6D]/70 whitespace-nowrap">
               Complete Control. Greater Confidence. Brighter Success.
             </div>
           </div>
         </Link>
 
-        <nav aria-label="Main navigation" className="hidden xl:flex items-center gap-6">
+        <nav aria-label="Main navigation" className="hidden lg:flex items-center gap-4 xl:gap-5">
           {NAV_LINKS.map(([label, href]) => (
             <a
               key={href}
               href={href}
-              className="text-sm font-bold text-[#0A2B6D] transition hover:text-[#0072FF]"
+              className="whitespace-nowrap text-xs xl:text-sm font-bold text-[#0A2B6D] transition hover:text-[#0072FF]"
             >
               {label}
             </a>
           ))}
         </nav>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex shrink-0 items-center gap-2">
           <Link
             to="/login"
-            className="hidden sm:inline-flex items-center justify-center rounded-xl px-3.5 py-2 text-sm font-bold text-[#0A2B6D] transition hover:bg-slate-100"
+            className="hidden sm:inline-flex items-center justify-center whitespace-nowrap rounded-xl px-3 py-2 text-xs xl:text-sm font-bold text-[#0A2B6D] transition hover:bg-slate-100"
           >
             Sign In
           </Link>
@@ -71,26 +71,26 @@ export default function LandingNav({ onBookDemo }) {
           <button
             type="button"
             onClick={() => onBookDemo && onBookDemo('Book a Personal Demo')}
-            className="hidden md:inline-flex items-center gap-1.5 rounded-xl border-2 border-[#0A2B6D] bg-white px-4 py-2 text-sm font-extrabold text-[#0A2B6D] transition hover:bg-[#0A2B6D] hover:text-white"
+            className="hidden md:inline-flex items-center gap-1.5 whitespace-nowrap rounded-xl border-2 border-[#0A2B6D] bg-white px-3.5 py-2 text-xs xl:text-sm font-extrabold text-[#0A2B6D] transition hover:bg-[#0A2B6D] hover:text-white"
           >
-            <Calendar className="h-4 w-4 text-[#0072FF]" />
+            <Calendar className="h-3.5 w-3.5 shrink-0 text-[#0072FF]" />
             <span>Book a Demo</span>
           </button>
 
           <Link
             to="/register"
-            className="inline-flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-sm font-extrabold text-white shadow-md transition hover:opacity-95"
+            className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-xl px-3.5 py-2 text-xs xl:text-sm font-extrabold text-white shadow-md transition hover:opacity-95"
             style={{
               background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
             }}
           >
             <span>Start Free Trial</span>
-            <ArrowRight className="h-4 w-4 text-white" />
+            <ArrowRight className="h-3.5 w-3.5 shrink-0 text-white" />
           </Link>
 
           <button
             type="button"
-            className="xl:hidden inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white p-2 text-[#0A2B6D]"
+            className="lg:hidden inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white p-2 text-[#0A2B6D]"
             aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
             onClick={() => setOpen(!open)}
@@ -103,7 +103,7 @@ export default function LandingNav({ onBookDemo }) {
       {open && (
         <nav
           aria-label="Mobile navigation"
-          className="xl:hidden border-t border-slate-200 bg-white px-4 py-4 space-y-2"
+          className="lg:hidden border-t border-slate-200 bg-white px-4 py-4 space-y-2"
         >
           <div className="grid grid-cols-2 gap-2">
             {NAV_LINKS.map(([label, href]) => (

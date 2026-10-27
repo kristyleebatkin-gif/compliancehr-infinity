@@ -1,6 +1,5 @@
 /* Enterprise SaaS Landing Page Styles — Clean whitespace, responsive typography, and accessible focus states */
 .landing-page {
-  overflow-wrap: anywhere;
   background-color: #ffffff;
   color: #0A2B6D;
 }
@@ -18,13 +17,4 @@
 .landing-page :is(a, button):focus-visible {
   outline: 3px solid #0072FF;
   outline-offset: 3px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .landing-page *,
-  .landing-page *::before,
-  .landing-page *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
 }
