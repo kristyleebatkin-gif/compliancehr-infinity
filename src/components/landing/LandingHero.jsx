@@ -86,7 +86,7 @@ export default function LandingHero({ onBookDemo }) {
                       >
                         <Check className="h-3 w-3 text-white" />
                       </span>
-                      <span>{badge.replace(/^✓\s*/, '')}</span>
+                      <span>{badge}</span>
                     </div>
                   ))}
                 </div>

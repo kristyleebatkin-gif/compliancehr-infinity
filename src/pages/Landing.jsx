@@ -30,7 +30,7 @@ export default function Landing() {
   };
 
   return (
-    <div className="landing-page app-readable relative min-h-screen overflow-x-hidden bg-white font-elegant text-[#0A2B6D] antialiased">
+    <div className="landing-page relative min-h-screen overflow-x-hidden bg-white font-elegant text-[#0A2B6D] antialiased">
       {/* Top Enterprise SaaS Navigation */}
       <LandingNav onBookDemo={openDemoModal} />
 

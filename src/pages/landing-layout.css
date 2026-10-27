@@ -1,114 +1,24 @@
-/* Landing-only readability and touch sizing. Keep the existing brand palette. */
-.landing-page { overflow-wrap: anywhere; }
-.landing-page .landing-main > div { gap: 2rem; }
-.landing-page main > div.space-y-4 > * + * { margin-top: 2rem; }
-.landing-page section { scroll-margin-top: 1.5rem; }
-.landing-page :is(a, button):focus-visible { outline: 3px solid #0072FF; outline-offset: 4px; }
-.landing-page :is(a, button)[class*="rounded-full"],
-.landing-page nav a { min-height: 44px; padding-top: .625rem; padding-bottom: .625rem; }
-.landing-page :is(span, p, div, a)[class*="text-[7px]"],
-.landing-page :is(span, p, div, a)[class*="text-[8"],
-.landing-page :is(span, p, div, a)[class*="text-[9"],
-.landing-page :is(span, p, div, a)[class*="text-[10"],
-.landing-page :is(span, p, div, a)[class*="text-[11"] { font-size: .8125rem; line-height: 1.5; }
-.landing-page main li[class*="h-[20px]"] { height: auto; min-height: 36px; }
-.landing-page main li > div { white-space: normal; padding: .5rem; }
-.landing-page main [class*="grid-rows-[20px_24px]"] { grid-template-rows: auto auto; padding: .5rem; }
-.landing-page main [class*="h-[20px]"],
-.landing-page main [class*="h-[24px]"] { height: auto; min-height: 32px; }
-.landing-page main [class*="whitespace-nowrap"] { white-space: normal; }
-.landing-page main p { max-width: 75ch; }
-#top-landing > div:first-child { max-width: 1440px; margin-inline: auto; padding: .75rem; }
-#top-landing nav a span { white-space: normal; }
-@media (max-width: 639px) {
-  #top-landing [class*="text-3xl"] { font-size: clamp(1.25rem, 6vw, 1.875rem); white-space: normal; }
-  #top-landing [class*="text-3xl"] > span { white-space: normal; }
-  #top-landing [class*="w-[96%]"] { width: 100%; flex-wrap: wrap; justify-content: center; gap: .25rem .75rem; white-space: normal; }
-  #top-landing nav [aria-hidden="true"] { display: none; }
-  #top-landing button[aria-label="Menu"] { min-width: 44px; min-height: 44px; }
-  .landing-page main h1 { font-size: clamp(1.75rem, 7vw, 2.5rem); }
-  .landing-page main > section > div { padding: 6px; }
+/* Enterprise SaaS Landing Page Styles — Clean whitespace, responsive typography, and accessible focus states */
+.landing-page {
+  overflow-wrap: anywhere;
+  background-color: #ffffff;
+  color: #0A2B6D;
 }
+
+.landing-page section {
+  scroll-margin-top: 5rem;
+}
+
+.landing-page :is(a, button):focus-visible {
+  outline: 3px solid #0072FF;
+  outline-offset: 3px;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .landing-page *, .landing-page *::before, .landing-page *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  .landing-page *,
+  .landing-page *::before,
+  .landing-page *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
-/* Give the opening section a clear business hierarchy. */
-.landing-page .landing-hero > div { padding: 3px; box-shadow: 0 8px 28px #A100FF12; }
-.landing-page .landing-hero > div > div { padding: clamp(1rem, 3vw, 2.5rem); gap: 1.5rem; }
-.landing-page .landing-hero h1 { font-family: inherit; font-size: clamp(1.875rem, 4.5vw, 3.75rem); line-height: 1.15; }
-.landing-page .landing-hero h1 + div p { font-size: 1rem; line-height: 1.75; font-weight: 500; padding: 1rem; }
-.landing-page .landing-hero ul { gap: .5rem; }
-.landing-page .landing-hero ul li > div { justify-content: flex-start; text-align: left; gap: .5rem; }
-.landing-page .landing-hero ul svg { width: 16px; height: 16px; }
-.landing-page .landing-hero [class*="md:grid-cols-3"] { gap: 1rem; }
-.landing-page .landing-hero [class*="grid-rows-[20px_24px]"] > div:first-child { padding: .5rem; }
-.landing-page .landing-hero [class*="grid-rows-[20px_24px]"] > div:first-child span { font-size: 1.5rem; }
-.landing-page .business-landing-nav { border-bottom: 1px solid #E9D5FF; }
-.landing-page .business-nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; max-width: 1440px; margin: auto; padding: 1rem 1.5rem; }
-.business-brand { display: flex; align-items: center; gap: .5rem; min-width: 0; }
-.business-brand img { width: 72px; height: 64px; object-fit: contain; }
-.business-brand strong { display: block; font-size: 1.25rem; line-height: 1.3; }
-.business-brand strong span { color: #A100FF; }
-.business-brand small { display: block; font-size: .6875rem; line-height: 1.5; margin-top: .25rem; }
-.business-desktop-links, .business-nav-actions { display: flex; align-items: center; gap: 1.25rem; }
-.business-desktop-links a, .business-sign-in { font-size: .875rem; font-weight: 600; }
-.business-trial { display: inline-flex; align-items: center; gap: .5rem; padding: .75rem 1.125rem; border-radius: .75rem; background: linear-gradient(110deg, #0072FF, #5A00D6); color: white !important; font-size: .875rem; font-weight: 700; }
-.business-menu { display: none; border: 1px solid #E9D5FF; border-radius: .75rem; padding: .625rem; background: white; }
-.business-mobile-links { display: grid; padding: .5rem 1rem 1rem; gap: .25rem; }
-.business-mobile-links a { padding: .75rem; font-weight: 600; }
-@media (max-width: 1050px) { .business-desktop-links { display: none; } .business-menu { display: block; } }
-@media (max-width: 639px) {
-  .landing-page .business-nav-inner { padding: .75rem; gap: .5rem; flex-wrap: wrap; }
-  .business-brand { flex: 1 1 100%; }
-  .business-brand img { width: 56px; height: 48px; }
-  .business-brand strong { font-size: 1.125rem; }
-  .business-nav-actions { width: 100%; justify-content: flex-end; gap: 1rem; }
-  .business-sign-in { margin-right: auto; }
-}
-
-/* Professional landing composition: white canvas, existing brand accents. */
-.landing-page .landing-main { max-width: 1240px; padding-top: 2rem; padding-bottom: 4rem; }
-.landing-page .professional-hero { padding: clamp(1.5rem, 5vw, 4rem) 0 1rem; }
-.professional-intro { max-width: 920px; margin: 0 auto; text-align: center; }
-.landing-page .professional-eyebrow { margin: 0 auto 1.5rem; color: #5A00D6; font-size: .75rem; font-weight: 700; letter-spacing: .16em; line-height: 1.7; }
-.landing-page .professional-intro h1 { font-family: inherit; font-size: clamp(2.25rem, 5vw, 4.25rem); font-weight: 750; letter-spacing: -.045em; line-height: 1.1; margin: 0; }
-.professional-intro h1 span { color: #5A00D6; }
-.landing-page .professional-lead { max-width: 660px; margin: 1.75rem auto; font-size: 1.125rem; line-height: 1.8; font-weight: 400; }
-.professional-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: .875rem; margin-top: 2rem; }
-.professional-primary, .professional-secondary { display: inline-flex; align-items: center; justify-content: center; gap: .75rem; min-height: 50px; padding: .875rem 1.25rem; border-radius: 12px; font-size: .9375rem; font-weight: 700; text-decoration: none; }
-.professional-primary { background: #5A00D6; color: white !important; border: 1px solid #5A00D6; }
-.professional-secondary { background: white; color: #5A00D6; border: 1px solid #E9D5FF; }
-.professional-primary:hover { background: #0072FF; }
-.professional-secondary:hover { background: #F5F0FF; }
-.landing-page .professional-terms { margin: 1rem auto 0; font-size: .8125rem; line-height: 1.6; }
-.professional-terms a { text-decoration: underline; text-underline-offset: 3px; }
-.professional-pillars { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; margin-top: 3.5rem; }
-.professional-pillar { border: 1px solid #E9D5FF; border-radius: 20px; padding: 1.75rem; background: white; text-align: left; }
-.professional-pillar-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
-.professional-icon { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 14px; }
-.professional-icon-0 { background: #E0F2FE; color: #0072FF; }
-.professional-icon-1 { background: #F5F0FF; color: #5A00D6; }
-.professional-icon-2 { background: #FFF3FA; color: #FF2E9A; }
-.professional-number { color: #5A00D6; font-size: .75rem; font-weight: 700; letter-spacing: .1em; }
-.professional-pillar h2 { font-family: inherit; font-size: 1.125rem; font-weight: 700; letter-spacing: -.02em; }
-.landing-page .professional-pillar p { font-size: .9375rem; line-height: 1.75; margin: .75rem 0 1.25rem; }
-.professional-pillar ul { display: grid; gap: .75rem; list-style: none; padding: 0; }
-.professional-pillar li { display: flex; align-items: flex-start; gap: .5rem; font-size: .8125rem; line-height: 1.6; }
-.professional-pillar li svg { flex-shrink: 0; margin-top: .15rem; color: #5A00D6; }
-.landing-page main :is(p, li, span, button)[class*="text-[6"] { font-size: .8125rem; line-height: 1.5; }
-.landing-page main .truncate { white-space: normal; overflow: visible; text-overflow: clip; }
-.landing-page main .line-clamp-2 { display: block; -webkit-line-clamp: unset; overflow: visible; }
-.landing-page #features .grid, .landing-page #benefits .grid { gap: 1rem; }
-.landing-page #features [class*="lg:grid-cols-"], .landing-page #benefits [class*="lg:grid-cols-"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.landing-page #why .professional-actions { margin-top: 1rem; }
-@media (max-width: 767px) {
-  .professional-pillars { grid-template-columns: 1fr; margin-top: 2rem; }
-  .professional-pillar { padding: 1.5rem; }
-  .landing-page #features [class*="lg:grid-cols-"], .landing-page #benefits [class*="lg:grid-cols-"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (max-width: 479px) {
-  .professional-actions { flex-direction: column; }
-  .professional-primary, .professional-secondary { width: 100%; }
-  .landing-page #features [class*="lg:grid-cols-"], .landing-page #benefits [class*="lg:grid-cols-"] { grid-template-columns: 1fr; }
-}
-
