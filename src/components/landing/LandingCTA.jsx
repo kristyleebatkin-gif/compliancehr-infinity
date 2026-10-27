@@ -1,5 +1,6 @@
 import React from 'react';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import Reveal from '@/components/landing/Reveal';
 import {
   getHeaderView,
@@ -68,15 +69,20 @@ export default function LandingCTA() {
             <div className="mx-auto w-full max-w-3xl rounded-xl bg-white px-3 py-1 text-center">
               <p className="text-center text-[10.5px] sm:text-xs md:text-sm font-extrabold leading-snug text-[#0A2B6D]">
                 <span className="block">
-                  Join providers who trust ComplianceHR Infinity to keep their records,
+                  Bring your records, team and improvement actions together
                 </span>
                 <span className="block">
-                  teams, and participants audit-ready every single day.
+                  and take the next step towards a more organised business.
                 </span>
               </p>
             </div>
           </div>
         </div>
+        <div className="professional-actions">
+          <Link to="/register" className="professional-primary">Start your 14-day free trial <ArrowRight size={18} aria-hidden="true" /></Link>
+          <a href="#pricing" className="professional-secondary">View pricing and plans</a>
+        </div>
+        <p className="professional-terms">Credit card required. Review plan details before registering.</p>
       </Reveal>
     </section>
   );
