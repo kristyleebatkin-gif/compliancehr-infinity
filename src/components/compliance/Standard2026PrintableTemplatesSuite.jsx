@@ -11,6 +11,7 @@ import {
   downloadSingle2026TemplatePdf,
   downloadAll2026TemplatesPackPdf,
 } from '@/lib/standard2026PrintablePdf';
+import EnterpriseStandardQualityGateSuite from '@/components/compliance/EnterpriseStandardQualityGateSuite';
 
 const HEADER_GRADIENT =
   'linear-gradient(120deg, #0072FF 0%, #0A2B6D 13%, #5A00D6 26%, #A100FF 39%, #FF2E9A 50%, #A100FF 61%, #5A00D6 74%, #0A2B6D 87%, #0072FF 100%)';
@@ -154,7 +155,10 @@ export default function Standard2026PrintableTemplatesSuite() {
   };
 
   return (
-    <div id="standard-2026-printable-templates" className="space-y-2.5">
+    <div id="standard-2026-printable-templates" className="space-y-3">
+      {/* Enterprise 11-Section Controlled Form, 16-Field Document Control, 5-Mode Preview, 12-Report Engine & 19-Point Quality Gate */}
+      <EnterpriseStandardQualityGateSuite />
+
       {/* Top Studio Header Bar */}
       <div
         className="app-section-card-header flex flex-wrap items-center justify-between gap-2 rounded-xl px-3 py-2 text-white shadow-sm"

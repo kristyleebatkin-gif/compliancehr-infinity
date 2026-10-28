@@ -51,6 +51,7 @@ import MasterChecklist from '@/components/compliance/MasterChecklist';
 import MasterComplianceAuditForms from '@/components/compliance/MasterComplianceAuditForms';
 import ScreenByScreenMasterAudit2026 from '@/components/compliance/ScreenByScreenMasterAudit2026';
 import Standard2026PrintableTemplatesSuite from '@/components/compliance/Standard2026PrintableTemplatesSuite';
+import EnterpriseStandardQualityGateSuite from '@/components/compliance/EnterpriseStandardQualityGateSuite';
 import BusinessHealthComplianceIntelligenceDashboard from '@/components/compliance/BusinessHealthComplianceIntelligenceDashboard';
 import InfinityCoreEngine from '@/components/compliance/InfinityCoreEngine';
 import InfinityOneClickOperations from '@/components/operations/InfinityOneClickOperations';
@@ -95,15 +96,16 @@ const REQ_STATUSES = ['Current', 'Review Required', 'Superseded', 'Archived'];
 // Organized into clear functional groups so every register and suite is easy to find.
 const TAB_GROUPS = [
   { id: 'all', label: 'All Compliance Areas' },
-  { id: 'executive', label: 'Executive & AI Suites', keys: ['control-centre', 'one-click-operations', 'infinity-core-engine', 'health-intelligence', 'executive-summary'] },
+  { id: 'executive', label: 'Executive & AI Suites', keys: ['enterprise-standard', 'control-centre', 'one-click-operations', 'infinity-core-engine', 'health-intelligence', 'executive-summary'] },
   { id: 'audits', label: 'NDIS Standards & Audits', keys: ['auditor-portal', 'standards-map', 'master-checklist', 'master-audit-forms', 'screen-audit-2026', 'audits', 'internal-audits', 'audit-report-list', 'weekly-audit-reports'] },
-  { id: 'policies', label: 'Policies, Legal & Templates', keys: ['policies', 'requirements', 'printable-2026-templates', 'form-templates', 'checklists', 'consents'] },
+  { id: 'policies', label: 'Policies, Legal & Templates', keys: ['enterprise-standard', 'policies', 'requirements', 'printable-2026-templates', 'form-templates', 'checklists', 'consents'] },
   { id: 'workforce', label: 'Workforce & Screening', keys: ['staff-compliance', 'worker-screening', 'cert-renewals', 'renewal-calendar', 'onboarding-progress', 'staff-bulk-actions'] },
   { id: 'risk-safety', label: 'Risk, Safety & Reviews', keys: ['issues', 'readiness', 'risk-status', 'risk-heatmap', 'trend-charts', 'participant-reviews', 'kits-drills', 'visitors'] },
   { id: 'tasks', label: 'Tasks & Activity', keys: ['quick-tasks', 'task-kanban', 'activity-feed'] },
 ];
 
 const TABS = [
+  ['enterprise-standard', 'Enterprise Build Standard'],
   ['auditor-portal', 'Auditor Portal'],
   ['standards-map', 'NDIS Standards Map'],
   ['policies', 'Policies Register'],
@@ -362,6 +364,10 @@ export default function ComplianceHub() {
       {screenView !== 'screen2' && (
       <div className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-sm space-y-2.5">
         <Tabs value={activeTab} onValueChange={setActiveTab}>
+
+          <TabsContent value="enterprise-standard" className="mt-3">
+            <EnterpriseStandardQualityGateSuite />
+          </TabsContent>
 
           <TabsContent value="auditor-portal" className="mt-3">
             <AuditorsPortal embedded />

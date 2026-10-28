@@ -33,6 +33,7 @@ import DocumentAcknowledgements from '@/components/documents/DocumentAcknowledge
 import BulkEditBar from '@/components/documents/BulkEditBar';
 import ExpiryCalendar from '@/components/documents/ExpiryCalendar';
 import SmartMailroomHub from '@/components/documents/SmartMailroomHub';
+import EnterpriseStandardQualityGateSuite from '@/components/compliance/EnterpriseStandardQualityGateSuite';
 
 const DOC_TYPES = ['Resume', 'Contract', 'Police Check', 'Blue Card', 'First Aid Certificate', 'CPR Certificate', 'NDIS Worker Screening', "Driver's License", 'Qualifications', 'Reference Check', 'Other'];
 const CATEGORIES = ['Mandatory', 'Compliance', 'Clinical', 'Professional Development', 'Induction'];
@@ -260,6 +261,12 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
               Data Control &amp; Breaches
             </TabsTrigger>
           )}
+          {!profile && (
+            <TabsTrigger value="controlled-forms-vault" data-hint="15 Vault Categories, 11-Section Forms & Reports">
+              <FolderOpen className="h-3.5 w-3.5" />
+              15-Category Vault &amp; Controlled Forms
+            </TabsTrigger>
+          )}
         </TabsList>
 
         <TabsContent value="documents" className="mt-3 space-y-3">
@@ -374,6 +381,12 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
         {!profile && canViewDataControl && (
           <TabsContent value="data-control" className="mt-3">
             <DataControlPanel />
+          </TabsContent>
+        )}
+
+        {!profile && (
+          <TabsContent value="controlled-forms-vault" className="mt-3">
+            <EnterpriseStandardQualityGateSuite />
           </TabsContent>
         )}
       </Tabs>
