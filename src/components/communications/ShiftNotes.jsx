@@ -11,6 +11,7 @@ import { Loader2, NotebookPen, Paperclip, Trash2, X } from 'lucide-react';
 import { NOTE_TYPES, SHIFT_TYPES, NOTE_TIPS, loadManagementEmails, openAttachment, exportCsv } from '@/lib/commTypes';
 import { routeDiaryEntry } from '@/lib/commRouting';
 import { useRole } from '@/lib/useRole';
+import ShiftNoteAutoDetectionPanel, { processShiftNoteAutoTriggersOnSave } from '@/components/communications/ShiftNoteAutoDetectionPanel';
 
 const EMPTY = {
   participant_name: '', note_type: 'Shift Note', shift_type: '', staff_involved: [],
@@ -29,6 +30,8 @@ export default function ShiftNotes({ selfOnly = false } = {}) {
   const [saving, setSaving] = useState(false);
   const [files, setFiles] = useState([]);
   const [managementCopy, setManagementCopy] = useState(false);
+  const [autoCreateActions, setAutoCreateActions] = useState(true);
+  const [autoCreateRisks, setAutoCreateRisks] = useState(false);
   const [form, setForm] = useState(EMPTY);
   const [filters, setFilters] = useState({ participant: '', note_type: '', shift_type: '', from: '', to: '' });
 
@@ -145,7 +148,25 @@ export default function ShiftNotes({ selfOnly = false } = {}) {
           await base44.functions.invoke('sendProfessionalEmail', { recipients: emails, subject, body: detail, date: form.date });
         } catch { /* email copy is best-effort */ }
       }
-      toast({ title: `${form.note_type} recorded`, description: form.goal ? 'Saved in the diary and updated in Goal Progress.' : 'Saved in the communication diary and the participant profile.' });
+      const autoRes = await processShiftNoteAutoTriggersOnSave({
+        noteText: form.body,
+        issuesText: form.issues_concerns,
+        participantName: form.participant_name,
+        staffName: user?.full_name || form.staff_involved?.[0] || '',
+        entryDate: form.date,
+        goalText: form.goal,
+        autoCreateActions,
+        autoCreateRisks,
+      });
+      const extraParts = [];
+      if (form.goal) extraParts.push('Goal Progress updated');
+      if (autoRes.actionsCreated > 0) extraParts.push(`${autoRes.actionsCreated} follow-up action(s) auto-created`);
+      if (autoRes.risksCreated > 0) extraParts.push(`${autoRes.risksCreated} risk(s) auto-recorded`);
+      if (autoRes.shiftTasksClosed > 0) extraParts.push('Shift task auto-completed');
+      toast({
+        title: `${form.note_type} recorded`,
+        description: extraParts.length > 0 ? extraParts.join(' · ') : 'Saved in the communication diary and the participant profile.',
+      });
       setForm(EMPTY);
       setFiles([]);
       setManagementCopy(false);
@@ -220,6 +241,19 @@ export default function ShiftNotes({ selfOnly = false } = {}) {
           <div className="grid gap-1.5"><Label>Incident report reference (if raised)</Label><Input value={form.incident_report} onChange={(e) => set('incident_report', e.target.value)} /></div>
           <div className="grid gap-1.5 md:col-span-2"><Label>What happened / note *</Label><Textarea rows={4} value={form.body} onChange={(e) => set('body', e.target.value)} /></div>
           <div className="grid gap-1.5 md:col-span-2"><Label>Issues or concerns</Label><Textarea rows={2} value={form.issues_concerns} onChange={(e) => set('issues_concerns', e.target.value)} /></div>
+          <div className="md:col-span-2">
+            <ShiftNoteAutoDetectionPanel
+              noteText={form.body}
+              issuesText={form.issues_concerns}
+              participantName={form.participant_name}
+              staffName={user?.full_name || form.staff_involved?.[0] || ''}
+              entryDate={form.date}
+              autoCreateActions={autoCreateActions}
+              onAutoCreateActionsChange={setAutoCreateActions}
+              autoCreateRisks={autoCreateRisks}
+              onAutoCreateRisksChange={setAutoCreateRisks}
+            />
+          </div>
           <div className="grid gap-1.5 md:col-span-2">
             <Label>Upload a copy (stored privately)</Label>
             <Input type="file" multiple onChange={addFiles} className="h-9" />

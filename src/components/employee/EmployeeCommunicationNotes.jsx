@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import EmployeeParticipantSelect from '@/components/employee/EmployeeParticipantSelect';
 import EmployeeCommunicationList from '@/components/employee/EmployeeCommunicationList';
 import EmployeeNoteDetails from '@/components/employee/EmployeeNoteDetails';
+import ShiftNoteAutoDetectionPanel, { processShiftNoteAutoTriggersOnSave } from '@/components/communications/ShiftNoteAutoDetectionPanel';
 export default function EmployeeCommunicationNotes({ employeeLog = false }) {
   const client = useQueryClient();
   const [participantId, setParticipantId] = useState('');
@@ -15,6 +16,8 @@ export default function EmployeeCommunicationNotes({ employeeLog = false }) {
   const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
   const [files, setFiles] = useState([]);
   const [details, setDetails] = useState({});
+  const [autoCreateActions, setAutoCreateActions] = useState(true);
+  const [autoCreateRisks, setAutoCreateRisks] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const save = async (event) => {
@@ -22,6 +25,15 @@ export default function EmployeeCommunicationNotes({ employeeLog = false }) {
     try {
       const attachments = await Promise.all(files.map(async (file) => ({ name: file.name, uri: (await base44.integrations.Core.UploadPrivateFile({ file })).file_uri })));
       await base44.functions.invoke('employeeCommunications', { action: 'note', participant_id: participantId, values: { ...details, kind: employeeLog ? 'Employee Log' : 'Shift Note', subject, body, date, attachments } });
+      await processShiftNoteAutoTriggersOnSave({
+        noteText: body,
+        issuesText: details?.issues_concerns || '',
+        participantName: details?.participant_name || subject || 'Participant',
+        entryDate: date,
+        goalText: details?.goal_id || '',
+        autoCreateActions,
+        autoCreateRisks,
+      });
       setSubject(''); setBody(''); setFiles([]); setDetails({}); event.target.reset();
       await client.invalidateQueries({ queryKey: ['employee-communications'] });
     } catch (failure) { setError(failure.response?.data?.error || failure.message); }
@@ -34,6 +46,16 @@ export default function EmployeeCommunicationNotes({ employeeLog = false }) {
       <label className="block text-sm">Date<Input type="date" required value={date} onChange={(event) => setDate(event.target.value)} /></label>
       <EmployeeNoteDetails value={details} onChange={setDetails} participantId={participantId} employeeLog={employeeLog} />
       <label className="block text-sm">Note<Textarea required maxLength={10000} rows={5} value={body} onChange={(event) => setBody(event.target.value)} /></label>
+      <ShiftNoteAutoDetectionPanel
+        noteText={body}
+        issuesText={details?.issues_concerns || ''}
+        participantName={details?.participant_name || subject || ''}
+        entryDate={date}
+        autoCreateActions={autoCreateActions}
+        onAutoCreateActionsChange={setAutoCreateActions}
+        autoCreateRisks={autoCreateRisks}
+        onAutoCreateRisksChange={setAutoCreateRisks}
+      />
       <label className="block text-sm">Attachments (stored privately)<Input type="file" multiple onChange={(event) => setFiles(Array.from(event.target.files || []).slice(0, 5))} /></label>
       {error && <p role="alert" className="text-sm text-destructive">{error}</p>}<Button type="submit" variant="outline" disabled={busy || !body.trim()}>{busy ? 'Saving…' : 'Save note'}</Button>
     </form>
