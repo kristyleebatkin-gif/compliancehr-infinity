@@ -21,7 +21,7 @@ export default function LandingNav({ onBookDemo }) {
       id="top-landing"
       className="sticky top-0 z-40 w-full border-b border-slate-200/90 bg-white/95 backdrop-blur-md shadow-2xs"
     >
-      <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-2 px-3 py-1.5 sm:px-5">
+      <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-2 px-3 py-2 sm:px-5">
         <Link
           to="/"
           className="flex shrink-0 items-center gap-2"
@@ -30,10 +30,10 @@ export default function LandingNav({ onBookDemo }) {
           <img
             src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/6bf497716_generated_image.png"
             alt="ComplianceHR Infinity"
-            className="h-8 w-9 shrink-0 object-contain"
+            className="h-8 w-8 shrink-0 object-contain"
           />
-          <div className="flex flex-col items-center text-center">
-            <div className="font-editorial text-base sm:text-lg font-extrabold tracking-tight text-[#0A2B6D] leading-none whitespace-nowrap">
+          <div className="flex flex-col items-start text-left">
+            <div className="font-editorial text-sm sm:text-base xl:text-lg font-extrabold tracking-tight text-[#0A2B6D] leading-none whitespace-nowrap">
               Compliance
               <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                 HR
@@ -42,18 +42,18 @@ export default function LandingNav({ onBookDemo }) {
                 Infinity
               </span>
             </div>
-            <div className="mt-0.5 text-[8.5px] sm:text-[9px] font-extrabold text-[#0A2B6D]/80 text-center whitespace-nowrap">
+            <div className="mt-0.5 hidden xl:block text-[8.5px] font-extrabold text-[#0A2B6D]/80 whitespace-nowrap">
               Complete Control. Greater Confidence. Brighter Success.
             </div>
           </div>
         </Link>
 
-        <nav aria-label="Main navigation" className="hidden lg:flex items-center gap-3 xl:gap-4">
+        <nav aria-label="Main navigation" className="hidden lg:flex items-center gap-2.5 xl:gap-4">
           {NAV_LINKS.map(([label, href]) => (
             <a
               key={href}
               href={href}
-              className="whitespace-nowrap text-xs font-extrabold text-[#0A2B6D] transition hover:text-[#0072FF]"
+              className="whitespace-nowrap text-[11px] xl:text-xs font-extrabold text-[#0A2B6D] transition hover:text-[#0072FF]"
             >
               {label}
             </a>
@@ -63,13 +63,13 @@ export default function LandingNav({ onBookDemo }) {
         <div className="flex shrink-0 items-center gap-1.5">
           <Link
             to="/dashboard"
-            className="hidden sm:inline-flex items-center justify-center whitespace-nowrap rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-extrabold text-[#5A00D6] shadow-2xs transition hover:border-[#0072FF] hover:text-[#0072FF]"
+            className="hidden sm:inline-flex items-center justify-center whitespace-nowrap rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-[11px] xl:text-xs font-extrabold text-[#5A00D6] shadow-2xs transition hover:border-[#0072FF] hover:text-[#0072FF]"
           >
             Open Workspace
           </Link>
           <Link
             to="/login"
-            className="hidden sm:inline-flex items-center justify-center whitespace-nowrap rounded-lg px-2.5 py-1.5 text-xs font-extrabold text-[#0A2B6D] transition hover:bg-slate-100"
+            className="hidden sm:inline-flex items-center justify-center whitespace-nowrap rounded-lg px-2 py-1.5 text-[11px] xl:text-xs font-extrabold text-[#0A2B6D] transition hover:bg-slate-100"
           >
             Sign In
           </Link>
@@ -77,7 +77,7 @@ export default function LandingNav({ onBookDemo }) {
           <button
             type="button"
             onClick={() => onBookDemo && onBookDemo('Book a Personal Demo')}
-            className="hidden md:inline-flex items-center gap-1 whitespace-nowrap rounded-lg border-2 border-[#0A2B6D] bg-white px-2.5 py-1.5 text-xs font-extrabold text-[#0A2B6D] transition hover:bg-[#0A2B6D] hover:text-white"
+            className="hidden md:inline-flex items-center gap-1 whitespace-nowrap rounded-lg border-2 border-[#0A2B6D] bg-white px-2.5 py-1.5 text-[11px] xl:text-xs font-extrabold text-[#0A2B6D] transition hover:bg-[#0A2B6D] hover:text-white"
           >
             <Calendar className="h-3.5 w-3.5 shrink-0 text-[#0072FF]" />
             <span>Book a Demo</span>
@@ -85,7 +85,7 @@ export default function LandingNav({ onBookDemo }) {
 
           <Link
             to="/register"
-            className="inline-flex items-center gap-1 whitespace-nowrap rounded-lg px-3 py-1.5 text-xs font-extrabold text-white shadow-sm transition hover:opacity-95"
+            className="inline-flex items-center gap-1 whitespace-nowrap rounded-lg px-2.5 xl:px-3 py-1.5 text-[11px] xl:text-xs font-extrabold text-white shadow-sm transition hover:opacity-95"
             style={{
               background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
             }}

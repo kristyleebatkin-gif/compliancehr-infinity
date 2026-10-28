@@ -76,7 +76,7 @@ export default function LandingHero({ onBookDemo }) {
 
                 {/* Main Headline */}
                 <h1
-                  className="font-editorial text-2xl sm:text-4xl lg:text-[2.6rem] font-extrabold tracking-tight text-white leading-[1.12]"
+                  className="font-editorial text-2xl sm:text-3xl lg:text-[2.15rem] xl:text-[2.55rem] font-extrabold tracking-tight text-white leading-[1.14]"
                   style={{ color: '#FFFFFF' }}
                 >
                   The Complete Compliance &amp; Workforce Management Platform
@@ -124,24 +124,24 @@ export default function LandingHero({ onBookDemo }) {
               </div>
 
               {/* Glassmorphism KPI Cards Row */}
-              <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-3 pt-1">
+              <div className="grid grid-cols-1 gap-2 sm:grid-cols-3 pt-1">
                 {GLASS_KPIS.map((kpi) => {
                   const Icon = kpi.icon;
                   return (
                     <div
                       key={kpi.label}
-                      className="rounded-2xl border border-white/30 bg-white/15 p-3 text-left text-white backdrop-blur-md shadow-lg"
+                      className="flex flex-col justify-between rounded-2xl border border-white/30 bg-white/15 p-2.5 xl:p-3 text-left text-white backdrop-blur-md shadow-lg"
                     >
-                      <div className="flex items-center justify-between gap-1.5">
-                        <span className="text-[10px] font-extrabold uppercase tracking-wider text-white/90 whitespace-nowrap">
+                      <div className="flex items-center justify-between gap-1">
+                        <span className="text-[9.5px] xl:text-[10px] font-extrabold uppercase tracking-wider text-white/90 leading-tight">
                           {kpi.label}
                         </span>
                         <Icon className="h-3.5 w-3.5 shrink-0" style={{ color: kpi.accent }} />
                       </div>
-                      <div className="mt-1 font-editorial text-xl sm:text-2xl font-extrabold text-white leading-tight whitespace-nowrap">
+                      <div className="mt-1 font-editorial text-lg xl:text-2xl font-extrabold text-white leading-tight">
                         {kpi.value}
                       </div>
-                      <div className="mt-0.5 flex items-center gap-1 text-[10px] font-semibold text-white/85 whitespace-nowrap">
+                      <div className="mt-0.5 flex items-center gap-1 text-[9.5px] xl:text-[10px] font-semibold text-white/85 leading-tight">
                         <TrendingUp className="h-3 w-3 shrink-0 text-[#00C6FF]" />
                         <span>{kpi.sub}</span>
                       </div>

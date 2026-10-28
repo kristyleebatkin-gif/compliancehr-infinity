@@ -72,13 +72,13 @@ export default function LandingSolutionSection() {
   return (
     <section id="solution" className="w-full scroll-mt-20">
       <div className="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-8 lg:p-10 shadow-lg space-y-7">
-        {/* Landscape Header — "Department" Fitted Right Beside "Every" on One Line */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 border-b border-slate-100 pb-5 text-left">
+        {/* Landscape Header */}
+        <div className="flex flex-col xl:flex-row xl:items-end justify-between gap-4 border-b border-slate-100 pb-5 text-left">
           <div className="min-w-0">
-            <span className="inline-flex items-center gap-2 rounded-full bg-[#0A2B6D] px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider text-white whitespace-nowrap">
+            <span className="inline-flex items-center gap-2 rounded-full bg-[#0A2B6D] px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider text-white">
               Four Connected Feature Pillars
             </span>
-            <h2 className="mt-2.5 font-editorial text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight text-[#0A2B6D] sm:whitespace-nowrap">
+            <h2 className="mt-2.5 font-editorial text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#0A2B6D]">
               One Unified Platform Across Every Department
             </h2>
           </div>

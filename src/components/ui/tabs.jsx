@@ -245,7 +245,7 @@ const TabsTrigger = React.forwardRef(({ className, children, ...props }, ref) =>
         {/* White Writing Area Inside Screen */}
         <span className="qa-tab-body flex min-h-[40px] w-full flex-1 items-center justify-between gap-1 border-t border-[#0A2B6D]/10 bg-white px-1.5 py-1">
           <span
-            className="line-clamp-2 min-w-0 flex-1 break-words text-[10.5px] font-bold leading-[13px] text-[#0A2B6D]/85"
+            className="min-w-0 flex-1 break-words text-[10px] font-bold leading-[12.5px] text-[#0A2B6D]/85"
             style={{ color: '#0A2B6D' }}
           >
             {subtitle}

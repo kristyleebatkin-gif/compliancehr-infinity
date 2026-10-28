@@ -81,19 +81,19 @@ export default function HeroDashboardMockup() {
               <span className="h-2.5 w-2.5 rounded-full bg-white/80" />
               <span className="h-2.5 w-2.5 rounded-full bg-[#00C6FF]" />
             </div>
-            <span className="ml-1 truncate text-xs font-extrabold tracking-wide text-white">
-              ComplianceHR Infinity · Live Executive Dashboard
+            <span className="ml-1 text-[11px] xl:text-xs font-extrabold tracking-wide text-white leading-tight">
+              ComplianceHR Infinity · Live Executive
             </span>
           </div>
-          <span className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-white/15 px-2.5 py-0.5 text-[10px] font-bold text-white">
+          <span className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-white/15 px-2 py-0.5 text-[9.5px] font-bold text-white">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-300 animate-pulse" />
             46 MODULES SYNCED
           </span>
         </div>
 
         {/* Interactive View Switcher (Live Executive First, Single Row) */}
-        <div className="flex items-center justify-between gap-1.5 border-b border-slate-100 bg-slate-50 px-3 py-1.5">
-          <div className="grid grid-cols-3 gap-1.5 flex-1">
+        <div className="flex items-center justify-between gap-1.5 border-b border-slate-100 bg-slate-50 px-2.5 py-1.5">
+          <div className="grid grid-cols-3 gap-1 flex-1">
             {VIEWS.map((view) => {
               const active = view.id === activeTab;
               return (
@@ -101,7 +101,7 @@ export default function HeroDashboardMockup() {
                   key={view.id}
                   type="button"
                   onClick={() => setActiveTab(view.id)}
-                  className={`whitespace-nowrap rounded-lg px-2 py-1 text-[11px] font-extrabold transition ${
+                  className={`rounded-lg px-1.5 py-1 text-[10px] xl:text-[11px] font-extrabold leading-tight transition ${
                     active
                       ? 'bg-[#0A2B6D] text-white shadow-xs'
                       : 'border border-slate-200 bg-white text-[#0A2B6D] hover:bg-slate-100'
@@ -163,14 +163,14 @@ export default function HeroDashboardMockup() {
           </div>
 
           {/* 4 Symmetrical KPI Mini Cards */}
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 items-stretch">
+          <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-4 items-stretch">
             {current.metrics.map((m) => (
               <div
                 key={m.label}
-                className="flex flex-col justify-between rounded-xl border border-slate-200/90 bg-slate-50/70 px-2.5 py-2 text-left shadow-2xs"
+                className="flex flex-col justify-between rounded-xl border border-slate-200/90 bg-slate-50/70 px-2 py-1.5 text-left shadow-2xs"
               >
                 <div className="flex items-center justify-between gap-1">
-                  <span className="whitespace-nowrap text-[10px] font-extrabold text-[#0A2B6D]/85">
+                  <span className="text-[9.5px] font-extrabold text-[#0A2B6D]/85 leading-tight">
                     {m.label}
                   </span>
                   <span
@@ -178,11 +178,11 @@ export default function HeroDashboardMockup() {
                     style={{ backgroundColor: m.color }}
                   />
                 </div>
-                <div className="my-0.5 font-editorial text-lg font-extrabold text-[#0A2B6D] leading-tight whitespace-nowrap">
+                <div className="my-0.5 font-editorial text-base xl:text-lg font-extrabold text-[#0A2B6D] leading-tight">
                   {m.value}
                 </div>
                 <div
-                  className="inline-flex items-center gap-1 text-[10px] font-bold whitespace-nowrap"
+                  className="inline-flex items-center gap-1 text-[9.5px] font-bold leading-tight"
                   style={{ color: m.color }}
                 >
                   <TrendingUp className="h-2.5 w-2.5 shrink-0" />
@@ -192,7 +192,7 @@ export default function HeroDashboardMockup() {
             ))}
           </div>
 
-          {/* Live Governance & Checkpoint Rows */}
+          {/* Live Governance & Checkpoint Rows — Every Word Fits Without Truncation */}
           <div className="rounded-xl border border-slate-200/90 bg-slate-50/60 p-2.5 space-y-1">
             <div className="flex items-center justify-between text-[10px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
               <span className="inline-flex items-center gap-1">
@@ -205,17 +205,17 @@ export default function HeroDashboardMockup() {
               {current.checkpoints.map((cp) => (
                 <div
                   key={cp.code}
-                  className="flex items-center justify-between gap-2 rounded-lg border border-slate-200/80 bg-white px-2.5 py-1 text-left"
+                  className="flex items-center justify-between gap-2 rounded-lg border border-slate-200/80 bg-white px-2 py-1 text-left"
                 >
-                  <div className="flex items-center gap-2 min-w-0">
+                  <div className="flex items-center gap-1.5 min-w-0">
                     <span className="shrink-0 rounded bg-[#0A2B6D] px-1.5 py-0.5 text-[9px] font-extrabold text-white whitespace-nowrap">
                       {cp.code}
                     </span>
-                    <span className="truncate text-[11px] font-bold text-[#0A2B6D]">
+                    <span className="text-[10.5px] font-bold leading-snug text-[#0A2B6D]">
                       {cp.title}
                     </span>
                   </div>
-                  <span className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full bg-[#0072FF]/10 px-2 py-0.5 text-[10px] font-extrabold text-[#0072FF]">
+                  <span className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full bg-[#0072FF]/10 px-2 py-0.5 text-[9.5px] font-extrabold text-[#0072FF]">
                     <CheckCircle2 className="h-2.5 w-2.5 text-[#0072FF]" />
                     {cp.status}
                   </span>

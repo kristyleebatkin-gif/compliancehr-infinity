@@ -339,19 +339,7 @@
       height: 2rem;
     }
   }
-  /* Balanced hierarchy: keep writing under headers slightly smaller and crisp so headers always stand out larger */
-  :is(body, .app-readable) :is([class*="text-[6"], [class*="text-[7"]) {
-    font-size: 0.65rem !important;
-    line-height: 0.95rem !important;
-  }
-  :is(body, .app-readable) :is([class*="text-[8"], [class*="text-[9"]) {
-    font-size: 0.7rem !important;
-    line-height: 1.05rem !important;
-  }
-  :is(body, .app-readable) [class*="text-[10"] {
-    font-size: 0.74rem !important;
-    line-height: 1.1rem !important;
-  }
+  /* Balanced hierarchy: keep writing under headers crisp and properly proportioned to its container */
   .app-readable :is(.dashboard-panel-body, [role="tabpanel"], main section) p:not(.app-page-header p):not(.dashboard-panel-header p) {
     font-size: 0.76rem;
     line-height: 1.2rem;
@@ -362,7 +350,7 @@
     overflow: visible !important;
     text-overflow: clip !important;
     overflow-wrap: break-word;
-    word-break: break-word;
+    word-break: normal;
   }
   .app-readable :is(button, a):is(.h-5, .h-6, .h-7, .h-8):not(.w-5):not(.w-6):not(.w-7):not(.w-8) {
     height: auto !important;

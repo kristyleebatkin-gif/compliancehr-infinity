@@ -595,8 +595,8 @@ export default function BlueprintPreviewSection() {
                             </div>
                             <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-white/75" />
                           </div>
-                          <div className="flex min-h-[48px] flex-1 items-center justify-between gap-1.5 border-t border-[#0A2B6D]/10 bg-white px-2 py-1.5">
-                            <span className="line-clamp-3 min-w-0 flex-1 break-words text-[10.5px] font-bold leading-[13px] text-[#0A2B6D]/85">
+                          <div className="flex min-h-[54px] flex-1 items-center justify-between gap-1.5 border-t border-[#0A2B6D]/10 bg-white px-2 py-1.5">
+                            <span className="min-w-0 flex-1 break-words text-[10px] font-bold leading-[13px] text-[#0A2B6D]/85">
                               {mod.blurb}
                             </span>
                             <ArrowRight className="h-3 w-3 shrink-0 text-[#0072FF] transition group-hover:translate-x-0.5 group-hover:text-[#FF2E9A]" />

@@ -184,7 +184,7 @@ export default function LandingProductShowcase() {
               </div>
             </div>
 
-            {/* Uniform 7-Tab Telemetry Switcher Grid (Aligned Across All Viewports) */}
+            {/* Uniform 7-Tab Telemetry Switcher Grid (Every Word Fitted Cleanly Across All Viewports) */}
             <div className="border-b border-slate-200 bg-slate-50/80 px-5 py-3 sm:px-7">
               <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-7">
                 {SHOWCASE_PANELS.map((panel) => {
@@ -195,14 +195,14 @@ export default function LandingProductShowcase() {
                       key={panel.id}
                       type="button"
                       onClick={() => setSelectedId(panel.id)}
-                      className={`flex h-10 w-full items-center justify-center gap-1.5 rounded-xl px-2.5 text-xs font-extrabold transition ${
+                      className={`flex min-h-[38px] w-full items-center justify-center gap-1.5 rounded-xl px-2 py-1.5 text-[11px] font-extrabold leading-tight transition ${
                         isActive
                           ? 'bg-[#0A2B6D] text-white shadow-sm'
                           : 'border border-slate-200 bg-white text-[#0A2B6D] hover:border-[#0072FF] hover:text-[#0072FF]'
                       }`}
                     >
                       <Icon className="h-3.5 w-3.5 shrink-0" />
-                      <span className="truncate">{panel.shortLabel}</span>
+                      <span className="text-center leading-tight">{panel.shortLabel}</span>
                     </button>
                   );
                 })}
@@ -398,8 +398,8 @@ export default function LandingProductShowcase() {
                 </div>
               </div>
 
-              {/* Bottom Row: 6 Connected Operational Telemetry Cards (Uniform Height & Aligned Baselines) */}
-              <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 items-stretch">
+              {/* Bottom Row: 6 Connected Operational Telemetry Cards (Uniform Height & Every Word Fitted) */}
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 items-stretch">
                 {TELEMETRY_CARDS.map((card) => {
                   const Icon = card.icon;
                   const isSelected = card.id === selectedId;
@@ -408,7 +408,7 @@ export default function LandingProductShowcase() {
                       key={card.id}
                       type="button"
                       onClick={() => setSelectedId(card.id)}
-                      className={`flex h-full flex-col justify-between rounded-2xl border p-4 text-left transition-all ${
+                      className={`flex h-full flex-col justify-between rounded-2xl border p-3.5 text-left transition-all ${
                         isSelected
                           ? 'border-[#0072FF] bg-[#0072FF]/5 shadow-md ring-2 ring-[#0072FF]/20'
                           : 'border-slate-200 bg-white shadow-2xs hover:border-[#0072FF]/50 hover:shadow-sm'
@@ -416,15 +416,15 @@ export default function LandingProductShowcase() {
                     >
                       <div>
                         {/* Card Top Row: Icon + Status Badge */}
-                        <div className="flex items-center justify-between gap-2">
+                        <div className="flex items-center justify-between gap-1.5">
                           <div
-                            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-white"
+                            className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-white"
                             style={{ backgroundColor: card.color }}
                           >
-                            <Icon className="h-4 w-4 text-white" />
+                            <Icon className="h-3.5 w-3.5 text-white" />
                           </div>
                           <span
-                            className="truncate rounded-full px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider"
+                            className="rounded-full px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-tight leading-tight text-right"
                             style={{
                               backgroundColor: `${card.color}15`,
                               color: card.color,
@@ -435,16 +435,16 @@ export default function LandingProductShowcase() {
                         </div>
 
                         {/* Card Middle Row: Value & Label */}
-                        <div className="mt-3 font-editorial text-2xl font-extrabold text-[#0A2B6D] leading-none">
+                        <div className="mt-2.5 font-editorial text-xl xl:text-2xl font-extrabold text-[#0A2B6D] leading-none">
                           {card.metricValue}
                         </div>
-                        <div className="mt-1.5 text-xs font-extrabold text-[#0A2B6D]">
+                        <div className="mt-1.5 text-[11.5px] font-extrabold text-[#0A2B6D] leading-snug">
                           {card.shortLabel}
                         </div>
                       </div>
 
                       {/* Card Bottom Row: Aligned Subtitle */}
-                      <div className="mt-3 border-t border-slate-100 pt-2.5 text-[11px] font-semibold leading-snug text-[#0A2B6D]/75">
+                      <div className="mt-2.5 border-t border-slate-100 pt-2 text-[10.5px] font-semibold leading-snug text-[#0A2B6D]/75">
                         {card.metricSub}
                       </div>
                     </button>
