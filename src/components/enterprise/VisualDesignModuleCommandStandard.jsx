@@ -59,6 +59,7 @@ const RAPID_8_PANELS = [
   { label: 'Reviews', to: '/review-due' },
   { label: 'Audits', to: '/auditor-portal' },
   { label: 'Goals', to: '/goals' },
+  { label: 'Auto Evidence Closure', to: '/user-success' },
   { label: 'Actions & Tasks', to: '/tasks' },
 ];
 

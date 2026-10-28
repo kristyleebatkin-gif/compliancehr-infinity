@@ -13,6 +13,7 @@ import RegisterInsights from '@/components/RegisterInsights';
 import { Field, TextInput, Select, TextArea, DateInput } from '@/components/Field';
 
 import TaskDashboard from '@/components/tasks/TaskDashboard';
+import AutomaticTaskCompletionEvidenceClosureEngine from '@/components/operations/AutomaticTaskCompletionEvidenceClosureEngine';
 import TaskCompletionFields from '@/components/tasks/TaskCompletionFields';
 import TaskToolbar from '@/components/tasks/TaskToolbar';
 import TaskSummaryCards from '@/components/tasks/TaskSummaryCards';
@@ -214,14 +215,16 @@ function Tasks() {
   return (
     <div className="compact-module tasks-workspace mx-auto max-w-5xl space-y-2 p-2 md:p-3">
       <ModuleShell
-        title="Task Dashboard"
-        subtitle="Current, past and future tasks with allocation, alerts and status tracking"
+        title="Automatic Task Completion & Evidence Closure Engine"
+        subtitle="Staff complete the real work. The system completes administrative tasks, updates registers, and stamps audit evidence automatically."
         icon={ListTodo}
         moduleKey="tasks"
         insightModule="tasks"
         tabs={<TaskToolbar navigationOnly />}
         actions={<TaskToolbar view={view} onView={(nextView) => { setView(nextView); requestAnimationFrame(() => document.getElementById('task-register-view')?.scrollIntoView({ block: 'start' })); }} onExport={exportTasks} onRun={runAutomations} onNew={openNew} loading={loading} empty={list.length === 0} running={running} />}
       />
+
+      <AutomaticTaskCompletionEvidenceClosureEngine compact />
 
       {taskId && <Button asChild variant="outline" size="sm"><Link to="/tasks">View all tasks</Link></Button>}
       <TaskSummaryCards totals={taskTotals} metrics={taskMetrics} loading={loading} />
