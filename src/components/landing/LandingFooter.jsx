@@ -25,8 +25,10 @@ export default function LandingFooter({ onBookDemo }) {
                     Infinity
                   </span>
                 </div>
-                <div className="mt-1 text-[10px] xl:text-[11px] font-extrabold text-[#0A2B6D]/85 whitespace-nowrap">
-                  Complete Control. Greater Confidence. Brighter Success.
+                <div className="mt-1 text-[10px] xl:text-[11px] font-extrabold whitespace-nowrap">
+                  <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
+                  <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
+                  <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
                 </div>
               </div>
             </Link>

@@ -143,8 +143,11 @@ export default function SoftwareAndSafeBanner({ compact = false }) {
       {/* Squashed Quick Bar to Edit & Save Logo, Name & Slogan */}
       {!compact && (
         <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-violet-300 bg-white px-3 py-1.5 shadow-sm">
-          <span className="text-[11px] font-extrabold text-violet-950">
-            Software: ComplianceHR Infinity · Complete Control. Greater Confidence. Brighter Success
+          <span className="text-[11px] font-extrabold text-[#0A2B6D]">
+            Software: ComplianceHR Infinity ·{' '}
+            <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
+            <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
+            <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
           </span>
           <button
             type="button"

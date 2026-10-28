@@ -27,7 +27,7 @@ export default function ObsidianSidebarRemote({
         {/* Top Brand Gradient Bar Matching Quick Access */}
         <div className="h-1 w-full shrink-0" style={{ background: BRAND_GRADIENT }} />
 
-        {/* Platform Name on Top + Smaller-Length Logo Below App Name */}
+        {/* Platform Name on Top + Smaller-Length Logo Below App Name + Blue/Purple/Pink Slogan */}
         <div className="flex shrink-0 flex-col items-center border-b border-slate-100 bg-[#F5F0FF]/40 px-3 py-2.5 text-center">
           <span className="font-editorial text-[13px] font-extrabold leading-tight tracking-tight text-[#0A2B6D] whitespace-nowrap">
             Compliance
@@ -42,6 +42,11 @@ export default function ObsidianSidebarRemote({
             fittingType="fit"
             className="mt-1 h-5 w-14 rounded-md border border-slate-200 bg-white px-1 py-0.5 shadow-2xs"
           />
+          <span className="mt-1 text-[8px] font-extrabold leading-tight">
+            <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
+            <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
+            <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
+          </span>
         </div>
 
         {/* Screens / Modules Only Underneath — Visually Matching Quick Access */}

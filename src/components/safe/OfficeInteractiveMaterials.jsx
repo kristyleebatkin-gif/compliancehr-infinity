@@ -135,8 +135,10 @@ export function CompanySafeMaterialPanel({ companyName = 'ComplianceHR Infinity'
           </div>
           <div className="min-w-0">
             <div className="truncate text-xs font-extrabold text-blue-950">ComplianceHR Infinity</div>
-            <div className="text-[9px] font-extrabold text-pink-700">
-              {FULL_SLOGAN}
+            <div className="text-[9px] font-extrabold">
+              <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
+              <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
+              <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
             </div>
           </div>
         </div>

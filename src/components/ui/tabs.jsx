@@ -154,7 +154,7 @@ const TabsList = React.forwardRef(({ className, children, ...props }, ref) => {
         )}
         {...props}
       >
-        {/* Platform Name on Top + Smaller-Length Logo Below App Name */}
+        {/* Platform Name on Top + Smaller-Length Logo Below App Name + Blue/Purple/Pink Slogan */}
         <div className="col-span-full -mx-3 -mt-3 mb-0.5">
           <div className="h-1 w-full" style={{ background: BRAND_GRADIENT }} />
           <div className="flex flex-col items-center px-3.5 pb-1.5 pt-2.5 text-center sm:px-4">
@@ -171,6 +171,11 @@ const TabsList = React.forwardRef(({ className, children, ...props }, ref) => {
               fittingType="fit"
               className="mt-1 h-5 w-14 rounded-md border border-slate-200 bg-white px-1 py-0.5 shadow-2xs"
             />
+            <span className="mt-1 text-[8.5px] font-extrabold leading-tight">
+              <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
+              <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
+              <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
+            </span>
           </div>
         </div>
 

@@ -41,6 +41,11 @@ export default function LandingNav({ onBookDemo }) {
             alt="ComplianceHR Infinity"
             className="mt-1 h-5 w-14 shrink-0 rounded-md border border-slate-200 bg-white px-1 py-0.5 object-contain shadow-2xs"
           />
+          <div className="mt-1 text-[8.5px] font-extrabold leading-none whitespace-nowrap">
+            <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
+            <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
+            <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
+          </div>
         </Link>
 
         <nav aria-label="Main navigation" className="hidden lg:flex items-center gap-2 xl:gap-3.5">

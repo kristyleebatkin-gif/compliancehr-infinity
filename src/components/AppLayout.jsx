@@ -264,6 +264,11 @@ export default function AppLayout() {
                   fittingType="fit"
                   className="mt-1 h-5 w-14 shrink-0 rounded-md border border-slate-200 bg-white px-1 py-0.5 shadow-2xs"
                 />
+                <span className="mt-1 text-[8.5px] font-extrabold leading-none whitespace-nowrap">
+                  <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
+                  <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
+                  <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
+                </span>
               </Link>
 
               <span
