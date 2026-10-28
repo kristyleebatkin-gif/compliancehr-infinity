@@ -16,7 +16,7 @@ import { buildFilledFormDoc } from '@/lib/participantFormPdf';
 import { loadCompanyBranding } from '@/lib/companyBranding';
 import { format, addMonths, differenceInCalendarDays } from 'date-fns';
 import {
-  Download, UploadCloud, Pencil, Loader2, FileDown, CalendarClock, CheckCircle2, AlertTriangle, Clock,
+  Download, UploadCloud, Pencil, Loader2, FileDown, CalendarClock,
 } from 'lucide-react';
 
 const nowParts = () => ({
@@ -38,6 +38,8 @@ export default function KitDrillChecklists() {
   const [completedBy, setCompletedBy] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [uploading, setUploading] = useState('');
+  const [uploadReview, setUploadReview] = useState(null);
+  const [uploadForm, setUploadForm] = useState({ date: '', by: '', outcome: '', notes: '', confirmed: false });
   const [editing, setEditing] = useState(null);
   const [editForm, setEditForm] = useState({ next_due_date: '', notes: '', completed_by: '' });
 
@@ -63,7 +65,6 @@ export default function KitDrillChecklists() {
     return unsubscribe;
   }, [load]);
 
-  const today = format(new Date(), 'yyyy-MM-dd');
 
   const latestEntry = (checklist) => entries
     .filter((entry) => entry.checklist_key === checklist.key)
@@ -75,8 +76,8 @@ export default function KitDrillChecklists() {
     if (!entry) return { label: 'Not recorded yet', tone: 'bg-muted text-muted-foreground' };
     let answers;
     try { answers = JSON.parse(entry.answers || '{}'); } catch { return review; }
-    if (!answers.checked || !checklist.items.length || checklist.items.some((item) => typeof answers.checked[item] !== 'boolean')) return review;
-    if (checklist.items.some((item) => !answers.checked[item])) return { label: 'Issues need review', tone: 'bg-warning/10 text-warning' };
+    if (!answers.reviewedUpload && (!answers.checked || !checklist.items.length || checklist.items.some((item) => typeof answers.checked[item] !== 'boolean'))) return review;
+    if (answers.reviewedUpload ? answers.outcome !== 'Pass' : checklist.items.some((item) => !answers.checked[item])) return { label: 'Issues need review', tone: 'bg-warning/10 text-warning' };
     if (!entry.completed_date || !entry.completed_by || !entry.next_due_date) return review;
     const due = new Date(`${entry.next_due_date}T00:00:00`);
     if (!Number.isFinite(due.getTime())) return review;
@@ -163,24 +164,31 @@ export default function KitDrillChecklists() {
   };
 
   const uploadCompleted = async (checklist, file) => {
-    if (!file) return;
+    if (!file || !uploadForm.confirmed || !uploadForm.date || !uploadForm.by.trim() || !['Pass', 'Issues Found'].includes(uploadForm.outcome)) return;
+    if (uploadForm.date > format(new Date(), 'yyyy-MM-dd')) {
+      toast({ title: 'Completion date cannot be in the future', variant: 'destructive' }); return;
+    }
+    if (uploadForm.outcome === 'Issues Found' && !uploadForm.notes.trim()) {
+      toast({ title: 'Describe the issues requiring follow-up', variant: 'destructive' }); return;
+    }
     setUploading(checklist.key);
     try {
       const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file });
-      const { date, time } = nowParts();
-      const nextDue = addSixMonths();
+      const { time } = nowParts();
+      const date = uploadForm.date;
+      const nextDue = addSixMonths(new Date(`${date}T00:00:00`));
       await base44.entities.ComplianceChecklistEntry.create({
         title: checklist.title,
         checklist_key: checklist.key,
         section: checklist.section,
-        answers: '',
-        completed_by: user?.full_name || user?.email || 'Uploaded',
+        answers: JSON.stringify({ reviewedUpload: true, outcome: uploadForm.outcome, reviewedBy: user?.id || user?.email, reviewedAt: new Date().toISOString() }),
+        completed_by: uploadForm.by.trim(),
         completed_date: date,
         completed_time: time,
         next_due_date: nextDue,
         file_uri,
         file_name: file.name,
-        notes: 'Completed checklist uploaded',
+        notes: uploadForm.notes.trim(),
       });
       if (checklist.safety_check_type) {
         await base44.entities.SafetyCheck.create({
@@ -188,8 +196,9 @@ export default function KitDrillChecklists() {
           check_type: checklist.safety_check_type,
           date_completed: date,
           next_due_date: nextDue,
-          completed_by: user?.full_name || user?.email || '',
-          result: 'Pass',
+          completed_by: uploadForm.by.trim(),
+          result: uploadForm.outcome,
+          notes: uploadForm.notes.trim(),
           file_uri,
           file_name: file.name,
         });
@@ -199,11 +208,12 @@ export default function KitDrillChecklists() {
           title: `${checklist.title} - ${format(new Date(), 'd MMM yyyy')}`,
           drill_type: checklist.drill_type,
           date,
-          outcome: 'Completed',
-          notes: 'Uploaded fire drill record',
+          outcome: uploadForm.outcome === 'Pass' ? 'Completed' : 'Issues Found',
+          notes: `Reviewed upload: ${file.name}. Completed by ${uploadForm.by.trim()}. ${uploadForm.notes.trim()}`,
         });
       }
       await load();
+      setUploadReview(null);
       toast({ title: `${checklist.title} uploaded and logged (stored privately)` });
     } catch (error) {
       toast({ title: 'Upload failed', description: error.message, variant: 'destructive' });
@@ -296,7 +306,7 @@ export default function KitDrillChecklists() {
                       <Pencil className="h-3.5 w-3.5" /> Complete online
                     </Button>
                     <label className="cursor-pointer">
-                      <input type="file" className="hidden" onChange={(e) => { uploadCompleted(checklist, e.target.files?.[0]); e.target.value = ''; }} />
+                      <input type="file" className="hidden" onChange={(e) => { const file = e.target.files?.[0]; if (file) { setUploadReview({ checklist, file }); setUploadForm({ date: '', by: '', outcome: '', notes: '', confirmed: false }); } e.target.value = ''; }} />
                       <span className="inline-flex min-h-11 items-center gap-1.5 rounded-md border border-input bg-transparent px-3 text-xs font-medium hover:bg-accent">
                         {uploading === checklist.key ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <UploadCloud className="h-3.5 w-3.5" />} Upload
                       </span>
@@ -382,6 +392,23 @@ export default function KitDrillChecklists() {
               </div>
             </form>
           )}
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={Boolean(uploadReview)} onOpenChange={(open) => { if (!open && !uploading) setUploadReview(null); }}>
+        <DialogContent className="max-h-[85vh] max-w-xl overflow-y-auto">
+          <DialogHeader><DialogTitle>Review uploaded checklist</DialogTitle></DialogHeader>
+          <p className="break-words text-sm">{uploadReview?.file.name}. Verify the document before recording its result. The upload date does not establish when the check occurred.</p>
+          <form className="space-y-4" onSubmit={(event) => { event.preventDefault(); if (uploadReview) uploadCompleted(uploadReview.checklist, uploadReview.file); }}>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div className="space-y-1.5"><Label htmlFor="upload-performed-date">Actual completion date</Label><Input id="upload-performed-date" className="min-h-11" type="date" required max={format(new Date(), 'yyyy-MM-dd')} value={uploadForm.date} onChange={(event) => setUploadForm({ ...uploadForm, date: event.target.value })} /></div>
+              <div className="space-y-1.5"><Label htmlFor="upload-performed-by">Check completed by</Label><Input id="upload-performed-by" className="min-h-11" required value={uploadForm.by} onChange={(event) => setUploadForm({ ...uploadForm, by: event.target.value })} /></div>
+            </div>
+            <div className="space-y-1.5"><Label htmlFor="upload-result">Result supported by the document</Label><select id="upload-result" className="min-h-11 w-full rounded-md border border-input bg-white px-3 text-sm" required value={uploadForm.outcome} onChange={(event) => setUploadForm({ ...uploadForm, outcome: event.target.value })}><option value="">Choose a result</option><option value="Pass">Pass / drill completed without identified issues</option><option value="Issues Found">Issues found — follow-up required</option></select></div>
+            <div className="space-y-1.5"><Label htmlFor="upload-review-notes">Issues and review notes</Label><Textarea id="upload-review-notes" required={uploadForm.outcome === 'Issues Found'} value={uploadForm.notes} onChange={(event) => setUploadForm({ ...uploadForm, notes: event.target.value })} /></div>
+            <label className="flex min-h-11 items-start gap-2 text-sm"><input type="checkbox" className="mt-1 h-5 w-5" checked={uploadForm.confirmed} onChange={(event) => setUploadForm({ ...uploadForm, confirmed: event.target.checked })} required /><span>I reviewed the document and confirmed the completion details and result. This does not certify that controls are effective.</span></label>
+            <Button type="submit" className="min-h-11 w-full" disabled={Boolean(uploading) || !uploadForm.confirmed}>{uploading ? 'Saving reviewed record…' : 'Save reviewed record and private document'}</Button>
+          </form>
         </DialogContent>
       </Dialog>
 
