@@ -19,6 +19,7 @@ import LiveDashboards from '@/components/dashboard/LiveDashboards';
 import PageHeader from '@/components/PageHeader';
 import SoftwareAndSafeBanner from '@/components/safe/SoftwareAndSafeBanner';
 import BusinessHealthComplianceIntelligenceDashboard from '@/components/compliance/BusinessHealthComplianceIntelligenceDashboard';
+import EnterpriseStandardQualityGateSuite from '@/components/compliance/EnterpriseStandardQualityGateSuite';
 import InfinityOneClickOperations from '@/components/operations/InfinityOneClickOperations';
 import InfinityControlCentreMasterSuite from '@/components/operations/InfinityControlCentreMasterSuite';
 import InfinityCoreEngine from '@/components/compliance/InfinityCoreEngine';
@@ -152,9 +153,12 @@ export default function Dashboard() {
         <ExecutiveWallScene showAllModulesMinimised={true} />
       )}
 
-      {/* 3. Infinity Control Centre Master Suite */}
+      {/* 3. Infinity Control Centre Master Suite + 12-Pillar Enterprise Governance & Form Generation Studio */}
       {isSuiteVisible('control-centre') && (
-        <InfinityControlCentreMasterSuite />
+        <>
+          <EnterpriseStandardQualityGateSuite />
+          <InfinityControlCentreMasterSuite />
+        </>
       )}
 
       {/* 4. Infinity One-Click Operations Deck */}

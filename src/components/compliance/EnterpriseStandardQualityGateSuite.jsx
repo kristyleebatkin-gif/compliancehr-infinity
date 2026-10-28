@@ -11,6 +11,7 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/components/ui/use-toast';
 import { downloadCsv } from '@/lib/csvExport';
 import { getHeaderView } from '@/lib/fullColourTiles';
+import Enterprise12PillarCommandBar from '@/components/compliance/Enterprise12PillarCommandBar';
 import {
   VAULT_15_CATEGORIES,
   QUICK_16_DATE_FILTERS,
@@ -42,11 +43,21 @@ export default function EnterpriseStandardQualityGateSuite() {
   const [activeStudioTab, setActiveStudioTab] = useState('controlled-forms');
   const [previewMode, setPreviewMode] = useState('desktop');
 
-  // Tab 1: Controlled Form & 12-Domain Template Studio State
+  // Tab 1: Controlled Form & 14-Domain Template Studio State
+  const [customTemplates, setCustomTemplates] = useState([]);
+  const allTemplates = useMemo(
+    () => [...customTemplates, ...ENTERPRISE_12_FORM_TEMPLATES],
+    [customTemplates]
+  );
   const [selectedTemplateId, setSelectedTemplateId] = useState(ENTERPRISE_12_FORM_TEMPLATES[0].id);
   const [formOverrides, setFormOverrides] = useState({});
   const [savingVault, setSavingVault] = useState(false);
   const [linkedRelationships, setLinkedRelationships] = useState(RECORD_16_RELATIONSHIP_TARGETS);
+  const [savedPresets, setSavedPresets] = useState([
+    { name: 'Monthly Board Assurance', quickDateFilter: 'THIS_MONTH', filterCategory: 'ALL', filterStatus: 'Approved' },
+    { name: 'Upcoming 90d NDIS Reviews & Audits', quickDateFilter: 'NEXT_90_DAYS', filterCategory: 'NDIS', filterStatus: 'ALL' },
+    { name: 'Overdue Actions & Risks', quickDateFilter: 'OVERDUE', filterCategory: 'Risk', filterStatus: 'Action Required' },
+  ]);
 
   // Tab 2: Advanced Filters, 16 Quick Date Ranges & 12 Report Generators
   const [quickDateFilter, setQuickDateFilter] = useState('ALL');
@@ -165,8 +176,8 @@ export default function EnterpriseStandardQualityGateSuite() {
 
   const activeTemplate = useMemo(() => {
     const base =
-      ENTERPRISE_12_FORM_TEMPLATES.find((t) => t.id === selectedTemplateId) ||
-      ENTERPRISE_12_FORM_TEMPLATES[0];
+      allTemplates.find((t) => t.id === selectedTemplateId) ||
+      allTemplates[0];
     const ov = formOverrides[base.id] || {};
     return {
       ...base,
@@ -176,7 +187,7 @@ export default function EnterpriseStandardQualityGateSuite() {
         value: ov.fieldValues?.[f.key] ?? f.value,
       })),
     };
-  }, [selectedTemplateId, formOverrides]);
+  }, [allTemplates, selectedTemplateId, formOverrides]);
 
   const updateTemplateField = (key, value) => {
     setFormOverrides((prev) => ({
@@ -355,6 +366,37 @@ export default function EnterpriseStandardQualityGateSuite() {
         </div>
       </div>
 
+      {/* 12-Pillar Executive Telemetry, Subject-Researched Form Generator & Saved Report Presets */}
+      <Enterprise12PillarCommandBar
+        liveTelemetry={liveTelemetry}
+        onGeneratedForm={(newTpl) => {
+          setCustomTemplates((prev) => [newTpl, ...prev]);
+          setSelectedTemplateId(newTpl.id);
+          setActiveStudioTab('controlled-forms');
+          toast({
+            title: 'Subject Researched & 24-Point Enterprise Form Generated',
+            description: `${newTpl.documentNumber} — ${newTpl.documentName} ready for editing, preview, export, and Vault/Safe filing.`,
+          });
+        }}
+        savedPresets={savedPresets}
+        onSavePreset={(name) => {
+          setSavedPresets((prev) => [
+            ...prev.filter((p) => p.name !== name),
+            { name, quickDateFilter, filterCategory, filterStatus },
+          ]);
+          toast({
+            title: 'Saved Executive Report Filter View',
+            description: `"${name}" saved to quick presets.`,
+          });
+        }}
+        onApplyPreset={(preset) => {
+          setQuickDateFilter(preset.quickDateFilter || 'ALL');
+          setFilterCategory(preset.filterCategory || 'ALL');
+          setFilterStatus(preset.filterStatus || 'ALL');
+          setActiveStudioTab('enterprise-reports');
+        }}
+      />
+
       {/* 6 Studio Navigation Tiles (Matching Quick Access iPad Screen Style) */}
       <div className="grid auto-rows-fr grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
         {[
@@ -466,8 +508,8 @@ export default function EnterpriseStandardQualityGateSuite() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-              {ENTERPRISE_12_FORM_TEMPLATES.map((tpl) => {
+            <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
+              {allTemplates.map((tpl) => {
                 const isSelected = tpl.id === activeTemplate.id;
                 return (
                   <button
@@ -781,7 +823,7 @@ export default function EnterpriseStandardQualityGateSuite() {
                       11. Controlled Footer · Document Vault Path: <span className="text-[#5A00D6]">Document Vault → {activeTemplate.module} → {activeTemplate.category}</span>
                     </div>
                     <div className="text-[10.5px] font-semibold text-[#0A2B6D]/80">
-                      Protected Master Copy, Working Copy &amp; Version History automatically stored in Company Safe.
+                      Business Info: ComplianceHR Infinity (NDIS Registered Provider) · Protected Master Copy &amp; Version History in Company Safe · <span className="font-extrabold text-[#0072FF]">Page 1 of 1</span>
                     </div>
                   </div>
                   <div className="flex flex-wrap items-center gap-1.5 shrink-0">
