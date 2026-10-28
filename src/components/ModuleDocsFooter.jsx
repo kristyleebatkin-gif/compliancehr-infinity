@@ -198,8 +198,30 @@ export default function ModuleDocsFooter() {
                 <Loader2 className="h-4 w-4 animate-spin text-[#5A00D6]" /> Loading documents…
               </div>
             ) : items.length === 0 ? (
-              <div className="text-xs font-extrabold text-[#5A00D6]">
-                No documents filed yet for this module — uploads made here or in the Document Vault will appear below.
+              <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border-2 border-dashed border-[#0A2B6D]/25 bg-[#F5F0FF]/40 p-3.5">
+                <div className="text-xs font-extrabold text-[#0A2B6D]">
+                  No documents filed yet for {cfg.title}. Upload a record or generate a controlled template to populate this register automatically.
+                </div>
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <Link
+                    to={`/documents?focus=${cfg.focus}`}
+                    className="inline-flex items-center gap-1 rounded-full bg-[#0A2B6D] px-3 py-1 text-[11px] font-extrabold text-white hover:bg-[#5A00D6]"
+                  >
+                    + Upload Document
+                  </Link>
+                  <Link
+                    to="/checklists"
+                    className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] bg-white px-3 py-1 text-[11px] font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
+                  >
+                    Complete Controlled Form
+                  </Link>
+                  <Link
+                    to="/registers"
+                    className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] bg-white px-3 py-1 text-[11px] font-extrabold text-[#5A00D6] hover:bg-[#F5F0FF]"
+                  >
+                    Open Register Hub
+                  </Link>
+                </div>
               </div>
             ) : (
               <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
