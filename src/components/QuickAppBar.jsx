@@ -1,21 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
-  LayoutDashboard, Compass, Sparkles,
+  LayoutDashboard, Sparkles,
   UserCircle, Users, Heart, ShieldCheck, FileSpreadsheet, Megaphone,
   MapPin, BadgeCheck, ClipboardList, AlertTriangle, UsersRound, Vault,
-  CalendarClock, Target, GraduationCap, Briefcase, Tablet, ArrowRight, Radio,
+  CalendarClock, Target, GraduationCap, Briefcase, ArrowRight, Radio,
 } from 'lucide-react';
-import { getHeaderView, getSymbolView, getAppBorderView } from '@/lib/fullColourTiles';
-
-const TOP_BORDER_GRADIENT =
-  'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
-
-const UNIFORM_IPAD_SPRAY_BG =
-  'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF';
-
-const LIT_IPAD_SPRAY_BG =
-  'radial-gradient(circle at 50% 25%, rgba(0, 198, 255, 0.48) 0%, transparent 55%), radial-gradient(circle at 20% 80%, rgba(255, 46, 154, 0.48) 0%, transparent 55%), radial-gradient(circle at 85% 75%, rgba(161, 0, 255, 0.45) 0%, transparent 55%), #FFFFFF';
+import { getHeaderView } from '@/lib/fullColourTiles';
 
 const QUICK_LINKS = [
   {
@@ -173,107 +164,69 @@ export default function QuickAppBar() {
       : location.pathname === path || location.pathname.startsWith(`${path}/`);
 
   return (
-    <div className="w-full bg-white px-[0.5cm] pb-2">
-      <div
-        className="rounded-3xl p-[12px] shadow-lg"
-        style={{ background: TOP_BORDER_GRADIENT }}
-      >
-        <div className="flex w-full flex-col items-center justify-center rounded-[16px] bg-white px-3 py-4 sm:px-5 sm:py-5 text-center space-y-3.5">
-          {/* Stretched Header — Line 1: Instant Workspace Navigation, Line 2: Live iPad Screens */}
-          <div
-            className="flex min-h-[62px] w-full flex-col items-center justify-center gap-1 rounded-2xl border-2 border-[#0A2B6D] px-4 sm:px-6 py-2.5 text-white shadow-sm"
-            style={{ background: getHeaderView(1), color: '#FFFFFF' }}
-          >
-            <div className="flex items-center justify-center gap-2.5 text-xs sm:text-base md:text-lg font-extrabold tracking-wide text-white">
-              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-                <Compass className="h-4 w-4 text-white" style={{ color: '#FFFFFF' }} />
+    <div className="mx-auto w-full max-w-[1440px] px-4 pt-3 sm:px-6 lg:px-8">
+      <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-2xs sm:p-4">
+        {/* Landing-style header: gradient editorial title + live status pill */}
+        <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <div className="min-w-0">
+            <h2 className="font-editorial text-sm sm:text-base font-extrabold tracking-tight text-[#0A2B6D]">
+              Quick App{' '}
+              <span className="bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                Bar
               </span>
-              <span className="text-center" style={{ color: '#FFFFFF' }}>
-                Quick App Bar — Instant Workspace Navigation
-              </span>
-            </div>
-            <div className="flex flex-wrap items-center justify-center gap-2 text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-white">
-              <Radio className="h-3.5 w-3.5 text-[#00C6FF]" />
-              <span style={{ color: '#FFFFFF' }}>
-                Live iPad Screens · Screen #{String(litIdx + 1).padStart(2, '0')} of {QUICK_LINKS.length} Lit · 30s ({(cycleIdx % 3) + 1}/3)
-              </span>
-            </div>
+            </h2>
+            <p className="text-[11px] font-medium leading-snug text-[#0A2B6D]/70">
+              Jump straight into any module without leaving your workspace.
+            </p>
           </div>
 
-          {/* 18 Modular Tiles Styled as 50% Smaller iPad Screens With App-Coloured Headers */}
-          <div className="grid w-full grid-cols-2 gap-1.5 rounded-xl bg-white p-1 sm:grid-cols-3 lg:grid-cols-6 auto-rows-fr items-stretch">
-            {QUICK_LINKS.map((item, idx) => {
-              const active = isActive(item.path);
-              const isLit = litIdx === idx;
-              const Icon = item.icon;
-              const sym = getSymbolView(idx);
-              const borderCol = isLit ? '#00C6FF' : getAppBorderView(idx);
-              const currentSub = item.views[cycleIdx % item.views.length];
+          <span className="inline-flex shrink-0 items-center gap-1.5 self-start rounded-full border border-[#0072FF]/25 bg-[#0072FF]/5 px-3 py-1 text-[10.5px] font-extrabold text-[#0072FF] sm:self-auto">
+            <Radio className="h-3 w-3 shrink-0 text-[#FF2E9A]" />
+            <span>
+              Live · {String(litIdx + 1).padStart(2, '0')}/{QUICK_LINKS.length} · View {(cycleIdx % 3) + 1}/3
+            </span>
+          </span>
+        </div>
 
-              return (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  className={`group flex h-full min-h-[86px] flex-col justify-between rounded-[14px] border-2 p-1.5 transition-all duration-300 ${
-                    isLit
-                      ? 'bg-[#0072FF] -translate-y-0.5 ring-2 ring-[#00C6FF]/70 shadow-md'
-                      : active
-                      ? 'bg-[#0A2B6D] ring-2 ring-[#FF2E9A] shadow-2xs'
-                      : 'bg-[#0A2B6D] shadow-2xs hover:-translate-y-0.5'
-                  }`}
-                  style={{ borderColor: borderCol }}
-                >
-                  {/* Top iPad Camera & Bezel Bar */}
-                  <div className="mb-1 flex h-[12px] items-center justify-between px-1">
-                    <span className="flex items-center gap-0.5 text-[7px] font-extrabold uppercase tracking-wider text-white">
-                      <Tablet className="h-2.5 w-2.5 text-[#00C6FF]" />
-                      IPAD {String(idx + 1).padStart(2, '0')}
-                    </span>
-                    <span
-                      className={`h-1.5 w-1.5 rounded-full ${
-                        isLit ? 'bg-[#FF2E9A] animate-ping' : 'bg-[#10B981]'
-                      }`}
-                    />
-                  </div>
+        {/* Clean module tiles matching the landing page cards */}
+        <div className="grid auto-rows-fr grid-cols-2 items-stretch gap-2 sm:grid-cols-3 lg:grid-cols-6">
+          {QUICK_LINKS.map((item, idx) => {
+            const active = isActive(item.path);
+            const isLit = litIdx === idx;
+            const Icon = item.icon;
+            const currentSub = item.views[cycleIdx % item.views.length];
 
-                  {/* Inner iPad Display Screen — Pink/Blue/Purple Spray Between Outer & Title Border, App-Coloured Header, White Box & Dark Blue Writing */}
-                  <div
-                    className="flex flex-1 rounded-xl p-[1.5px]"
-                    style={{ background: TOP_BORDER_GRADIENT }}
+            return (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`group flex h-full min-h-[76px] flex-col justify-between gap-1.5 rounded-xl border p-2.5 transition-all duration-200 ${
+                  active
+                    ? 'border-[#5A00D6] bg-[#F5F0FF] shadow-2xs'
+                    : 'border-slate-200 bg-white hover:-translate-y-0.5 hover:border-[#0072FF]/40 hover:shadow-md'
+                } ${isLit ? 'ring-1 ring-[#00C6FF]/60' : ''}`}
+              >
+                <div className="flex items-start justify-between gap-1">
+                  <span
+                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-white shadow-2xs"
+                    style={{ background: getHeaderView(idx) }}
                   >
-                    <div
-                      className="flex h-full w-full flex-col justify-between gap-1 rounded-[9px] p-1 text-center"
-                      style={{ background: isLit ? LIT_IPAD_SPRAY_BG : UNIFORM_IPAD_SPRAY_BG }}
-                    >
-                      {/* App-Design Coloured Header Bar for Module Title */}
-                      <div
-                        className="gradient-brand flex min-h-[20px] w-full items-center justify-center gap-1 rounded-md px-1.5 py-0.5 text-center text-white"
-                        style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
-                      >
-                        <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-                        <span className="text-[8px] font-extrabold leading-tight text-white" style={{ color: '#FFFFFF' }}>
-                          {item.label}
-                        </span>
-                      </div>
+                    <Icon className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
+                  </span>
+                  <ArrowRight className="h-3 w-3 shrink-0 text-[#0A2B6D]/30 transition group-hover:translate-x-0.5 group-hover:text-[#0072FF]" />
+                </div>
 
-                      {/* White Writing Box Framed in App-Design Border With Dark Blue Writing */}
-                      <div
-                        className="w-full rounded-md p-[1.5px]"
-                        style={{ background: TOP_BORDER_GRADIENT }}
-                      >
-                        <div className="flex min-h-[20px] w-full items-center justify-between gap-1 rounded-[4px] bg-white px-1.5 py-0.5">
-                          <span className="flex-1 text-center text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
-                            {currentSub}
-                          </span>
-                          <ArrowRight className="h-2 w-2 shrink-0 text-[#0A2B6D]" />
-                        </div>
-                      </div>
-                    </div>
+                <div className="min-w-0">
+                  <div className="break-words text-[11px] font-extrabold leading-snug text-[#0A2B6D]">
+                    {item.label}
                   </div>
-                </Link>
-              );
-            })}
-          </div>
+                  <div className="mt-0.5 break-words text-[10px] font-medium leading-snug text-[#0A2B6D]/65">
+                    {currentSub}
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </div>
