@@ -53,86 +53,89 @@ const STEPS = [
 export default function LandingHowItWorks() {
   return (
     <section id="how-it-works" className="w-full scroll-mt-20">
-      <div className="mx-auto max-w-3xl text-center">
-        <span className="inline-flex items-center gap-2 rounded-full bg-[#0072FF]/10 px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-[#0072FF]">
-          Simple 3-Step Implementation
-        </span>
-        <h2 className="mt-3 font-editorial text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#0A2B6D]">
-          How It Works
-        </h2>
-        <p className="mt-3 text-base sm:text-lg text-[#0A2B6D]/75">
-          Move from fragmented spreadsheets to continuous NDIS &amp; Aged Care audit readiness
-          <br className="hidden sm:inline" /> in three clear steps.
-        </p>
-      </div>
+      <div className="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-8 lg:p-10 shadow-lg space-y-7">
+        {/* Consistent Landscape Section Header */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 border-b border-slate-100 pb-5 text-left">
+          <div>
+            <span className="inline-flex items-center gap-2 rounded-full bg-[#0072FF]/10 px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider text-[#0072FF]">
+              Simple 3-Step Implementation
+            </span>
+            <h2 className="mt-2.5 font-editorial text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#0A2B6D]">
+              How It Works
+            </h2>
+          </div>
+          <p className="max-w-md text-xs sm:text-sm font-medium text-[#0A2B6D]/75">
+            Move from fragmented spreadsheets to continuous NDIS &amp; Aged Care audit readiness in three clear steps.
+          </p>
+        </div>
 
-      <div className="relative mt-8 grid grid-cols-1 gap-6 md:grid-cols-3 items-stretch">
-        {STEPS.map((item, idx) => {
-          const Icon = item.icon;
-          return (
-            <Reveal
-              key={item.title}
-              delay={idx * 0.1}
-              className="relative flex flex-col justify-between rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-8 text-left shadow-lg transition-all hover:-translate-y-1 hover:shadow-xl"
-            >
-              {/* Top Step Pill & Icon */}
-              <div>
-                <div className="flex items-center justify-between gap-3">
-                  <span
-                    className="inline-flex items-center gap-2 rounded-full px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider text-white"
-                    style={{ backgroundColor: item.accent }}
-                  >
-                    <span>{item.step}</span>
-                    <span>•</span>
-                    <span>{item.number}</span>
-                  </span>
+        <div className="relative grid grid-cols-1 gap-5 md:grid-cols-3 items-stretch">
+          {STEPS.map((item, idx) => {
+            const Icon = item.icon;
+            return (
+              <Reveal
+                key={item.title}
+                delay={idx * 0.08}
+                className="relative flex h-full flex-col justify-between rounded-2xl border border-slate-200/90 bg-slate-50/40 p-6 text-left shadow-xs transition-all hover:-translate-y-0.5 hover:bg-white hover:border-[#0072FF] hover:shadow-lg"
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-3">
+                    <span
+                      className="inline-flex items-center gap-2 rounded-full px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider text-white"
+                      style={{ backgroundColor: item.accent }}
+                    >
+                      <span>{item.step}</span>
+                      <span>•</span>
+                      <span>{item.number}</span>
+                    </span>
 
-                  <div
-                    className="flex h-12 w-12 items-center justify-center rounded-2xl text-white shadow-md"
-                    style={{
-                      background: 'linear-gradient(135deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
-                    }}
-                  >
-                    <Icon className="h-6 w-6 text-white" />
+                    <div
+                      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white shadow-sm"
+                      style={{
+                        background: 'linear-gradient(135deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
+                      }}
+                    >
+                      <Icon className="h-5 w-5 text-white" />
+                    </div>
                   </div>
+
+                  <h3 className="mt-5 font-editorial text-xl sm:text-2xl font-extrabold text-[#0A2B6D]">
+                    {item.title}
+                  </h3>
+
+                  <p
+                    className="mt-1 text-sm font-extrabold"
+                    style={{ color: item.accent }}
+                  >
+                    {item.description}
+                  </p>
+
+                  <p className="mt-2.5 text-xs sm:text-sm leading-relaxed text-[#0A2B6D]/75">
+                    {item.detail}
+                  </p>
                 </div>
 
-                <h3 className="mt-6 font-editorial text-2xl font-extrabold text-[#0A2B6D]">
-                  {item.title}
-                </h3>
+                <ul className="mt-5 space-y-2 border-t border-slate-200/70 pt-3.5">
+                  {item.highlights.map((h) => (
+                    <li key={h} className="flex items-center gap-2 text-xs font-bold text-[#0A2B6D]">
+                      <CheckCircle2 className="h-4 w-4 shrink-0 text-[#0072FF]" />
+                      <span>{h}</span>
+                    </li>
+                  ))}
+                </ul>
 
-                <p
-                  className="mt-1.5 text-base font-extrabold"
-                  style={{ color: item.accent }}
-                >
-                  {item.description}
-                </p>
-
-                <p className="mt-3 text-sm leading-relaxed text-[#0A2B6D]/75">
-                  {item.detail}
-                </p>
-              </div>
-
-              <ul className="mt-6 space-y-2 border-t border-slate-100 pt-4">
-                {item.highlights.map((h) => (
-                  <li key={h} className="flex items-center gap-2 text-xs font-bold text-[#0A2B6D]">
-                    <CheckCircle2 className="h-4 w-4 shrink-0 text-[#0072FF]" />
-                    <span>{h}</span>
-                  </li>
-                ))}
-              </ul>
-
-              {idx < STEPS.length - 1 && (
-                <div
-                  aria-hidden="true"
-                  className="hidden md:flex absolute -right-5 top-1/2 z-20 -translate-y-1/2 h-8 w-8 items-center justify-center rounded-full border border-slate-200 bg-white text-[#5A00D6] shadow-md"
-                >
-                  <ArrowRight className="h-4 w-4" />
-                </div>
-              )}
-            </Reveal>
-          );
-        })}
+                {idx < STEPS.length - 1 && (
+                  <div
+                    aria-hidden="true"
+                    className="hidden md:flex absolute -right-4 top-1/2 z-20 -translate-y-1/2 h-7 w-7 items-center justify-center rounded-full border border-slate-200 bg-white text-[#5A00D6] shadow-sm"
+                  >
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </div>
+                )}
+              </Reveal>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

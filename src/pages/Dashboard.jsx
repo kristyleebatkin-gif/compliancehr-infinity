@@ -117,7 +117,7 @@ export default function Dashboard() {
         }))}
         activeKey={activeSuite}
         onSelectChannel={setActiveSuite}
-        columnsClass="grid-cols-1 sm:grid-cols-2 xl:grid-cols-4"
+        columnsClass="grid-cols-2 sm:grid-cols-4 lg:grid-cols-8"
       />
 
       {/* Quick Launch Actions & Personalisation Controls */}

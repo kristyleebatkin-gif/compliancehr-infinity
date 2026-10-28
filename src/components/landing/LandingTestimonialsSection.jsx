@@ -32,62 +32,67 @@ const TESTIMONIALS = [
 export default function LandingTestimonialsSection() {
   return (
     <section id="testimonials" className="w-full scroll-mt-20">
-      <div className="mx-auto max-w-3xl text-center">
-        <span className="inline-flex items-center gap-2 rounded-full bg-[#FF2E9A]/10 px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-[#FF2E9A]">
-          <ShieldCheck className="h-3.5 w-3.5" />
-          Trusted by NDIS &amp; Aged Care Support Leaders
-        </span>
-        <h2 className="mt-3 font-editorial text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#0A2B6D] sm:whitespace-nowrap">
-          Built for Leadership, Operations &amp; Compliance Teams
-        </h2>
-        <p className="mt-3 text-base sm:text-lg text-[#0A2B6D]/75">
-          See how executive leaders and compliance managers use ComplianceHR Infinity to protect participants and pass NDIS audits with confidence.
-        </p>
-      </div>
+      <div className="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-8 lg:p-10 shadow-lg space-y-7">
+        {/* Consistent Landscape Section Header */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 border-b border-slate-100 pb-5 text-left">
+          <div>
+            <span className="inline-flex items-center gap-2 rounded-full bg-[#FF2E9A]/10 px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider text-[#FF2E9A]">
+              <ShieldCheck className="h-3.5 w-3.5" />
+              Trusted by NDIS &amp; Aged Care Support Leaders
+            </span>
+            <h2 className="mt-2.5 font-editorial text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#0A2B6D]">
+              Built for Leadership, Operations &amp; Compliance Teams
+            </h2>
+          </div>
+          <p className="max-w-md text-xs sm:text-sm font-medium text-[#0A2B6D]/75">
+            See how executive leaders and compliance managers use ComplianceHR Infinity to protect participants and pass NDIS audits with confidence.
+          </p>
+        </div>
 
-      <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3 items-stretch">
-        {TESTIMONIALS.map((item, idx) => (
-          <Reveal
-            key={item.role}
-            delay={idx * 0.08}
-            className="flex flex-col justify-between rounded-3xl p-[2.5px] shadow-lg transition-all hover:-translate-y-1"
-            style={{
-              background: 'linear-gradient(120deg, #0072FF 0%, #5A00D6 52%, #FF2E9A 100%)',
-            }}
-          >
-            <div className="flex h-full flex-col justify-between rounded-[21px] bg-white p-6 sm:p-8 text-left">
-              <div>
-                <div className="flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-1 text-amber-400" aria-label="5 out of 5 stars">
-                    {[0, 1, 2, 3, 4].map((s) => (
-                      <Star key={s} className="h-4 w-4 fill-amber-400 text-amber-400" />
-                    ))}
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-3 items-stretch">
+          {TESTIMONIALS.map((item, idx) => (
+            <Reveal
+              key={item.role}
+              delay={idx * 0.08}
+              className="flex h-full flex-col justify-between rounded-3xl p-[2.5px] shadow-md transition-all hover:-translate-y-0.5 hover:shadow-xl"
+              style={{
+                background: 'linear-gradient(120deg, #0072FF 0%, #5A00D6 52%, #FF2E9A 100%)',
+              }}
+            >
+              <div className="flex h-full flex-col justify-between rounded-[21px] bg-white p-6 text-left">
+                <div>
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-1 text-amber-400" aria-label="5 out of 5 stars">
+                      {[0, 1, 2, 3, 4].map((s) => (
+                        <Star key={s} className="h-4 w-4 fill-amber-400 text-amber-400" />
+                      ))}
+                    </div>
+                    <Quote className="h-6 w-6 text-[#5A00D6]/30" />
                   </div>
-                  <Quote className="h-6 w-6 text-[#5A00D6]/30" />
+
+                  <p className="mt-4 text-xs sm:text-sm font-medium leading-relaxed text-[#0A2B6D]">
+                    &ldquo;{item.quote}&rdquo;
+                  </p>
                 </div>
 
-                <p className="mt-5 text-sm sm:text-base font-medium leading-relaxed text-[#0A2B6D]">
-                  &ldquo;{item.quote}&rdquo;
-                </p>
-              </div>
-
-              <div className="mt-6 border-t border-slate-100 pt-4">
-                <div
-                  className="inline-flex items-center rounded-full px-3 py-1 text-[11px] font-extrabold text-white"
-                  style={{ backgroundColor: item.accent }}
-                >
-                  {item.metric}
-                </div>
-                <div className="mt-3 font-editorial text-lg font-extrabold text-[#0A2B6D]">
-                  {item.role}
-                </div>
-                <div className="text-xs font-semibold text-[#0A2B6D]/70">
-                  {item.org}
+                <div className="mt-5 border-t border-slate-100 pt-4">
+                  <div
+                    className="inline-flex items-center rounded-full px-3 py-1 text-[11px] font-extrabold text-white"
+                    style={{ backgroundColor: item.accent }}
+                  >
+                    {item.metric}
+                  </div>
+                  <div className="mt-2.5 font-editorial text-lg font-extrabold text-[#0A2B6D]">
+                    {item.role}
+                  </div>
+                  <div className="text-xs font-semibold text-[#0A2B6D]/70">
+                    {item.org}
+                  </div>
                 </div>
               </div>
-            </div>
-          </Reveal>
-        ))}
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );

@@ -247,6 +247,11 @@
   .app-workspace-bg {
     background: #FFFFFF !important;
   }
+  /* Prevent double horizontal padding when a page inside .app-dashboard-canvas defines its own max-w-[1440px] wrapper */
+  .app-dashboard-canvas > .max-w-\[1440px\] {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
   .dark .app-workspace-bg,
   .dark .app-readable > div > main {
     background: hsl(var(--background)) !important;

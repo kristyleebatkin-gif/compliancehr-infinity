@@ -69,7 +69,7 @@ export default function LandingHero({ onBookDemo }) {
             <div className="flex flex-col justify-between lg:col-span-6 text-left text-white space-y-4">
               <div className="space-y-3.5">
                 {/* Top Enterprise Pill — NDIS & Aged Care Support Super-Platform */}
-                <div className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/15 px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider text-white backdrop-blur-md whitespace-nowrap">
+                <div className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/15 px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider text-white backdrop-blur-md sm:whitespace-nowrap">
                   <Sparkles className="h-3.5 w-3.5 shrink-0 text-[#00C6FF]" />
                   <span>NDIS &amp; Aged Care Support Super-Platform</span>
                 </div>
@@ -107,17 +107,17 @@ export default function LandingHero({ onBookDemo }) {
                   </Link>
                 </div>
 
-                {/* 4 Trust Badges — Fitted Cleanly Without Truncation */}
-                <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 pt-0.5">
+                {/* 4 Trust Badges — Fitted Cleanly Across Mobile, 1052px Desktop & Wide Viewports */}
+                <div className="grid grid-cols-2 gap-2 xl:grid-cols-4 pt-0.5">
                   {TRUST_BADGES.map((badge) => (
                     <div
                       key={badge}
-                      className="flex items-center gap-1.5 rounded-xl border border-white/25 bg-white/15 px-2.5 py-1.5 text-[11px] font-extrabold text-white backdrop-blur-md shadow-xs whitespace-nowrap"
+                      className="flex min-h-[36px] items-center gap-1.5 rounded-xl border border-white/25 bg-white/15 px-2.5 py-1.5 text-[11px] font-extrabold text-white backdrop-blur-md shadow-xs"
                     >
                       <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#00C6FF] text-[#0A2B6D]">
                         <Check className="h-2.5 w-2.5 stroke-[3]" />
                       </span>
-                      <span>{badge}</span>
+                      <span className="leading-tight">{badge}</span>
                     </div>
                   ))}
                 </div>

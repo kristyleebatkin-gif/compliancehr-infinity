@@ -16,6 +16,7 @@ import {
   DollarSign,
 } from 'lucide-react';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
+import { getHeaderView } from '@/lib/fullColourTiles';
 
 const BRAND_GRADIENT =
   'linear-gradient(120deg, #0A2B6D 0%, #0072FF 34%, #5A00D6 68%, #FF2E9A 100%)';
@@ -453,7 +454,7 @@ export default function BlueprintPreviewSection() {
                 aria-hidden="true"
                 className="pointer-events-none hidden lg:block absolute inset-x-8 top-1/2 -translate-y-1/2 h-0.5 bg-gradient-to-r from-[#00C6FF] via-white/60 to-[#FF6EDB]"
               />
-              <div className="relative z-10 grid grid-cols-1 gap-2.5 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 items-stretch">
+              <div className="relative z-10 grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-7 items-stretch">
                 {ECOSYSTEM_NODES.map((node, idx) => {
                   const Icon = node.icon;
                   return (
@@ -470,10 +471,10 @@ export default function BlueprintPreviewSection() {
                           0{idx + 1}
                         </span>
                       </div>
-                      <div className="mt-2 text-[11px] font-extrabold text-white leading-snug whitespace-nowrap">
+                      <div className="mt-2 text-[11px] font-extrabold text-white leading-snug">
                         {node.title}
                       </div>
-                      <div className="mt-0.5 text-[10px] font-medium text-white/85 leading-tight whitespace-nowrap">
+                      <div className="mt-0.5 text-[10px] font-medium text-white/85 leading-tight">
                         {node.sub}
                       </div>
                     </Link>
@@ -567,35 +568,42 @@ export default function BlueprintPreviewSection() {
                   </span>
                 </div>
 
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 items-stretch">
-                  {group.modules.map((mod) => {
+                <div className="grid auto-rows-fr grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-5 items-stretch">
+                  {group.modules.map((mod, idx) => {
                     const Icon = mod.icon || ShieldCheck;
+                    const headerBg = getHeaderView(idx);
                     return (
                       <Link
                         key={mod.key}
                         to={mod.path}
-                        className="group flex h-full flex-col justify-between rounded-2xl border border-slate-200/90 bg-slate-50/40 p-3.5 text-left shadow-2xs transition-all hover:-translate-y-0.5 hover:bg-white hover:border-[#0072FF] hover:shadow-md"
+                        title={`${mod.label} — ${mod.blurb}`}
+                        className="group flex h-full min-h-[108px] flex-col gap-[3px] rounded-xl border-2 border-[#0A2B6D] bg-[#0A2B6D] p-[3px] text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-[#0072FF] hover:shadow-md focus-visible:outline-none"
                       >
-                        <div>
-                          <div className="flex items-center justify-between gap-2">
-                            <div
-                              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-white"
-                              style={{ background: BRAND_GRADIENT }}
-                            >
-                              <Icon className="h-4 w-4 text-white" />
+                        <div className="flex flex-1 flex-col overflow-hidden rounded-[8px] bg-white">
+                          <div
+                            className="flex min-h-[38px] items-center justify-between gap-1 px-2 py-1 text-white"
+                            style={{ background: headerBg }}
+                          >
+                            <div className="flex min-w-0 items-center gap-1.5">
+                              <Icon className="h-3.5 w-3.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                              <span
+                                className="min-w-0 text-[10px] font-extrabold leading-[12px] tracking-tight text-white"
+                                style={{ color: '#FFFFFF', wordBreak: 'normal', overflowWrap: 'normal' }}
+                              >
+                                {mod.label}
+                              </span>
                             </div>
-                            <ArrowUpRight className="h-3.5 w-3.5 text-slate-400 transition group-hover:text-[#0072FF]" />
+                            <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-white/75" />
                           </div>
-                          <h4 className="mt-2.5 text-xs sm:text-[13px] font-extrabold text-[#0A2B6D] group-hover:text-[#0072FF] leading-snug">
-                            {mod.label}
-                          </h4>
-                          <p className="mt-1 text-[11px] leading-snug text-[#0A2B6D]/80">
-                            {mod.blurb}
-                          </p>
+                          <div className="flex min-h-[48px] flex-1 items-center justify-between gap-1.5 border-t border-[#0A2B6D]/10 bg-white px-2 py-1.5">
+                            <span className="line-clamp-3 min-w-0 flex-1 break-words text-[10.5px] font-bold leading-[13px] text-[#0A2B6D]/85">
+                              {mod.blurb}
+                            </span>
+                            <ArrowRight className="h-3 w-3 shrink-0 text-[#0072FF] transition group-hover:translate-x-0.5 group-hover:text-[#FF2E9A]" />
+                          </div>
                         </div>
-                        <div className="mt-2.5 pt-2 border-t border-slate-200/60 flex items-center justify-between text-[10.5px] font-extrabold text-[#0072FF]">
-                          <span>Open Module</span>
-                          <span>→</span>
+                        <div className="flex h-[5px] items-center justify-center">
+                          <span className="h-[2.5px] w-6 rounded-full bg-white/45 transition-all group-hover:bg-white/80" />
                         </div>
                       </Link>
                     );

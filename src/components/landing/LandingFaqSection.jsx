@@ -58,22 +58,23 @@ export default function LandingFaqSection() {
 
   return (
     <section id="faq" className="w-full scroll-mt-20">
-      <Reveal className="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-10 lg:p-12 shadow-lg">
-        <div className="mx-auto max-w-3xl text-center">
-          <span className="inline-flex items-center gap-2 rounded-full bg-[#0072FF]/10 px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-[#0072FF]">
-            <HelpCircle className="h-3.5 w-3.5 text-[#5A00D6]" />
-            Frequently Asked Questions
-          </span>
-          <h2 className="mt-3 font-editorial text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#0A2B6D]">
-            Answers to Key Questions
-          </h2>
-          <p className="mt-3 text-base sm:text-lg text-[#0A2B6D]/75">
-            Everything you need to know about NDIS &amp; Aged Care compliance and security,
-            <br className="hidden sm:inline" /> from implementation to day-to-day operations.
+      <Reveal className="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-8 lg:p-10 shadow-lg space-y-7">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 border-b border-slate-100 pb-5 text-left">
+          <div>
+            <span className="inline-flex items-center gap-2 rounded-full bg-[#0072FF]/10 px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider text-[#0072FF]">
+              <HelpCircle className="h-3.5 w-3.5 text-[#5A00D6]" />
+              Frequently Asked Questions
+            </span>
+            <h2 className="mt-2.5 font-editorial text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#0A2B6D]">
+              Answers to Key Questions
+            </h2>
+          </div>
+          <p className="max-w-md text-xs sm:text-sm font-medium text-[#0A2B6D]/75">
+            Everything you need to know about NDIS &amp; Aged Care compliance and security, from implementation to day-to-day operations.
           </p>
         </div>
 
-        <div className="mx-auto mt-10 grid max-w-5xl grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 items-start">
           {FAQS.map((faq, idx) => {
             const isOpen = openIndex === idx;
             return (

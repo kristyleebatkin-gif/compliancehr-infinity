@@ -446,7 +446,7 @@ export default function AppLayout() {
             <ModuleGuide />
           </div>
           <AutoRegisterInsights />
-          <div className="app-dashboard-canvas min-w-0" style={{ '--module-colour': currentModuleColour }}>
+          <div className="app-dashboard-canvas mx-auto w-full max-w-[1440px] min-w-0 px-4 py-3 sm:px-6 lg:px-8" style={{ '--module-colour': currentModuleColour }}>
             <ErrorBoundary>
               <Outlet />
             </ErrorBoundary>
