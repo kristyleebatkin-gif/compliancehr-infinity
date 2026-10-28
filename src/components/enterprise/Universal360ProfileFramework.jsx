@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import { Link } from 'react-router-dom';
 import {
   Users, Heart, ShieldAlert, AlertTriangle, ShieldCheck, ClipboardCheck,
-  FolderOpen, Truck, Sparkles, CheckCircle2, ArrowRight, RefreshCw,
-  GitBranch, Clock, FileCheck2, Zap, Layers, Lock, Play, PlusCircle,
+  FolderOpen, Truck, CheckCircle2, ArrowRight, RefreshCw,
+  Clock, Zap, Layers,
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
@@ -414,7 +414,7 @@ export default function Universal360ProfileFramework({
       if (!task?.id) throw new Error('Task creation was not confirmed');
       taskCreated = true;
       completedActions.current.add(actionKey);
-      await base44.entities.AuditLog.create({
+      const audit = await base44.entities.AuditLog.create({
         action: '360° Review Task Created',
         entity_type: currentTypeObj.shortLabel,
         record_id: String(recordId),
@@ -422,6 +422,7 @@ export default function Universal360ProfileFramework({
         performed_by: user.email || user.full_name || user.id,
         details: `Created review task ${task.id}. No readiness scores, compliance mappings, notifications or other automation outputs were updated by this action.`,
       });
+      if (!audit?.id) throw new Error('Audit entry was not confirmed');
       const message = 'Review task created and audit entry saved. Readiness and mapping were not changed.';
       setActionResult(message);
       toast({ title: 'Review task created', description: message });
