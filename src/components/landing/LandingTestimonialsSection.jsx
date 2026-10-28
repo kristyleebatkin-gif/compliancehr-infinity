@@ -1,6 +1,7 @@
 import React from 'react';
-import { Quote, ShieldCheck, Star } from 'lucide-react';
+import { Quote, ShieldCheck, Star, MessageSquareQuote } from 'lucide-react';
 import Reveal from '@/components/landing/Reveal';
+import LandingSectionHeader from '@/components/landing/LandingSectionHeader';
 
 const TESTIMONIALS = [
   {
@@ -33,21 +34,13 @@ export default function LandingTestimonialsSection() {
   return (
     <section id="testimonials" className="w-full scroll-mt-20">
       <div className="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-8 lg:p-10 shadow-lg space-y-7">
-        {/* Consistent Landscape Section Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 border-b border-slate-100 pb-5 text-left">
-          <div>
-            <span className="inline-flex items-center gap-2 rounded-full bg-[#FF2E9A]/10 px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider text-[#FF2E9A]">
-              <ShieldCheck className="h-3.5 w-3.5" />
-              Trusted by NDIS &amp; Aged Care Support Leaders
-            </span>
-            <h2 className="mt-2.5 font-editorial text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#0A2B6D]">
-              Built for Leadership, Operations &amp; Compliance Teams
-            </h2>
-          </div>
-          <p className="max-w-md text-xs sm:text-sm font-medium text-[#0A2B6D]/75">
-            See how executive leaders and compliance managers use ComplianceHR Infinity to protect participants and pass NDIS audits with confidence.
-          </p>
-        </div>
+        <LandingSectionHeader
+          badge="Trusted by NDIS & Aged Care Support Leaders"
+          tone="pink"
+          icon={MessageSquareQuote}
+          title="Built for Leadership, Operations & Compliance Teams"
+          description="See how executive leaders and compliance managers use ComplianceHR Infinity to protect participants and pass NDIS audits with confidence."
+        />
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-3 items-stretch">
           {TESTIMONIALS.map((item, idx) => (
