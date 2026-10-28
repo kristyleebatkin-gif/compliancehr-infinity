@@ -20,6 +20,7 @@ import {
 import GlobalSearch from '@/components/GlobalSearch';
 import AutoRegisterInsights from '@/components/AutoRegisterInsights';
 import QuickAppBar from '@/components/QuickAppBar';
+import ObsidianSidebarRemote from '@/components/ObsidianSidebarRemote';
 import { Image } from '@/components/ui/image';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import PendingApprovalNotice from '@/components/users/PendingApprovalNotice';
@@ -152,95 +153,15 @@ export default function AppLayout() {
     .join('') || 'CH';
 
   const sidebarContent = (
-    <div className="flex h-full w-full min-w-0 min-h-0 flex-col overflow-hidden bg-white p-2 space-y-2">
-      <div
-        className="shrink-0 rounded-2xl p-[8px] shadow-md"
-        style={{
-          background:
-            'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
-        }}
-      >
-        <div className="flex flex-col items-center justify-center rounded-xl bg-white p-2.5 text-center space-y-1">
-          <div className="font-editorial text-base font-extrabold tracking-tight text-[#0A2B6D]">
-            Compliance
-            <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-              HR
-            </span>{' '}
-            <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-              Infinity
-            </span>
-          </div>
-          <div className="text-[9.5px] font-extrabold leading-tight">
-            <span className="text-[#0072FF]">Complete Control.</span>{' '}
-            <span className="text-[#5A00D6]">Greater Confidence.</span>{' '}
-            <span className="text-[#FF2E9A]">Brighter Success.</span>
-          </div>
-          <span
-            className="mt-1 inline-flex items-center justify-center rounded-full border-2 border-[#0A2B6D] px-3 py-0.5 text-[10px] font-extrabold text-white shadow-2xs"
-            style={{
-              background:
-                'linear-gradient(120deg, #FF2E9A 0%, #A100FF 42%, #5A00D6 74%, #0072FF 100%)',
-            }}
-          >
-            {role}
-          </span>
-        </div>
-      </div>
-
-      <nav aria-label="App modules" className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-1 py-1 space-y-3">
-        {NAV_GROUPS.map((group, gIdx) => {
-          const items = visiblePrimary.filter((item) => group.keys.includes(item.key) && !(item.key === 'staff-progress' && visiblePrimary.some((entry) => entry.key === 'staff')));
-          if (!items.length) return null;
-          return (
-            <div key={group.label} className="space-y-1.5">
-              <div
-                className="inline-flex items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white"
-                style={{ background: getHeaderView(gIdx) }}
-              >
-                {group.label}
-              </div>
-              <div className="space-y-1.5">
-                {items.map((item, iIdx) => {
-                  const Icon = item.icon;
-                  const active = isActive(item.path);
-                  const tile = getTilePalette(gIdx * 3 + iIdx);
-                  const sym = getSymbolView(gIdx * 3 + iIdx);
-                  return (
-                    <Link
-                      key={item.path}
-                      to={item.path}
-                      className={`group relative flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-3 py-1.5 text-xs font-extrabold shadow-2xs transition-all hover:-translate-y-0.5 ${
-                        active ? 'ring-2 ring-[#0A2B6D]' : ''
-                      }`}
-                      style={{ backgroundColor: tile.bg, color: tile.text }}
-                    >
-                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white shadow-2xs">
-                        <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
-                      </span>
-                      <span className="min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap" style={{ color: tile.text }}>{navLabel(item)}</span>
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-          );
-        })}
-      </nav>
-
-      <div className="shrink-0 rounded-2xl border-2 border-[#0A2B6D] bg-white p-2.5 space-y-1.5">
-        <div className="px-1">
-          <div className="truncate text-xs font-extrabold text-[#0A2B6D]">{user?.full_name || 'User'}</div>
-          <div className="truncate text-[11px] font-bold text-[#5A00D6]">{user?.email || ''}</div>
-        </div>
-        <button
-          onClick={handleLogout}
-          className="flex w-full items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] bg-white px-3 py-1.5 text-xs font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF] transition-colors"
-        >
-          <LogOut className="h-3.5 w-3.5 text-[#FF2E9A]" />
-          Sign out
-        </button>
-      </div>
-    </div>
+    <ObsidianSidebarRemote
+      visiblePrimary={visiblePrimary}
+      role={role}
+      user={user}
+      isActive={isActive}
+      navLabel={navLabel}
+      currentLabel={currentLabel}
+      onLogout={handleLogout}
+    />
   );
 
   if (role === ROLES.AUDITOR) return <AuditorOnlyLayout />;
