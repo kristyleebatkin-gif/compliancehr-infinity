@@ -32,6 +32,7 @@ import EasyAccessVisibilityHub from '@/components/compliance/EasyAccessVisibilit
 import IntelligentOperationsGuidanceSuite from '@/components/compliance/IntelligentOperationsGuidanceSuite';
 import EnterpriseToolsAiIntelligencePlatform from '@/components/compliance/EnterpriseToolsAiIntelligencePlatform';
 import FiveLayerEnterpriseAcceptanceSuite from '@/components/compliance/FiveLayerEnterpriseAcceptanceSuite';
+import UniversalDataStorageRetentionExportSuite from '@/components/compliance/UniversalDataStorageRetentionExportSuite';
 import { Activity, ShieldCheck, Sparkles, Zap, LayoutGrid, ClipboardCheck, Layers, Building2, Cpu } from 'lucide-react';
 
 const HEADINGS = {
@@ -141,6 +142,7 @@ export default function Dashboard() {
       {/* 1. Original Published KPI Strip, Announcements Board & Quick Links + 45 Modules Hub + Quick Start + Role Dashboards */}
       {isSuiteVisible('overview') && (
         <>
+          <UniversalDataStorageRetentionExportSuite />
           <FiveLayerEnterpriseAcceptanceSuite />
           <EnterpriseToolsAiIntelligencePlatform />
           <IntelligentOperationsGuidanceSuite />

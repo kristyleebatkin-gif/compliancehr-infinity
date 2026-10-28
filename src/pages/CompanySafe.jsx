@@ -9,6 +9,7 @@ import StaffBadgeCreator from '@/components/safe/StaffBadgeCreator';
 import SecurityPosture from '@/components/safe/SecurityPosture';
 import LiveSecurityEvidence from '@/components/safe/LiveSecurityEvidence';
 import EnterpriseStandardQualityGateSuite from '@/components/compliance/EnterpriseStandardQualityGateSuite';
+import UniversalDataStorageRetentionExportSuite from '@/components/compliance/UniversalDataStorageRetentionExportSuite';
 import { SQUISHED_GRADIENT } from '@/components/safe/ExecutiveWallScene';
 
 const SAFE_MODULES = [
@@ -137,6 +138,9 @@ export default function CompanySafe() {
         {openArea.documents && <ComplianceUploads defaultOpen />}
         {openArea.posture && <SecurityPosture defaultOpen />}
       </div>
+
+      {/* Universal Data Storage, Retention, Traceability & Export Standard */}
+      <UniversalDataStorageRetentionExportSuite />
 
       {/* Protected Master Copy, Working Copy, Version / Review / Approval / Change History & 11-Section Controlled Forms */}
       <EnterpriseStandardQualityGateSuite />

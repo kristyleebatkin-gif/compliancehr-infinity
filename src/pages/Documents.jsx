@@ -34,6 +34,7 @@ import BulkEditBar from '@/components/documents/BulkEditBar';
 import ExpiryCalendar from '@/components/documents/ExpiryCalendar';
 import SmartMailroomHub from '@/components/documents/SmartMailroomHub';
 import EnterpriseStandardQualityGateSuite from '@/components/compliance/EnterpriseStandardQualityGateSuite';
+import UniversalDataStorageRetentionExportSuite from '@/components/compliance/UniversalDataStorageRetentionExportSuite';
 
 const DOC_TYPES = ['Resume', 'Contract', 'Police Check', 'Blue Card', 'First Aid Certificate', 'CPR Certificate', 'NDIS Worker Screening', "Driver's License", 'Qualifications', 'Reference Check', 'Other'];
 const CATEGORIES = ['Mandatory', 'Compliance', 'Clinical', 'Professional Development', 'Induction'];
@@ -270,6 +271,7 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
         </TabsList>
 
         <TabsContent value="documents" className="mt-3 space-y-3">
+          {!profile && <UniversalDataStorageRetentionExportSuite />}
           {!profile && <DocumentsDashboard role={me?.role} focus={focus} />}
       <StaffDocumentToolbar profile={profile} staff={staff} scanning={scanning} scanMsg={scanMsg} onScan={runScan} onExport={exportAll} onAdd={() => { setEditing(null); setOpen(true); }} onDone={load} />
         <EmployeeDocumentDialog

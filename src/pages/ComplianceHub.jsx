@@ -56,6 +56,7 @@ import EasyAccessVisibilityHub from '@/components/compliance/EasyAccessVisibilit
 import IntelligentOperationsGuidanceSuite from '@/components/compliance/IntelligentOperationsGuidanceSuite';
 import EnterpriseToolsAiIntelligencePlatform from '@/components/compliance/EnterpriseToolsAiIntelligencePlatform';
 import FiveLayerEnterpriseAcceptanceSuite from '@/components/compliance/FiveLayerEnterpriseAcceptanceSuite';
+import UniversalDataStorageRetentionExportSuite from '@/components/compliance/UniversalDataStorageRetentionExportSuite';
 import BusinessHealthComplianceIntelligenceDashboard from '@/components/compliance/BusinessHealthComplianceIntelligenceDashboard';
 import InfinityCoreEngine from '@/components/compliance/InfinityCoreEngine';
 import InfinityOneClickOperations from '@/components/operations/InfinityOneClickOperations';
@@ -303,7 +304,8 @@ export default function ComplianceHub() {
         )}
       />
 
-      {/* Five-Layer Enterprise Build, Validation & Acceptance Framework + Enterprise AI & Intelligence Platform */}
+      {/* Universal Data Storage, Retention, Traceability & Export Standard + Five-Layer Framework */}
+      <UniversalDataStorageRetentionExportSuite />
       <FiveLayerEnterpriseAcceptanceSuite />
       <EnterpriseToolsAiIntelligencePlatform />
       <IntelligentOperationsGuidanceSuite />
