@@ -487,7 +487,7 @@ export default function Universal360ProfileFramework({
         </div>
       </div>
 
-      <div className="p-3 sm:p-4 space-y-3">
+      <div className="p-4 sm:p-6 space-y-5">
         <div role="status" aria-live="polite" className="rounded-xl border border-[#C084FC] bg-[#F6F0FF] p-3 text-xs font-semibold text-[#0A2B6D]">
           {actionResult || 'The automation button currently creates one review task and an audit entry. The 14 outputs, workflow steps and related sections below describe the framework; their execution and evidence are not verified here.'}
         </div>
@@ -502,7 +502,7 @@ export default function Universal360ProfileFramework({
         )}
         {/* 8 Master 360° Profile Type Selector Tabs */}
         {!focusRecord && (
-          <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-4 lg:grid-cols-8">
+          <div role="group" aria-label="Choose record type" className="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-8">
             {PROFILE_360_TYPES.map((type) => {
               const Icon = type.icon;
               const active = selectedType === type.id;
@@ -514,8 +514,10 @@ export default function Universal360ProfileFramework({
                   onClick={() => {
                     setSelectedType(type.id);
                     setSelectedRecordIdx(0);
+                    setActionResult(null);
                   }}
-                  className={`flex flex-col justify-between rounded-xl border-2 p-2 text-left transition-all ${
+                  aria-pressed={active}
+                  className={`min-h-[112px] flex flex-col justify-between rounded-2xl border-2 p-3 text-left transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0072FF] focus-visible:ring-offset-2 ${
                     active
                       ? 'border-[#5A00D6] bg-[#5A00D6] text-white shadow-sm'
                       : 'border-[#0A2B6D]/25 bg-white text-[#0A2B6D] hover:border-[#0072FF]'
@@ -535,7 +537,7 @@ export default function Universal360ProfileFramework({
                     {type.shortLabel}
                   </div>
                   <div className={`text-[9.5px] font-semibold ${active ? 'text-white/85' : 'text-[#5A00D6]'}`}>
-                    {count > 0 ? `${count} live records` : 'Master 360° schema'}
+                    {loading ? 'Loading…' : loadStates[type.id] === 'denied' ? 'Access restricted' : loadStates[type.id] === 'error' ? 'Unavailable' : `${count} records loaded`}
                   </div>
                 </button>
               );
@@ -544,7 +546,7 @@ export default function Universal360ProfileFramework({
         )}
 
         {/* Record Picker Strip + Selected Record Summary Header */}
-        <div className="rounded-xl border border-[#C084FC]/60 bg-[#F6F0FF]/70 p-3 space-y-2.5">
+        <div className="rounded-2xl border border-[#C084FC]/60 bg-[#F6F0FF]/70 p-4 sm:p-5 space-y-4">
           {!focusRecord && currentList.length > 1 && (
             <div className="flex flex-wrap items-center gap-1.5">
               <span className="text-[10.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
@@ -554,8 +556,9 @@ export default function Universal360ProfileFramework({
                 <button
                   key={rec.id}
                   type="button"
-                  onClick={() => setSelectedRecordIdx(idx)}
-                  className={`rounded-lg px-2.5 py-1 text-[11px] font-extrabold transition ${
+                  onClick={() => { setSelectedRecordIdx(idx); setActionResult(null); }}
+                  aria-pressed={idx === selectedRecordIdx}
+                  className={`min-h-[44px] rounded-xl px-3 py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0072FF] focus-visible:ring-offset-2 ${
                     idx === selectedRecordIdx
                       ? 'bg-[#0A2B6D] text-white shadow-2xs'
                       : 'border border-[#C084FC]/60 bg-white text-[#0A2B6D] hover:border-[#0072FF]'
@@ -594,13 +597,42 @@ export default function Universal360ProfileFramework({
             <div className="flex flex-wrap items-center gap-1.5 shrink-0">
               <Link
                 to={activeRecord.detailUrl || currentTypeObj.route}
-                className="inline-flex items-center gap-1 rounded-xl bg-[#0A2B6D] px-3 py-1.5 text-xs font-extrabold text-white shadow-2xs hover:bg-[#0072FF]"
+                className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl bg-[#0A2B6D] px-4 py-2 text-sm font-semibold text-white shadow-2xs hover:bg-[#0072FF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0072FF] focus-visible:ring-offset-2"
               >
                 <span style={{ color: '#FFFFFF' }}>Open Full Dedicated Workspace</span>
                 <ArrowRight className="h-3.5 w-3.5 text-[#00C6FF]" />
               </Link>
             </div>
           </div>
+        </div>
+
+        <div className="grid gap-4 rounded-2xl border border-[#C084FC]/60 bg-white p-4 sm:p-5 md:grid-cols-[1fr_auto] md:items-center">
+          <div className="space-y-2">
+            <p className="text-xs font-bold uppercase tracking-wider text-[#5A00D6]">Next step</p>
+            <p className="text-base font-semibold leading-relaxed text-[#0A2B6D]">
+              {{
+                employee: 'Review screening, training and documents before confirming workforce readiness.',
+                participant: 'Review consent, support plans and goals with the authorised support team.',
+                risk: 'Review controls, responsible owner and the next assessment date.',
+                incident: 'Review immediate response, investigation evidence and outstanding actions.',
+                standard: 'Review the policy and supporting evidence before assessing compliance.',
+                audit: 'Review findings, corrective actions and verification evidence.',
+                document: 'Review the document version, approval and expiry information.',
+                supplier: 'Review screening, insurance and contract evidence.',
+              }[selectedType]}
+            </p>
+            <p className="text-sm leading-relaxed text-[#0A2B6D]">
+              Create a review task for this record. Its readiness remains unassessed until evidence is reviewed.
+            </p>
+          </div>
+          <Button
+            type="button"
+            onClick={triggerMasterAutomation}
+            disabled={runningAutomation || loading || !activeRecord.id || completedActions.current.has(`${selectedType}:${activeRecord.id}`) || (!focusRecord && loadStates[selectedType] !== 'loaded')}
+            className="min-h-[48px] w-full rounded-xl bg-[#5A00D6] px-5 text-sm font-semibold text-white hover:bg-[#0072FF] focus-visible:ring-2 focus-visible:ring-[#0072FF] focus-visible:ring-offset-2 md:w-auto"
+          >
+            {runningAutomation ? 'Creating review task…' : completedActions.current.has(`${selectedType}:${activeRecord.id}`) ? 'Review task created' : 'Create review task'}
+          </Button>
         </div>
 
         {/* All Domain-Specific 360° Attributes for this Object */}
