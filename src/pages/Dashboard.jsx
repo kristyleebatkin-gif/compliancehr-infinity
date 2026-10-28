@@ -35,6 +35,7 @@ import FiveLayerEnterpriseAcceptanceSuite from '@/components/compliance/FiveLaye
 import UniversalDataStorageRetentionExportSuite from '@/components/compliance/UniversalDataStorageRetentionExportSuite';
 import WorkforcePresenceSafetyCentre from '@/components/emergency/WorkforcePresenceSafetyCentre';
 import EnterpriseOperationsAttendancePayrollFramework from '@/components/operations/EnterpriseOperationsAttendancePayrollFramework';
+import FrontlineWorkerMobileRapidSuite from '@/components/operations/FrontlineWorkerMobileRapidSuite';
 import { Activity, ShieldCheck, Sparkles, Zap, LayoutGrid, ClipboardCheck, Layers, Building2, Cpu } from 'lucide-react';
 
 const HEADINGS = {
@@ -144,6 +145,7 @@ export default function Dashboard() {
       {/* 1. Original Published KPI Strip, Announcements Board & Quick Links + 45 Modules Hub + Quick Start + Role Dashboards */}
       {isSuiteVisible('overview') && (
         <>
+          <FrontlineWorkerMobileRapidSuite />
           <WorkforcePresenceSafetyCentre />
           <EnterpriseOperationsAttendancePayrollFramework />
           <UniversalDataStorageRetentionExportSuite />

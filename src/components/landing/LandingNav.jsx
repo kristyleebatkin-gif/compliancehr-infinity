@@ -121,13 +121,13 @@ export default function LandingNav({ onBookDemo }) {
           <div className="flex flex-wrap items-center gap-1.5">
             {[
               ['Dashboard', '/dashboard'],
+              ['Frontline Rapid Hub', '/frontline-hub'],
               ['Workforce Presence & Safety', '/workforce-presence'],
               ['Universal Storage & Export Hub', '/universal-storage'],
               ['Document Vault', '/documents'],
               ['Company Safe', '/company-safe'],
               ['Compliance Centre', '/compliance'],
               ['Operations Centre', '/operations-centre'],
-              ['Emergency Response', '/emergency-response'],
             ].map(([label, path]) => (
               <Link
                 key={path}

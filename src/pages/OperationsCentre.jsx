@@ -4,6 +4,7 @@ import ExecutiveOperationsCentre from '@/components/operations/ExecutiveOperatio
 import FiveLayerEnterpriseAcceptanceSuite from '@/components/compliance/FiveLayerEnterpriseAcceptanceSuite';
 import UniversalDataStorageRetentionExportSuite from '@/components/compliance/UniversalDataStorageRetentionExportSuite';
 import EnterpriseOperationsAttendancePayrollFramework from '@/components/operations/EnterpriseOperationsAttendancePayrollFramework';
+import FrontlineWorkerMobileRapidSuite from '@/components/operations/FrontlineWorkerMobileRapidSuite';
 
 export default function OperationsCentre() {
   return (
@@ -12,6 +13,7 @@ export default function OperationsCentre() {
         title="Executive Operations & Control Centre"
         description="Unified whole-of-enterprise command across NDIS Practice Standards, Aged Care Quality Standards, SIRS, ISO 31000 Risk, Workforce & Document Control."
       />
+      <FrontlineWorkerMobileRapidSuite />
       <EnterpriseOperationsAttendancePayrollFramework />
       <UniversalDataStorageRetentionExportSuite />
       <FiveLayerEnterpriseAcceptanceSuite />

@@ -45,6 +45,7 @@ import InvoicingCentre from '@/pages/InvoicingCentre';
 import MeetingCentre from '@/pages/MeetingCentre';
 import EmergencyResponse from '@/pages/EmergencyResponse';
 import WorkforcePresenceCentre from '@/pages/WorkforcePresenceCentre';
+import FrontlineRapidHub from '@/pages/FrontlineRapidHub';
 import ProgramsEvents from '@/pages/ProgramsEvents';
 import Communications from '@/pages/Communications';
 import IntakeCentre from '@/pages/IntakeCentre';
@@ -168,6 +169,7 @@ const AuthenticatedApp = () => {
           <Route path="/meetings" element={<RoleGate navKey="meetings"><MeetingCentre /></RoleGate>} />
           <Route path="/emergency-response" element={<RoleGate navKey="emergency-response"><EmergencyResponse /></RoleGate>} />
           <Route path="/workforce-presence" element={<WorkforcePresenceCentre />} />
+          <Route path="/frontline-hub" element={<FrontlineRapidHub />} />
           <Route path="/programs" element={<RoleGate navKey="programs"><ProgramsEvents /></RoleGate>} />
           <Route path="/communications" element={<RoleGate navKey="communications"><Communications /></RoleGate>} />
           <Route path="/audit" element={<RoleGate navKey="audit-log"><Navigate to="/compliance" replace /></RoleGate>} />
