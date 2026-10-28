@@ -36,7 +36,8 @@ const CADENCES = [
     tone: 'bg-warning/10',
     items: [
       'Internal audits with stored evidence and closed-loop corrective actions',
-      'Individual Participant Risk Assessments & 3-Monthly Participant Details Checks',
+      'Employee and participant profile reviews every 3 calendar months from the last completed review (provider policy)',
+      'Individual Participant Risk Assessments & Participant Details Checks',
       'Same documented evidence and corrective actions apply to incidents, feedback and risks',
     ],
   },
@@ -45,6 +46,7 @@ const CADENCES = [
     tone: 'bg-safe/10',
     items: [
       '6-Monthly: First aid kit checks, fire safety/extinguisher checks, evacuation drills, MSDS reviews & natural disaster kits',
+      'Staff training renewal every 12 calendar months from evidenced completion (provider policy); earlier qualification expiry or competency needs still apply',
       '12-Monthly: Policy & procedure reviews, staff performance appraisals, insurance renewals & NDIS Practice Standards self-assessment',
     ],
   },
@@ -84,6 +86,7 @@ const Chip = ({ children }) => <li className="break-words rounded-md bg-white px
 export default function ComplianceSchedulesDashboard() {
   return <EmployeeProfileSection title="NDIS Compliance Schedule & Registers Dashboard" tone="red" defaultOpen>
     <div className="space-y-3">
+      <p className="rounded-lg bg-white p-3 text-sm leading-relaxed text-black">Schedule reference only. Profile reviews are due every 3 calendar months and staff training every 12 calendar months under provider policy. A request or assignment is not evidence of completion. Reminder delivery and completion evidence must be checked in the linked records.</p>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {CADENCES.map((cadence) => <div key={cadence.title} className={`rounded-lg ${cadence.tone} p-3`}>
           <p className="text-xs font-bold text-black">{cadence.title}</p>

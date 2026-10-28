@@ -50,3 +50,10 @@ safety checks, drills, audits, registers and business documents above.
 - Service delivery register: People / participant directory
 - Continuous improvement: Quality Improvement module
 - Business documents: Company Safe (business plan templates)
+## Provider policy update — 29 October 2026
+- Employee and participant profiles: review every **3 calendar months** from the last completed review. A reminder or request does not count as a completed review.
+- Staff training: renewal due every **12 calendar months** from the evidenced completion date. Assignment, attendance, assessment and practical competency are distinct states.
+- Missing completion evidence means the due date is unknown; do not infer current training or invent a completion date.
+- Preserve externally issued qualification expiry dates. Earlier credential expiry, participant-specific requirements or identified competency gaps require earlier action.
+- These intervals are the provider's operating policy, not a claim of a universal statutory renewal interval.
+- Reminder delivery, escalation and end-to-end renewal tracking require validation before acceptance. Updating a displayed schedule or module default does not prove a reminder was delivered.
