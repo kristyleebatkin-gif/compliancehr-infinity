@@ -829,6 +829,42 @@ export default function EnterpriseStandardQualityGateSuite() {
                   <div className="flex flex-wrap items-center gap-1.5 shrink-0">
                     <Button
                       size="sm"
+                      type="button"
+                      onClick={() => {
+                        const cloned = {
+                          ...activeTemplate,
+                          id: `TPL-CLONE-${Date.now()}`,
+                          documentNumber: `${activeTemplate.documentNumber}-COPY`,
+                          recordId: `${activeTemplate.recordId}-C1`,
+                          documentName: `${activeTemplate.documentName} (Cloned Template)`,
+                          versionNumber: 'v1.0',
+                          status: 'Draft',
+                        };
+                        setCustomTemplates((prev) => [cloned, ...prev]);
+                        setSelectedTemplateId(cloned.id);
+                        toast({
+                          title: 'Form / Template Cloned',
+                          description: `${cloned.documentNumber} created and ready for editing.`,
+                        });
+                      }}
+                      className="bg-white border border-[#0A2B6D] text-[#0A2B6D] text-xs font-extrabold hover:bg-slate-100"
+                    >
+                      Clone Form
+                    </Button>
+                    <Button
+                      size="sm"
+                      type="button"
+                      disabled={savingVault}
+                      onClick={async () => {
+                        updateTemplateField('status', 'Approved');
+                        await handleSaveAndFileRecord('pdf');
+                      }}
+                      className="bg-emerald-600 text-white text-xs font-extrabold"
+                    >
+                      Publish &amp; Lock in Safe
+                    </Button>
+                    <Button
+                      size="sm"
                       disabled={savingVault}
                       onClick={() => handleSaveAndFileRecord('pdf')}
                       className="bg-[#0A2B6D] text-white text-xs font-extrabold"

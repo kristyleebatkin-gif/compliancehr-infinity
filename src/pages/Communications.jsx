@@ -41,6 +41,7 @@ import CommunicateWell from '@/components/communications/CommunicateWell';
 import CommAuditBar from '@/components/communications/CommAuditBar';
 import CommWeatherBar from '@/components/communications/CommWeatherBar';
 import ExecutiveWallScene, { SmallSafeVaultBar } from '@/components/safe/ExecutiveWallScene';
+import EnterpriseStandardQualityGateSuite from '@/components/compliance/EnterpriseStandardQualityGateSuite';
 import '@/components/communications/commCentreTheme.css';
 
 const TABS = [
@@ -203,7 +204,12 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
               : <CommunicationDiary />}
         </TabsContent>
         <TabsContent value="inbox"><Inbox /></TabsContent>
-        <TabsContent value="templates"><TemplateLibrary /></TabsContent>
+        <TabsContent value="templates">
+          <div className="space-y-4">
+            {!restricted && <EnterpriseStandardQualityGateSuite />}
+            <TemplateLibrary />
+          </div>
+        </TabsContent>
         <TabsContent value="email"><ProfessionalEmail /></TabsContent>
         <TabsContent value="bulk"><BulkMessage /></TabsContent>
         <TabsContent value="banter"><TeamBanter /></TabsContent>

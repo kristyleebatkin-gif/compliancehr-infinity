@@ -83,8 +83,11 @@ export default function Dashboard() {
     localStorage.setItem('chr-dashboard-density', mode);
   };
 
-  const isSuiteVisible = (suiteId) =>
-    activeSuite === suiteId || (activeSuite === 'all' && !hiddenSuites.includes(suiteId));
+  const isRestrictedRole = role === ROLES.PARTICIPANT || role === ROLES.SUPPORT;
+  const isSuiteVisible = (suiteId) => {
+    if (isRestrictedRole && suiteId !== 'overview') return false;
+    return activeSuite === suiteId || (activeSuite === 'all' && !hiddenSuites.includes(suiteId));
+  };
 
   useEffect(() => {
     const onModeChange = (e) => {

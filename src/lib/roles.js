@@ -74,7 +74,7 @@ export function hasApprovedAccess(user) {
 }
 export const NAV_PERMISSIONS = {
   'my-profile': PERSONAL, 'our-staff': [...OPERATIONS, ROLES.EMPLOYEE], 'our-participants': [...OPERATIONS, ROLES.PARTICIPANT],
-  dashboard: PERSONAL, 'operations-centre': PERSONAL, notifications: PERSONAL, assistant: PERSONAL, help: PERSONAL, 'user-guides': PERSONAL,
+  dashboard: PERSONAL, 'operations-centre': OPERATIONS, notifications: PERSONAL, assistant: PERSONAL, help: PERSONAL, 'user-guides': PERSONAL,
   'key-contacts': PERSONAL, 'community-council': PERSONAL, 'community-referral': PERSONAL, 'ndis-news': PERSONAL,
   programs: PERSONAL, events: PERSONAL, 'whats-on': PERSONAL, weather: PERSONAL, 'visual-boards': PERSONAL,
   participants: OPERATIONS, intake: PERSONAL, staff: OPERATIONS, training: PERSONAL, compliance: OPERATIONS,
@@ -90,13 +90,27 @@ export const NAV_PERMISSIONS = {
   'staff-progress': OPERATIONS, analytics: FULL_ACCESS, crm: OPERATIONS, procurement: FULL_ACCESS,
   projects: OPERATIONS, 'my-payroll': FULL_ACCESS,
 };
+const RESTRICTED_EXECUTIVE_KEYS = [
+  'operations-centre',
+  'company-safe',
+  'users',
+  'data-control',
+  'analytics',
+];
+
 export function canAccessNav(role, navKey) {
+  const normalized = normalizeRole(role);
+  if (
+    (normalized === ROLES.PARTICIPANT || normalized === ROLES.EMPLOYEE || role === ROLES.VOLUNTEER) &&
+    RESTRICTED_EXECUTIVE_KEYS.includes(navKey)
+  ) {
+    return false;
+  }
   if (isOpenAccessWindowActive()) return true;
-  role = normalizeRole(role);
-  if (FULL_ACCESS.includes(role)) return true;
-  if (role === ROLES.AUDITOR) return navKey === 'auditor-portal';
-  if (role === ROLES.TEAM_LEADER && FINANCIAL_KEYS.includes(navKey)) return false;
-  return Boolean(NAV_PERMISSIONS[navKey]?.includes(role));
+  if (FULL_ACCESS.includes(normalized)) return true;
+  if (normalized === ROLES.AUDITOR) return navKey === 'auditor-portal';
+  if (normalized === ROLES.TEAM_LEADER && FINANCIAL_KEYS.includes(navKey)) return false;
+  return Boolean(NAV_PERMISSIONS[navKey]?.includes(normalized));
 }
 export function isAdmin(role) { return isOpenAccessWindowActive() || FULL_ACCESS.includes(role); }
 export function isCompliance(role) { return isOpenAccessWindowActive() || FULL_ACCESS.includes(role); }

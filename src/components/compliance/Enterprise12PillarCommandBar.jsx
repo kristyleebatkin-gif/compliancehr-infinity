@@ -12,6 +12,22 @@ import {
 const CHR_LOGO =
   'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png';
 
+const EXECUTIVE_13_ADMIN_CENTRES = [
+  'Form Generator',
+  'Template Library',
+  'Workflow Builder',
+  'Dashboard Builder',
+  'Report Builder',
+  'Security & Permissions',
+  'User Management',
+  'Branding & Themes',
+  'Reviews Management',
+  'Audit Management',
+  'Document Vault Management',
+  'Company Safe Management',
+  'Data Quality Centre',
+];
+
 export default function Enterprise12PillarCommandBar({
   liveTelemetry = {},
   onGeneratedForm,
@@ -23,6 +39,7 @@ export default function Enterprise12PillarCommandBar({
   const [selectedDomain, setSelectedDomain] = useState(PLATFORM_14_FOUNDATION_DOMAINS[2]);
   const [ownerRole, setOwnerRole] = useState('Compliance Manager');
   const [presetName, setPresetName] = useState('');
+  const [activeAdminCentre, setActiveAdminCentre] = useState('Form Generator');
 
   const handleResearchAndGenerate = (e) => {
     e.preventDefault();
@@ -166,6 +183,37 @@ export default function Enterprise12PillarCommandBar({
           </div>
         </div>
       </form>
+
+      {/* 13 EXECUTIVE ADMINISTRATION CENTRES + 4 AUDIT/REVIEW REGISTERS + DATA QUALITY CENTRE */}
+      <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-3 space-y-2">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+            Executive Administration — 13 No-Code Configuration Centres &amp; 4 Assurance Registers
+          </span>
+          <span className="text-[10px] font-extrabold text-[#5A00D6]">
+            Reviews Register · Audit Register · Findings Register · Corrective Actions Register · Data Quality Verified
+          </span>
+        </div>
+        <div className="flex flex-wrap gap-1.5">
+          {EXECUTIVE_13_ADMIN_CENTRES.map((centre) => {
+            const active = activeAdminCentre === centre;
+            return (
+              <button
+                key={centre}
+                type="button"
+                onClick={() => setActiveAdminCentre(centre)}
+                className={`rounded-lg px-2.5 py-1 text-[10px] font-extrabold transition ${
+                  active
+                    ? 'bg-[#0A2B6D] text-white shadow-2xs'
+                    : 'border border-slate-200 bg-white text-[#0A2B6D] hover:border-[#0072FF]'
+                }`}
+              >
+                {centre}
+              </button>
+            );
+          })}
+        </div>
+      </div>
 
       {/* SAVED REPORT PRESETS BAR (PILLAR 11 & 12) */}
       {onSavePreset && (
