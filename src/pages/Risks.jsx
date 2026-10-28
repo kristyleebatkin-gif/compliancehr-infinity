@@ -143,7 +143,11 @@ function Risks({ profile, profileKind, embedded = false } = {}) {
     const scheduleChanged = previous && (previous.assessment_type !== payload.assessment_type || previous.last_assessed_date !== payload.last_assessed_date);
     if (payload.assessment_type !== 'Not scheduled' && payload.last_assessed_date && (!payload.next_due_date || (scheduleChanged && payload.next_due_date === previous.next_due_date))) {
       const next = new Date(`${payload.last_assessed_date}T00:00:00`);
+      const originalDay = next.getDate();
+      next.setDate(1);
       next.setMonth(next.getMonth() + (payload.assessment_type === 'Home' ? 1 : 3));
+      const lastDay = new Date(next.getFullYear(), next.getMonth() + 1, 0).getDate();
+      next.setDate(Math.min(originalDay, lastDay));
       payload.next_due_date = next.toISOString().slice(0, 10);
     }
     try {

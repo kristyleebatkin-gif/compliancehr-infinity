@@ -39,7 +39,7 @@ export default async function(req) {
 
     const [
       qualityP, invoiceP, quoteP, certP, docsP, maintP, equipP, eventsP,
-      actionsP, leadsP, ndisP, suppliersP, checklistsP, consentsP, usersP, entriesP, notifsP, taskP,
+      actionsP, leadsP, ndisP, suppliersP, checklistsP, consentsP, usersP, entriesP, notifsP, taskP, homeRisksP,
     ] = await Promise.all([
       service.entities.QualityItem.filter({}, { limit: 500 }),
       service.entities.Invoice.filter({}, { limit: 500 }),
@@ -59,6 +59,7 @@ export default async function(req) {
       service.entities.CommunicationEntry.filter({ note_type: { $in: NOTE_TYPES } }, { limit: 1000 }),
       service.entities.Notification.filter({}, { limit: 1000 }),
       service.entities.TodoTask.filter({ task_type: 'Register Reminder', status: { $in: ['Open', 'In Progress'] } }, { limit: 1000 }),
+      service.entities.Risk.filter({ assessment_type: 'Home' }, { limit: 500 }),
     ]);
 
     const entryKeys = new Set(pageItems(entriesP).map((e) => String(e.subject || '')));
@@ -228,6 +229,16 @@ export default async function(req) {
           date: r.c.next_due_date,
           subject: `Compliance task ${r.state.toLowerCase()}: ${r.c.title} (due ${pretty(r.c.next_due_date)})`,
           body: `Compliance checklist task "${r.c.title}" (${r.c.section || 'checklist'}) is ${r.state.toLowerCase()} (due ${pretty(r.c.next_due_date)}). Please complete or reschedule it.`,
+        })));
+
+    // Provider policy: existing Home assessment records must not lose their monthly follow-up.
+    addGroup('Compliance Checklist', 'Risk Reporting', 'Expiry Alert', 'Compliance Manager, Administration',
+      pageItems(homeRisksP)
+        .filter((risk) => !risk.next_due_date || risk.next_due_date <= soon)
+        .map((risk) => ({
+          date: risk.next_due_date || today,
+          subject: `Home risk assessment ${risk.next_due_date ? 'review due' : 'schedule missing'}: ${risk.id} (${risk.next_due_date || monthKey})`,
+          body: `Home risk assessment ${risk.id} requires review under monthly provider policy. Owner: ${risk.owner || 'Unassigned — allocate an owner'}. Next due: ${risk.next_due_date || 'Unknown — verify actual assessment evidence'}. Open Risk Reporting, complete the actual assessment, document controls and follow-up, and retain evidence before updating the next due date. A reminder is not a completed assessment.`,
         })));
 
     // 14. Information sharing consents — active consents expired or expiring within 30 days.

@@ -64,3 +64,10 @@ safety checks, drills, audits, registers and business documents above.
 - Car safety check every shift, linked to that shift; defects require prompt escalation and controls.
 - Home risk assessment every calendar month, with assessment evidence, controls, owner and next-due date; earlier review after material changes.
 - Remaining validation: CommunicationEntry/ShiftNote reconciliation, exact linkage of multiple same-day shifts, enabled schedules, delivery, manager follow-up and monthly participant/home coverage.
+
+## Linked roster accuracy requirements — 29 October 2026
+- Participants see only their authorised shifts and approved workers. Workers see only their approved participants and authorised shift information.
+- Reconcile planned and actually delivered participant shifts with clock events, corrections, approved timesheets, wages and invoices using stable shift IDs.
+- Preserve date, start/end, overnight and timezone treatment, breaks, travel, cancellations and applicable allowances. Staff pay allowances and participant billable items are separate rules requiring their own authority and effective dates.
+- Payroll and billing release need verified rules and exception approval; actual delivery, approval, payment and billing remain distinct states.
+- These are acceptance requirements; participant/worker visibility, allowance calculations and financial reconciliation are not yet certified.
