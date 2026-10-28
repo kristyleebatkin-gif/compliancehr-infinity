@@ -154,23 +154,23 @@ const TabsList = React.forwardRef(({ className, children, ...props }, ref) => {
         )}
         {...props}
       >
-        {/* Small Logo at Top + Platform Name Below Logo */}
+        {/* Platform Name on Top + Smaller-Length Logo Below App Name */}
         <div className="col-span-full -mx-3 -mt-3 mb-0.5">
           <div className="h-1 w-full" style={{ background: BRAND_GRADIENT }} />
-          <div className="flex flex-col items-center px-3.5 pb-1 pt-2.5 text-center sm:px-4">
-            <Image
-              src={CHR_LOGO}
-              alt="ComplianceHR Infinity"
-              fittingType="fit"
-              className="h-7 w-7 rounded-lg border border-slate-200 bg-white p-0.5 shadow-2xs"
-            />
-            <span className="mt-1 font-editorial text-[12px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]">
+          <div className="flex flex-col items-center px-3.5 pb-1.5 pt-2.5 text-center sm:px-4">
+            <span className="font-editorial text-[13px] font-extrabold leading-tight tracking-tight text-[#0A2B6D] whitespace-nowrap">
               Compliance
               <span className="font-editorial-italic text-[#5A00D6]">HR</span>{' '}
               <span className="bg-gradient-to-r from-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                 Infinity
               </span>
             </span>
+            <Image
+              src={CHR_LOGO}
+              alt="ComplianceHR Infinity"
+              fittingType="fit"
+              className="mt-1 h-5 w-14 rounded-md border border-slate-200 bg-white px-1 py-0.5 shadow-2xs"
+            />
           </div>
         </div>
 

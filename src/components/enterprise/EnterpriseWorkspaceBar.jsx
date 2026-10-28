@@ -297,8 +297,16 @@ export default function EnterpriseWorkspaceBar({
 
   return (
     <>
-      <div className="border-b border-slate-200/80 bg-white/95 backdrop-blur-xs">
-        <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-2 px-4 py-1.5 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-[1440px] bg-white px-4 pt-2.5 sm:px-6 lg:px-8">
+        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-panel">
+          <div
+            className="h-1 w-full"
+            style={{
+              background:
+                'linear-gradient(120deg, #0072FF 0%, #0A2B6D 18%, #5A00D6 42%, #A100FF 68%, #FF2E9A 100%)',
+            }}
+          />
+          <div className="flex flex-wrap items-center justify-between gap-2 px-3.5 py-2 sm:px-4">
           {/* Left: Interactive Enterprise Breadcrumbs + Save View Bookmark */}
           <nav
             aria-label="Breadcrumb"
@@ -584,6 +592,7 @@ export default function EnterpriseWorkspaceBar({
                 <Moon className="h-3.5 w-3.5 text-[#5A00D6]" />
               )}
             </button>
+          </div>
           </div>
         </div>
       </div>

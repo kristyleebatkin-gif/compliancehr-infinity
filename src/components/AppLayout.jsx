@@ -229,44 +229,51 @@ export default function AppLayout() {
       )}
 
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
-        <header className="sticky top-0 z-40 shrink-0 border-b border-slate-200 bg-white/95 shadow-2xs backdrop-blur-md">
-          <div className="flex flex-wrap items-center gap-2 px-3 py-2 sm:px-4 md:px-6">
-            <button
-              onClick={() => setMobileOpen(true)}
-              aria-label="Open menu"
-              className="shrink-0 rounded-lg border border-slate-200 bg-white p-1.5 text-[#0A2B6D] shadow-2xs transition hover:border-[#0072FF]/50 md:hidden"
-            >
-              <Menu className="h-4 w-4" />
-            </button>
+        <header className="sticky top-0 z-40 shrink-0 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-md">
+          <div
+            className="h-1 w-full"
+            style={{
+              background:
+                'linear-gradient(120deg, #0072FF 0%, #0A2B6D 18%, #5A00D6 42%, #A100FF 68%, #FF2E9A 100%)',
+            }}
+          />
+          <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-2.5 px-3 py-2 sm:px-6 lg:px-8">
+            <div className="flex min-w-0 items-center gap-2.5">
+              <button
+                onClick={() => setMobileOpen(true)}
+                aria-label="Open menu"
+                className="shrink-0 rounded-lg border border-slate-200 bg-white p-1.5 text-[#0A2B6D] shadow-2xs transition hover:border-[#0072FF]/50 md:hidden"
+              >
+                <Menu className="h-4 w-4" />
+              </button>
 
-            <Link to="/dashboard" className="flex min-w-0 shrink-0 items-center gap-2">
-              <Image
-                src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
-                alt="ComplianceHR Infinity"
-                fittingType="fit"
-                className="h-8 w-8 shrink-0 rounded-lg border border-slate-200 bg-white shadow-2xs"
-              />
-              <span className="flex min-w-0 flex-col leading-none">
-                <span className="font-editorial text-[13px] font-extrabold tracking-tight text-[#0A2B6D] sm:text-sm">
+              <Link
+                to="/dashboard"
+                className="flex shrink-0 flex-col items-center rounded-xl border border-slate-200/90 bg-[#F5F0FF]/50 px-3 py-1 text-center shadow-2xs transition hover:border-[#0072FF]/50"
+              >
+                <span className="font-editorial text-[13px] font-extrabold leading-none tracking-tight text-[#0A2B6D] sm:text-[15px] whitespace-nowrap">
                   Compliance
                   <span className="font-editorial-italic text-[#5A00D6]">HR</span>{' '}
                   <span className="bg-gradient-to-r from-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                     Infinity
                   </span>
                 </span>
-                <span className="mt-1 hidden text-[8.5px] font-extrabold leading-none text-[#0A2B6D]/70 sm:block">
-                  Complete Control. Greater Confidence. Brighter Success.
-                </span>
-              </span>
-            </Link>
+                <Image
+                  src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
+                  alt="ComplianceHR Infinity"
+                  fittingType="fit"
+                  className="mt-1 h-5 w-14 shrink-0 rounded-md border border-slate-200 bg-white px-1 py-0.5 shadow-2xs"
+                />
+              </Link>
 
-            <span
-              className="hidden min-h-[26px] items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-[10.5px] font-extrabold text-white md:inline-flex"
-              style={{ background: getHeaderView(1) }}
-            >
-              <Sparkles className="h-3 w-3 shrink-0" style={{ color: '#00C6FF' }} />
-              <span className="whitespace-nowrap">{currentLabel}</span>
-            </span>
+              <span
+                className="hidden min-h-[28px] items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-[10.5px] font-extrabold text-white shadow-2xs md:inline-flex"
+                style={{ background: getHeaderView(1) }}
+              >
+                <Sparkles className="h-3 w-3 shrink-0" style={{ color: '#00C6FF' }} />
+                <span className="whitespace-nowrap">{currentLabel}</span>
+              </span>
+            </div>
 
             <div className="ml-auto flex shrink-0 items-center gap-1.5 sm:gap-2">
               <div className="block">

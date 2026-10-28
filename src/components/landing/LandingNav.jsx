@@ -24,28 +24,23 @@ export default function LandingNav({ onBookDemo }) {
       <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-2 px-3 py-2 sm:px-5">
         <Link
           to="/"
-          className="flex shrink-0 items-center gap-2"
+          className="flex shrink-0 flex-col items-center rounded-xl border border-slate-200/90 bg-[#F5F0FF]/50 px-3 py-1 text-center shadow-2xs transition hover:border-[#0072FF]/50"
           aria-label="ComplianceHR Infinity home"
         >
+          <div className="font-editorial text-sm sm:text-base font-extrabold tracking-tight text-[#0A2B6D] leading-none whitespace-nowrap">
+            Compliance
+            <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+              HR
+            </span>{' '}
+            <span className="bg-gradient-to-r from-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+              Infinity
+            </span>
+          </div>
           <img
             src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/6bf497716_generated_image.png"
             alt="ComplianceHR Infinity"
-            className="h-8 w-8 shrink-0 object-contain"
+            className="mt-1 h-5 w-14 shrink-0 rounded-md border border-slate-200 bg-white px-1 py-0.5 object-contain shadow-2xs"
           />
-          <div className="flex flex-col items-start text-left">
-            <div className="font-editorial text-sm sm:text-base xl:text-lg font-extrabold tracking-tight text-[#0A2B6D] leading-none whitespace-nowrap">
-              Compliance
-              <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                HR
-              </span>{' '}
-              <span className="bg-gradient-to-r from-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                Infinity
-              </span>
-            </div>
-            <div className="mt-0.5 hidden xl:block text-[8.5px] font-extrabold text-[#0A2B6D]/80 whitespace-nowrap">
-              Complete Control. Greater Confidence. Brighter Success.
-            </div>
-          </div>
         </Link>
 
         <nav aria-label="Main navigation" className="hidden lg:flex items-center gap-2 xl:gap-3.5">

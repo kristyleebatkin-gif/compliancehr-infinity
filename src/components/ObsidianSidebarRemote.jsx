@@ -27,21 +27,21 @@ export default function ObsidianSidebarRemote({
         {/* Top Brand Gradient Bar Matching Quick Access */}
         <div className="h-1 w-full shrink-0" style={{ background: BRAND_GRADIENT }} />
 
-        {/* Small Logo at Top + Platform Name Below Logo */}
-        <div className="flex shrink-0 flex-col items-center border-b border-slate-100 px-3 py-2.5 text-center">
-          <Image
-            src={CHR_LOGO}
-            alt="ComplianceHR Infinity"
-            fittingType="fit"
-            className="h-8 w-8 rounded-lg border border-slate-200 bg-white p-0.5 shadow-2xs"
-          />
-          <span className="mt-1 font-editorial text-[12px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]">
+        {/* Platform Name on Top + Smaller-Length Logo Below App Name */}
+        <div className="flex shrink-0 flex-col items-center border-b border-slate-100 bg-[#F5F0FF]/40 px-3 py-2.5 text-center">
+          <span className="font-editorial text-[13px] font-extrabold leading-tight tracking-tight text-[#0A2B6D] whitespace-nowrap">
             Compliance
             <span className="font-editorial-italic text-[#5A00D6]">HR</span>{' '}
             <span className="bg-gradient-to-r from-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
               Infinity
             </span>
           </span>
+          <Image
+            src={CHR_LOGO}
+            alt="ComplianceHR Infinity"
+            fittingType="fit"
+            className="mt-1 h-5 w-14 rounded-md border border-slate-200 bg-white px-1 py-0.5 shadow-2xs"
+          />
         </div>
 
         {/* Screens / Modules Only Underneath — Visually Matching Quick Access */}
