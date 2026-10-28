@@ -1,6 +1,6 @@
 {
   "name": "Shift Note Reminders",
-  "description": "Daily at 7pm: emails each support worker whose completed shift still has no shift note, every day until the note is recorded.",
+  "description": "Daily at 7pm Australia/Sydney: employee reminders on days 1-5 after shift end; manager escalation from day 6. Delivery and matching require validation.",
   "trigger": {
     "condition": null,
     "config": {

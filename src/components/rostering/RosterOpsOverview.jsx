@@ -26,7 +26,7 @@ export default function RosterOpsOverview({ onOpenApprovals }) {
       const noteKeys = new Set((notes.items || []).map((n) => `${n.date}|${(n.participant_name || '').trim().toLowerCase()}`));
       const checkShiftIds = new Set((checks.items || []).map((c) => c.shift_id));
       const missingNotes = shifts.filter((s) => !noteKeys.has(`${s.date}|${(s.participant_name || '').trim().toLowerCase()}`));
-      const travelShifts = shifts.filter((s) => (s.travel_km || 0) > 0 || s.service_type === 'Transport');
+      const travelShifts = shifts; // Provider policy: check every shift.
       const missingChecks = travelShifts.filter((s) => !checkShiftIds.has(s.id));
       setData({
         shifts,
@@ -101,14 +101,14 @@ export default function RosterOpsOverview({ onOpenApprovals }) {
             {/* Car safety checks */}
             <div className="rounded-xl border border-border/60 p-4">
               <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-                <div className="flex items-center gap-2"><Car className="h-4 w-4 text-warning" /><p className="text-sm font-bold">Car safety checks</p><Badge variant="secondary">{data.travelCount} travel shift(s)</Badge></div>
+                <div className="flex items-center gap-2"><Car className="h-4 w-4 text-warning" /><p className="text-sm font-bold">Car safety checks</p><Badge variant="secondary">{data.travelCount} shift(s) requiring a check</Badge></div>
                 <div className="flex flex-wrap items-center gap-4">
                   <Stat icon={CheckCircle2} tone="bg-safe/10 text-safe" label="completed" value={data.checksDone} />
                   <Stat icon={AlertTriangle} tone="bg-warning/10 text-warning" label="not completed" value={data.missingChecks.length === 20 ? '20+' : data.missingChecks.length} />
                 </div>
               </div>
               {data.missingChecks.length === 0 ? (
-                <p className="text-xs text-muted-foreground">Every travel shift in this period has a pre-shift car safety check.</p>
+                <p className="text-xs text-muted-foreground">Every loaded completed shift has a linked check. Review unsuccessful checks separately.</p>
               ) : (
                 <div className="max-h-40 space-y-1 overflow-y-auto">
                   {data.missingChecks.map((s) => (

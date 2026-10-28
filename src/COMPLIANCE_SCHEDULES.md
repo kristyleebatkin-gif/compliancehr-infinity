@@ -57,3 +57,10 @@ safety checks, drills, audits, registers and business documents above.
 - Preserve externally issued qualification expiry dates. Earlier credential expiry, participant-specific requirements or identified competency gaps require earlier action.
 - These intervals are the provider's operating policy, not a claim of a universal statutory renewal interval.
 - Reminder delivery, escalation and end-to-end renewal tracking require validation before acceptance. Updating a displayed schedule or module default does not prove a reminder was delivered.
+
+## Shift and home safety policy — 29 October 2026
+- Shift notes are due after every shift. Include actual supports, goals/progress, concerns, incidents and handover. Urgent incidents must be escalated immediately.
+- Daily employee reminders on days 1–5 after shift end; unresolved notes pass to management from day 6. Current scheduled sweep: 19:00 Australia/Sydney. A reminder is not completion evidence.
+- Car safety check every shift, linked to that shift; defects require prompt escalation and controls.
+- Home risk assessment every calendar month, with assessment evidence, controls, owner and next-due date; earlier review after material changes.
+- Remaining validation: CommunicationEntry/ShiftNote reconciliation, exact linkage of multiple same-day shifts, enabled schedules, delivery, manager follow-up and monthly participant/home coverage.

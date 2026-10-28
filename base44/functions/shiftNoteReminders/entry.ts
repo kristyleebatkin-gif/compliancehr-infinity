@@ -1,71 +1,92 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 import { authorizeSystemCall } from '../../shared/systemAuth.ts';
-import { auDate } from '../../shared/reminders.ts';
+import { auDate, addDays, pageItems } from '../../shared/reminders.ts';
 
 const norm = (v) => String(v || '').trim().toLowerCase();
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const MANAGERS = new Set(['admin', 'Provider Administrator', 'Compliance Manager', 'Team Leader']);
 
 export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
-    if (!(await authorizeSystemCall(base44))) {
-      return Response.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    if (!(await authorizeSystemCall(base44))) return Response.json({ error: 'Unauthorized' }, { status: 401 });
     const service = base44.asServiceRole;
-
+    const body = await req.json().catch(() => ({}));
+    const dryRun = body.dry_run === true;
     const today = auDate(new Date());
-
-    // Completed shifts (finished or ended) up to and including today.
-    const completed = [];
-    let cursor = null;
-    do {
-      const page = await service.entities.Shift.filter(
-        { status: 'Completed' },
-        { limit: 200, ...(cursor ? { cursor } : {}) },
-      );
-      completed.push(...(page.items || []));
-      cursor = page.has_more ? page.next_cursor : null;
-    } while (cursor);
-    const due = completed.filter((s) => s.employee_name && s.date && s.date <= today);
-
-    // Shift notes already recorded, matched on staff + participant + date.
-    const notes = [];
-    let noteCursor = null;
-    do {
-      const page = await service.entities.ShiftNote.filter(
-        {},
-        { limit: 200, ...(noteCursor ? { cursor: noteCursor } : {}) },
-      );
-      notes.push(...(page.items || []));
-      noteCursor = page.has_more ? page.next_cursor : null;
-    } while (noteCursor);
-    const noted = new Set(notes.map((n) => `${norm(n.staff_name)}|${norm(n.participant_name)}|${n.date}`));
-
-    const missing = due.filter((s) => !noted.has(`${norm(s.employee_name)}|${norm(s.participant_name)}|${s.date}`));
-    if (!missing.length) return Response.json({ ok: true, checked: due.length, overdue: 0, emails_sent: 0 });
-
-    const staffPage = await service.entities.StaffProfile.filter({}, { limit: 1000, fields: ['full_name', 'email'] });
-    const emailByName = new Map(staffPage.items.map((s) => [norm(s.full_name), String(s.email || '').trim()]));
-
-    let sent = 0;
-    const failures = [];
+    const all = async (entity, query = {}) => {
+      const rows = []; let cursor = null; const seen = new Set();
+      do {
+        const page = await service.entities[entity].filter(query, { limit: 200, ...(cursor ? { cursor } : {}) });
+        const items = pageItems(page);
+        if (!Array.isArray(items)) throw new Error(entity + ' response not confirmed');
+        rows.push(...items);
+        cursor = page.has_more ? page.next_cursor : null;
+        if (cursor && seen.has(cursor)) throw new Error(entity + ' pagination did not advance');
+        if (cursor) seen.add(cursor);
+        if (page.has_more && !cursor) throw new Error(entity + ' pagination incomplete');
+      } while (cursor);
+      return rows;
+    };
+    const [shifts, notes, staff] = await Promise.all([all('Shift', { status: 'Completed' }), all('ShiftNote'), all('StaffProfile')]);
+    const endDate = (shift) => {
+      if (shift.clock_out && Number.isFinite(Date.parse(shift.clock_out))) return auDate(new Date(shift.clock_out));
+      return shift.start_time && shift.end_time && shift.end_time <= shift.start_time ? addDays(shift.date, 1) : shift.date;
+    };
+    const group = (row) => norm(row.employee_name || row.staff_name) + '|' + norm(row.participant_name) + '|' + row.date;
+    const counts = new Map();
+    for (const shift of shifts) counts.set(group(shift), (counts.get(group(shift)) || 0) + 1);
+    const due = shifts.filter(s => s.employee_name && endDate(s) && endDate(s) < today);
+    // Legacy name/date matching only establishes completion for a unique shift.
+    // Multiple shifts on the same date remain unresolved rather than silently sharing one note.
+    const missing = due.filter(s => !notes.some(n => n.shift_id === s.id || (!n.shift_id && counts.get(group(s)) === 1 && group(n) === group(s) && String(n.what_happened || '').trim())));
+    const failures = []; let sent = 0, escalations = 0, plannedEmployee = 0, plannedManager = 0;
+    const users = missing.length ? pageItems(await service.entities.User.list()) : [];
+    const managers = users.filter(u => MANAGERS.has(u.role) && u.account_status !== 'Archived');
     for (const shift of missing) {
-      const to = emailByName.get(norm(shift.employee_name));
-      if (!to || !EMAIL_RE.test(to)) continue;
+      const days = Math.floor((Date.parse(today + 'T00:00:00Z') - Date.parse(endDate(shift) + 'T00:00:00Z')) / 86400000);
+      if (!Number.isFinite(days)) { failures.push({ shift_id: shift.id, step: 'date', error: 'Shift end date unknown' }); continue; }
       try {
-        await service.integrations.Core.SendEmail({
-          to,
-          subject: `Shift note overdue: ${shift.participant_name || 'participant'} on ${shift.date}`,
-          from_name: 'ComplianceHR Infinity',
-          body: `Your shift note is overdue.\n\nEmployee: ${shift.employee_name}\nParticipant: ${shift.participant_name || '-'}\nShift date: ${shift.date}\nTime: ${shift.start_time || '-'} to ${shift.end_time || '-'}\nService: ${shift.service_type || '-'}\n\nPlease open the Communication Centre, record the shift note for this shift, and save it. You will receive this reminder daily until the note is recorded.`,
-        });
-        sent += 1;
-      } catch (error) {
-        failures.push(String(error?.message || error));
-      }
+        if (days <= 5) {
+          plannedEmployee += 1;
+          const matches = staff.filter(s => norm(s.full_name) === norm(shift.employee_name) && s.status !== 'Inactive');
+          if (matches.length !== 1 || !EMAIL_RE.test(String(matches[0]?.email || '').trim())) {
+            failures.push({ shift_id: shift.id, step: 'recipient', error: 'Employee identity/email requires manager review' }); continue;
+          }
+          const key = 'shift_note:' + shift.id + ':' + today;
+          if (pageItems(await service.entities.PushLog.filter({ key }, { limit: 1 })).length || dryRun) continue;
+          await service.integrations.Core.SendEmail({
+            to: matches[0].email.trim(), from_name: 'ComplianceHR Infinity',
+            subject: 'Shift note required — reminder ' + days + ' of 5',
+            body: 'Your shift note is due after the shift. Please open Communication Centre and complete the note for shift ' + shift.id + ' (' + shift.date + ', ' + (shift.start_time || '') + '–' + (shift.end_time || '') + '). Include factual support delivered, goal progress, concerns and handover. Report urgent incidents immediately. If still missing after five reminder days, this goes to management. Do not reply with sensitive participant information.',
+          });
+          await service.entities.PushLog.create({ key, sent_at: new Date().toISOString(), recipient_id: matches[0].id });
+          sent += 1;
+        } else {
+          plannedManager += 1;
+          if (!managers.length) { failures.push({ shift_id: shift.id, step: 'escalation', error: 'No active manager found' }); continue; }
+          const reference = 'Missing shift note: ' + shift.id;
+          const existing = pageItems(await service.entities.TodoTask.filter({ important_info: reference }, { limit: 1 }));
+          if (!existing.length && !dryRun) {
+            const task = await service.entities.TodoTask.create({
+              title: 'Manager follow-up: missing shift note', task_type: 'Shift Note Escalation', module: 'Rostering',
+              task_date: today, due_date: today, status: 'Pending', priority: 'High',
+              important_info: reference, linked_entity_type: 'Shift', linked_entity_id: shift.id,
+              assigned_to: 'Management', resources_needed: '/communications',
+              how_to_complete: 'Shift note remains unconfirmed after five daily reminder days. Resolve the correct employee/shift, obtain the actual note, review goals/incidents and attach evidence before closing. Do not mark a reminder as note completion.',
+            });
+            if (!task?.id) throw new Error('Manager task not confirmed');
+          }
+          for (const manager of managers) {
+            const key = { recipient_id: manager.id, linked_entity_type: 'Shift', linked_entity_id: shift.id, type: 'General', message: 'Manager review required: shift note remains unconfirmed after five reminder days. Shift ' + shift.id };
+            if (pageItems(await service.entities.Notification.filter(key, { limit: 1 })).length || dryRun) continue;
+            const alert = await service.entities.Notification.create({ ...key, recipient: manager.email || manager.full_name, read: false, action_url: '/rostering' });
+            if (!alert?.id) throw new Error('Manager alert not confirmed');
+            escalations += 1;
+          }
+        }
+      } catch (error) { failures.push({ shift_id: shift.id, error: String(error?.message || error) }); }
     }
-    return Response.json({ ok: true, checked: due.length, overdue: missing.length, emails_sent: sent, failures });
-  } catch (error) {
-    return Response.json({ error: error.message }, { status: 500 });
-  }
+    return Response.json({ ok: failures.length === 0, dry_run: dryRun, checked: due.length, overdue: missing.length, employee_reminders_due: plannedEmployee, manager_cases_due: plannedManager, emails_sent: sent, manager_alerts_created: escalations, failures, matching_limit: 'Legacy notes require a unique employee/participant/date; CommunicationEntry notes need explicit reconciliation.' });
+  } catch (error) { return Response.json({ error: String(error?.message || error) }, { status: 500 }); }
 }

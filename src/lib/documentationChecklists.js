@@ -8,6 +8,7 @@ export const CADENCE_MONTHS = {
   '6-monthly': 6,
   '12-monthly': 12,
   'Ongoing': 0,
+  'Every shift': 0,
   'On exit': 0,
 };
 
@@ -147,7 +148,7 @@ export const DOCUMENTATION_SECTIONS = [
     applies: 'employee',
     tone: 'orange',
     items: [
-      { key: 'car-check', title: 'Car safety check completed', cadence: '6-monthly', note: 'Vehicle used for support checked and logged.' },
+      { key: 'car-check', title: 'Car safety check completed', cadence: 'Every shift', note: 'A separate check is required for every shift; link it to the shift and review defects immediately.' },
       { key: 'car-rego', title: 'Registration, insurance & licence current', cadence: '12-monthly', note: 'Documents valid and on file.' },
     ],
   },
