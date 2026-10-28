@@ -12,7 +12,7 @@ const CHR_LOGO =
 const ITEMS = [
   ['modules', 'Modules', LayoutGrid, 'LMS courses & completion'],
   ['calendar', 'Calendar', CalendarDays, 'Training dates & renewals'],
-  ['templates', 'Role templates', GraduationCap, 'Mandatory role curricula'],
+  ['templates', 'Packages & assignments', GraduationCap, 'Build training & assign learning'],
   ['ladder', 'Ladder', Award, 'Competency progression'],
   ['drills', 'AI Drills', Sparkles, 'Interactive AI quiz drills'],
   ['insights', 'Insights', TrendingUp, 'Workforce learning analytics'],
