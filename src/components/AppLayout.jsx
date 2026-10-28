@@ -208,7 +208,13 @@ export default function AppLayout() {
   }
 
   return (
-    <div className="app-readable flex h-dvh overflow-hidden bg-white">
+    <div className="app-readable flex h-dvh overflow-hidden bg-background text-foreground">
+      <a
+        href="#main-workspace-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-xl focus:bg-[#0A2B6D] focus:px-4 focus:py-2 focus:text-xs focus:font-extrabold focus:text-white focus:shadow-lg"
+      >
+        Skip to main content
+      </a>
       <aside className="hidden w-64 shrink-0 overflow-hidden border-r-4 border-[#0A2B6D] bg-white md:flex">
         {sidebarContent}
       </aside>
@@ -427,7 +433,7 @@ export default function AppLayout() {
           </div>
         </header>
 
-        <main className="relative z-0 flex-1 overflow-y-auto overflow-x-hidden bg-white pb-20 md:pb-0">
+        <main id="main-workspace-content" className="relative z-0 flex-1 overflow-y-auto overflow-x-hidden bg-background pb-20 md:pb-0">
           <EnterpriseWorkspaceBar
             currentLabel={currentLabel}
             role={role}

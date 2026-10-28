@@ -247,6 +247,23 @@
   .app-workspace-bg {
     background: #FFFFFF !important;
   }
+  .dark .app-workspace-bg,
+  .dark .app-readable > div > main {
+    background: hsl(var(--background)) !important;
+  }
+  .dark .app-readable :is(header, section, .bg-white):not(.preserve-island-theme):not(.preserve-island-theme *) {
+    background-color: hsl(var(--card)) !important;
+    color: hsl(var(--card-foreground)) !important;
+    border-color: hsl(var(--border)) !important;
+  }
+  .dark .app-readable :is(h1, h2, h3, h4, p, span, label, td, th):not(.app-page-header *):not(.gradient-brand *):not(.preserve-island-theme *) {
+    color: hsl(var(--foreground));
+  }
+  .dark .app-readable :is(input, textarea, select):not(.preserve-island-theme *) {
+    background-color: #0F172A !important;
+    color: #F8FAFC !important;
+    border-color: #334155 !important;
+  }
   .shadow-panel {
     box-shadow: 0 1px 3px rgba(10, 43, 109, 0.06), 0 10px 26px -14px rgba(90, 0, 214, 0.22);
   }

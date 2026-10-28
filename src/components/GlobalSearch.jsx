@@ -71,12 +71,13 @@ export default function GlobalSearch() {
       const esc = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const rx = { $regex: esc, $options: 'i' };
       try {
-        const [staff, participants, employeeDocs, participantDocs, tasks] = await Promise.all([
+        const [staff, participants, employeeDocs, participantDocs, tasks, incidents] = await Promise.all([
           base44.entities.StaffProfile.filter({ $or: [{ full_name: rx }, { position: rx }] }, { limit: 5, fields: ['id', 'full_name', 'position'] }),
           base44.entities.ParticipantProfile.filter({ $or: [{ full_name: rx }, { ndis_number: rx }] }, { limit: 5, fields: ['id', 'full_name', 'status'] }),
           base44.entities.EmployeeDocument.filter({ title: rx }, { limit: 5, fields: ['id', 'title', 'document_type'] }),
           base44.entities.ParticipantDocument.filter({ title: rx }, { limit: 5, fields: ['id', 'title', 'document_type'] }),
           base44.entities.TodoTask.filter({ $or: [{ title: rx }, { assigned_to: rx }] }, { limit: 5, fields: ['id', 'title', 'status', 'assigned_to'] }),
+          base44.entities.Incident.filter({ $or: [{ title: rx }, { location: rx }] }, { limit: 5, fields: ['id', 'title', 'severity', 'status'] }),
         ]);
         setResults({
           modules: MODULE_DIRECTORY.filter((m) => m.label.toLowerCase().includes(term.toLowerCase())).slice(0, 5),
@@ -84,6 +85,7 @@ export default function GlobalSearch() {
           participants: participants.items || [],
           documents: [...(employeeDocs.items || []), ...(participantDocs.items || [])].slice(0, 5),
           tasks: tasks.items || [],
+          incidents: incidents.items || [],
         });
       } catch (error) {
         console.error(error);
@@ -104,7 +106,7 @@ export default function GlobalSearch() {
     : QUICK_ACTIONS.filter((a) => a.label.toLowerCase().includes(query.trim().toLowerCase()));
   const modules = results.modules;
 
-  const hasResults = quickActions.length > 0 || ['modules', 'staff', 'participants', 'documents', 'tasks'].some((k) => results[k].length > 0);
+  const hasResults = quickActions.length > 0 || ['modules', 'staff', 'participants', 'documents', 'tasks', 'incidents'].some((k) => (results[k] || []).length > 0);
 
   return (
     <>
@@ -204,6 +206,17 @@ export default function GlobalSearch() {
                         <ClipboardList className="text-brand" />
                         <span className="font-medium">{t.title}</span>
                         <span className="ml-auto text-[11px] text-foreground/40">{t.status || ''}</span>
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                )}
+                {(results.incidents || []).length > 0 && (
+                  <CommandGroup heading="Incidents">
+                    {results.incidents.map((inc) => (
+                      <CommandItem key={inc.id} value={`inc-${inc.id}`} onSelect={() => go(`/incidents/${inc.id}`)}>
+                        <Zap className="text-brand" />
+                        <span className="font-medium">{inc.title}</span>
+                        <span className="ml-auto text-[11px] text-foreground/40">{inc.severity || inc.status || ''}</span>
                       </CommandItem>
                     ))}
                   </CommandGroup>
