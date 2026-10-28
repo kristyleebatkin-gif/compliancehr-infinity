@@ -55,6 +55,7 @@ import EnterpriseStandardQualityGateSuite from '@/components/compliance/Enterpri
 import EasyAccessVisibilityHub from '@/components/compliance/EasyAccessVisibilityHub';
 import IntelligentOperationsGuidanceSuite from '@/components/compliance/IntelligentOperationsGuidanceSuite';
 import EnterpriseToolsAiIntelligencePlatform from '@/components/compliance/EnterpriseToolsAiIntelligencePlatform';
+import FiveLayerEnterpriseAcceptanceSuite from '@/components/compliance/FiveLayerEnterpriseAcceptanceSuite';
 import BusinessHealthComplianceIntelligenceDashboard from '@/components/compliance/BusinessHealthComplianceIntelligenceDashboard';
 import InfinityCoreEngine from '@/components/compliance/InfinityCoreEngine';
 import InfinityOneClickOperations from '@/components/operations/InfinityOneClickOperations';
@@ -302,7 +303,8 @@ export default function ComplianceHub() {
         )}
       />
 
-      {/* Enterprise Tools, AI Capabilities & Intelligence Platform + Intelligent Operations + Easy Access 3-Click Standard */}
+      {/* Five-Layer Enterprise Build, Validation & Acceptance Framework + Enterprise AI & Intelligence Platform */}
+      <FiveLayerEnterpriseAcceptanceSuite />
       <EnterpriseToolsAiIntelligencePlatform />
       <IntelligentOperationsGuidanceSuite />
       <EasyAccessVisibilityHub />

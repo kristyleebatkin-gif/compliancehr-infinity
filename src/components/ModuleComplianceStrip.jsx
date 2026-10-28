@@ -52,7 +52,7 @@ export default function ModuleComplianceStrip({ path: requested }) {
         </span>
       </span>
       <span className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D]">
-        Reviews: {totalOpen === 0 ? 'In Date' : `${totalOpen} Due`} · Audits: Verified · Actions: {totalOpen === 0 ? 'Clear' : `${totalOpen} Open`}
+        5-Layer Verified · Reviews: {totalOpen === 0 ? 'In Date' : `${totalOpen} Due`} · Evidence &amp; Audits: Ready · Actions: {totalOpen === 0 ? 'Clear' : `${totalOpen} Open`}
       </span>
       {alerts.map((a, idx) => {
         const tile = getTilePalette(idx + 1);

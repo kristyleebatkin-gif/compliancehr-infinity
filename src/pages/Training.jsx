@@ -107,8 +107,8 @@ export default function Training({ profile, embedded = false } = {}) {
     <div className="mx-auto max-w-6xl space-y-4 rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/10 via-background to-teal/15 p-3 md:p-5">
       <ModuleShell
         embedded={embedded}
-        title="Training Hub"
-        subtitle={`${LMS_ACADEMY_NAME} · ${LMS_PROGRAM_NAME} — 50 Module LMS`}
+        title="Skills Assessment & Capability Centre"
+        subtitle={`${LMS_ACADEMY_NAME} · Skills Assessments, Competency Assessments, Qualifications, Certifications, Licences, Registrations, Workplace Assessments & 50-Module LMS (14d/7d/3d/1d/Overdue Alerts)`}
         moduleKey="training"
         tabs={<TrainingNavigation view={view} onChange={setView} personalOnly={employee} />}
         actions={!employee && <Button variant="outline" onClick={exportTrainingRegister} disabled={loading || allCompletions.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>}

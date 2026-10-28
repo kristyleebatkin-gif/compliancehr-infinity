@@ -9,6 +9,7 @@ import NdisDeadlineTracker from '@/components/ndis/NdisDeadlineTracker';
 import GovernanceControlsRegister from '@/components/ndis/GovernanceControlsRegister';
 import AutoRegisterInsights from '@/components/AutoRegisterInsights';
 import BestInClassBenchmarkSuite from '@/components/operations/BestInClassBenchmarkSuite';
+import EnterpriseToolsAiIntelligencePlatform from '@/components/compliance/EnterpriseToolsAiIntelligencePlatform';
 
 const PORTALS = [
   { name: 'myplace Provider Portal', url: 'https://www.myplace.ndis.gov.au', icon: Landmark, desc: 'The NDIA provider portal for claims, payment requests, bulk billing and viewing participant plan information. Sign in with your own PRODA / myplace credentials.' },
@@ -23,6 +24,7 @@ export default function NdisProviderPortal() {
     <div className="ndis-workspace space-y-4">
       <ModuleShell moduleKey="ndis-provider" title="NDIS Registered Provider Portal" subtitle="Direct access points to the official NDIS portals and provider resources." icon={Building2} actions={<ModuleAlertsButton />} />
       <AutoRegisterInsights placement="header" />
+      <EnterpriseToolsAiIntelligencePlatform />
       <div className="ndis-dashboard-panels grid items-start gap-3 xl:grid-cols-2"><NdisDeadlineTracker /><GovernanceControlsRegister /></div>
       <div className="ndis-panel ndis-accent-warning p-4">
         <div className="flex items-start gap-3">
