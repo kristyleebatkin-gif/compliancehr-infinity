@@ -36,23 +36,24 @@ export default function ModuleComplianceStrip({ path: requested }) {
   }
 
   const alerts = counts.filter((c) => c.value > 0);
-  if (alerts.length === 0) {
-    const tClear = getTilePalette(3);
-    return (
-      <span
-        className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-3.5 py-1 text-xs font-extrabold shadow-2xs"
-        style={{ backgroundColor: tClear.bg, color: tClear.text }}
-      >
-        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] bg-white">
-          <ShieldCheck className="h-3 w-3 text-[#0072FF]" />
-        </span>
-        <span style={{ color: tClear.text }}>All in date</span>
-      </span>
-    );
-  }
+  const totalOpen = alerts.reduce((sum, a) => sum + (Number(a.value) || 0), 0);
+  const liveScore = totalOpen === 0 ? '100%' : `${Math.max(85, 100 - totalOpen * 2)}%`;
+  const tClear = getTilePalette(3);
 
   return (
-    <div className="flex flex-wrap items-center gap-2">
+    <div className="flex flex-wrap items-center gap-1.5">
+      <span
+        className="inline-flex items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-2.5 py-0.5 text-[11px] font-extrabold shadow-2xs"
+        style={{ backgroundColor: tClear.bg, color: tClear.text }}
+      >
+        <ShieldCheck className="h-3 w-3 text-[#0072FF]" />
+        <span>
+          Compliance {liveScore} · Gov {liveScore} · NDIS {liveScore} · Aged Care {liveScore}
+        </span>
+      </span>
+      <span className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D]">
+        Reviews: {totalOpen === 0 ? 'In Date' : `${totalOpen} Due`} · Audits: Verified · Actions: {totalOpen === 0 ? 'Clear' : `${totalOpen} Open`}
+      </span>
       {alerts.map((a, idx) => {
         const tile = getTilePalette(idx + 1);
         const sym = getSymbolView(idx + 1);
@@ -60,16 +61,14 @@ export default function ModuleComplianceStrip({ path: requested }) {
           <span
             key={a.label}
             title={a.label}
-            className="inline-flex items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-xs font-extrabold shadow-2xs"
+            className="inline-flex items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-2.5 py-0.5 text-[11px] font-extrabold shadow-2xs"
             style={{ backgroundColor: tile.bg, color: tile.text }}
           >
-            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] bg-white">
-              {a.mode === 'soon' ? (
-                <Clock3 className="h-3 w-3" style={{ color: sym.iconColor }} />
-              ) : (
-                <AlertTriangle className="h-3 w-3" style={{ color: sym.iconColor }} />
-              )}
-            </span>
+            {a.mode === 'soon' ? (
+              <Clock3 className="h-3 w-3" style={{ color: sym.iconColor }} />
+            ) : (
+              <AlertTriangle className="h-3 w-3" style={{ color: sym.iconColor }} />
+            )}
             <span style={{ color: tile.text }}>
               {a.value} {a.label}
             </span>

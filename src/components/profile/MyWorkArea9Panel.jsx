@@ -19,6 +19,7 @@ import { Button } from '@/components/ui/button';
 
 const MY_WORK_STREAMS = [
   { id: 'tasks', label: 'My Tasks', icon: CheckSquare, href: '/tasks', color: '#0072FF' },
+  { id: 'actions', label: 'My Actions', icon: CheckSquare, href: '/quality', color: '#0A2B6D' },
   { id: 'reviews', label: 'My Reviews', icon: CalendarClock, href: '/review-due', color: '#5A00D6' },
   { id: 'approvals', label: 'My Approvals', icon: ShieldCheck, href: '/compliance', color: '#0A2B6D' },
   { id: 'goals', label: 'My Goals', icon: Target, href: '/goals', color: '#A100FF' },
@@ -71,8 +72,10 @@ export default function MyWorkArea9Panel({ compact = false }) {
         base44.entities.Shift.list({ sort: '-created_date', limit: 20 }).catch(() => ({ items: [] })),
       ]);
 
+      const allTasks = tasksPage?.items || [];
       const streamData = {
-        tasks: tasksPage?.items || [],
+        tasks: allTasks,
+        actions: allTasks.filter((t) => t.status !== 'Completed' && t.status !== 'Finalised'),
         reviews: reviewsPage?.items || [],
         approvals: (submissionsPage?.items || []).filter(
           (s) => s.review_outcome === 'Pending Review' || s.status === 'Submitted'
@@ -87,6 +90,7 @@ export default function MyWorkArea9Panel({ compact = false }) {
 
       setCounts({
         tasks: streamData.tasks.length,
+        actions: streamData.actions.length,
         reviews: streamData.reviews.length,
         approvals: streamData.approvals.length,
         goals: streamData.goals.length,
@@ -152,7 +156,7 @@ export default function MyWorkArea9Panel({ compact = false }) {
       </div>
 
       {/* 9 STREAM TILES */}
-      <div className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-2">
+      <div className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 gap-2">
         {MY_WORK_STREAMS.map((stream) => {
           const Icon = stream.icon;
           const active = activeStream === stream.id;

@@ -21,35 +21,45 @@ import {
   autoFileToVaultAndCompanySafe,
   ENTERPRISE_12_FORM_TEMPLATES,
 } from '@/lib/enterpriseGovernanceStandard';
+import DataQualityAndContinuousImprovementCentre from '@/components/compliance/DataQualityAndContinuousImprovementCentre';
 
 export const BUSINESS_10_PROCESS_STAGES = [
   { step: 1, label: '1. Creation', detail: 'Subject-researched record & form intake' },
-  { step: 2, label: '2. Validation', detail: 'Mandatory field, NDIS & Aged Care validation' },
-  { step: 3, label: '3. Classification', detail: '18-category Document Vault & domain tagging' },
-  { step: 4, label: '4. Assignment', detail: 'Owner, Reviewer, Approver & SLA routing' },
-  { step: 5, label: '5. Storage', detail: 'Auto-filed to Document Vault & Company Safe' },
-  { step: 6, label: '6. Review', detail: 'Scheduled review cycle & reminder alerts' },
-  { step: 7, label: '7. Approval', detail: 'Digital sign-off & version promotion' },
-  { step: 8, label: '8. Reporting', detail: 'Executive, Board, NDIS & Aged Care analytics' },
-  { step: 9, label: '9. Auditability', detail: 'Immutable AuditLog & StatusLog ledger' },
-  { step: 10, label: '10. Archiving', detail: 'Retention-locked historical version custody' },
+  { step: 2, label: '2. Classification', detail: '18-category Document Vault & domain tagging' },
+  { step: 3, label: '3. Validation', detail: 'Mandatory field, NDIS & Aged Care validation' },
+  { step: 4, label: '4. Assignment', detail: 'Responsible staff, reviewer & SLA routing' },
+  { step: 5, label: '5. Ownership', detail: 'Owner, Responsible Manager, Dept, Site & Program' },
+  { step: 6, label: '6. Workflow', detail: 'Automated stage transitions & triggers' },
+  { step: 7, label: '7. Notifications', detail: 'Real-time alerts, emails & reminders' },
+  { step: 8, label: '8. Reviews', detail: 'Scheduled review cycle & verification' },
+  { step: 9, label: '9. Approvals', detail: 'Digital sign-off & version promotion' },
+  { step: 10, label: '10. Actions', detail: 'Corrective, preventive & follow-up tasks' },
+  { step: 11, label: '11. Escalations', detail: 'Overdue & high-risk management escalation' },
+  { step: 12, label: '12. Reporting', detail: 'Executive, Board, NDIS & Aged Care analytics' },
+  { step: 13, label: '13. Auditing', detail: '14-verb immutable AuditLog & StatusLog ledger' },
+  { step: 14, label: '14. Storage', detail: 'Auto-filed to Document Vault & Company Safe' },
+  { step: 15, label: '15. Retrieval', detail: 'Role-gated global search & instant filters' },
+  { step: 16, label: '16. Export', detail: 'Controlled PDF, Excel, Word & CSV output' },
+  { step: 17, label: '17. Archiving', detail: 'Retention-locked historical version custody' },
 ];
 
 export const PROVIDER_14_ADMIN_CONTROLS = [
   'Change Forms',
   'Change Templates',
+  'Change Reports',
+  'Change Dashboards',
   'Change Workflows',
   'Change Reviews',
+  'Change Audits',
   'Change Approvals',
-  'Change Dashboards',
-  'Change Reports',
+  'Change Notifications',
   'Change Branding',
   'Change Themes',
   'Change Permissions',
-  'Change Document Settings',
   'Change Compliance Settings',
   'Change NDIS Settings',
   'Change Aged Care Settings',
+  'Change Document Controls',
 ];
 
 export const FOUR_STAGE_READINESS_AUDIT = [
@@ -382,18 +392,18 @@ export default function EnterpriseCompletenessAndMyWorkSuite() {
         </div>
       </div>
 
-      {/* 10-STAGE BUSINESS PROCESS COMPLETION ENGINE */}
+      {/* 17-STAGE MASTER BUSINESS PROCESS COMPLETION ENGINE */}
       <div className="space-y-1.5">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-wrap items-center justify-between gap-1">
           <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#0A2B6D] flex items-center gap-1">
             <Layers className="h-3.5 w-3.5 text-[#0072FF]" />
-            10-Stage Business Process Completion Pipeline (Creation → Archiving)
+            17-Stage Master Business Process Lifecycle (Creation → Classification → Validation → Archiving)
           </span>
           <span className="text-[10px] font-extrabold text-emerald-700">
-            Automation-First Active: Auto-Tasks · Auto-Reminders · Auto-Reviews · Auto-Approvals · Auto-Escalations
+            Single Source of Truth · Auto-Tasks · Auto-Reminders · Auto-Reviews · Auto-Approvals · Auto-Escalations
           </span>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 gap-1.5">
+        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-9 gap-1.5">
           {BUSINESS_10_PROCESS_STAGES.map((item) => (
             <div
               key={item.step}
@@ -409,7 +419,9 @@ export default function EnterpriseCompletenessAndMyWorkSuite() {
         </div>
       </div>
 
-      {/* 14 PROVIDER ADMINISTRATOR NO-CODE CONTROLS + 4-STAGE PRODUCTION AUDIT */}
+      <DataQualityAndContinuousImprovementCentre />
+
+      {/* 16 PROVIDER ADMINISTRATOR NO-CODE CONTROLS + 4-STAGE PRODUCTION AUDIT */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
         <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-3 space-y-2">
           <div className="flex items-center justify-between">
