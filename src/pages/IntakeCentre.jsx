@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import ModuleShell from '@/components/module/ModuleShell';
 import { ClipboardList } from 'lucide-react';
 import IntakeReadinessExport from '@/components/intake/IntakeReadinessExport';
+import IntakeAutomationTriggersBar from '@/components/intake/IntakeAutomationTriggersBar';
 import { base44 } from '@/api/base44Client';
 import { STATUS_HEX, STATUS_ORDER } from '@/components/intake/intakeDisplay';
 import { Heart, Users, ArrowRight } from 'lucide-react';
@@ -139,7 +140,10 @@ export default function IntakeCentre({ embedded = false, profile, profileKind } 
           <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{stats ? value : '…'}</p></div>
         ))}
       />
-      <div className="mt-2 overflow-hidden rounded-2xl border border-[#1e293b] bg-[#0f172a] shadow-xl">
+      <div className="mt-3">
+        <IntakeAutomationTriggersBar intakeType="All" />
+      </div>
+      <div className="mt-3 overflow-hidden rounded-2xl border border-[#1e293b] bg-[#0f172a] shadow-xl">
         <div className="relative grid grid-cols-2">
           <span className="pointer-events-none absolute bottom-0 left-1/2 top-0 w-px" style={{ background: 'linear-gradient(180deg, transparent, rgba(255,255,255,0.25), transparent)' }} />
           <div className="animate-in fade-in slide-in-from-bottom-2 duration-500"><StreamPanel stream={STREAMS[0]} stats={stats} /></div>

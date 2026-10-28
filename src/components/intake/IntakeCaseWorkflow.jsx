@@ -23,6 +23,11 @@ import IntakeCaseForm, { SUPPORT_OPTIONS, IntakeReadinessPanel } from '@/compone
 import personalStaffIntakeClient from '@/lib/personalStaffIntakeClient';
 import { syncEmployeeRecord } from '@/lib/employeeRecordBridge';
 import IntakeLogPanels from '@/components/intake/IntakeLogPanels';
+import IntakeAutomationTriggersBar from '@/components/intake/IntakeAutomationTriggersBar';
+import {
+  autoGenerateThreeMonthParticipantReview,
+  autoGenerateNewEmployeeCompetencies,
+} from '@/lib/automaticTaskCompletionEngine';
 import IntakeCaseHeaderTools from '@/components/intake/IntakeCaseHeaderTools';
 import IntakeCaseList from '@/components/intake/IntakeCaseList';
 import IntakeBulkImport from '@/components/intake/IntakeBulkImport';
@@ -274,6 +279,7 @@ export default function IntakeCaseWorkflow({ intakeType, profile, profileView })
   const [submittingAck, setSubmittingAck] = useState(false);
   const [refereeCheck, setRefereeCheck] = useState({ checked_by: '', date: '', time: '', outcome: '' });
   const [buddyShift, setBuddyShift] = useState({ date: '', time: '', other_employee: '', notes: '' });
+  const [autoRunOnConvert, setAutoRunOnConvert] = useState(true);
 
   const activeCase = cases.find((record) => record.id === activeCaseId) || null;
   const readiness = useMemo(() => intakeReadiness(activeCase), [activeCase]);
@@ -668,8 +674,26 @@ export default function IntakeCaseWorkflow({ intakeType, profile, profileView })
       } catch (auditError) {
         console.error('Conversion audit logging failed', auditError);
       }
+      if (autoRunOnConvert) {
+        if (intakeType === 'Participant') {
+          await autoGenerateThreeMonthParticipantReview(
+            activeCase.applicant_name,
+            activeCase.support_coordinator || activeCase.assigned_to || user?.full_name || 'Support Coordinator',
+            user
+          ).catch(() => {});
+        } else {
+          await autoGenerateNewEmployeeCompetencies(activeCase.applicant_name, user).catch(() => {});
+        }
+      }
       await load(activeCase.id);
-      toast({ title: `${activeCase.applicant_name} converted to a profile${mirrored ? `, ${mirrored} document(s) filed to their vault` : ''}` });
+      toast({
+        title: `${activeCase.applicant_name} converted to a profile${mirrored ? `, ${mirrored} document(s) filed to their vault` : ''}`,
+        description: autoRunOnConvert
+          ? intakeType === 'Participant'
+            ? '3-Month Participant Review automatically created, assigned, scheduled, and reminder sent.'
+            : 'Induction, Skills Assessments, Mandatory Policies & Competencies automatically assigned.'
+          : undefined,
+      });
     } catch (error) {
       console.error(error);
       toast({ title: 'Unable to convert intake case', description: error.message, variant: 'destructive' });
@@ -1010,6 +1034,15 @@ export default function IntakeCaseWorkflow({ intakeType, profile, profileView })
 
   return (
     <div className="space-y-3">
+      {!profileView && (
+        <IntakeAutomationTriggersBar
+          intakeType={intakeType}
+          activeCase={activeCase}
+          user={user}
+          autoRunOnConvert={autoRunOnConvert}
+          onAutoRunOnConvertChange={setAutoRunOnConvert}
+        />
+      )}
       {!profileView && <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex flex-wrap items-center gap-1.5">
           {['All', ...STATUS_ORDER.filter((s) => statusCounts[s] && s !== 'All')].map((s) => (
