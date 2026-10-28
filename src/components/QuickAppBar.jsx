@@ -12,139 +12,31 @@ const BRAND_GRADIENT =
   'linear-gradient(120deg, #0A2B6D 0%, #0072FF 30%, #5A00D6 66%, #FF2E9A 100%)';
 
 const QUICK_LINKS = [
-  {
-    key: 'dashboard',
-    label: 'Dashboard',
-    views: ['Executive & Role Hub', 'Live KPI Score Ring', 'Morning Shift Brief'],
-    path: '/dashboard',
-    icon: LayoutDashboard,
-  },
-  {
-    key: 'operations-centre',
-    label: 'Operations Centre',
-    views: ['1-Click Live Sweeps', '12 Armed Actions', 'Live Audit Trail'],
-    path: '/operations-centre',
-    icon: Sparkles,
-  },
-  {
-    key: 'rostering',
-    label: 'Roster & Shifts',
-    views: ['SCHADS & Coverage', 'Fatigue Gatekeeper', '2-Way Calendar Sync'],
-    path: '/roster',
-    icon: CalendarClock,
-  },
-  {
-    key: 'my-profile',
-    label: 'My Profile',
-    views: ['Personal Workspace', 'My Shifts & Goals', 'Staff Name Tag Studio'],
-    path: '/my-profile',
-    icon: UserCircle,
-  },
-  {
-    key: 'our-staff',
-    label: 'Employee Profiles',
-    views: ['100-Pt Staff Files', 'Screening Alerts', '360° Appraisals'],
-    path: '/our-employees',
-    icon: Users,
-  },
-  {
-    key: 'our-participants',
-    label: 'Participant Profiles',
-    views: ['Plans & Consents', '3-Part Consent Lock', '10-Weekly Reviews'],
-    path: '/our-participants',
-    icon: Heart,
-  },
-  {
-    key: 'compliance',
-    label: 'Compliance Centre',
-    views: ['Audits & Readiness', '356 Checkpoints', '2-Min Express Audit'],
-    path: '/compliance',
-    icon: ShieldCheck,
-  },
-  {
-    key: 'invoicing',
-    label: 'Invoicing Centre',
-    views: ['NDIS Claims & Pay', 'Price Guide Builder', 'Bank Reconciliation'],
-    path: '/invoicing',
-    icon: FileSpreadsheet,
-  },
-  {
-    key: 'communications',
-    label: 'Communication Centre',
-    views: ['Shift Notes & Inbox', 'AI Compose & Email', '5-Day Complaint SLA'],
-    path: '/communications',
-    icon: Megaphone,
-  },
-  {
-    key: 'goals',
-    label: 'Goal Progress',
-    views: ['Outcomes & AI Coach', 'Funding Utilisation', 'Goal Progress Slider'],
-    path: '/goals',
-    icon: Target,
-  },
-  {
-    key: 'training',
-    label: 'Training Centre',
-    views: ['LMS & AI Quizzes', 'AI Course Studio', 'Signed PDF Certs'],
-    path: '/training',
-    icon: GraduationCap,
-  },
-  {
-    key: 'community-council',
-    label: 'Community Hub',
-    views: ['Programs & Events', 'Postcode Directory', 'Event Flyer Studio'],
-    path: '/community-council',
-    icon: MapPin,
-  },
-  {
-    key: 'certificates',
-    label: 'Recognition & Certs',
-    views: ['Signed PDF Awards', 'Milestone Badges', 'Renewal Calendar'],
-    path: '/certificates',
-    icon: BadgeCheck,
-  },
-  {
-    key: 'tasks',
-    label: 'Task Dashboard',
-    views: ['Shared To-Do & SLA', 'Digital Sign-Off', '30-Task Batch PDF'],
-    path: '/tasks',
-    icon: ClipboardList,
-  },
-  {
-    key: 'incidents',
-    label: 'Incident Clinic',
-    views: ['24h / 5d NDIS Timers', 'Root-Cause Review', 'Photo Evidence Log'],
-    path: '/incidents',
-    icon: AlertTriangle,
-  },
-  {
-    key: 'human-resources',
-    label: 'HR & Volunteers',
-    views: ['Contracts & Reviews', 'Digital E-Signing', 'Volunteer Placements'],
-    path: '/hr',
-    icon: UsersRound,
-  },
-  {
-    key: 'company-safe',
-    label: 'Company Safe',
-    views: ['Protected Vault', 'Executive Wall View', 'Insurance Register'],
-    path: '/company-safe',
-    icon: Vault,
-  },
-  {
-    key: 'intake',
-    label: 'Intake Centre',
-    views: ['1-Click Onboarding', 'AI Resume Extract', 'Fast Profile Sync'],
-    path: '/intake',
-    icon: Briefcase,
-  },
+  { key: 'dashboard', label: 'Dashboard', views: ['Executive & Role Hub', 'Live KPI Score Ring', 'Morning Shift Brief'], path: '/dashboard', icon: LayoutDashboard },
+  { key: 'operations-centre', label: 'Operations Centre', views: ['1-Click Live Sweeps', '12 Armed Actions', 'Live Audit Trail'], path: '/operations-centre', icon: Sparkles },
+  { key: 'rostering', label: 'Roster & Shifts', views: ['SCHADS & Coverage', 'Fatigue Gatekeeper', 'Calendar Sync'], path: '/roster', icon: CalendarClock },
+  { key: 'my-profile', label: 'My Profile', views: ['Personal Workspace', 'My Shifts & Goals', 'Staff Name Tags'], path: '/my-profile', icon: UserCircle },
+  { key: 'our-staff', label: 'Employee Profiles', views: ['100-Pt Staff Files', 'Screening Alerts', '360° Appraisals'], path: '/our-employees', icon: Users },
+  { key: 'our-participants', label: 'Participant Profiles', views: ['Plans & Consents', '3-Part Consent Lock', '10-Weekly Reviews'], path: '/our-participants', icon: Heart },
+  { key: 'compliance', label: 'Compliance Centre', views: ['Audits & Readiness', '356 Checkpoints', 'Express 2-Min Audit'], path: '/compliance', icon: ShieldCheck },
+  { key: 'invoicing', label: 'Invoicing Centre', views: ['NDIS Claims & Pay', 'Price Guide Builder', 'Bank Reconciliation'], path: '/invoicing', icon: FileSpreadsheet },
+  { key: 'communications', label: 'Communication Centre', views: ['Shift Notes & Inbox', 'AI Compose & Email', '5-Day Complaint SLA'], path: '/communications', icon: Megaphone },
+  { key: 'goals', label: 'Goal Progress', views: ['Outcomes & AI Coach', 'Funding Utilisation', 'Goal Progress Slider'], path: '/goals', icon: Target },
+  { key: 'training', label: 'Training Centre', views: ['LMS & AI Quizzes', 'AI Course Studio', 'Signed PDF Certs'], path: '/training', icon: GraduationCap },
+  { key: 'community-council', label: 'Community Hub', views: ['Programs & Events', 'Postcode Directory', 'Event Flyer Studio'], path: '/community-council', icon: MapPin },
+  { key: 'certificates', label: 'Recognition & Certs', views: ['Signed PDF Awards', 'Milestone Badges', 'Renewal Calendar'], path: '/certificates', icon: BadgeCheck },
+  { key: 'tasks', label: 'Task Dashboard', views: ['Shared To-Do & SLA', 'Digital Sign-Off', '30-Task Batch PDF'], path: '/tasks', icon: ClipboardList },
+  { key: 'incidents', label: 'Incident Clinic', views: ['24h / 5d NDIS Timers', 'Root-Cause Review', 'Photo Evidence Log'], path: '/incidents', icon: AlertTriangle },
+  { key: 'human-resources', label: 'HR & Volunteers', views: ['Contracts & Reviews', 'Digital E-Signing', 'Volunteer Placements'], path: '/hr', icon: UsersRound },
+  { key: 'company-safe', label: 'Company Safe', views: ['Protected Vault', 'Executive Wall View', 'Insurance Register'], path: '/company-safe', icon: Vault },
+  { key: 'intake', label: 'Intake Centre', views: ['1-Click Onboarding', 'AI Resume Extract', 'Fast Profile Sync'], path: '/intake', icon: Briefcase },
 ];
 
 export default function QuickAppBar() {
   const location = useLocation();
   const [cycleIdx, setCycleIdx] = useState(0);
 
-  // Rotate the supporting line shown on every tile, every 30 seconds
+  // Rotate the supporting line shown on every screen, every 30 seconds
   useEffect(() => {
     const viewTimer = setInterval(() => {
       setCycleIdx((prev) => (prev + 1) % 3);
@@ -172,21 +64,22 @@ export default function QuickAppBar() {
             </span>
             <div className="min-w-0">
               <h2 className="text-[13px] font-extrabold leading-tight text-[#0A2B6D]">Quick Access</h2>
-              <p className="text-[9.5px] font-bold leading-tight text-[#0A2B6D]/60">
-                Jump straight into any of your {QUICK_LINKS.length} core workspaces
+              <p className="text-[10px] font-bold leading-tight text-[#0A2B6D]/60">
+                {QUICK_LINKS.length} live screens · one tap into any workspace
               </p>
             </div>
           </div>
 
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
             <span className="relative flex h-1.5 w-1.5 shrink-0">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-70" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
             </span>
-            <span className="whitespace-nowrap">Live · all systems ready</span>
+            <span className="whitespace-nowrap">Live</span>
           </span>
         </div>
 
+        {/* iPad screens — identical chrome, uniform heights, all copy fits */}
         <div className="grid auto-rows-fr grid-cols-2 items-stretch gap-2 px-3.5 pb-3.5 pt-2.5 sm:grid-cols-3 sm:px-4 lg:grid-cols-6">
           {QUICK_LINKS.map((item, idx) => {
             const active = isActive(item.path);
@@ -198,34 +91,41 @@ export default function QuickAppBar() {
                 key={item.path}
                 to={item.path}
                 title={`${item.label} — ${currentSub}`}
-                className={`group flex h-full min-h-[80px] flex-col justify-between gap-2 rounded-xl border p-2.5 transition-all duration-200 ${
+                className={`group flex h-full min-h-[98px] flex-col gap-[3px] rounded-xl border-2 bg-[#0A2B6D] p-[3px] transition-all duration-200 ${
                   active
-                    ? 'border-[#5A00D6] bg-[#5A00D6]/5 shadow-sm'
-                    : 'border-slate-200 bg-white hover:-translate-y-0.5 hover:border-[#0072FF]/45 hover:shadow-md'
+                    ? 'border-[#5A00D6] shadow-md'
+                    : 'border-[#0A2B6D] hover:-translate-y-0.5 hover:border-[#0072FF] hover:shadow-md'
                 }`}
               >
-                <div className="flex items-start justify-between gap-1">
-                  <span
-                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-white shadow-2xs"
+                {/* Screen */}
+                <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-[7px] bg-white">
+                  {/* App title bar */}
+                  <div
+                    className="flex shrink-0 items-center gap-1 px-1.5 py-1"
                     style={{ background: getHeaderView(idx) }}
                   >
-                    <Icon className="h-3.5 w-3.5 text-white" />
-                  </span>
-                  <ArrowRight
-                    className={`h-3 w-3 shrink-0 transition group-hover:translate-x-0.5 ${
-                      active ? 'text-[#5A00D6]' : 'text-slate-300 group-hover:text-[#0072FF]'
-                    }`}
-                  />
+                    <Icon className="h-2.5 w-2.5 shrink-0 text-white" />
+                    <span className="min-w-0 flex-1 truncate text-[11px] font-extrabold leading-[15px] text-white">
+                      {item.label}
+                    </span>
+                    <span
+                      className={`h-1 w-1 shrink-0 rounded-full ${
+                        active ? 'bg-white' : 'bg-white/60'
+                      }`}
+                    />
+                  </div>
+
+                  {/* White writing area with the supported detail */}
+                  <div className="flex min-h-[40px] flex-1 items-center justify-between gap-1 border-t border-[#0A2B6D]/10 bg-white px-1.5 py-1">
+                    <span className="line-clamp-2 min-w-0 flex-1 break-words text-[10.5px] font-bold leading-[13px] text-[#0A2B6D]">
+                      {currentSub}
+                    </span>
+                    <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#5A00D6] opacity-70 transition group-hover:translate-x-0.5 group-hover:opacity-100" />
+                  </div>
                 </div>
 
-                <div className="min-w-0">
-                  <div className="break-words text-[10.5px] font-extrabold leading-[13px] text-[#0A2B6D]">
-                    {item.label}
-                  </div>
-                  <div className="mt-0.5 line-clamp-1 text-[9px] font-bold leading-[11px] text-[#0A2B6D]/55">
-                    {currentSub}
-                  </div>
-                </div>
+                {/* Home indicator */}
+                <span className="mx-auto h-[2px] w-5 shrink-0 rounded-full bg-white/45" />
               </Link>
             );
           })}
