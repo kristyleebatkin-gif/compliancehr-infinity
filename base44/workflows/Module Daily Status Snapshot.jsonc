@@ -5,7 +5,7 @@
       "trigger_type": "scheduled",
       "events": [],
       "schedule_mode": "recurring",
-      "cron_expression": "10 7 * * *",
+      "cron_expression": "30 8 * * *",
       "one_time_date": null,
       "timezone": "Australia/Sydney",
       "interval_value": null,
@@ -16,7 +16,7 @@
       "ends_after_count": null
     }
   },
-  "description": "Records a daily live-status snapshot of every module's register counts for the exportable dashboard log",
+  "description": "Daily at 8:30 AM (Australia/Sydney): records a live-status snapshot of every module's register counts for the exportable dashboard log",
   "name": "Module Daily Status Snapshot",
   "definition": {
     "document": {
@@ -35,7 +35,7 @@
           },
           "then": "end",
           "x-base44": {
-            "title": "Record daily module status",
+            "title": "Record 8:30 AM daily module status",
             "description": "Live counts for all modules"
           }
         }

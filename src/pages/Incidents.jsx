@@ -12,7 +12,8 @@ import SectionCard from '@/components/SectionCard';
 import EmptyState from '@/components/EmptyState';
 import { Field, TextInput, TextArea, Select, DateInput } from '@/components/Field';
 import { Button } from '@/components/ui/button';
-import { Plus, Search, AlertTriangle, FileSearch, UserPlus, X, Download, LayoutGrid, KanbanSquare } from 'lucide-react';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Plus, Search, AlertTriangle, FileSearch, UserPlus, X, Download, LayoutGrid, KanbanSquare, BarChart3, ShieldAlert } from 'lucide-react';
 import HealthMedicationResponse from '@/components/incidents/HealthMedicationResponse';
 import { downloadIncidentReport } from '@/lib/compliancePdf';
 import IncidentKanban from '@/components/incidents/IncidentKanban';
@@ -68,18 +69,30 @@ function Incidents({ profile, profileKind, embedded = false } = {}) {
   }, [loading]);
 
   useEffect(() => {
+    const matchesProfile = (rec) => !profile || (profileKind === 'participant'
+      ? rec?.participant_id === profile.id || rec?.participant_name === profile.full_name
+      : rec?.staff_id === profile.id || rec?.staff_name === profile.full_name);
+
     const unsubInc = base44.entities.Incident.subscribe((event) => {
-      if (event.type === 'create' && (!profile || (profileKind === 'participant' ? event.data.participant_id === profile.id || event.data.participant_name === profile.full_name : event.data.staff_id === profile.id || event.data.staff_name === profile.full_name))) {
+      if (event.type === 'create' && matchesProfile(event.data)) {
         setItems((prev) => (prev.some((i) => i.id === event.data.id) ? prev : [event.data, ...prev]));
+      } else if (event.type === 'update' && event.data) {
+        setItems((prev) => prev.map((i) => (i.id === event.data.id ? { ...i, ...event.data } : i)));
+      } else if (event.type === 'delete') {
+        setItems((prev) => prev.filter((i) => i.id !== event.id));
       }
     });
     const unsubInv = base44.entities.Investigation.subscribe((event) => {
-      if (event.type === 'create') {
+      if (event.type === 'create' && event.data) {
         setInvestigations((prev) => (prev.some((i) => i.id === event.data.id) ? prev : [event.data, ...prev]));
+      } else if (event.type === 'update' && event.data) {
+        setInvestigations((prev) => prev.map((i) => (i.id === event.data.id ? { ...i, ...event.data } : i)));
+      } else if (event.type === 'delete') {
+        setInvestigations((prev) => prev.filter((i) => i.id !== event.id));
       }
     });
     return () => { unsubInc(); unsubInv(); };
-  }, []);
+  }, [profile?.id, profile?.full_name, profileKind]);
 
   const load = async () => {
     setLoading(true);
@@ -210,47 +223,42 @@ function Incidents({ profile, profileKind, embedded = false } = {}) {
   };
 
   return (
-    <div className="safety-workspace mx-auto min-w-0 max-w-7xl space-y-4">
+    <div className="safety-workspace mx-auto min-w-0 max-w-[1440px] space-y-4">
       <ModuleShell
         embedded={embedded}
         title="Incident Clinic"
-        subtitle="Report, investigate and resolve incidents - every report feeds the register, investigations and exports"
+        subtitle="Report, investigate and resolve incidents — real-time 24h / 5-day NDIS reportable tracking, investigations and exports"
+        icon={AlertTriangle}
         moduleKey="incidents"
         insightModule="incidents"
         search={<ModuleSearchBar value={search} onChange={setSearch} placeholder="Search incidents..." />}
         actions={<>
-          {canReview && <Button size="sm" onClick={() => { setEditingInvestigation(null); setInvForm(blankInv); setShowInv(true); }}><FileSearch className="h-4 w-4 mr-1.5" /> New investigation</Button>}
+          {canReview && <Button size="sm" onClick={() => { setEditingInvestigation(null); setInvForm(blankInv); setShowInv(true); }}><FileSearch className="h-4 w-4 mr-1.5" /> New Investigation</Button>}
           <Link to={profile ? `/incidents/new?${profileKind === 'participant' ? 'participantId' : 'staffId'}=${encodeURIComponent(profile.id)}` : '/incidents/new'}>
-            <Button size="sm"><Plus className="h-4 w-4 mr-1.5" /> New incident</Button>
+            <Button size="sm"><Plus className="h-4 w-4 mr-1.5" /> New Incident</Button>
           </Link>
           {canReview && <Button size="sm" onClick={() => downloadIncidentReport(items)} disabled={loading || items.length === 0}><Download className="h-4 w-4 mr-1.5" /> Reports (PDF)</Button>}
         </>}
       >
       {embedded && <RegisterInsights module="incidents" />}
 
-      {/* Screen Switcher: Incident Clinic & Friendly Incident Analytics */}
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white p-2.5 shadow-sm">
-        <span className="text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-          Incident Clinic &amp; Friendly Incident Analytics Workspace
-        </span>
-        <div className="flex flex-wrap gap-1.5">
-          {[
-            ['both', 'Combined Clinic + Friendly Analytics'],
-            ['clinic', 'Screen 1: Incident Clinic & Register'],
-            ['analytics', 'Screen 2: Friendly Incident Analytics'],
-          ].map(([key, label]) => (
-            <Button
-              key={key}
-              size="sm"
-              variant={screenMode === key ? 'default' : 'outline'}
-              className="border-2 border-[#0A2B6D] font-extrabold"
-              onClick={() => setScreenMode(key)}
-            >
-              {label}
-            </Button>
-          ))}
-        </div>
-      </div>
+      {/* Standardized iPad-Style Workspace Tabs */}
+      <Tabs value={screenMode} onValueChange={setScreenMode}>
+        <TabsList>
+          <TabsTrigger value="both" data-hint="Clinic, 24h/5d NDIS Escalation & Analytics">
+            <ShieldAlert className="h-3.5 w-3.5" />
+            Combined Clinic &amp; Analytics
+          </TabsTrigger>
+          <TabsTrigger value="clinic" data-hint="Incident Register, CAPA & Investigations">
+            <AlertTriangle className="h-3.5 w-3.5" />
+            Incident Clinic &amp; Register
+          </TabsTrigger>
+          <TabsTrigger value="analytics" data-hint="Blame-Free Safety Trends & Support Charts">
+            <BarChart3 className="h-3.5 w-3.5" />
+            Friendly Incident Analytics
+          </TabsTrigger>
+        </TabsList>
+      </Tabs>
 
       {(screenMode === 'analytics' || screenMode === 'both') && (
         <SectionCard

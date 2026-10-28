@@ -38,37 +38,37 @@ const MINI_COMM_SQUARES = [
   { key: 'log', label: 'Staff Log', icon: Briefcase, color: '#0A2B6D' },
 ];
 
-const DEFAULT_SMALL_TODOS = [
-  { id: 'st-1', title: 'Sign off morning SIL shift handover note', module: 'Comms', status: 'Pending' },
-  { id: 'st-2', title: 'Verify 10-weekly participant progress copy', module: 'Participants', status: 'In Progress' },
-  { id: 'st-3', title: 'Confirm NDIS worker screening renewal check', module: 'HR', status: 'Open' },
-];
-
-export default function MiniCommunicationCentrePanel({ alertCount = 3 }) {
-  const [todos, setTodos] = useState(DEFAULT_SMALL_TODOS);
+export default function MiniCommunicationCentrePanel({ alertCount = 0 }) {
+  const [todos, setTodos] = useState([]);
   const [newTodoText, setNewTodoText] = useState('');
 
   useEffect(() => {
     let active = true;
-    base44.entities.TodoTask.filter(
-      { status: { $in: ['Pending', 'Open', 'In Progress'] } },
-      { sort: '-created_date', limit: 4 }
-    )
-      .then((page) => {
-        if (active && page?.items?.length > 0) {
+    const loadTodos = () => {
+      base44.entities.TodoTask.filter(
+        { status: { $in: ['Pending', 'Open', 'In Progress'] } },
+        { sort: '-created_date', limit: 4 }
+      )
+        .then((page) => {
+          if (!active) return;
           setTodos(
-            page.items.slice(0, 4).map((t) => ({
+            (page?.items || []).slice(0, 4).map((t) => ({
               id: t.id,
               title: t.title,
               module: t.module || 'Team',
               status: t.status || 'Open',
             }))
           );
-        }
-      })
-      .catch(() => {});
+        })
+        .catch(() => {
+          if (active) setTodos([]);
+        });
+    };
+    loadTodos();
+    const unsub = base44.entities.TodoTask.subscribe(() => loadTodos());
     return () => {
       active = false;
+      unsub();
     };
   }, []);
 
@@ -250,6 +250,11 @@ export default function MiniCommunicationCentrePanel({ alertCount = 3 }) {
 
           {/* Compact Shared To-Do Items */}
           <div className="space-y-0.5">
+            {todos.length === 0 && (
+              <div className="rounded border border-[#0A2B6D]/20 bg-white px-1.5 py-1 text-[7.5px] font-extrabold text-[#0A2B6D]">
+                No open shared to-do tasks — add a task above to dispatch in real time.
+              </div>
+            )}
             {todos.slice(0, 3).map((item, idx) => (
               <div
                 key={item.id}

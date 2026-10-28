@@ -14,8 +14,9 @@ import SectionCard from '@/components/SectionCard';
 import { Field, TextInput, Select, TextArea, DateInput } from '@/components/Field';
 import EmptyState from '@/components/EmptyState';
 import TreatmentSection from '@/components/risks/TreatmentSection';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useRole } from '@/lib/useRole';
-import { ShieldAlert, Plus, Pencil, Trash2, AlertTriangle, FileWarning, Download, FileDown } from 'lucide-react';
+import { ShieldAlert, Plus, Pencil, Trash2, AlertTriangle, FileWarning, Download, FileDown, Grid3X3, CheckSquare } from 'lucide-react';
 import { downloadRiskReport } from '@/lib/compliancePdf';
 import { downloadTake5AssessmentPdf, downloadRiskAssessmentTemplatePdf } from '@/lib/riskTemplates';
 import TemplatePicker from '@/components/TemplatePicker';
@@ -72,6 +73,7 @@ function Risks({ profile, profileKind, embedded = false } = {}) {
   const [statusFilter, setStatusFilter] = useState(searchParams.get('status') === 'open' ? 'Open' : 'All');
   const [issueFilter, setIssueFilter] = useState('All');
   const [query, setQuery] = useState('');
+  const [riskTab, setRiskTab] = useState('all');
 
   const load = async () => {
     setLoading(true);
@@ -83,6 +85,23 @@ function Risks({ profile, profileKind, embedded = false } = {}) {
     setLoading(false);
   };
   useEffect(() => { load(); }, []);
+
+  useEffect(() => {
+    const matchesProfile = (rec) => !profile || (profileKind === 'participant'
+      ? rec?.participant_id === profile.id || rec?.participant_name === profile.full_name
+      : rec?.owner === profile.full_name);
+
+    const unsub = base44.entities.Risk.subscribe((event) => {
+      if (event.type === 'create' && event.data && matchesProfile(event.data)) {
+        setRisks((prev) => (prev.some((r) => r.id === event.data.id) ? prev : [event.data, ...prev]));
+      } else if (event.type === 'update' && event.data) {
+        setRisks((prev) => prev.map((r) => (r.id === event.data.id ? { ...r, ...event.data } : r)));
+      } else if (event.type === 'delete') {
+        setRisks((prev) => prev.filter((r) => r.id !== event.id));
+      }
+    });
+    return unsub;
+  }, [profile?.id, profile?.full_name, profileKind]);
   useEffect(() => {
     if (window.location.hash !== '#risk-register') return;
     const timer = window.setTimeout(() => document.getElementById('risk-register')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 250);
@@ -215,7 +234,7 @@ function Risks({ profile, profileKind, embedded = false } = {}) {
   ));
 
   return (
-    <div className="safety-workspace mx-auto min-w-0 max-w-6xl space-y-4">
+    <div className="safety-workspace mx-auto min-w-0 max-w-[1440px] space-y-4">
       {embedded ? (
         <>
           <RegisterInsights module="risks" />
@@ -225,7 +244,7 @@ function Risks({ profile, profileKind, embedded = false } = {}) {
       ) : (
         <ModuleShell
           title="Risk Management"
-          subtitle={`${risks.length} risk reports in register`}
+          subtitle={`${risks.length} risk reports in register — 5×5 matrix, monthly Home & 3-monthly Individual review cycles`}
           icon={ShieldAlert}
           moduleKey="risks"
           insightModule="risks"
@@ -234,6 +253,29 @@ function Risks({ profile, profileKind, embedded = false } = {}) {
           small={tiles}
         />
       )}
+
+      {/* Standardized iPad-Style Risk Workspace Tabs */}
+      <Tabs value={riskTab} onValueChange={setRiskTab}>
+        <TabsList>
+          <TabsTrigger value="all" data-hint="5×5 Matrix, Registers, Take 5 & Controls">
+            <ShieldAlert className="h-3.5 w-3.5" />
+            All Risk Workspaces
+          </TabsTrigger>
+          <TabsTrigger value="register" data-hint="Live 5×5 Matrix, Status & Risk Register">
+            <Grid3X3 className="h-3.5 w-3.5" />
+            Risk Matrix &amp; Register
+          </TabsTrigger>
+          <TabsTrigger value="hazards" data-hint="Hazards, Near Misses & Take 5 Checks">
+            <AlertTriangle className="h-3.5 w-3.5" />
+            Hazards &amp; Take 5
+          </TabsTrigger>
+          <TabsTrigger value="controls" data-hint="Eliminate, Minimise, Isolate & Due Dates">
+            <CheckSquare className="h-3.5 w-3.5" />
+            Controls &amp; Review Cycles
+          </TabsTrigger>
+        </TabsList>
+      </Tabs>
+
       {profileKind === 'participant' && profile && <ParticipantAssessmentRecords participant={profile} />}
 
       <div className="rounded-xl border-2 border-[#ea580c] bg-orange-50/70 p-2.5 flex flex-wrap items-center justify-between gap-2" style={{ borderTopWidth: '4px' }}>
@@ -252,43 +294,56 @@ function Risks({ profile, profileKind, embedded = false } = {}) {
         </div>
       </div>
 
-      <CommonRiskLibrary onAdded={load} />
+      {(riskTab === 'all' || riskTab === 'register') && (
+        <CommonRiskLibrary onAdded={load} />
+      )}
 
-      <TakeFiveRegister />
-      <SafetyFormsLibrary types={['Risk Assessment', 'Hazard Report', 'Near Miss Report', 'Take Five Assessment', 'Individual Risk Assessment', 'Daily Vehicle Check', 'Home Risk Assessment']} />
-      <SafetyRegisterExports risks={risks} />
+      {(riskTab === 'all' || riskTab === 'hazards') && (
+        <>
+          <TakeFiveRegister />
+          <SafetyFormsLibrary types={['Risk Assessment', 'Hazard Report', 'Near Miss Report', 'Take Five Assessment', 'Individual Risk Assessment', 'Daily Vehicle Check', 'Home Risk Assessment']} />
+        </>
+      )}
 
-      {/* Changeable status dashboard */}
-      <StatusDashboard
-        title="Risk Status Dashboard"
-        description="Every risk and its current status — change a status here and the register updates"
-        records={risks}
-        statuses={STATUSES}
-        subField="risk_id"
-        disabled={!can('risks')}
-        onChange={changeRiskStatus}
-        onExport={() => {
-          if (!risks.length) { toast({ title: 'No risks to export' }); return; }
-          downloadCsv('Risk Register.csv', RISK_CSV_COLUMNS, risks);
-          toast({ title: 'Risk register exported' });
-        }}
-        emptyTitle="No risks recorded"
-      />
+      {(riskTab === 'all' || riskTab === 'register') && (
+        <>
+          <SafetyRegisterExports risks={risks} />
+
+          {/* Changeable status dashboard */}
+          <StatusDashboard
+            title="Risk Status Dashboard"
+            description="Every risk and its current status — change a status here and the register updates"
+            records={risks}
+            statuses={STATUSES}
+            subField="risk_id"
+            disabled={!can('risks')}
+            onChange={changeRiskStatus}
+            onExport={() => {
+              if (!risks.length) { toast({ title: 'No risks to export' }); return; }
+              downloadCsv('Risk Register.csv', RISK_CSV_COLUMNS, risks);
+              toast({ title: 'Risk register exported' });
+            }}
+            emptyTitle="No risks recorded"
+          />
+        </>
+      )}
 
       {/* Individual (3-monthly) and home (monthly) assessment due tracking */}
-      <AssessmentDuePanel
-        risks={risks}
-        onEdit={openEdit}
-        canEdit={can('risks')}
-        onUpdate={async (risk, patch) => {
-          await base44.entities.Risk.update(risk.id, patch);
-          toast({ title: 'Assessment logged; next due date set' });
-          load();
-        }}
-      />
+      {(riskTab === 'all' || riskTab === 'controls') && (
+        <AssessmentDuePanel
+          risks={risks}
+          onEdit={openEdit}
+          canEdit={can('risks')}
+          onUpdate={async (risk, patch) => {
+            await base44.entities.Risk.update(risk.id, patch);
+            toast({ title: 'Assessment logged; next due date set' });
+            load();
+          }}
+        />
+      )}
 
       {/* Hazard Register - live updates as hazards are entered */}
-      <SectionCard
+      {(riskTab === 'all' || riskTab === 'hazards') && <SectionCard
         collapsible
         title="Hazard Register"
         description="Hazards reported via the Report Hazard button"
@@ -339,10 +394,10 @@ function Risks({ profile, profileKind, embedded = false } = {}) {
             </div>
           );
         })()}
-      </SectionCard>
+      </SectionCard>}
 
       {/* Risk Matrix */}
-      <SectionCard title="Risk Matrix" description="Likelihood × Consequence — the number in each cell shows how many risks sit at that score">
+      {(riskTab === 'all' || riskTab === 'register') && <SectionCard title="Risk Matrix" description="Likelihood × Consequence — the number in each cell shows how many risks sit at that score">
         <div className="overflow-x-auto">
           <div className="min-w-[540px]">
             <div className="grid grid-cols-[120px_repeat(5,1fr)] gap-1">
@@ -385,10 +440,10 @@ function Risks({ profile, profileKind, embedded = false } = {}) {
             </div>
           </div>
         </div>
-      </SectionCard>
+      </SectionCard>}
 
       {/* Risk register */}
-      <SectionCard
+      {(riskTab === 'all' || riskTab === 'register') && <SectionCard
         id="risk-register"
         collapsible
         title="Risk Register"
@@ -455,48 +510,50 @@ function Risks({ profile, profileKind, embedded = false } = {}) {
             </table>
           </div>
         )}
-      </SectionCard>
+      </SectionCard>}
 
-      {/* Elimination section */}
-      <TreatmentSection
-        type="elimination"
-        title="Elimination Strategies"
-        description="Hierarchy of controls - eliminate the hazard entirely"
-        field="elimination_actions"
-        risks={risks}
-        loading={loading}
-        canEdit={can('risks')}
-        onEdit={openEdit}
-      />
+      {(riskTab === 'all' || riskTab === 'controls') && (
+        <>
+          {/* Elimination section */}
+          <TreatmentSection
+            type="elimination"
+            title="Elimination Strategies"
+            description="Hierarchy of controls - eliminate the hazard entirely"
+            field="elimination_actions"
+            risks={risks}
+            loading={loading}
+            canEdit={can('risks')}
+            onEdit={openEdit}
+          />
 
-      {/* Minimise section */}
-      <TreatmentSection
-        type="minimise"
-        title="Minimise Strategies"
-        description="Hierarchy of controls - reduce likelihood and severity"
-        field="minimise_actions"
-        risks={risks}
-        loading={loading}
-        canEdit={can('risks')}
-        onEdit={openEdit}
-      />
+          {/* Minimise section */}
+          <TreatmentSection
+            type="minimise"
+            title="Minimise Strategies"
+            description="Hierarchy of controls - reduce likelihood and severity"
+            field="minimise_actions"
+            risks={risks}
+            loading={loading}
+            canEdit={can('risks')}
+            onEdit={openEdit}
+          />
 
-      {/* Isolate section */}
-      <TreatmentSection
-        type="isolate"
-        title="Isolate Strategies"
-        description="Hierarchy of controls - separate people from the hazard"
-        field="isolate_actions"
-        risks={risks}
-        loading={loading}
-        canEdit={can('risks')}
-        onEdit={openEdit}
-      />
+          {/* Isolate section */}
+          <TreatmentSection
+            type="isolate"
+            title="Isolate Strategies"
+            description="Hierarchy of controls - separate people from the hazard"
+            field="isolate_actions"
+            risks={risks}
+            loading={loading}
+            canEdit={can('risks')}
+            onEdit={openEdit}
+          />
 
-      {/* Staff Training & Compliance Controls */}
-      <SectionCard
-        collapsible
-        title="Staff Training & Compliance Controls"
+          {/* Staff Training & Compliance Controls */}
+          <SectionCard
+            collapsible
+            title="Staff Training & Compliance Controls"
         description="Training and compliance controls recorded against each risk"
         action={
           <div className="flex items-center gap-2">
@@ -540,6 +597,8 @@ function Risks({ profile, profileKind, embedded = false } = {}) {
           </div>
         )}
       </SectionCard>
+        </>
+      )}
 
       {editing && (
         <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-foreground/40 p-4">

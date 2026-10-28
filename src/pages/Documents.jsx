@@ -15,7 +15,7 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Trash2, Pencil, FolderOpen, Eye, CalendarDays } from 'lucide-react';
+import { Trash2, Pencil, FolderOpen, Eye, CalendarDays, Sparkles, UploadCloud, ShieldCheck } from 'lucide-react';
 import EmptyState from '@/components/EmptyState';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import DataControlPanel from '@/components/documents/DataControlPanel';
@@ -128,6 +128,18 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
 
   useEffect(() => { load(); }, [load]);
 
+  // Real-time document & certificate updates
+  useEffect(() => {
+    const unsubEmp = base44.entities.EmployeeDocument.subscribe(() => { load(); });
+    const unsubPart = base44.entities.ParticipantDocument.subscribe(() => { load(); });
+    const unsubCert = base44.entities.Certificate.subscribe(() => { load(); });
+    return () => {
+      unsubEmp();
+      unsubPart();
+      unsubCert();
+    };
+  }, [load]);
+
   // Scroll to the section a module's Docs button asked for (e.g. ?focus=employee)
   useEffect(() => {
     if (!focus) return;
@@ -202,11 +214,11 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
   };
 
   return (
-    <div className="vault-workspace compact-module space-y-2">
+    <div className="vault-workspace compact-module mx-auto min-w-0 max-w-[1440px] space-y-3">
       {!embedded && <ModuleShell
         icon={FolderOpen}
         title="Document Vault"
-        subtitle="Every Document, Expiry Tracking and Data Control."
+        subtitle="Every Document, Real-Time 90/60/30/14-Day Expiry Tracking, Smart Mailroom & Data Control"
         moduleKey="documents"
         insightModule={!profile && !isParticipant ? 'documents' : undefined}
       />}
@@ -221,12 +233,33 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
       {embedded && !profile && <RegisterInsights module="documents" recordsClassName="vault-record-count" />}
 
       <Tabs value={tab} onValueChange={setTab}>
-        <TabsList className="vault-document-tabs flex flex-wrap h-auto gap-1.5 justify-start">
-          <TabsTrigger value="documents"><FolderOpen className="mr-1.5 inline h-3.5 w-3.5" />Every Document</TabsTrigger>
-          {!profile && <TabsTrigger value="smart-mailroom">Smart Mailroom (Auto-Classify)</TabsTrigger>}
-          <TabsTrigger value="expiry-calendar"><CalendarDays className="mr-1.5 inline h-3.5 w-3.5" />Expiry Calendar</TabsTrigger>
-          {!profile && canViewUploads && <TabsTrigger value="vault-uploads">Vault Uploads &amp; Templates</TabsTrigger>}
-          {!profile && canViewDataControl && <TabsTrigger value="data-control">Data Control &amp; Breaches</TabsTrigger>}
+        <TabsList className="vault-document-tabs">
+          <TabsTrigger value="documents" data-hint="Employee, Participant & Compliance Files">
+            <FolderOpen className="h-3.5 w-3.5" />
+            Every Document
+          </TabsTrigger>
+          {!profile && (
+            <TabsTrigger value="smart-mailroom" data-hint="AI Auto-Classify & Route Uploads">
+              <Sparkles className="h-3.5 w-3.5" />
+              Smart Mailroom
+            </TabsTrigger>
+          )}
+          <TabsTrigger value="expiry-calendar" data-hint="90 / 60 / 30 / 14-Day Renewal Schedule">
+            <CalendarDays className="h-3.5 w-3.5" />
+            Expiry Calendar
+          </TabsTrigger>
+          {!profile && canViewUploads && (
+            <TabsTrigger value="vault-uploads" data-hint="Bulk Upload & Official Templates">
+              <UploadCloud className="h-3.5 w-3.5" />
+              Vault Uploads &amp; Templates
+            </TabsTrigger>
+          )}
+          {!profile && canViewDataControl && (
+            <TabsTrigger value="data-control" data-hint="Access Logs, Audits & Breach Register">
+              <ShieldCheck className="h-3.5 w-3.5" />
+              Data Control &amp; Breaches
+            </TabsTrigger>
+          )}
         </TabsList>
 
         <TabsContent value="documents" className="mt-3 space-y-3">

@@ -136,11 +136,28 @@ export function SmallSafeVaultBar() {
  * 2. Today's Overview with Roster on a Flat Screen, Dark Blue Writing & Overhead Spotlights
  */
 function TodaysRosterPictureCard() {
-  const sampleRosterRows = [
-    { shift: '07:00 – 15:00 · Morning Support', staff: 'Sarah Jenkins (RN)', participant: 'Liam Carter', status: 'Cleared & Active' },
-    { shift: '09:00 – 17:00 · Community Access', staff: 'David Nguyen (SW)', participant: 'Mia Thompson', status: 'Cleared & Active' },
-    { shift: '15:00 – 23:00 · Afternoon SIL', staff: 'Emma Wilson (TL)', participant: 'Noah Williams', status: 'Handover Ready' },
-  ];
+  const [liveShifts, setLiveShifts] = useState([]);
+
+  useEffect(() => {
+    let active = true;
+    const today = new Date().toISOString().slice(0, 10);
+    const loadShifts = () => {
+      base44.entities.Shift.filter({ date: today }, { sort: 'start_time', limit: 3 })
+        .then((page) => {
+          if (!active) return;
+          setLiveShifts(page?.items || []);
+        })
+        .catch(() => {
+          if (active) setLiveShifts([]);
+        });
+    };
+    loadShifts();
+    const unsub = base44.entities.Shift.subscribe(() => loadShifts());
+    return () => {
+      active = false;
+      unsub();
+    };
+  }, []);
 
   return (
     <WallHangingPictureFrame title="2. Today's Overview & Flat Screen Live Roster" className="h-full">
@@ -207,9 +224,9 @@ function TodaysRosterPictureCard() {
               </div>
 
               <div className="grid grid-cols-1 gap-0.5">
-                {sampleRosterRows.map((row) => (
+                {liveShifts.length > 0 ? liveShifts.map((s) => (
                   <div
-                    key={row.shift}
+                    key={s.id}
                     className="flex items-center justify-between gap-1 rounded border border-[#0A2B6D]/20 bg-white px-1.5 py-0.5 text-left"
                   >
                     <div className="min-w-0 truncate">
@@ -217,7 +234,7 @@ function TodaysRosterPictureCard() {
                         className="text-[7.5px] font-extrabold text-[#0A2B6D]"
                         style={{ color: '#0A2B6D' }}
                       >
-                        {row.shift} · {row.staff} → {row.participant}
+                        {s.start_time || 'Scheduled'} – {s.end_time || ''} · {s.employee_name || 'Unassigned'} → {s.participant_name || 'Participant'}
                       </span>
                     </div>
                     <span
@@ -225,10 +242,19 @@ function TodaysRosterPictureCard() {
                       style={{ color: '#0A2B6D' }}
                     >
                       <CheckCircle2 className="h-2 w-2 text-[#0A2B6D]" style={{ color: '#0A2B6D' }} />
-                      {row.status}
+                      {s.status || 'Rostered'}
                     </span>
                   </div>
-                ))}
+                )) : (
+                  <div className="flex items-center justify-between gap-1 rounded border border-[#0A2B6D]/20 bg-white px-1.5 py-1 text-left">
+                    <span className="text-[7.5px] font-extrabold text-[#0A2B6D]" style={{ color: '#0A2B6D' }}>
+                      No shifts rostered for today yet — live roster updates in real time as shifts are scheduled
+                    </span>
+                    <span className="inline-flex shrink-0 items-center gap-0.5 rounded-full border border-[#0A2B6D]/25 bg-white px-1.5 py-0 text-[6.5px] font-extrabold text-[#0A2B6D]" style={{ color: '#0A2B6D' }}>
+                      Live Ready
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -251,23 +277,33 @@ function TodaysRosterPictureCard() {
  * 3. Communication Tab & 4. Mailbox Tab (Modulars Grid Removed)
  */
 function CommunicationAndMailboxTabs() {
-  const [hasAlertMail, setHasAlertMail] = useState(true);
-  const [mailAlertCount, setMailAlertCount] = useState(3);
+  const [hasAlertMail, setHasAlertMail] = useState(false);
+  const [mailAlertCount, setMailAlertCount] = useState(0);
+  const [recentComms, setRecentComms] = useState([]);
 
   useEffect(() => {
     let active = true;
-    Promise.all([
-      base44.entities.Notification.count({ read: false }).catch(() => 0),
-      base44.entities.CommunicationEntry.count({ issues_concerns: { $exists: true, $ne: '' } }).catch(() => 0),
-    ]).then(([u, f]) => {
-      if (!active) return;
-      const total = (u || 0) + (f || 0);
-      if (total > 0) {
+    const refreshCommsAndAlerts = () => {
+      Promise.all([
+        base44.entities.Notification.count({ read: false }).catch(() => 0),
+        base44.entities.CommunicationEntry.count({ issues_concerns: { $exists: true, $ne: '' } }).catch(() => 0),
+        base44.entities.CommunicationEntry.filter({}, { sort: '-created_date', limit: 4 }).catch(() => ({ items: [] })),
+      ]).then(([u, f, commPage]) => {
+        if (!active) return;
+        const total = (u || 0) + (f || 0);
         setMailAlertCount(total);
-        setHasAlertMail(true);
-      }
-    });
-    return () => { active = false; };
+        setHasAlertMail(total > 0);
+        setRecentComms(commPage?.items || []);
+      });
+    };
+    refreshCommsAndAlerts();
+    const unsubNotif = base44.entities.Notification.subscribe(() => refreshCommsAndAlerts());
+    const unsubComm = base44.entities.CommunicationEntry.subscribe(() => refreshCommsAndAlerts());
+    return () => {
+      active = false;
+      unsubNotif();
+      unsubComm();
+    };
   }, []);
 
   return (
@@ -299,22 +335,24 @@ function CommunicationAndMailboxTabs() {
               </div>
 
               <div className="w-full space-y-0.5 rounded-lg bg-white text-left">
-                {[
-                  { tag: 'Shift Note', text: 'Morning SIL handover signed off' },
-                  { tag: 'Broadcast', text: 'NDIS 2026 Standards briefing live' },
-                  { tag: 'Team Diary', text: '3 participant goal notes synced' },
-                  { tag: 'Inbox SLA', text: 'Zero overdue · 24h SLA active' },
-                ].map((msg) => (
+                {recentComms.length > 0 ? recentComms.map((msg) => (
                   <div
-                    key={msg.tag}
+                    key={msg.id}
                     className="flex items-center justify-between gap-1 rounded border border-[#0A2B6D]/20 bg-white px-1.5 py-0.5 text-[7.5px] font-extrabold text-[#0A2B6D]"
                   >
                     <span className="shrink-0 rounded-full bg-[#0A2B6D] px-1.5 py-0 text-[6.5px] text-white">
-                      {msg.tag}
+                      {msg.entry_kind || 'Comms'}
                     </span>
-                    <span className="flex-1 truncate text-right text-[#0A2B6D]">{msg.text}</span>
+                    <span className="flex-1 truncate text-right text-[#0A2B6D]">{msg.subject || msg.body || 'New communication'}</span>
                   </div>
-                ))}
+                )) : (
+                  <div className="flex items-center justify-between gap-1 rounded border border-[#0A2B6D]/20 bg-white px-1.5 py-1 text-[7.5px] font-extrabold text-[#0A2B6D]">
+                    <span className="shrink-0 rounded-full bg-[#0A2B6D] px-1.5 py-0 text-[6.5px] text-white">
+                      Live Inbox
+                    </span>
+                    <span className="flex-1 text-right text-[#0A2B6D]">No unread communications · 8:30 AM daily summary active</span>
+                  </div>
+                )}
               </div>
             </div>
           </div>

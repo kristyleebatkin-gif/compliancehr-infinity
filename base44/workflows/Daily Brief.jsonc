@@ -18,21 +18,21 @@
           },
           "then": "end",
           "x-base44": {
-            "title": "Build and email the morning brief",
-            "description": "Org-wide snapshot for administrators"
+            "title": "Build and email the 8:30 AM daily summary brief",
+            "description": "Org-wide snapshot of expiries, overdue tasks, incidents, risks and unfilled shifts"
           }
         }
       }
     ]
   },
-  "description": "Weekday 7am morning brief of expiries, overdue tasks and unfilled shifts, emailed to administrators",
+  "description": "Daily at 8:30 AM (Australia/Sydney): morning summary brief of expiries, overdue tasks, incidents, risks and unfilled shifts emailed and notified to administrators",
   "trigger": {
     "condition": null,
     "config": {
       "trigger_type": "scheduled",
       "events": [],
       "schedule_mode": "recurring",
-      "cron_expression": "0 7 * * 1-5",
+      "cron_expression": "30 8 * * *",
       "one_time_date": null,
       "timezone": "Australia/Sydney",
       "interval_value": null,

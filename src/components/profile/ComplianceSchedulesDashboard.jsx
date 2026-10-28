@@ -7,36 +7,54 @@ import EmployeeProfileSection from '@/components/profile/EmployeeProfileSection'
 
 const CADENCES = [
   {
-    title: '6-Monthly',
+    title: 'Real-Time & Statutory (24h / 5-Day)',
     tone: 'bg-danger/10',
     items: [
-      'First aid kit checks', 'Fire safety equipment and extinguisher checks',
-      'Fire and evacuation drills', 'MSDS reviews', 'Natural disaster kit checks',
-      'Emergency plans reviewed and kept accessible',
+      'Immediate real-time notifications for critical incidents, high/critical risks, data breaches and complaints',
+      '24-hour NDIS Commission initial notification for reportable incidents & 5-day statutory follow-up report',
+      'Daily executive & compliance summary dispatched at 8:30 AM (Australia/Sydney)',
     ],
   },
   {
-    title: '3-Monthly',
+    title: 'Expiry & Escalation Windows (90 / 60 / 30 / 14 / 7 Days)',
+    tone: 'bg-brand/10',
+    items: [
+      'NDIS Worker Screening, Police Check, Blue Card/WWCC, Driver Licence, First Aid & CPR expiry alerts at 90, 60, 30, 14 and 7 days',
+      'Automated overdue task & audit corrective action (CAPA) escalation to Compliance & Management',
+    ],
+  },
+  {
+    title: 'Monthly & 10-Weekly Cycles',
+    tone: 'bg-teal/10',
+    items: [
+      'Monthly Home Risk Assessments & Monthly Training Audit Reports',
+      '10-Weekly Participant Progress Report copies & NDIS funding utilisation reviews',
+    ],
+  },
+  {
+    title: '3-Monthly (Quarterly) Cycles',
     tone: 'bg-warning/10',
     items: [
-      'Internal audits with stored evidence and corrective actions',
+      'Internal audits with stored evidence and closed-loop corrective actions',
+      'Individual Participant Risk Assessments & 3-Monthly Participant Details Checks',
       'Same documented evidence and corrective actions apply to incidents, feedback and risks',
     ],
   },
   {
-    title: 'Daily',
-    tone: 'bg-teal/10',
-    items: ['Cleaning checklist', 'Sign in and out register'],
-  },
-  {
-    title: 'Ongoing',
+    title: '6-Monthly & 12-Monthly Cycles',
     tone: 'bg-safe/10',
-    items: ['Infection control', 'Waste management', 'PPE', 'Manual handling', 'Continuous improvement'],
+    items: [
+      '6-Monthly: First aid kit checks, fire safety/extinguisher checks, evacuation drills, MSDS reviews & natural disaster kits',
+      '12-Monthly: Policy & procedure reviews, staff performance appraisals, insurance renewals & NDIS Practice Standards self-assessment',
+    ],
   },
   {
-    title: 'On File, Kept Current',
+    title: 'Daily & Ongoing',
     tone: 'bg-chart-5/10',
-    items: ['Business structure', 'Strategic plan', 'Operations plan', 'Business plan', 'Emergency plans'],
+    items: [
+      'Daily: 8:30 AM summary brief, pre-shift car safety checks, cleaning checklist & visitor sign-in/out register',
+      'Ongoing: Infection control, waste management, PPE, manual handling, continuous improvement & strategic/emergency plans',
+    ],
   },
 ];
 
