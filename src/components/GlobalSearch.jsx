@@ -8,7 +8,18 @@ import {
 } from '@/components/ui/command';
 import { Search, X, Loader2, Users, Heart, FolderOpen, ClipboardList, Zap, Plus } from 'lucide-react';
 
-const EMPTY = { modules: [], staff: [], participants: [], documents: [], tasks: [], incidents: [] };
+const EMPTY = {
+  modules: [],
+  staff: [],
+  participants: [],
+  documents: [],
+  tasks: [],
+  incidents: [],
+  risks: [],
+  policies: [],
+  goals: [],
+  assets: [],
+};
 
 const QUICK_ACTIONS = [
   { id: 'qa-incident', label: 'New Incident Report', path: '/incidents/new', hint: 'Report & investigate' },
@@ -71,21 +82,29 @@ export default function GlobalSearch() {
       const esc = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const rx = { $regex: esc, $options: 'i' };
       try {
-        const [staff, participants, employeeDocs, participantDocs, tasks, incidents] = await Promise.all([
-          base44.entities.StaffProfile.filter({ $or: [{ full_name: rx }, { position: rx }] }, { limit: 5, fields: ['id', 'full_name', 'position'] }),
-          base44.entities.ParticipantProfile.filter({ $or: [{ full_name: rx }, { ndis_number: rx }] }, { limit: 5, fields: ['id', 'full_name', 'status'] }),
-          base44.entities.EmployeeDocument.filter({ title: rx }, { limit: 5, fields: ['id', 'title', 'document_type'] }),
-          base44.entities.ParticipantDocument.filter({ title: rx }, { limit: 5, fields: ['id', 'title', 'document_type'] }),
-          base44.entities.TodoTask.filter({ $or: [{ title: rx }, { assigned_to: rx }] }, { limit: 5, fields: ['id', 'title', 'status', 'assigned_to'] }),
-          base44.entities.Incident.filter({ $or: [{ title: rx }, { location: rx }] }, { limit: 5, fields: ['id', 'title', 'severity', 'status'] }),
+        const [staff, participants, employeeDocs, participantDocs, tasks, incidents, risks, policies, goals, assets] = await Promise.all([
+          base44.entities.StaffProfile.filter({ $or: [{ full_name: rx }, { position: rx }] }, { limit: 5, fields: ['id', 'full_name', 'position'] }).catch(() => ({ items: [] })),
+          base44.entities.ParticipantProfile.filter({ $or: [{ full_name: rx }, { ndis_number: rx }] }, { limit: 5, fields: ['id', 'full_name', 'status'] }).catch(() => ({ items: [] })),
+          base44.entities.EmployeeDocument.filter({ title: rx }, { limit: 5, fields: ['id', 'title', 'document_type'] }).catch(() => ({ items: [] })),
+          base44.entities.ParticipantDocument.filter({ title: rx }, { limit: 5, fields: ['id', 'title', 'document_type'] }).catch(() => ({ items: [] })),
+          base44.entities.TodoTask.filter({ $or: [{ title: rx }, { assigned_to: rx }] }, { limit: 5, fields: ['id', 'title', 'status', 'assigned_to'] }).catch(() => ({ items: [] })),
+          base44.entities.Incident.filter({ $or: [{ title: rx }, { location: rx }] }, { limit: 5, fields: ['id', 'title', 'severity', 'status'] }).catch(() => ({ items: [] })),
+          base44.entities.Risk.filter({ $or: [{ title: rx }, { category: rx }] }, { limit: 5, fields: ['id', 'title', 'rating', 'status'] }).catch(() => ({ items: [] })),
+          base44.entities.Policy.filter({ $or: [{ document_name: rx }, { category: rx }] }, { limit: 5, fields: ['id', 'document_name', 'category', 'status'] }).catch(() => ({ items: [] })),
+          base44.entities.Goal.filter({ title: rx }, { limit: 5, fields: ['id', 'title', 'status'] }).catch(() => ({ items: [] })),
+          base44.entities.Asset.filter({ $or: [{ name: rx }, { category: rx }] }, { limit: 5, fields: ['id', 'name', 'category'] }).catch(() => ({ items: [] })),
         ]);
         setResults({
-          modules: MODULE_DIRECTORY.filter((m) => m.label.toLowerCase().includes(term.toLowerCase())).slice(0, 5),
+          modules: MODULE_DIRECTORY.filter((m) => m.label.toLowerCase().includes(term.toLowerCase()) || (m.blurb || '').toLowerCase().includes(term.toLowerCase())).slice(0, 6),
           staff: staff.items || [],
           participants: participants.items || [],
           documents: [...(employeeDocs.items || []), ...(participantDocs.items || [])].slice(0, 5),
           tasks: tasks.items || [],
           incidents: incidents.items || [],
+          risks: risks.items || [],
+          policies: policies.items || [],
+          goals: goals.items || [],
+          assets: assets.items || [],
         });
       } catch (error) {
         console.error(error);
@@ -106,7 +125,7 @@ export default function GlobalSearch() {
     : QUICK_ACTIONS.filter((a) => a.label.toLowerCase().includes(query.trim().toLowerCase()));
   const modules = results.modules;
 
-  const hasResults = quickActions.length > 0 || ['modules', 'staff', 'participants', 'documents', 'tasks', 'incidents'].some((k) => (results[k] || []).length > 0);
+  const hasResults = quickActions.length > 0 || ['modules', 'staff', 'participants', 'documents', 'tasks', 'incidents', 'risks', 'policies', 'goals', 'assets'].some((k) => (results[k] || []).length > 0);
 
   return (
     <>
@@ -211,12 +230,56 @@ export default function GlobalSearch() {
                   </CommandGroup>
                 )}
                 {(results.incidents || []).length > 0 && (
-                  <CommandGroup heading="Incidents">
+                  <CommandGroup heading="Incidents (Incident 360°)">
                     {results.incidents.map((inc) => (
                       <CommandItem key={inc.id} value={`inc-${inc.id}`} onSelect={() => go(`/incidents/${inc.id}`)}>
                         <Zap className="text-brand" />
                         <span className="font-medium">{inc.title}</span>
                         <span className="ml-auto text-[11px] text-foreground/40">{inc.severity || inc.status || ''}</span>
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                )}
+                {(results.risks || []).length > 0 && (
+                  <CommandGroup heading="Risks (Risk 360°)">
+                    {results.risks.map((r) => (
+                      <CommandItem key={r.id} value={`risk-${r.id}`} onSelect={() => go('/risks')}>
+                        <Zap className="text-brand" />
+                        <span className="font-medium">{r.title}</span>
+                        <span className="ml-auto text-[11px] text-foreground/40">{r.rating || r.status || ''}</span>
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                )}
+                {(results.policies || []).length > 0 && (
+                  <CommandGroup heading="Policies, Standards & Procedures">
+                    {results.policies.map((pol) => (
+                      <CommandItem key={pol.id} value={`pol-${pol.id}`} onSelect={() => go('/compliance')}>
+                        <FolderOpen className="text-brand" />
+                        <span className="font-medium">{pol.document_name}</span>
+                        <span className="ml-auto text-[11px] text-foreground/40">{pol.category || pol.status || ''}</span>
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                )}
+                {(results.goals || []).length > 0 && (
+                  <CommandGroup heading="Goals & Outcomes">
+                    {results.goals.map((g) => (
+                      <CommandItem key={g.id} value={`goal-${g.id}`} onSelect={() => go('/goals')}>
+                        <ClipboardList className="text-brand" />
+                        <span className="font-medium">{g.title}</span>
+                        <span className="ml-auto text-[11px] text-foreground/40">{g.status || ''}</span>
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                )}
+                {(results.assets || []).length > 0 && (
+                  <CommandGroup heading="Assets, Contracts & Fleet">
+                    {results.assets.map((a) => (
+                      <CommandItem key={a.id} value={`asset-${a.id}`} onSelect={() => go('/assets')}>
+                        <FolderOpen className="text-brand" />
+                        <span className="font-medium">{a.name}</span>
+                        <span className="ml-auto text-[11px] text-foreground/40">{a.category || ''}</span>
                       </CommandItem>
                     ))}
                   </CommandGroup>

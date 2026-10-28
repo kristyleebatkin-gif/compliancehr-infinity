@@ -31,6 +31,7 @@ import SafetyRegisterExports from '@/components/safety/SafetyRegisterExports';
 import { isHighCriticalRisk, isOpenRisk } from '@/lib/safetyFilters';
 import { downloadCsv } from '@/lib/csvExport';
 import StatusDashboard from '@/components/safety/StatusDashboard';
+import Universal360ProfileFramework from '@/components/enterprise/Universal360ProfileFramework';
 import { RISK_CSV_COLUMNS, HAZARD_CSV_COLUMNS } from '@/components/safety/SafetyRegisterExports';
 
 const CATEGORIES = ['Operational', 'Clinical', 'Financial', 'Workplace Health & Safety', 'Participant', 'Compliance'];
@@ -295,7 +296,10 @@ function Risks({ profile, profileKind, embedded = false } = {}) {
       </div>
 
       {(riskTab === 'all' || riskTab === 'register') && (
-        <CommonRiskLibrary onAdded={load} />
+        <>
+          <Universal360ProfileFramework initialType="risk" compact />
+          <CommonRiskLibrary onAdded={load} />
+        </>
       )}
 
       {(riskTab === 'all' || riskTab === 'hazards') && (

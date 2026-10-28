@@ -156,6 +156,40 @@ export default function LandingHero({ onBookDemo }) {
               <HeroDashboardMockup />
             </div>
           </div>
+
+          {/* 10 Core Capabilities + 5 Master Architecture Layers Strip */}
+          <div className="mt-5 rounded-2xl border border-white/25 bg-white/10 p-3 backdrop-blur-md">
+            <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-white/20">
+              <span className="text-[10.5px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
+                Australian Organisational Operating System — 5 Master Architecture Layers
+              </span>
+              <span className="text-[11px] font-extrabold text-white">
+                PEOPLE → WORK → COMPLIANCE → EVIDENCE → INTELLIGENCE
+              </span>
+            </div>
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              {[
+                'Workforce Management',
+                'NDIS Compliance',
+                'Aged Care Compliance',
+                'Governance',
+                'Risk Management',
+                'Quality Management',
+                'Audit Readiness',
+                'Evidence Management',
+                'AI Automation',
+                'Organisational Intelligence',
+              ].map((cap) => (
+                <span
+                  key={cap}
+                  className="inline-flex items-center gap-1 rounded-lg border border-white/25 bg-white/15 px-2.5 py-1 text-[10.5px] font-extrabold text-white"
+                >
+                  <Check className="h-3 w-3 text-[#00C6FF]" />
+                  <span>{cap}</span>
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

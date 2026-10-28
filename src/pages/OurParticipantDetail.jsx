@@ -8,6 +8,7 @@ import PortalInviteButton from '@/components/profile/PortalInviteButton';
 import ProfileLoadState from '@/components/profile/ProfileLoadState';
 import OurProfileWorkspace from '@/components/profile/OurProfileWorkspace';
 import CompleteProfile13SectionNavigator from '@/components/profile/CompleteProfile13SectionNavigator';
+import Universal360ProfileFramework from '@/components/enterprise/Universal360ProfileFramework';
 import useProfileRecord from '@/hooks/useProfileRecord';
 import { useRole, ROLES } from '@/lib/useRole';
 import '@/components/profile/myProfilePastels.css';
@@ -30,6 +31,7 @@ export default function OurParticipantDetail({ backTo = '/our-participants', bac
           <PortalInviteButton kind="participant" profile={participant} />
         </div>
       </div>
+      <Universal360ProfileFramework initialType="participant" focusRecord={participant} compact />
       <CompleteProfile13SectionNavigator kind="participant" profile={participant} />
       <OurProfileWorkspace key={participant.id} profile={participant} kind="participant" onUpdated={refresh} header={<ProfileHeader profile={participant} kind="participant" onUpdated={refresh} />} />
     </div>

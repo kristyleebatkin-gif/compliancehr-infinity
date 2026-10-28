@@ -8,6 +8,7 @@ import PortalInviteButton from '@/components/profile/PortalInviteButton';
 import ProfileLoadState from '@/components/profile/ProfileLoadState';
 import OurProfileWorkspace from '@/components/profile/OurProfileWorkspace';
 import CompleteProfile13SectionNavigator from '@/components/profile/CompleteProfile13SectionNavigator';
+import Universal360ProfileFramework from '@/components/enterprise/Universal360ProfileFramework';
 import useProfileRecord from '@/hooks/useProfileRecord';
 import { useRole, ROLES } from '@/lib/useRole';
 import '@/components/profile/myProfilePastels.css';
@@ -28,6 +29,7 @@ export default function OurEmployeeDetail({ backTo = '/our-employees', backLabel
         <Button variant="ghost" size="sm" asChild><Link to={backTo}><ArrowLeft className="h-4 w-4" />Back to {backLabel}</Link></Button>
         <PortalInviteButton kind="staff" profile={employee} />
       </div>
+      <Universal360ProfileFramework initialType="employee" focusRecord={employee} compact />
       <CompleteProfile13SectionNavigator kind="staff" profile={employee} />
       <OurProfileWorkspace key={employee.id} profile={employee} kind="staff" matchEmployeeLayout onUpdated={refresh} header={<ProfileHeader profile={employee} kind="staff" onUpdated={refresh} />} />
     </div>
