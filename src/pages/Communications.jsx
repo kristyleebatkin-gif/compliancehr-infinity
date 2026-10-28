@@ -43,6 +43,7 @@ import CommWeatherBar from '@/components/communications/CommWeatherBar';
 import ExecutiveWallScene, { SmallSafeVaultBar } from '@/components/safe/ExecutiveWallScene';
 import EnterpriseStandardQualityGateSuite from '@/components/compliance/EnterpriseStandardQualityGateSuite';
 import UniversalRecordIntelligenceRoutingSuite from '@/components/operations/UniversalRecordIntelligenceRoutingSuite';
+import LivingOrganisationalEcosystemSuite from '@/components/enterprise/LivingOrganisationalEcosystemSuite';
 import '@/components/communications/commCentreTheme.css';
 
 const TABS = [
@@ -181,6 +182,7 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
 
               {commScreen !== 'screen2' && (
                 <>
+                  <LivingOrganisationalEcosystemSuite initialTab="comm-alerts" />
                   <UniversalRecordIntelligenceRoutingSuite />
                   <ExecutiveWallScene showAllModulesMinimised={true} showRosterAbove={true} />
                   <CommDailyInsight />

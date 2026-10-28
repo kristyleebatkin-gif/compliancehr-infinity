@@ -25,6 +25,7 @@ import ExecutiveWallScene from '@/components/safe/ExecutiveWallScene';
 import ObsidianSmartRemote from '@/components/common/ObsidianSmartRemote';
 import Universal360ProfileFramework from '@/components/enterprise/Universal360ProfileFramework';
 import OrganisationalOperatingSystemCommand from '@/components/enterprise/OrganisationalOperatingSystemCommand';
+import LivingOrganisationalEcosystemSuite from '@/components/enterprise/LivingOrganisationalEcosystemSuite';
 import {
   Activity, ShieldCheck, Zap, LayoutGrid, ClipboardCheck, Layers, Building2, Cpu, Users,
 } from 'lucide-react';
@@ -101,10 +102,11 @@ export default function Dashboard() {
         columnsClass="grid-cols-2 sm:grid-cols-4"
       />
 
-      {/* 1. Flagship Home Command Centre, 30-Second Outcome Matrix, Organisational Digital Twin, Manager/Executive Centres & Data Quality Engine */}
+      {/* 1. Flagship Home Command Centre, 30-Second Outcome Matrix, Organisational Digital Twin, Living Ecosystem & 360° Profiles */}
       {isSuiteVisible('os-command') && (
         <div className="space-y-5">
           <OrganisationalOperatingSystemCommand />
+          <LivingOrganisationalEcosystemSuite />
           <Universal360ProfileFramework compact />
         </div>
       )}

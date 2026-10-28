@@ -20,6 +20,7 @@ import TrainingStreaks from '@/components/training/TrainingStreaks';
 import SkillsGapAnalytics from '@/components/training/SkillsGapAnalytics';
 import AiQuizDrill from '@/components/training/AiQuizDrill';
 import MasterSkillsAndInstructionsStudio from '@/components/training/MasterSkillsAndInstructionsStudio';
+import LivingOrganisationalEcosystemSuite from '@/components/enterprise/LivingOrganisationalEcosystemSuite';
 import { Clock, AlertTriangle, CheckCircle2, BookOpen, CalendarDays, LayoutGrid, GraduationCap, Award, Sparkles, TrendingUp, Play, Download, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
@@ -117,6 +118,7 @@ export default function Training({ profile, embedded = false } = {}) {
       >
       {loadError && <p role="alert" className="text-sm text-destructive">{loadError}<Button variant="outline" onClick={load}>Retry</Button></p>}
 
+      <LivingOrganisationalEcosystemSuite initialTab="training-competency" />
       <TrainingStreaks completions={completions} meName={profile?.full_name || user?.full_name || ''} />
 
       <div className="relative overflow-hidden rounded-2xl border border-primary/40 bg-gradient-to-r from-primary/25 via-card to-teal/25 shadow-sm">

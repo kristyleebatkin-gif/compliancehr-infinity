@@ -10,6 +10,7 @@ import AutomaticTaskCompletionEvidenceClosureEngine from '@/components/operation
 import UniversalRegisterManagementHubSuite from '@/components/operations/UniversalRegisterManagementHubSuite';
 import OrganisationalOperatingSystemCommand from '@/components/enterprise/OrganisationalOperatingSystemCommand';
 import Universal360ProfileFramework from '@/components/enterprise/Universal360ProfileFramework';
+import LivingOrganisationalEcosystemSuite from '@/components/enterprise/LivingOrganisationalEcosystemSuite';
 import { Cpu, Users, Zap, ShieldCheck, FolderOpen, Layers } from 'lucide-react';
 
 const EXEC_TABS = [
@@ -58,6 +59,7 @@ export default function OperationsCentre() {
       {show('executive-os') && (
         <div className="space-y-4">
           <OrganisationalOperatingSystemCommand />
+          <LivingOrganisationalEcosystemSuite initialTab="security-whitelabel-exec" />
           <ExecutiveOperationsCentre defaultSuite="all" />
         </div>
       )}
