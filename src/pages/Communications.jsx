@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import withEmployeeView from '@/components/withEmployeeView';
 import EmployeeCommunications from '@/components/employee/EmployeeCommunications';
 export default withEmployeeView(Communications, EmployeeCommunications);
-import { Tabs, TabsContent } from '@/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Megaphone, Mail, NotebookPen, Briefcase, Inbox as InboxIcon, MessagesSquare, Video, Sparkles, Siren, ListTodo, BookMarked, History, Radio, LayoutDashboard, Lightbulb, CalendarDays, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import MeetingCentre from '@/pages/MeetingCentre';
@@ -47,6 +47,9 @@ import LivingOrganisationalEcosystemSuite from '@/components/enterprise/LivingOr
 import '@/components/communications/commCentreTheme.css';
 
 const TABS = [
+  ['alerts', Siren, 'Alerts'],
+  ['logs', History, 'System Logs'],
+  ['bulk', Megaphone, 'Bulk Messages'],
   ['task-dashboard', LayoutDashboard, 'Tasks'],
   ['todo', ListTodo, 'To-Do Board'],
   ['guide', Lightbulb, 'Tips & Teamwork'],
@@ -74,7 +77,7 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
   const participantOnly = role === ROLES.PARTICIPANT;
   const restricted = employeeSelf || participantOnly;
   const [selfProfile, setSelfProfile] = useState(null);
-  const [commScreen, setCommScreen] = useState('both');
+  const [commScreen, setCommScreen] = useState('screen1');
 
   useEffect(() => {
     if (!restricted || profile) return;
@@ -98,7 +101,7 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
 
   return (
     <div className="comm-centre space-y-1">
-      <Tabs defaultValue="feed">
+      <Tabs defaultValue={participantOnly ? 'diary' : employeeSelf ? 'alerts' : 'inbox'}>
         <ModuleShell
           embedded={embedded || participantOnly}
           title="Communication Centre"
@@ -197,6 +200,15 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
             </div>
           )}
         >
+        {(embedded || participantOnly) && (
+          <TabsList aria-label="Communication tools">
+            {shown.map(([value, Icon, label]) => (
+              <TabsTrigger key={value} value={value} className="min-h-[44px] gap-2">
+                <Icon aria-hidden="true" className="h-4 w-4" />{label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        )}
         <TabsContent value="alerts"><AlertsCentre selfOnly={employeeSelf} /></TabsContent>
         <TabsContent value="meetings"><MeetingCentre embedded /></TabsContent>
         <TabsContent value="feedback"><Feedback embedded /></TabsContent>
