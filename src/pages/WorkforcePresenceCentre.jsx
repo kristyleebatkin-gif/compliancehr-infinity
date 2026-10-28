@@ -5,6 +5,7 @@ import WorkforcePresenceSafetyCentre from '@/components/emergency/WorkforcePrese
 import EnterpriseOperationsAttendancePayrollFramework from '@/components/operations/EnterpriseOperationsAttendancePayrollFramework';
 import FrontlineWorkerMobileRapidSuite from '@/components/operations/FrontlineWorkerMobileRapidSuite';
 import MasterEnterpriseEcosystemConsolidationSuite from '@/components/operations/MasterEnterpriseEcosystemConsolidationSuite';
+import UniversalRecordIntelligenceRoutingSuite from '@/components/operations/UniversalRecordIntelligenceRoutingSuite';
 
 export default function WorkforcePresenceCentre() {
   return (
@@ -13,9 +14,10 @@ export default function WorkforcePresenceCentre() {
         icon={Siren}
         moduleKey="emergency-response"
         title="Workforce Presence, Visitor Management, Site Attendance & Emergency Accountability Centre"
-        subtitle="Unified 9-Role Attendance, Emergency Roll Call, SCHADS & Shift Integrity, Frontline 'Finish My Shift' Rapid Suite, Daily 7PM Preservation & 5-Role Profile Intelligence"
+        subtitle="Unified 9-Role Attendance, Emergency Roll Call, Universal Record Intelligence & Data Routing, Daily 7PM Preservation, 5-Role Profile Intelligence & Frontline Rapid Suite"
       />
       <WorkforcePresenceSafetyCentre />
+      <UniversalRecordIntelligenceRoutingSuite />
       <MasterEnterpriseEcosystemConsolidationSuite />
       <FrontlineWorkerMobileRapidSuite />
       <EnterpriseOperationsAttendancePayrollFramework />
