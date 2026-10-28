@@ -121,6 +121,7 @@ export default function LandingNav({ onBookDemo }) {
           <div className="flex flex-wrap items-center gap-1.5">
             {[
               ['Dashboard', '/dashboard'],
+              ['User Success & Evidence Hub', '/user-success'],
               ['Record Intelligence Hub', '/record-intelligence'],
               ['Frontline Rapid Hub', '/frontline-hub'],
               ['Workforce Presence & Safety', '/workforce-presence'],

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './landing-layout.css';
 import LandingNav from '@/components/landing/LandingNav';
 import LandingHero from '@/components/landing/LandingHero';
+import UniversalUserSuccessEvidenceFirstSuite from '@/components/operations/UniversalUserSuccessEvidenceFirstSuite';
 import LandingProductShowcase from '@/components/landing/LandingProductShowcase';
 import LandingSolutionSection from '@/components/landing/LandingSolutionSection';
 import LandingStatsSection from '@/components/landing/LandingStatsSection';
@@ -36,6 +37,9 @@ export default function Landing() {
       <main className="landing-main relative z-10 mx-auto w-full max-w-[1440px] bg-white px-4 py-6 sm:px-6 lg:px-8 space-y-10 pb-14">
         {/* 1. Hero Section (Landscape) */}
         <LandingHero onBookDemo={openDemoModal} />
+
+        {/* Top-Level Platform Rule: Universal User Success, Rapid Access & Evidence-First Standard */}
+        <UniversalUserSuccessEvidenceFirstSuite />
 
         {/* 2. Dashboard Showcase Section (Landscape) */}
         <LandingProductShowcase />
