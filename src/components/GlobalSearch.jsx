@@ -3,6 +3,8 @@ import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
+import { useRole } from '@/lib/useRole';
+import { canAccessNav } from '@/lib/roles';
 import {
   Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator,
 } from '@/components/ui/command';
@@ -31,6 +33,7 @@ const QUICK_ACTIONS = [
 ];
 
 export default function GlobalSearch() {
+  const { role } = useRole();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [results, setResults] = useState(EMPTY);
@@ -71,31 +74,35 @@ export default function GlobalSearch() {
 
   useEffect(() => {
     if (!open) return;
+    let cancelled = false;
+    const visibleModules = MODULE_DIRECTORY.filter((module) => canAccessNav(role, module.key));
     const term = query.trim();
     if (term.length < 2) {
-      setResults({ ...EMPTY, modules: MODULE_DIRECTORY.filter((m) => !term) });
+      setResults({ ...EMPTY, modules: visibleModules.filter(() => !term) });
       setSearching(false);
       return;
     }
+    setResults({ ...EMPTY, modules: visibleModules.filter((module) => module.label.toLowerCase().includes(term.toLowerCase()) || (module.blurb || '').toLowerCase().includes(term.toLowerCase())).slice(0, 6) });
     setSearching(true);
     const timer = setTimeout(async () => {
       const esc = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const rx = { $regex: esc, $options: 'i' };
       try {
         const [staff, participants, employeeDocs, participantDocs, tasks, incidents, risks, policies, goals, assets] = await Promise.all([
-          base44.entities.StaffProfile.filter({ $or: [{ full_name: rx }, { position: rx }] }, { limit: 5, fields: ['id', 'full_name', 'position'] }).catch(() => ({ items: [] })),
-          base44.entities.ParticipantProfile.filter({ $or: [{ full_name: rx }, { ndis_number: rx }] }, { limit: 5, fields: ['id', 'full_name', 'status'] }).catch(() => ({ items: [] })),
-          base44.entities.EmployeeDocument.filter({ title: rx }, { limit: 5, fields: ['id', 'title', 'document_type'] }).catch(() => ({ items: [] })),
-          base44.entities.ParticipantDocument.filter({ title: rx }, { limit: 5, fields: ['id', 'title', 'document_type'] }).catch(() => ({ items: [] })),
-          base44.entities.TodoTask.filter({ $or: [{ title: rx }, { assigned_to: rx }] }, { limit: 5, fields: ['id', 'title', 'status', 'assigned_to'] }).catch(() => ({ items: [] })),
-          base44.entities.Incident.filter({ $or: [{ title: rx }, { location: rx }] }, { limit: 5, fields: ['id', 'title', 'severity', 'status'] }).catch(() => ({ items: [] })),
-          base44.entities.Risk.filter({ $or: [{ title: rx }, { category: rx }] }, { limit: 5, fields: ['id', 'title', 'rating', 'status'] }).catch(() => ({ items: [] })),
-          base44.entities.Policy.filter({ $or: [{ document_name: rx }, { category: rx }] }, { limit: 5, fields: ['id', 'document_name', 'category', 'status'] }).catch(() => ({ items: [] })),
-          base44.entities.Goal.filter({ title: rx }, { limit: 5, fields: ['id', 'title', 'status'] }).catch(() => ({ items: [] })),
-          base44.entities.Asset.filter({ $or: [{ name: rx }, { category: rx }] }, { limit: 5, fields: ['id', 'name', 'category'] }).catch(() => ({ items: [] })),
+          !canAccessNav(role, 'our-staff') ? Promise.resolve({ items: [] }) : base44.entities.StaffProfile.filter({ $or: [{ full_name: rx }, { position: rx }] }, { limit: 5, fields: ['id', 'full_name', 'position'] }).catch(() => ({ items: [] })),
+          !canAccessNav(role, 'our-participants') ? Promise.resolve({ items: [] }) : base44.entities.ParticipantProfile.filter({ $or: [{ full_name: rx }, { ndis_number: rx }] }, { limit: 5, fields: ['id', 'full_name', 'status'] }).catch(() => ({ items: [] })),
+          !canAccessNav(role, 'documents') ? Promise.resolve({ items: [] }) : base44.entities.EmployeeDocument.filter({ title: rx }, { limit: 5, fields: ['id', 'title', 'document_type'] }).catch(() => ({ items: [] })),
+          !canAccessNav(role, 'documents') ? Promise.resolve({ items: [] }) : base44.entities.ParticipantDocument.filter({ title: rx }, { limit: 5, fields: ['id', 'title', 'document_type'] }).catch(() => ({ items: [] })),
+          !canAccessNav(role, 'tasks') ? Promise.resolve({ items: [] }) : base44.entities.TodoTask.filter({ $or: [{ title: rx }, { assigned_to: rx }] }, { limit: 5, fields: ['id', 'title', 'status', 'assigned_to'] }).catch(() => ({ items: [] })),
+          !canAccessNav(role, 'incidents') ? Promise.resolve({ items: [] }) : base44.entities.Incident.filter({ $or: [{ title: rx }, { location: rx }] }, { limit: 5, fields: ['id', 'title', 'severity', 'status'] }).catch(() => ({ items: [] })),
+          !canAccessNav(role, 'risks') ? Promise.resolve({ items: [] }) : base44.entities.Risk.filter({ $or: [{ title: rx }, { category: rx }] }, { limit: 5, fields: ['id', 'title', 'rating', 'status'] }).catch(() => ({ items: [] })),
+          !canAccessNav(role, 'compliance') ? Promise.resolve({ items: [] }) : base44.entities.Policy.filter({ $or: [{ document_name: rx }, { category: rx }] }, { limit: 5, fields: ['id', 'document_name', 'category', 'status'] }).catch(() => ({ items: [] })),
+          !canAccessNav(role, 'goals') ? Promise.resolve({ items: [] }) : base44.entities.Goal.filter({ title: rx }, { limit: 5, fields: ['id', 'title', 'status'] }).catch(() => ({ items: [] })),
+          !canAccessNav(role, 'assets') ? Promise.resolve({ items: [] }) : base44.entities.Asset.filter({ $or: [{ name: rx }, { category: rx }] }, { limit: 5, fields: ['id', 'name', 'category'] }).catch(() => ({ items: [] })),
         ]);
+        if (cancelled) return;
         setResults({
-          modules: MODULE_DIRECTORY.filter((m) => m.label.toLowerCase().includes(term.toLowerCase()) || (m.blurb || '').toLowerCase().includes(term.toLowerCase())).slice(0, 6),
+          modules: visibleModules.filter((m) => m.label.toLowerCase().includes(term.toLowerCase()) || (m.blurb || '').toLowerCase().includes(term.toLowerCase())).slice(0, 6),
           staff: staff.items || [],
           participants: participants.items || [],
           documents: [...(employeeDocs.items || []), ...(participantDocs.items || [])].slice(0, 5),
@@ -109,21 +116,26 @@ export default function GlobalSearch() {
       } catch (error) {
         console.error(error);
       } finally {
-        setSearching(false);
+        if (!cancelled) setSearching(false);
       }
     }, 250);
-    return () => clearTimeout(timer);
-  }, [query, open]);
+    return () => { cancelled = true; clearTimeout(timer); };
+  }, [query, open, role]);
 
   const go = (path) => {
     setOpen(false);
     navigate(path);
   };
 
-  const quickActions = query.trim().length < 2
-    ? QUICK_ACTIONS
-    : QUICK_ACTIONS.filter((a) => a.label.toLowerCase().includes(query.trim().toLowerCase()));
-  const modules = results.modules;
+  const actionKeys = {
+    'qa-incident': 'incidents', 'qa-participant': 'intake', 'qa-employee': 'intake',
+    'qa-ai': 'assistant', 'qa-compliance': 'compliance', 'qa-dashboard': 'dashboard',
+  };
+  const quickActions = QUICK_ACTIONS.filter((action) =>
+    canAccessNav(role, actionKeys[action.id]) &&
+    (query.trim().length < 2 || action.label.toLowerCase().includes(query.trim().toLowerCase()))
+  );
+  const modules = results.modules.filter((module) => canAccessNav(role, module.key));
 
   const hasResults = quickActions.length > 0 || ['modules', 'staff', 'participants', 'documents', 'tasks', 'incidents', 'risks', 'policies', 'goals', 'assets'].some((k) => (results[k] || []).length > 0);
 
