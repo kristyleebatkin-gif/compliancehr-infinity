@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Image } from '@/components/ui/image';
 import { Vault, Mail, MailWarning, BellRing, CheckCircle2 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import AlertLamp from '@/components/communications/AlertLamp';
 import AboveMailboxCommandDeck from '@/components/safe/AboveMailboxCommandDeck';
-import { SQUISHED_GRADIENT } from '@/components/safe/ExecutiveWallScene';
+import { useRole } from '@/lib/useRole';
 import '@/components/communications/communicationNavigation.css';
 
 const INFINITY_LOGO = 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png';
@@ -31,25 +30,26 @@ const COLOURS = {
   bulk: '#00C6FF',
 };
 
-export default function CommunicationNavigation({ tabs }) {
-  const [alertCount, setAlertCount] = useState(0);
-  const [flaggedCount, setFlaggedCount] = useState(0);
+export default function CommunicationNavigation({ tabs, onCompose }) {
+  const { user } = useRole();
+  const [alertCount, setAlertCount] = useState(null);
+  const [flaggedCount, setFlaggedCount] = useState(null);
 
   useEffect(() => {
     let alive = true;
     const loadAlerts = async () => {
       try {
         const [unread, flagged] = await Promise.all([
-          base44.entities.Notification.count({ read: false }).catch(() => 0),
-          base44.entities.CommunicationEntry.count({ issues_concerns: { $exists: true, $ne: '' } }).catch(() => 0),
+          user?.id ? base44.entities.Notification.count({ read: false, recipient_id: user.id }).catch(() => null) : Promise.resolve(null),
+          base44.entities.CommunicationEntry.count({ issues_concerns: { $exists: true, $ne: '' } }).catch(() => null),
         ]);
         if (!alive) return;
-        setAlertCount(unread || 0);
-        setFlaggedCount(flagged || 0);
+        setAlertCount(typeof unread === 'number' && Number.isFinite(unread) ? unread : null);
+        setFlaggedCount(typeof flagged === 'number' && Number.isFinite(flagged) ? flagged : null);
       } catch {
         if (alive) {
-          setAlertCount(0);
-          setFlaggedCount(0);
+          setAlertCount(null);
+          setFlaggedCount(null);
         }
       }
     };
@@ -59,9 +59,10 @@ export default function CommunicationNavigation({ tabs }) {
       alive = false;
       clearInterval(timer);
     };
-  }, []);
+  }, [user?.id]);
 
-  const totalAlerts = alertCount + flaggedCount;
+  const countsKnown = alertCount !== null && flaggedCount !== null;
+  const totalAlerts = (alertCount || 0) + (flaggedCount || 0);
   const hasAlerts = totalAlerts > 0;
 
   return (
@@ -75,8 +76,8 @@ export default function CommunicationNavigation({ tabs }) {
       <div className="space-y-2.5 rounded-[16px] bg-white p-3">
       {/* Interactive Sky-Drop Air-Mail Drone, 360° Radar & Live Roster Deck Above Mailbox */}
       <AboveMailboxCommandDeck
-        mailAlertCount={totalAlerts || 3}
-        onDropExpressMail={() => setAlertCount((prev) => prev + 1)}
+        mailAlertCount={totalAlerts}
+        onDropExpressMail={onCompose}
       />
 
       {/* Top Alert Lamps + Colour-Changing Alert Mailbox */}
@@ -113,23 +114,23 @@ export default function CommunicationNavigation({ tabs }) {
                     hasAlerts ? 'bg-amber-300 text-[#0A2B6D]' : 'bg-white text-[#0A2B6D]'
                   }`}
                 >
-                  {totalAlerts}
+                  {countsKnown ? totalAlerts : '—'}
                 </span>
               </div>
 
               <div className="min-w-0">
                 <div className="flex items-center gap-1.5">
                   <span className="rounded-full bg-white/25 px-2 py-0 text-[9px] font-extrabold uppercase tracking-wider text-white">
-                    {hasAlerts ? '● MAILBOX ALERT ACTIVE' : '● MAILBOX CLEAR'}
+                    {!countsKnown ? '● ALERT STATUS UNAVAILABLE' : hasAlerts ? '● MAILBOX ALERT ACTIVE' : '● MAILBOX CLEAR'}
                   </span>
                 </div>
                 <div className="mt-0.5 text-sm font-extrabold leading-tight text-white">
                   {hasAlerts ? `Alert Mailbox (${totalAlerts} New)` : 'Communications Mailbox'}
                 </div>
                 <div className="text-[10px] font-semibold text-white/95">
-                  {hasAlerts
-                    ? `${alertCount} unread alerts · ${flaggedCount} flagged notes — Tap to open`
-                    : 'No unread alerts — Mailbox colour changes when alerts arrive'}
+                  {!countsKnown ? 'Open Alerts to check availability and retry.' : hasAlerts
+                    ? `${alertCount} unread notifications · ${flaggedCount} flagged notes — Tap to open`
+                    : 'No unread notifications or flagged notes were returned.'}
                 </div>
               </div>
             </div>
