@@ -15,7 +15,7 @@ import { getTilePalette, getHeaderView, getSymbolView } from '@/lib/fullColourTi
 import {
   Bell, LogOut, Menu, X, ChevronDown, MoreHorizontal, ShieldQuestion, Siren, Sparkles, LifeBuoy,
   LayoutDashboard, Users, Heart, GraduationCap, ShieldCheck, PartyPopper,
-  Search, Sun, Moon, User, Wallet, Building2,
+  Search, Sun, Moon, User, Wallet, Building2, Layers,
 } from 'lucide-react';
 import GlobalSearch from '@/components/GlobalSearch';
 import AutoRegisterInsights from '@/components/AutoRegisterInsights';
@@ -30,6 +30,12 @@ const BOTTOM_NAV = [
   { label: 'Employees', path: '/our-employees', key: 'our-staff', icon: Users },
   { label: 'Training', path: '/training', key: 'training', icon: GraduationCap },
   { label: 'Compliance', path: '/compliance', key: 'compliance', icon: ShieldCheck },
+];
+
+const WORKSPACE_VIEWS = [
+  { id: 'both', label: 'Both Views', Icon: Layers },
+  { id: 'office', label: 'Office View', Icon: Building2 },
+  { id: 'profiles', label: 'View Profiles', Icon: Users },
 ];
 
 export default function AppLayout() {
@@ -295,36 +301,189 @@ export default function AppLayout() {
       )}
 
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
-        <header className="relative z-40 flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-slate-200 bg-white/95 px-3 py-2.5 shadow-2xs backdrop-blur-md sm:px-4 md:px-6">
-          <div className="flex min-w-0 flex-1 items-center gap-3">
-            <button onClick={() => setMobileOpen(true)} aria-label="Open menu" className="rounded-lg p-1.5 hover:bg-brand/5 md:hidden">
-              <Menu className="h-5 w-5" />
+        <header className="sticky top-0 z-40 shrink-0 border-b border-slate-200 bg-white/95 shadow-2xs backdrop-blur-md">
+          <div className="flex flex-wrap items-center gap-2 px-3 py-2 sm:px-4 md:px-6">
+            <button
+              onClick={() => setMobileOpen(true)}
+              aria-label="Open menu"
+              className="shrink-0 rounded-lg border border-slate-200 bg-white p-1.5 text-[#0A2B6D] shadow-2xs transition hover:border-[#0072FF]/50 md:hidden"
+            >
+              <Menu className="h-4 w-4" />
             </button>
-            <Image
-              src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
-              alt="ComplianceHR"
-              fittingType="fit"
-              className="h-9 w-9 shrink-0 rounded-xl bg-white shadow-sm ring-1 ring-brand/10"
-            />
-            <div className="hidden min-w-0 sm:block">
-              <div className="text-sm font-extrabold tracking-tight font-display text-foreground leading-tight">{currentLabel}</div>
-              <div className="text-[11px] font-bold text-violet-700 leading-tight">ComplianceHR INFINITY · Complete Control. Greater Confidence. Brighter Success.</div>
+
+            <Link to="/dashboard" className="flex min-w-0 shrink-0 items-center gap-2">
+              <Image
+                src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
+                alt="ComplianceHR Infinity"
+                fittingType="fit"
+                className="h-8 w-8 shrink-0 rounded-lg border border-slate-200 bg-white shadow-2xs"
+              />
+              <span className="flex min-w-0 flex-col leading-none">
+                <span className="font-editorial text-[13px] font-extrabold tracking-tight text-[#0A2B6D] sm:text-sm">
+                  Compliance
+                  <span className="font-editorial-italic text-[#5A00D6]">HR</span>{' '}
+                  <span className="bg-gradient-to-r from-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                    Infinity
+                  </span>
+                </span>
+                <span className="mt-1 hidden text-[8.5px] font-extrabold leading-none text-[#0A2B6D]/70 sm:block">
+                  Complete Control. Greater Confidence. Brighter Success.
+                </span>
+              </span>
+            </Link>
+
+            <span
+              className="hidden min-h-[26px] items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-[10.5px] font-extrabold text-white md:inline-flex"
+              style={{ background: getHeaderView(1) }}
+            >
+              <Sparkles className="h-3 w-3 shrink-0" style={{ color: '#00C6FF' }} />
+              <span className="whitespace-nowrap">{currentLabel}</span>
+            </span>
+
+            <div className="ml-auto flex shrink-0 items-center gap-1.5 sm:gap-2">
+              <div className="hidden w-52 xl:block">
+                <GlobalSearch />
+              </div>
+
+              {/* Workspace view selector */}
+              <div className="hidden items-center gap-1 rounded-xl border border-slate-200 bg-white p-1 shadow-2xs md:flex">
+                {WORKSPACE_VIEWS.map(({ id, label, Icon }) => {
+                  const selected = workspaceView === id;
+                  return (
+                    <button
+                      key={id}
+                      type="button"
+                      onClick={() => switchWorkspaceView(id)}
+                      aria-pressed={selected}
+                      title={label}
+                      className={`inline-flex min-h-[26px] items-center gap-1 rounded-lg px-2 py-1 text-[10.5px] font-extrabold transition-all ${
+                        selected ? 'bg-[#0A2B6D] text-white shadow-sm' : 'text-[#0A2B6D] hover:text-[#0072FF]'
+                      }`}
+                    >
+                      <Icon className={`h-3.5 w-3.5 shrink-0 ${selected ? 'text-white' : 'text-[#5A00D6]'}`} />
+                      <span className="hidden whitespace-nowrap lg:inline">{label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Notifications Bell */}
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setNotifOpen((v) => !v);
+                    setUserMenuOpen(false);
+                  }}
+                  aria-label="Notifications"
+                  className="relative flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-white text-[#0A2B6D] shadow-2xs transition hover:border-[#0072FF]/50 hover:text-[#0072FF]"
+                >
+                  <Bell className="h-4 w-4" />
+                  {unread > 0 && (
+                    <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#FF2E9A] px-1 text-[10px] font-black text-white">
+                      {unread}
+                    </span>
+                  )}
+                </button>
+                {notifOpen && (
+                  <div className="absolute right-0 top-10 z-50 w-80 rounded-2xl border border-slate-200 bg-white p-3 shadow-xl">
+                    <div className="mb-2 flex items-center justify-between border-b border-slate-100 pb-2">
+                      <span className="text-xs font-extrabold text-[#0A2B6D]">Notifications</span>
+                      {unread > 0 && (
+                        <button
+                          type="button"
+                          onClick={markAllRead}
+                          className="text-xs font-bold text-[#FF2E9A] hover:underline"
+                        >
+                          Mark all read
+                        </button>
+                      )}
+                    </div>
+                    <div className="max-h-64 space-y-1.5 overflow-y-auto">
+                      {notifications.length === 0 ? (
+                        <p className="py-4 text-center text-xs text-muted-foreground">All caught up — no notifications.</p>
+                      ) : (
+                        notifications.map((n) => (
+                          <div
+                            key={n.id}
+                            className={`rounded-xl border p-2.5 text-xs ${
+                              n.read ? 'border-slate-100 bg-white' : 'border-[#FF2E9A]/30 bg-[#FF2E9A]/5 font-semibold'
+                            }`}
+                          >
+                            <div className="font-bold text-[#0A2B6D]">{n.title || 'Update'}</div>
+                            {n.message && <div className="mt-0.5 text-muted-foreground">{n.message}</div>}
+                          </div>
+                        ))
+                      )}
+                    </div>
+                    <Link
+                      to="/notifications"
+                      className="mt-2 block rounded-lg bg-[#F5F0FF] py-1.5 text-center text-xs font-bold text-[#5A00D6] hover:bg-[#5A00D6]/10"
+                    >
+                      View all notifications
+                    </Link>
+                  </div>
+                )}
+              </div>
+
+              {/* User Avatar & Quick Menu */}
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setUserMenuOpen((v) => !v);
+                    setNotifOpen(false);
+                  }}
+                  aria-label="User menu"
+                  className="flex h-8 items-center gap-1.5 rounded-lg gradient-brand px-1.5 text-xs font-black text-white shadow-sm sm:px-2"
+                >
+                  <span className="flex h-5 w-5 items-center justify-center rounded-md bg-white/20">{initials}</span>
+                  <span className="hidden max-w-[130px] truncate text-[10.5px] font-extrabold xl:inline">
+                    {user?.full_name || 'My account'}
+                  </span>
+                  <ChevronDown className="hidden h-3 w-3 shrink-0 xl:block" />
+                </button>
+                {userMenuOpen && (
+                  <div className="absolute right-0 top-10 z-50 w-56 rounded-2xl border border-slate-200 bg-white p-3 shadow-xl space-y-2">
+                    <div className="border-b border-slate-100 pb-2">
+                      <div className="truncate text-xs font-extrabold text-[#0A2B6D]">{user?.full_name || 'ComplianceHR User'}</div>
+                      <div className="truncate text-[11px] text-muted-foreground">{user?.email || role}</div>
+                      <span className="mt-1 inline-block rounded-full bg-[#F5F0FF] px-2 py-0.5 text-[10px] font-bold text-[#5A00D6]">
+                        {role}
+                      </span>
+                    </div>
+                    <Link
+                      to="/my-profile"
+                      className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-bold text-[#0A2B6D] hover:bg-[#F5F0FF]"
+                    >
+                      <User className="h-3.5 w-3.5 text-[#5A00D6]" />
+                      My Profile
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={handleLogout}
+                      className="flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-bold text-[#FF2E9A] hover:bg-[#FF2E9A]/5"
+                    >
+                      <LogOut className="h-3.5 w-3.5" />
+                      Sign out
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
-          {/* Global Switcher + Search + Notifications + User Menu */}
-          <div className="flex shrink-0 items-center gap-2">
-            <div className="hidden lg:block w-56">
-              <GlobalSearch />
-            </div>
-
-            {/* Workspace View Selector — landing-style segmented control */}
-            <div className="flex items-center gap-1 rounded-xl border border-slate-200 bg-slate-100/80 p-1">
-              {[
-                { id: 'both', label: 'Both Views', Icon: Building2 },
-                { id: 'office', label: 'Office View', Icon: Building2 },
-                { id: 'profiles', label: 'View Profiles', Icon: Users },
-              ].map(({ id, label, Icon }) => {
+          {/* Mobile band: current module and view switch */}
+          <div className="flex items-center gap-2 border-t border-slate-100 px-3 pb-2 pt-1.5 md:hidden">
+            <span
+              className="inline-flex min-h-[24px] min-w-0 flex-1 items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-2.5 py-0.5 text-[10px] font-extrabold text-white"
+              style={{ background: getHeaderView(1) }}
+            >
+              <Sparkles className="h-3 w-3 shrink-0" style={{ color: '#00C6FF' }} />
+              <span className="truncate">{currentLabel}</span>
+            </span>
+            <div className="flex shrink-0 items-center gap-1 rounded-xl border border-slate-200 bg-white p-1">
+              {WORKSPACE_VIEWS.map(({ id, label, Icon }) => {
                 const selected = workspaceView === id;
                 return (
                   <button
@@ -332,117 +491,16 @@ export default function AppLayout() {
                     type="button"
                     onClick={() => switchWorkspaceView(id)}
                     aria-pressed={selected}
-                    className={`inline-flex min-h-[28px] items-center gap-1 rounded-lg px-2.5 py-1 text-[10.5px] font-extrabold transition-all ${
-                      selected
-                        ? 'bg-[#0A2B6D] text-white shadow-sm'
-                        : 'text-[#0A2B6D] hover:text-[#0072FF]'
+                    aria-label={label}
+                    title={label}
+                    className={`inline-flex h-6 w-6 items-center justify-center rounded-md transition ${
+                      selected ? 'bg-[#0A2B6D] text-white' : 'text-[#0A2B6D]'
                     }`}
                   >
-                    <Icon className={`h-3.5 w-3.5 shrink-0 ${selected ? 'text-white' : 'text-[#5A00D6]'}`} />
-                    <span className="hidden sm:inline whitespace-nowrap">{label}</span>
+                    <Icon className={`h-3.5 w-3.5 ${selected ? 'text-white' : 'text-[#5A00D6]'}`} />
                   </button>
                 );
               })}
-            </div>
-
-            {/* Notifications Bell */}
-            <div className="relative">
-              <button
-                type="button"
-                onClick={() => {
-                  setNotifOpen((v) => !v);
-                  setUserMenuOpen(false);
-                }}
-                aria-label="Notifications"
-                className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-violet-200 bg-white text-violet-800 shadow-2xs transition-colors hover:bg-violet-50"
-              >
-                <Bell className="h-4 w-4" />
-                {unread > 0 && (
-                  <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-pink-600 px-1 text-[10px] font-black text-white">
-                    {unread}
-                  </span>
-                )}
-              </button>
-              {notifOpen && (
-                <div className="absolute right-0 top-11 z-50 w-80 rounded-2xl border-2 border-violet-200 bg-white p-3 shadow-xl">
-                  <div className="mb-2 flex items-center justify-between border-b border-violet-100 pb-2">
-                    <span className="text-xs font-extrabold text-violet-950">Notifications</span>
-                    {unread > 0 && (
-                      <button
-                        type="button"
-                        onClick={markAllRead}
-                        className="text-xs font-bold text-pink-600 hover:underline"
-                      >
-                        Mark all read
-                      </button>
-                    )}
-                  </div>
-                  <div className="max-h-64 space-y-1.5 overflow-y-auto">
-                    {notifications.length === 0 ? (
-                      <p className="py-4 text-center text-xs text-muted-foreground">All caught up — no notifications.</p>
-                    ) : (
-                      notifications.map((n) => (
-                        <div
-                          key={n.id}
-                          className={`rounded-xl border p-2.5 text-xs ${
-                            n.read ? 'border-violet-100 bg-white' : 'border-pink-200 bg-pink-50/50 font-semibold'
-                          }`}
-                        >
-                          <div className="font-bold text-foreground">{n.title || 'Update'}</div>
-                          {n.message && <div className="mt-0.5 text-muted-foreground">{n.message}</div>}
-                        </div>
-                      ))
-                    )}
-                  </div>
-                  <Link
-                    to="/notifications"
-                    className="mt-2 block rounded-lg bg-violet-50 py-1.5 text-center text-xs font-bold text-violet-800 hover:bg-violet-100"
-                  >
-                    View all notifications
-                  </Link>
-                </div>
-              )}
-            </div>
-
-            {/* User Avatar & Quick Menu */}
-            <div className="relative">
-              <button
-                type="button"
-                onClick={() => {
-                  setUserMenuOpen((v) => !v);
-                  setNotifOpen(false);
-                }}
-                aria-label="User menu"
-                className="flex h-9 w-9 items-center justify-center rounded-xl gradient-brand text-xs font-black text-white shadow-sm"
-              >
-                {initials}
-              </button>
-              {userMenuOpen && (
-                <div className="absolute right-0 top-11 z-50 w-56 rounded-2xl border-2 border-violet-200 bg-white p-3 shadow-xl space-y-2">
-                  <div className="border-b border-violet-100 pb-2">
-                    <div className="truncate text-xs font-extrabold text-foreground">{user?.full_name || 'ComplianceHR User'}</div>
-                    <div className="truncate text-[11px] text-muted-foreground">{user?.email || role}</div>
-                    <span className="mt-1 inline-block rounded-full bg-violet-100 px-2 py-0.5 text-[10px] font-bold text-violet-900">
-                      {role}
-                    </span>
-                  </div>
-                  <Link
-                    to="/my-profile"
-                    className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-bold text-foreground hover:bg-violet-50"
-                  >
-                    <User className="h-3.5 w-3.5 text-violet-600" />
-                    My Profile
-                  </Link>
-                  <button
-                    type="button"
-                    onClick={handleLogout}
-                    className="flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-bold text-rose-700 hover:bg-rose-50"
-                  >
-                    <LogOut className="h-3.5 w-3.5" />
-                    Sign out
-                  </button>
-                </div>
-              )}
             </div>
           </div>
         </header>
