@@ -193,7 +193,7 @@ export default function OurProfilesTab({ kind, basePath, scoped = true, director
                             </div>
                             <div className="min-w-0 flex-1">
                               <div className="flex items-start justify-between gap-2">
-                                <div className="line-clamp-2 min-w-0 text-[15px] font-extrabold leading-[19px] text-[#0A2B6D]">{r.full_name}</div>
+                                <div className="min-w-0 break-words text-[15px] font-extrabold leading-[19px] text-[#0A2B6D]">{r.full_name}</div>
                                 <Badge className={`shrink-0 whitespace-nowrap text-[10px] font-extrabold ${statusTone(r.status || 'Active')}`}>{r.status || 'Active'}</Badge>
                               </div>
                               <div className="mt-1 flex flex-wrap gap-1">
@@ -209,8 +209,8 @@ export default function OurProfilesTab({ kind, basePath, scoped = true, director
                           </div>
                           {(r.email || r.phone) && (
                             <div className="mt-2 space-y-1 border-t border-[#0A2B6D]/8 pt-2 text-[10.5px] font-semibold leading-[14px] text-[#0A2B6D]/65">
-                              {r.email && <div className="flex items-center gap-1.5"><Mail className="h-3 w-3 shrink-0 text-[#0072FF]" /><span className="truncate">{r.email}</span></div>}
-                              {r.phone && <div className="flex items-center gap-1.5"><Phone className="h-3 w-3 shrink-0 text-[#0072FF]" /><span className="truncate">{r.phone}</span></div>}
+                              {r.email && <div className="flex items-center gap-1.5"><Mail className="h-3 w-3 shrink-0 text-[#0072FF]" /><span className="min-w-0 break-all">{r.email}</span></div>}
+                              {r.phone && <div className="flex items-center gap-1.5"><Phone className="h-3 w-3 shrink-0 text-[#0072FF]" /><span className="min-w-0 break-words">{r.phone}</span></div>}
                             </div>
                           )}
                           <div className="mt-auto flex items-center justify-between gap-1 pt-2 text-[10.5px] font-extrabold uppercase tracking-[0.06em] text-[#0A2B6D]/45 transition-colors group-hover:text-[#5A00D6]">
