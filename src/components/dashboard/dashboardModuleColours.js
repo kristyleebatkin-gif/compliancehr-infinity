@@ -48,6 +48,15 @@ export const MODULE_KEY_COLOURS = {
   'suggestions-hub': '#C084FC',
   'help': '#0072FF',
   'user-guides': '#FF2E9A',
+  'daily-briefing': '#0072FF',
+  'checklists': '#5A00D6',
+  'review-due': '#A100FF',
+  'universal-storage': '#0A2B6D',
+  'registers': '#5A00D6',
+  'user-success': '#00C6FF',
+  'record-intelligence': '#0072FF',
+  'frontline-hub': '#FF2E9A',
+  'workforce-presence': '#A100FF',
 };
 
 // Live dashboard card keys that differ from the module directory keys.

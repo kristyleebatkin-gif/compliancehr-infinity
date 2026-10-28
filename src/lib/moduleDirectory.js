@@ -10,68 +10,153 @@ import {
 // Single source of truth for every module in the app: the sidebar, bottom nav and
 // the dashboard module hub all read this list so nothing can go missing again.
 export const MODULE_DIRECTORY = [
-  { key: 'dashboard', label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard, blurb: 'Live overview of compliance, safety and work across the organisation.' },
-  { key: 'operations-centre', label: 'Executive Operations Centre', path: '/operations-centre', icon: Sparkles, blurb: 'Infinity One-Click Operations, Core Engine, NDIS Health Intelligence, 2026 Printable Templates and all executive resources in one place.' },
-  { key: 'my-profile', label: 'My Profile', path: '/my-profile', icon: UserCircle, blurb: 'Your profile, work, documents and name tag in one place.' },
-  { key: 'our-staff', label: 'Our employee profiles', path: '/our-employees', icon: Users, blurb: 'Main employee records, documents, screening, forms, progress and connected modules.' },
-  { key: 'our-participants', label: 'Our participant profiles', path: '/our-participants', icon: Heart, blurb: 'Main participant records, plans, documents, forms, goals and connected modules.' },
-  { key: 'intake', label: 'Intake Centre', path: '/intake', icon: UserPlus, blurb: 'Participant and employee intake forms, reviews and conversions.' },
-  { key: 'universal-storage', label: 'Universal Storage & Export Hub', path: '/universal-storage', icon: FolderOpen, blurb: 'Automatic 6-destination storage across 25 item types, 11-attribute search, 9-way record linking, 7-layer retention and 4-format exports.' },
-  { key: 'documents', label: 'Document Vault', path: '/documents', icon: FolderOpen, blurb: 'Document register, central routing, uploads and vault exports.' },
-  { key: 'company-safe', label: 'Company Safe', path: '/company-safe', icon: Vault, blurb: 'Submitted forms, business details, branding and completed documents.' },
-  { key: 'visual-boards', label: 'Visual Boards', path: '/visual-boards', icon: LayoutPanelTop, blurb: 'Accessible routines, communication boards, sign prompts and translators.' },
-  { key: 'communications', label: 'Communication Centre', path: '/communications', icon: Megaphone, blurb: 'Diary, inbox, professional email, broadcasts, video calls and AI compose.' },
-  { key: 'assistant', label: 'AI Assistant', path: '/assistant', icon: Bot, blurb: 'Talk to the compliance, rostering, receipts and personal AI assistants.' },
-  { key: 'incidents', label: 'Incident Clinic', path: '/incidents', icon: AlertTriangle, blurb: 'Incident reporting, investigations, health responses and kanban tracking.' },
-  { key: 'incident-analytics', label: 'Incident Analytics', path: '/incident-analytics', icon: Activity, blurb: 'Charts of incident trends by category and by staff, to target support where it is needed.' },
-  { key: 'risks', label: 'Risk Reporting', path: '/risks', icon: ShieldAlert, blurb: 'Risk reports, hazards, near misses, assessments and treatment controls.' },
-  { key: 'compliance', label: 'Compliance & Report Centre', path: '/compliance', icon: ShieldCheck, blurb: 'Checklists, audits, file matrices, expiry scans and full business audit exports.' },
-  { key: 'auditor-portal', label: 'Auditor Portal', path: '/auditor-portal', icon: ClipboardCheck, blurb: 'Live read-only collaboration view for auditors: evidence, audits, corrective actions and observations.' },
-  { key: 'training', label: 'Training Centre', path: '/training', icon: GraduationCap, blurb: 'Curriculum, LMS, calendar, AI quiz drills, templates and team analytics.' },
-  { key: 'certificates', label: 'Recognition & My Certificates', path: '/certificates', icon: BadgeCheck, blurb: 'Participant journey, staff journey, employee recognition leaderboard, and my certificates in one place.' },
-  { key: 'assets', label: 'Asset Management', path: '/assets', icon: Boxes, blurb: 'Asset register, maintenance, compliance reviews and disposal records.' },
-  { key: 'rostering', label: 'Rostering', path: '/rostering', icon: CalendarClock, blurb: 'Shift calendar, patterns, availability, approvals, payroll and ICS feeds.' },
-  { key: 'invoicing', label: 'Invoicing Centre', path: '/invoicing', icon: FileSpreadsheet, blurb: 'NDIS invoicing, quotes workflow and payroll reports.' },
-  { key: 'goals', label: 'Goal Progress', path: '/goals', icon: Target, blurb: 'Goals, progress notes grouped by goal, insights and AI coaching.' },
-  { key: 'registers', label: 'Universal Register Management & Health Hub', path: '/registers', icon: Sparkles, blurb: '45 auto-updated organisational master registers, 28-source indexing, 8-metric Register Health Dashboard & 6 register checklists.' },
-  { key: 'user-success', label: 'Universal User Success & Evidence-First Hub', path: '/user-success', icon: Sparkles, blurb: '5 personalised role workspaces, 8-task speed standard (<10s Clock-In), automatic 5-point evidence stamp, Manager Review Mode & Audit Mode.' },
-  { key: 'record-intelligence', label: 'Universal Record Intelligence & Routing', path: '/record-intelligence', icon: Sparkles, blurb: 'Single-entry intelligence across 28 record types, 18 auto-extracted signals, 8 call/comm channels & 11 Document Hub categories.' },
-  { key: 'frontline-hub', label: 'Frontline Rapid & Finish My Shift Hub', path: '/frontline-hub', icon: ClipboardCheck, blurb: 'Mobile-first My Day dashboard, Finish My Shift 7-gate check, Voice-to-Text, AI notes, ✓ Yes / ✗ No smart checklists & offline sync.' },
-  { key: 'workforce-presence', label: 'Workforce Presence & Safety Centre', path: '/workforce-presence', icon: Siren, blurb: 'Unified 9-role site attendance, visitor & contractor registers, live occupancy, First Aid & Fire Warden coverage and emergency roll call.' },
-  { key: 'emergency-response', label: 'Emergency Response', path: '/emergency-response', icon: Siren, blurb: 'Live alerts, quick dial, plans, drills, safety checks and visitor logs.' },
-  { key: 'meetings', label: 'Meeting Centre', path: '/meetings', icon: CalendarDays, blurb: 'Meetings, agenda assistant, templates, minutes and overdue tracking.' },
-  { key: 'users', label: 'Users & Permissions Hub', path: '/users', icon: UsersRound, blurb: 'User accounts, permission matrix, archived users and activity log.' },
-  { key: 'receipts', label: 'Receipt Hub', path: '/receipts', icon: ReceiptText, blurb: 'Receipt scanning to PDF, reconciliation, reimbursement and exports.' },
-  { key: 'equipment-manuals', label: 'Equipment & MSDS', path: '/equipment-manuals', icon: Wrench, blurb: 'Equipment manuals, operating instructions and chemical MSDS library.' },
-  { key: 'community-council', label: 'Community, Programs & Referral Support', path: '/community-council', icon: MapPin, blurb: 'Local council lookup, community programs & events, crisis support, resource library and referral forms in one hub.' },
-  { key: 'community-referral', label: 'Referral & Support (in Community)', path: '/referrals', icon: HeartHandshake, blurb: 'Referrals, crisis information, local services, community programs and referral PDFs.' },
-  { key: 'ndis-provider', label: 'NDIS Provider Portal', path: '/ndis-portal', icon: Building2, blurb: 'Provider registration details, obligations and portal records.' },
-  { key: 'ndis-news', label: 'NDIS Updates & News', path: '/ndis-updates', icon: Newspaper, blurb: 'Automated NDIS news, pricing updates and deadline tracking.' },
-  { key: 'quotes', label: 'Quote Centre', path: '/quotes', icon: Landmark, blurb: 'Quotes, live branded preview, win-rate analytics and re-issue workflows.' },
-  { key: 'programs', label: 'Programs', path: '/programs', icon: Handshake, blurb: 'Programs, events, ad builder, invites and survey collection.' },
-  { key: 'key-contacts', label: 'Key Personnel Contacts', path: '/key-contacts', icon: UserCog, blurb: 'Personnel profiles and delegated authority registers.' },
-  { key: 'volunteering-placements', label: 'Volunteering & Placement (HR Hub)', path: '/volunteering-placements', icon: Handshake, blurb: 'Volunteer and student onboarding, screening and placement records inside HR Hub.' },
-  { key: 'analytics', label: 'Business Analytics', path: '/analytics', icon: BarChart3, blurb: 'Business-wide analytics, KPIs, trends and growth dashboards.' },
-  { key: 'human-resources', label: 'HR Hub & Volunteering', path: '/hr', icon: UsersRound, blurb: 'Leave, performance reviews, volunteering & placements, TV/Radio/Phone/Computer goals & hobbies hub, and HR registers.' },
-  { key: 'crm', label: 'CRM & Leads', path: '/crm', icon: Briefcase, blurb: 'Lead pipeline, contacts, follow-ups and conversion tracking.' },
-  { key: 'procurement', label: 'Procurement', path: '/procurement', icon: ShoppingCart, blurb: 'Suppliers, purchase orders, receipts-to-assets and stock tracking.' },
-  { key: 'projects', label: 'Projects Hub', path: '/projects', icon: KanbanSquare, blurb: 'Business projects, milestones, owners and progress tracking.' },
-  { key: 'tasks', label: 'Task Dashboard', path: '/tasks', icon: ClipboardList, blurb: 'Tasks, board view, reminders, leaderboards and completion records.' },
-  { key: 'feedback', label: 'Feedback & Surveys', path: '/feedback', icon: MessageSquare, blurb: 'Feedback register, complaint routing and branded surveys.' },
-  { key: 'quality', label: 'Quality & Improvement', path: '/quality', icon: Lightbulb, blurb: 'Continuous improvement register, actions and quality reviews.' },
-  { key: 'suggestions-hub', label: 'Suggestions Hub', path: '/suggestions', icon: Sparkles, blurb: 'AI review of every module: what to visualise, automate and refine.' },
-  { key: 'help', label: 'Help Centre', path: '/help', icon: LifeBuoy, blurb: 'Guides, AI troubleshooter, system health and support desk.' },
-  { key: 'user-guides', label: 'User Guides', path: '/user-guides', icon: BookOpen, blurb: 'Complete downloadable user guides for every module in the platform.' },
+  // 1. DASHBOARD & EXECUTIVE COMMAND
+  { key: 'dashboard', label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard, group: '1. Dashboard & Executive Command', blurb: 'Live overview of compliance, safety and work across the organisation.' },
+  { key: 'operations-centre', label: 'Operations Centre', path: '/operations-centre', icon: Sparkles, group: '1. Dashboard & Executive Command', blurb: 'Executive intelligence, executive reports, 1-click operations, Core Engine and 2026 printable templates.' },
+  { key: 'analytics', label: 'Business Analytics', path: '/analytics', icon: BarChart3, group: '1. Dashboard & Executive Command', blurb: 'Business-wide analytics, KPIs, trends, executive reports and growth dashboards.' },
+  { key: 'suggestions-hub', label: 'Suggestions Hub', path: '/suggestions', icon: Sparkles, group: '1. Dashboard & Executive Command', blurb: 'AI review of every module: what to visualise, automate and refine.' },
+  { key: 'assistant', label: 'AI Assistant', path: '/assistant', icon: Bot, group: '1. Dashboard & Executive Command', blurb: 'Talk to the compliance, rostering, receipts and personal AI assistants.' },
+  { key: 'daily-briefing', label: 'Daily Briefing', path: '/briefing', icon: Newspaper, group: '1. Dashboard & Executive Command', blurb: 'Daily organisational briefing, operational priorities and executive updates.' },
+
+  // 2. PEOPLE, INTAKE & PROFILES
+  { key: 'my-profile', label: 'My Profile', path: '/my-profile', icon: UserCircle, group: '2. People, Intake & Profiles', blurb: 'Your profile, work, documents, payroll and name tag in one place.' },
+  { key: 'intake', label: 'Intake Centre', path: '/intake', icon: UserPlus, group: '2. People, Intake & Profiles', blurb: 'Participant and employee intake forms, reviews and onboarding conversions.' },
+  { key: 'our-staff', label: 'Employee Profiles', path: '/our-employees', icon: Users, group: '2. People, Intake & Profiles', blurb: 'Main employee records, documents, screening, forms, progress and connected modules.' },
+  { key: 'our-participants', label: 'Participant Profiles', path: '/our-participants', icon: Heart, group: '2. People, Intake & Profiles', blurb: 'Main participant records, plans, documents, forms, goals and connected modules.' },
+  { key: 'visual-boards', label: 'Visual Boards', path: '/visual-boards', icon: LayoutPanelTop, group: '2. People, Intake & Profiles', blurb: 'Accessible routines, communication boards, sign prompts and translators.' },
+  { key: 'key-contacts', label: 'Key Personnel Contacts', path: '/key-contacts', icon: UserCog, group: '2. People, Intake & Profiles', blurb: 'Personnel profiles and delegated authority registers.' },
+  { key: 'volunteering-placements', label: 'Volunteering & Placements', path: '/volunteers', icon: Handshake, group: '2. People, Intake & Profiles', blurb: 'Volunteer and student onboarding, screening and placement records.' },
+  { key: 'users', label: 'Users & Permissions', path: '/users', icon: UsersRound, group: '2. People, Intake & Profiles', blurb: 'User accounts, permission matrix, archived users and activity log.' },
+
+  // 3. COMMUNICATIONS & WORKFORCE
+  { key: 'communications', label: 'Communication Centre', path: '/communications', icon: Megaphone, group: '3. Communications & Workforce', blurb: 'Diary, inbox, professional email, broadcasts, video calls and AI compose.' },
+  { key: 'rostering', label: 'Rostering', path: '/rostering', icon: CalendarClock, group: '3. Communications & Workforce', blurb: 'Shift calendar, patterns, availability, approvals, payroll and ICS feeds.' },
+  { key: 'goals', label: 'Goals', path: '/goals', icon: Target, group: '3. Communications & Workforce', blurb: 'Goals, progress notes grouped by goal, insights and AI coaching.' },
+  { key: 'tasks', label: 'Tasks', path: '/tasks', icon: ClipboardList, group: '3. Communications & Workforce', blurb: 'Tasks, board view, reminders, leaderboards and completion records.' },
+  { key: 'meetings', label: 'Meetings', path: '/meetings', icon: CalendarDays, group: '3. Communications & Workforce', blurb: 'Meetings, agenda assistant, templates, minutes and overdue tracking.' },
+  { key: 'programs', label: 'Programs & Events', path: '/programs', icon: Handshake, group: '3. Communications & Workforce', blurb: 'Programs, events, ad builder, invites and survey collection.' },
+  { key: 'frontline-hub', label: 'Frontline Rapid Hub', path: '/frontline-hub', icon: ClipboardCheck, group: '3. Communications & Workforce', blurb: 'Mobile-first My Day dashboard, Finish My Shift 7-gate check, Voice-to-Text and smart checklists.' },
+  { key: 'workforce-presence', label: 'Workforce Presence Centre', path: '/workforce-presence', icon: Siren, group: '3. Communications & Workforce', blurb: 'Unified site attendance, visitor & contractor registers, live occupancy and emergency roll call.' },
+
+  // 4. INCIDENTS, RISK & SAFETY
+  { key: 'incidents', label: 'Incident Clinic', path: '/incidents', icon: AlertTriangle, group: '4. Incidents, Risk & Safety', blurb: 'Incident reporting, investigations, health responses and kanban tracking.' },
+  { key: 'incident-analytics', label: 'Incident Analytics', path: '/incident-analytics', icon: Activity, group: '4. Incidents, Risk & Safety', blurb: 'Charts of incident trends by category and by staff, to target support where it is needed.' },
+  { key: 'risks', label: 'Risk Reporting', path: '/risks', icon: ShieldAlert, group: '4. Incidents, Risk & Safety', blurb: 'Risk reports, hazards, near misses, assessments and treatment controls.' },
+  { key: 'emergency-response', label: 'Emergency Response', path: '/emergency-response', icon: Siren, group: '4. Incidents, Risk & Safety', blurb: 'Live alerts, quick dial, plans, emergency drills, WHS safety checks and visitor logs.' },
+  { key: 'equipment-manuals', label: 'Equipment Manuals & MSDS', path: '/equipment-manuals', icon: Wrench, group: '4. Incidents, Risk & Safety', blurb: 'Equipment manuals, operating instructions and chemical MSDS library.' },
+
+  // 5. COMPLIANCE, QUALITY & EVIDENCE
+  { key: 'compliance', label: 'Compliance Centre', path: '/compliance', icon: ShieldCheck, group: '5. Compliance, Quality & Evidence', blurb: 'Checklists, audit management, file matrices, expiry scans and full business audit exports.' },
+  { key: 'auditor-portal', label: 'Auditor Portal', path: '/auditor-portal', icon: ClipboardCheck, group: '5. Compliance, Quality & Evidence', blurb: 'Live read-only collaboration view for auditors: evidence, audits, corrective actions and observations.' },
+  { key: 'documents', label: 'Document Vault', path: '/documents', icon: FolderOpen, group: '5. Compliance, Quality & Evidence', blurb: 'Document register, central routing, uploads and vault exports.' },
+  { key: 'company-safe', label: 'Company Safe', path: '/company-safe', icon: Vault, group: '5. Compliance, Quality & Evidence', blurb: 'Submitted forms, business details, branding and completed documents.' },
+  { key: 'quality', label: 'Quality & Improvement', path: '/quality', icon: Lightbulb, group: '5. Compliance, Quality & Evidence', blurb: 'Continuous improvement register, CAPA corrective/preventive actions and quality reviews.' },
+  { key: 'feedback', label: 'Feedback & Surveys', path: '/feedback', icon: MessageSquare, group: '5. Compliance, Quality & Evidence', blurb: 'Feedback register, complaint routing and branded surveys.' },
+  { key: 'checklists', label: 'Checklists', path: '/checklists', icon: ClipboardCheck, group: '5. Compliance, Quality & Evidence', blurb: 'Compliance checklists, assessments, sign-offs and evidence verification.' },
+  { key: 'review-due', label: 'Review Due Board', path: '/review-due', icon: CalendarClock, group: '5. Compliance, Quality & Evidence', blurb: 'Upcoming and overdue compliance, policy, plan and document reviews.' },
+  { key: 'universal-storage', label: 'Universal Storage & Export Hub', path: '/universal-storage', icon: FolderOpen, group: '5. Compliance, Quality & Evidence', blurb: 'Automatic 6-destination storage, 11-attribute search, 9-way record linking, 7-layer retention and 4-format exports.' },
+  { key: 'registers', label: 'Universal Register Hub', path: '/registers', icon: Sparkles, group: '5. Compliance, Quality & Evidence', blurb: '45 auto-updated organisational master registers, 28-source indexing & Register Health Dashboard.' },
+  { key: 'user-success', label: 'Evidence & User Success Hub', path: '/user-success', icon: Sparkles, group: '5. Compliance, Quality & Evidence', blurb: 'Personalised role workspaces, automatic 5-point evidence stamp, Manager Review Mode & Audit Mode.' },
+  { key: 'record-intelligence', label: 'Record Intelligence & Routing', path: '/record-intelligence', icon: Sparkles, group: '5. Compliance, Quality & Evidence', blurb: 'Single-entry intelligence across 28 record types, 18 auto-extracted signals & 11 Document Hub categories.' },
+
+  // 6. TRAINING & CAPABILITY
+  { key: 'training', label: 'Training Centre', path: '/training', icon: GraduationCap, group: '6. Training & Capability', blurb: 'Learning academy, curriculum, LMS, competency management, skills matrix, learning pathways and workforce development.' },
+  { key: 'certificates', label: 'Certificates', path: '/certificates', icon: BadgeCheck, group: '6. Training & Capability', blurb: 'Participant journey, staff journey, employee recognition leaderboard and my certificates in one place.' },
+
+  // 7. FINANCE & COMMERCIAL
+  { key: 'invoicing', label: 'Invoicing Centre', path: '/invoicing', icon: FileSpreadsheet, group: '7. Finance & Commercial', blurb: 'NDIS invoicing, funding management, revenue intelligence and payroll reports.' },
+  { key: 'quotes', label: 'Quote Centre', path: '/quotes', icon: Landmark, group: '7. Finance & Commercial', blurb: 'Quotes, live branded preview, win-rate analytics and re-issue workflows.' },
+  { key: 'receipts', label: 'Receipt Hub', path: '/receipts', icon: ReceiptText, group: '7. Finance & Commercial', blurb: 'Receipt scanning to PDF, reconciliation, reimbursement and exports.' },
+  { key: 'procurement', label: 'Procurement', path: '/procurement', icon: ShoppingCart, group: '7. Finance & Commercial', blurb: 'Suppliers, purchase orders, receipts-to-assets and stock tracking.' },
+  { key: 'assets', label: 'Asset Management', path: '/assets', icon: Boxes, group: '7. Finance & Commercial', blurb: 'Asset register, maintenance, compliance reviews and disposal records.' },
+
+  // 8. HUMAN RESOURCES
+  { key: 'human-resources', label: 'HR Hub', path: '/hr', icon: UsersRound, group: '8. Human Resources', blurb: 'Contracts, position descriptions, performance reviews, leave management, onboarding, offboarding and recognition.' },
+
+  // 9. CRM, GROWTH & RELATIONSHIPS
+  { key: 'crm', label: 'CRM & Leads', path: '/crm', icon: Briefcase, group: '9. CRM, Growth & Relationships', blurb: 'Lead pipeline, provider relationships, support coordinators, business development and conversion tracking.' },
+  { key: 'community-referral', label: 'Referrals', path: '/referrals', icon: HeartHandshake, group: '9. CRM, Growth & Relationships', blurb: 'Referrals, crisis information, local services, community contacts and referral PDFs.' },
+
+  // 10. GOVERNANCE & STRATEGY
+  { key: 'projects', label: 'Projects Hub', path: '/projects', icon: KanbanSquare, group: '10. Governance & Strategy', blurb: 'Business projects, governance hub, board packs, strategic planning, corporate reporting and KPI framework.' },
+
+  // 11. NDIS & REGULATORY
+  { key: 'ndis-provider', label: 'NDIS Provider Portal', path: '/ndis-portal', icon: Building2, group: '11. NDIS & Regulatory', blurb: 'Provider registration details, practice standards, registration groups, obligations and audit readiness.' },
+  { key: 'ndis-news', label: 'NDIS Updates & News', path: '/ndis-updates', icon: Newspaper, group: '11. NDIS & Regulatory', blurb: 'Automated NDIS news, pricing updates and regulatory deadline tracking.' },
+
+  // 12. COMMUNITY & SUPPORT SERVICES
+  { key: 'community-council', label: 'Community Council Hub', path: '/community-council', icon: MapPin, group: '12. Community & Support Services', blurb: 'Local council lookup, community networks, accessibility services, crisis support and resource library.' },
+
+  // 13. HELP, KNOWLEDGE & SUPPORT
+  { key: 'help', label: 'Help Centre', path: '/help', icon: LifeBuoy, group: '13. Help, Knowledge & Support', blurb: 'Support centre, AI troubleshooter, system health and support desk.' },
+  { key: 'user-guides', label: 'User Guides', path: '/user-guides', icon: BookOpen, group: '13. Help, Knowledge & Support', blurb: 'Knowledge base, system documentation and complete downloadable user guides for every module.' },
 ];
 
-// Sidebar sections: every module key appears in exactly one group.
+// Permanent 13-Group Architectural Map: every existing module key appears in exactly one permanent home.
 export const NAV_GROUPS = [
-  { label: 'Overview', keys: ['dashboard', 'operations-centre', 'my-profile'] },
-  { label: 'People', keys: ['our-staff', 'our-participants', 'key-contacts', 'volunteering-placements', 'human-resources'] },
-  { label: 'Care & Support', keys: ['intake', 'goals', 'visual-boards', 'rostering', 'community-referral', 'programs', 'community-council'] },
-  { label: 'Compliance & Safety', keys: ['registers', 'user-success', 'record-intelligence', 'frontline-hub', 'workforce-presence', 'compliance', 'auditor-portal', 'incidents', 'incident-analytics', 'risks', 'emergency-response', 'equipment-manuals', 'certificates', 'ndis-provider', 'ndis-news', 'assets'] },
-  { label: 'Money', keys: ['invoicing', 'quotes', 'receipts', 'procurement'] },
-  { label: 'Work', keys: ['tasks', 'meetings', 'projects', 'training', 'communications', 'feedback', 'crm'] },
-  { label: 'Company', keys: ['universal-storage', 'documents', 'company-safe', 'quality', 'suggestions-hub', 'analytics', 'users'] },
-  { label: 'Help & Tools', keys: ['assistant', 'help', 'user-guides'] },
+  {
+    label: '1. Dashboard & Executive Command',
+    keys: ['dashboard', 'operations-centre', 'analytics', 'suggestions-hub', 'assistant', 'daily-briefing'],
+  },
+  {
+    label: '2. People, Intake & Profiles',
+    keys: ['my-profile', 'intake', 'our-staff', 'our-participants', 'visual-boards', 'key-contacts', 'volunteering-placements', 'users'],
+  },
+  {
+    label: '3. Communications & Workforce',
+    keys: ['communications', 'rostering', 'goals', 'tasks', 'meetings', 'programs', 'frontline-hub', 'workforce-presence'],
+  },
+  {
+    label: '4. Incidents, Risk & Safety',
+    keys: ['incidents', 'incident-analytics', 'risks', 'emergency-response', 'equipment-manuals'],
+  },
+  {
+    label: '5. Compliance, Quality & Evidence',
+    keys: [
+      'compliance',
+      'auditor-portal',
+      'documents',
+      'company-safe',
+      'quality',
+      'feedback',
+      'checklists',
+      'review-due',
+      'universal-storage',
+      'registers',
+      'user-success',
+      'record-intelligence',
+    ],
+  },
+  {
+    label: '6. Training & Capability',
+    keys: ['training', 'certificates'],
+  },
+  {
+    label: '7. Finance & Commercial',
+    keys: ['invoicing', 'quotes', 'receipts', 'procurement', 'assets'],
+  },
+  {
+    label: '8. Human Resources',
+    keys: ['human-resources'],
+  },
+  {
+    label: '9. CRM, Growth & Relationships',
+    keys: ['crm', 'community-referral'],
+  },
+  {
+    label: '10. Governance & Strategy',
+    keys: ['projects'],
+  },
+  {
+    label: '11. NDIS & Regulatory',
+    keys: ['ndis-provider', 'ndis-news'],
+  },
+  {
+    label: '12. Community & Support Services',
+    keys: ['community-council'],
+  },
+  {
+    label: '13. Help, Knowledge & Support',
+    keys: ['help', 'user-guides'],
+  },
 ];

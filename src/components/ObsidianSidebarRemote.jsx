@@ -14,158 +14,178 @@ const BRAND_GRADIENT =
 const CHR_LOGO =
   'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png';
 
-// Master Specification: 11 Primary Navigation Pillars (Max 2 Navigation Levels, Zero Duplicates)
+// Permanent 13-Group Architectural Map (Single Source of Truth, Zero Duplicates)
 export const PRIMARY_11_OS_NAV = [
   {
-    id: 'home',
-    label: '1. Home',
-    sub: 'Command Centre & Digital Twin',
+    id: 'dashboard-executive',
+    label: '1. Dashboard & Executive Command',
+    sub: 'Dashboard, Operations, Analytics, Suggestions & AI',
     path: '/dashboard',
     icon: LayoutDashboard,
     children: [
-      { label: 'Home Command Centre', path: '/dashboard' },
+      { label: 'Dashboard', path: '/dashboard' },
+      { label: 'Operations Centre', path: '/operations-centre' },
+      { label: 'Business Analytics', path: '/analytics' },
+      { label: 'Suggestions Hub', path: '/suggestions' },
+      { label: 'AI Assistant', path: '/assistant' },
       { label: 'Daily Briefing', path: '/briefing' },
-      { label: 'Review Due Board', path: '/review-due' },
     ],
   },
   {
-    id: 'my-work',
-    label: '2. My Work',
-    sub: 'Tasks, Shifts, Goals & Profile',
-    path: '/my-profile',
-    icon: ClipboardList,
-    children: [
-      { label: 'My Profile & Work Hub', path: '/my-profile' },
-      { label: 'Task Dashboard & Shared To-Do', path: '/tasks' },
-      { label: 'Frontline Rapid & Finish Shift', path: '/frontline-hub' },
-      { label: 'My Payroll & Payslips', path: '/my-payroll' },
-    ],
-  },
-  {
-    id: 'people',
-    label: '3. People',
-    sub: 'Employee 360° & Participant 360°',
+    id: 'people-intake-profiles',
+    label: '2. People, Intake & Profiles',
+    sub: 'Profiles, Intake, Visual Boards, Contacts & Users',
     path: '/our-employees',
     icon: Users,
     children: [
-      { label: 'Employee 360° Profiles', path: '/our-employees' },
-      { label: 'Participant 360° Profiles', path: '/our-participants' },
-      { label: 'Intake & Onboarding Centre', path: '/intake' },
-      { label: 'HR Hub & Volunteering', path: '/hr' },
-      { label: 'Training & Skills Matrix', path: '/training' },
-      { label: 'Goal Progress & Outcomes', path: '/goals' },
-      { label: 'Recognition & Certificates', path: '/certificates' },
+      { label: 'My Profile', path: '/my-profile' },
+      { label: 'Intake Centre', path: '/intake' },
+      { label: 'Employee Profiles', path: '/our-employees' },
+      { label: 'Participant Profiles', path: '/our-participants' },
+      { label: 'Visual Boards', path: '/visual-boards' },
+      { label: 'Key Personnel Contacts', path: '/key-contacts' },
+      { label: 'Volunteering & Placements', path: '/volunteers' },
+      { label: 'Users & Permissions', path: '/users' },
     ],
   },
   {
-    id: 'operations',
-    label: '4. Operations',
-    sub: 'Rostering, Fleet, Assets & Suppliers',
-    path: '/rostering',
-    icon: CalendarClock,
-    children: [
-      { label: 'Rostering & Shift Management', path: '/rostering' },
-      { label: 'Workforce Presence & Roll Call', path: '/workforce-presence' },
-      { label: 'Programs & Events', path: '/programs' },
-      { label: 'Projects Hub', path: '/projects' },
-      { label: 'Assets & Fleet Management', path: '/assets' },
-      { label: 'Procurement & Supplier 360°', path: '/procurement' },
-      { label: 'Emergency & Business Continuity', path: '/emergency-response' },
-    ],
-  },
-  {
-    id: 'compliance-quality',
-    label: '5. Compliance & Quality',
-    sub: 'NDIS, Aged Care, Audits & CAPA',
-    path: '/compliance',
-    icon: ShieldCheck,
-    children: [
-      { label: 'Compliance & Standard 360°', path: '/compliance' },
-      { label: 'Live Auditor Portal (Audit 360°)', path: '/auditor-portal' },
-      { label: 'Quality & Continuous Improvement', path: '/quality' },
-      { label: 'Working Checklists & Assessments', path: '/checklists' },
-      { label: 'NDIS Provider Portal', path: '/ndis-portal' },
-      { label: 'NDIS Updates & Alerts', path: '/ndis-updates' },
-    ],
-  },
-  {
-    id: 'risks-incidents',
-    label: '6. Risks & Incidents',
-    sub: 'Risk 360°, Incident 360° & WHS',
-    path: '/risks',
-    icon: ShieldAlert,
-    children: [
-      { label: 'Risk 360° & 5×5 Matrix', path: '/risks' },
-      { label: 'Incident 360° & 24h/5d Clinic', path: '/incidents' },
-      { label: 'Feedback, Complaints & Surveys', path: '/feedback' },
-      { label: 'Equipment Manuals & MSDS', path: '/equipment-manuals' },
-    ],
-  },
-  {
-    id: 'documents-evidence',
-    label: '7. Documents & Evidence',
-    sub: 'Document 360°, Vault & Safe',
-    path: '/documents',
-    icon: FolderOpen,
-    children: [
-      { label: 'Document Vault & Form Studio', path: '/documents' },
-      { label: 'Company Safe Master Copies', path: '/company-safe' },
-      { label: 'Universal Storage & Export Hub', path: '/universal-storage' },
-      { label: '45 Master Registers Hub', path: '/registers' },
-    ],
-  },
-  {
-    id: 'communications',
-    label: '8. Communications',
-    sub: 'Email, Notes, Calls & Meetings',
+    id: 'communications-workforce',
+    label: '3. Communications & Workforce',
+    sub: 'Communications, Rostering, Goals, Tasks & Meetings',
     path: '/communications',
     icon: Megaphone,
     children: [
       { label: 'Communication Centre', path: '/communications' },
-      { label: 'Meeting Centre & Minutes', path: '/meetings' },
-      { label: 'Community & Referral Hub', path: '/community-council' },
-      { label: 'Visual & Accessible Boards', path: '/visual-boards' },
-      { label: 'CRM & Leads Pipeline', path: '/crm' },
+      { label: 'Rostering', path: '/rostering' },
+      { label: 'Goals', path: '/goals' },
+      { label: 'Tasks', path: '/tasks' },
+      { label: 'Meetings', path: '/meetings' },
+      { label: 'Programs & Events', path: '/programs' },
+      { label: 'Frontline Rapid Hub', path: '/frontline-hub' },
+      { label: 'Workforce Presence Centre', path: '/workforce-presence' },
     ],
   },
   {
-    id: 'reports-analytics',
-    label: '9. Reports & Analytics',
-    sub: 'KPIs, Heatmaps, Claims & Finance',
-    path: '/analytics',
+    id: 'incidents-risk-safety',
+    label: '4. Incidents, Risk & Safety',
+    sub: 'Incidents, Analytics, Risks, Emergency & MSDS',
+    path: '/incidents',
+    icon: ShieldAlert,
+    children: [
+      { label: 'Incident Clinic', path: '/incidents' },
+      { label: 'Incident Analytics', path: '/incident-analytics' },
+      { label: 'Risk Reporting', path: '/risks' },
+      { label: 'Emergency Response', path: '/emergency-response' },
+      { label: 'Equipment Manuals & MSDS', path: '/equipment-manuals' },
+    ],
+  },
+  {
+    id: 'compliance-quality-evidence',
+    label: '5. Compliance, Quality & Evidence',
+    sub: 'Compliance, Auditor, Vault, Safe, Quality & Evidence',
+    path: '/compliance',
+    icon: ShieldCheck,
+    children: [
+      { label: 'Compliance Centre', path: '/compliance' },
+      { label: 'Auditor Portal', path: '/auditor-portal' },
+      { label: 'Document Vault', path: '/documents' },
+      { label: 'Company Safe', path: '/company-safe' },
+      { label: 'Quality & Improvement', path: '/quality' },
+      { label: 'Feedback & Surveys', path: '/feedback' },
+      { label: 'Checklists', path: '/checklists' },
+      { label: 'Review Due Board', path: '/review-due' },
+      { label: 'Universal Storage & Export Hub', path: '/universal-storage' },
+      { label: 'Universal Register Hub', path: '/registers' },
+      { label: 'Evidence & User Success Hub', path: '/user-success' },
+      { label: 'Record Intelligence & Routing', path: '/record-intelligence' },
+    ],
+  },
+  {
+    id: 'training-capability',
+    label: '6. Training & Capability',
+    sub: 'Training Centre, Certificates, LMS & Skills Matrix',
+    path: '/training',
+    icon: ClipboardList,
+    children: [
+      { label: 'Training Centre', path: '/training' },
+      { label: 'Certificates', path: '/certificates' },
+    ],
+  },
+  {
+    id: 'finance-commercial',
+    label: '7. Finance & Commercial',
+    sub: 'Invoicing, Quotes, Receipts, Procurement & Assets',
+    path: '/invoicing',
     icon: BarChart3,
     children: [
-      { label: 'Enterprise Analytics & KPIs', path: '/analytics' },
-      { label: 'Incident & Safety Analytics', path: '/incident-analytics' },
-      { label: 'Invoicing & NDIS Claims', path: '/invoicing' },
-      { label: 'Quotes & Service Estimates', path: '/quotes' },
-      { label: 'Receipts & Reimbursements', path: '/receipts' },
+      { label: 'Invoicing Centre', path: '/invoicing' },
+      { label: 'Quote Centre', path: '/quotes' },
+      { label: 'Receipt Hub', path: '/receipts' },
+      { label: 'Procurement', path: '/procurement' },
+      { label: 'Asset Management', path: '/assets' },
     ],
   },
   {
-    id: 'executive-centre',
-    label: '10. Executive Centre',
-    sub: 'Digital Twin, Board & AI Briefings',
-    path: '/operations-centre',
+    id: 'human-resources',
+    label: '8. Human Resources',
+    sub: 'HR Hub, Contracts, Reviews, Leave & Onboarding',
+    path: '/hr',
+    icon: Users,
+    children: [
+      { label: 'HR Hub', path: '/hr' },
+    ],
+  },
+  {
+    id: 'crm-growth-relationships',
+    label: '9. CRM, Growth & Relationships',
+    sub: 'CRM & Leads, Referrals & Provider Relationships',
+    path: '/crm',
+    icon: Megaphone,
+    children: [
+      { label: 'CRM & Leads', path: '/crm' },
+      { label: 'Referrals', path: '/referrals' },
+    ],
+  },
+  {
+    id: 'governance-strategy',
+    label: '10. Governance & Strategy',
+    sub: 'Projects Hub, Governance, Board Packs & KPIs',
+    path: '/projects',
     icon: Cpu,
     children: [
-      { label: 'Executive Operations Centre', path: '/operations-centre' },
-      { label: 'Universal Record Intelligence', path: '/record-intelligence' },
-      { label: 'User Success & Evidence Hub', path: '/user-success' },
-      { label: 'AI Copilot Studio', path: '/assistant' },
+      { label: 'Projects Hub', path: '/projects' },
     ],
   },
   {
-    id: 'administration',
-    label: '11. Administration',
-    sub: 'Users, Roles, Security & Guides',
-    path: '/users',
+    id: 'ndis-regulatory',
+    label: '11. NDIS & Regulatory',
+    sub: 'NDIS Provider Portal, Practice Standards & News',
+    path: '/ndis-portal',
+    icon: ShieldCheck,
+    children: [
+      { label: 'NDIS Provider Portal', path: '/ndis-portal' },
+      { label: 'NDIS Updates & News', path: '/ndis-updates' },
+    ],
+  },
+  {
+    id: 'community-support-services',
+    label: '12. Community & Support Services',
+    sub: 'Community Council Hub, Networks & Accessibility',
+    path: '/community-council',
+    icon: FolderOpen,
+    children: [
+      { label: 'Community Council Hub', path: '/community-council' },
+    ],
+  },
+  {
+    id: 'help-knowledge-support',
+    label: '13. Help, Knowledge & Support',
+    sub: 'Help Centre, User Guides & System Documentation',
+    path: '/help',
     icon: Settings,
     children: [
-      { label: 'Users, Roles & Permissions', path: '/users' },
-      { label: 'Key Personnel & Delegations', path: '/key-contacts' },
-      { label: 'Help & System Health', path: '/help' },
-      { label: 'User Guides & Manuals', path: '/user-guides' },
+      { label: 'Help Centre', path: '/help' },
+      { label: 'User Guides', path: '/user-guides' },
     ],
   },
 ];
@@ -177,8 +197,8 @@ export default function ObsidianSidebarRemote({
   onLogout,
 }) {
   const location = useLocation();
-  const [navMode, setNavMode] = useState('os11'); // 'os11' (11 Primary OS Pillars) | 'all' (All Modules)
-  const [expandedPillar, setExpandedPillar] = useState('home');
+  const [navMode, setNavMode] = useState('os11'); // 'os11' (13 Permanent Categories) | 'all' (All Modules)
+  const [expandedPillar, setExpandedPillar] = useState('dashboard-executive');
 
   const modules = visiblePrimary.filter(
     (item) =>
@@ -223,7 +243,7 @@ export default function ObsidianSidebarRemote({
                   : 'text-[#0A2B6D] hover:bg-[#F5F0FF]'
               }`}
             >
-              11 Primary Pillars
+              13 OS Categories
             </button>
             <button
               type="button"

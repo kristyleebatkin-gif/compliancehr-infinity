@@ -10,20 +10,21 @@ import { getHeaderView } from '@/lib/fullColourTiles';
 const BRAND_GRADIENT =
   'linear-gradient(120deg, #0072FF 0%, #0A2B6D 18%, #5A00D6 42%, #A100FF 68%, #FF2E9A 100%)';
 
-// Master Specification: 11 Primary Navigation Pillars + Participant 360° Quick Screen (12 Clean Tiles)
+// Permanent 13-Group Quick Access Architecture
 const QUICK_LINKS = [
-  { key: 'dashboard', label: '1. Home Command', views: ['Organisation Health (9 Pillars)', '30-Second Manager Answers', 'Organisational Digital Twin'], path: '/dashboard', icon: LayoutDashboard },
-  { key: 'my-work', label: '2. My Work', views: ['Tasks, Shifts & Approvals', 'Frontline Finish My Shift', 'Personal 360° Workspace'], path: '/my-profile', icon: ClipboardList },
-  { key: 'our-staff', label: '3. People (Staff 360°)', views: ['Employee 360° Profiles', '100-Pt Screening & Matrix', 'HR, Leave & Appraisals'], path: '/our-employees', icon: Users },
-  { key: 'our-participants', label: 'Participant 360°', views: ['Participant 360° Profiles', '3-Part Consents & Plans', 'Goals & 10-Weekly Reviews'], path: '/our-participants', icon: Heart },
-  { key: 'rostering', label: '4. Operations', views: ['Rostering & Shift Gatekeeper', 'Assets, Fleet & Programs', 'Supplier 360° & Continuity'], path: '/rostering', icon: CalendarClock },
-  { key: 'compliance', label: '5. Compliance & Quality', views: ['NDIS & Aged Care Standards', '356 Audit Checkpoints', 'Continuous Improvement'], path: '/compliance', icon: ShieldCheck },
-  { key: 'risks', label: '6. Risks & Incidents', views: ['Risk 360° & 5×5 Matrix', 'Incident 360° (24h/5d SLA)', 'Hazards, WHS & Complaints'], path: '/risks', icon: ShieldAlert },
-  { key: 'documents', label: '7. Documents & Evidence', views: ['Document 360° & Vault', 'Company Safe Master Copies', 'Controlled Form Generator'], path: '/documents', icon: FolderOpen },
-  { key: 'communications', label: '8. Communications', views: ['Emails, Notes, Calls & SMS', 'Meetings & Minutes', 'Surveys & Announcements'], path: '/communications', icon: Megaphone },
-  { key: 'analytics', label: '9. Reports & Analytics', views: ['13 Enterprise Report Suites', 'Heatmaps, KPIs & Forecasts', 'NDIS Claims & Invoicing'], path: '/analytics', icon: BarChart3 },
-  { key: 'operations-centre', label: '10. Executive Centre', views: ['Board & CEO Readiness', 'Strategic Risks & Actions', '6 Specialist AI Copilots'], path: '/operations-centre', icon: Cpu },
-  { key: 'users', label: '11. Administration', views: ['Role-Based Security & RLS', 'Multi-Site & Delegations', 'Data Quality & Audit Logs'], path: '/users', icon: Settings },
+  { key: 'dashboard', label: '1. Dashboard & Executive', views: ['Dashboard & Operations Centre', 'Business Analytics & Reports', 'Suggestions Hub & AI Assistant'], path: '/dashboard', icon: LayoutDashboard },
+  { key: 'our-staff', label: '2. People, Intake & Profiles', views: ['My Profile & Intake Centre', 'Employee & Participant Profiles', 'Visual Boards, Contacts & Users'], path: '/our-employees', icon: Users },
+  { key: 'communications', label: '3. Comms & Workforce', views: ['Communication Centre & Rostering', 'Goals, Tasks & Meetings', 'Programs & Events'], path: '/communications', icon: Megaphone },
+  { key: 'incidents', label: '4. Incidents, Risk & Safety', views: ['Incident Clinic & Analytics', 'Risk Reporting & Hazards', 'Emergency Response & MSDS'], path: '/incidents', icon: ShieldAlert },
+  { key: 'compliance', label: '5. Compliance & Evidence', views: ['Compliance Centre & Auditor Portal', 'Document Vault & Company Safe', 'Quality, CAPA & Feedback'], path: '/compliance', icon: ShieldCheck },
+  { key: 'training', label: '6. Training & Capability', views: ['Training Centre & Learning Academy', 'Competency & Skills Matrix', 'Certificates & Pathways'], path: '/training', icon: ClipboardList },
+  { key: 'invoicing', label: '7. Finance & Commercial', views: ['Invoicing & Quote Centre', 'Receipt Hub & Procurement', 'Asset & Funding Management'], path: '/invoicing', icon: BarChart3 },
+  { key: 'human-resources', label: '8. Human Resources', views: ['HR Hub & Contracts', 'Performance Reviews & Leave', 'Onboarding & Recognition'], path: '/hr', icon: Users },
+  { key: 'crm', label: '9. CRM & Relationships', views: ['CRM & Leads Pipeline', 'Referrals & Support Coordinators', 'Provider Relationships'], path: '/crm', icon: Heart },
+  { key: 'projects', label: '10. Governance & Strategy', views: ['Projects & Governance Hub', 'Board Packs & Strategic Planning', 'Corporate Reporting & KPIs'], path: '/projects', icon: Cpu },
+  { key: 'ndis-provider', label: '11. NDIS & Regulatory', views: ['NDIS Provider Portal', 'NDIS Updates & News', 'Practice Standards & Readiness'], path: '/ndis-portal', icon: ShieldCheck },
+  { key: 'community-council', label: '12. Community & Support', views: ['Community Council Hub', 'Accessibility Services', 'Community Networks'], path: '/community-council', icon: FolderOpen },
+  { key: 'help', label: '13. Help, Knowledge & Support', views: ['Help Centre & Support Desk', 'User Guides & Knowledge Base', 'System Documentation'], path: '/help', icon: Settings },
 ];
 
 export default function QuickAppBar() {
@@ -62,7 +63,7 @@ export default function QuickAppBar() {
             </span>
             <div className="min-w-0">
               <h2 className="text-[13px] font-extrabold leading-tight text-[#0A2B6D]">
-                Primary Operating System Navigation (11 Core Pillars)
+                Organisational Operating System Navigation (13 Permanent Categories)
               </h2>
               <p className="text-[11px] font-semibold leading-tight text-slate-600">
                 People → Work → Compliance → Evidence → Intelligence · Maximum 2 clicks to any 360° record
