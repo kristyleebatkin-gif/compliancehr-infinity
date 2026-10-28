@@ -172,45 +172,52 @@ export default function OurProfilesTab({ kind, basePath, scoped = true, director
             .filter(([, list]) => list.length > 0)
             .map(([key, list]) => (
               <section key={key} data-profile-role={key}>
-                <div className="mb-2.5 flex items-center gap-2">
-                  <span className="h-3 w-3 shrink-0 rounded-full shadow-sm" style={{ background: `linear-gradient(135deg, ${profilePalette(key).primary}, ${profilePalette(key).accent})` }} />
-                  <h3 className="font-display text-sm font-bold uppercase tracking-wide text-foreground/70">{key}</h3>
-                  <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-semibold text-foreground/60">{list.length}</span>
-                  <div className="h-px flex-1 bg-border/60" />
+                <div className="mb-2 flex items-center gap-2">
+                  <span className="h-2.5 w-2.5 shrink-0 rounded-full shadow-sm" style={{ background: `linear-gradient(135deg, ${profilePalette(key).primary}, ${profilePalette(key).accent})` }} />
+                  <h3 className="text-xs font-extrabold uppercase tracking-[0.08em] text-[#0A2B6D]">{key}</h3>
+                  <span className="rounded-full border border-[#0A2B6D]/15 bg-white px-2 py-0.5 text-[11px] font-extrabold text-[#5A00D6]">{list.length}</span>
+                  <div className="h-px flex-1 bg-[#0A2B6D]/10" />
                 </div>
                 <div className="profile-card-grid grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
                   {list.map((r) => {
                     const { primary } = profilePalette(r.full_name);
                     return (
-                      <Link key={r.id} to={`${profilePath}/${r.id}`} className="group">
-                        <div className="flex h-full items-start gap-2 rounded-xl border border-border/60 bg-card p-2.5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">
-                          <div
-                            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-xs font-bold text-white shadow-sm"
-                            style={{ background: `linear-gradient(135deg, ${primary}, ${primary}cc)` }}
-                          >
-                            {initials(r.full_name)}
+                      <Link key={r.id} to={`${profilePath}/${r.id}`} className="group h-full">
+                        <div className="flex h-full flex-col rounded-2xl border border-[#0A2B6D]/12 bg-white p-3 shadow-[0_1px_2px_rgba(10,43,109,0.05)] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#0072FF]/45 hover:shadow-[0_12px_28px_-16px_rgba(10,43,109,0.45)]">
+                          <div className="flex items-start gap-2.5">
+                            <div
+                              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-[13px] font-extrabold text-white shadow-sm ring-1 ring-inset ring-white/30"
+                              style={{ background: `linear-gradient(135deg, ${primary}, ${primary}cc)` }}
+                            >
+                              {initials(r.full_name)}
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <div className="flex items-start justify-between gap-2">
+                                <div className="line-clamp-2 min-w-0 text-[15px] font-extrabold leading-[19px] text-[#0A2B6D]">{r.full_name}</div>
+                                <Badge className={`shrink-0 whitespace-nowrap text-[10px] font-extrabold ${statusTone(r.status || 'Active')}`}>{r.status || 'Active'}</Badge>
+                              </div>
+                              <div className="mt-1 flex flex-wrap gap-1">
+                                {isParticipant
+                                  ? (r.support_type && <span className="rounded-full border border-[#0A2B6D]/15 bg-white px-2 py-0.5 text-[10.5px] font-bold leading-[13px] text-[#0A2B6D]/75">{r.support_type}</span>)
+                                  : ((r.position || r.role) && <span className="rounded-full border border-[#0A2B6D]/15 bg-white px-2 py-0.5 text-[10.5px] font-bold leading-[13px] text-[#0A2B6D]/75">{r.position || r.role}</span>)}
+                                {isParticipant
+                                  ? (r.ndis_number && <span className="rounded-full border border-[#0A2B6D]/15 bg-white px-2 py-0.5 text-[10.5px] font-bold leading-[13px] text-[#0A2B6D]/75">NDIS {r.ndis_number}</span>)
+                                  : (r.employee_number && <span className="rounded-full border border-[#0A2B6D]/15 bg-white px-2 py-0.5 text-[10.5px] font-bold leading-[13px] text-[#0A2B6D]/75">ID {r.employee_number}</span>)}
+                                {isParticipant && r.ndis_reference_number && <span className="rounded-full border border-[#0A2B6D]/15 bg-white px-2 py-0.5 text-[10.5px] font-bold leading-[13px] text-[#0A2B6D]/75">Ref {r.ndis_reference_number}</span>}
+                              </div>
+                            </div>
                           </div>
-                          <div className="min-w-0 flex-1">
-                            <div className="flex items-start justify-between gap-2">
-                              <div className="truncate text-sm font-semibold font-editorial">{r.full_name}</div>
-                              <Badge className={`shrink-0 ${statusTone(r.status || 'Active')}`}>{r.status || 'Active'}</Badge>
+                          {(r.email || r.phone) && (
+                            <div className="mt-2 space-y-1 border-t border-[#0A2B6D]/8 pt-2 text-[10.5px] font-semibold leading-[14px] text-[#0A2B6D]/65">
+                              {r.email && <div className="flex items-center gap-1.5"><Mail className="h-3 w-3 shrink-0 text-[#0072FF]" /><span className="truncate">{r.email}</span></div>}
+                              {r.phone && <div className="flex items-center gap-1.5"><Phone className="h-3 w-3 shrink-0 text-[#0072FF]" /><span className="truncate">{r.phone}</span></div>}
                             </div>
-                            <div className="mt-1 flex flex-wrap gap-1">
-                              {isParticipant
-                                ? (r.support_type && <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-semibold text-foreground/70">{r.support_type}</span>)
-                                : ((r.position || r.role) && <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-semibold text-foreground/70">{r.position || r.role}</span>)}
-                              {isParticipant
-                                ? (r.ndis_number && <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-semibold text-foreground/70">NDIS {r.ndis_number}</span>)
-                                : (r.employee_number && <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-semibold text-foreground/70">ID {r.employee_number}</span>)}
-                              {isParticipant && r.ndis_reference_number && <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-semibold text-foreground/70">Ref {r.ndis_reference_number}</span>}
-                            </div>
-                            <div className="mt-1 space-y-0.5 text-[11px] text-foreground/50">
-                              {r.email && <div className="flex items-center gap-1.5 truncate"><Mail className="h-3 w-3 shrink-0" />{r.email}</div>}
-                              {r.phone && <div className="flex items-center gap-1.5 truncate"><Phone className="h-3 w-3 shrink-0" />{r.phone}</div>}
-                            </div>
-                            <div className="mt-1 flex items-center gap-1 text-[11px] font-semibold text-primary opacity-0 transition-opacity group-hover:opacity-100">
-                              Open profile <ChevronRight className="h-3.5 w-3.5" />
-                            </div>
+                          )}
+                          <div className="mt-auto flex items-center justify-between gap-1 pt-2 text-[10.5px] font-extrabold uppercase tracking-[0.06em] text-[#0A2B6D]/45 transition-colors group-hover:text-[#5A00D6]">
+                            <span>Open profile</span>
+                            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D]/12 bg-white transition-colors group-hover:border-[#5A00D6]/40 group-hover:bg-[#5A00D6] group-hover:text-white">
+                              <ChevronRight className="h-3 w-3" />
+                            </span>
                           </div>
                         </div>
                       </Link>
