@@ -4,15 +4,78 @@
   "properties": {
     "visitor_name": {
       "type": "string",
-      "title": "Visitor Name"
+      "title": "Name (Employee / Contractor / Visitor / Volunteer)"
+    },
+    "attendance_type": {
+      "type": "string",
+      "enum": [
+        "Employee",
+        "Manager",
+        "Executive",
+        "Contractor",
+        "Volunteer",
+        "Visitor",
+        "Auditor",
+        "Consultant",
+        "Service Provider"
+      ],
+      "default": "Visitor",
+      "title": "Attendance Category"
+    },
+    "employee_id": {
+      "type": "string",
+      "title": "Employee / Contractor ID"
+    },
+    "department": {
+      "type": "string",
+      "title": "Department"
+    },
+    "position": {
+      "type": "string",
+      "title": "Position / Role"
+    },
+    "site": {
+      "type": "string",
+      "default": "Head Office",
+      "title": "Site / Facility"
+    },
+    "building": {
+      "type": "string",
+      "default": "Main Building",
+      "title": "Building"
+    },
+    "areas_accessed": {
+      "type": "string",
+      "title": "Areas Accessed"
+    },
+    "program": {
+      "type": "string",
+      "default": "NDIS & Aged Care",
+      "title": "Program"
+    },
+    "manager": {
+      "type": "string",
+      "title": "Responsible Manager"
     },
     "organisation": {
       "type": "string",
-      "title": "Organisation"
+      "title": "Company / Organisation"
+    },
+    "email": {
+      "type": "string",
+      "title": "Email"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Phone Number"
+    },
+    "vehicle_registration": {
+      "type": "string",
+      "title": "Vehicle Registration"
     },
     "host": {
       "type": "string",
-      "title": "Host / Visiting"
+      "title": "Host Employee / Met With"
     },
     "date": {
       "type": "string",
@@ -21,15 +84,137 @@
     },
     "time_in": {
       "type": "string",
-      "title": "Sign In Time"
+      "title": "Sign In / Arrival Time"
     },
     "time_out": {
       "type": "string",
-      "title": "Sign Out Time"
+      "title": "Sign Out / Departure Time"
+    },
+    "break_start": {
+      "type": "string",
+      "title": "Break Start"
+    },
+    "break_end": {
+      "type": "string",
+      "title": "Break End"
+    },
+    "total_hours": {
+      "type": "number",
+      "title": "Total Hours"
+    },
+    "attendance_exceptions": {
+      "type": "string",
+      "title": "Attendance Exceptions / Flags"
+    },
+    "site_transfer_to": {
+      "type": "string",
+      "title": "Site Transfer Destination"
+    },
+    "after_hours": {
+      "type": "boolean",
+      "default": false,
+      "title": "After Hours Attendance"
     },
     "purpose": {
       "type": "string",
-      "title": "Purpose of Visit"
+      "title": "Purpose of Attendance / Duties Performed"
+    },
+    "contractor_trade": {
+      "type": "string",
+      "title": "Contractor Trade Details"
+    },
+    "contractor_insurance": {
+      "type": "string",
+      "title": "Contractor Insurance Details"
+    },
+    "contractor_qualifications": {
+      "type": "string",
+      "title": "Contractor Qualifications & Licences"
+    },
+    "id_verified": {
+      "type": "boolean",
+      "default": true,
+      "title": "Identification Verified"
+    },
+    "badge_number": {
+      "type": "string",
+      "title": "Visitor / Site Badge Number"
+    },
+    "photo_uri": {
+      "type": "string",
+      "title": "Photograph Private URI"
+    },
+    "first_aid_officer": {
+      "type": "boolean",
+      "default": false,
+      "title": "First Aid Officer On Site"
+    },
+    "fire_warden": {
+      "type": "boolean",
+      "default": false,
+      "title": "Fire Warden On Site"
+    },
+    "manager_on_site": {
+      "type": "boolean",
+      "default": false,
+      "title": "Manager On Site"
+    },
+    "ack_privacy": {
+      "type": "boolean",
+      "default": true,
+      "title": "Privacy Notice Acknowledged"
+    },
+    "ack_confidentiality": {
+      "type": "boolean",
+      "default": true,
+      "title": "Confidentiality Notice Acknowledged"
+    },
+    "ack_whs": {
+      "type": "boolean",
+      "default": true,
+      "title": "WHS Information Acknowledged"
+    },
+    "ack_emergency": {
+      "type": "boolean",
+      "default": true,
+      "title": "Emergency Procedures Acknowledged"
+    },
+    "ack_conditions": {
+      "type": "boolean",
+      "default": true,
+      "title": "Visitor / Site Conditions Acknowledged"
+    },
+    "digital_signature": {
+      "type": "string",
+      "title": "Digital Signature"
+    },
+    "sign_in_method": {
+      "type": "string",
+      "enum": [
+        "QR Code",
+        "Mobile",
+        "Kiosk",
+        "Tablet",
+        "Web Desk"
+      ],
+      "default": "Kiosk",
+      "title": "Sign-In Method"
+    },
+    "emergency_accountability_status": {
+      "type": "string",
+      "enum": [
+        "Present",
+        "Accounted For",
+        "Not Accounted For",
+        "Signed Out",
+        "Off Site"
+      ],
+      "default": "Present",
+      "title": "Emergency Roll Call Status"
+    },
+    "emergency_event_type": {
+      "type": "string",
+      "title": "Emergency Event Type"
     },
     "notes": {
       "type": "string",
