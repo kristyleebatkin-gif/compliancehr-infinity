@@ -1,47 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import {
-  LayoutDashboard, ClipboardList, Users, CalendarClock, ShieldCheck,
-  ShieldAlert, FolderOpen, Megaphone, BarChart3, Cpu, Settings, Heart,
-  Zap, ArrowRight, ChevronDown, ChevronUp,
-} from 'lucide-react';
+import { Zap, ArrowRight, ChevronDown, ChevronUp } from 'lucide-react';
+import { MODULE_DIRECTORY, NAV_GROUPS } from '@/lib/moduleDirectory';
+import { useRole } from '@/lib/useRole';
+import { canAccessNav } from '@/lib/roles';
 import { getHeaderView } from '@/lib/fullColourTiles';
 
 const BRAND_GRADIENT =
   'linear-gradient(120deg, #0072FF 0%, #0A2B6D 18%, #5A00D6 42%, #A100FF 68%, #FF2E9A 100%)';
 
-// Permanent 13-Group Quick Access Architecture
-const QUICK_LINKS = [
-  { key: 'dashboard', label: '1. Dashboard & Executive', views: ['Dashboard & Operations Centre', 'Business Analytics & Reports', 'Suggestions Hub & AI Assistant'], path: '/dashboard', icon: LayoutDashboard },
-  { key: 'our-staff', label: '2. People, Intake & Profiles', views: ['My Profile & Intake Centre', 'Employee & Participant Profiles', 'Visual Boards, Contacts & Users'], path: '/our-employees', icon: Users },
-  { key: 'communications', label: '3. Comms & Workforce', views: ['Communication Centre & Rostering', 'Goals, Tasks & Meetings', 'Programs & Events'], path: '/communications', icon: Megaphone },
-  { key: 'incidents', label: '4. Incidents, Risk & Safety', views: ['Incident Clinic & Analytics', 'Risk Reporting & Hazards', 'Emergency Response & MSDS'], path: '/incidents', icon: ShieldAlert },
-  { key: 'compliance', label: '5. Compliance & Evidence', views: ['Compliance Centre & Auditor Portal', 'Document Vault & Company Safe', 'Quality, CAPA & Feedback'], path: '/compliance', icon: ShieldCheck },
-  { key: 'training', label: '6. Training & Capability', views: ['Training Centre & Learning Academy', 'Competency & Skills Matrix', 'Certificates & Pathways'], path: '/training', icon: ClipboardList },
-  { key: 'invoicing', label: '7. Finance & Commercial', views: ['Invoicing & Quote Centre', 'Receipt Hub & Procurement', 'Asset & Funding Management'], path: '/invoicing', icon: BarChart3 },
-  { key: 'human-resources', label: '8. Human Resources', views: ['HR Hub & Contracts', 'Performance Reviews & Leave', 'Onboarding & Recognition'], path: '/hr', icon: Users },
-  { key: 'crm', label: '9. CRM & Relationships', views: ['CRM & Leads Pipeline', 'Referrals & Support Coordinators', 'Provider Relationships'], path: '/crm', icon: Heart },
-  { key: 'projects', label: '10. Governance & Strategy', views: ['Projects & Governance Hub', 'Board Packs & Strategic Planning', 'Corporate Reporting & KPIs'], path: '/projects', icon: Cpu },
-  { key: 'ndis-provider', label: '11. NDIS & Regulatory', views: ['NDIS Provider Portal', 'NDIS Updates & News', 'Practice Standards & Readiness'], path: '/ndis-portal', icon: ShieldCheck },
-  { key: 'community-council', label: '12. Community & Support', views: ['Community Council Hub', 'Accessibility Services', 'Community Networks'], path: '/community-council', icon: FolderOpen },
-  { key: 'help', label: '13. Help, Knowledge & Support', views: ['Help Centre & Support Desk', 'User Guides & Knowledge Base', 'System Documentation'], path: '/help', icon: Settings },
-];
+// Labels, routes, icons and group membership come from the existing registry.
 
 export default function QuickAppBar() {
   const location = useLocation();
-  const [cycleIdx, setCycleIdx] = useState(0);
+  const { role } = useRole();
+  const [selectedGroup, setSelectedGroup] = useState(null);
+  const quickGroups = NAV_GROUPS.map((group, colourIndex) => ({
+    ...group,
+    colourIndex,
+    modules: group.keys.map((key) => MODULE_DIRECTORY.find((module) => module.key === key))
+      .filter((module) => module && canAccessNav(role, module.key)),
+  })).filter((group) => group.modules.length);
+  const expandedGroup = quickGroups.find((group) => group.label === selectedGroup);
   const [collapsed, setCollapsed] = useState(() => location.pathname !== '/dashboard');
 
   useEffect(() => {
     setCollapsed(location.pathname !== '/dashboard');
+    setSelectedGroup(null);
   }, [location.pathname]);
 
-  useEffect(() => {
-    const viewTimer = setInterval(() => {
-      setCycleIdx((prev) => (prev + 1) % 3);
-    }, 30000);
-    return () => clearInterval(viewTimer);
-  }, []);
 
   const isActive = (path) =>
     path === '/'
@@ -89,18 +76,21 @@ export default function QuickAppBar() {
 
         {!collapsed && (
           <div className="grid auto-rows-fr grid-cols-2 gap-2 p-3 pt-1.5 sm:grid-cols-3 lg:grid-cols-6 items-stretch">
-            {QUICK_LINKS.map((item, idx) => {
-              const active = isActive(item.path);
-              const Icon = item.icon;
-              const currentSub = item.views[cycleIdx % item.views.length];
-              const headerBg = getHeaderView(idx);
+            {quickGroups.map((item) => {
+              const active = item.modules.some((module) => isActive(module.path));
+              const Icon = item.modules[0].icon;
+              const currentSub = item.modules.slice(0, 2).map((module) => module.label).join(' · ') + (item.modules.length > 2 ? ` · +${item.modules.length - 2} more` : '');
+              const headerBg = getHeaderView(item.colourIndex);
 
               return (
-                <Link
-                  key={item.path}
-                  to={item.path}
+                <button
+                  key={item.label}
+                  type="button"
+                  onClick={() => setSelectedGroup((current) => current === item.label ? null : item.label)}
+                  aria-expanded={selectedGroup === item.label}
+                  aria-controls="quick-access-modules"
                   title={`${item.label} — ${currentSub}`}
-                  className={`group flex h-full min-h-[86px] flex-col gap-[3px] rounded-xl border-2 bg-[#0A2B6D] p-[3px] transition-all duration-200 focus-visible:outline-none ${
+                  className={`group flex h-full min-h-[86px] flex-col gap-[3px] rounded-xl border-2 bg-[#0A2B6D] p-[3px] text-left transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0072FF] focus-visible:ring-offset-2 ${
                     active
                       ? 'border-[#5A00D6] shadow-md ring-2 ring-[#5A00D6]/25 ring-offset-1'
                       : 'border-[#0A2B6D] hover:-translate-y-0.5 hover:border-[#0072FF] hover:shadow-md'
@@ -134,9 +124,32 @@ export default function QuickAppBar() {
                       <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#0072FF] transition group-hover:translate-x-0.5 group-hover:text-[#FF2E9A]" />
                     </div>
                   </div>
-                </Link>
+                </button>
               );
             })}
+          </div>
+        )}
+        {!collapsed && (
+          <div id="quick-access-modules">
+            {expandedGroup && (
+              <nav aria-label={expandedGroup.label} className="mx-3 mb-3 rounded-xl border border-[#C084FC]/60 bg-[#F6F0FF] p-3">
+                <p className="mb-2 text-sm font-bold text-[#0A2B6D]">{expandedGroup.label}</p>
+                <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+                  {expandedGroup.modules.map((module) => {
+                    const Icon = module.icon;
+                    return (
+                      <Link key={module.key} to={module.path}
+                        aria-current={isActive(module.path) ? 'page' : undefined}
+                        className="flex min-h-[48px] items-center gap-3 rounded-xl border border-[#C084FC]/60 bg-white px-3 py-2 text-sm font-semibold text-[#0A2B6D] hover:border-[#0072FF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0072FF]">
+                        <Icon className="h-4 w-4 shrink-0 text-[#5A00D6]" />
+                        <span className="flex-1">{module.label}</span>
+                        <ArrowRight className="h-4 w-4 shrink-0 text-[#0072FF]" />
+                      </Link>
+                    );
+                  })}
+                </div>
+              </nav>
+            )}
           </div>
         )}
       </section>
