@@ -357,7 +357,9 @@ export default function Universal360ProfileFramework({
           owner: focusRecord.owner || focusRecord.responsible_manager || 'Compliance Manager',
           score: 'Readiness not assessed',
           standard: 'NDIS Practice Standards & Aged Care Quality Standards',
-          detailUrl: currentTypeObj.route,
+          detailUrl: focusRecord.id && ['employee', 'participant', 'incident'].includes(selectedType)
+            ? `${currentTypeObj.route}/${encodeURIComponent(focusRecord.id)}`
+            : currentTypeObj.route,
         },
       ];
     }
@@ -404,6 +406,9 @@ export default function Universal360ProfileFramework({
         title: `[360° Review] Verify & Review ${activeRecord.name} (${currentTypeObj.shortLabel})`,
         task_type: '360° Master Automation',
         module: currentTypeObj.shortLabel,
+        linked_entity_type: { employee: 'StaffProfile', participant: 'ParticipantProfile', risk: 'Risk', incident: 'Incident', standard: 'Policy', audit: 'InternalAudit', document: 'EmployeeDocument', supplier: 'Supplier' }[selectedType],
+        linked_entity_id: String(recordId),
+        resources_needed: activeRecord.detailUrl || currentTypeObj.route,
         task_date: today,
         due_date: due,
         assigned_to: activeRecord.owner || 'Compliance Manager',
