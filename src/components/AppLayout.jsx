@@ -296,7 +296,7 @@ export default function AppLayout() {
       )}
 
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
-        <header className="relative z-40 flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-brand/10 bg-background/85 px-3 py-2.5 shadow-sm backdrop-blur-md sm:px-4 md:px-6">
+        <header className="relative z-40 flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-slate-200 bg-white/95 px-3 py-2.5 shadow-2xs backdrop-blur-md sm:px-4 md:px-6">
           <div className="flex min-w-0 flex-1 items-center gap-3">
             <button onClick={() => setMobileOpen(true)} aria-label="Open menu" className="rounded-lg p-1.5 hover:bg-brand/5 md:hidden">
               <Menu className="h-5 w-5" />
@@ -465,7 +465,7 @@ export default function AppLayout() {
 
         <main className="relative z-0 flex-1 overflow-y-auto pb-20 md:pb-0">
           <QuickAppBar />
-          <div className={location.pathname === '/staff' || location.pathname.startsWith('/staff/') ? 'mx-auto max-w-6xl px-3 md:px-8' : 'mx-auto max-w-6xl px-3 pt-3 md:px-8 md:pt-4'}>
+          <div className={location.pathname === '/staff' || location.pathname.startsWith('/staff/') ? 'mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8' : 'mx-auto max-w-[1440px] px-4 pt-3 sm:px-6 lg:px-8 md:pt-4'}>
             <PendingApprovalNotice />
             <ModuleGuide />
           </div>

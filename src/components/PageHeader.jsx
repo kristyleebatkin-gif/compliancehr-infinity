@@ -100,7 +100,7 @@ export default function PageHeader({
             </h1>
             {description && (
               <p
-                className="mx-auto max-w-3xl text-xs sm:text-sm font-extrabold leading-relaxed"
+                className="mx-auto max-w-3xl text-xs sm:text-sm font-semibold leading-relaxed"
                 style={{ color: getSubheaderColourView(seed) }}
               >
                 {description}

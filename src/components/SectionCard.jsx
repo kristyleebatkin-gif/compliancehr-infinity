@@ -134,7 +134,7 @@ export default function SectionCard({
                   ))}
                 {description && (
                   <p
-                    className="mt-0.5 break-words text-xs font-extrabold"
+                    className="mt-0.5 break-words text-xs font-semibold"
                     style={{ color: getSubheaderColourView(seed) }}
                   >
                     {description}
