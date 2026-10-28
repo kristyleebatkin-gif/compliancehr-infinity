@@ -306,8 +306,8 @@ export default function KitDrillChecklists() {
                       <Pencil className="h-3.5 w-3.5" /> Complete online
                     </Button>
                     <label className="cursor-pointer">
-                      <input type="file" className="hidden" onChange={(e) => { const file = e.target.files?.[0]; if (file) { setUploadReview({ checklist, file }); setUploadForm({ date: '', by: '', outcome: '', notes: '', confirmed: false }); } e.target.value = ''; }} />
-                      <span className="inline-flex min-h-11 items-center gap-1.5 rounded-md border border-input bg-transparent px-3 text-xs font-medium hover:bg-accent">
+                      <input type="file" className="peer sr-only" onChange={(e) => { const file = e.target.files?.[0]; if (file) { setUploadReview({ checklist, file }); setUploadForm({ date: '', by: '', outcome: '', notes: '', confirmed: false }); } e.target.value = ''; }} />
+                      <span className="inline-flex min-h-11 items-center peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 gap-1.5 rounded-md border border-input bg-transparent px-3 text-xs font-medium hover:bg-accent">
                         {uploading === checklist.key ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <UploadCloud className="h-3.5 w-3.5" />} Upload
                       </span>
                     </label>
