@@ -28,6 +28,7 @@ import OriginalPublishedOverview from '@/components/dashboard/OriginalPublishedO
 import DashboardGrandCelebrationBar from '@/components/dashboard/DashboardGrandCelebrationBar';
 import ObsidianSmartRemote from '@/components/common/ObsidianSmartRemote';
 import DashboardPersonaliser from '@/components/dashboard/DashboardPersonaliser';
+import EasyAccessVisibilityHub from '@/components/compliance/EasyAccessVisibilityHub';
 import { Activity, ShieldCheck, Sparkles, Zap, LayoutGrid, ClipboardCheck, Layers, Building2, Cpu } from 'lucide-react';
 
 const HEADINGS = {
@@ -137,6 +138,7 @@ export default function Dashboard() {
       {/* 1. Original Published KPI Strip, Announcements Board & Quick Links + 45 Modules Hub + Quick Start + Role Dashboards */}
       {isSuiteVisible('overview') && (
         <>
+          <EasyAccessVisibilityHub />
           <OriginalPublishedOverview />
           <AllModulesHub />
           <DashboardQuickStart />

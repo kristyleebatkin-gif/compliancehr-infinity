@@ -89,6 +89,22 @@ export default function AuditorsPortal({ embedded = false } = {}) {
         )) : undefined}
       />
 
+      <div className="rounded-2xl border-2 border-[#0A2B6D] bg-[#F5F0FF] p-3.5 text-xs">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <span className="font-extrabold uppercase tracking-wider text-[#5A00D6]">
+              Permission-Based Auditing · Consent &amp; Authority Gate Active
+            </span>
+            <p className="mt-0.5 font-semibold text-[#0A2B6D]">
+              NDIS Auditors, External Auditors and Internal Auditors are only shown records where active Consent exists, Authority exists, and Access is permitted. Withdrawn consent records remain protected and excluded.
+            </p>
+          </div>
+          <span className="rounded-full bg-[#0A2B6D] px-3 py-1 text-[10px] font-extrabold text-white">
+            Verified Consent Filter Enforced
+          </span>
+        </div>
+      </div>
+
       {data === null ? (
         <div className="flex justify-center py-16"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>
       ) : (

@@ -52,6 +52,7 @@ import MasterComplianceAuditForms from '@/components/compliance/MasterCompliance
 import ScreenByScreenMasterAudit2026 from '@/components/compliance/ScreenByScreenMasterAudit2026';
 import Standard2026PrintableTemplatesSuite from '@/components/compliance/Standard2026PrintableTemplatesSuite';
 import EnterpriseStandardQualityGateSuite from '@/components/compliance/EnterpriseStandardQualityGateSuite';
+import EasyAccessVisibilityHub from '@/components/compliance/EasyAccessVisibilityHub';
 import BusinessHealthComplianceIntelligenceDashboard from '@/components/compliance/BusinessHealthComplianceIntelligenceDashboard';
 import InfinityCoreEngine from '@/components/compliance/InfinityCoreEngine';
 import InfinityOneClickOperations from '@/components/operations/InfinityOneClickOperations';
@@ -298,6 +299,9 @@ export default function ComplianceHub() {
           </>
         )}
       />
+
+      {/* Easy Access & Complete Visibility Standard (<= 3 Clicks Role Portals, Saved Views, Favourites & Recent Items) */}
+      <EasyAccessVisibilityHub />
 
       {/* Obsidian Smart Remote for Dual-Screen & Compliance Workspaces */}
       <ObsidianSmartRemote
