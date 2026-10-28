@@ -26,7 +26,7 @@ import { downloadInvoicePdf, printInvoicePdf, invoicePdfBase64 } from '@/lib/inv
 import { downloadCsv } from '@/lib/csvExport';
 import exportProdaClaims from '@/lib/prodaClaimExport';
 import BestInClassBenchmarkSuite from '@/components/operations/BestInClassBenchmarkSuite';
-import { Trash2, FileSpreadsheet, Printer, Send, FileDown, Loader2, BadgeCheck, AlertTriangle } from 'lucide-react';
+import { Plus, Trash2, FileSpreadsheet, Printer, Send, FileDown, Loader2, BadgeCheck, AlertTriangle } from 'lucide-react';
 import { format } from 'date-fns';
 import { loadCompanyBranding } from '@/lib/companyBranding';
 
@@ -130,35 +130,47 @@ export default function InvoicingCentre() {
   }), [invoices]);
 
   return (
-    <div className="finance-workspace space-y-4">
-      <ModuleShell
-        icon={FileSpreadsheet}
-        title="Invoicing Centre"
-        subtitle="Create, send and track NDIS invoices with GST-free supports and payment tracking."
-        moduleKey="invoicing"
-        insightModule="invoicing"
-        actions={<>
-          <Button variant="outline" className="border-border bg-white text-black" onClick={exportCsv} disabled={loading || invoices.length === 0}><FileDown className="mr-2 h-4 w-4" />Export CSV</Button>
-          <Button variant="outline" className="border-border bg-white text-black" onClick={exportProda} disabled={loading || invoices.length === 0}><FileSpreadsheet className="mr-2 h-4 w-4" />PRODA claim export</Button>
-        </>}
-      />
-
-      <AgedReceivables invoices={invoices} onChanged={load} />
-
-      {!business.business_name && !loading && (
-        <Card><CardContent className="p-4 text-sm text-muted-foreground">Add your business name, address, contact details and banking details in Company Safe so they appear on every invoice.</CardContent></Card>
-      )}
-
+    <div className="finance-workspace mx-auto w-full max-w-[1440px] space-y-4 bg-white px-4 py-4 sm:px-6 lg:px-8">
       <Tabs defaultValue="invoices">
-        <InvoiceNavigation onGenerate={() => setBuilderOpen(true)} />
+        <ModuleShell
+          icon={FileSpreadsheet}
+          title="Invoicing Centre"
+          subtitle="Create, send and track NDIS invoices with GST-free supports and payment tracking."
+          moduleKey="invoicing"
+          insightModule="invoicing"
+          tabs={<InvoiceNavigation />}
+          actions={
+            <>
+              <Button size="sm" onClick={() => setBuilderOpen(true)}>
+                <Plus className="mr-1.5 h-4 w-4" />Generate Invoice
+              </Button>
+              <Button size="sm" variant="outline" className="border-border bg-white text-[#0A2B6D]" onClick={exportCsv} disabled={loading || invoices.length === 0}>
+                <FileDown className="mr-1.5 h-4 w-4" />Export CSV
+              </Button>
+              <Button size="sm" variant="outline" className="border-border bg-white text-[#0A2B6D]" onClick={exportProda} disabled={loading || invoices.length === 0}>
+                <FileSpreadsheet className="mr-1.5 h-4 w-4" />PRODA Claim Export
+              </Button>
+            </>
+          }
+          small={[
+            ['Total invoices', summary.total],
+            ['Invoices sent', summary.sent],
+            ['Invoices paid', summary.paid],
+            ['Invoices overdue', summary.overdue],
+          ].map(([label, value]) => (
+            <div key={label}>
+              <p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p>
+              <p className="mt-1 text-2xl font-bold tabular-nums">{loading ? '…' : value}</p>
+            </div>
+          ))}
+        >
+          <AgedReceivables invoices={invoices} onChanged={load} />
 
-        <TabsContent value="invoices" className="space-y-4">
-          <FinanceMetricCards entries={[
-            { label: 'Invoices', value: summary.total, Icon: FileSpreadsheet, tone: 'primary' },
-            { label: 'Sent', value: summary.sent, Icon: Send, tone: 'evidence' },
-            { label: 'Paid', value: summary.paid, Icon: BadgeCheck, tone: 'safe' },
-            { label: 'Overdue', value: summary.overdue, Icon: AlertTriangle, tone: 'danger' },
-          ]} />
+          {!business.business_name && !loading && (
+            <Card><CardContent className="p-4 text-sm text-muted-foreground">Add your business name, address, contact details and banking details in Company Safe so they appear on every invoice.</CardContent></Card>
+          )}
+
+          <TabsContent value="invoices" className="mt-4 space-y-4">
 
           {loading ? (
             <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
@@ -205,6 +217,7 @@ export default function InvoicingCentre() {
         <TabsContent value="proda-xero" className="mt-3">
           <BestInClassBenchmarkSuite onRefresh={load} />
         </TabsContent>
+        </ModuleShell>
       </Tabs>
 
       <InvoiceBuilder open={builderOpen} onClose={() => setBuilderOpen(false)} onSaved={load} invoiceCount={invoices.length} />

@@ -304,16 +304,26 @@ function Rostering({ profile, profileKind, ourView = false, embedded = false } =
   };
 
   return (
-    <div className="space-y-4">
+    <div className={embedded ? 'space-y-4' : 'mx-auto w-full max-w-[1440px] space-y-4 bg-white px-4 py-4 sm:px-6 lg:px-8'}>
       <Tabs value={tab} onValueChange={setTab}>
         <ModuleShell
           embedded={embedded}
           icon={CalendarRange}
-          title="Rostering"
+          title="Rostering & Shift Management"
           subtitle="Roster board, shift register, timesheet approvals and staff availability."
           moduleKey="rostering"
+          insightModule="rostering"
           tabs={<RosterDashboardNavigation profile={profile} profileKind={profileKind} />}
-          actions={<Button variant="outline" onClick={exportShiftRegister}><Download className="mr-2 h-4 w-4" />Export shift register</Button>}
+          actions={
+            <>
+              <Button size="sm" onClick={() => openNew()}>
+                <PlusIcon />Schedule Shift
+              </Button>
+              <Button size="sm" variant="outline" onClick={exportShiftRegister}>
+                <Download className="mr-1.5 h-4 w-4" />Export Shift Register (CSV)
+              </Button>
+            </>
+          }
           small={[
             ['Shifts this week', stats.week],
             ['Completed this week', stats.completed],

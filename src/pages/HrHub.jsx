@@ -143,7 +143,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
   ));
 
   return (
-    <div className={embedded ? 'min-w-0 space-y-2' : 'mx-auto min-w-0 max-w-6xl space-y-2 p-3 sm:p-3 md:p-5'}>
+    <div className={embedded ? 'min-w-0 space-y-3' : 'mx-auto w-full max-w-[1440px] min-w-0 space-y-3 bg-white px-4 py-4 sm:px-6 lg:px-8'}>
       <Tabs value={tab} onValueChange={setTab}>
       <ModuleShell
         embedded={embedded}
@@ -154,41 +154,30 @@ export default function HrHub({ profile, embedded = false } = {}) {
         insightModule="hr"
         tabs={<HrDashboardNavigation isManager={isManager} payrollVisible={payrollVisible} />}
         actions={
-          <div className="flex w-full flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#0A2B6D] bg-white p-2.5 shadow-sm">
-            <span className="text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-              Quick Leave &amp; Register Actions
-            </span>
-            <div className="flex flex-wrap items-center gap-2">
-              <Button
-                size="sm"
-                className="border-2 border-[#0A2B6D] shadow-sm font-extrabold"
-                onClick={() => { setTab('leave'); setShowLeaveForm((open) => !open); }}
-              >
-                <Plus className="h-4 w-4" />Log Leave Request
-              </Button>
-              <Button
-                size="sm"
-                variant="outline"
-                className="border-2 border-[#0A2B6D] bg-white font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
-                onClick={() => downloadCsv('leave-register.csv', [
-                  { label: 'Staff', key: 'staff_name' }, { label: 'Type', key: 'leave_type' }, { label: 'Start', key: 'start_date' },
-                  { label: 'End', key: 'end_date' }, { label: 'Status', key: 'status' }, { label: 'Coverage', key: 'coverage_arranged' },
-                ], leaves)}
-              >
-                <Download className="h-4 w-4" />Export CSV
-              </Button>
-            </div>
-          </div>
+          <>
+            <Button
+              size="sm"
+              className="border-2 border-[#0A2B6D] shadow-sm font-extrabold"
+              onClick={() => { setTab('leave'); setShowLeaveForm((open) => !open); }}
+            >
+              <Plus className="mr-1.5 h-4 w-4" />Log Leave Request
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              className="border-2 border-[#0A2B6D] bg-white font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
+              onClick={() => downloadCsv('leave-register.csv', [
+                { label: 'Staff', key: 'staff_name' }, { label: 'Type', key: 'leave_type' }, { label: 'Start', key: 'start_date' },
+                { label: 'End', key: 'end_date' }, { label: 'Status', key: 'status' }, { label: 'Coverage', key: 'coverage_arranged' },
+              ], leaves)}
+            >
+              <Download className="mr-1.5 h-4 w-4" />Export Leave Register (CSV)
+            </Button>
+          </>
         }
         search={<ModuleSearchBar value={query} onChange={setQuery} placeholder="Search leave, volunteering and reviews…" />}
         small={tiles}
       >
-        {/* Shoreline Command Center (Base-44 44x44px Sand-to-Deep-Teal Heatmap & Fast-Cheer Icons) */}
-        <ShorelineCommandCenter />
-
-        {/* TV, Radio, Phone & Computer Hub for Achieving Goals, Opening Doors & Hobbies */}
-        <HrMediaGoalsHobbiesHub />
-
         <TabsContent value="shoreline" className="mt-4">
           <ShorelineCommandCenter />
         </TabsContent>

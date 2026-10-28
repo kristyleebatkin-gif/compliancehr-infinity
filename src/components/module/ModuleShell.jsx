@@ -43,16 +43,7 @@ export default function ModuleShell({
         </div>
       )}
 
-      {tabs && (
-        <div
-          className="rounded-3xl p-[10px] shadow-md"
-          style={{ background: TOP_BORDER_GRADIENT }}
-        >
-          <div className="rounded-[14px] bg-white p-2.5 [&>[role=tablist]]:bg-transparent [&>[role=tablist]]:p-0 [&>[role=tablist]]:shadow-none [&>[role=tablist]]:border-0">
-            {tabs}
-          </div>
-        </div>
-      )}
+      {tabs && <div className="w-full">{tabs}</div>}
 
       {search && (
         <div
@@ -68,7 +59,13 @@ export default function ModuleShell({
           className="rounded-3xl p-[10px] shadow-md"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="module-shell-tiles grid gap-2.5 rounded-[14px] bg-white p-3 sm:grid-cols-2 lg:grid-cols-4 [&>*]:rounded-2xl [&>*]:border-2 [&>*]:border-[#0A2B6D] [&>*]:bg-white [&>*]:p-3.5">
+          <div
+            className={`module-shell-tiles grid gap-2.5 rounded-[14px] bg-white p-3 sm:grid-cols-2 ${
+              React.Children.count(small) === 5
+                ? 'md:grid-cols-3 lg:grid-cols-5'
+                : ' lg:grid-cols-4'
+            } [&>*]:rounded-2xl [&>*]:border-2 [&>*]:border-[#0A2B6D] [&>*]:bg-white [&>*]:p-3.5`}
+          >
             {small}
           </div>
         </div>
