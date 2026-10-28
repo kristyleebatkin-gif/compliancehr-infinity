@@ -31,6 +31,7 @@ export default function KitDrillChecklists() {
   const { user } = useRole();
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState('');
   const [onlineChecklist, setOnlineChecklist] = useState(null);
   const [checked, setChecked] = useState({});
   const [notes, setNotes] = useState('');
@@ -44,7 +45,12 @@ export default function KitDrillChecklists() {
     setLoading(true);
     try {
       const page = await base44.entities.ComplianceChecklistEntry.filter({}, { sort: '-created_date', limit: 500 });
-      setEntries(page.items);
+      const rows = Array.isArray(page) ? page : page.items;
+      if (!Array.isArray(rows)) throw new Error('Checklist records could not be confirmed.');
+      setEntries(rows);
+      setLoadError('');
+    } catch {
+      setLoadError('Checklist records could not be loaded. Status is unavailable; retry before relying on this view.');
     } finally {
       setLoading(false);
     }
@@ -63,13 +69,21 @@ export default function KitDrillChecklists() {
     .filter((entry) => entry.checklist_key === checklist.key)
     .sort((a, b) => String(b.completed_date || '').localeCompare(String(a.completed_date || '')))[0] || null;
 
-  const statusFor = (entry) => {
-    if (!entry) return { label: 'Not completed yet', tone: 'bg-muted text-muted-foreground' };
-    if (!entry.next_due_date) return { label: 'Current', tone: 'bg-safe/10 text-safe' };
-    const days = differenceInCalendarDays(new Date(`${entry.next_due_date}T00:00:00`), new Date());
+  const statusFor = (entry, checklist) => {
+    const review = { label: 'Evidence needs review', tone: 'bg-warning/10 text-warning' };
+    if (loadError) return { label: 'Status unavailable', tone: 'bg-warning/10 text-warning' };
+    if (!entry) return { label: 'Not recorded yet', tone: 'bg-muted text-muted-foreground' };
+    let answers;
+    try { answers = JSON.parse(entry.answers || '{}'); } catch { return review; }
+    if (!answers.checked || !checklist.items.length || checklist.items.some((item) => typeof answers.checked[item] !== 'boolean')) return review;
+    if (checklist.items.some((item) => !answers.checked[item])) return { label: 'Issues need review', tone: 'bg-warning/10 text-warning' };
+    if (!entry.completed_date || !entry.completed_by || !entry.next_due_date) return review;
+    const due = new Date(`${entry.next_due_date}T00:00:00`);
+    if (!Number.isFinite(due.getTime())) return review;
+    const days = differenceInCalendarDays(due, new Date());
     if (days < 0) return { label: 'Overdue', tone: 'bg-red-600/10 text-red-600 dark:text-red-300' };
     if (days <= 30) return { label: 'Due soon', tone: 'bg-warning/10 text-warning' };
-    return { label: 'Current', tone: 'bg-safe/10 text-safe' };
+    return { label: 'Recorded · within review cycle', tone: 'bg-brand/10 text-brand' };
   };
 
   const openOnline = (checklist) => {
@@ -123,7 +137,7 @@ export default function KitDrillChecklists() {
           date_completed: date,
           next_due_date: nextDue,
           completed_by: completedBy.trim(),
-          result: notes.trim() ? 'Issues Found' : 'Pass',
+          result: onlineChecklist.items.length > 0 && onlineChecklist.items.every((item) => checked[item] === true) ? 'Pass' : 'Issues Found',
           file_uri,
           file_name: file.name,
           notes,
@@ -134,7 +148,7 @@ export default function KitDrillChecklists() {
           title: `${onlineChecklist.title} - ${format(new Date(), 'd MMM yyyy')}`,
           drill_type: onlineChecklist.drill_type,
           date,
-          outcome: notes.trim() ? 'Issues Found' : 'Completed',
+          outcome: onlineChecklist.items.length > 0 && onlineChecklist.items.every((item) => checked[item] === true) ? 'Completed' : 'Issues Found',
           notes,
         });
       }
@@ -242,6 +256,8 @@ export default function KitDrillChecklists() {
 
   return (
     <div className="space-y-4">
+      <p className="rounded-lg border border-border bg-white p-3 text-sm leading-relaxed">A recorded checklist is evidence of the answers entered. Unchecked items need review and corrective action. Uploaded documents need their contents and actual completion date verified; uploading alone does not establish a pass.</p>
+      {loadError && <div role="alert" className="rounded-lg border border-border bg-white p-3 text-sm"><p>{loadError}</p><Button type="button" variant="outline" className="mt-2 min-h-11" onClick={load}>Retry loading records</Button></div>}
       <p className="text-sm text-muted-foreground">
         Every checklist below can be downloaded as a branded blank form, completed online (a branded PDF is generated and filed automatically), or a completed copy can be uploaded. Kit, drill and checklist checks run on a 6-month cycle and administrators are emailed when they fall due.
       </p>
@@ -251,7 +267,7 @@ export default function KitDrillChecklists() {
         <div className="grid gap-4 lg:grid-cols-2">
           {COMPLIANCE_CHECKLISTS.map((checklist) => {
             const latest = latestEntry(checklist);
-            const status = statusFor(latest);
+            const status = statusFor(latest, checklist);
             return (
               <Card key={checklist.key}>
                 <CardContent className="p-4">
@@ -273,20 +289,20 @@ export default function KitDrillChecklists() {
                     </div>
                   )}
                   <div className="mt-3 flex flex-wrap items-center justify-end gap-2">
-                    <Button variant="outline" size="sm" onClick={() => downloadBlank(checklist)}>
+                    <Button variant="outline" size="sm" className="min-h-11" onClick={() => downloadBlank(checklist)}>
                       <Download className="h-3.5 w-3.5" /> Download
                     </Button>
-                    <Button variant="outline" size="sm" onClick={() => openOnline(checklist)}>
+                    <Button variant="outline" size="sm" className="min-h-11" onClick={() => openOnline(checklist)}>
                       <Pencil className="h-3.5 w-3.5" /> Complete online
                     </Button>
                     <label className="cursor-pointer">
                       <input type="file" className="hidden" onChange={(e) => { uploadCompleted(checklist, e.target.files?.[0]); e.target.value = ''; }} />
-                      <span className="inline-flex h-8 items-center gap-1.5 rounded-md border border-input bg-transparent px-3 text-xs font-medium hover:bg-accent">
+                      <span className="inline-flex min-h-11 items-center gap-1.5 rounded-md border border-input bg-transparent px-3 text-xs font-medium hover:bg-accent">
                         {uploading === checklist.key ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <UploadCloud className="h-3.5 w-3.5" />} Upload
                       </span>
                     </label>
                     {latest?.file_uri && (
-                      <Button variant="ghost" size="sm" onClick={() => viewFile(latest)}><FileDown className="h-3.5 w-3.5" /> View</Button>
+                      <Button variant="ghost" size="sm" className="min-h-11" onClick={() => viewFile(latest)}><FileDown className="h-3.5 w-3.5" /> View</Button>
                     )}
                   </div>
                 </CardContent>
@@ -320,9 +336,9 @@ export default function KitDrillChecklists() {
                       <td className="py-2 pr-3 text-muted-foreground">{entry.next_due_date ? format(new Date(`${entry.next_due_date}T00:00:00`), 'd MMM yyyy') : '-'}</td>
                       <td className="py-2">
                         {entry.file_uri && (
-                          <Button variant="ghost" size="sm" onClick={() => viewFile(entry)}><FileDown className="h-3.5 w-3.5" /> View</Button>
+                          <Button variant="ghost" size="sm" className="min-h-11" onClick={() => viewFile(entry)}><FileDown className="h-3.5 w-3.5" /> View</Button>
                         )}
-                        <Button variant="ghost" size="sm" onClick={() => openEdit(entry)}>Edit</Button>
+                        <Button variant="ghost" size="sm" className="min-h-11" onClick={() => openEdit(entry)}>Edit</Button>
                         <Button variant="ghost" size="sm" className="text-destructive" onClick={() => removeEntry(entry)}>Remove</Button>
                       </td>
                     </tr>
