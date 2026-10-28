@@ -18,6 +18,36 @@
       "type": "string",
       "title": "Linked Participant User ID"
     },
+    "consent_type": {
+      "type": "string",
+      "title": "Consent Type",
+      "enum": [
+        "Information Collection",
+        "Information Storage",
+        "Internal Information Sharing",
+        "External Information Sharing",
+        "Family Information Sharing",
+        "Guardian Information Sharing",
+        "Medical Information Sharing",
+        "Medication Administration",
+        "Service Delivery",
+        "Photos",
+        "Videos",
+        "Audio Recordings",
+        "Marketing Materials",
+        "Testimonials",
+        "NDIS Audits",
+        "Quality Audits",
+        "Accreditation Audits",
+        "Research Participation",
+        "Electronic Signatures"
+      ],
+      "default": "External Information Sharing"
+    },
+    "consent_description": {
+      "type": "string",
+      "title": "Consent Description"
+    },
     "team_worker_ids": {
       "type": "array",
       "title": "Team Support Worker IDs",
@@ -68,9 +98,14 @@
       "title": "Consent Start Date",
       "format": "date"
     },
+    "review_date": {
+      "type": "string",
+      "title": "Review Date",
+      "format": "date"
+    },
     "consent_end_date": {
       "type": "string",
-      "title": "Consent End Date",
+      "title": "Expiry Date",
       "format": "date"
     },
     "status": {
@@ -79,7 +114,8 @@
       "enum": [
         "Active",
         "Withdrawn",
-        "Expired"
+        "Expired",
+        "Renewed"
       ],
       "default": "Active"
     },
@@ -90,7 +126,7 @@
     },
     "participant_signatory_name": {
       "type": "string",
-      "title": "Participant / Representative Name"
+      "title": "Signed By (Participant / Guardian)"
     },
     "participant_signed_date": {
       "type": "string",
@@ -99,15 +135,55 @@
     },
     "participant_signature": {
       "type": "string",
-      "title": "Participant / Representative Signature"
+      "title": "Participant Signature"
+    },
+    "guardian_signature": {
+      "type": "string",
+      "title": "Guardian Signature"
+    },
+    "witness_name": {
+      "type": "string",
+      "title": "Witness Name"
+    },
+    "witness_signature": {
+      "type": "string",
+      "title": "Witness Signature"
+    },
+    "approval_signature": {
+      "type": "string",
+      "title": "Approval Signature"
+    },
+    "signature_timestamp": {
+      "type": "string",
+      "title": "Signature Date & Time Stamp"
+    },
+    "signature_user_id": {
+      "type": "string",
+      "title": "Signature Linked User"
     },
     "signed_form_url": {
       "type": "string",
       "title": "Signed Consent Form URL"
     },
+    "signed_form_uri": {
+      "type": "string",
+      "title": "Signed Consent Form Private URI"
+    },
     "signed_form_name": {
       "type": "string",
       "title": "Signed Consent Form Name"
+    },
+    "owner": {
+      "type": "string",
+      "title": "Consent Owner"
+    },
+    "responsible_manager": {
+      "type": "string",
+      "title": "Responsible Manager"
+    },
+    "audit_trail_log": {
+      "type": "string",
+      "title": "Consent Audit Trail"
     },
     "notes": {
       "type": "string",

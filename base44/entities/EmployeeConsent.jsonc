@@ -1,0 +1,278 @@
+{
+  "name": "EmployeeConsent",
+  "type": "object",
+  "properties": {
+    "employee_id": {
+      "type": "string",
+      "title": "Employee Profile ID"
+    },
+    "employee_name": {
+      "type": "string",
+      "title": "Employee Name"
+    },
+    "employee_email": {
+      "type": "string",
+      "format": "email",
+      "title": "Employee Email"
+    },
+    "consent_type": {
+      "type": "string",
+      "title": "Consent Type",
+      "enum": [
+        "Information Collection",
+        "Information Storage",
+        "Personnel Records",
+        "Compliance Audits",
+        "Training Records",
+        "Certifications",
+        "Employee Recognition",
+        "Workforce Reporting",
+        "Internal Communications",
+        "External Reporting",
+        "Photographs",
+        "Marketing Participation"
+      ],
+      "default": "Personnel Records"
+    },
+    "consent_description": {
+      "type": "string",
+      "title": "Consent Description"
+    },
+    "status": {
+      "type": "string",
+      "title": "Consent Status",
+      "enum": [
+        "Active",
+        "Withdrawn",
+        "Expired",
+        "Renewed"
+      ],
+      "default": "Active"
+    },
+    "date_signed": {
+      "type": "string",
+      "format": "date",
+      "title": "Date Signed"
+    },
+    "review_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Review Date"
+    },
+    "expiry_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Expiry Date"
+    },
+    "withdrawal_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Withdrawal Date"
+    },
+    "signed_by": {
+      "type": "string",
+      "title": "Signed By"
+    },
+    "employee_signature": {
+      "type": "string",
+      "title": "Employee Digital Signature"
+    },
+    "witness_name": {
+      "type": "string",
+      "title": "Witness Name"
+    },
+    "witness_signature": {
+      "type": "string",
+      "title": "Witness Digital Signature"
+    },
+    "approval_signature": {
+      "type": "string",
+      "title": "Manager / HR Approval Signature"
+    },
+    "signature_timestamp": {
+      "type": "string",
+      "title": "Signature Date & Time Stamp"
+    },
+    "signature_user_id": {
+      "type": "string",
+      "title": "Signature Linked User"
+    },
+    "supporting_evidence_uri": {
+      "type": "string",
+      "title": "Supporting Evidence Private File URI"
+    },
+    "supporting_evidence_name": {
+      "type": "string",
+      "title": "Supporting Evidence File Name"
+    },
+    "owner": {
+      "type": "string",
+      "title": "Consent Owner"
+    },
+    "responsible_manager": {
+      "type": "string",
+      "title": "Responsible Manager"
+    },
+    "audit_consent": {
+      "type": "string",
+      "enum": [
+        "Audit consent received",
+        "Audit declined"
+      ],
+      "default": "Audit consent received",
+      "title": "Auditor Visibility Consent"
+    },
+    "audit_trail_log": {
+      "type": "string",
+      "title": "Consent Audit Trail"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "employee_name",
+    "consent_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Human Resources Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Human Resources Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "data.employee_email": "{{user.email}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            },
+            {
+              "data.audit_consent": "Audit consent received"
+            },
+            {
+              "data.status": "Active"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Human Resources Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Human Resources Manager"
+          }
+        }
+      ]
+    }
+  }
+}
