@@ -36,7 +36,7 @@ import StaffCommPanel from '@/components/communications/StaffCommPanel';
 import ProfileCommDiary from '@/components/communications/ProfileCommDiary';
 import ProfileTodoList from '@/components/communications/ProfileTodoList';
 import CommunicationNavigation from '@/components/communications/CommunicationNavigation';
-import CommGuide, { AboutCommunication, CommHintsTips } from '@/components/communications/CommGuide';
+import CommGuide, { CommHintsTips } from '@/components/communications/CommGuide';
 import CommunicateWell from '@/components/communications/CommunicateWell';
 import CommAuditBar from '@/components/communications/CommAuditBar';
 import CommWeatherBar from '@/components/communications/CommWeatherBar';
