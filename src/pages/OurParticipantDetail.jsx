@@ -7,6 +7,7 @@ import ProfileHeader from '@/components/profile/ProfileHeader';
 import PortalInviteButton from '@/components/profile/PortalInviteButton';
 import ProfileLoadState from '@/components/profile/ProfileLoadState';
 import OurProfileWorkspace from '@/components/profile/OurProfileWorkspace';
+import CompleteProfile13SectionNavigator from '@/components/profile/CompleteProfile13SectionNavigator';
 import useProfileRecord from '@/hooks/useProfileRecord';
 import { useRole, ROLES } from '@/lib/useRole';
 import '@/components/profile/myProfilePastels.css';
@@ -29,6 +30,7 @@ export default function OurParticipantDetail({ backTo = '/our-participants', bac
           <PortalInviteButton kind="participant" profile={participant} />
         </div>
       </div>
+      <CompleteProfile13SectionNavigator kind="participant" profile={participant} />
       <OurProfileWorkspace key={participant.id} profile={participant} kind="participant" onUpdated={refresh} header={<ProfileHeader profile={participant} kind="participant" onUpdated={refresh} />} />
     </div>
   );

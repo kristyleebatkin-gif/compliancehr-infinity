@@ -20,9 +20,11 @@ import BestInClassBenchmarkSuite from '@/components/operations/BestInClassBenchm
 
 const STATUSES = ['New', 'In Progress', 'Implemented', 'Closed'];
 const TABS = [
-  { value: 'Idea', label: 'Ideas', legacy: 'Improvement Idea', icon: Lightbulb },
-  { value: 'Suggestion', label: 'Suggestions', icon: MessageSquarePlus },
-  { value: 'Corrective Action', label: 'Corrective Actions', icon: Wrench },
+  { value: 'Improvement', label: 'Improvement Register', legacy: 'Idea', icon: Lightbulb },
+  { value: 'Corrective Action', label: 'Corrective Actions Register', icon: Wrench },
+  { value: 'Preventive Action', label: 'Preventive Actions Register', icon: CheckCircle2 },
+  { value: 'Lessons Learned', label: 'Lessons Learned Register', icon: Lightbulb },
+  { value: 'Suggestion', label: 'Suggestions Register', legacy: 'Improvement Idea', icon: MessageSquarePlus },
 ];
 
 const exportColumns = [
@@ -44,8 +46,8 @@ export default function QualityImprovement() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState(null);
   const [sending, setSending] = useState('');
-  const [defaultType, setDefaultType] = useState('Idea');
-  const [activeTab, setActiveTab] = useState('Idea');
+  const [defaultType, setDefaultType] = useState('Improvement');
+  const [activeTab, setActiveTab] = useState('Improvement');
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -145,6 +147,12 @@ export default function QualityImprovement() {
               <SelectContent>{STATUSES.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
             </Select>
           </div>
+        </div>
+        <div className="mt-1.5 flex flex-wrap items-center gap-1.5 text-[11px]">
+          <Badge variant="outline">Linked Source: {item.source_type || item.source || 'Audit / Review / Incident'}</Badge>
+          {item.owner && <Badge variant="secondary">Owner: {item.owner}</Badge>}
+          {item.department && <Badge variant="secondary">Dept: {item.department}</Badge>}
+          {item.review_schedule && <Badge variant="secondary">Review: {item.review_schedule}</Badge>}
         </div>
         {item.description && <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{item.description}</p>}
         {item.outcome && <p className="mt-1 text-sm text-muted-foreground"><span className="font-medium">Outcome:</span> {item.outcome}</p>}

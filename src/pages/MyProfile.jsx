@@ -22,6 +22,7 @@ import StaffHome from '@/pages/StaffHome';
 import MyDocuments from '@/pages/MyDocuments';
 import NameTags from '@/pages/NameTags';
 import MyWorkArea9Panel from '@/components/profile/MyWorkArea9Panel';
+import CompleteProfile13SectionNavigator from '@/components/profile/CompleteProfile13SectionNavigator';
 
 import { useQueryClient } from '@tanstack/react-query';
 import { logUserAction } from '@/lib/actionLog';
@@ -164,6 +165,10 @@ export default function MyProfile() {
         showAlerts={false}
       />
       <MyWorkArea9Panel />
+      <CompleteProfile13SectionNavigator
+        kind={tab === 'participant-details' || isParticipant ? 'participant' : 'staff'}
+        profile={tab === 'participant-details' ? participantProfile : profile}
+      />
       {!isParticipant && participantProfile && <nav data-dashboard-tabs="" aria-label="My profile views" className="flex flex-wrap gap-2">
         <Button data-dashboard-tab="" data-dashboard-tone="blue" aria-pressed={tab !== 'participant-details'} variant={tab === 'participant-details' ? 'outline' : 'secondary'} onClick={() => setTab('details')}>My Employee Profile &amp; Profession</Button>
         <Button data-dashboard-tab="" data-dashboard-tone="pink" aria-pressed={tab === 'participant-details'} variant={tab === 'participant-details' ? 'secondary' : 'outline'} onClick={() => setTab('participant-details')}>My Participant Profile &amp; NDIS Plan</Button>
