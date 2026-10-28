@@ -1,5 +1,4 @@
 /* My Profile: Dark Blue (#0A2B6D) boxes around every section and item, with clear visual separation and 8-colour Infinity palette accents. */
-html body .my-profile-pastels [data-dashboard-tab],
 html body .my-profile-pastels .app-section-card-header {
   background: var(--header-gradient) !important;
   color: #ffffff !important;

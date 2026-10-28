@@ -1,16 +1,20 @@
 import React, { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { NAV_GROUPS } from '@/lib/moduleDirectory';
+import { getHeaderView } from '@/lib/fullColourTiles';
 import {
   ChevronUp,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
-  Power,
-  Tv,
   LogOut,
-  Radio,
+  Zap,
+  ArrowRight,
+  Compass,
 } from 'lucide-react';
+
+const BRAND_GRADIENT =
+  'linear-gradient(120deg, #0072FF 0%, #0A2B6D 18%, #5A00D6 42%, #A100FF 68%, #FF2E9A 100%)';
 
 export default function ObsidianSidebarRemote({
   visiblePrimary = [],
@@ -24,7 +28,6 @@ export default function ObsidianSidebarRemote({
   const navigate = useNavigate();
   const [selectedGroupIdx, setSelectedGroupIdx] = useState(null);
 
-  // Build grouped list and flat channel list with 1-based channel numbers
   const { groupsWithChannels, flatChannels } = useMemo(() => {
     const flat = [];
     const grouped = [];
@@ -102,404 +105,206 @@ export default function ObsidianSidebarRemote({
       : groupsWithChannels.filter((_, idx) => idx === selectedGroupIdx);
 
   return (
-    <div
-      className="preserve-island-theme relative flex h-full w-full min-w-0 min-h-0 flex-col overflow-hidden p-2.5 space-y-2.5 select-none"
-      style={{
-        background: 'linear-gradient(165deg, #1E293B 0%, #0F172A 55%, #090F1C 100%)',
-        color: '#F8FAFC',
-        boxShadow: 'inset -1px 0 0 rgba(56,189,248,0.22)',
-      }}
-    >
-      {/* Brushed Obsidian Metallic Grain */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-15"
-        style={{
-          backgroundImage:
-            'repeating-linear-gradient(176deg, transparent 0 3px, rgba(148,163,184,0.22) 4px, transparent 5px 8px)',
-        }}
-      />
+    <div className="relative flex h-full w-full min-w-0 min-h-0 flex-col overflow-hidden bg-white p-2.5 space-y-2 select-none">
+      {/* Top Quick-Access Matched Header Card */}
+      <div className="shrink-0 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-panel">
+        <div className="h-1 w-full" style={{ background: BRAND_GRADIENT }} />
 
-      {/* Top Small Screen: Recessed OLED Channel & Brand Readout */}
-      <div
-        className="relative z-10 shrink-0 rounded-2xl border p-2.5"
-        style={{
-          backgroundColor: '#090F1C',
-          borderColor: 'rgba(56,189,248,0.45)',
-          boxShadow:
-            'inset 0 2px 10px rgba(0,0,0,0.75), 0 0 16px -4px rgba(56,189,248,0.28)',
-        }}
-      >
-        {/* Top OLED Status Line */}
-        <div className="flex items-center justify-between gap-1.5 border-b pb-1.5" style={{ borderColor: '#1E293B' }}>
-          <div className="flex items-center gap-1.5">
-            <span
-              className="inline-flex items-center gap-1 rounded border px-1.5 py-0.5 font-mono text-[9.5px] font-extrabold uppercase tracking-wider"
-              style={{
-                backgroundColor: 'rgba(56,189,248,0.16)',
-                borderColor: 'rgba(56,189,248,0.45)',
-                color: '#38BDF8',
-              }}
-            >
-              <Tv className="h-2.5 w-2.5" style={{ color: '#38BDF8' }} />
-              CH {activeChannel.channelCode}/{String(flatChannels.length || 1).padStart(2, '0')}
-            </span>
-            <span
-              className="truncate font-mono text-[9px] font-bold uppercase tracking-wider"
-              style={{ color: '#94A3B8' }}
-            >
-              {activeChannel.groupLabel}
-            </span>
-          </div>
-
-          <span className="inline-flex items-center gap-1 text-[9px] font-extrabold uppercase tracking-wider" style={{ color: '#38BDF8' }}>
-            <span
-              className="h-2 w-2 rounded-full animate-pulse"
-              style={{ backgroundColor: '#38BDF8', boxShadow: '0 0 8px #38BDF8' }}
-            />
-            LIVE
-          </span>
-        </div>
-
-        {/* OLED Screen Center: Brand & Active Route */}
-        <div className="mt-2 text-center space-y-1">
-          <div className="font-editorial text-sm font-extrabold tracking-tight" style={{ color: '#F8FAFC' }}>
-            Compliance
-            <span className="font-editorial-italic" style={{ color: '#38BDF8' }}>
-              HR
-            </span>{' '}
-            <span style={{ color: '#BAE6FD' }}>Infinity</span>
-          </div>
-
-          <div
-            className="rounded-lg border px-2 py-1"
-            style={{
-              backgroundColor: '#0F172A',
-              borderColor: '#1E293B',
-            }}
-          >
-            <div className="text-[9px] font-bold uppercase tracking-widest" style={{ color: '#38BDF8' }}>
-              Active Screen Route
-            </div>
-            <div className="truncate text-[11.5px] font-extrabold leading-snug" style={{ color: '#F8FAFC' }}>
-              {activeChannel.displayLabel}
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between gap-1 pt-0.5">
-            <span
-              className="inline-flex items-center rounded-full border px-2 py-0.5 text-[9px] font-extrabold"
-              style={{
-                backgroundColor: '#1E293B',
-                borderColor: '#334155',
-                color: '#BAE6FD',
-              }}
-            >
-              {role}
-            </span>
-            <span className="inline-flex items-center gap-1 text-[9px] font-bold" style={{ color: '#94A3B8' }}>
-              <Power className="h-2.5 w-2.5" style={{ color: '#38BDF8' }} />
-              Smart Router
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Tactile Remote Control Pod: Circular D-Pad + CH-/CH+ Rockers */}
-      <div
-        className="relative z-10 shrink-0 rounded-2xl border p-2"
-        style={{
-          backgroundColor: '#0F172A',
-          borderColor: '#334155',
-          boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08), 0 4px 10px rgba(0,0,0,0.35)',
-        }}
-      >
-        <div className="flex items-center justify-between gap-2">
-          {/* Left: CH- /GRP- Rocker */}
-          <div className="flex flex-col gap-1">
-            <button
-              type="button"
-              onClick={() => stepChannel(-1)}
-              title="Previous page channel"
-              className="flex items-center justify-center gap-0.5 rounded-lg border px-2 py-1 text-[9.5px] font-extrabold transition hover:opacity-90 active:scale-95"
-              style={{
-                backgroundColor: '#1E293B',
-                borderColor: '#475569',
-                color: '#F8FAFC',
-              }}
-            >
-              <ChevronUp className="h-3 w-3" style={{ color: '#38BDF8' }} />
-              <span style={{ color: '#F8FAFC' }}>CH-</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => stepGroup(-1)}
-              title="Previous section group"
-              className="flex items-center justify-center gap-0.5 rounded-lg border px-2 py-1 text-[9px] font-bold transition hover:opacity-90 active:scale-95"
-              style={{
-                backgroundColor: '#090F1C',
-                borderColor: '#334155',
-                color: '#94A3B8',
-              }}
-            >
-              <ChevronLeft className="h-2.5 w-2.5" style={{ color: '#38BDF8' }} />
-              <span style={{ color: '#CBD5E1' }}>GRP</span>
-            </button>
-          </div>
-
-          {/* Center: Circular Tactile D-Pad */}
-          <div
-            className="relative flex h-20 w-20 shrink-0 items-center justify-center rounded-full border-2"
-            style={{
-              background: 'radial-gradient(circle at 32% 28%, #1E293B 0%, #090F1C 78%)',
-              borderColor: '#475569',
-              boxShadow:
-                'inset 0 2px 5px rgba(255,255,255,0.08), 0 4px 12px rgba(0,0,0,0.65)',
-            }}
-          >
-            <button
-              type="button"
-              onClick={() => stepChannel(-1)}
-              aria-label="Previous channel"
-              title="Previous page (Up)"
-              className="absolute top-0.5 left-1/2 -translate-x-1/2 rounded-full p-1 transition hover:scale-110 active:scale-95"
-            >
-              <ChevronUp className="h-3.5 w-3.5" style={{ color: '#38BDF8' }} />
-            </button>
-            <button
-              type="button"
-              onClick={() => stepChannel(1)}
-              aria-label="Next channel"
-              title="Next page (Down)"
-              className="absolute bottom-0.5 left-1/2 -translate-x-1/2 rounded-full p-1 transition hover:scale-110 active:scale-95"
-            >
-              <ChevronDown className="h-3.5 w-3.5" style={{ color: '#38BDF8' }} />
-            </button>
-            <button
-              type="button"
-              onClick={() => stepGroup(-1)}
-              aria-label="Previous group"
-              title="Previous group (Left)"
-              className="absolute left-0.5 top-1/2 -translate-y-1/2 rounded-full p-1 transition hover:scale-110 active:scale-95"
-            >
-              <ChevronLeft className="h-3.5 w-3.5" style={{ color: '#38BDF8' }} />
-            </button>
-            <button
-              type="button"
-              onClick={() => stepGroup(1)}
-              aria-label="Next group"
-              title="Next group (Right)"
-              className="absolute right-0.5 top-1/2 -translate-y-1/2 rounded-full p-1 transition hover:scale-110 active:scale-95"
-            >
-              <ChevronRight className="h-3.5 w-3.5" style={{ color: '#38BDF8' }} />
-            </button>
-
-            <button
-              type="button"
-              onClick={() => navigate(activeChannel.path)}
-              title={`Open ${activeChannel.displayLabel}`}
-              className="flex h-8 w-8 items-center justify-center rounded-full border text-[9px] font-extrabold uppercase tracking-wider transition hover:scale-105"
-              style={{
-                background: 'linear-gradient(135deg, #38BDF8 0%, #0284C7 100%)',
-                borderColor: '#BAE6FD',
-                color: '#0F172A',
-                boxShadow: '0 0 10px rgba(56,189,248,0.55)',
-              }}
-            >
-              OK
-            </button>
-          </div>
-
-          {/* Right: CH+ / GRP+ Rocker */}
-          <div className="flex flex-col gap-1">
-            <button
-              type="button"
-              onClick={() => stepChannel(1)}
-              title="Next page channel"
-              className="flex items-center justify-center gap-0.5 rounded-lg border px-2 py-1 text-[9.5px] font-extrabold transition hover:opacity-90 active:scale-95"
-              style={{
-                backgroundColor: '#1E293B',
-                borderColor: '#475569',
-                color: '#F8FAFC',
-              }}
-            >
-              <span style={{ color: '#F8FAFC' }}>CH+</span>
-              <ChevronDown className="h-3 w-3" style={{ color: '#38BDF8' }} />
-            </button>
-            <button
-              type="button"
-              onClick={() => stepGroup(1)}
-              title="Next section group"
-              className="flex items-center justify-center gap-0.5 rounded-lg border px-2 py-1 text-[9px] font-bold transition hover:opacity-90 active:scale-95"
-              style={{
-                backgroundColor: '#090F1C',
-                borderColor: '#334155',
-                color: '#94A3B8',
-              }}
-            >
-              <span style={{ color: '#CBD5E1' }}>GRP</span>
-              <ChevronRight className="h-2.5 w-2.5" style={{ color: '#38BDF8' }} />
-            </button>
-          </div>
-        </div>
-
-        {/* Group Bank Filter Pills */}
-        <div className="mt-2 flex flex-wrap gap-1 border-t pt-1.5" style={{ borderColor: '#1E293B' }}>
-          <button
-            type="button"
-            onClick={() => setSelectedGroupIdx(null)}
-            className="rounded-md border px-1.5 py-0.5 text-[8.5px] font-extrabold uppercase tracking-wider transition"
-            style={
-              selectedGroupIdx === null
-                ? {
-                    backgroundColor: '#38BDF8',
-                    borderColor: '#BAE6FD',
-                    color: '#0F172A',
-                  }
-                : {
-                    backgroundColor: '#090F1C',
-                    borderColor: '#334155',
-                    color: '#94A3B8',
-                  }
-            }
-          >
-            ALL ({flatChannels.length})
-          </button>
-          {groupsWithChannels.map((g, idx) => {
-            const selected = selectedGroupIdx === idx;
-            return (
-              <button
-                key={g.label}
-                type="button"
-                onClick={() => setSelectedGroupIdx(selected ? null : idx)}
-                className="rounded-md border px-1.5 py-0.5 text-[8.5px] font-extrabold uppercase tracking-wider transition"
-                style={
-                  selected
-                    ? {
-                        backgroundColor: '#38BDF8',
-                        borderColor: '#BAE6FD',
-                        color: '#0F172A',
-                      }
-                    : {
-                        backgroundColor: '#090F1C',
-                        borderColor: '#334155',
-                        color: '#94A3B8',
-                      }
-                }
+        <div className="p-2.5 space-y-2">
+          {/* Header Row Matching Quick Access */}
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex min-w-0 items-center gap-2">
+              <span
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-white shadow-2xs"
+                style={{ background: BRAND_GRADIENT }}
               >
-                {g.label.split(' ')[0]}
-              </button>
-            );
-          })}
+                <Zap className="h-3.5 w-3.5 text-white" />
+              </span>
+              <div className="min-w-0">
+                <div className="text-[12.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                  Page Navigation
+                </div>
+                <div className="text-[10px] font-semibold leading-tight text-slate-600">
+                  {flatChannels.length} live screens · one tap
+                </div>
+              </div>
+            </div>
+
+            <span className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-2 py-0.5 text-[9.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#00C6FF]" />
+              Live
+            </span>
+          </div>
+
+          {/* Active Screen Mini iPad Readout */}
+          <div className="flex flex-col gap-[3px] rounded-xl border-2 border-[#0A2B6D] bg-[#0A2B6D] p-[3px]">
+            <div className="overflow-hidden rounded-[8px] bg-white">
+              <div
+                className="flex items-center justify-between gap-1 px-2 py-1 text-white"
+                style={{ background: getHeaderView(activeChannelIdx) }}
+              >
+                <span className="text-[9.5px] font-extrabold tracking-tight text-white">
+                  CH {activeChannel.channelCode}/{String(flatChannels.length || 1).padStart(2, '0')} · {activeChannel.groupLabel}
+                </span>
+                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#00C6FF]" />
+              </div>
+              <div className="flex items-center justify-between gap-1 bg-white px-2 py-1">
+                <span className="truncate text-[11px] font-extrabold text-[#0A2B6D]">
+                  {activeChannel.displayLabel}
+                </span>
+                <span className="rounded-full bg-[#F5F0FF] px-1.5 py-0.5 text-[9px] font-extrabold text-[#5A00D6]">
+                  {role}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Stepper & Group Filter Controls */}
+          <div className="flex items-center justify-between gap-1">
+            <button
+              type="button"
+              onClick={() => stepChannel(-1)}
+              title="Previous page screen"
+              className="inline-flex flex-1 items-center justify-center gap-0.5 rounded-lg border border-slate-200 bg-white py-1 text-[10px] font-extrabold text-[#0A2B6D] hover:border-[#0072FF] hover:text-[#0072FF]"
+            >
+              <ChevronUp className="h-3 w-3 text-[#0072FF]" />
+              <span>Prev</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => stepGroup(-1)}
+              title="Previous group"
+              className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-2 py-1 text-[10px] font-extrabold text-[#5A00D6] hover:border-[#5A00D6]"
+            >
+              <ChevronLeft className="h-3 w-3" />
+            </button>
+            <button
+              type="button"
+              onClick={() => stepGroup(1)}
+              title="Next group"
+              className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-2 py-1 text-[10px] font-extrabold text-[#5A00D6] hover:border-[#5A00D6]"
+            >
+              <ChevronRight className="h-3 w-3" />
+            </button>
+            <button
+              type="button"
+              onClick={() => stepChannel(1)}
+              title="Next page screen"
+              className="inline-flex flex-1 items-center justify-center gap-0.5 rounded-lg border border-slate-200 bg-white py-1 text-[10px] font-extrabold text-[#0A2B6D] hover:border-[#0072FF] hover:text-[#0072FF]"
+            >
+              <span>Next</span>
+              <ChevronDown className="h-3 w-3 text-[#0072FF]" />
+            </button>
+          </div>
+
+          {/* Group Filter Pills */}
+          <div className="flex flex-wrap gap-1 pt-0.5">
+            <button
+              type="button"
+              onClick={() => setSelectedGroupIdx(null)}
+              className={`rounded-md border px-1.5 py-0.5 text-[8.5px] font-extrabold uppercase tracking-wider transition ${
+                selectedGroupIdx === null
+                  ? 'border-[#0A2B6D] bg-[#0A2B6D] text-white'
+                  : 'border-slate-200 bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
+              }`}
+            >
+              ALL ({flatChannels.length})
+            </button>
+            {groupsWithChannels.map((g, idx) => {
+              const selected = selectedGroupIdx === idx;
+              return (
+                <button
+                  key={g.label}
+                  type="button"
+                  onClick={() => setSelectedGroupIdx(selected ? null : idx)}
+                  className={`rounded-md border px-1.5 py-0.5 text-[8.5px] font-extrabold uppercase tracking-wider transition ${
+                    selected
+                      ? 'border-[#5A00D6] bg-[#5A00D6] text-white'
+                      : 'border-slate-200 bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
+                  }`}
+                >
+                  {g.label.split(' ')[0]}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 
-      {/* Backlit Numbered Channel Keypad (Page Router) */}
+      {/* Quick-Access Styled iPad Mini Screen List */}
       <nav
         aria-label="App modules"
-        className="relative z-10 min-h-0 flex-1 overflow-y-auto overscroll-contain pr-0.5 space-y-2.5"
+        className="min-h-0 flex-1 overflow-y-auto overscroll-contain pr-0.5 space-y-2.5"
       >
         {displayedGroups.map((group) => (
-          <div key={group.label} className="space-y-1">
-            {/* Group Header Strip */}
-            <div
-              className="flex items-center justify-between rounded-lg border px-2 py-1"
-              style={{
-                backgroundColor: '#090F1C',
-                borderColor: '#334155',
-              }}
-            >
-              <span
-                className="flex items-center gap-1.5 text-[9.5px] font-extrabold uppercase tracking-wider"
-                style={{ color: '#38BDF8' }}
-              >
-                <Radio className="h-2.5 w-2.5" style={{ color: '#38BDF8' }} />
+          <div key={group.label} className="space-y-1.5">
+            <div className="flex items-center justify-between rounded-lg border border-slate-200 bg-[#F5F0FF] px-2.5 py-1">
+              <span className="flex items-center gap-1.5 text-[9.5px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                <Compass className="h-2.5 w-2.5 text-[#0072FF]" />
                 {group.label}
               </span>
-              <span
-                className="font-mono text-[8.5px] font-bold"
-                style={{ color: '#94A3B8' }}
-              >
-                {group.entries.length} CH
+              <span className="text-[9px] font-extrabold text-[#0A2B6D]">
+                {group.entries.length} screens
               </span>
             </div>
 
-            {/* Tactile Backlit Route Keys */}
-            <div className="space-y-1">
+            <div className="space-y-1.5">
               {group.entries.map((item) => {
                 const Icon = item.icon;
                 const active = isActive(item.path);
+                const headerBg = getHeaderView(item.channelNumber - 1);
+
                 return (
                   <Link
                     key={item.path}
                     to={item.path}
-                    className="group relative flex items-center gap-2 rounded-xl border px-2.5 py-1.5 text-xs font-extrabold transition-all hover:-translate-y-0.5"
-                    style={
+                    title={`${item.displayLabel} — ${group.label}`}
+                    className={`group flex flex-col gap-[3px] rounded-xl border-2 bg-[#0A2B6D] p-[3px] transition-all duration-200 focus-visible:outline-none ${
                       active
-                        ? {
-                            backgroundColor: '#1E293B',
-                            borderColor: '#38BDF8',
-                            color: '#F8FAFC',
-                            boxShadow:
-                              'inset 0 0 12px rgba(56,189,248,0.22), 0 0 12px rgba(56,189,248,0.38)',
-                          }
-                        : {
-                            backgroundColor: '#0F172A',
-                            borderColor: '#334155',
-                            color: '#E2E8F0',
-                          }
-                    }
+                        ? 'border-[#5A00D6] shadow-md ring-2 ring-[#5A00D6]/25 ring-offset-1'
+                        : 'border-[#0A2B6D] hover:-translate-y-0.5 hover:border-[#0072FF] hover:shadow-md'
+                    }`}
                   >
-                    {/* Backlit Channel Number */}
-                    <span
-                      className="inline-flex h-5 min-w-[22px] shrink-0 items-center justify-center rounded px-1 font-mono text-[9px] font-extrabold leading-none"
-                      style={
-                        active
-                          ? { backgroundColor: '#38BDF8', color: '#0F172A' }
-                          : { backgroundColor: '#1E293B', color: '#94A3B8' }
-                      }
-                    >
-                      {item.channelCode}
-                    </span>
+                    {/* iPad Screen */}
+                    <div className="flex flex-col overflow-hidden rounded-[8px] bg-white">
+                      {/* Coloured Header Inside Screen */}
+                      <div
+                        className="flex min-h-[30px] items-center justify-between gap-1 px-2 py-1 text-white"
+                        style={{ background: headerBg }}
+                      >
+                        <div className="flex min-w-0 items-center gap-1.5">
+                          <Icon className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                          <span
+                            className="min-w-0 text-[10px] font-extrabold leading-[12px] tracking-tight text-white"
+                            style={{ color: '#FFFFFF' }}
+                          >
+                            {item.displayLabel}
+                          </span>
+                        </div>
+                        <span
+                          className={`h-1.5 w-1.5 shrink-0 rounded-full ${
+                            active ? 'bg-[#00C6FF]' : 'bg-white/75'
+                          }`}
+                        />
+                      </div>
 
-                    {/* Module Icon */}
-                    <span
-                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border"
-                      style={
-                        active
-                          ? {
-                              backgroundColor: 'rgba(56,189,248,0.18)',
-                              borderColor: 'rgba(56,189,248,0.5)',
-                            }
-                          : {
-                              backgroundColor: '#1E293B',
-                              borderColor: '#334155',
-                            }
-                      }
-                    >
-                      <Icon
-                        className="h-3.5 w-3.5"
-                        style={{ color: active ? '#38BDF8' : '#BAE6FD' }}
+                      {/* White Detail Strip Inside Screen */}
+                      <div className="flex min-h-[24px] items-center justify-between gap-1 border-t border-[#0A2B6D]/10 bg-white px-2 py-0.5">
+                        <span className="truncate text-[9.5px] font-bold text-[#0A2B6D]/85">
+                          CH {item.channelCode} · {group.label}
+                        </span>
+                        <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#0072FF] transition group-hover:translate-x-0.5 group-hover:text-[#FF2E9A]" />
+                      </div>
+                    </div>
+
+                    {/* iPad Home Indicator Bar */}
+                    <div className="flex h-[4px] items-center justify-center">
+                      <span
+                        className={`h-[2px] w-5 rounded-full transition-all ${
+                          active ? 'w-7 bg-[#00C6FF]' : 'bg-white/45 group-hover:bg-white/80'
+                        }`}
                       />
-                    </span>
-
-                    {/* Route Title */}
-                    <span
-                      className="min-w-0 flex-1 truncate text-[11px] font-extrabold leading-snug"
-                      style={{ color: active ? '#F8FAFC' : '#E2E8F0' }}
-                    >
-                      {item.displayLabel}
-                    </span>
-
-                    {/* Glowing Cyan LED Indicator Dot */}
-                    <span
-                      className="h-2 w-2 shrink-0 rounded-full"
-                      style={
-                        active
-                          ? { backgroundColor: '#38BDF8', boxShadow: '0 0 8px #38BDF8' }
-                          : { backgroundColor: '#475569' }
-                      }
-                    />
+                    </div>
                   </Link>
                 );
               })}
@@ -508,35 +313,23 @@ export default function ObsidianSidebarRemote({
         ))}
       </nav>
 
-      {/* Bottom Remote Account & Power Dock */}
-      <div
-        className="relative z-10 shrink-0 rounded-2xl border p-2.5 space-y-1.5"
-        style={{
-          backgroundColor: '#090F1C',
-          borderColor: '#334155',
-          boxShadow: 'inset 0 1px 4px rgba(0,0,0,0.6)',
-        }}
-      >
+      {/* Bottom User & Sign-Out Card Matching Quick Access */}
+      <div className="shrink-0 overflow-hidden rounded-2xl border border-slate-200 bg-white p-2.5 shadow-panel space-y-1.5">
         <div className="px-1">
-          <div className="truncate text-[11px] font-extrabold" style={{ color: '#F8FAFC' }}>
+          <div className="truncate text-[11px] font-extrabold text-[#0A2B6D]">
             {user?.full_name || 'User'}
           </div>
-          <div className="truncate text-[10px] font-semibold" style={{ color: '#38BDF8' }}>
+          <div className="truncate text-[10px] font-semibold text-[#5A00D6]">
             {user?.email || ''}
           </div>
         </div>
         <button
           type="button"
           onClick={onLogout}
-          className="flex w-full items-center justify-center gap-1.5 rounded-xl border px-3 py-1.5 text-[11px] font-extrabold transition hover:opacity-90"
-          style={{
-            backgroundColor: '#1E293B',
-            borderColor: '#475569',
-            color: '#F8FAFC',
-          }}
+          className="flex w-full items-center justify-center gap-1.5 rounded-xl border-2 border-[#0A2B6D] bg-white px-3 py-1.5 text-[11px] font-extrabold text-[#0A2B6D] transition hover:bg-[#F5F0FF] hover:text-[#5A00D6]"
         >
-          <LogOut className="h-3.5 w-3.5" style={{ color: '#38BDF8' }} />
-          <span style={{ color: '#F8FAFC' }}>Sign out</span>
+          <LogOut className="h-3.5 w-3.5 text-[#FF2E9A]" />
+          <span>Sign out</span>
         </button>
       </div>
     </div>
