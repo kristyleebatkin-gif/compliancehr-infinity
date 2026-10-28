@@ -195,7 +195,7 @@ export default function LandingProductShowcase() {
                       key={panel.id}
                       type="button"
                       onClick={() => setSelectedId(panel.id)}
-                      className={`flex min-h-[38px] w-full items-center justify-center gap-1.5 rounded-xl px-2 py-1.5 text-[11px] font-extrabold leading-tight transition ${
+                      className={`flex min-h-[38px] w-full items-center justify-center gap-1 whitespace-nowrap rounded-xl px-1.5 py-1.5 text-[10.5px] xl:text-[11px] font-extrabold leading-tight transition ${
                         isActive
                           ? 'bg-[#0A2B6D] text-white shadow-sm'
                           : 'border border-slate-200 bg-white text-[#0A2B6D] hover:border-[#0072FF] hover:text-[#0072FF]'
@@ -424,7 +424,7 @@ export default function LandingProductShowcase() {
                             <Icon className="h-3.5 w-3.5 text-white" />
                           </div>
                           <span
-                            className="rounded-full px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-tight leading-tight text-right"
+                            className="whitespace-nowrap rounded-full px-1.5 py-0.5 text-[8.5px] xl:text-[9px] font-extrabold uppercase tracking-tight leading-tight text-right"
                             style={{
                               backgroundColor: `${card.color}15`,
                               color: card.color,

@@ -232,18 +232,21 @@ export default function DemoBookingModal({ open, onClose, initialTopic = 'Execut
               </div>
 
               <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
-                <div className="flex items-center gap-2 text-xs font-semibold text-[#0A2B6D]/75">
-                  <ShieldCheck className="h-4 w-4 shrink-0 text-[#0072FF]" />
-                  <span>Direct enquiries: kristyleebatkin@live.com.au</span>
-                </div>
+                <a
+                  href="mailto:kristyleebatkin@live.com.au"
+                  className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-[#5A00D6]/20 bg-[#5A00D6]/5 px-2.5 py-1.5 text-xs font-extrabold text-[#5A00D6] hover:bg-[#5A00D6]/10"
+                >
+                  <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-[#0072FF]" />
+                  <span>kristyleebatkin@live.com.au</span>
+                </a>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-bold text-white shadow-md transition hover:opacity-95 disabled:opacity-60"
+                  className="inline-flex w-full sm:w-auto shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-xl px-5 py-2.5 text-sm font-extrabold text-white shadow-md transition hover:opacity-95 disabled:opacity-60"
                   style={{ background: BRAND_GRADIENT }}
                 >
                   <span>{submitting ? 'Confirming...' : 'Confirm Demo Booking'}</span>
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowRight className="h-4 w-4 shrink-0" />
                 </button>
               </div>
             </form>

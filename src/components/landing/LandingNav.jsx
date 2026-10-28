@@ -48,7 +48,7 @@ export default function LandingNav({ onBookDemo }) {
           </div>
         </Link>
 
-        <nav aria-label="Main navigation" className="hidden lg:flex items-center gap-2.5 xl:gap-4">
+        <nav aria-label="Main navigation" className="hidden lg:flex items-center gap-2 xl:gap-3.5">
           {NAV_LINKS.map(([label, href]) => (
             <a
               key={href}
@@ -63,7 +63,7 @@ export default function LandingNav({ onBookDemo }) {
         <div className="flex shrink-0 items-center gap-1.5">
           <Link
             to="/dashboard"
-            className="hidden sm:inline-flex items-center justify-center whitespace-nowrap rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-[11px] xl:text-xs font-extrabold text-[#5A00D6] shadow-2xs transition hover:border-[#0072FF] hover:text-[#0072FF]"
+            className="hidden xl:inline-flex items-center justify-center whitespace-nowrap rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-extrabold text-[#5A00D6] shadow-2xs transition hover:border-[#0072FF] hover:text-[#0072FF]"
           >
             Open Workspace
           </Link>
@@ -85,7 +85,7 @@ export default function LandingNav({ onBookDemo }) {
 
           <Link
             to="/register"
-            className="inline-flex items-center gap-1 whitespace-nowrap rounded-lg px-2.5 xl:px-3 py-1.5 text-[11px] xl:text-xs font-extrabold text-white shadow-sm transition hover:opacity-95"
+            className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-lg px-3 py-1.5 text-[11px] xl:text-xs font-extrabold text-white shadow-sm transition hover:opacity-95"
             style={{
               background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
             }}

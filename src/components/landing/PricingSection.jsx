@@ -298,21 +298,21 @@ export default function PricingSection({ onContactSales }) {
 
                       {/* Symmetrical 2-Column Credit Allowances */}
                       <div className="mt-3 grid grid-cols-2 gap-2 items-stretch">
-                        <div className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-2.5 text-center">
+                        <div className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white px-2 py-2 text-center">
                           <div className="flex items-center justify-center gap-1">
                             <Zap className="h-3.5 w-3.5 shrink-0 text-[#0072FF]" />
                             <span className="text-sm font-extrabold text-[#0A2B6D]">1,200</span>
                           </div>
-                          <span className="mt-0.5 text-[10.5px] font-semibold text-[#0A2B6D]/75 whitespace-nowrap">
+                          <span className="mt-0.5 text-[9.5px] xl:text-[10.5px] font-semibold text-[#0A2B6D]/75 whitespace-nowrap">
                             Message credits / mo
                           </span>
                         </div>
-                        <div className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-2.5 text-center">
+                        <div className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white px-2 py-2 text-center">
                           <div className="flex items-center justify-center gap-1">
                             <Layers className="h-3.5 w-3.5 shrink-0 text-[#5A00D6]" />
                             <span className="text-sm font-extrabold text-[#0A2B6D]">50,000</span>
                           </div>
-                          <span className="mt-0.5 text-[10.5px] font-semibold text-[#0A2B6D]/75 whitespace-nowrap">
+                          <span className="mt-0.5 text-[9.5px] xl:text-[10.5px] font-semibold text-[#0A2B6D]/75 whitespace-nowrap">
                             Integration credits / mo
                           </span>
                         </div>
@@ -336,15 +336,15 @@ export default function PricingSection({ onContactSales }) {
                     <div className="mt-5 space-y-2 border-t border-slate-100 pt-4">
                       <Link
                         to="/register"
-                        className="inline-flex min-h-[42px] w-full items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-extrabold text-white shadow-md transition hover:opacity-95"
+                        className="inline-flex min-h-[42px] w-full items-center justify-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-xs xl:text-sm font-extrabold text-white shadow-md transition hover:opacity-95"
                         style={{
                           background: isFeatured
                             ? 'linear-gradient(115deg, #0072FF 0%, #5A00D6 52%, #FF2E9A 100%)'
                             : '#0A2B6D',
                         }}
                       >
-                        <span>Start 14-Day Free Trial</span>
-                        <ArrowRight className="h-4 w-4 text-white" />
+                        <span>Start Free Trial (14 Days)</span>
+                        <ArrowRight className="h-4 w-4 shrink-0 text-white" />
                       </Link>
 
                       <button

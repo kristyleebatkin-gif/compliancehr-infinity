@@ -8,15 +8,15 @@ export default function LandingFooter({ onBookDemo }) {
       <div className="mx-auto max-w-[1440px] px-4 py-10 sm:px-6 lg:py-12">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 items-start">
           {/* Brand Column — Centred Logo + Centred Slogan + Single-Line 46 Connected Modules Pill */}
-          <div className="lg:col-span-5 flex flex-col items-center lg:items-start text-center lg:text-left space-y-3.5">
-            <Link to="/" className="inline-flex flex-col sm:flex-row items-center gap-3">
+          <div className="lg:col-span-4 flex flex-col items-center lg:items-start text-center lg:text-left space-y-3.5">
+            <Link to="/" className="inline-flex flex-col sm:flex-row items-center gap-2.5">
               <img
                 src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/6bf497716_generated_image.png"
                 alt="ComplianceHR Infinity logo"
-                className="h-11 w-12 shrink-0 object-contain"
+                className="h-10 w-10 shrink-0 object-contain"
               />
-              <div className="flex flex-col items-center text-center">
-                <div className="font-editorial text-2xl font-extrabold tracking-tight text-[#0A2B6D] leading-none whitespace-nowrap">
+              <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
+                <div className="font-editorial text-xl xl:text-2xl font-extrabold tracking-tight text-[#0A2B6D] leading-none whitespace-nowrap">
                   Compliance
                   <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                     HR
@@ -25,7 +25,7 @@ export default function LandingFooter({ onBookDemo }) {
                     Infinity
                   </span>
                 </div>
-                <div className="mt-1 text-[11px] font-extrabold text-[#0A2B6D]/85 text-center whitespace-nowrap">
+                <div className="mt-1 text-[10px] xl:text-[11px] font-extrabold text-[#0A2B6D]/85 whitespace-nowrap">
                   Complete Control. Greater Confidence. Brighter Success.
                 </div>
               </div>
@@ -36,15 +36,15 @@ export default function LandingFooter({ onBookDemo }) {
             </p>
 
             {/* 46 Connected Modules on One Single Line */}
-            <div className="inline-flex items-center gap-1.5 rounded-full border border-[#0072FF]/25 bg-[#0072FF]/5 px-3.5 py-1.5 text-[11px] font-extrabold text-[#0072FF] whitespace-nowrap">
+            <div className="inline-flex items-center gap-1.5 rounded-full border border-[#0072FF]/25 bg-[#0072FF]/5 px-3 py-1.5 text-[10px] xl:text-[11px] font-extrabold text-[#0072FF] whitespace-nowrap">
               <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-[#5A00D6]" />
               <span>46 Connected Modules · 356 NDIS Checkpoints · 17 Categories</span>
             </div>
           </div>
 
-          {/* Platform Links */}
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 lg:col-span-7 text-left">
-            <div>
+          {/* Platform Links — Sized so Get Started, Start Free Trial & Email Fit Cleanly on One Line */}
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-12 lg:col-span-8 text-left">
+            <div className="sm:col-span-3">
               <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
                 Platform Pillars
               </h3>
@@ -57,7 +57,7 @@ export default function LandingFooter({ onBookDemo }) {
               </ul>
             </div>
 
-            <div>
+            <div className="sm:col-span-4">
               <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
                 Quick Access
               </h3>
@@ -70,11 +70,11 @@ export default function LandingFooter({ onBookDemo }) {
               </ul>
             </div>
 
-            <div>
+            <div className="sm:col-span-5">
               <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
                 Get Started &amp; Support
               </h3>
-              <ul className="mt-3 space-y-2 text-xs sm:text-sm font-semibold text-[#0A2B6D]/80">
+              <ul className="mt-3 space-y-2.5 text-xs sm:text-sm font-semibold text-[#0A2B6D]/80">
                 <li>
                   <button
                     type="button"
@@ -85,13 +85,24 @@ export default function LandingFooter({ onBookDemo }) {
                     <ArrowUpRight className="h-3.5 w-3.5 shrink-0" />
                   </button>
                 </li>
-                <li><Link to="/register" className="whitespace-nowrap hover:text-[#0072FF]">Start 14-Day Free Trial</Link></li>
+                <li>
+                  <Link
+                    to="/register"
+                    className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg px-3 py-1.5 text-xs font-extrabold text-white shadow-2xs transition hover:opacity-95"
+                    style={{
+                      background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
+                    }}
+                  >
+                    <span>Start Free Trial (14 Days)</span>
+                    <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-white" />
+                  </Link>
+                </li>
                 <li><Link to="/login" className="whitespace-nowrap hover:text-[#0072FF]">Sign In to Workspace</Link></li>
                 <li><Link to="/help" className="whitespace-nowrap hover:text-[#0072FF]">Help &amp; Support Centre</Link></li>
                 <li>
                   <a
                     href="mailto:kristyleebatkin@live.com.au"
-                    className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-[#5A00D6]/20 bg-[#5A00D6]/5 px-2.5 py-1 text-xs font-extrabold text-[#5A00D6] hover:bg-[#5A00D6]/10"
+                    className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-[#5A00D6]/25 bg-[#5A00D6]/5 px-2.5 py-1.5 text-[11px] xl:text-xs font-extrabold text-[#5A00D6] hover:bg-[#5A00D6]/10"
                   >
                     <Mail className="h-3.5 w-3.5 shrink-0 text-[#FF2E9A]" />
                     <span>kristyleebatkin@live.com.au</span>

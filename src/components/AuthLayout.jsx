@@ -9,7 +9,7 @@ const DEFAULT_LOGO = "https://media.base44.com/images/public/6ac9f91f0d82b1f80ec
 export default function AuthLayout({ icon: Icon, title, subtitle, footer, children }) {
   return (
     <div className="app-readable min-h-screen flex flex-col justify-center items-center px-4 py-8 app-workspace-bg">
-      <div className="w-full max-w-md space-y-4">
+      <div className="w-full max-w-lg space-y-4">
         {/* Seamless Website <-> App Top Bar */}
         <div className="flex items-center justify-between gap-2 px-1">
           <Link
@@ -55,9 +55,13 @@ export default function AuthLayout({ icon: Icon, title, subtitle, footer, childr
                 <div>{SOFTWARE_INFO.sloganLine2}</div>
               </div>
 
-              <div className="space-y-1 pt-1 text-xs font-bold text-white/95">
-                <div>Developer: {SOFTWARE_INFO.developer.name}</div>
-                <div>Email: {SOFTWARE_INFO.developer.email}</div>
+              <div className="flex flex-wrap items-center gap-2 pt-1 text-xs font-extrabold text-white/95">
+                <span className="whitespace-nowrap rounded-md bg-white/15 px-2 py-0.5">
+                  Developer: {SOFTWARE_INFO.developer.name}
+                </span>
+                <span className="whitespace-nowrap rounded-md bg-white/15 px-2 py-0.5">
+                  {SOFTWARE_INFO.developer.email}
+                </span>
               </div>
             </div>
           </div>

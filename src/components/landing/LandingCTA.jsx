@@ -54,27 +54,27 @@ export default function LandingCTA({ onBookDemo }) {
             </div>
 
             {/* Right 5 Columns: Action Buttons & Executive Trust Card */}
-            <div className="lg:col-span-5 flex flex-col justify-center gap-3.5 rounded-2xl border border-white/25 bg-white/15 p-6 backdrop-blur-md shadow-xl">
+            <div className="lg:col-span-5 flex flex-col justify-center gap-3 rounded-2xl border border-white/25 bg-white/15 p-5 sm:p-6 backdrop-blur-md shadow-xl">
               <button
                 type="button"
                 onClick={() => onBookDemo && onBookDemo('Book a Personal Demo')}
-                className="inline-flex w-full items-center justify-center gap-2.5 rounded-2xl border-2 border-white bg-white px-6 py-4 text-base font-extrabold text-[#0A2B6D] shadow-lg transition hover:-translate-y-0.5 hover:bg-slate-50"
+                className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 whitespace-nowrap rounded-2xl border-2 border-white bg-white px-5 py-3.5 text-sm sm:text-base font-extrabold text-[#0A2B6D] shadow-lg transition hover:-translate-y-0.5 hover:bg-slate-50"
               >
-                <Calendar className="h-5 w-5 text-[#5A00D6]" />
+                <Calendar className="h-5 w-5 shrink-0 text-[#5A00D6]" />
                 <span>Book a Demo</span>
               </button>
 
               <Link
                 to="/register"
-                className="inline-flex w-full items-center justify-center gap-2.5 rounded-2xl border-2 border-white/40 bg-[#0A2B6D] px-6 py-4 text-base font-extrabold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-[#0A2B6D]/90"
+                className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 whitespace-nowrap rounded-2xl border-2 border-white/40 bg-[#0A2B6D] px-5 py-3.5 text-sm sm:text-base font-extrabold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-[#0A2B6D]/90"
               >
                 <span>Start Free Trial</span>
-                <ArrowRight className="h-5 w-5 text-[#00C6FF]" />
+                <ArrowRight className="h-5 w-5 shrink-0 text-[#00C6FF]" />
               </Link>
 
-              <div className="flex items-center justify-center gap-2 pt-1 text-xs font-bold text-white/90">
-                <ShieldCheck className="h-4 w-4 text-[#00C6FF]" />
-                <span>Set up in minutes · Dedicated Australian onboarding support</span>
+              <div className="flex items-center justify-center gap-1.5 pt-1 text-[11px] font-bold text-white/95 text-center">
+                <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-[#00C6FF]" />
+                <span>Set up in minutes · Dedicated Australian support</span>
               </div>
             </div>
           </div>

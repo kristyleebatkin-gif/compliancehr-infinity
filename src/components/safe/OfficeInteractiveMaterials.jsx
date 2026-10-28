@@ -140,22 +140,22 @@ export function CompanySafeMaterialPanel({ companyName = 'ComplianceHR Infinity'
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-1 text-[9.5px]">
-          <div className="flex items-center justify-between rounded border border-blue-200 bg-white px-2 py-1">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-[9.5px]">
+          <div className="flex items-center justify-between gap-1.5 rounded border border-blue-200 bg-white px-2 py-1">
             <span className="font-bold text-blue-700">Software</span>
-            <span className="font-extrabold text-blue-950">ComplianceHR Infinity</span>
+            <span className="font-extrabold text-blue-950 whitespace-nowrap">ComplianceHR Infinity</span>
           </div>
-          <div className="flex items-center justify-between rounded border border-purple-200 bg-white px-2 py-1">
+          <div className="flex items-center justify-between gap-1.5 rounded border border-purple-200 bg-white px-2 py-1">
             <span className="font-bold text-purple-700">Business</span>
-            <span className="font-extrabold text-purple-950 truncate max-w-[120px]">{resolvedBusinessName}</span>
+            <span className="font-extrabold text-purple-950 whitespace-nowrap">{resolvedBusinessName}</span>
           </div>
-          <div className="flex items-center justify-between rounded border border-pink-200 bg-white px-2 py-1">
+          <div className="flex items-center justify-between gap-1.5 rounded border border-pink-200 bg-white px-2 py-1">
             <span className="font-bold text-pink-700">Developer</span>
-            <span className="font-extrabold text-pink-950">Kristy Lee Whelan</span>
+            <span className="font-extrabold text-pink-950 whitespace-nowrap">Kristy Lee Whelan</span>
           </div>
-          <div className="flex items-center justify-between rounded border border-indigo-200 bg-white px-2 py-1">
+          <div className="sm:col-span-2 flex items-center justify-between gap-1.5 rounded border border-indigo-200 bg-white px-2 py-1">
             <span className="font-bold text-indigo-700">Email</span>
-            <span className="font-extrabold text-indigo-950 truncate">kristyleebatkin@live.com.au</span>
+            <span className="font-extrabold text-indigo-950 whitespace-nowrap">kristyleebatkin@live.com.au</span>
           </div>
         </div>
       </div>

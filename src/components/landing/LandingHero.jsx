@@ -87,23 +87,23 @@ export default function LandingHero({ onBookDemo }) {
                   Manage participants, staff, compliance, incidents, rostering, HR, invoicing and audit readiness from one connected platform.
                 </p>
 
-                {/* Two Primary CTA Buttons */}
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-0.5">
+                {/* Two Primary CTA Buttons — Equal Proportions & Crisp Single-Line Fit */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-0.5">
                   <button
                     type="button"
                     onClick={() => onBookDemo && onBookDemo('Book a Demo')}
-                    className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl border-2 border-white bg-white px-6 py-3 text-sm sm:text-base font-extrabold text-[#0A2B6D] shadow-xl transition hover:-translate-y-0.5 hover:bg-slate-50"
+                    className="inline-flex min-h-[46px] w-full items-center justify-center gap-2 whitespace-nowrap rounded-xl border-2 border-white bg-white px-5 py-2.5 text-sm xl:text-base font-extrabold text-[#0A2B6D] shadow-xl transition hover:-translate-y-0.5 hover:bg-slate-50"
                   >
-                    <Calendar className="h-4 w-4 text-[#5A00D6]" />
+                    <Calendar className="h-4 w-4 shrink-0 text-[#5A00D6]" />
                     <span>Book a Demo</span>
                   </button>
 
                   <Link
                     to={authed ? '/dashboard' : '/register'}
-                    className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl border-2 border-white/40 bg-[#0A2B6D]/85 px-6 py-3 text-sm sm:text-base font-extrabold text-white shadow-xl backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-[#0A2B6D]"
+                    className="inline-flex min-h-[46px] w-full items-center justify-center gap-2 whitespace-nowrap rounded-xl border-2 border-white/40 bg-[#0A2B6D]/85 px-5 py-2.5 text-sm xl:text-base font-extrabold text-white shadow-xl backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-[#0A2B6D]"
                   >
                     <span>Start Free Trial</span>
-                    <ArrowRight className="h-4 w-4 text-[#00C6FF]" />
+                    <ArrowRight className="h-4 w-4 shrink-0 text-[#00C6FF]" />
                   </Link>
                 </div>
 
@@ -117,7 +117,7 @@ export default function LandingHero({ onBookDemo }) {
                       <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#00C6FF] text-[#0A2B6D]">
                         <Check className="h-2.5 w-2.5 stroke-[3]" />
                       </span>
-                      <span className="leading-tight">{badge}</span>
+                      <span className="whitespace-nowrap leading-tight">{badge}</span>
                     </div>
                   ))}
                 </div>
@@ -133,15 +133,15 @@ export default function LandingHero({ onBookDemo }) {
                       className="flex flex-col justify-between rounded-2xl border border-white/30 bg-white/15 p-2.5 xl:p-3 text-left text-white backdrop-blur-md shadow-lg"
                     >
                       <div className="flex items-center justify-between gap-1">
-                        <span className="text-[9.5px] xl:text-[10px] font-extrabold uppercase tracking-wider text-white/90 leading-tight">
+                        <span className="text-[9px] xl:text-[10px] font-extrabold uppercase tracking-wider text-white/90 leading-tight whitespace-nowrap">
                           {kpi.label}
                         </span>
                         <Icon className="h-3.5 w-3.5 shrink-0" style={{ color: kpi.accent }} />
                       </div>
-                      <div className="mt-1 font-editorial text-lg xl:text-2xl font-extrabold text-white leading-tight">
+                      <div className="mt-1 font-editorial text-base xl:text-2xl font-extrabold text-white leading-tight whitespace-nowrap">
                         {kpi.value}
                       </div>
-                      <div className="mt-0.5 flex items-center gap-1 text-[9.5px] xl:text-[10px] font-semibold text-white/85 leading-tight">
+                      <div className="mt-0.5 flex items-center gap-1 text-[9.5px] xl:text-[10px] font-semibold text-white/85 leading-tight whitespace-nowrap">
                         <TrendingUp className="h-3 w-3 shrink-0 text-[#00C6FF]" />
                         <span>{kpi.sub}</span>
                       </div>
