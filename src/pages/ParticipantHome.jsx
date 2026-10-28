@@ -19,7 +19,7 @@ function StatusPill({ status }) {
   return <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${tone}`}>{status}</span>;
 }
 
-function Section({ icon: Icon, title, linkTo, linkLabel, emptyIcon, emptyTitle, emptyMessage, loading, count, children }) {
+function Section({ title, linkTo, linkLabel, emptyIcon, emptyTitle, emptyMessage, loading, count, children }) {
   return (
     <section className="space-y-2">
       <div className="flex items-center justify-between">
@@ -96,12 +96,12 @@ export default function ParticipantHome({ me }) {
           <div className="flex items-start gap-3">
             <UserRound className="mt-0.5 h-5 w-5 shrink-0 text-brand" />
             <div className="min-w-0 flex-1 space-y-1">
-              <div className="text-sm font-semibold">{profile.full_name}</div>
-              <div className="text-xs text-foreground/50">{profile.phone || ''}{profile.address ? ` · ${profile.address}` : ''}</div>
-              <div className="text-xs text-foreground/50">NDIS number: {profile.ndis_number || '—'}{profile.support_type ? ` · Support: ${profile.support_type}` : ''}</div>
-              {profile.about_me && <div className="text-xs text-foreground/60">{profile.about_me}</div>}
+              <div className="text-sm font-semibold">{profile?.full_name}</div>
+              <div className="text-xs text-foreground/50">{profile?.phone || ''}{profile?.address ? ` · ${profile.address}` : ''}</div>
+              <div className="text-xs text-foreground/50">NDIS number: {profile?.ndis_number || '—'}{profile?.support_type ? ` · Support: ${profile.support_type}` : ''}</div>
+              {profile?.about_me && <div className="text-xs text-foreground/60">{profile.about_me}</div>}
             </div>
-            <StatusPill status={profile.status || 'Active'} />
+            <StatusPill status={profile?.status || 'Active'} />
           </div>
         </div>
       </Section>
@@ -210,8 +210,8 @@ export default function ParticipantHome({ me }) {
             <Siren className="mt-0.5 h-5 w-5 shrink-0 text-danger" />
             <div className="min-w-0 flex-1">
               <div className="text-sm font-semibold text-danger">In an emergency call 000</div>
-              <div className="mt-1 text-sm">Emergency contact: <span className="font-medium">{profile.emergency_contact || '—'}</span></div>
-              {profile.emergency_contact_phone && (
+              <div className="mt-1 text-sm">Emergency contact: <span className="font-medium">{profile?.emergency_contact || '—'}</span></div>
+              {profile?.emergency_contact_phone && (
                 <a href={`tel:${profile.emergency_contact_phone}`} className="mt-1 inline-flex items-center gap-1 text-xs font-semibold text-brand hover:underline"><Phone className="h-3 w-3" />{profile.emergency_contact_phone}</a>
               )}
             </div>

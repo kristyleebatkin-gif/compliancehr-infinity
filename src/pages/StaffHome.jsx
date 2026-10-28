@@ -66,7 +66,6 @@ export default function StaffHome({ embedded = false } = {}) {
       if (receiptPage.status === 'fulfilled') setReceipts(receiptPage.value.items || []);
       const prof = profilePage.status === 'fulfilled' ? (profilePage.value.items || [])[0] || null : null;
       setProfile(prof);
-      // Participant goals for the participants this staff member supports
       if (prof && (prof.participant_team || []).length > 0) {
         const goalPage = await base44.entities.Goal.filter(
           { participant_name: { $in: prof.participant_team } },
@@ -82,7 +81,6 @@ export default function StaffHome({ embedded = false } = {}) {
     base44.auth.me().then((user) => { setMe(user); return load(user); }).catch(() => setLoading(false));
   }, [load]);
 
-  // Participants get their own personal dashboard at the same My Work address.
   if (me && me.role === 'Participant') return <ParticipantHome me={me} />;
 
   const openTasks = tasks.filter((t) => t.status !== 'Completed' && t.status !== 'Cancelled');

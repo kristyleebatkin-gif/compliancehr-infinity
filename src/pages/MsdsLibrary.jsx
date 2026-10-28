@@ -10,7 +10,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
-import { FlaskConical, Search, Download, ExternalLink, Phone, Siren, Plus, Loader2, Printer } from 'lucide-react';
+import { Search, Download, ExternalLink, Phone, Siren, Plus, Loader2, Printer } from 'lucide-react';
 import { downloadCsv } from '@/lib/csvExport';
 import { downloadChemicalRegister } from '@/lib/chemicalRegisterPdf';
 
@@ -49,7 +49,7 @@ const CHEMICAL_CSV_COLUMNS = [
 export default function MsdsLibrary() {
   const { toast } = useToast();
   const [chemicals, setChemicals] = useState([]);
-  const [total, setTotal] = useState(0);
+  const [, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('All');
@@ -97,7 +97,6 @@ export default function MsdsLibrary() {
 
   return (
     <div className="space-y-4">
-      {/* Emergency call prompts */}
       <div className="rounded-2xl border border-danger/30 bg-danger/10 p-4 shadow-sm">
         <div className="flex flex-wrap items-center gap-3">
           <div className="rounded-xl bg-danger p-2.5"><Siren className="h-6 w-6 text-white" /></div>
@@ -154,7 +153,7 @@ export default function MsdsLibrary() {
                     <ExternalLink className="h-3 w-3" />Download SDS / MSDS
                   </a>
                   {c.cas_number && c.cas_number !== 'Mixture' && (
-                    <a href={`tel:131126`} className="inline-flex h-7 items-center gap-1 rounded-md border border-border px-2.5 text-xs font-semibold text-danger hover:bg-danger/5"><Phone className="h-3 w-3" />Poisons</a>
+                    <a href="tel:131126" className="inline-flex h-7 items-center gap-1 rounded-md border border-border px-2.5 text-xs font-semibold text-danger hover:bg-danger/5"><Phone className="h-3 w-3" />Poisons</a>
                   )}
                 </div>
               </CardContent>

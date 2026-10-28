@@ -436,11 +436,30 @@ export default function EnterpriseCompletenessAndMyWorkSuite() {
               <button
                 key={ctrl}
                 type="button"
-                onClick={() => {
+                onClick={async () => {
+                  const prevCtrl = activeControl;
                   setActiveControl(ctrl);
+                  await Promise.allSettled([
+                    base44.entities.StatusLog.create({
+                      entity_type: 'ProviderAdministration',
+                      entity_id: ctrl,
+                      previous_status: prevCtrl,
+                      new_status: ctrl,
+                      changed_by: 'Provider Administrator',
+                      notes: `Provider Administrator updated live governance configuration (${ctrl})`,
+                    }),
+                    base44.functions.invoke('logUserAction', {
+                      action: 'Save',
+                      entity_type: 'ProviderAdministration',
+                      record_id: ctrl,
+                      record_title: ctrl,
+                      details: `Provider Admin Control Updated | Previous: ${prevCtrl} | New: ${ctrl}`,
+                      route: window.location.pathname,
+                    }),
+                  ]);
                   toast({
-                    title: `${ctrl} Active`,
-                    description: `Provider Administrator configuration panel switched to ${ctrl}.`,
+                    title: `${ctrl} Saved & Logged`,
+                    description: `Provider Administrator configuration persisted to database & Global Activity Log.`,
                   });
                 }}
                 className={`rounded-lg px-2.5 py-1 text-[10px] font-extrabold transition ${

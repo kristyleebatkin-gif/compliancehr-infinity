@@ -10,6 +10,55 @@
       "type": "string",
       "title": "Incident ID"
     },
+    "document_number": {
+      "type": "string",
+      "title": "Document Number"
+    },
+    "version": {
+      "type": "string",
+      "default": "v1.0",
+      "title": "Version"
+    },
+    "owner": {
+      "type": "string",
+      "title": "Record Owner"
+    },
+    "responsible_manager": {
+      "type": "string",
+      "title": "Responsible Manager"
+    },
+    "department": {
+      "type": "string",
+      "title": "Department"
+    },
+    "site": {
+      "type": "string",
+      "title": "Site / Residence"
+    },
+    "program": {
+      "type": "string",
+      "title": "Program (NDIS / Aged Care)"
+    },
+    "security_classification": {
+      "type": "string",
+      "enum": [
+        "Internal",
+        "Confidential",
+        "Restricted Clinical",
+        "Executive Safe"
+      ],
+      "default": "Restricted Clinical",
+      "title": "Security Classification"
+    },
+    "review_schedule": {
+      "type": "string",
+      "default": "Quarterly",
+      "title": "Review Schedule"
+    },
+    "audit_history": {
+      "type": "string",
+      "title": "Audit History"
+    },
     "date_occurred": {
       "type": "string",
       "format": "date",
@@ -178,6 +227,30 @@
     "reportability_decision_reasons": {
       "type": "string",
       "title": "Reportability Decision and Reasons"
+    },
+    "sirs_reportable": {
+      "type": "boolean",
+      "default": false,
+      "title": "Aged Care SIRS Reportable"
+    },
+    "sirs_priority": {
+      "type": "string",
+      "enum": [
+        "Not Applicable",
+        "Priority 1 - 24 Hours",
+        "Priority 2 - 30 Days"
+      ],
+      "default": "Not Applicable",
+      "title": "Aged Care SIRS Priority"
+    },
+    "sirs_notified_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Aged Care SIRS Notified At"
+    },
+    "aged_care_standard": {
+      "type": "string",
+      "title": "Aged Care Quality Standard"
     },
     "provider_awareness_at": {
       "type": "string",

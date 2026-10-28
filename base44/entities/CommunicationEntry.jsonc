@@ -15,6 +15,76 @@
       ],
       "title": "Entry Kind"
     },
+    "document_number": {
+      "type": "string",
+      "title": "Document Number"
+    },
+    "version": {
+      "type": "string",
+      "default": "v1.0",
+      "title": "Version"
+    },
+    "department": {
+      "type": "string",
+      "title": "Department"
+    },
+    "site": {
+      "type": "string",
+      "title": "Site / Residence"
+    },
+    "program": {
+      "type": "string",
+      "title": "Program (NDIS / Aged Care)"
+    },
+    "security_classification": {
+      "type": "string",
+      "enum": [
+        "Internal",
+        "Confidential",
+        "Restricted Clinical",
+        "Executive Safe"
+      ],
+      "default": "Internal",
+      "title": "Security Classification"
+    },
+    "lifecycle_status": {
+      "type": "string",
+      "enum": [
+        "Sent",
+        "Delivered",
+        "Read",
+        "Acknowledged",
+        "Responded",
+        "Archived"
+      ],
+      "default": "Sent",
+      "title": "6-Stage Communication Lifecycle Status"
+    },
+    "delivered_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Delivered Timestamp"
+    },
+    "read_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Read Timestamp"
+    },
+    "acknowledged_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Acknowledged Timestamp"
+    },
+    "responded_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Responded Timestamp"
+    },
+    "archived_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Archived Timestamp"
+    },
     "person_type": {
       "type": "string",
       "enum": [

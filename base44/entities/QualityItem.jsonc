@@ -6,15 +6,89 @@
       "type": "string",
       "title": "Title"
     },
+    "document_number": {
+      "type": "string",
+      "title": "Document Number"
+    },
+    "version": {
+      "type": "string",
+      "default": "v1.0",
+      "title": "Version"
+    },
+    "responsible_manager": {
+      "type": "string",
+      "title": "Responsible Manager"
+    },
+    "department": {
+      "type": "string",
+      "title": "Department"
+    },
+    "site": {
+      "type": "string",
+      "title": "Site / Residence"
+    },
+    "program": {
+      "type": "string",
+      "title": "Program (NDIS / Aged Care)"
+    },
+    "security_classification": {
+      "type": "string",
+      "enum": [
+        "Internal",
+        "Confidential",
+        "Restricted Clinical",
+        "Executive Safe"
+      ],
+      "default": "Internal",
+      "title": "Security Classification"
+    },
+    "review_schedule": {
+      "type": "string",
+      "default": "Quarterly",
+      "title": "Review Schedule"
+    },
+    "audit_history": {
+      "type": "string",
+      "title": "Audit History"
+    },
     "type": {
       "type": "string",
       "enum": [
         "Idea",
         "Suggestion",
-        "Corrective Action"
+        "Improvement",
+        "Corrective Action",
+        "Preventive Action",
+        "Lessons Learned"
       ],
-      "default": "Idea",
-      "title": "Type"
+      "default": "Improvement",
+      "title": "Register Type"
+    },
+    "source_type": {
+      "type": "string",
+      "enum": [
+        "Audit",
+        "Review",
+        "Complaint",
+        "Risk",
+        "Incident",
+        "Staff Suggestion",
+        "Other"
+      ],
+      "default": "Audit",
+      "title": "Linked Source Type"
+    },
+    "source_record_id": {
+      "type": "string",
+      "title": "Linked Source Record ID"
+    },
+    "ndis_standard": {
+      "type": "string",
+      "title": "NDIS Practice Standard"
+    },
+    "aged_care_standard": {
+      "type": "string",
+      "title": "Aged Care Quality Standard"
     },
     "description": {
       "type": "string",

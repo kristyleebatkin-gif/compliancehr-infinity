@@ -1098,6 +1098,16 @@ export function exportControlledRecordAsPdf(record) {
   }
 
   doc.save(`${record.documentNumber}-${record.versionNumber}.pdf`);
+  base44.functions
+    .invoke('logUserAction', {
+      action: 'Export',
+      entity_type: record.module || 'ControlledDocument',
+      record_id: record.documentNumber,
+      record_title: record.documentName,
+      details: `Exported PDF (${record.documentNumber} ${record.versionNumber}) | Previous: Stored | New: Exported PDF`,
+      route: typeof window !== 'undefined' ? window.location.pathname : '/dashboard',
+    })
+    .catch(() => {});
 }
 
 export function exportControlledRecordAsWord(record) {

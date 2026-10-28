@@ -18,8 +18,6 @@ import { format } from 'date-fns';
 const fmt = (d) => d ? format(new Date(d), 'd MMM yyyy') : '';
 const MANAGEMENT = ['admin', 'Provider Administrator', 'Compliance Manager', 'Administration', 'Team Leader', 'Human Resources Manager'];
 
-// Name Tags module: staff make, download and email their own branded name tag;
-// management roles get the full badge creator for any staff member.
 export default function NameTags({ embedded = false, profile: selectedProfile } = {}) {
   const { toast } = useToast();
   const [me, setMe] = useState(null);
@@ -62,7 +60,7 @@ export default function NameTags({ embedded = false, profile: selectedProfile } 
       const { file_uri } = await base44.integrations.Core.UploadPrivateFile({
         file: new File([blob], `Staff Badge - ${profile.full_name}.pdf`, { type: 'application/pdf' }),
       });
-      const saved = await base44.entities.EmployeeDocument.create({
+      const savedDoc = await base44.entities.EmployeeDocument.create({
         title: `Staff Badge - ${profile.full_name}`,
         employee_name: profile.full_name,
         employee_email: profile.email || '',
@@ -71,7 +69,7 @@ export default function NameTags({ embedded = false, profile: selectedProfile } 
         file_uri,
         notes: 'Made by the employee in the Name Tags module.',
       });
-      logUserAction('Document Uploaded', 'Employee Document', { record_id: saved?.id, record_title: `Staff Badge - ${profile.full_name}`, details: 'Name tag saved to My Documents', person: { profile_type: 'employee', profile_id: profile.id, profile_name: profile.full_name } });
+      logUserAction('Document Uploaded', 'Employee Document', { record_id: savedDoc?.id, record_title: `Staff Badge - ${profile.full_name}`, details: 'Name tag saved to My Documents', person: { profile_type: 'employee', profile_id: profile.id, profile_name: profile.full_name } });
       toast({ title: 'Name tag saved to My Documents' });
       load();
     } catch (error) {
