@@ -142,7 +142,7 @@ export default function QuickAppBar() {
   const [litIdx, setLitIdx] = useState(0);
   const [cycleIdx, setCycleIdx] = useState(0);
 
-  // Light up iPad screens one by one every 1.8 seconds
+  // Highlight one module tile at a time every 1.8 seconds
   useEffect(() => {
     const lightTimer = setInterval(() => {
       setLitIdx((prev) => (prev + 1) % QUICK_LINKS.length);
@@ -150,7 +150,7 @@ export default function QuickAppBar() {
     return () => clearInterval(lightTimer);
   }, []);
 
-  // Change all iPad screen views every 30 seconds
+  // Rotate the featured view shown under each module every 30 seconds
   useEffect(() => {
     const viewTimer = setInterval(() => {
       setCycleIdx((prev) => (prev + 1) % 3);
@@ -164,7 +164,7 @@ export default function QuickAppBar() {
       : location.pathname === path || location.pathname.startsWith(`${path}/`);
 
   return (
-    <div className="mx-auto w-full max-w-[1440px] px-4 pt-3 sm:px-6 lg:px-8">
+    <div className="mx-auto w-full max-w-[1440px] bg-white px-4 pt-3 sm:px-6 lg:px-8">
       <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-2xs sm:p-4">
         {/* Landing-style header: gradient editorial title + live status pill */}
         <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
@@ -182,7 +182,7 @@ export default function QuickAppBar() {
 
           <span className="inline-flex shrink-0 items-center gap-1.5 self-start rounded-full border border-[#0072FF]/25 bg-[#0072FF]/5 px-3 py-1 text-[10.5px] font-extrabold text-[#0072FF] sm:self-auto">
             <Radio className="h-3 w-3 shrink-0 text-[#FF2E9A]" />
-            <span>
+            <span className="whitespace-nowrap">
               Live · {String(litIdx + 1).padStart(2, '0')}/{QUICK_LINKS.length} · View {(cycleIdx % 3) + 1}/3
             </span>
           </span>
@@ -204,7 +204,7 @@ export default function QuickAppBar() {
                   active
                     ? 'border-[#5A00D6] bg-[#F5F0FF] shadow-2xs'
                     : 'border-slate-200 bg-white hover:-translate-y-0.5 hover:border-[#0072FF]/40 hover:shadow-md'
-                } ${isLit ? 'ring-1 ring-[#00C6FF]/60' : ''}`}
+                } ${isLit && !active ? 'ring-1 ring-[#00C6FF]/60' : ''}`}
               >
                 <div className="flex items-start justify-between gap-1">
                   <span

@@ -447,7 +447,7 @@ export default function AppLayout() {
           </div>
         </header>
 
-        <main className="relative z-0 flex-1 overflow-y-auto pb-20 md:pb-0">
+        <main className="relative z-0 flex-1 overflow-y-auto bg-white pb-20 md:pb-0">
           <QuickAppBar />
           <div className={location.pathname === '/staff' || location.pathname.startsWith('/staff/') ? 'mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8' : 'mx-auto max-w-[1440px] px-4 pt-3 sm:px-6 lg:px-8 md:pt-4'}>
             <PendingApprovalNotice />
@@ -514,18 +514,12 @@ export default function AppLayout() {
                       <Link
                         key={item.path}
                         to={item.path}
-                        className="flex flex-col items-center gap-1.5 rounded-xl border p-3 text-xs font-extrabold text-foreground hover:shadow-sm"
-                        style={{
-                          borderColor: `${modColor}55`,
-                          borderTopWidth: '3px',
-                          borderTopColor: modColor,
-                          background: `linear-gradient(145deg, ${modColor}18, #ffffff)`,
-                        }}
+                        className="flex flex-col items-center gap-1.5 rounded-xl border border-slate-200 bg-white p-3 text-center text-xs font-extrabold text-[#0A2B6D] shadow-2xs transition hover:-translate-y-0.5 hover:border-[#0072FF]/40 hover:shadow-md"
                       >
-                        <span className="flex h-7 w-7 items-center justify-center rounded-lg text-white shadow-sm" style={{ background: modColor }}>
-                          <Icon className="h-4 w-4" />
+                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg shadow-2xs" style={{ background: modColor }}>
+                          <Icon className="h-4 w-4 text-white" style={{ color: '#FFFFFF' }} />
                         </span>
-                        {navLabel(item)}
+                        <span className="break-words leading-snug">{navLabel(item)}</span>
                       </Link>
                     );
                   })}
