@@ -2,6 +2,7 @@ import React from 'react';
 import { Siren } from 'lucide-react';
 import ModuleShell from '@/components/module/ModuleShell';
 import WorkforcePresenceSafetyCentre from '@/components/emergency/WorkforcePresenceSafetyCentre';
+import EnterpriseOperationsAttendancePayrollFramework from '@/components/operations/EnterpriseOperationsAttendancePayrollFramework';
 
 export default function WorkforcePresenceCentre() {
   return (
@@ -10,9 +11,10 @@ export default function WorkforcePresenceCentre() {
         icon={Siren}
         moduleKey="emergency-response"
         title="Workforce Presence, Visitor Management, Site Attendance & Emergency Accountability Centre"
-        subtitle="Unified 9-Role Attendance, Contractor & Visitor Registers, Live Facility Occupancy, First Aid & Fire Warden Coverage, Emergency Roll Call & 4-Format Exports"
+        subtitle="Unified 9-Role Attendance, SCHADS Award & Shift Integrity, Service Delivery Docs, Medication & Vehicle Compliance, 6-Monthly Fire Drills & Emergency Roll Call"
       />
       <WorkforcePresenceSafetyCentre />
+      <EnterpriseOperationsAttendancePayrollFramework />
     </div>
   );
 }

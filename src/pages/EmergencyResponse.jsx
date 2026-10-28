@@ -22,6 +22,7 @@ import EmergencyResources from '@/components/emergency/EmergencyResources';
 import LiveAlerts from '@/components/emergency/LiveAlerts';
 import EmergencyQuickDial from '@/components/emergency/EmergencyQuickDial';
 import OfflineFieldCapture from '@/components/safety/OfflineFieldCapture';
+import WorkforcePresenceSafetyCentre from '@/components/emergency/WorkforcePresenceSafetyCentre';
 
 
 export default function EmergencyResponse({ embedded = false } = {}) {
@@ -124,6 +125,7 @@ export default function EmergencyResponse({ embedded = false } = {}) {
         </Badge>
       </div>
 
+      <WorkforcePresenceSafetyCentre />
       {!employee && <EmergencyQuickDial />}
 
       {!employee && <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">

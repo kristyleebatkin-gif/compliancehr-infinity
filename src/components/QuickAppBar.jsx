@@ -13,6 +13,7 @@ const BRAND_GRADIENT =
 
 const QUICK_LINKS = [
   { key: 'dashboard', label: 'Dashboard', views: ['Executive & Role Hub', 'Live KPI Score Ring', 'Morning Shift Brief'], path: '/dashboard', icon: LayoutDashboard },
+  { key: 'workforce-presence', label: 'Workforce Presence & Safety', views: ['Live Occupancy & Roll Call', 'Visitor & Contractor Log', 'First Aid & Fire Wardens'], path: '/workforce-presence', icon: AlertTriangle },
   { key: 'universal-storage', label: 'Universal Storage Hub', views: ['6-Destination Auto-Save', '11-Attribute Search', 'PDF · Word · Excel · CSV'], path: '/universal-storage', icon: Vault },
   { key: 'operations-centre', label: 'Operations Centre', views: ['1-Click Live Sweeps', '12 Armed Actions', 'Live Audit Trail'], path: '/operations-centre', icon: Sparkles },
   { key: 'rostering', label: 'Roster & Shifts', views: ['SCHADS & Coverage', 'Fatigue Gatekeeper', 'Calendar Sync'], path: '/roster', icon: CalendarClock },
