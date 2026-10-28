@@ -4,6 +4,7 @@ import ModuleShell from '@/components/module/ModuleShell';
 import WorkforcePresenceSafetyCentre from '@/components/emergency/WorkforcePresenceSafetyCentre';
 import EnterpriseOperationsAttendancePayrollFramework from '@/components/operations/EnterpriseOperationsAttendancePayrollFramework';
 import FrontlineWorkerMobileRapidSuite from '@/components/operations/FrontlineWorkerMobileRapidSuite';
+import MasterEnterpriseEcosystemConsolidationSuite from '@/components/operations/MasterEnterpriseEcosystemConsolidationSuite';
 
 export default function WorkforcePresenceCentre() {
   return (
@@ -12,10 +13,11 @@ export default function WorkforcePresenceCentre() {
         icon={Siren}
         moduleKey="emergency-response"
         title="Workforce Presence, Visitor Management, Site Attendance & Emergency Accountability Centre"
-        subtitle="Frontline Mobile-First Rapid Completion ('Finish My Shift'), Unified 9-Role Attendance, SCHADS Award & Shift Integrity, Service Delivery Docs & Emergency Roll Call"
+        subtitle="Unified 9-Role Attendance, Emergency Roll Call, SCHADS & Shift Integrity, Frontline 'Finish My Shift' Rapid Suite, Daily 7PM Preservation & 5-Role Profile Intelligence"
       />
-      <FrontlineWorkerMobileRapidSuite />
       <WorkforcePresenceSafetyCentre />
+      <MasterEnterpriseEcosystemConsolidationSuite />
+      <FrontlineWorkerMobileRapidSuite />
       <EnterpriseOperationsAttendancePayrollFramework />
     </div>
   );
