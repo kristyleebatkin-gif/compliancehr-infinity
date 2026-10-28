@@ -8,7 +8,108 @@
     },
     "category": {
       "type": "string",
-      "title": "Category"
+      "title": "Checklist / Assessment Type",
+      "default": "Compliance Checklists"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Draft",
+        "In Progress",
+        "Under Review",
+        "Approved",
+        "Action Required",
+        "Completed"
+      ],
+      "default": "In Progress"
+    },
+    "outcome": {
+      "type": "string",
+      "title": "Assessment Outcome",
+      "default": "Compliant"
+    },
+    "recommendations": {
+      "type": "string",
+      "title": "Recommendations"
+    },
+    "actions": {
+      "type": "string",
+      "title": "Follow-Up Actions"
+    },
+    "evidence_uri": {
+      "type": "string",
+      "title": "Evidence Private File URI"
+    },
+    "evidence_name": {
+      "type": "string",
+      "title": "Evidence File Name"
+    },
+    "reviewer": {
+      "type": "string",
+      "title": "Reviewer"
+    },
+    "review_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Review Date"
+    },
+    "approved_by": {
+      "type": "string",
+      "title": "Approved By"
+    },
+    "approval_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Approval Date"
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": [
+        "Pending Approval",
+        "Approved",
+        "Changes Required"
+      ],
+      "default": "Approved",
+      "title": "Approval Status"
+    },
+    "digital_signature": {
+      "type": "string",
+      "title": "Digital Signature"
+    },
+    "witness_signature": {
+      "type": "string",
+      "title": "Witness Digital Signature"
+    },
+    "signature_timestamp": {
+      "type": "string",
+      "title": "Signature Timestamp"
+    },
+    "participant_id": {
+      "type": "string",
+      "title": "Linked Participant ID"
+    },
+    "participant_name": {
+      "type": "string",
+      "title": "Linked Participant Name"
+    },
+    "employee_id": {
+      "type": "string",
+      "title": "Linked Employee ID"
+    },
+    "employee_name": {
+      "type": "string",
+      "title": "Linked Employee Name"
+    },
+    "ndis_compliant": {
+      "type": "boolean",
+      "default": true,
+      "title": "NDIS Compliant"
+    },
+    "aged_care_compliant": {
+      "type": "boolean",
+      "default": true,
+      "title": "Aged Care Compliant"
     },
     "items": {
       "type": "array",
@@ -109,6 +210,11 @@
           "user_condition": {
             "role": "Volunteer"
           }
+        },
+        {
+          "user_condition": {
+            "role": "Auditor"
+          }
         }
       ]
     },
@@ -138,6 +244,11 @@
           "user_condition": {
             "role": "Team Leader"
           }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
         }
       ]
     },
@@ -166,6 +277,11 @@
         {
           "user_condition": {
             "role": "Team Leader"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
           }
         }
       ]
