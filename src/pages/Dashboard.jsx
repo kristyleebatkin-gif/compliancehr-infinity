@@ -36,8 +36,8 @@ const HEADINGS = {
 };
 
 const DASHBOARD_SUITES = [
-  { id: 'all', label: 'Full Merged Dashboard', sub: 'All Original & Current Suites Together', icon: Layers, color: '#ea580c' },
-  { id: 'overview', label: 'Original Overview & 45 Modules', sub: 'KPIs · Announcements · Quick Start · Live Trackers', icon: LayoutGrid, color: '#4f46e5' },
+  { id: 'all', label: 'All Workspaces', sub: 'Your complete dashboard in one place', icon: Layers, color: '#ea580c' },
+  { id: 'overview', label: 'Overview & Modules', sub: 'KPIs · Announcements · Quick Start · Live Trackers', icon: LayoutGrid, color: '#4f46e5' },
   { id: 'office-wall', label: 'Interactive Office & Profile Scene', sub: 'Dual Office Wall · Safe · Modular Screens', icon: Building2, color: '#0284c7' },
   { id: 'control-centre', label: 'Infinity Control Centre', sub: '356 Audit Checks · 98 Docs · Approvals', icon: ShieldCheck, color: '#7c3aed' },
   { id: 'one-click', label: '1-Click Operations Deck', sub: '12 Instant Executive Actions', icon: Zap, color: '#db2777' },
@@ -63,7 +63,7 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="bright-dashboard mx-auto max-w-6xl p-3 md:p-5 space-y-4">
+    <div className="bright-dashboard mx-auto w-full max-w-[1440px] px-4 py-5 sm:px-6 lg:px-8 space-y-6">
       <PageHeader
         icon={ShieldCheck}
         title={firstName ? `Welcome, ${firstName}` : heading.title}
@@ -76,7 +76,7 @@ export default function Dashboard() {
 
       {/* Unified Dashboard Command Navigator — Framed in Top Section Template */}
       <section
-        className="rounded-3xl p-[12px] shadow-lg"
+        className="rounded-3xl p-[2px] shadow-sm"
         style={{
           background:
             'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
@@ -90,14 +90,14 @@ export default function Dashboard() {
             <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
               <Sparkles className="h-3.5 w-3.5 text-white" />
             </span>
-            <span>Merged Original &amp; Current Executive Dashboard</span>
+            <span>Your Dashboard</span>
           </span>
 
           <p className="mx-auto max-w-3xl text-xs sm:text-sm font-extrabold text-[#5A00D6]">
-            Showing all original published widgets and current Infinity suites together — click any pill to focus on a single area.
+            Choose a workspace to focus on your priorities, or view all areas together.
           </p>
 
-          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 lg:grid-cols-4">
+          <div className="grid auto-rows-fr grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
             {DASHBOARD_SUITES.map((s, idx) => {
               const Icon = s.icon;
               const active = activeSuite === s.id;
@@ -108,8 +108,9 @@ export default function Dashboard() {
                   key={s.id}
                   type="button"
                   onClick={() => setActiveSuite(s.id)}
-                  className={`flex items-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-3.5 py-2 text-left transition-all hover:-translate-y-0.5 ${
-                    active ? 'ring-2 ring-[#0A2B6D] shadow-md' : 'shadow-2xs'
+                  aria-pressed={active}
+                  className={`flex min-h-[100px] items-start gap-3 rounded-2xl border border-[#0A2B6D]/15 p-4 text-left transition-all hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#5A00D6] ${
+                    active ? 'ring-2 ring-[#5A00D6] shadow-md' : 'shadow-2xs hover:shadow-md'
                   }`}
                   style={{ backgroundColor: tile.bg, color: tile.text }}
                 >
@@ -117,10 +118,10 @@ export default function Dashboard() {
                     <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
                   </span>
                   <div className="min-w-0 flex-1">
-                    <div className="text-xs font-extrabold leading-tight" style={{ color: tile.text }}>
+                    <div className="break-words text-sm font-bold leading-snug" style={{ color: tile.text }}>
                       {s.label}
                     </div>
-                    <div className="text-[10px] font-bold leading-tight" style={{ color: tile.subtext }}>
+                    <div className="mt-1 break-words text-xs font-medium leading-relaxed" style={{ color: tile.subtext }}>
                       {s.sub}
                     </div>
                   </div>
