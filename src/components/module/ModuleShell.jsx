@@ -10,25 +10,25 @@ const TOP_BORDER_GRADIENT =
 
 export default function ModuleShell({
   embedded = false,
-  header,
-  title,
-  subtitle,
-  icon,
-  moduleKey,
-  tabs,
-  actions,
-  search,
-  insightModule,
-  insight,
+  header = null,
+  title = '',
+  subtitle = '',
+  icon = undefined,
+  moduleKey = '',
+  tabs = null,
+  actions = null,
+  search = null,
+  insightModule = null,
+  insight = null,
   insightAfterTiles = false,
-  small,
-  medium,
+  small = null,
+  medium = null,
   large = [],
   children,
 }) {
   const colour = moduleKeyColour(moduleKey) || '#0072FF';
   const rows = (
-    <div className="space-y-3" style={{ '--module-colour': colour }}>
+    <div className="module-shell-workspace min-w-0 space-y-4" style={{ '--module-colour': colour }}>
       {!insightAfterTiles && insight}
       {!insightAfterTiles && insightModule && <RegisterInsights module={insightModule} />}
 
@@ -37,20 +37,20 @@ export default function ModuleShell({
           className="rounded-3xl p-[10px] shadow-md"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="module-shell-actions module-action-bar flex flex-wrap items-center justify-center rounded-[14px] bg-white p-3 [&_button]:rounded-full [&_button]:border-2 [&_button]:border-[#0A2B6D]">
+          <div role="group" aria-label={`${title || 'Module'} actions`} className="module-shell-actions module-action-bar flex flex-wrap items-center justify-center rounded-[14px] bg-white p-3 [&_button]:rounded-full [&_button]:border-2 [&_button]:border-[#0A2B6D]">
             {actions}
           </div>
         </div>
       )}
 
-      {tabs && <div className="w-full">{tabs}</div>}
+      {tabs && <div className="min-w-0 w-full">{tabs}</div>}
 
       {search && (
         <div
           className="rounded-3xl p-[10px] shadow-md"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="rounded-[14px] bg-white p-2.5">{search}</div>
+          <div role="search" aria-label={`${title || 'Module'} search and filters`} className="module-shell-search min-w-0 rounded-[14px] bg-white p-3">{search}</div>
         </div>
       )}
 
@@ -84,10 +84,26 @@ export default function ModuleShell({
     </div>
   );
 
-  if (embedded) return <div className="space-y-3">{tabs}{children}</div>;
+  const supportingSections = large.map((section) => (
+    <CollapsibleSection key={section.key || section.title} title={section.title}>
+      {section.content}
+    </CollapsibleSection>
+  ));
+
+  if (embedded) {
+    return (
+      <div className="module-shell-workspace min-w-0 space-y-4" style={{ '--module-colour': colour }}>
+        {rows}
+        {children}
+        {insightAfterTiles && insight}
+        {insightAfterTiles && insightModule && <RegisterInsights module={insightModule} />}
+        {supportingSections}
+      </div>
+    );
+  }
 
   return (
-    <div className="space-y-3" style={{ '--module-colour': colour }}>
+    <div className="module-shell-workspace min-w-0 space-y-4" style={{ '--module-colour': colour }}>
       {header ? (
         <>
           {header}
@@ -105,11 +121,7 @@ export default function ModuleShell({
       {children}
       {insightAfterTiles && insight}
       {insightAfterTiles && insightModule && <RegisterInsights module={insightModule} />}
-      {large.map((s) => (
-        <CollapsibleSection key={s.key || s.title} title={s.title}>
-          {s.content}
-        </CollapsibleSection>
-      ))}
+      {supportingSections}
     </div>
   );
 }
