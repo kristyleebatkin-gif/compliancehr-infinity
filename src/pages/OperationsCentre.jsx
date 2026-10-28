@@ -8,6 +8,7 @@ import FrontlineWorkerMobileRapidSuite from '@/components/operations/FrontlineWo
 import MasterEnterpriseEcosystemConsolidationSuite from '@/components/operations/MasterEnterpriseEcosystemConsolidationSuite';
 import UniversalRecordIntelligenceRoutingSuite from '@/components/operations/UniversalRecordIntelligenceRoutingSuite';
 import UniversalUserSuccessEvidenceFirstSuite from '@/components/operations/UniversalUserSuccessEvidenceFirstSuite';
+import UniversalRegisterManagementHubSuite from '@/components/operations/UniversalRegisterManagementHubSuite';
 
 export default function OperationsCentre() {
   return (
@@ -17,6 +18,7 @@ export default function OperationsCentre() {
         description="Unified whole-of-enterprise command across NDIS Practice Standards, Aged Care Quality Standards, SIRS, ISO 31000 Risk, Workforce & Document Control."
       />
       <UniversalUserSuccessEvidenceFirstSuite />
+      <UniversalRegisterManagementHubSuite />
       <UniversalRecordIntelligenceRoutingSuite />
       <MasterEnterpriseEcosystemConsolidationSuite />
       <FrontlineWorkerMobileRapidSuite />

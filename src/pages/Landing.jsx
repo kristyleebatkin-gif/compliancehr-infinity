@@ -3,6 +3,7 @@ import './landing-layout.css';
 import LandingNav from '@/components/landing/LandingNav';
 import LandingHero from '@/components/landing/LandingHero';
 import UniversalUserSuccessEvidenceFirstSuite from '@/components/operations/UniversalUserSuccessEvidenceFirstSuite';
+import UniversalRegisterManagementHubSuite from '@/components/operations/UniversalRegisterManagementHubSuite';
 import LandingProductShowcase from '@/components/landing/LandingProductShowcase';
 import LandingSolutionSection from '@/components/landing/LandingSolutionSection';
 import LandingStatsSection from '@/components/landing/LandingStatsSection';
@@ -40,6 +41,9 @@ export default function Landing() {
 
         {/* Top-Level Platform Rule: Universal User Success, Rapid Access & Evidence-First Standard */}
         <UniversalUserSuccessEvidenceFirstSuite />
+
+        {/* Universal Register Management, Record Indexing, Register Health & Document Hub Standard */}
+        <UniversalRegisterManagementHubSuite />
 
         {/* 2. Dashboard Showcase Section (Landscape) */}
         <LandingProductShowcase />

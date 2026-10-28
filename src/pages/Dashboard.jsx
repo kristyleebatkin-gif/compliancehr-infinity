@@ -39,6 +39,7 @@ import FrontlineWorkerMobileRapidSuite from '@/components/operations/FrontlineWo
 import MasterEnterpriseEcosystemConsolidationSuite from '@/components/operations/MasterEnterpriseEcosystemConsolidationSuite';
 import UniversalRecordIntelligenceRoutingSuite from '@/components/operations/UniversalRecordIntelligenceRoutingSuite';
 import UniversalUserSuccessEvidenceFirstSuite from '@/components/operations/UniversalUserSuccessEvidenceFirstSuite';
+import UniversalRegisterManagementHubSuite from '@/components/operations/UniversalRegisterManagementHubSuite';
 import { Activity, ShieldCheck, Sparkles, Zap, LayoutGrid, ClipboardCheck, Layers, Building2, Cpu } from 'lucide-react';
 
 const HEADINGS = {
@@ -149,6 +150,7 @@ export default function Dashboard() {
       {isSuiteVisible('overview') && (
         <>
           <UniversalUserSuccessEvidenceFirstSuite />
+          <UniversalRegisterManagementHubSuite />
           <WorkforcePresenceSafetyCentre />
           <UniversalRecordIntelligenceRoutingSuite />
           <MasterEnterpriseEcosystemConsolidationSuite />

@@ -13,6 +13,7 @@ const BRAND_GRADIENT =
 
 const QUICK_LINKS = [
   { key: 'dashboard', label: 'Dashboard', views: ['Executive & Role Hub', 'Live KPI Score Ring', 'Morning Shift Brief'], path: '/dashboard', icon: LayoutDashboard },
+  { key: 'registers', label: '45 Master Registers Hub', views: ['Register Health Dashboard', '45 Auto-Updated Registers', '6 Register Checklists'], path: '/registers', icon: Sparkles },
   { key: 'user-success', label: 'User Success & Evidence Hub', views: ['5 Role Workspaces', '8-Task Speed Standard', 'Manager & Audit Mode'], path: '/user-success', icon: Sparkles },
   { key: 'record-intelligence', label: 'Record Intelligence Hub', views: ['18-Signal Extractor', 'Call & Comm Router', '11-Category Document Hub'], path: '/record-intelligence', icon: Sparkles },
   { key: 'frontline-hub', label: 'Frontline Rapid Hub', views: ['Finish My Shift Gate', 'Voice-to-Text & AI Notes', '✓ Yes / ✗ No Checklists'], path: '/frontline-hub', icon: ClipboardList },

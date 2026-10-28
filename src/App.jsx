@@ -48,6 +48,7 @@ import WorkforcePresenceCentre from '@/pages/WorkforcePresenceCentre';
 import FrontlineRapidHub from '@/pages/FrontlineRapidHub';
 import UniversalRecordIntelligenceHub from '@/pages/UniversalRecordIntelligenceHub';
 import UniversalUserSuccessHub from '@/pages/UniversalUserSuccessHub';
+import UniversalRegisterHub from '@/pages/UniversalRegisterHub';
 import ProgramsEvents from '@/pages/ProgramsEvents';
 import Communications from '@/pages/Communications';
 import IntakeCentre from '@/pages/IntakeCentre';
@@ -174,6 +175,7 @@ const AuthenticatedApp = () => {
           <Route path="/frontline-hub" element={<FrontlineRapidHub />} />
           <Route path="/record-intelligence" element={<UniversalRecordIntelligenceHub />} />
           <Route path="/user-success" element={<UniversalUserSuccessHub />} />
+          <Route path="/registers" element={<UniversalRegisterHub />} />
           <Route path="/programs" element={<RoleGate navKey="programs"><ProgramsEvents /></RoleGate>} />
           <Route path="/communications" element={<RoleGate navKey="communications"><Communications /></RoleGate>} />
           <Route path="/audit" element={<RoleGate navKey="audit-log"><Navigate to="/compliance" replace /></RoleGate>} />

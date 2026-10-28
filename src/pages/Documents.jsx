@@ -35,6 +35,7 @@ import ExpiryCalendar from '@/components/documents/ExpiryCalendar';
 import SmartMailroomHub from '@/components/documents/SmartMailroomHub';
 import EnterpriseStandardQualityGateSuite from '@/components/compliance/EnterpriseStandardQualityGateSuite';
 import UniversalDataStorageRetentionExportSuite from '@/components/compliance/UniversalDataStorageRetentionExportSuite';
+import UniversalRegisterManagementHubSuite from '@/components/operations/UniversalRegisterManagementHubSuite';
 
 const DOC_TYPES = ['Resume', 'Contract', 'Police Check', 'Blue Card', 'First Aid Certificate', 'CPR Certificate', 'NDIS Worker Screening', "Driver's License", 'Qualifications', 'Reference Check', 'Other'];
 const CATEGORIES = ['Mandatory', 'Compliance', 'Clinical', 'Professional Development', 'Induction'];
@@ -241,6 +242,12 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
             Every Document
           </TabsTrigger>
           {!profile && (
+            <TabsTrigger value="registers-hub" data-hint="45 Auto-Updated Master Registers & Register Health">
+              <Sparkles className="h-3.5 w-3.5" />
+              45 Master Registers &amp; Health
+            </TabsTrigger>
+          )}
+          {!profile && (
             <TabsTrigger value="smart-mailroom" data-hint="AI Auto-Classify & Route Uploads">
               <Sparkles className="h-3.5 w-3.5" />
               Smart Mailroom
@@ -271,6 +278,7 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
         </TabsList>
 
         <TabsContent value="documents" className="mt-3 space-y-3">
+          {!profile && <UniversalRegisterManagementHubSuite />}
           {!profile && <UniversalDataStorageRetentionExportSuite />}
           {!profile && <DocumentsDashboard role={me?.role} focus={focus} />}
       <StaffDocumentToolbar profile={profile} staff={staff} scanning={scanning} scanMsg={scanMsg} onScan={runScan} onExport={exportAll} onAdd={() => { setEditing(null); setOpen(true); }} onDone={load} />
@@ -362,6 +370,11 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
 
         </TabsContent>
 
+        {!profile && (
+          <TabsContent value="registers-hub" className="mt-3">
+            <UniversalRegisterManagementHubSuite />
+          </TabsContent>
+        )}
         {!profile && (
           <TabsContent value="smart-mailroom" className="mt-3">
             <SmartMailroomHub onFiled={load} />
