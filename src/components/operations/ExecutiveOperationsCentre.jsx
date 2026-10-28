@@ -218,58 +218,70 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-1.5">
+            <div className="flex flex-wrap items-center gap-2">
               <Link
                 to="/compliance"
-                className="inline-flex items-center gap-1 rounded-lg bg-white px-2.5 py-1 text-[8px] font-black text-purple-950 shadow-sm hover:bg-purple-50"
+                className="inline-flex items-center gap-1.5 rounded-xl border border-white/60 bg-white px-3 py-1.5 text-xs font-extrabold text-[#0A2B6D] shadow-sm hover:bg-[#F5F0FF]"
               >
-                <ShieldCheck className="h-3 w-3 text-purple-700" />
+                <ShieldCheck className="h-3.5 w-3.5 text-[#5A00D6]" />
                 Compliance &amp; Report Centre
               </Link>
               <Link
                 to="/shared-to-do"
-                className="inline-flex items-center gap-1 rounded-lg bg-amber-300 px-2.5 py-1 text-[8px] font-black text-blue-950 shadow-sm hover:bg-amber-200"
+                className="inline-flex items-center gap-1.5 rounded-xl border border-white/60 bg-white px-3 py-1.5 text-xs font-extrabold text-[#0A2B6D] shadow-sm hover:bg-[#F5F0FF]"
               >
-                <ClipboardCheck className="h-3 w-3" />
+                <ClipboardCheck className="h-3.5 w-3.5 text-[#0072FF]" />
                 Shared To-Do Command Board
               </Link>
             </div>
           </div>
         </div>
 
-        {/* Executive Live KPI Command Bar */}
-        <div className="bg-white p-1.5 space-y-1.5">
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-1">
+        {/* Executive Live KPI Command Bar — Visually Matching Quick Access */}
+        <div className="bg-white p-3 space-y-3">
+          <div className="grid auto-rows-fr grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-8 items-stretch">
             {[
-              { label: 'Active Staff', value: kpi.staff, sub: 'HR & Screening', color: '#0072FF', path: '/our-employees' },
-              { label: 'Participants', value: kpi.participants, sub: 'NDIS Plans & Goals', color: '#0A2B6D', path: '/our-participants' },
-              { label: 'Rostered Shifts', value: kpi.shifts, sub: 'Validated Coverage', color: '#5A00D6', path: '/roster' },
-              { label: 'Command Tasks', value: kpi.tasks, sub: 'Shared To-Do Board', color: '#A100FF', path: '/tasks' },
-              { label: 'Incidents', value: kpi.incidents, sub: '24h/5d NDIS SLA', color: '#FF2E9A', path: '/incidents' },
-              { label: 'Active Risks', value: kpi.risks, sub: 'ISO 31000 Controls', color: '#FF6EDB', path: '/risks' },
-              { label: 'Vault Credentials', value: kpi.documents, sub: 'Expiry Monitored', color: '#00C6FF', path: '/documents' },
-              { label: 'Active Policies', value: kpi.policies, sub: 'Version Controlled', color: '#C084FC', path: '/compliance' },
-            ].map((item) => (
-              <Link
-                key={item.label}
-                to={item.path}
-                className="group rounded-lg border bg-white p-1.5 shadow-sm transition-all hover:-translate-y-0.5"
-                style={{
-                  borderColor: item.color,
-                  borderTopWidth: '3px',
-                  background: `linear-gradient(145deg, ${item.color}12 0%, #ffffff 82%)`,
-                }}
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-[7px] font-black uppercase tracking-wider text-purple-900">
-                    {item.label}
-                  </span>
-                  <ArrowRight className="h-2.5 w-2.5 text-purple-600 transition-transform group-hover:translate-x-0.5" />
-                </div>
-                <div className="mt-0.5 text-sm font-black text-blue-950">{item.value}</div>
-                <div className="text-[6.8px] font-bold text-purple-800">{item.sub}</div>
-              </Link>
-            ))}
+              { label: 'Active Staff', value: kpi.staff, sub: 'HR & Screening', path: '/our-employees' },
+              { label: 'Participants', value: kpi.participants, sub: 'NDIS Plans & Goals', path: '/our-participants' },
+              { label: 'Rostered Shifts', value: kpi.shifts, sub: 'Validated Coverage', path: '/roster' },
+              { label: 'Command Tasks', value: kpi.tasks, sub: 'Shared To-Do Board', path: '/tasks' },
+              { label: 'Incidents', value: kpi.incidents, sub: '24h/5d NDIS SLA', path: '/incidents' },
+              { label: 'Active Risks', value: kpi.risks, sub: 'ISO 31000 Controls', path: '/risks' },
+              { label: 'Vault Credentials', value: kpi.documents, sub: 'Expiry Monitored', path: '/documents' },
+              { label: 'Active Policies', value: kpi.policies, sub: 'Version Controlled', path: '/compliance' },
+            ].map((item, idx) => {
+              const headerBg = getHeaderView(idx);
+              return (
+                <Link
+                  key={item.label}
+                  to={item.path}
+                  className="group flex h-full min-h-[86px] flex-col gap-[3px] rounded-xl border-2 border-[#0A2B6D] bg-[#0A2B6D] p-[3px] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#0072FF] hover:shadow-md"
+                >
+                  <div className="flex flex-1 flex-col overflow-hidden rounded-[8px] bg-white">
+                    <div
+                      className="flex min-h-[34px] items-center justify-between gap-1 px-1.5 py-1 text-white"
+                      style={{ background: headerBg }}
+                    >
+                      <span className="min-w-0 text-[9.5px] font-extrabold leading-[11px] tracking-tight text-white">
+                        {item.label}
+                      </span>
+                      <span className="rounded-full bg-white px-1.5 py-0.2 text-[9.5px] font-black text-[#0A2B6D]">
+                        {item.value}
+                      </span>
+                    </div>
+                    <div className="flex min-h-[34px] flex-1 items-center justify-between gap-1 border-t border-[#0A2B6D]/10 bg-white px-1.5 py-1">
+                      <span className="line-clamp-2 min-w-0 flex-1 break-words text-[10px] font-bold leading-[12.5px] text-[#0A2B6D]/85">
+                        {item.sub}
+                      </span>
+                      <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#0072FF] transition group-hover:translate-x-0.5 group-hover:text-[#FF2E9A]" />
+                    </div>
+                  </div>
+                  <div className="flex h-[5px] items-center justify-center">
+                    <span className="h-[2.5px] w-6 rounded-full bg-white/45 transition-all group-hover:bg-white/80" />
+                  </div>
+                </Link>
+              );
+            })}
           </div>
 
           {/* Executive Resource Suite Navigator — Visually Matching Quick Access */}

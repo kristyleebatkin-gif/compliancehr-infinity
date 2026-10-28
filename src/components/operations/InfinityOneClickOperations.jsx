@@ -718,105 +718,80 @@ export default function InfinityOneClickOperations({ compact = false }) {
         </div>
       </div>
 
-      {/* 4. 50% Smaller 12 One-Click System Operation Tiles Moving Slowly in a Clockwise Circle Every 30 Seconds */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5 items-stretch text-center">
+      {/* 4. 12 One-Click System Operation Tiles — Visually Matching Quick Access */}
+      <div className="grid auto-rows-fr grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-6 items-stretch text-left">
         {visibleOps.map((op, idx) => {
           const Icon = op.icon;
           const isRunning = runningId === op.id;
-          const borderCol = getAppBorderView(idx);
-          const sym = getSymbolView(idx);
-          const symSub = getSymbolView(idx + 2);
+          const headerBg = getHeaderView(idx);
           const isOrbitHighlight = idx === circleStep % visibleOps.length;
           return (
             <div
               key={`${op.id}-${idx}`}
-              className={`flex h-full rounded-xl p-[2.5px] transition-all duration-700 hover:-translate-y-0.5 ${
-                isOrbitHighlight ? 'ring-2 ring-[#FF2E9A] shadow-md' : 'shadow-2xs'
+              className={`group flex h-full min-h-[118px] flex-col gap-[3px] rounded-xl border-2 bg-[#0A2B6D] p-[3px] transition-all duration-200 ${
+                isOrbitHighlight
+                  ? 'border-[#5A00D6] shadow-md ring-2 ring-[#5A00D6]/25 ring-offset-1'
+                  : 'border-[#0A2B6D] hover:-translate-y-0.5 hover:border-[#0072FF] hover:shadow-md'
               }`}
-              style={{
-                background: TOP_BORDER_GRADIENT,
-                boxShadow: isOrbitHighlight
-                  ? '0 0 14px 3px rgba(255, 255, 255, 0.96), 0 0 10px 2px #00C6FF'
-                  : '0 0 8px 2px rgba(255, 255, 255, 0.88)',
-              }}
             >
-              <div
-                className="grid h-full w-full grid-cols-1 grid-rows-[18px_32px_32px_20px] gap-1 rounded-[9px] p-1 text-center"
-                style={{
-                  background:
-                    'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.65) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.65) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.65) 0%, transparent 52%), #FFFFFF',
-                }}
-              >
-                {/* Section 1: Reduced SYS READY Header Pill */}
+              <div className="flex flex-1 flex-col overflow-hidden rounded-[8px] bg-white">
+                {/* Coloured Header Inside Screen */}
                 <div
-                  className="gradient-brand flex h-[18px] w-full items-center justify-between gap-1 rounded-full px-1.5 text-[7px] font-extrabold uppercase tracking-wider leading-none text-white whitespace-nowrap"
-                  style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
+                  className="flex min-h-[38px] items-center justify-between gap-1 px-1.5 py-1 text-white"
+                  style={{ background: headerBg }}
                 >
-                  <span className="inline-flex items-center gap-1 truncate">
+                  <div className="flex min-w-0 items-center gap-1">
+                    <Icon className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
                     <span
-                      className="h-1.5 w-1.5 shrink-0 rounded-full border border-white bg-white"
-                      style={{ boxShadow: '0 0 6px 2px #FFFFFF' }}
-                    />
-                    <Icon className="h-2 w-2 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-                    <span className="truncate" style={{ color: '#FFFFFF' }}>
-                      {op.code}
-                    </span>
-                  </span>
-                  <span className="rounded-full bg-white px-1 py-0 text-[5.5px] font-extrabold text-[#0A2B6D]">
-                    SYS READY
-                  </span>
-                </div>
-
-                {/* Section 2: Centered Card Title Box — Pure White Writing Box */}
-                <div className="flex h-[32px] w-full flex-col items-center justify-center rounded-[5px] border border-[#0A2B6D]/25 bg-white px-1 py-0.5 text-center">
-                  <div className="flex items-center justify-center gap-1 w-full">
-                    <span
-                      className="h-1.5 w-1.5 shrink-0 rounded-full border border-[#0A2B6D]/30 bg-white"
-                      style={{ boxShadow: '0 0 6px 2px #FFFFFF, 0 0 8px 2px #00C6FF' }}
-                    />
-                    <h3 className="font-editorial text-[8px] font-extrabold leading-tight text-[#0A2B6D] text-center line-clamp-1">
+                      className="min-w-0 text-[9.5px] font-extrabold leading-[11px] tracking-tight text-white"
+                      style={{ color: '#FFFFFF', wordBreak: 'normal', overflowWrap: 'normal' }}
+                    >
                       {op.title}
-                    </h3>
-                  </div>
-                  <div className="text-center text-[7px] font-extrabold leading-tight text-[#0A2B6D] line-clamp-1">
-                    {op.subtitle}
-                  </div>
-                </div>
-
-                {/* Section 3: Centered Description Box — Pure White Writing Box */}
-                <div className="flex h-[32px] w-full items-center justify-center rounded-[5px] border border-[#0A2B6D]/25 bg-white px-1 py-0.5 text-center">
-                  <p className="text-center text-[7px] font-bold leading-tight text-[#0A2B6D] line-clamp-2">
-                    {op.description}
-                  </p>
-                </div>
-
-                {/* Section 4: Compact Action Buttons Row */}
-                <div className="flex h-[20px] items-center justify-between gap-1">
-                  <button
-                    type="button"
-                    onClick={() => runOperation(op)}
-                    disabled={isRunning}
-                    className="gradient-brand inline-flex h-[18px] flex-1 items-center justify-center gap-0.5 rounded-full px-1 text-[7px] font-extrabold text-white shadow-2xs whitespace-nowrap"
-                    style={{ background: getHeaderView(idx + 1), color: '#FFFFFF' }}
-                  >
-                    <Play
-                      className={`h-2 w-2 shrink-0 fill-current text-white ${isRunning ? 'animate-pulse' : ''}`}
-                      style={{ color: '#FFFFFF' }}
-                    />
-                    <span className="truncate" style={{ color: '#FFFFFF' }}>
-                      {isRunning ? 'Running…' : op.buttonLabel}
                     </span>
-                  </button>
-
-                  <Link
-                    to={op.link}
-                    className="gradient-brand inline-flex h-[18px] shrink-0 items-center justify-center gap-0.5 rounded-full px-1.5 text-[7px] font-extrabold text-white"
-                    style={{ background: getHeaderView(idx + 3), color: '#FFFFFF' }}
-                  >
-                    <span style={{ color: '#FFFFFF' }}>Open</span>
-                    <ArrowRight className="h-2 w-2 text-white" style={{ color: '#FFFFFF' }} />
-                  </Link>
+                  </div>
+                  <span
+                    className={`h-1.5 w-1.5 shrink-0 rounded-full ${
+                      isOrbitHighlight ? 'bg-[#00C6FF]' : 'bg-white/75'
+                    }`}
+                  />
                 </div>
+
+                {/* White Writing Area With Supporting Detail */}
+                <div className="flex min-h-[42px] flex-1 flex-col justify-between gap-1 border-t border-[#0A2B6D]/10 bg-white px-1.5 py-1.5">
+                  <span className="line-clamp-2 text-[10px] font-bold leading-[12.5px] text-[#0A2B6D]/85">
+                    {op.subtitle}
+                  </span>
+
+                  <div className="flex items-center justify-between gap-1 pt-0.5">
+                    <button
+                      type="button"
+                      onClick={() => runOperation(op)}
+                      disabled={isRunning}
+                      className="inline-flex h-6 flex-1 items-center justify-center gap-1 rounded-md px-1.5 text-[9px] font-extrabold text-white shadow-2xs transition hover:opacity-95 disabled:opacity-60"
+                      style={{ background: headerBg, color: '#FFFFFF' }}
+                    >
+                      <Play className={`h-2.5 w-2.5 shrink-0 fill-current text-white ${isRunning ? 'animate-pulse' : ''}`} />
+                      <span className="truncate">{isRunning ? 'Running…' : op.buttonLabel}</span>
+                    </button>
+
+                    <Link
+                      to={op.link}
+                      className="inline-flex h-6 shrink-0 items-center justify-center gap-0.5 rounded-md border border-[#0A2B6D]/25 bg-white px-1.5 text-[9px] font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
+                    >
+                      <span>Open</span>
+                      <ArrowRight className="h-2.5 w-2.5 text-[#0072FF]" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              {/* iPad Home Indicator Bar */}
+              <div className="flex h-[5px] items-center justify-center">
+                <span
+                  className={`h-[2.5px] w-6 rounded-full transition-all ${
+                    isOrbitHighlight ? 'w-8 bg-[#00C6FF]' : 'bg-white/45 group-hover:bg-white/80'
+                  }`}
+                />
               </div>
             </div>
           );

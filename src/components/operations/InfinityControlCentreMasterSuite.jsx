@@ -627,81 +627,82 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
             </div>
           </div>
 
-          {/* 9 Numbered Command Navigation Tiles — 50% Smaller, App-Theme Headers With White Writing & White Spotlights */}
-          <div className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-9 gap-1.5 auto-rows-fr pt-0.5">
+          {/* 9 Numbered Command Navigation Tiles — Visually Matching Quick Access */}
+          <div className="grid auto-rows-fr w-full grid-cols-2 gap-2 pt-1 sm:grid-cols-3 md:grid-cols-6 lg:grid-cols-9 items-stretch text-left">
             {[
               { id: 'control-centre', label: '1. Control Centre', category: 'Oversight', sub: 'Live Telemetry', icon: Building2 },
-              { id: 'master-audit-356', label: '2. 356 Audit Checks', category: 'Audit', sub: `${evidencedCount}/356`, icon: ClipboardCheck },
+              { id: 'master-audit-356', label: '2. 356 Audit Checks', category: 'Audit', sub: `${evidencedCount}/356 Evidenced`, icon: ClipboardCheck },
               { id: 'document-control-98', label: '3. 98 Master Docs', category: 'Documents', sub: 'Word, PDF & Excel', icon: FileText },
-              { id: 'end-of-shift', label: '4. End-of-Shift', category: 'Shifts', sub: 'Clock-Out', icon: Clock },
-              { id: 'skills-17-point', label: '5. Skills & 17-Pt', category: 'Training', sub: 'Competency', icon: Award },
-              { id: 'smart-mailroom', label: '6. Smart Mailroom', category: 'Mailroom', sub: 'Auto-Route', icon: Layers },
+              { id: 'end-of-shift', label: '4. End-of-Shift', category: 'Shifts', sub: 'Clock-Out & Notes', icon: Clock },
+              { id: 'skills-17-point', label: '5. Skills & 17-Pt', category: 'Training', sub: 'Competency Studio', icon: Award },
+              { id: 'smart-mailroom', label: '6. Smart Mailroom', category: 'Mailroom', sub: 'Auto-Route Hub', icon: Layers },
               { id: 'advanced-ai-tools', label: '7. AI & 12 Tools', category: 'AI Suite', sub: 'Human Gate', icon: Sparkles },
               { id: 'best-in-class', label: '8. Best-In-Class', category: 'Benchmarks', sub: 'PRODA · SCHADS', icon: Wrench },
               { id: 'dev-register-31', label: '9. Dev Register', category: 'Verification', sub: '15-Pt Check', icon: CheckSquare },
             ].map((tab, idx) => {
               const Icon = tab.icon;
               const active = activeTab === tab.id;
-              const sym = getSymbolView(idx);
+              const headerBg = getHeaderView(idx);
               return (
-                <div
+                <button
                   key={tab.id}
-                  className={`flex h-full rounded-xl p-[2.5px] shadow-sm transition-all hover:-translate-y-0.5 ${
-                    active ? 'ring-2 ring-[#FF2E9A]' : ''
+                  type="button"
+                  onClick={() => setActiveTab(tab.id)}
+                  aria-pressed={active}
+                  className={`group flex h-full min-h-[92px] flex-col gap-[3px] rounded-xl border-2 bg-[#0A2B6D] p-[3px] text-left transition-all duration-200 focus-visible:outline-none ${
+                    active
+                      ? 'border-[#5A00D6] shadow-md ring-2 ring-[#5A00D6]/25 ring-offset-1'
+                      : 'border-[#0A2B6D] hover:-translate-y-0.5 hover:border-[#0072FF] hover:shadow-md'
                   }`}
-                  style={{
-                    background: getHeaderView(idx),
-                    boxShadow: '0 0 12px 3px rgba(255, 255, 255, 0.96), 0 3px 8px rgba(90, 0, 214, 0.16)',
-                  }}
                 >
-                  <button
-                    type="button"
-                    onClick={() => setActiveTab(tab.id)}
-                    className="flex h-full min-h-[46px] w-full flex-col items-center justify-between gap-1 rounded-[9px] bg-white p-1 text-center"
-                  >
-                    {/* App-Theme Tile Header With White Writing & White Spotlights */}
+                  <div className="flex w-full flex-1 flex-col overflow-hidden rounded-[8px] bg-white">
                     <div
-                      className="gradient-brand flex min-h-[20px] w-full items-center justify-center gap-1 rounded-md px-1.5 py-0.5 text-white"
-                      style={{
-                        background: getHeaderView(idx),
-                        color: '#FFFFFF',
-                        boxShadow: '0 0 8px 2px rgba(255, 255, 255, 0.9)',
-                      }}
+                      className="flex min-h-[36px] w-full items-center justify-between gap-1 px-1.5 py-1 text-white"
+                      style={{ background: headerBg }}
                     >
+                      <div className="flex min-w-0 items-center gap-1">
+                        <Icon className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                        <span
+                          className="min-w-0 text-[9.5px] font-extrabold leading-[11px] tracking-tight text-white"
+                          style={{ color: '#FFFFFF', wordBreak: 'normal', overflowWrap: 'normal' }}
+                        >
+                          {tab.label}
+                        </span>
+                      </div>
                       <span
-                        className="h-2 w-2 shrink-0 rounded-full border border-white bg-white"
-                        style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF' }}
+                        className={`h-1.5 w-1.5 shrink-0 rounded-full ${
+                          active ? 'bg-[#00C6FF]' : 'bg-white/75'
+                        }`}
                       />
-                      <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-                      <span
-                        className="text-[7.5px] font-extrabold uppercase tracking-wider text-white leading-none"
-                        style={{ color: '#FFFFFF' }}
-                      >
-                        {tab.category}
-                      </span>
                     </div>
 
-                    <div className="flex w-full flex-col items-center justify-center rounded-[5px] border border-[#0A2B6D]/25 bg-white px-1 py-0.5 text-center">
-                      <div className="text-[8.5px] font-extrabold leading-tight text-[#0A2B6D]">
-                        {tab.label}
-                      </div>
-                      <div className="text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]">
+                    <div className="flex min-h-[38px] w-full flex-1 items-center justify-between gap-1 border-t border-[#0A2B6D]/10 bg-white px-1.5 py-1">
+                      <span className="line-clamp-2 min-w-0 flex-1 break-words text-[10px] font-bold leading-[12.5px] text-[#0A2B6D]/85">
                         {tab.sub}
-                      </div>
+                      </span>
+                      <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#0072FF] transition group-hover:translate-x-0.5 group-hover:text-[#FF2E9A]" />
                     </div>
-                  </button>
-                </div>
+                  </div>
+
+                  <div className="flex h-[5px] w-full items-center justify-center">
+                    <span
+                      className={`h-[2.5px] w-6 rounded-full transition-all ${
+                        active ? 'w-8 bg-[#00C6FF]' : 'bg-white/45 group-hover:bg-white/80'
+                      }`}
+                    />
+                  </div>
+                </button>
               );
             })}
           </div>
         </div>
       </div>
 
-      {/* ==================== TAB 1: INFINITY CONTROL CENTRE — PURE WHITE INSIDE TEXT BOXES ==================== */}
+      {/* ==================== TAB 1: INFINITY CONTROL CENTRE — QUICK ACCESS SCREEN CARDS ==================== */}
       {activeTab === 'control-centre' && (
-        <div className="p-1.5 space-y-2 text-center rounded-xl bg-white">
+        <div className="p-1.5 space-y-2 rounded-xl bg-white">
           {/* 12 Live Operational Register Telemetry Tiles */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5 items-stretch bg-white">
+          <div className="grid auto-rows-fr grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-6 items-stretch bg-white">
             {[
               { category: 'People & HR', icon: Users, label: 'Active Staff (HR)', value: counts.staff, route: '/our-employees', sub: 'Screening & Profiles' },
               { category: 'Care & Support', icon: HeartHandshake, label: 'Participants', value: counts.participants, route: '/our-participants', sub: 'Plans, Goals & Consents' },
@@ -717,52 +718,40 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
               { category: 'Finance & NDIS', icon: DollarSign, label: 'Invoices & Claims', value: counts.invoices, route: '/invoicing', sub: 'NDIS Price Validated' },
             ].map((m, idx) => {
               const TileIcon = m.icon;
+              const headerBg = getHeaderView(idx);
               return (
-                <div
+                <Link
                   key={m.label}
-                  className="flex h-full rounded-xl border border-[#0A2B6D]/30 bg-white p-1.5 shadow-2xs transition-all hover:-translate-y-0.5 hover:shadow-md"
+                  to={m.route}
+                  title={`${m.label} — ${m.sub}`}
+                  className="group flex h-full min-h-[92px] flex-col gap-[3px] rounded-xl border-2 border-[#0A2B6D] bg-[#0A2B6D] p-[3px] text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-[#0072FF] hover:shadow-md"
                 >
-                  <Link
-                    to={m.route}
-                    className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[7px] bg-white text-center"
-                  >
-                    {/* App-Theme Header With White Writing & White Spotlights */}
+                  <div className="flex flex-1 flex-col overflow-hidden rounded-[8px] bg-white">
                     <div
-                      className="gradient-brand flex min-h-[20px] w-full items-center justify-center gap-1 rounded-full px-2 py-0.5 text-white"
-                      style={{
-                        background: getHeaderView(idx),
-                        color: '#FFFFFF',
-                      }}
+                      className="flex min-h-[36px] items-center justify-between gap-1 px-1.5 py-1 text-white"
+                      style={{ background: headerBg }}
                     >
-                      <span
-                        className="h-2 w-2 shrink-0 rounded-full border border-white bg-white"
-                        style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF' }}
-                      />
-                      <TileIcon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-                      <span
-                        className="text-[8px] font-extrabold uppercase tracking-wider text-white leading-none"
-                        style={{ color: '#FFFFFF' }}
-                      >
-                        {m.category}
-                      </span>
-                    </div>
-
-                    {/* Label & Number Value With Pure White Writing Box */}
-                    <div className="flex min-h-[24px] w-full flex-col items-center justify-center rounded border border-[#0A2B6D]/20 bg-white px-1 py-0.5 text-center">
-                      <span className="text-[7px] font-extrabold uppercase tracking-wider text-[#0A2B6D] leading-tight">
-                        {m.label}
-                      </span>
-                      <div className="font-editorial text-[11px] font-extrabold leading-tight text-[#0A2B6D]">
-                        {m.value}
+                      <div className="flex min-w-0 items-center gap-1">
+                        <TileIcon className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                        <span className="min-w-0 text-[9.5px] font-extrabold leading-[11px] tracking-tight text-white">
+                          {m.label}
+                        </span>
                       </div>
+                      <span className="rounded-full bg-white px-1.5 py-0.2 text-[9.5px] font-black text-[#0A2B6D]">
+                        {m.value}
+                      </span>
                     </div>
-
-                    {/* Sub-Label With Pure White Writing Box */}
-                    <div className="flex min-h-[16px] w-full items-center justify-center rounded border border-[#0A2B6D]/20 bg-white px-1 py-0 text-center text-[7px] font-extrabold leading-tight text-[#0A2B6D]">
-                      {m.sub}
+                    <div className="flex min-h-[38px] flex-1 items-center justify-between gap-1 border-t border-[#0A2B6D]/10 bg-white px-1.5 py-1">
+                      <span className="line-clamp-2 min-w-0 flex-1 break-words text-[10px] font-bold leading-[12.5px] text-[#0A2B6D]/85">
+                        {m.sub}
+                      </span>
+                      <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#0072FF] transition group-hover:translate-x-0.5 group-hover:text-[#FF2E9A]" />
                     </div>
-                  </Link>
-                </div>
+                  </div>
+                  <div className="flex h-[5px] items-center justify-center">
+                    <span className="h-[2.5px] w-6 rounded-full bg-white/45 transition-all group-hover:bg-white/80" />
+                  </div>
+                </Link>
               );
             })}
           </div>

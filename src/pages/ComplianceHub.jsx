@@ -274,7 +274,7 @@ export default function ComplianceHub() {
   };
 
   return (
-    <div className="compact-module space-y-3">
+    <div className="mx-auto w-full max-w-[1440px] bg-white px-4 py-4 sm:px-6 lg:px-8 compact-module space-y-3">
       <ModuleShell
         icon={ShieldCheck}
         title="Compliance & Report Centre"
@@ -330,7 +330,7 @@ export default function ComplianceHub() {
           setActiveTab(val);
           if (screenView === 'screen2') setScreenView('both');
         }}
-        columnsClass="grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
+        columnsClass="grid-cols-2 sm:grid-cols-3 md:grid-cols-6"
       />
 
       {/* SECOND SCREEN: AUDITOR PORTAL IN COMPLIANCE */}

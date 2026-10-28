@@ -150,71 +150,19 @@ export default function CommunicationNavigation({ tabs }) {
         </TabsList>
       </div>
 
-      {/* Compact Square Button Grid: Just Big Enough to Press Buttons Inside the Mailbox & Functions Box */}
-      <div className="rounded-xl border-2 border-[#0A2B6D] bg-[#F5F0FF]/55 p-2">
-        <div className="mb-1.5 flex flex-wrap items-center justify-between gap-1 px-1">
-          <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-            Mailbox &amp; Communication Function Squares — Tap Any Button Square
-          </span>
-          <span className="text-[10px] font-bold text-[#5A00D6]">
-            {tabs.length + 1} Quick-Press Function Squares
-          </span>
-        </div>
-
-        <TabsList
-          aria-label="Communication dashboard"
-          className="flex flex-wrap items-center justify-start gap-1.5 h-auto bg-transparent p-0"
-        >
-          {tabs.map(([value, Icon, label]) => {
-            const c = COLOURS[value] || '#0072FF';
-            const isInboxOrAlert = value === 'inbox' || value === 'email';
-            const badgeAlert = isInboxOrAlert && hasAlerts;
-            return (
-              <TabsTrigger
-                key={value}
-                value={value}
-                className="group relative flex h-14 w-[4.6rem] sm:w-20 shrink-0 flex-col items-center justify-center gap-1 overflow-hidden rounded-xl border-2 border-[#0A2B6D] bg-white p-1 text-center shadow-2xs transition-all hover:-translate-y-0.5 hover:shadow-md data-[state=active]:ring-2 data-[state=active]:ring-[#FF2E9A]"
-                style={{
-                  borderTopWidth: '4px',
-                  borderTopColor: badgeAlert ? '#FF2E9A' : c,
-                  background: badgeAlert
-                    ? 'linear-gradient(165deg, rgba(255,46,154,0.22) 0%, #ffffff 85%)'
-                    : `linear-gradient(165deg, ${c}18 0%, #ffffff 85%)`,
-                }}
-              >
-                <span
-                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-[#0A2B6D]/30 text-white shadow-2xs"
-                  style={{ background: badgeAlert ? '#FF2E9A' : c }}
-                >
-                  <Icon aria-hidden="true" className="h-3.5 w-3.5" />
-                </span>
-                <span className="w-full truncate text-[9.5px] font-extrabold leading-tight text-[#0A2B6D]">
-                  {label}
-                </span>
-              </TabsTrigger>
-            );
-          })}
-
-          {/* Smart Vault Compact Square Button */}
-          <TabsTrigger
-            value="smart-vault"
-            className="group relative flex h-14 w-[4.6rem] sm:w-20 shrink-0 flex-col items-center justify-center gap-1 overflow-hidden rounded-xl border-2 border-[#0A2B6D] p-1 text-center text-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
-            style={{ background: SQUISHED_GRADIENT }}
-          >
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-[#0A2B6D] bg-white p-0.5 shadow-2xs">
-              <Image
-                src={INFINITY_LOGO}
-                alt="ComplianceHR Infinity"
-                fittingType="fit"
-                className="h-full w-full object-contain"
-              />
-            </span>
-            <span className="flex items-center justify-center gap-0.5 w-full truncate text-[9.5px] font-extrabold leading-tight text-white">
-              <Vault className="h-2.5 w-2.5 shrink-0" /> Vault
-            </span>
+      {/* Communication Centre Screens — Visually Matching Quick Access */}
+      <TabsList aria-label="Communication dashboard">
+        {tabs.map(([value, Icon, label]) => (
+          <TabsTrigger key={value} value={value} data-hint={`${label} workspace`}>
+            <Icon aria-hidden="true" className="h-3.5 w-3.5" />
+            {label}
           </TabsTrigger>
-        </TabsList>
-      </div>
+        ))}
+        <TabsTrigger value="smart-vault" data-hint="Smart Mailroom & Vault">
+          <Vault className="h-3.5 w-3.5" />
+          Smart Vault
+        </TabsTrigger>
+      </TabsList>
       </div>
     </div>
   );
