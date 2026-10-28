@@ -91,9 +91,9 @@ export default function QuickAppBar() {
                 key={item.path}
                 to={item.path}
                 title={`${item.label} — ${currentSub}`}
-                className={`group flex h-full min-h-[98px] flex-col gap-[3px] rounded-xl border-2 bg-[#0A2B6D] p-[3px] transition-all duration-200 ${
+                className={`group flex h-full min-h-[98px] flex-col gap-[3px] rounded-xl border-2 bg-[#0A2B6D] p-[3px] transition-all duration-200 focus-visible:outline-none ${
                   active
-                    ? 'border-[#5A00D6] shadow-md'
+                    ? 'border-[#5A00D6] shadow-md ring-2 ring-[#5A00D6]/25 ring-offset-1'
                     : 'border-[#0A2B6D] hover:-translate-y-0.5 hover:border-[#0072FF] hover:shadow-md'
                 }`}
               >
@@ -117,10 +117,10 @@ export default function QuickAppBar() {
 
                   {/* White writing area with the supported detail */}
                   <div className="flex min-h-[40px] flex-1 items-center justify-between gap-1 border-t border-[#0A2B6D]/10 bg-white px-1.5 py-1">
-                    <span className="line-clamp-2 min-w-0 flex-1 break-words text-[10.5px] font-bold leading-[13px] text-[#0A2B6D]">
+                    <span className="line-clamp-2 min-w-0 flex-1 break-words text-[10.5px] font-bold leading-[13px] text-[#0A2B6D]/85">
                       {currentSub}
                     </span>
-                    <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#5A00D6] opacity-70 transition group-hover:translate-x-0.5 group-hover:opacity-100" />
+                    <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#0072FF] transition group-hover:translate-x-0.5 group-hover:text-[#FF2E9A]" />
                   </div>
                 </div>
 
