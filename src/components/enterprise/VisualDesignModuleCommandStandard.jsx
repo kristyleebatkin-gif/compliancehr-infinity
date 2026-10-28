@@ -343,7 +343,9 @@ export default function VisualDesignModuleCommandStandard() {
             </div>
           </div>
 
-          {/* Row 2: Universal Search & Action Bar (Find Records · Open Profiles · Create Actions · Locate Documents · Generate Reports) */}
+          {/* Row 2 & 3 shown when expanded so every module's PageHeader sits immediately above the fold */}
+          {expanded && (
+          <>
           <div className="flex flex-wrap items-center justify-between gap-2">
             <form onSubmit={handleUniversalSearch} className="flex flex-1 min-w-[220px] items-center gap-1.5">
               <div className="relative flex-1">
@@ -436,12 +438,6 @@ export default function VisualDesignModuleCommandStandard() {
             </div>
           </div>
 
-          {/* Expanded Complete Module Command Centre Dock:
-              - What Information Exists / What Needs Attention / What Should Happen Next
-              - 10 Related Resource Categories (Resource Visibility Rule)
-              - Participant (16 Domains + 6 Tools) & Employee (9 Sections + 6 Tools)
-              - Executive Design Standard (6 Visual Health Pillars) */}
-          {expanded && (
             <div className="space-y-3 border-t border-slate-200 pt-3">
               {/* Primary / Secondary / Supporting Information Hierarchy */}
               <div className="grid grid-cols-1 gap-2.5 md:grid-cols-3">
@@ -585,6 +581,7 @@ export default function VisualDesignModuleCommandStandard() {
                 </div>
               </div>
             </div>
+          </>
           )}
         </div>
       </section>

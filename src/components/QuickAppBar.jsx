@@ -29,7 +29,11 @@ const QUICK_LINKS = [
 export default function QuickAppBar() {
   const location = useLocation();
   const [cycleIdx, setCycleIdx] = useState(0);
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(() => location.pathname !== '/dashboard');
+
+  useEffect(() => {
+    setCollapsed(location.pathname !== '/dashboard');
+  }, [location.pathname]);
 
   useEffect(() => {
     const viewTimer = setInterval(() => {

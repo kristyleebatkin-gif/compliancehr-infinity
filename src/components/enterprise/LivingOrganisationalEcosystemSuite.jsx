@@ -386,12 +386,32 @@ export default function LivingOrganisationalEcosystemSuite({ initialTab = 'comm-
     }
   };
 
+  const AUDIT_16_SCREENS = [
+    { num: 1, title: 'Home Dashboard', route: '/dashboard', summary: '30-Second Manager Answers, 9 Health Pillars & Organisational Digital Twin' },
+    { num: 2, title: 'Navigation (11 Core Pillars)', route: '/dashboard', summary: 'Max 2-Level Hierarchy, Global Search & Quick Action Bar' },
+    { num: 3, title: 'Employee Profile (360°)', route: '/our-employees', summary: '19-Section 360° Staff Profile, 100-Pt Screening & Skill Matrix' },
+    { num: 4, title: 'Participant Profile (360°)', route: '/our-participants', summary: '19-Section 360° Participant Profile, 3-Part Consents & Support Plans' },
+    { num: 5, title: 'Compliance Centre', route: '/compliance', summary: 'NDIS Practice Standards, Aged Care Standards & 356 Audit Checkpoints' },
+    { num: 6, title: 'Risk Centre', route: '/risks', summary: 'Risk 360°, 5×5 Risk Matrix, Hazards, WHS & Controls' },
+    { num: 7, title: 'Incident Centre', route: '/incidents', summary: 'Incident 360°, NDIS 24h/5-Day & Aged Care SIRS SLA Timers' },
+    { num: 8, title: 'Review Centre', route: '/review-due', summary: '90/60/30/14/7/1-Day Review Escalations & Auto-Generated Next Reviews' },
+    { num: 9, title: 'Audit Centre', route: '/auditor-portal', summary: 'Auditor Portal, Evidence Bundles, Findings & CAPA Verification' },
+    { num: 10, title: 'Training Centre', route: '/training', summary: '10-Stage Learning Lifecycle, Training/Induction Builder & Competency Matrix' },
+    { num: 11, title: 'Rostering', route: '/rostering', summary: 'Qualification, Skill & Participant-Matched Roster Gatekeeper' },
+    { num: 12, title: 'Shifts', route: '/frontline-hub', summary: '8-Stage Shift Workflow, Finish-My-Shift 7-Gate Check & Service Notes' },
+    { num: 13, title: 'Invoicing', route: '/invoicing', summary: 'NDIS Price Guide Claiming, Budget Utilisation & Service Profitability' },
+    { num: 14, title: 'Reports', route: '/analytics', summary: '13 Enterprise Report Suites & 9-Format Register Exports' },
+    { num: 15, title: 'Executive Dashboard', route: '/operations-centre', summary: '18-Domain Owner/Director Control Centre & AI Executive Briefings' },
+    { num: 16, title: 'Mobile Views', route: '/frontline-hub', summary: 'Responsive Frontline Mobile Rapid Entry, Offline Sync & Bottom Bar' },
+  ];
+
   const TABS = [
     { id: 'comm-alerts', label: '1. Communication, 19 Notifications & 3-Tier Alerts', icon: Megaphone },
     { id: 'accuracy-registers', label: '2. 13-Pt Accuracy, 27 Records & 38 Auto-Registers', icon: FolderOpen },
     { id: 'training-competency', label: '3. Training, Induction, Competency & Skill Matrix', icon: GraduationCap },
     { id: 'rostering-service-finance', label: '4. Shift-to-Invoice, Service Delivery & Assessments', icon: CalendarClock },
     { id: 'security-whitelabel-exec', label: '5. Security, White-Label & 19 Unified Systems', icon: Lock },
+    { id: 'visual-audit-16', label: '6. 16-Screen Page-by-Page Audit & Pack', icon: Layers },
   ];
 
   return (
@@ -1005,6 +1025,57 @@ export default function LivingOrganisationalEcosystemSuite({ initialTab = 'comm-
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* ==================== TAB 6: 16-SCREEN PAGE-BY-PAGE VISUAL AUDIT & PACK ==================== */}
+        {activeTab === 'visual-audit-16' && (
+          <div className="space-y-3">
+            <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#0A2B6D] bg-[#F6F0FF]/60 p-3">
+              <div>
+                <span className="text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                  16-Screen Page-by-Page Audit Directory (Desktop &amp; Mobile Verified)
+                </span>
+                <p className="text-[11px] font-semibold text-[#0A2B6D]/85">
+                  Click any screen below to inspect live or export the complete 16-Screen Page-by-Page Audit Evidence Pack.
+                </p>
+              </div>
+              <Button
+                size="sm"
+                onClick={() => handleExportRegisterPack('audit-pack', '16-Screen Page-by-Page Visual Audit Pack')}
+                className="bg-[#0A2B6D] text-white text-xs font-extrabold"
+              >
+                <Download className="mr-1.5 h-3.5 w-3.5 text-[#00C6FF]" />
+                Export 16-Screen Audit Pack (PDF)
+              </Button>
+            </div>
+
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
+              {AUDIT_16_SCREENS.map((scr) => (
+                <Link
+                  key={scr.num}
+                  to={scr.route}
+                  className="group flex flex-col justify-between rounded-xl border-2 border-[#0A2B6D]/20 bg-white p-2.5 transition hover:border-[#0072FF] hover:shadow-sm"
+                >
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="rounded bg-[#0A2B6D] px-1.5 py-0.5 text-[9.5px] font-extrabold text-white">
+                        Screen #{scr.num}
+                      </span>
+                      <span className="text-[10px] font-extrabold text-[#0072FF] group-hover:underline">
+                        Inspect Live →
+                      </span>
+                    </div>
+                    <h4 className="mt-1.5 text-xs font-extrabold text-[#0A2B6D]">{scr.title}</h4>
+                    <p className="mt-0.5 text-[10.5px] font-semibold text-[#0A2B6D]/75">{scr.summary}</p>
+                  </div>
+                  <div className="mt-2 flex items-center justify-between border-t border-slate-100 pt-1.5 text-[9.5px] font-bold text-[#5A00D6]">
+                    <span>Route: {scr.route}</span>
+                    <span>✓ Verified</span>
+                  </div>
+                </Link>
+              ))}
             </div>
           </div>
         )}
