@@ -62,6 +62,12 @@ export default function LandingNav({ onBookDemo }) {
 
         <div className="flex shrink-0 items-center gap-1.5">
           <Link
+            to="/dashboard"
+            className="hidden sm:inline-flex items-center justify-center whitespace-nowrap rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-extrabold text-[#5A00D6] shadow-2xs transition hover:border-[#0072FF] hover:text-[#0072FF]"
+          >
+            Open Workspace
+          </Link>
+          <Link
             to="/login"
             className="hidden sm:inline-flex items-center justify-center whitespace-nowrap rounded-lg px-2.5 py-1.5 text-xs font-extrabold text-[#0A2B6D] transition hover:bg-slate-100"
           >

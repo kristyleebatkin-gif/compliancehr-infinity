@@ -26,6 +26,7 @@ import ExecutiveWallScene from '@/components/safe/ExecutiveWallScene';
 import OriginalPublishedOverview from '@/components/dashboard/OriginalPublishedOverview';
 import DashboardGrandCelebrationBar from '@/components/dashboard/DashboardGrandCelebrationBar';
 import ObsidianSmartRemote from '@/components/common/ObsidianSmartRemote';
+import DashboardPersonaliser from '@/components/dashboard/DashboardPersonaliser';
 import { Activity, ShieldCheck, Sparkles, Zap, LayoutGrid, ClipboardCheck, Layers, Building2, Cpu } from 'lucide-react';
 
 const HEADINGS = {
@@ -54,6 +55,35 @@ export default function Dashboard() {
   // Default to 'all' so both the original published Dashboard and current suites are displayed together
   const [activeSuite, setActiveSuite] = useState('all');
   const [viewMode, setViewMode] = useState(() => localStorage.getItem('chr-workspace-view-mode') || 'profiles');
+  const [hiddenSuites, setHiddenSuites] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('chr-dashboard-hidden-suites') || '[]');
+    } catch {
+      return [];
+    }
+  });
+  const [density, setDensity] = useState(() => localStorage.getItem('chr-dashboard-density') || 'comfortable');
+
+  const toggleSuiteVisibility = (suiteId) => {
+    setHiddenSuites((prev) => {
+      const next = prev.includes(suiteId) ? prev.filter((id) => id !== suiteId) : [...prev, suiteId];
+      localStorage.setItem('chr-dashboard-hidden-suites', JSON.stringify(next));
+      return next;
+    });
+  };
+
+  const resetSuites = () => {
+    setHiddenSuites([]);
+    localStorage.removeItem('chr-dashboard-hidden-suites');
+  };
+
+  const changeDensity = (mode) => {
+    setDensity(mode);
+    localStorage.setItem('chr-dashboard-density', mode);
+  };
+
+  const isSuiteVisible = (suiteId) =>
+    activeSuite === suiteId || (activeSuite === 'all' && !hiddenSuites.includes(suiteId));
 
   useEffect(() => {
     const onModeChange = (e) => {
@@ -90,8 +120,18 @@ export default function Dashboard() {
         columnsClass="grid-cols-1 sm:grid-cols-2 xl:grid-cols-4"
       />
 
+      {/* Quick Launch Actions & Personalisation Controls */}
+      <DashboardPersonaliser
+        suites={DASHBOARD_SUITES}
+        hiddenSuites={hiddenSuites}
+        onToggleSuite={toggleSuiteVisibility}
+        onResetSuites={resetSuites}
+        density={density}
+        onChangeDensity={changeDensity}
+      />
+
       {/* 1. Original Published KPI Strip, Announcements Board & Quick Links + 45 Modules Hub + Quick Start + Role Dashboards */}
-      {(activeSuite === 'overview' || activeSuite === 'all') && (
+      {isSuiteVisible('overview') && (
         <>
           <OriginalPublishedOverview />
           <AllModulesHub />
@@ -108,32 +148,32 @@ export default function Dashboard() {
       )}
 
       {/* 2. Interactive Executive Office & Dual Profile Wall Scene */}
-      {(activeSuite === 'office-wall' || activeSuite === 'all') && (
+      {isSuiteVisible('office-wall') && (
         <ExecutiveWallScene showAllModulesMinimised={true} />
       )}
 
       {/* 3. Infinity Control Centre Master Suite */}
-      {(activeSuite === 'control-centre' || activeSuite === 'all') && (
+      {isSuiteVisible('control-centre') && (
         <InfinityControlCentreMasterSuite />
       )}
 
       {/* 4. Infinity One-Click Operations Deck */}
-      {(activeSuite === 'one-click' || activeSuite === 'all') && (
+      {isSuiteVisible('one-click') && (
         <InfinityOneClickOperations />
       )}
 
       {/* 5. Infinity Core Engine (104 Functions · 65 Workflows · Real-Time Validation & Smart-Fill) */}
-      {(activeSuite === 'core-engine' || activeSuite === 'all') && (
+      {isSuiteVisible('core-engine') && (
         <InfinityCoreEngine />
       )}
 
       {/* 6. Business Health & Compliance Intelligence Dashboard */}
-      {(activeSuite === 'health-intelligence' || activeSuite === 'all') && (
+      {isSuiteVisible('health-intelligence') && (
         <BusinessHealthComplianceIntelligenceDashboard />
       )}
 
-      {/* 6. Management Review Report & Safety Trends Dashboard */}
-      {(activeSuite === 'reviews-trends' || activeSuite === 'all') && (
+      {/* 7. Management Review Report & Safety Trends Dashboard */}
+      {isSuiteVisible('reviews-trends') && (
         <>
           {role !== ROLES.PARTICIPANT && role !== ROLES.SUPPORT && <ManagementReviewReport />}
           {canAccessNav(role, 'safety-insights') && <ComplianceDashboardFrame><SafetyTrendsDashboard /></ComplianceDashboardFrame>}

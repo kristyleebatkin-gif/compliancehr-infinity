@@ -21,6 +21,7 @@ import GlobalSearch from '@/components/GlobalSearch';
 import AutoRegisterInsights from '@/components/AutoRegisterInsights';
 import QuickAppBar from '@/components/QuickAppBar';
 import ObsidianSidebarRemote from '@/components/ObsidianSidebarRemote';
+import EnterpriseWorkspaceBar from '@/components/enterprise/EnterpriseWorkspaceBar';
 import { Image } from '@/components/ui/image';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import PendingApprovalNotice from '@/components/users/PendingApprovalNotice';
@@ -262,7 +263,7 @@ export default function AppLayout() {
             </span>
 
             <div className="ml-auto flex shrink-0 items-center gap-1.5 sm:gap-2">
-              <div className="hidden w-52 xl:block">
+              <div className="block">
                 <GlobalSearch />
               </div>
 
@@ -426,7 +427,13 @@ export default function AppLayout() {
           </div>
         </header>
 
-        <main className="relative z-0 flex-1 overflow-y-auto bg-white pb-20 md:pb-0">
+        <main className="relative z-0 flex-1 overflow-y-auto overflow-x-hidden bg-white pb-20 md:pb-0">
+          <EnterpriseWorkspaceBar
+            currentLabel={currentLabel}
+            role={role}
+            darkMode={darkMode}
+            onToggleDarkMode={() => setDarkMode((d) => !d)}
+          />
           <QuickAppBar />
           <div className={location.pathname === '/staff' || location.pathname.startsWith('/staff/') ? 'mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8' : 'mx-auto max-w-[1440px] px-4 pt-3 sm:px-6 lg:px-8 md:pt-4'}>
             <PendingApprovalNotice />

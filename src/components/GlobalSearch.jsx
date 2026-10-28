@@ -8,13 +8,15 @@ import {
 } from '@/components/ui/command';
 import { Search, X, Loader2, Users, Heart, FolderOpen, ClipboardList, Zap, Plus } from 'lucide-react';
 
-const EMPTY = { modules: [], staff: [], participants: [], documents: [], tasks: [] };
+const EMPTY = { modules: [], staff: [], participants: [], documents: [], tasks: [], incidents: [] };
 
 const QUICK_ACTIONS = [
   { id: 'qa-incident', label: 'New Incident Report', path: '/incidents/new', hint: 'Report & investigate' },
   { id: 'qa-participant', label: 'New Participant Intake', path: '/intake/participant', hint: 'Onboard a participant' },
   { id: 'qa-employee', label: 'New Employee Intake', path: '/intake/employee', hint: 'Onboard an employee' },
-  { id: 'qa-dashboard', label: 'Go to Dashboard', path: '/dashboard', hint: 'Live overview' },
+  { id: 'qa-ai', label: 'Ask Infinity AI Copilot', path: '/assistant', hint: 'Instant NDIS & HR intelligence' },
+  { id: 'qa-compliance', label: 'Compliance & Audit Centre', path: '/compliance', hint: '356 checkpoints & readiness' },
+  { id: 'qa-dashboard', label: 'Go to Executive Dashboard', path: '/dashboard', hint: 'Live overview' },
 ];
 
 export default function GlobalSearch() {
@@ -30,7 +32,7 @@ export default function GlobalSearch() {
     if (open) setTimeout(() => inputRef.current?.focus(), 0);
   }, [open]);
 
-  // Ctrl/Cmd + K opens, Escape closes
+  // Ctrl/Cmd + K or custom event opens, Escape closes
   useEffect(() => {
     const onKey = (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
@@ -39,8 +41,13 @@ export default function GlobalSearch() {
       }
       if (e.key === 'Escape') setOpen(false);
     };
+    const onOpenPalette = () => setOpen(true);
     window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    window.addEventListener('chr-open-command-palette', onOpenPalette);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      window.removeEventListener('chr-open-command-palette', onOpenPalette);
+    };
   }, []);
 
   useEffect(() => {
@@ -160,7 +167,7 @@ export default function GlobalSearch() {
                 {results.staff.length > 0 && (
                   <CommandGroup heading="Staff">
                     {results.staff.map((s) => (
-                      <CommandItem key={s.id} value={`staff-${s.id}`} onSelect={() => go(`/staff/${s.id}`)}>
+                      <CommandItem key={s.id} value={`staff-${s.id}`} onSelect={() => go(`/our-employees/${s.id}`)}>
                         <Users className="text-brand" />
                         <span className="font-medium">{s.full_name}</span>
                         <span className="ml-auto text-[11px] text-foreground/40">{s.position || ''}</span>
@@ -171,7 +178,7 @@ export default function GlobalSearch() {
                 {results.participants.length > 0 && (
                   <CommandGroup heading="Participants">
                     {results.participants.map((p) => (
-                      <CommandItem key={p.id} value={`part-${p.id}`} onSelect={() => go(`/participants/${p.id}`)}>
+                      <CommandItem key={p.id} value={`part-${p.id}`} onSelect={() => go(`/our-participants/${p.id}`)}>
                         <Heart className="text-brand" />
                         <span className="font-medium">{p.full_name}</span>
                         <span className="ml-auto text-[11px] text-foreground/40">{p.status || ''}</span>
