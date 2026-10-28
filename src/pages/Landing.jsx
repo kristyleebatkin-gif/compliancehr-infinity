@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import './landing-layout.css';
 import LandingNav from '@/components/landing/LandingNav';
 import LandingHero from '@/components/landing/LandingHero';
-import UniversalUserSuccessEvidenceFirstSuite from '@/components/operations/UniversalUserSuccessEvidenceFirstSuite';
-import UniversalRegisterManagementHubSuite from '@/components/operations/UniversalRegisterManagementHubSuite';
+import LandingEvidenceStandardSection from '@/components/landing/LandingEvidenceStandardSection';
+import LandingRegisterEngineSection from '@/components/landing/LandingRegisterEngineSection';
 import LandingProductShowcase from '@/components/landing/LandingProductShowcase';
 import LandingSolutionSection from '@/components/landing/LandingSolutionSection';
 import LandingStatsSection from '@/components/landing/LandingStatsSection';
@@ -31,19 +31,19 @@ export default function Landing() {
   };
 
   return (
-    <div className="landing-page relative min-h-screen overflow-x-hidden bg-white font-elegant text-[#0A2B6D] antialiased">
+    <div className="landing-page relative min-h-screen overflow-x-hidden bg-[#F6F0FF] font-elegant text-[#0A2B6D] antialiased">
       {/* Top Enterprise SaaS Navigation */}
       <LandingNav onBookDemo={openDemoModal} />
 
-      <main className="landing-main relative z-10 mx-auto w-full max-w-[1440px] bg-white px-4 py-6 sm:px-6 lg:px-8 space-y-10 pb-14">
+      <main className="landing-main relative z-10 mx-auto w-full max-w-[1440px] px-4 py-6 sm:px-6 lg:px-8 space-y-8 pb-14">
         {/* 1. Hero Section (Landscape) */}
         <LandingHero onBookDemo={openDemoModal} />
 
-        {/* Top-Level Platform Rule: Universal User Success, Rapid Access & Evidence-First Standard */}
-        <UniversalUserSuccessEvidenceFirstSuite />
+        {/* Evidence-First Operating Standard */}
+        <LandingEvidenceStandardSection />
 
-        {/* Universal Register Management, Record Indexing, Register Health & Document Hub Standard */}
-        <UniversalRegisterManagementHubSuite />
+        {/* Universal Register Engine Standard */}
+        <LandingRegisterEngineSection />
 
         {/* 2. Dashboard Showcase Section (Landscape) */}
         <LandingProductShowcase />
