@@ -406,8 +406,8 @@ export default function BlueprintPreviewSection() {
           {/* Executive Blueprint Header — "15 Role Permission Tiers" Fitted Beside "46 Connected Modules" on One Row */}
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 border-b border-slate-100 pb-5 text-left">
             <div>
-              <span className="inline-flex items-center gap-2 rounded-full bg-[#0A2B6D] px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider text-white">
-                <Layers className="h-3.5 w-3.5 text-[#00C6FF]" />
+              <span className="inline-flex items-center gap-2 rounded-full bg-[#5A00D6]/10 px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                <Layers className="h-3.5 w-3.5 text-[#5A00D6]" />
                 Software Ecosystem Architecture Map
               </span>
               <h2 className="mt-2.5 font-editorial text-2xl sm:text-4xl font-extrabold tracking-tight text-[#0A2B6D]">

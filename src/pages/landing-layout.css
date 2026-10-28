@@ -23,7 +23,7 @@
    Palette: sky blue #00C6FF · blue #0072FF · dark blue #0A2B6D · dark purple #5A00D6
             purple #A100FF · pink #FF2E9A · magenta #FF6EDB · lilac #C084FC
    Surfaces: white cards on pale lavender #F6F0FF, lilac-tinted borders. */
-.landing-page [class*="border-slate-"] {
+.landing-page [class*="border-slate-"]:not([class*="hover:border-slate-"]):not([class*="focus:border-slate-"]):not([class*="border-white"]) {
   border-color: rgba(192, 132, 252, 0.4);
 }
 
@@ -31,14 +31,14 @@
   border-color: rgba(192, 132, 252, 0.32);
 }
 
-.landing-page [class*="bg-slate-50"],
-.landing-page [class*="bg-slate-100"] {
+.landing-page [class*="bg-slate-50"]:not([class*="hover:bg-slate-"]):not([class*="focus:bg-slate-"]),
+.landing-page [class*="bg-slate-100"]:not([class*="hover:bg-slate-"]):not([class*="focus:bg-slate-"]) {
   background-color: #F5F0FF;
 }
 
-.landing-page [class*="text-slate-500"],
-.landing-page [class*="text-slate-600"],
-.landing-page [class*="text-slate-700"] {
+.landing-page [class*="text-slate-500"]:not([class*="hover:text-slate-"]),
+.landing-page [class*="text-slate-600"]:not([class*="hover:text-slate-"]),
+.landing-page [class*="text-slate-700"]:not([class*="hover:text-slate-"]) {
   color: rgba(10, 43, 109, 0.72);
 }
 
@@ -48,8 +48,15 @@
   fill: #FF2E9A;
 }
 
-.landing-page [class*="bg-emerald-"] {
+.landing-page [class*="bg-emerald-50"],
+.landing-page [class*="bg-emerald-100"] {
   background-color: rgba(0, 198, 255, 0.16);
+}
+
+.landing-page [class*="bg-emerald-300"],
+.landing-page [class*="bg-emerald-400"],
+.landing-page [class*="bg-emerald-500"] {
+  background-color: #00C6FF;
 }
 
 .landing-page [class*="text-emerald-"] {
