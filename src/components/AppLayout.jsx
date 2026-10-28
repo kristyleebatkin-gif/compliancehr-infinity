@@ -17,7 +17,6 @@ import {
   LayoutDashboard, Users, Heart, GraduationCap, ShieldCheck, PartyPopper,
   Search, Sun, Moon, User, Wallet, Building2,
 } from 'lucide-react';
-import ExecutiveWallScene, { SQUISHED_GRADIENT } from '@/components/safe/ExecutiveWallScene';
 import GlobalSearch from '@/components/GlobalSearch';
 import AutoRegisterInsights from '@/components/AutoRegisterInsights';
 import QuickAppBar from '@/components/QuickAppBar';
@@ -319,46 +318,31 @@ export default function AppLayout() {
               <GlobalSearch />
             </div>
 
-            <div
-              className="flex items-center gap-1 rounded-full p-1 shadow-sm"
-              style={{ background: SQUISHED_GRADIENT }}
-            >
-              <button
-                type="button"
-                onClick={() => switchWorkspaceView('both')}
-                className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-extrabold transition-all ${
-                  workspaceView === 'both'
-                    ? 'bg-white text-blue-950 shadow-sm'
-                    : 'text-white hover:bg-white/15'
-                }`}
-              >
-                <Building2 className="h-3.5 w-3.5 text-blue-600" />
-                <span className="hidden sm:inline">Both Views</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => switchWorkspaceView('office')}
-                className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-extrabold transition-all ${
-                  workspaceView === 'office'
-                    ? 'bg-white text-blue-950 shadow-sm'
-                    : 'text-white hover:bg-white/15'
-                }`}
-              >
-                <Building2 className="h-3.5 w-3.5 text-pink-600" />
-                <span className="hidden sm:inline">Office View</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => switchWorkspaceView('profiles')}
-                className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-extrabold transition-all ${
-                  workspaceView === 'profiles'
-                    ? 'bg-white text-purple-950 shadow-sm'
-                    : 'text-white hover:bg-white/15'
-                }`}
-              >
-                <Users className="h-3.5 w-3.5 text-purple-600" />
-                <span className="hidden sm:inline">View Profiles</span>
-              </button>
+            {/* Workspace View Selector — landing-style segmented control */}
+            <div className="flex items-center gap-1 rounded-xl border border-slate-200 bg-slate-100/80 p-1">
+              {[
+                { id: 'both', label: 'Both Views', Icon: Building2 },
+                { id: 'office', label: 'Office View', Icon: Building2 },
+                { id: 'profiles', label: 'View Profiles', Icon: Users },
+              ].map(({ id, label, Icon }) => {
+                const selected = workspaceView === id;
+                return (
+                  <button
+                    key={id}
+                    type="button"
+                    onClick={() => switchWorkspaceView(id)}
+                    aria-pressed={selected}
+                    className={`inline-flex min-h-[28px] items-center gap-1 rounded-lg px-2.5 py-1 text-[10.5px] font-extrabold transition-all ${
+                      selected
+                        ? 'bg-[#0A2B6D] text-white shadow-sm'
+                        : 'text-[#0A2B6D] hover:text-[#0072FF]'
+                    }`}
+                  >
+                    <Icon className={`h-3.5 w-3.5 shrink-0 ${selected ? 'text-white' : 'text-[#5A00D6]'}`} />
+                    <span className="hidden sm:inline whitespace-nowrap">{label}</span>
+                  </button>
+                );
+              })}
             </div>
 
             {/* Notifications Bell */}
