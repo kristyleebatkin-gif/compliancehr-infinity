@@ -78,6 +78,8 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
   const restricted = employeeSelf || participantOnly;
   const [selfProfile, setSelfProfile] = useState(null);
   const [commScreen, setCommScreen] = useState('screen1');
+  const [activeTab, setActiveTab] = useState(participantOnly ? 'diary' : employeeSelf ? 'alerts' : 'inbox');
+  useEffect(() => { setActiveTab(participantOnly ? 'diary' : employeeSelf ? 'alerts' : 'inbox'); }, [participantOnly, employeeSelf]);
 
   useEffect(() => {
     if (!restricted || profile) return;
@@ -101,7 +103,7 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
 
   return (
     <div className="comm-centre space-y-1">
-      <Tabs defaultValue={participantOnly ? 'diary' : employeeSelf ? 'alerts' : 'inbox'}>
+      <Tabs value={activeTab} onValueChange={setActiveTab}>
         <ModuleShell
           embedded={embedded || participantOnly}
           title="Communication Centre"
@@ -142,7 +144,7 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
               </div>
 
               <CommWeatherBar />
-              <CommunicationNavigation tabs={shown} />
+              <CommunicationNavigation tabs={shown} onCompose={() => setActiveTab('email')} />
 
               {/* SCREEN 2 IN COMMUNICATION CENTRE: MEETING CENTRE & FEEDBACK SURVEYS */}
               {(commScreen === 'screen2' || commScreen === 'both') && (
