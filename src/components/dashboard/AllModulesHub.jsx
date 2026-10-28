@@ -47,7 +47,7 @@ export default function AllModulesHub() {
       </div>
 
       {/* Screens / Modules Only Underneath — Visually Matching Quick Access */}
-      <div className="grid auto-rows-fr grid-cols-2 gap-2 p-3 pt-2 sm:grid-cols-3 md:grid-cols-6 items-stretch">
+      <div className="grid auto-rows-fr grid-cols-2 gap-2.5 p-3 pt-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 items-stretch">
         {modules.map((module, idx) => {
           const Icon = module.icon;
           const headerBg = getHeaderView(idx);

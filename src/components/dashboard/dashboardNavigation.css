@@ -75,7 +75,14 @@
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
+  .app-readable [data-dashboard-tabs][role="tablist"],
+  .app-readable nav[data-dashboard-tabs] {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (min-width: 1280px) {
   .app-readable [data-dashboard-tabs][role="tablist"],
   .app-readable nav[data-dashboard-tabs] {
     grid-template-columns: repeat(6, minmax(0, 1fr)) !important;

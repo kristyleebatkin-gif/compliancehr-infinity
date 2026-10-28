@@ -143,8 +143,8 @@ export default function DashboardPersonaliser({
                       style={{ color: visible ? suite.color : '#94A3B8' }}
                     />
                     <div className="min-w-0">
-                      <div className="truncate text-xs font-extrabold">{suite.label}</div>
-                      <div className="truncate text-[10px] font-medium text-slate-500">
+                      <div className="text-xs font-extrabold leading-tight">{suite.label}</div>
+                      <div className="mt-0.5 text-[10px] font-medium leading-tight text-slate-500">
                         {suite.sub}
                       </div>
                     </div>

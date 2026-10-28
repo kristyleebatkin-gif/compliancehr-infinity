@@ -77,7 +77,7 @@ export default function QuickAppBar() {
         </div>
 
         {/* 18 iPad-style screens */}
-        <div className="grid auto-rows-fr grid-cols-2 gap-2 p-3 pt-2 sm:grid-cols-3 md:grid-cols-6 items-stretch">
+        <div className="grid auto-rows-fr grid-cols-2 gap-2.5 p-3 pt-2 sm:grid-cols-3 lg:grid-cols-6 items-stretch">
           {QUICK_LINKS.map((item, idx) => {
             const active = isActive(item.path);
             const Icon = item.icon;

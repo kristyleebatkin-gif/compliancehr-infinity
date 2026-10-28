@@ -104,20 +104,20 @@ const TAB_GROUPS = [
 ];
 
 const TABS = [
-  ['auditor-portal', 'Screen 2: Auditor Portal'],
+  ['auditor-portal', 'Auditor Portal'],
   ['standards-map', 'NDIS Standards Map'],
-  ['policies', 'Policies'],
+  ['policies', 'Policies Register'],
   ['requirements', 'Legal Requirements'],
-  ['control-centre', 'Infinity Control Centre (356 Checks & 98 Docs)'],
-  ['one-click-operations', '1-Click Operations Deck'],
+  ['control-centre', 'Infinity Control Centre'],
+  ['one-click-operations', '1-Click Operations'],
   ['infinity-core-engine', 'Infinity Core Engine'],
-  ['health-intelligence', 'Health & Readiness Intelligence'],
+  ['health-intelligence', 'Health & Readiness'],
   ['master-checklist', 'Master Checklist'],
-  ['master-audit-forms', 'Master Audit Checklists (A4)'],
-  ['printable-2026-templates', '2026 Printable Office Templates'],
-  ['screen-audit-2026', '45-Screen Smart-Fill Audit'],
-  ['audits', 'Audits'],
-  ['internal-audits', 'Internal Audit Register'],
+  ['master-audit-forms', 'Master Audit Forms'],
+  ['printable-2026-templates', '2026 Printable Templates'],
+  ['screen-audit-2026', '46-Screen Smart Audit'],
+  ['audits', 'External Audits'],
+  ['internal-audits', 'Internal Audits'],
   ['audit-report-list', 'Audit Report List'],
   ['weekly-audit-reports', 'Weekly Audit Reports'],
   ['executive-summary', 'Executive Summary'],
@@ -129,14 +129,14 @@ const TABS = [
   ['participant-reviews', 'Participant Reviews'],
   ['staff-compliance', 'Staff Compliance'],
   ['worker-screening', 'Worker Screening'],
-  ['cert-renewals', 'Certification Renewals'],
+  ['cert-renewals', 'Cert Renewals'],
   ['renewal-calendar', 'Renewal Calendar'],
-  ['onboarding-progress', 'Onboarding Progress'],
+  ['onboarding-progress', 'Onboarding Tracker'],
   ['staff-bulk-actions', 'Staff Bulk Actions'],
-  ['risk-status', 'Risk & Status Dashboard'],
+  ['risk-status', 'Risk & Status'],
   ['risk-heatmap', 'Risk Heatmap'],
-  ['trend-charts', 'Trend Charts'],
-  ['kits-drills', 'Kits & Drills Checklists'],
+  ['trend-charts', 'Safety Trend Charts'],
+  ['kits-drills', 'Kits & Drills'],
   ['visitors', 'Visitor Sign In/Out'],
   ['quick-tasks', 'Quick Tasks'],
   ['task-kanban', 'Task Kanban'],
@@ -330,7 +330,7 @@ export default function ComplianceHub() {
           setActiveTab(val);
           if (screenView === 'screen2') setScreenView('both');
         }}
-        columnsClass="grid-cols-2 sm:grid-cols-3 md:grid-cols-6"
+        columnsClass="grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"
       />
 
       {/* SECOND SCREEN: AUDITOR PORTAL IN COMPLIANCE */}
