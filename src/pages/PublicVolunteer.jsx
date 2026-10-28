@@ -6,8 +6,8 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Loader2, HeartHandshake } from 'lucide-react';
-import { COMPANY_LOGO_URL, COMPANY_NAME, COMPANY_SLOGAN } from '@/lib/companyBranding';
+import { Loader2, HeartHandshake, ArrowRight, Send } from 'lucide-react';
+import PublicPageShell from '@/components/landing/PublicPageShell';
 
 // Public volunteer / student placement interest form. Creates a
 // VolunteerInterest record through publicSubmissions (service-role endpoint).
@@ -46,115 +46,121 @@ export default function PublicVolunteer() {
 
   if (done) {
     return (
-      <div className="min-h-screen bg-background px-4 py-10 font-elegant antialiased sm:py-16">
-        <div className="mx-auto w-full max-w-xl rounded-3xl border border-emerald-200 bg-white p-8 text-center shadow-xl shadow-emerald-500/10 dark:border-emerald-500/20 dark:bg-card">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-500/15">
-            <HeartHandshake className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
+      <PublicPageShell>
+        <div className="text-center">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#0072FF]/10">
+            <HeartHandshake className="h-7 w-7 text-[#0072FF]" />
           </div>
-          <h1 className="mt-4 font-editorial text-2xl font-semibold text-foreground">Thank you, {form.full_name.split(' ')[0]}!</h1>
-          <p className="mt-2 text-sm text-foreground/60">Your interest has been registered. Our team will review it and be in touch about the next steps, including the checks and induction.</p>
-          <Button asChild variant="outline" className="mt-6 rounded-full">
-            <Link to="/">Back to website</Link>
-          </Button>
+          <h1 className="mt-4 font-editorial text-2xl sm:text-3xl font-extrabold tracking-tight text-[#0A2B6D]">
+            Thank you, {form.full_name.split(' ')[0]}!
+          </h1>
+          <p className="mx-auto mt-2 max-w-lg text-sm leading-relaxed text-[#0A2B6D]/75">
+            Your interest has been registered. Our team will review it and be in touch about the next
+            steps, including the checks and induction.
+          </p>
+          <Link
+            to="/"
+            className="mt-6 inline-flex items-center justify-center gap-2 rounded-xl bg-[#0A2B6D] px-5 py-2.5 text-sm font-extrabold text-white transition hover:bg-[#0072FF]"
+          >
+            <span>Back to website</span>
+            <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
-      </div>
+      </PublicPageShell>
     );
   }
 
   return (
-    <div className="app-readable min-h-screen bg-white px-4 py-10 font-elegant antialiased sm:py-16">
-      <div className="mx-auto w-full max-w-xl space-y-4">
-        <div className="flex items-center justify-between rounded-2xl px-4 py-3 text-white shadow-md" style={{ background: 'var(--header-gradient)' }}>
-          <div className="flex items-center gap-3">
-            <img src={COMPANY_LOGO_URL} alt={COMPANY_NAME} className="h-10 w-10 rounded-lg border border-white/30 bg-white object-contain p-0.5" />
-            <div>
-              <div className="text-sm font-black tracking-tight text-white">{COMPANY_NAME}</div>
-              <div className="text-[10px] font-semibold text-white/95">{COMPANY_SLOGAN}</div>
-            </div>
-          </div>
-          <Link to="/" className="rounded-lg bg-white px-3 py-1.5 text-xs font-extrabold text-violet-900 shadow-sm hover:bg-violet-50">
-            Home
-          </Link>
+    <PublicPageShell>
+      <div className="flex items-start gap-3 border-b border-slate-100 pb-4">
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#00C6FF]/15">
+          <HeartHandshake className="h-6 w-6 text-[#0072FF]" />
         </div>
-      <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-violet-500/10 sm:p-8 dark:border-white/10 dark:bg-card">
-        <div className="flex items-center gap-3">
-          <div className="rounded-xl bg-teal-500/10 p-2.5"><HeartHandshake className="h-5 w-5 text-teal-600" /></div>
-          <div>
-            <h1 className="font-editorial text-2xl font-semibold text-foreground">Volunteer with us</h1>
-            <p className="text-xs text-muted-foreground">Register your interest in volunteering or a student placement.</p>
-          </div>
+        <div>
+          <span className="inline-flex items-center rounded-full bg-[#0A2B6D] px-3 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white">
+            Volunteer &amp; Placement Portal
+          </span>
+          <h1 className="mt-1.5 font-editorial text-2xl sm:text-3xl font-extrabold tracking-tight text-[#0A2B6D]">
+            Volunteer with us
+          </h1>
+          <p className="mt-1 text-sm text-[#0A2B6D]/75">
+            Register your interest in volunteering or a student placement.
+          </p>
         </div>
+      </div>
 
-        <div className="mt-6 space-y-4">
+      <div className="mt-5 space-y-4">
+        <div>
+          <Label>I would like to apply as a</Label>
+          <Select value={form.interest_type} onValueChange={set('interest_type')}>
+            <SelectTrigger className="mt-1.5 bg-white"><SelectValue placeholder="Volunteer or student placement" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Volunteer">Volunteer</SelectItem>
+              <SelectItem value="Student Placement">Student Placement</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div>
+          <Label htmlFor="pv-name">Full name *</Label>
+          <Input id="pv-name" className="mt-1.5 bg-white" value={form.full_name} onChange={set('full_name')} />
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <Label>I would like to apply as a</Label>
-            <Select value={form.interest_type} onValueChange={set('interest_type')}>
-              <SelectTrigger className="mt-1.5"><SelectValue placeholder="Volunteer or student placement" /></SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Volunteer">Volunteer</SelectItem>
-                <SelectItem value="Student Placement">Student Placement</SelectItem>
-              </SelectContent>
-            </Select>
+            <Label htmlFor="pv-email">Email *</Label>
+            <Input id="pv-email" type="email" className="mt-1.5 bg-white" value={form.email} onChange={set('email')} />
           </div>
           <div>
-            <Label htmlFor="pv-name">Full name *</Label>
-            <Input id="pv-name" className="mt-1.5" value={form.full_name} onChange={set('full_name')} />
+            <Label htmlFor="pv-phone">Phone *</Label>
+            <Input id="pv-phone" className="mt-1.5 bg-white" value={form.phone} onChange={set('phone')} />
           </div>
+        </div>
+        <div>
+          <Label htmlFor="pv-suburb">Suburb</Label>
+          <Input id="pv-suburb" className="mt-1.5 bg-white" value={form.suburb} onChange={set('suburb')} />
+        </div>
+        {form.interest_type === 'Student Placement' && (
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <Label htmlFor="pv-email">Email *</Label>
-              <Input id="pv-email" type="email" className="mt-1.5" value={form.email} onChange={set('email')} />
+              <Label htmlFor="pv-inst">Education institution</Label>
+              <Input id="pv-inst" className="mt-1.5 bg-white" value={form.institution_name} onChange={set('institution_name')} />
             </div>
             <div>
-              <Label htmlFor="pv-phone">Phone *</Label>
-              <Input id="pv-phone" className="mt-1.5" value={form.phone} onChange={set('phone')} />
+              <Label htmlFor="pv-course">Course</Label>
+              <Input id="pv-course" className="mt-1.5 bg-white" value={form.course_name} onChange={set('course_name')} />
             </div>
           </div>
-          <div>
-            <Label htmlFor="pv-suburb">Suburb</Label>
-            <Input id="pv-suburb" className="mt-1.5" value={form.suburb} onChange={set('suburb')} />
-          </div>
-          {form.interest_type === 'Student Placement' && (
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div>
-                <Label htmlFor="pv-inst">Education institution</Label>
-                <Input id="pv-inst" className="mt-1.5" value={form.institution_name} onChange={set('institution_name')} />
-              </div>
-              <div>
-                <Label htmlFor="pv-course">Course</Label>
-                <Input id="pv-course" className="mt-1.5" value={form.course_name} onChange={set('course_name')} />
-              </div>
-            </div>
-          )}
-          <div>
-            <Label htmlFor="pv-avail">Availability</Label>
-            <Input id="pv-avail" className="mt-1.5" placeholder="e.g. Weekday mornings, weekends" value={form.availability} onChange={set('availability')} />
-          </div>
-          <div>
-            <Label htmlFor="pv-exp">Relevant experience</Label>
-            <Textarea id="pv-exp" className="mt-1.5 min-h-[80px]" value={form.relevant_experience} onChange={set('relevant_experience')} />
-          </div>
-          <div>
-            <Label htmlFor="pv-mot">Why would you like to join us? *</Label>
-            <Textarea id="pv-mot" className="mt-1.5 min-h-[100px]" value={form.motivation} onChange={set('motivation')} />
-          </div>
-          <label className="flex items-start gap-2.5 rounded-xl bg-muted/60 p-3 text-xs leading-relaxed text-foreground/70">
-            <input
-              type="checkbox"
-              checked={form.privacy_consent}
-              onChange={(e) => setForm((f) => ({ ...f, privacy_consent: e.target.checked }))}
-              className="mt-0.5 h-4 w-4 rounded border-input"
-            />
-            I consent to my details being collected and used to assess my application, in line with the privacy policy. *
-          </label>
-          {error && <p className="text-sm font-medium text-destructive">{error}</p>}
-          <Button onClick={submit} disabled={sending} className="w-full rounded-full">
-            {sending ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-            {sending ? 'Submitting...' : 'Submit interest'}
-          </Button>
+        )}
+        <div>
+          <Label htmlFor="pv-avail">Availability</Label>
+          <Input id="pv-avail" className="mt-1.5 bg-white" placeholder="e.g. Weekday mornings, weekends" value={form.availability} onChange={set('availability')} />
         </div>
+        <div>
+          <Label htmlFor="pv-exp">Relevant experience</Label>
+          <Textarea id="pv-exp" className="mt-1.5 min-h-[80px] bg-white" value={form.relevant_experience} onChange={set('relevant_experience')} />
+        </div>
+        <div>
+          <Label htmlFor="pv-mot">Why would you like to join us? *</Label>
+          <Textarea id="pv-mot" className="mt-1.5 min-h-[110px] bg-white" value={form.motivation} onChange={set('motivation')} />
+        </div>
+        <label className="flex items-start gap-2.5 rounded-xl border border-slate-200 bg-slate-50/70 p-3 text-xs font-semibold leading-relaxed text-[#0A2B6D]/80">
+          <input
+            type="checkbox"
+            checked={form.privacy_consent}
+            onChange={(e) => setForm((f) => ({ ...f, privacy_consent: e.target.checked }))}
+            className="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300"
+          />
+          <span>I consent to my details being collected and used to assess my application, in line with the privacy policy. *</span>
+        </label>
+        {error && <p className="rounded-xl bg-[#FF2E9A]/10 px-3 py-2 text-sm font-bold text-[#FF2E9A]">{error}</p>}
+        <Button
+          onClick={submit}
+          disabled={sending}
+          className="w-full rounded-xl bg-[#0A2B6D] py-5 text-sm font-extrabold text-white hover:bg-[#0072FF]"
+        >
+          {sending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Send className="mr-2 h-4 w-4" />}
+          {sending ? 'Submitting...' : 'Submit interest'}
+        </Button>
       </div>
-      </div>
-    </div>
+    </PublicPageShell>
   );
 }

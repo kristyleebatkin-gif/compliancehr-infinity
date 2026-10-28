@@ -6,8 +6,8 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Loader2, MessageCircleWarning, ShieldCheck } from 'lucide-react';
-import { COMPANY_LOGO_URL, COMPANY_NAME, COMPANY_SLOGAN } from '@/lib/companyBranding';
+import { Loader2, MessageCircleWarning, ShieldCheck, ArrowRight, CheckCircle2 } from 'lucide-react';
+import PublicPageShell from '@/components/landing/PublicPageShell';
 
 // Public complaint form: anyone visiting the provider's site can raise a
 // complaint without logging in. Creates the record through publicSubmissions.
@@ -36,89 +36,99 @@ export default function PublicComplaint() {
     }
   };
 
-  return (
-    <div className="app-readable min-h-screen bg-white px-4 py-10 font-elegant antialiased sm:py-16">
-      <div className="mx-auto w-full max-w-xl space-y-4">
-        <div className="flex items-center justify-between rounded-2xl px-4 py-3 text-white shadow-md" style={{ background: 'var(--header-gradient)' }}>
-          <div className="flex items-center gap-3">
-            <img src={COMPANY_LOGO_URL} alt={COMPANY_NAME} className="h-10 w-10 rounded-lg border border-white/30 bg-white object-contain p-0.5" />
-            <div>
-              <div className="text-sm font-black tracking-tight text-white">{COMPANY_NAME}</div>
-              <div className="text-[10px] font-semibold text-white/95">{COMPANY_SLOGAN}</div>
-            </div>
+  if (reference) {
+    return (
+      <PublicPageShell>
+        <div className="text-center">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#0072FF]/10">
+            <ShieldCheck className="h-7 w-7 text-[#0072FF]" />
           </div>
-          <Link to="/" className="rounded-lg bg-white px-3 py-1.5 text-xs font-extrabold text-violet-900 shadow-sm hover:bg-violet-50">
-            Home
+          <h1 className="mt-4 font-editorial text-2xl sm:text-3xl font-extrabold tracking-tight text-[#0A2B6D]">
+            Complaint received
+          </h1>
+          <p className="mx-auto mt-2 max-w-lg text-sm leading-relaxed text-[#0A2B6D]/75">
+            Thank you for letting us know. Your reference number is{' '}
+            <span className="font-extrabold text-[#5A00D6]">{reference}</span>. A team member will
+            acknowledge your complaint and be in touch.
+          </p>
+          <Link
+            to="/"
+            className="mt-6 inline-flex items-center justify-center gap-2 rounded-xl bg-[#0A2B6D] px-5 py-2.5 text-sm font-extrabold text-white transition hover:bg-[#0072FF]"
+          >
+            <span>Back to website</span>
+            <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
-        {reference ? (
-          <div className="rounded-3xl border border-emerald-200 bg-white p-8 text-center shadow-xl shadow-emerald-500/10 dark:border-emerald-500/20 dark:bg-card">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-500/15">
-              <ShieldCheck className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
-            </div>
-            <h1 className="mt-4 font-editorial text-2xl font-semibold text-foreground">Complaint received</h1>
-            <p className="mt-2 text-sm text-foreground/60">
-              Thank you for letting us know. Your reference number is <span className="font-bold text-foreground">{reference}</span>. A team member will acknowledge your complaint and be in touch.
-            </p>
-            <Button asChild variant="outline" className="mt-6 rounded-full">
-              <Link to="/">Back to website</Link>
-            </Button>
-          </div>
-        ) : (
-          <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-violet-500/10 sm:p-8 dark:border-white/10 dark:bg-card">
-            <div className="flex items-center gap-3">
-              <div className="rounded-xl bg-rose-500/10 p-2.5"><MessageCircleWarning className="h-5 w-5 text-rose-600" /></div>
-              <div>
-                <h1 className="font-editorial text-2xl font-semibold text-foreground">Raise a complaint</h1>
-                <p className="text-xs text-muted-foreground">Your feedback helps us improve. Every complaint is formally tracked and acknowledged.</p>
-              </div>
-            </div>
+      </PublicPageShell>
+    );
+  }
 
-            <div className="mt-6 space-y-4">
-              <div>
-                <Label htmlFor="pc-name">Your name *</Label>
-                <Input id="pc-name" className="mt-1.5" value={form.complainant_name} onChange={set('complainant_name')} />
-              </div>
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div>
-                  <Label>I am a</Label>
-                  <Select value={form.complainant_relationship} onValueChange={set('complainant_relationship')}>
-                    <SelectTrigger className="mt-1.5"><SelectValue placeholder="Select relationship" /></SelectTrigger>
-                    <SelectContent>
-                      {['Participant', 'Family Member', 'Staff', 'Advocate', 'Other'].map((r) => <SelectItem key={r} value={r}>{r}</SelectItem>)}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <Label>Category</Label>
-                  <Select value={form.category} onValueChange={set('category')}>
-                    <SelectTrigger className="mt-1.5"><SelectValue placeholder="Select category" /></SelectTrigger>
-                    <SelectContent>
-                      {['Service Quality', 'Staff Conduct', 'Communication', 'Safety', 'Financial', 'Other'].map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-              <div>
-                <Label htmlFor="pc-subject">Subject *</Label>
-                <Input id="pc-subject" className="mt-1.5" placeholder="Short summary of the issue" value={form.title} onChange={set('title')} />
-              </div>
-              <div>
-                <Label htmlFor="pc-details">What happened? *</Label>
-                <Textarea id="pc-details" className="mt-1.5 min-h-[120px]" placeholder="Please describe what happened, when, and who was involved." value={form.description} onChange={set('description')} />
-              </div>
-              {error && <p className="text-sm font-medium text-destructive">{error}</p>}
-              <Button onClick={submit} disabled={sending} className="w-full rounded-full">
-                {sending ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-                {sending ? 'Submitting...' : 'Submit complaint'}
-              </Button>
-              <p className="text-center text-[11px] leading-relaxed text-foreground/45">
-                Handled under our complaints policy. If your complaint concerns your safety, please also call 000 in an emergency.
-              </p>
-            </div>
-          </div>
-        )}
+  return (
+    <PublicPageShell>
+      <div className="flex items-start gap-3 border-b border-slate-100 pb-4">
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#FF2E9A]/10">
+          <MessageCircleWarning className="h-6 w-6 text-[#FF2E9A]" />
+        </div>
+        <div>
+          <span className="inline-flex items-center rounded-full bg-[#0A2B6D] px-3 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white">
+            Public Feedback Portal
+          </span>
+          <h1 className="mt-1.5 font-editorial text-2xl sm:text-3xl font-extrabold tracking-tight text-[#0A2B6D]">
+            Raise a complaint
+          </h1>
+          <p className="mt-1 text-sm text-[#0A2B6D]/75">
+            Your feedback helps us improve. Every complaint is formally tracked and acknowledged.
+          </p>
+        </div>
       </div>
-    </div>
+
+      <div className="mt-5 space-y-4">
+        <div>
+          <Label htmlFor="pc-name">Your name *</Label>
+          <Input id="pc-name" className="mt-1.5 bg-white" value={form.complainant_name} onChange={set('complainant_name')} />
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <Label>I am a</Label>
+            <Select value={form.complainant_relationship} onValueChange={set('complainant_relationship')}>
+              <SelectTrigger className="mt-1.5 bg-white"><SelectValue placeholder="Select relationship" /></SelectTrigger>
+              <SelectContent>
+                {['Participant', 'Family Member', 'Staff', 'Advocate', 'Other'].map((r) => <SelectItem key={r} value={r}>{r}</SelectItem>)}
+              </SelectContent>
+            </Select>
+          </div>
+          <div>
+            <Label>Category</Label>
+            <Select value={form.category} onValueChange={set('category')}>
+              <SelectTrigger className="mt-1.5 bg-white"><SelectValue placeholder="Select category" /></SelectTrigger>
+              <SelectContent>
+                {['Service Quality', 'Staff Conduct', 'Communication', 'Safety', 'Financial', 'Other'].map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+        <div>
+          <Label htmlFor="pc-subject">Subject *</Label>
+          <Input id="pc-subject" className="mt-1.5 bg-white" placeholder="Short summary of the issue" value={form.title} onChange={set('title')} />
+        </div>
+        <div>
+          <Label htmlFor="pc-details">What happened? *</Label>
+          <Textarea id="pc-details" className="mt-1.5 min-h-[130px] bg-white" placeholder="Please describe what happened, when, and who was involved." value={form.description} onChange={set('description')} />
+        </div>
+        {error && <p className="rounded-xl bg-[#FF2E9A]/10 px-3 py-2 text-sm font-bold text-[#FF2E9A]">{error}</p>}
+        <Button
+          onClick={submit}
+          disabled={sending}
+          className="w-full rounded-xl bg-[#0A2B6D] py-5 text-sm font-extrabold text-white hover:bg-[#0072FF]"
+        >
+          {sending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <CheckCircle2 className="mr-2 h-4 w-4" />}
+          {sending ? 'Submitting...' : 'Submit complaint'}
+        </Button>
+        <p className="flex items-start justify-center gap-1.5 text-center text-[11px] leading-relaxed text-[#0A2B6D]/60">
+          <ShieldCheck className="mt-0.5 h-3 w-3 shrink-0 text-[#0072FF]" />
+          <span>Handled under our complaints policy. If your complaint concerns your safety, please also call 000 in an emergency.</span>
+        </p>
+      </div>
+    </PublicPageShell>
   );
 }

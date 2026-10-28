@@ -52,7 +52,7 @@ const STEPS = [
 
 export default function LandingHowItWorks() {
   return (
-    <section id="how-it-works" className="w-full scroll-mt-20 py-6">
+    <section id="how-it-works" className="w-full scroll-mt-20">
       <div className="mx-auto max-w-3xl text-center">
         <span className="inline-flex items-center gap-2 rounded-full bg-[#0072FF]/10 px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-[#0072FF]">
           Simple 3-Step Implementation

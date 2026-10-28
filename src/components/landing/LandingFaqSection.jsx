@@ -57,7 +57,7 @@ export default function LandingFaqSection() {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section id="faq" className="w-full scroll-mt-20 py-6">
+    <section id="faq" className="w-full scroll-mt-20">
       <Reveal className="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-10 lg:p-12 shadow-lg">
         <div className="mx-auto max-w-3xl text-center">
           <span className="inline-flex items-center gap-2 rounded-full bg-[#0072FF]/10 px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-[#0072FF]">

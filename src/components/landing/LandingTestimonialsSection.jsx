@@ -31,7 +31,7 @@ const TESTIMONIALS = [
 
 export default function LandingTestimonialsSection() {
   return (
-    <section id="testimonials" className="w-full scroll-mt-20 py-6">
+    <section id="testimonials" className="w-full scroll-mt-20">
       <div className="mx-auto max-w-3xl text-center">
         <span className="inline-flex items-center gap-2 rounded-full bg-[#FF2E9A]/10 px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-[#FF2E9A]">
           <ShieldCheck className="h-3.5 w-3.5" />
