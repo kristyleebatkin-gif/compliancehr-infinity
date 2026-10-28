@@ -7,7 +7,10 @@ import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Users, Plus, GraduationCap, Loader2, Sparkles } from 'lucide-react';
-import { format, addMonths } from 'date-fns';
+import { format, addDays } from 'date-fns';
+import { fetchAllRecords } from '@/lib/csvExport';
+import TrainingPackageEditor from '@/components/training/TrainingPackageEditor';
+import { readTrainingPackage, trainingTemplateSummary } from '@/lib/trainingPackage';
 import { LMS_MODULES, LMS_GROUPS } from '@/lib/lmsCurriculum';
 
 const ROLES = ['Support Worker', 'Team Leader', 'Compliance Manager', 'Administration', 'Management'];
@@ -54,13 +57,14 @@ export default function TrainingTemplates() {
   const [assignMode, setAssignMode] = useState('one');
   const [assignResult, setAssignResult] = useState('');
   const [assigning, setAssigning] = useState(false);
+  const [assignDue, setAssignDue] = useState(() => format(addDays(new Date(), 14), 'yyyy-MM-dd'));
 
   const load = useCallback(async () => {
     setLoading(true);
     try {
       const [tplPage, staffPage] = await Promise.all([
         base44.entities.TrainingTemplate.list('-created_date', 100),
-        base44.entities.StaffProfile.filter({ status: 'Active' }, { sort: 'full_name', limit: 200, fields: ['full_name', 'role'] }),
+        base44.entities.StaffProfile.filter({ status: 'Active' }, { sort: 'full_name', limit: 200, fields: ['id', 'full_name', 'role', 'email'] }),
       ]);
       setTemplates(tplPage.items || []);
       setStaff(staffPage.items || []);
@@ -110,46 +114,53 @@ export default function TrainingTemplates() {
       const titles = (assignTemplate.module_titles || '').split('\n').map((t) => t.trim()).filter(Boolean);
       if (titles.length === 0) { setAssignResult('This template has no modules.'); return; }
       const today = todayStr();
+      const pack = readTrainingPackage(assignTemplate.description);
+      if (pack && (pack.status !== 'Reviewed for use' || !pack.reviewDate || pack.reviewDate < today)) {
+        setAssignResult('Review this training package and its review date before assigning it.'); return;
+      }
+      if (!assignDue) { setAssignResult('Choose an assignment due date.'); return; }
       const targets = assignMode === 'role'
-        ? staff.filter((s) => s.role === assignTemplate.role).map((s) => s.full_name)
-        : [assignStaff];
+        ? staff.filter((person) => person.role === assignTemplate.role)
+        : staff.filter((person) => person.id === assignStaff);
       if (targets.length === 0) {
         setAssignResult(`No active staff with the ${assignTemplate.role} role.`);
         return;
       }
-      const compsPage = await base44.entities.TrainingCompletion.filter(
-        { status: 'Completed' },
-        { limit: 500, fields: ['employee_name', 'module_title', 'expiry_date'] },
-      );
+      const completions = await fetchAllRecords(base44.entities.TrainingCompletion, { status: 'Completed' });
       const current = new Set(
-        (compsPage.items || [])
+        completions
           .filter((c) => !c.expiry_date || c.expiry_date >= today)
           .map((c) => `${c.employee_name}|${c.module_title}`),
       );
-      const records = [];
-      targets.forEach((name) => {
-        titles.forEach((title) => {
-          if (current.has(`${name}|${title}`)) return;
-          const mod = LMS_MODULES.find((m) => m.title === title);
-          const months = mod?.validity_months;
-          records.push({
-            employee_name: name,
-            learner_type: 'Employee',
-            learner_name: name,
-            module_title: title,
-            completed_date: today,
-            expiry_date: months ? format(addMonths(new Date(), months), 'yyyy-MM-dd') : undefined,
-            status: 'Completed',
-            training_notes: `Assigned via "${assignTemplate.name}" template${assignMode === 'role' ? ' (role auto-assign)' : ''}`,
+      let created = 0, skipped = 0, failed = 0;
+      const actor = await base44.auth.me();
+      for (const person of targets) {
+        const missing = titles.filter((title) => !current.has(`${person.full_name}|${title}`));
+        if (!missing.length) { skipped += 1; continue; }
+        const reference = `Training assignment: ${assignTemplate.id} / ${person.id}`;
+        try {
+          const existing = await base44.entities.TodoTask.filter({
+            task_type: 'Training Assignment', important_info: reference,
+            status: { $nin: ['Completed', 'Finalised', 'Cancelled'] },
+          }, { limit: 1 });
+          if (existing.items?.length) { skipped += 1; continue; }
+          const task = await base44.entities.TodoTask.create({
+            title: `Complete training: ${assignTemplate.name}`,
+            task_type: 'Training Assignment', module: 'Training',
+            task_date: today, due_date: assignDue, priority: 'Medium', status: 'Pending',
+            assigned_to: person.full_name, assigned_email: person.email || undefined,
+            responsible: [person.full_name], responsible_emails: person.email ? [person.email] : [],
+            linked_entity_type: 'TrainingTemplate', linked_entity_id: assignTemplate.id,
+            important_info: reference,
+            resources_needed: '/training',
+            how_to_complete: `Training template: ${assignTemplate.id}. Learner profile: ${person.id}.\nModules:\n${missing.join('\n')}\nComplete learning and required assessment. Record actual completion and supporting evidence separately. Assignment is not proof of competency.`,
+            shared_by: actor.full_name || actor.email,
           });
-        });
-      });
-      if (records.length === 0) {
-        setAssignResult('Everyone already holds all modules in this bundle.');
-        return;
+          if (!task?.id) throw new Error('Task not confirmed');
+          created += 1;
+        } catch { failed += 1; }
       }
-      await base44.entities.TrainingCompletion.bulkCreate(records);
-      setAssignResult(`Recorded ${records.length} module${records.length === 1 ? '' : 's'} for ${targets.length} staff member${targets.length === 1 ? '' : 's'}${assignMode === 'role' ? ` with the ${assignTemplate.role} role` : ''}.`);
+      setAssignResult(`${created} training assignment task(s) created; ${skipped} skipped; ${failed} could not be confirmed. No training completions or certificates were created. Existing task reminder workflows handle due dates; delivery must be verified separately.`);
     } finally {
       setAssigning(false);
     }
@@ -159,7 +170,8 @@ export default function TrainingTemplates() {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
+      <TrainingPackageEditor templates={templates} onSaved={load} />
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="text-sm text-muted-foreground">Bundle mandatory modules per role, then assign a whole set to a staff member at once.</p>
         <Button size="sm" onClick={() => { setForm({ name: '', role: 'Support Worker', description: '', selected: [] }); setCreateOpen(true); }}>
           <Plus className="h-4 w-4" /> New template
@@ -178,7 +190,7 @@ export default function TrainingTemplates() {
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
                     <p className="font-semibold leading-tight">{tpl.name}</p>
-                    {tpl.description && <p className="text-xs text-muted-foreground">{tpl.description}</p>}
+                    {tpl.description && <p className="text-sm text-muted-foreground">{trainingTemplateSummary(tpl)}</p>}
                   </div>
                   <Badge className="bg-brand/10 text-brand border-transparent">{tpl.role}</Badge>
                 </div>
@@ -258,14 +270,14 @@ export default function TrainingTemplates() {
             </div>
             {assignMode === 'role' ? (
               <p className="rounded-lg bg-brand/10 p-2 text-xs text-brand">
-                {staff.filter((s) => s.role === assignTemplate?.role).length} active staff member(s) have the {assignTemplate?.role} role — the bundle will be recorded for all of them.
+                {staff.filter((s) => s.role === assignTemplate?.role).length} active staff member(s) have the {assignTemplate?.role} role — training tasks will be assigned to them; completions require separate evidence.
               </p>
             ) : (
               <Select value={assignStaff || ''} onValueChange={setAssignStaff}>
                 <SelectTrigger><SelectValue placeholder="Select staff member" /></SelectTrigger>
                 <SelectContent>
                   {staff.map((s) => (
-                    <SelectItem key={s.full_name} value={s.full_name}>
+                    <SelectItem key={s.id} value={s.id}>
                       {s.full_name}{s.role ? ` (${s.role})` : ''}
                     </SelectItem>
                   ))}
@@ -273,8 +285,9 @@ export default function TrainingTemplates() {
               </Select>
             )}
             <p className="text-sm text-muted-foreground">
-              {moduleCount(assignTemplate || {})} modules per person. Modules already held currently are skipped.
+              {moduleCount(assignTemplate || {})} modules per person. Current completions are checked before creating pending training tasks.
             </p>
+            <label className="grid gap-2 text-sm font-semibold">Training due date<Input type="date" value={assignDue} onChange={(event) => setAssignDue(event.target.value)} /></label>
             {assignResult && <p className="rounded-lg bg-safe/10 p-2 text-xs font-medium text-safe">{assignResult}</p>}
           </div>
           <DialogFooter>
