@@ -16,6 +16,7 @@ export const MODULE_DIRECTORY = [
   { key: 'our-staff', label: 'Our employee profiles', path: '/our-employees', icon: Users, blurb: 'Main employee records, documents, screening, forms, progress and connected modules.' },
   { key: 'our-participants', label: 'Our participant profiles', path: '/our-participants', icon: Heart, blurb: 'Main participant records, plans, documents, forms, goals and connected modules.' },
   { key: 'intake', label: 'Intake Centre', path: '/intake', icon: UserPlus, blurb: 'Participant and employee intake forms, reviews and conversions.' },
+  { key: 'universal-storage', label: 'Universal Storage & Export Hub', path: '/universal-storage', icon: FolderOpen, blurb: 'Automatic 6-destination storage across 25 item types, 11-attribute search, 9-way record linking, 7-layer retention and 4-format exports.' },
   { key: 'documents', label: 'Document Vault', path: '/documents', icon: FolderOpen, blurb: 'Document register, central routing, uploads and vault exports.' },
   { key: 'company-safe', label: 'Company Safe', path: '/company-safe', icon: Vault, blurb: 'Submitted forms, business details, branding and completed documents.' },
   { key: 'visual-boards', label: 'Visual Boards', path: '/visual-boards', icon: LayoutPanelTop, blurb: 'Accessible routines, communication boards, sign prompts and translators.' },
@@ -66,6 +67,6 @@ export const NAV_GROUPS = [
   { label: 'Compliance & Safety', keys: ['compliance', 'auditor-portal', 'incidents', 'incident-analytics', 'risks', 'emergency-response', 'equipment-manuals', 'certificates', 'ndis-provider', 'ndis-news', 'assets'] },
   { label: 'Money', keys: ['invoicing', 'quotes', 'receipts', 'procurement'] },
   { label: 'Work', keys: ['tasks', 'meetings', 'projects', 'training', 'communications', 'feedback', 'crm'] },
-  { label: 'Company', keys: ['documents', 'company-safe', 'quality', 'suggestions-hub', 'analytics', 'users'] },
+  { label: 'Company', keys: ['universal-storage', 'documents', 'company-safe', 'quality', 'suggestions-hub', 'analytics', 'users'] },
   { label: 'Help & Tools', keys: ['assistant', 'help', 'user-guides'] },
 ];

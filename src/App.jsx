@@ -23,6 +23,7 @@ import ComplianceHub from '@/pages/ComplianceHub';
 import AuditorsPortal from '@/pages/AuditorsPortal';
 import DailyBriefing from '@/pages/DailyBriefing';
 import Documents from '@/pages/Documents';
+import UniversalStorageHub from '@/pages/UniversalStorageHub';
 import Training from '@/pages/Training';
 import Tasks from '@/pages/Tasks';
 import SharedTodoDashboard from '@/pages/SharedTodoDashboard';
@@ -140,6 +141,7 @@ const AuthenticatedApp = () => {
           <Route path="/auditor-portal" element={<RoleGate navKey="auditor-portal"><AuditorsPortal /></RoleGate>} />
           <Route path="/briefing" element={<RoleGate navKey="daily-briefing"><DailyBriefing /></RoleGate>} />
           <Route path="/documents" element={<RoleGate navKey="documents"><Documents /></RoleGate>} />
+          <Route path="/universal-storage" element={<UniversalStorageHub />} />
           <Route path="/training" element={<RoleGate navKey="training"><Training /></RoleGate>} />
           <Route path="/tasks" element={<RoleGate navKey="tasks"><Tasks /></RoleGate>} />
           <Route path="/shared-to-do" element={<RoleGate navKey="tasks"><SharedTodoDashboard /></RoleGate>} />
