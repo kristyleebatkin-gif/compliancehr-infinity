@@ -1,18 +1,40 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import ModuleShell from '@/components/module/ModuleShell';
 import BriefingList from '@/components/briefing/BriefingList';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Sunrise, ClipboardList, CalendarClock, CalendarX2, FileWarning, ListChecks } from 'lucide-react';
+import {
+  Sunrise, ClipboardList, CalendarClock, CalendarX2, FileWarning, ListChecks,
+  AlertTriangle, ShieldAlert, ClipboardCheck, GraduationCap, ShieldCheck,
+  CheckCircle2, Clock, ArrowRight,
+} from 'lucide-react';
 import { format, addDays, differenceInCalendarDays, parseISO } from 'date-fns';
+import { getHeaderView } from '@/lib/fullColourTiles';
+import { Image } from '@/components/ui/image';
 
 const WINDOWS = ['7', '14', '30', '60'];
+
+const ROLE_LENSES = [
+  { id: 'Executives', label: 'Executives', sub: 'Board, Risk & SLA Summary' },
+  { id: 'Managers', label: 'Managers', sub: 'Operations, Roster & Actions' },
+  { id: 'HR', label: 'HR', sub: 'Workforce, Leave & Screening' },
+  { id: 'Compliance', label: 'Compliance', sub: 'Audits, Incidents & Standards' },
+  { id: 'Supervisors', label: 'Supervisors', sub: 'Shifts, Tasks & Escalations' },
+];
+
+const CHR_LOGO =
+  'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png';
+
+const BRAND_GRADIENT =
+  'linear-gradient(120deg, #0072FF 0%, #0A2B6D 18%, #5A00D6 42%, #A100FF 68%, #FF2E9A 100%)';
 
 const peopleLabel = (value) => (Array.isArray(value) ? value.filter(Boolean).join(', ') : value) || 'Unassigned';
 
 export default function DailyBriefing() {
   const today = format(new Date(), 'yyyy-MM-dd');
   const [windowDays, setWindowDays] = useState('30');
+  const [roleLens, setRoleLens] = useState('Executives');
   const [state, setState] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -21,7 +43,26 @@ export default function DailyBriefing() {
     try {
       const horizon = format(addDays(new Date(), Number(days)), 'yyyy-MM-dd');
       const F = (sort) => ({ sort, limit: 100 });
-      const [tasksDue, tasksOver, checksDue, checksOver, docsExp, certsExp, insExp, docsOver, certsOver, insOver] = await Promise.all([
+      const [
+        tasksDue,
+        tasksOver,
+        checksDue,
+        checksOver,
+        docsExp,
+        certsExp,
+        insExp,
+        docsOver,
+        certsOver,
+        insOver,
+        incidentsCount,
+        risksCount,
+        auditsCount,
+        auditActionsCount,
+        trainingCount,
+        issuesCount,
+        reviewsCount,
+        leavePendingCount,
+      ] = await Promise.all([
         base44.entities.TodoTask.filter({ status: 'Pending', due_date: today }, F('due_date')),
         base44.entities.TodoTask.filter({ status: 'Pending', due_date: { $lt: today } }, F('due_date')),
         base44.entities.ComplianceChecklistEntry.filter({ next_due_date: today }, F('next_due_date')),
@@ -32,6 +73,14 @@ export default function DailyBriefing() {
         base44.entities.EmployeeDocument.filter({ expiry_date: { $lt: today }, status: { $ne: 'Archived' } }, { sort: '-expiry_date', limit: 100 }),
         base44.entities.Certificate.filter({ expiry_date: { $lt: today }, status: { $ne: 'Revoked' } }, { sort: '-expiry_date', limit: 100 }),
         base44.entities.InsurancePolicy.filter({ expiry_date: { $lt: today } }, { sort: '-expiry_date', limit: 100 }),
+        base44.entities.Incident.count().catch(() => 0),
+        base44.entities.Risk.count().catch(() => 0),
+        base44.entities.Audit.count().catch(() => 0),
+        base44.entities.AuditAction.count().catch(() => 0),
+        base44.entities.TrainingModule.count().catch(() => 0),
+        base44.entities.ComplianceIssue.count().catch(() => 0),
+        base44.entities.PerformanceReview.count().catch(() => 0),
+        base44.entities.LeaveRequest.count({ status: 'Pending' }).catch(() => 0),
       ]);
 
       const overdueDays = (dateStr) => Math.max(1, differenceInCalendarDays(parseISO(today), parseISO(dateStr)));
@@ -98,7 +147,26 @@ export default function DailyBriefing() {
         tone: 'text-danger',
       }));
 
-      setState({ dueToday, overdue, expiring, expired, windowDays: Number(days) });
+      setState({
+        dueToday,
+        overdue,
+        expiring,
+        expired,
+        windowDays: Number(days),
+        summaryCounts: {
+          incidents: incidentsCount,
+          risks: risksCount,
+          audits: auditsCount,
+          actions: auditActionsCount + dueToday.length,
+          training: trainingCount,
+          compliance: issuesCount,
+          expiries: expiring.length + expired.length,
+          reviews: reviewsCount,
+          escalations: overdue.length,
+          approvals: leavePendingCount,
+          critical: expired.length + issuesCount,
+        },
+      });
     } finally {
       setLoading(false);
     }
@@ -113,16 +181,30 @@ export default function DailyBriefing() {
     { icon: CalendarX2, label: 'Expired records', value: state.expired.length, tone: 'text-danger' },
   ] : [];
 
+  const summaryItems = state?.summaryCounts ? [
+    { label: 'Incidents', value: state.summaryCounts.incidents, sub: '24h / 5d NDIS SLA', path: '/incidents', icon: AlertTriangle },
+    { label: 'Risks', value: state.summaryCounts.risks, sub: 'ISO 31000 Register', path: '/risks', icon: ShieldAlert },
+    { label: 'Audits', value: state.summaryCounts.audits, sub: 'Scheduled & Active', path: '/compliance', icon: ClipboardCheck },
+    { label: 'Actions', value: state.summaryCounts.actions, sub: 'Corrective & To-Do', path: '/tasks', icon: ListChecks },
+    { label: 'Training', value: state.summaryCounts.training, sub: 'Active LMS Courses', path: '/training', icon: GraduationCap },
+    { label: 'Compliance', value: state.summaryCounts.compliance, sub: 'Open Compliance Items', path: '/compliance', icon: ShieldCheck },
+    { label: 'Expiries', value: state.summaryCounts.expiries, sub: 'Approaching & Past', path: '/documents', icon: FileWarning },
+    { label: 'Reviews', value: state.summaryCounts.reviews, sub: 'Performance & Plans', path: '/review-due', icon: Clock },
+    { label: 'Escalations', value: state.summaryCounts.escalations, sub: 'Overdue Items', path: '/tasks', icon: CalendarX2 },
+    { label: 'Approvals', value: state.summaryCounts.approvals, sub: 'Pending Sign-Offs', path: '/hr', icon: CheckCircle2 },
+    { label: 'Critical Issues', value: state.summaryCounts.critical, sub: 'Immediate Action', path: '/compliance', icon: AlertTriangle },
+  ] : [];
+
   return (
-    <div className="space-y-4">
+    <div className="mx-auto w-full max-w-[1440px] bg-white px-4 py-4 sm:px-6 lg:px-8 space-y-4">
       <ModuleShell
         moduleKey="daily-briefing"
-        title="Daily Briefing"
-        subtitle="Everything pending and expiring for today — pending compliance tasks, checks due, and records approaching or past expiry."
+        title="Daily 8:30 AM Briefing & Role Summary"
+        subtitle="Automated 8:30 AM role-based summaries across Incidents, Risks, Audits, Actions, Training, Compliance, Expiries, Reviews, Escalations, Approvals, and Critical Issues."
         icon={Sunrise}
         actions={(
           <Select value={windowDays} onValueChange={setWindowDays}>
-            <SelectTrigger className="h-8 w-40 px-2 py-1 text-xs"><SelectValue /></SelectTrigger>
+            <SelectTrigger className="h-8 w-44 bg-white px-2 py-1 text-xs"><SelectValue /></SelectTrigger>
             <SelectContent>
               {WINDOWS.map((w) => <SelectItem key={w} value={w}>Expiring window: {w} days</SelectItem>)}
             </SelectContent>
@@ -132,6 +214,124 @@ export default function DailyBriefing() {
           <div key={t.label}><p className="text-[10px] font-semibold uppercase tracking-wide">{t.label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{t.value}</p></div>
         )) : null}
       />
+
+      {/* Role-Based 8:30 AM Summary Selector — Visually Matching Quick Access */}
+      <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-panel">
+        <div className="h-1 w-full" style={{ background: BRAND_GRADIENT }} />
+
+        <div className="flex flex-col items-center px-3.5 pb-1 pt-2.5 text-center sm:px-4">
+          <Image
+            src={CHR_LOGO}
+            alt="ComplianceHR Infinity"
+            fittingType="fit"
+            className="h-7 w-7 rounded-lg border border-slate-200 bg-white p-0.5 shadow-2xs"
+          />
+          <span className="mt-1 font-editorial text-[12px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]">
+            Compliance
+            <span className="font-editorial-italic text-[#5A00D6]">HR</span>{' '}
+            <span className="bg-gradient-to-r from-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+              Infinity
+            </span>
+          </span>
+        </div>
+
+        <div className="grid auto-rows-fr grid-cols-2 gap-2 p-3 pt-2 sm:grid-cols-3 md:grid-cols-5 items-stretch">
+          {ROLE_LENSES.map((lens, idx) => {
+            const active = roleLens === lens.id;
+            const headerBg = getHeaderView(idx);
+            return (
+              <button
+                key={lens.id}
+                type="button"
+                onClick={() => setRoleLens(lens.id)}
+                aria-pressed={active}
+                className={`group flex h-full min-h-[92px] flex-col gap-[3px] rounded-xl border-2 bg-[#0A2B6D] p-[3px] text-left transition-all duration-200 focus-visible:outline-none ${
+                  active
+                    ? 'border-[#5A00D6] shadow-md ring-2 ring-[#5A00D6]/25 ring-offset-1'
+                    : 'border-[#0A2B6D] hover:-translate-y-0.5 hover:border-[#0072FF] hover:shadow-md'
+                }`}
+              >
+                <div className="flex w-full flex-1 flex-col overflow-hidden rounded-[8px] bg-white">
+                  <div
+                    className="flex min-h-[36px] w-full items-center justify-between gap-1 px-1.5 py-1 text-white"
+                    style={{ background: headerBg }}
+                  >
+                    <div className="flex min-w-0 items-center gap-1">
+                      <Sunrise className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                      <span className="min-w-0 text-[9.5px] font-extrabold leading-[11px] tracking-tight text-white">
+                        8:30 AM · {lens.label}
+                      </span>
+                    </div>
+                    <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${active ? 'bg-[#00C6FF]' : 'bg-white/75'}`} />
+                  </div>
+                  <div className="flex min-h-[38px] w-full flex-1 items-center justify-between gap-1 border-t border-[#0A2B6D]/10 bg-white px-1.5 py-1">
+                    <span className="line-clamp-2 min-w-0 flex-1 break-words text-[10.5px] font-bold leading-[13px] text-[#0A2B6D]/85">
+                      {lens.sub}
+                    </span>
+                    <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#0072FF] transition group-hover:translate-x-0.5 group-hover:text-[#FF2E9A]" />
+                  </div>
+                </div>
+                <div className="flex h-[5px] w-full items-center justify-center">
+                  <span className={`h-[2.5px] w-6 rounded-full transition-all ${active ? 'w-8 bg-[#00C6FF]' : 'bg-white/45 group-hover:bg-white/80'}`} />
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* 11-Point Role-Based 8:30 AM Summary Grid */}
+        {summaryItems.length > 0 && (
+          <div className="border-t border-slate-100 p-3 pt-2.5">
+            <div className="mb-2 flex items-center justify-between">
+              <span className="text-xs font-extrabold text-[#0A2B6D]">
+                8:30 AM Daily Summary — {roleLens} View ({today})
+              </span>
+              <span className="rounded-full bg-[#F5F0FF] px-2.5 py-0.5 text-[10px] font-extrabold text-[#5A00D6]">
+                11 Live Domains
+              </span>
+            </div>
+            <div className="grid auto-rows-fr grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-6 items-stretch">
+              {summaryItems.map((item, idx) => {
+                const Icon = item.icon;
+                const headerBg = getHeaderView(idx);
+                return (
+                  <Link
+                    key={item.label}
+                    to={item.path}
+                    className="group flex h-full min-h-[92px] flex-col gap-[3px] rounded-xl border-2 border-[#0A2B6D] bg-[#0A2B6D] p-[3px] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#0072FF] hover:shadow-md"
+                  >
+                    <div className="flex flex-1 flex-col overflow-hidden rounded-[8px] bg-white">
+                      <div
+                        className="flex min-h-[34px] items-center justify-between gap-1 px-1.5 py-1 text-white"
+                        style={{ background: headerBg }}
+                      >
+                        <div className="flex min-w-0 items-center gap-1">
+                          <Icon className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                          <span className="min-w-0 text-[9.5px] font-extrabold leading-[11px] text-white">
+                            {item.label}
+                          </span>
+                        </div>
+                        <span className="rounded-full bg-white px-1.5 py-0.2 text-[9.5px] font-black text-[#0A2B6D]">
+                          {item.value}
+                        </span>
+                      </div>
+                      <div className="flex min-h-[36px] flex-1 items-center justify-between gap-1 border-t border-[#0A2B6D]/10 bg-white px-1.5 py-1">
+                        <span className="line-clamp-2 min-w-0 flex-1 break-words text-[10px] font-bold leading-[12.5px] text-[#0A2B6D]/85">
+                          {item.sub}
+                        </span>
+                        <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#0072FF] transition group-hover:translate-x-0.5 group-hover:text-[#FF2E9A]" />
+                      </div>
+                    </div>
+                    <div className="flex h-[5px] items-center justify-center">
+                      <span className="h-[2.5px] w-6 rounded-full bg-white/45 transition-all group-hover:bg-white/80" />
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </section>
 
       {loading ? (
         <div className="flex justify-center py-12"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>

@@ -1,167 +1,49 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { getHeaderView } from '@/lib/fullColourTiles';
-import {
-  ChevronUp,
-  ChevronDown,
-  Zap,
-  ArrowRight,
-  ExternalLink,
-} from 'lucide-react';
+import { Image } from '@/components/ui/image';
+import { ArrowRight } from 'lucide-react';
 
 const BRAND_GRADIENT =
   'linear-gradient(120deg, #0072FF 0%, #0A2B6D 18%, #5A00D6 42%, #A100FF 68%, #FF2E9A 100%)';
 
+const CHR_LOGO =
+  'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png';
+
 /**
- * Page & Suite Navigation — Visually matched to the Quick Access iPad-screen section.
+ * Page Navigation — Small logo at top, platform name below logo, screens/modules only underneath,
+ * visually matching Quick Access.
  */
 export default function ObsidianSmartRemote({
-  title = 'Page Navigation',
-  subtitle = 'Interactive workspace screens · one tap into any view',
+  subtitle = 'Interactive workspace screens',
   channels = [],
   activeKey,
   onSelectChannel,
   onConfirmChannel,
-  confirmHref,
-  confirmLabel = 'Open Screen',
-  banks = [],
-  activeBank,
-  onSelectBank,
-  screenModes = [],
-  activeScreenMode,
-  onSelectScreenMode,
   columnsClass = 'grid-cols-2 sm:grid-cols-3 md:grid-cols-6',
 }) {
-  const activeIndex = Math.max(
-    0,
-    channels.findIndex((c) => c.key === activeKey)
-  );
-  const currentChannel = channels[activeIndex] || channels[0] || {
-    key: 'default',
-    label: title,
-    sub: subtitle,
-  };
-
-  const stepChannel = (delta) => {
-    if (!channels.length || !onSelectChannel) return;
-    const nextIdx = (activeIndex + delta + channels.length) % channels.length;
-    onSelectChannel(channels[nextIdx].key);
-  };
-
   return (
     <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-panel">
       {/* Top Brand Gradient Strip Matching Quick Access */}
       <div className="h-1 w-full" style={{ background: BRAND_GRADIENT }} />
 
-      {/* Header Row Matching Quick Access */}
-      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 px-3.5 pb-1 pt-3 sm:px-4">
-        <div className="flex min-w-0 items-center gap-2">
-          <span
-            className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-white shadow-2xs"
-            style={{ background: BRAND_GRADIENT }}
-          >
-            <Zap className="h-3.5 w-3.5 text-white" />
+      {/* Small Logo at Top + Platform Name Below Logo */}
+      <div className="flex flex-col items-center px-3.5 pb-1 pt-2.5 text-center sm:px-4">
+        <Image
+          src={CHR_LOGO}
+          alt="ComplianceHR Infinity"
+          fittingType="fit"
+          className="h-7 w-7 rounded-lg border border-slate-200 bg-white p-0.5 shadow-2xs"
+        />
+        <span className="mt-1 font-editorial text-[12px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]">
+          Compliance
+          <span className="font-editorial-italic text-[#5A00D6]">HR</span>{' '}
+          <span className="bg-gradient-to-r from-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+            Infinity
           </span>
-          <div className="min-w-0">
-            <h2 className="text-[13px] font-extrabold leading-tight text-[#0A2B6D]">
-              {title} · {currentChannel.label}
-            </h2>
-            <p className="text-[11px] font-semibold leading-tight text-slate-600">
-              {channels.length} live screens · {currentChannel.sub || subtitle}
-            </p>
-          </div>
-        </div>
-
-        <div className="flex flex-wrap items-center gap-1.5">
-          {/* Optional Screen Mode Switcher */}
-          {screenModes.length > 0 && (
-            <div className="flex flex-wrap items-center gap-1 rounded-xl border border-slate-200 bg-white p-0.5">
-              {screenModes.map((m) => {
-                const isModeActive = activeScreenMode === m.key;
-                return (
-                  <button
-                    key={m.key}
-                    type="button"
-                    onClick={() => onSelectScreenMode && onSelectScreenMode(m.key)}
-                    className={`rounded-lg px-2 py-0.5 text-[10px] font-extrabold transition-all ${
-                      isModeActive
-                        ? 'bg-[#0A2B6D] text-white shadow-2xs'
-                        : 'text-[#0A2B6D] hover:bg-[#F5F0FF]'
-                    }`}
-                  >
-                    {m.label}
-                  </button>
-                );
-              })}
-            </div>
-          )}
-
-          {/* Optional Category Banks */}
-          {banks.length > 0 && (
-            <div className="flex flex-wrap items-center gap-1 rounded-xl border border-slate-200 bg-white p-0.5">
-              {banks.map((b) => {
-                const active = activeBank === b.id;
-                return (
-                  <button
-                    key={b.id}
-                    type="button"
-                    onClick={() => onSelectBank && onSelectBank(b.id)}
-                    className={`rounded-lg px-2 py-0.5 text-[10px] font-extrabold transition-all ${
-                      active
-                        ? 'bg-[#5A00D6] text-white shadow-2xs'
-                        : 'text-[#0A2B6D] hover:bg-[#F5F0FF]'
-                    }`}
-                  >
-                    {b.label}
-                  </button>
-                );
-              })}
-            </div>
-          )}
-
-          {/* Prev / Next Stepper */}
-          {channels.length > 1 && (
-            <div className="inline-flex items-center rounded-full border border-slate-200 bg-white px-1 py-0.5">
-              <button
-                type="button"
-                onClick={() => stepChannel(-1)}
-                title="Previous screen"
-                className="inline-flex items-center gap-0.5 px-1.5 text-[10px] font-extrabold text-[#0A2B6D] hover:text-[#0072FF]"
-              >
-                <ChevronUp className="h-3 w-3 text-[#0072FF]" />
-                <span>Prev</span>
-              </button>
-              <span className="h-3 w-px bg-slate-200" />
-              <button
-                type="button"
-                onClick={() => stepChannel(1)}
-                title="Next screen"
-                className="inline-flex items-center gap-0.5 px-1.5 text-[10px] font-extrabold text-[#0A2B6D] hover:text-[#0072FF]"
-              >
-                <span>Next</span>
-                <ChevronDown className="h-3 w-3 text-[#0072FF]" />
-              </button>
-            </div>
-          )}
-
-          {confirmHref && (
-            <Link
-              to={confirmHref}
-              className="inline-flex items-center gap-1 rounded-full border border-[#0072FF]/40 bg-[#F5F0FF] px-2.5 py-0.5 text-[10px] font-extrabold text-[#0072FF] hover:bg-[#0072FF] hover:text-white"
-            >
-              <span>{confirmLabel}</span>
-              <ExternalLink className="h-2.5 w-2.5" />
-            </Link>
-          )}
-
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#00C6FF]" />
-            Live
-          </span>
-        </div>
+        </span>
       </div>
 
-      {/* iPad-Style Screen Tiles Matching Quick Access */}
+      {/* Screens / Modules Only Underneath — Visually Matching Quick Access */}
       <div className={`grid auto-rows-fr gap-2 p-3 pt-2 items-stretch ${columnsClass}`}>
         {channels.map((ch, idx) => {
           const Icon = ch.icon;
@@ -178,7 +60,7 @@ export default function ObsidianSmartRemote({
               }}
               aria-pressed={active}
               title={`${ch.label} — ${ch.sub || subtitle}`}
-              className={`group flex h-full min-h-[96px] flex-col gap-[3px] rounded-xl border-2 bg-[#0A2B6D] p-[3px] text-left transition-all duration-200 focus-visible:outline-none ${
+              className={`group flex h-full min-h-[98px] flex-col gap-[3px] rounded-xl border-2 bg-[#0A2B6D] p-[3px] text-left transition-all duration-200 focus-visible:outline-none ${
                 active
                   ? 'border-[#5A00D6] shadow-md ring-2 ring-[#5A00D6]/25 ring-offset-1'
                   : 'border-[#0A2B6D] hover:-translate-y-0.5 hover:border-[#0072FF] hover:shadow-md'
@@ -209,7 +91,7 @@ export default function ObsidianSmartRemote({
                   />
                 </div>
 
-                {/* White Writing Area With Supported Detail */}
+                {/* White Writing Area With Supporting Detail */}
                 <div className="flex min-h-[40px] w-full flex-1 items-center justify-between gap-1 border-t border-[#0A2B6D]/10 bg-white px-1.5 py-1">
                   <span className="line-clamp-2 min-w-0 flex-1 break-words text-[10.5px] font-bold leading-[13px] text-[#0A2B6D]/85">
                     {ch.sub || 'Interactive screen view'}

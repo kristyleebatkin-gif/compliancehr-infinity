@@ -3,7 +3,7 @@ import ExecutiveOperationsCentre from '@/components/operations/ExecutiveOperatio
 
 export default function OperationsCentre() {
   return (
-    <div className="mx-auto max-w-6xl p-2 sm:p-3 space-y-2 bg-white">
+    <div className="mx-auto w-full max-w-[1440px] bg-white px-4 py-4 sm:px-6 lg:px-8 space-y-4">
       <ExecutiveOperationsCentre defaultSuite="all" />
     </div>
   );

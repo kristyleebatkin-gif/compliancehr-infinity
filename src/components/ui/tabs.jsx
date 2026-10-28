@@ -1,14 +1,18 @@
 import * as React from "react"
 import * as TabsPrimitive from "@radix-ui/react-tabs"
-import { ArrowRight, Compass } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import dashboardTabTone from '@/lib/dashboardTabTone';
 import { getHeaderView } from '@/lib/fullColourTiles';
+import { Image } from '@/components/ui/image';
 import '@/components/dashboard/dashboardNavigation.css';
 
 const BRAND_GRADIENT =
   'linear-gradient(120deg, #0072FF 0%, #0A2B6D 18%, #5A00D6 42%, #A100FF 68%, #FF2E9A 100%)';
+
+const CHR_LOGO =
+  'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png';
 
 const TAB_SUBTITLES = {
   details: 'Profile & Personal Details',
@@ -139,9 +143,6 @@ const TabsList = React.forwardRef(({ className, children, ...props }, ref) => {
     return React.cloneElement(child, { 'data-tile-index': idx });
   });
 
-  const navSubtitle =
-    props['aria-label'] || 'Interactive page screens · one tap into any section';
-
   return (
     <DashboardTabsContext.Provider value={{ isDashboard: true }}>
       <TabsPrimitive.List
@@ -153,34 +154,27 @@ const TabsList = React.forwardRef(({ className, children, ...props }, ref) => {
         )}
         {...props}
       >
-        {/* Top Quick-Access Matching Header Strip */}
-        <div className="col-span-full -mx-3 -mt-3 mb-1">
+        {/* Small Logo at Top + Platform Name Below Logo */}
+        <div className="col-span-full -mx-3 -mt-3 mb-0.5">
           <div className="h-1 w-full" style={{ background: BRAND_GRADIENT }} />
-          <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 px-3.5 pb-1 pt-2.5 sm:px-4">
-            <div className="flex min-w-0 items-center gap-2">
-              <span
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-white shadow-2xs"
-                style={{ background: BRAND_GRADIENT }}
-              >
-                <Compass className="h-3.5 w-3.5 text-white" />
+          <div className="flex flex-col items-center px-3.5 pb-1 pt-2.5 text-center sm:px-4">
+            <Image
+              src={CHR_LOGO}
+              alt="ComplianceHR Infinity"
+              fittingType="fit"
+              className="h-7 w-7 rounded-lg border border-slate-200 bg-white p-0.5 shadow-2xs"
+            />
+            <span className="mt-1 font-editorial text-[12px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]">
+              Compliance
+              <span className="font-editorial-italic text-[#5A00D6]">HR</span>{' '}
+              <span className="bg-gradient-to-r from-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                Infinity
               </span>
-              <div className="min-w-0 text-left">
-                <div className="text-[13px] font-extrabold leading-tight text-[#0A2B6D]">
-                  Page Navigation
-                </div>
-                <div className="text-[11px] font-semibold leading-tight text-slate-600 capitalize">
-                  {tileCounter} live views · {navSubtitle}
-                </div>
-              </div>
-            </div>
-
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#00C6FF]" />
-              Live
             </span>
           </div>
         </div>
 
+        {/* Screens / Modules Only Underneath */}
         {indexedChildren}
       </TabsPrimitive.List>
     </DashboardTabsContext.Provider>
@@ -224,7 +218,7 @@ const TabsTrigger = React.forwardRef(({ className, children, ...props }, ref) =>
       data-dashboard-tone={dashboardTabTone(props.value)}
       ref={ref}
       className={cn(
-        "group flex h-full min-h-[92px] w-full flex-col gap-[3px] rounded-xl border-2 border-[#0A2B6D] bg-[#0A2B6D] p-[3px] text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-[#0072FF] hover:shadow-md focus-visible:outline-none data-[state=active]:border-[#5A00D6] data-[state=active]:shadow-md data-[state=active]:ring-2 data-[state=active]:ring-[#5A00D6]/25 data-[state=active]:ring-offset-1 disabled:pointer-events-none disabled:opacity-50",
+        "group flex h-full min-h-[98px] w-full flex-col gap-[3px] rounded-xl border-2 border-[#0A2B6D] bg-[#0A2B6D] p-[3px] text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-[#0072FF] hover:shadow-md focus-visible:outline-none data-[state=active]:border-[#5A00D6] data-[state=active]:shadow-md data-[state=active]:ring-2 data-[state=active]:ring-[#5A00D6]/25 data-[state=active]:ring-offset-1 disabled:pointer-events-none disabled:opacity-50",
         className
       )}
       {...props}
@@ -249,7 +243,7 @@ const TabsTrigger = React.forwardRef(({ className, children, ...props }, ref) =>
         </span>
 
         {/* White Writing Area Inside Screen */}
-        <span className="qa-tab-body flex min-h-[38px] w-full flex-1 items-center justify-between gap-1 border-t border-[#0A2B6D]/10 bg-white px-1.5 py-1">
+        <span className="qa-tab-body flex min-h-[40px] w-full flex-1 items-center justify-between gap-1 border-t border-[#0A2B6D]/10 bg-white px-1.5 py-1">
           <span
             className="line-clamp-2 min-w-0 flex-1 break-words text-[10.5px] font-bold leading-[13px] text-[#0A2B6D]/85"
             style={{ color: '#0A2B6D' }}

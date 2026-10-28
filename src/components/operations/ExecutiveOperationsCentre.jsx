@@ -8,6 +8,7 @@ import { Image } from '@/components/ui/image';
 import { base44 } from '@/api/base44Client';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
+import { getHeaderView } from '@/lib/fullColourTiles';
 import Rostering from '@/pages/Rostering';
 import RosterMiniOverview from '@/components/communications/RosterMiniOverview';
 import InfinityOneClickOperations from '@/components/operations/InfinityOneClickOperations';
@@ -271,74 +272,84 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
             ))}
           </div>
 
-          {/* Executive Resource Suite Navigator */}
-          <div className="rounded-xl border-2 border-[#5A00D6]/50 bg-[#F5F0FF] p-2">
-            <div
-              className="mb-2 flex flex-wrap items-center justify-between gap-1.5 rounded-lg border-2 border-[#5A00D6] border-b-4 border-b-[#FF2E9A] px-3 py-1.5 text-white shadow-sm"
-              style={{ background: SQUISHED_GRADIENT }}
-            >
-              <span className="text-xs font-extrabold uppercase tracking-wider text-white">
-                Executive Command Switcher — Option 1: Live Roster &amp; Shift Coverage
-              </span>
-              <span className="rounded-full bg-white/20 px-2.5 py-0.5 text-[10px] font-bold text-white">
-                10 Executive Suites + All {MODULE_DIRECTORY.length} Modules
+          {/* Executive Resource Suite Navigator — Visually Matching Quick Access */}
+          <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-panel">
+            <div className="h-1 w-full" style={{ background: SQUISHED_GRADIENT }} />
+
+            <div className="flex flex-col items-center px-3.5 pb-1 pt-2.5 text-center sm:px-4">
+              <Image
+                src={CHR_LOGO}
+                alt="ComplianceHR Infinity"
+                fittingType="fit"
+                className="h-7 w-7 rounded-lg border border-slate-200 bg-white p-0.5 shadow-2xs"
+              />
+              <span className="mt-1 font-editorial text-[12px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]">
+                Compliance
+                <span className="font-editorial-italic text-[#5A00D6]">HR</span>{' '}
+                <span className="bg-gradient-to-r from-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                  Infinity
+                </span>
               </span>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1.5">
-              {EXECUTIVE_RESOURCE_SUITES.map((suite) => {
+            <div className="grid auto-rows-fr grid-cols-2 gap-2 p-3 pt-2 sm:grid-cols-3 md:grid-cols-6 items-stretch">
+              {EXECUTIVE_RESOURCE_SUITES.map((suite, idx) => {
                 const Icon = suite.icon;
                 const active = activeSuite === suite.id;
+                const headerBg = getHeaderView(idx);
                 return (
                   <button
                     key={suite.id}
                     type="button"
                     onClick={() => setActiveSuite(suite.id)}
-                    className={`flex flex-col justify-between rounded-xl border-2 p-2 text-left transition-all ${
+                    aria-pressed={active}
+                    className={`group flex h-full min-h-[98px] flex-col gap-[3px] rounded-xl border-2 bg-[#0A2B6D] p-[3px] text-left transition-all duration-200 focus-visible:outline-none ${
                       active
-                        ? 'ring-2 ring-[#FF2E9A] text-white shadow-md'
-                        : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
+                        ? 'border-[#5A00D6] shadow-md ring-2 ring-[#5A00D6]/25 ring-offset-1'
+                        : 'border-[#0A2B6D] hover:-translate-y-0.5 hover:border-[#0072FF] hover:shadow-md'
                     }`}
-                    style={
-                      active
-                        ? { background: SQUISHED_GRADIENT, borderColor: '#FF2E9A' }
-                        : { borderColor: suite.color, borderTopWidth: '4px' }
-                    }
                   >
-                    <div className="flex items-center justify-between gap-1 border-b pb-1" style={{ borderColor: active ? 'rgba(255,255,255,0.25)' : `${suite.color}35` }}>
-                      <span
-                        className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md text-white shadow-2xs"
-                        style={{ background: active ? 'rgba(255,255,255,0.25)' : suite.color }}
+                    <div className="flex w-full flex-1 flex-col overflow-hidden rounded-[8px] bg-white">
+                      <div
+                        className="flex min-h-[38px] w-full items-center justify-between gap-1 px-1.5 py-1 text-white"
+                        style={{ background: headerBg }}
                       >
-                        <Icon className="h-3 w-3" />
-                      </span>
+                        <div className="flex min-w-0 items-center gap-1">
+                          <Icon className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                          <span
+                            className="min-w-0 text-[9.5px] font-extrabold leading-[11px] tracking-tight text-white"
+                            style={{ color: '#FFFFFF', wordBreak: 'normal', overflowWrap: 'normal' }}
+                          >
+                            {suite.shortLabel}
+                          </span>
+                        </div>
+                        <span
+                          className={`h-1.5 w-1.5 shrink-0 rounded-full ${
+                            active ? 'bg-[#00C6FF]' : 'bg-white/75'
+                          }`}
+                        />
+                      </div>
+
+                      <div className="flex min-h-[40px] w-full flex-1 items-center justify-between gap-1 border-t border-[#0A2B6D]/10 bg-white px-1.5 py-1">
+                        <span className="line-clamp-2 min-w-0 flex-1 break-words text-[10.5px] font-bold leading-[13px] text-[#0A2B6D]/85">
+                          {suite.badge} · {suite.subject}
+                        </span>
+                        <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#0072FF] transition group-hover:translate-x-0.5 group-hover:text-[#FF2E9A]" />
+                      </div>
+                    </div>
+
+                    <div className="flex h-[5px] w-full items-center justify-center">
                       <span
-                        className={`rounded-full px-1.5 py-0.5 text-[9px] font-extrabold uppercase ${
-                          active ? 'bg-white text-[#0A2B6D]' : 'bg-[#F5F0FF] text-[#5A00D6]'
+                        className={`h-[2.5px] w-6 rounded-full transition-all ${
+                          active ? 'w-8 bg-[#00C6FF]' : 'bg-white/45 group-hover:bg-white/80'
                         }`}
-                      >
-                        {suite.subject}
-                      </span>
+                      />
                     </div>
-                    <div
-                      className={`mt-1.5 text-xs font-extrabold leading-snug ${
-                        active ? 'text-white' : 'text-[#0A2B6D]'
-                      }`}
-                    >
-                      {suite.shortLabel}
-                    </div>
-                    <p
-                      className={`mt-0.5 line-clamp-2 text-[10px] font-medium leading-tight ${
-                        active ? 'text-white/90' : 'text-[#0A2B6D]/75'
-                      }`}
-                    >
-                      {suite.description}
-                    </p>
                   </button>
                 );
               })}
             </div>
-          </div>
+          </section>
         </div>
       </div>
 
@@ -489,43 +500,42 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 p-2.5 bg-white">
-            {MODULE_DIRECTORY.map((mod) => {
+          <div className="grid auto-rows-fr grid-cols-2 gap-2 p-3 sm:grid-cols-3 md:grid-cols-6 items-stretch bg-white">
+            {MODULE_DIRECTORY.map((mod, idx) => {
               const Icon = mod.icon;
-              const colour = moduleKeyColour(mod.key);
+              const headerBg = getHeaderView(idx);
               return (
                 <Link
                   key={mod.key}
                   to={mod.path}
-                  className="group flex flex-col justify-between overflow-hidden rounded-xl border-2 bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
-                  style={{ borderColor: colour }}
+                  title={`${mod.label} — ${mod.blurb}`}
+                  className="group flex h-full min-h-[98px] flex-col gap-[3px] rounded-xl border-2 border-[#0A2B6D] bg-[#0A2B6D] p-[3px] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#0072FF] hover:shadow-md focus-visible:outline-none"
                 >
-                  <div
-                    className="flex items-center justify-between gap-1.5 border-b-2 px-2.5 py-1.5 text-white"
-                    style={{
-                      background: `linear-gradient(120deg, ${colour} 0%, #5A00D6 100%)`,
-                      borderBottomColor: '#FF2E9A',
-                    }}
-                  >
-                    <div className="flex items-center gap-1.5 min-w-0">
-                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-white/50 bg-white/20 text-white shadow-2xs">
-                        <Icon className="h-3.5 w-3.5" />
-                      </span>
-                      <div className="min-w-0">
-                        <div className="text-[9px] font-extrabold uppercase tracking-wider text-white/90">
-                          {mod.group || 'Module'}
-                        </div>
-                        <div className="text-xs font-extrabold leading-tight text-white">
+                  <div className="flex flex-1 flex-col overflow-hidden rounded-[8px] bg-white">
+                    <div
+                      className="flex min-h-[38px] items-center justify-between gap-1 px-1.5 py-1 text-white"
+                      style={{ background: headerBg }}
+                    >
+                      <div className="flex min-w-0 items-center gap-1">
+                        <Icon className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                        <span
+                          className="min-w-0 text-[9.5px] font-extrabold leading-[11px] tracking-tight text-white"
+                          style={{ color: '#FFFFFF', wordBreak: 'normal', overflowWrap: 'normal' }}
+                        >
                           {mod.label}
-                        </div>
+                        </span>
                       </div>
+                      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-white/75" />
                     </div>
-                    <ArrowRight className="h-3.5 w-3.5 shrink-0 text-white/90 transition-transform group-hover:translate-x-0.5" />
+                    <div className="flex min-h-[40px] flex-1 items-center justify-between gap-1 border-t border-[#0A2B6D]/10 bg-white px-1.5 py-1">
+                      <span className="line-clamp-2 min-w-0 flex-1 break-words text-[10.5px] font-bold leading-[13px] text-[#0A2B6D]/85">
+                        {mod.blurb}
+                      </span>
+                      <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#0072FF] transition group-hover:translate-x-0.5 group-hover:text-[#FF2E9A]" />
+                    </div>
                   </div>
-                  <div className="p-2 bg-white">
-                    <p className="text-[11px] font-medium text-[#0A2B6D]/85 leading-snug">
-                      {mod.blurb}
-                    </p>
+                  <div className="flex h-[5px] items-center justify-center">
+                    <span className="h-[2.5px] w-6 rounded-full bg-white/45 transition-all group-hover:bg-white/80" />
                   </div>
                 </Link>
               );
