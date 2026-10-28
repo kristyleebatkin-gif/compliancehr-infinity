@@ -5,7 +5,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { AlertTriangle, FileSearch, ClipboardList, CircleAlert, Filter } from 'lucide-react';
-import { isOpenIncident } from '@/lib/safetyFilters';
 import { format } from 'date-fns';
 import SectionCard from '@/components/SectionCard';
 import Tile from '@/components/safety/SafetyOperationTile';
@@ -46,29 +45,48 @@ export default function SafetyOperationsDashboard() {
   const [investigations, setInvestigations] = useState([]);
   const [checklists, setChecklists] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadErrors, setLoadErrors] = useState({});
+  const [refresh, setRefresh] = useState(0);
+  const [loadedAt, setLoadedAt] = useState('');
   const [locationFilter, setLocationFilter] = useState('all');
   const [shiftFilter, setShiftFilter] = useState('all');
 
   useEffect(() => {
     let cancelled = false;
+    setLoading(true);
     (async () => {
       try {
-        const [incPage, invPage, chkPage] = await Promise.all([
+        const results = await Promise.allSettled([
           base44.entities.Incident.filter({ status: { $nin: ['Resolved', 'Closed'] } }, { sort: '-date_occurred', limit: 50 }),
           base44.entities.Investigation.filter({ status: { $nin: ['Completed', 'Closed'] } }, { sort: '-start_date', limit: 50 }),
           base44.entities.Checklist.list({ sort: 'due_date', limit: 200, fields: ['title', 'due_date', 'items', 'category'] }),
         ]);
         if (cancelled) return;
-        setIncidents(incPage.items || []);
-        setInvestigations(invPage.items || []);
+        const errors = {};
+        const keys = ['incidents', 'investigations', 'checklists'];
+        const pages = results.map((result, index) => {
+          if (result.status === 'rejected') {
+            const code = result.reason?.status || result.reason?.response?.status;
+            errors[keys[index]] = code === 403 || code === 401 ? 'Access denied' : 'Could not load';
+            return [];
+          }
+          const rows = Array.isArray(result.value) ? result.value : result.value?.items;
+          if (!Array.isArray(rows)) { errors[keys[index]] = 'Response not confirmed'; return []; }
+          return rows;
+        });
+        setIncidents(pages[0]);
+        setInvestigations(pages[1]);
         const today = format(new Date(), 'yyyy-MM-dd');
-        setChecklists((chkPage.items || []).filter((c) => (c.items || []).some((i) => !i.done)));
-        setChecklists((prev) => prev.map((c) => ({ ...c, overdue: c.due_date && c.due_date < today })));
-      } catch (e) { console.error(e); }
+        setChecklists(pages[2].filter((c) => (c.items || []).some((i) => !i.done)).map((c) => ({ ...c, overdue: Boolean(c.due_date && c.due_date < today) })));
+        setLoadErrors(errors);
+        setLoadedAt(new Date().toLocaleTimeString());
+      } catch {
+        if (!cancelled) setLoadErrors({ incidents: 'Could not load', investigations: 'Could not load', checklists: 'Could not load' });
+      }
       finally { if (!cancelled) setLoading(false); }
     })();
     return () => { cancelled = true; };
-  }, []);
+  }, [refresh]);
 
   // Facility / shift filtering — isolates incident reports to spot problem areas
   const filteredIncidents = incidents.filter((inc) => {
@@ -85,25 +103,30 @@ export default function SafetyOperationsDashboard() {
 
   if (loading) {
     return (
-      <Card><CardContent className="p-8 text-center"><div className="mx-auto h-7 w-7 animate-spin rounded-full border-4 border-border border-t-foreground" /></CardContent></Card>
+      <Card><CardContent role="status" className="p-8 text-center"><span className="sr-only">Loading safety records</span><div className="mx-auto h-7 w-7 animate-spin rounded-full border-4 border-border border-t-foreground" /></CardContent></Card>
     );
   }
 
   return (
     <SectionCard title="Safety Operations Dashboard" description="Everything in the safety section that needs attention right now" className="safety-operations-dashboard">
       <div className="space-y-5">
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-white p-3">
+          <p className="max-w-2xl text-sm leading-relaxed">Loaded view: up to 50 incidents, 50 investigations and 200 checklists. Counts reflect accessible records returned, not organisation-wide totals. Last checked {loadedAt || 'not confirmed'}.</p>
+          <button type="button" className="min-h-11 rounded-lg border border-border bg-white px-4 text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2" onClick={() => setRefresh((value) => value + 1)}>Refresh records</button>
+        </div>
+        {Object.keys(loadErrors).length > 0 && <div role="alert" className="rounded-xl border border-border bg-white p-3 text-sm"><p className="font-semibold">Some safety information is unavailable.</p><p>{Object.entries(loadErrors).map(([key, value]) => `${key}: ${value}`).join(' · ')}. Unavailable does not mean there is no work to do.</p></div>}
 
         <div className="flex flex-wrap items-center gap-2 rounded-lg border border-border/60 bg-muted/40 p-2.5">
           <span className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-foreground/50"><Filter className="h-3.5 w-3.5" /> Filter incidents</span>
           <Select value={locationFilter} onValueChange={setLocationFilter}>
-            <SelectTrigger className="h-8 w-[200px] bg-card text-xs"><SelectValue /></SelectTrigger>
+            <SelectTrigger aria-label="Filter incidents by location" className="min-h-11 w-full bg-card text-sm sm:w-[200px]"><SelectValue /></SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All locations</SelectItem>
               {locationOptions.map((loc) => <SelectItem key={loc} value={loc}>{loc}</SelectItem>)}
             </SelectContent>
           </Select>
           <Select value={shiftFilter} onValueChange={setShiftFilter}>
-            <SelectTrigger className="h-8 w-[210px] bg-card text-xs"><SelectValue /></SelectTrigger>
+            <SelectTrigger aria-label="Filter incidents by shift" className="min-h-11 w-full bg-card text-sm sm:w-[210px]"><SelectValue /></SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All shift types</SelectItem>
               {SHIFT_BUCKETS.map((b) => <SelectItem key={b.value} value={b.value}>{b.label}</SelectItem>)}
@@ -116,15 +139,15 @@ export default function SafetyOperationsDashboard() {
         </div>
 
         <div className="grid gap-3 sm:grid-cols-3">
-          <Tile icon={AlertTriangle} label={`Active incidents${locationFilter !== 'all' || shiftFilter !== 'all' ? ' (filtered)' : ''}`} count={filteredIncidents.length} urgent={urgentIncidents.length} to="/incidents" tone="danger" />
-          <Tile icon={FileSearch} label="Open investigations" count={investigations.length} urgent={openInvestigations.length} to="/incidents" tone="primary" />
-          <Tile icon={ClipboardList} label="Pending checklists" count={checklists.length} urgent={overdueChecklists.length} to="/checklists" tone="teal" />
+          <Tile icon={AlertTriangle} label={`Active incidents${locationFilter !== 'all' || shiftFilter !== 'all' ? ' (filtered)' : ''}`} count={loadErrors.incidents ? 'Unavailable' : filteredIncidents.length} urgent={urgentIncidents.length} to="/incidents" tone="danger" />
+          <Tile icon={FileSearch} label="Open investigations" count={loadErrors.investigations ? 'Unavailable' : investigations.length} urgent={openInvestigations.length} to="/incidents" tone="primary" />
+          <Tile icon={ClipboardList} label="Pending checklists" count={loadErrors.checklists ? 'Unavailable' : checklists.length} urgent={overdueChecklists.length} to="/checklists" tone="teal" />
         </div>
 
         <div className="safety-operations-lists grid items-start gap-4 lg:grid-cols-3">
           <details open className="space-y-2">
             <summary>Active incidents</summary>
-            {filteredIncidents.length === 0 ? <p className="text-xs text-muted-foreground">{incidents.length === 0 ? 'No active incidents.' : 'No incidents match the selected filters.'}</p> : filteredIncidents.slice(0, 5).map((inc) => (
+            {loadErrors.incidents ? <p className="text-sm">{loadErrors.incidents}. Refresh or check access.</p> : filteredIncidents.length === 0 ? <p className="text-xs text-muted-foreground">{incidents.length === 0 ? 'No active incidents returned in this view.' : 'No incidents match the selected filters.'}</p> : [...filteredIncidents].sort((a, b) => ['Critical', 'High', 'Medium', 'Low'].indexOf(a.severity) - ['Critical', 'High', 'Medium', 'Low'].indexOf(b.severity)).slice(0, 5).map((inc) => (
               <Row
                 key={inc.id}
                 to={`/incidents/${inc.id}`}
@@ -139,7 +162,7 @@ export default function SafetyOperationsDashboard() {
 
           <details open className="space-y-2">
             <summary>Current investigations</summary>
-            {investigations.length === 0 ? <p className="text-xs text-muted-foreground">No open investigations.</p> : investigations.slice(0, 5).map((inv) => (
+            {loadErrors.investigations ? <p className="text-sm">{loadErrors.investigations}. Refresh or check access.</p> : investigations.length === 0 ? <p className="text-xs text-muted-foreground">No open investigations returned in this view.</p> : investigations.slice(0, 5).map((inv) => (
               <Row
                 key={inv.id}
                 to={inv.incident_id ? `/incidents/${inv.incident_id}` : '/incidents'}
@@ -154,7 +177,7 @@ export default function SafetyOperationsDashboard() {
 
           <details open className="space-y-2">
             <summary>Pending checklists</summary>
-            {checklists.length === 0 ? <p className="text-xs text-muted-foreground">All checklists complete.</p> : checklists.slice(0, 5).map((c) => {
+            {loadErrors.checklists ? <p className="text-sm">{loadErrors.checklists}. Refresh or check access.</p> : checklists.length === 0 ? <p className="text-xs text-muted-foreground">No pending items in the loaded checklists.</p> : [...checklists].sort((a, b) => Number(b.overdue) - Number(a.overdue) || String(a.due_date || '9999').localeCompare(String(b.due_date || '9999'))).slice(0, 5).map((c) => {
               const done = (c.items || []).filter((i) => i.done).length;
               return (
                 <Row
