@@ -25,6 +25,7 @@ import InfinityCoreEngine from '@/components/compliance/InfinityCoreEngine';
 import ExecutiveWallScene from '@/components/safe/ExecutiveWallScene';
 import OriginalPublishedOverview from '@/components/dashboard/OriginalPublishedOverview';
 import DashboardGrandCelebrationBar from '@/components/dashboard/DashboardGrandCelebrationBar';
+import ObsidianSmartRemote from '@/components/common/ObsidianSmartRemote';
 import { Activity, ShieldCheck, Sparkles, Zap, LayoutGrid, ClipboardCheck, Layers, Building2, Cpu } from 'lucide-react';
 
 const HEADINGS = {
@@ -74,63 +75,20 @@ export default function Dashboard() {
 
       <DashboardGrandCelebrationBar />
 
-      {/* Unified Dashboard Command Navigator — Framed in Top Section Template */}
-      <section
-        className="rounded-3xl p-[2px] shadow-sm"
-        style={{
-          background:
-            'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
-        }}
-      >
-        <div className="rounded-[16px] bg-white p-4 sm:p-5 text-center space-y-3">
-          <span
-            className="mx-auto inline-flex min-h-[40px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
-            style={{ background: getHeaderView(0) }}
-          >
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-              <Sparkles className="h-3.5 w-3.5 text-white" />
-            </span>
-            <span>Your Dashboard</span>
-          </span>
-
-          <p className="mx-auto max-w-3xl text-xs sm:text-sm font-extrabold text-[#5A00D6]">
-            Choose a workspace to focus on your priorities, or view all areas together.
-          </p>
-
-          <div className="grid auto-rows-fr grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
-            {DASHBOARD_SUITES.map((s, idx) => {
-              const Icon = s.icon;
-              const active = activeSuite === s.id;
-              const tile = getTilePalette(idx);
-              const sym = getSymbolView(idx);
-              return (
-                <button
-                  key={s.id}
-                  type="button"
-                  onClick={() => setActiveSuite(s.id)}
-                  aria-pressed={active}
-                  className={`flex min-h-[100px] items-start gap-3 rounded-2xl border border-[#0A2B6D]/15 p-4 text-left transition-all hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#5A00D6] ${
-                    active ? 'ring-2 ring-[#5A00D6] shadow-md' : 'shadow-2xs hover:shadow-md'
-                  }`}
-                  style={{ backgroundColor: tile.bg, color: tile.text }}
-                >
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white">
-                    <Icon className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <div className="break-words text-sm font-bold leading-snug" style={{ color: tile.text }}>
-                      {s.label}
-                    </div>
-                    <div className="mt-1 break-words text-xs font-medium leading-relaxed" style={{ color: tile.subtext }}>
-                      {s.sub}
-                    </div>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+      {/* Unified Dashboard Command Navigator — Obsidian Smart Remote */}
+      <ObsidianSmartRemote
+        title="Dashboard Smart Remote"
+        subtitle="Choose a workspace channel or step through views with the D-pad"
+        channels={DASHBOARD_SUITES.map((s) => ({
+          key: s.id,
+          label: s.label,
+          sub: s.sub,
+          icon: s.icon,
+        }))}
+        activeKey={activeSuite}
+        onSelectChannel={setActiveSuite}
+        columnsClass="grid-cols-1 sm:grid-cols-2 xl:grid-cols-4"
+      />
 
       {/* 1. Original Published KPI Strip, Announcements Board & Quick Links + 45 Modules Hub + Quick Start + Role Dashboards */}
       {(activeSuite === 'overview' || activeSuite === 'all') && (

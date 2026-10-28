@@ -86,6 +86,7 @@ import StaffOnboardingTracker from '@/components/compliance/StaffOnboardingTrack
 import StaffBulkActions from '@/components/compliance/StaffBulkActions';
 import ComplianceActivityFeed from '@/components/compliance/ComplianceActivityFeed';
 import AuditorsPortal from '@/pages/AuditorsPortal';
+import ObsidianSmartRemote from '@/components/common/ObsidianSmartRemote';
 
 const POLICY_CATEGORIES = ['Rights & Responsibilities', 'Privacy', 'Complaints', 'Incident Management', 'Risk Management', 'Medication', 'Human Resources', 'Emergency Management', 'Governance', 'Quality', 'Financial'];
 const POLICY_STATUSES = ['Draft', 'Active', 'Under Review', 'Expired', 'Archived'];
@@ -296,34 +297,41 @@ export default function ComplianceHub() {
         )}
       />
 
-      {/* Screen 1 (Compliance Centre) & Screen 2 (Auditor Portal) Switcher Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-sm">
-        <div>
-          <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
-            Dual-Screen Compliance &amp; Auditor Workspace
-          </span>
-          <h3 className="text-sm font-extrabold text-[#0A2B6D]">
-            Screen 1: Compliance &amp; Report Centre · Screen 2: Live Auditor Portal
-          </h3>
-        </div>
-        <div className="flex flex-wrap gap-1.5">
-          {[
-            ['both', 'Screen 1 + Screen 2 (Auditor Portal)'],
-            ['screen1', 'Screen 1: Compliance & Report Centre'],
-            ['screen2', 'Screen 2: Auditor Portal Only'],
-          ].map(([key, label]) => (
-            <Button
-              key={key}
-              size="sm"
-              variant={screenView === key ? 'default' : 'outline'}
-              className="border-2 border-[#0A2B6D] font-extrabold"
-              onClick={() => setScreenView(key)}
-            >
-              {label}
-            </Button>
-          ))}
-        </div>
-      </div>
+      {/* Obsidian Smart Remote for Dual-Screen & Compliance Workspaces */}
+      <ObsidianSmartRemote
+        title="Compliance Screen Remote"
+        subtitle="Screen 1: Compliance & Report Centre · Screen 2: Live Auditor Portal"
+        screenModes={[
+          { key: 'both', label: 'Screen 1 + Screen 2' },
+          { key: 'screen1', label: 'Screen 1 Only' },
+          { key: 'screen2', label: 'Screen 2 (Auditor)' },
+        ]}
+        activeScreenMode={screenView}
+        onSelectScreenMode={setScreenView}
+        banks={TAB_GROUPS}
+        activeBank={tabGroup}
+        onSelectBank={(gid) => {
+          setTabGroup(gid);
+          const grp = TAB_GROUPS.find((x) => x.id === gid);
+          if (grp?.keys && !grp.keys.includes(activeTab)) {
+            setActiveTab(grp.keys[0]);
+          }
+        }}
+        channels={TABS.filter(([value]) => {
+          if (tabGroup === 'all') return true;
+          const grp = TAB_GROUPS.find((x) => x.id === tabGroup);
+          return grp?.keys?.includes(value);
+        }).map(([value, label]) => ({
+          key: value,
+          label,
+        }))}
+        activeKey={activeTab}
+        onSelectChannel={(val) => {
+          setActiveTab(val);
+          if (screenView === 'screen2') setScreenView('both');
+        }}
+        columnsClass="grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
+      />
 
       {/* SECOND SCREEN: AUDITOR PORTAL IN COMPLIANCE */}
       {(screenView === 'screen2' || screenView === 'both') && (
@@ -350,52 +358,10 @@ export default function ComplianceHub() {
         </section>
       )}
 
-      {/* Category Filter Bar for clean, organized Compliance navigation */}
+      {/* Active Compliance Workspace Content */}
       {screenView !== 'screen2' && (
       <div className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-sm space-y-2.5">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <span className="text-xs font-extrabold uppercase tracking-wider text-foreground/80">
-            Compliance &amp; Governance Workspaces
-          </span>
-          <div className="flex flex-wrap gap-1.5">
-            {TAB_GROUPS.map((g) => (
-              <button
-                key={g.id}
-                type="button"
-                onClick={() => {
-                  setTabGroup(g.id);
-                  if (g.keys && !g.keys.includes(activeTab)) {
-                    setActiveTab(g.keys[0]);
-                  }
-                }}
-                className={`rounded-full border px-3 py-1 text-xs font-bold transition-all ${
-                  tabGroup === g.id
-                    ? 'gradient-brand border-transparent text-white shadow-sm'
-                    : 'border-border bg-muted/40 text-foreground/80 hover:bg-muted'
-                }`}
-              >
-                {g.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="h-auto flex-wrap justify-start gap-1.5 rounded-xl border border-border/60 bg-muted/30 p-1.5 shadow-none">
-            {TABS.filter(([value]) => {
-              if (tabGroup === 'all') return true;
-              const grp = TAB_GROUPS.find((x) => x.id === tabGroup);
-              return grp?.keys?.includes(value);
-            }).map(([value, label]) => (
-              <TabsTrigger
-                key={value}
-                value={value}
-                className={`rounded-lg px-3 py-1.5 text-xs font-bold text-foreground/80 transition-colors data-[state=active]:bg-gradient-to-r data-[state=active]:text-white ${TAB_TONES[value] || 'data-[state=active]:from-indigo-600 data-[state=active]:to-violet-600'}`}
-              >
-                {label}
-              </TabsTrigger>
-            ))}
-          </TabsList>
 
           <TabsContent value="auditor-portal" className="mt-3">
             <AuditorsPortal embedded />

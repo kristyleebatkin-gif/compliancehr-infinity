@@ -14,6 +14,7 @@ import MasterComplianceAuditForms from '@/components/compliance/MasterCompliance
 import BusinessHealthComplianceIntelligenceDashboard from '@/components/compliance/BusinessHealthComplianceIntelligenceDashboard';
 import InfinityCoreEngine from '@/components/compliance/InfinityCoreEngine';
 import PricingSection from '@/components/landing/PricingSection';
+import ObsidianSmartRemote from '@/components/common/ObsidianSmartRemote';
 
 export const SQUISHED_GRADIENT = 'linear-gradient(120deg, #0072FF 0%, #0A2B6D 13%, #5A00D6 26%, #A100FF 39%, #FF2E9A 50%, #A100FF 61%, #5A00D6 74%, #0A2B6D 87%, #0072FF 100%)';
 export const DEFAULT_LOGO = 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png';
@@ -70,91 +71,26 @@ export function LogoBrandedOfficeSecondScreen({
   ];
 
   const activeModule =
-    MODULE_DIRECTORY.find((m) => m.key === selectedScreen) ||
     quickScreens.find((q) => q.key === selectedScreen) ||
+    MODULE_DIRECTORY.find((m) => m.key === selectedScreen) ||
     quickScreens[0];
-  const activeColor = moduleKeyColour(activeModule.key || 'dashboard');
 
   return (
-    <div className="rounded-lg border-2 border-[#0A2B6D] bg-white p-1 shadow-2xs space-y-1">
-      {/* Minimised Top Branded Bezel with Logo on Office Smart Screen #2 */}
-      <div
-        className="flex items-center justify-between gap-1 rounded px-2 py-0.5 text-white"
-        style={{ background: SQUISHED_GRADIENT }}
-      >
-        <div className="flex items-center gap-1.5 min-w-0">
-          <div className="flex h-4.5 w-4.5 shrink-0 items-center justify-center overflow-hidden rounded bg-white p-0.5">
-            <Image
-              src={logoUrl || DEFAULT_LOGO}
-              alt="ComplianceHR Infinity Logo"
-              fittingType="fit"
-              className="h-full w-full object-contain"
-            />
-          </div>
-          <span className="truncate text-[8px] font-extrabold uppercase tracking-wider text-white">
-            6. Office Smart Screen #2 · {activeModule.label}
-          </span>
-        </div>
-
-        <Link
-          to={activeModule.path || '/dashboard'}
-          className="inline-flex shrink-0 items-center gap-0.5 rounded-full bg-white px-1.5 py-0 text-[7px] font-extrabold text-[#0A2B6D]"
-        >
-          Open <ExternalLink className="h-2 w-2 text-[#FF2E9A]" />
-        </Link>
-      </div>
-
-      {/* Minimised Screen Selector Pills */}
-      <div className="grid grid-cols-3 gap-0.5">
-        {quickScreens.map((scr) => {
-          const isSelected = activeModule.key === scr.key;
-          return (
-            <button
-              key={scr.key}
-              type="button"
-              onClick={() => onSelectScreen(scr.key)}
-              className={`truncate rounded-full border px-1.5 py-0 text-[6.5px] font-extrabold transition-all ${
-                isSelected
-                  ? 'text-white shadow-2xs'
-                  : 'border-[#0A2B6D]/25 bg-white text-[#0A2B6D]'
-              }`}
-              style={isSelected ? { background: scr.color, borderColor: scr.color } : undefined}
-            >
-              {scr.label.replace(' Screen', '')}
-            </button>
-          );
-        })}
-      </div>
-
-      {/* Minimised Office Display Screen Body */}
-      <div
-        className="rounded-md border p-1.5 bg-white"
-        style={{ borderColor: activeColor }}
-      >
-        <div className="flex items-center justify-between gap-1.5">
-          <div className="min-w-0 flex-1 text-left">
-            <div className="flex items-center gap-1">
-              <Monitor className="h-2.5 w-2.5 shrink-0" style={{ color: activeColor }} />
-              <span className="truncate text-[8px] font-extrabold text-[#0A2B6D]">
-                {activeModule.label}
-              </span>
-            </div>
-            <p className="text-[7px] font-bold text-[#0A2B6D] leading-tight line-clamp-2">
-              {activeModule.summary ||
-                `Live interactive ${activeModule.label} workspace on your office screen.`}
-            </p>
-          </div>
-
-          <Link
-            to={activeModule.path || '/dashboard'}
-            className="inline-flex shrink-0 items-center gap-0.5 rounded-full px-2 py-0.5 text-[7px] font-extrabold text-white"
-            style={{ background: activeColor }}
-          >
-            Launch <ArrowRight className="h-2 w-2" />
-          </Link>
-        </div>
-      </div>
-    </div>
+    <ObsidianSmartRemote
+      compact
+      title="6. Office Smart Screen #2"
+      subtitle={activeModule.summary || `${companyName} live office screen`}
+      channels={quickScreens.map((scr) => ({
+        key: scr.key,
+        label: scr.label.replace(' Screen', '').replace(/^1\.\s*/, ''),
+        sub: scr.summary,
+      }))}
+      activeKey={activeModule.key}
+      onSelectChannel={onSelectScreen}
+      confirmHref={activeModule.path || '/dashboard'}
+      confirmLabel={`Open ${activeModule.label.replace(' Screen', '')}`}
+      columnsClass="grid-cols-2 sm:grid-cols-3"
+    />
   );
 }
 

@@ -799,7 +799,7 @@ export default function ExecutiveWallScene({
 
           {/* Bottom Compact Row: (5) Silver Screen + (6) Office Screen 2 + (7) Desk PC Screen */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-2 items-stretch">
-            <div className="lg:col-span-4 flex flex-col max-h-[220px] overflow-y-auto">
+            <div className="lg:col-span-4 flex flex-col">
               <WallHangingPictureFrame
                 title="5. Silver Screen · Weather & NDIS News"
                 frameAccent={TOP_BORDER_GRADIENT}
@@ -808,7 +808,7 @@ export default function ExecutiveWallScene({
                 <SilverScreenSplit />
               </WallHangingPictureFrame>
             </div>
-            <div className="lg:col-span-4 flex flex-col max-h-[220px] overflow-y-auto">
+            <div className="lg:col-span-4 flex flex-col">
               <LogoBrandedOfficeSecondScreen
                 logoUrl={frameSrc}
                 selectedScreen={secondScreenKey}
