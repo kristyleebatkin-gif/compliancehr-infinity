@@ -68,7 +68,8 @@ export default function LandingFaqSection() {
             Answers to Key Questions
           </h2>
           <p className="mt-3 text-base sm:text-lg text-[#0A2B6D]/75">
-            Everything you need to know about NDIS compliance, security, implementation, and day-to-day operations.
+            Everything you need to know about NDIS &amp; Aged Care compliance and security,
+            <br className="hidden sm:inline" /> from implementation to day-to-day operations.
           </p>
         </div>
 

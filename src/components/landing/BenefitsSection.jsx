@@ -70,8 +70,8 @@ export default function BenefitsSection() {
             <span className="inline-flex items-center gap-2 rounded-full bg-[#5A00D6]/10 px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider text-[#5A00D6]">
               Why Choose ComplianceHR Infinity
             </span>
-            <h2 className="mt-2.5 font-editorial text-2xl sm:text-4xl font-extrabold tracking-tight text-[#0A2B6D]">
-              Enterprise-Grade Governance, Built for NDIS Providers
+            <h2 className="mt-2.5 font-editorial text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight text-[#0A2B6D] sm:whitespace-nowrap">
+              Enterprise-Grade Governance, Built for NDIS &amp; Aged Care Providers
             </h2>
           </div>
           <p className="max-w-md text-sm font-medium text-[#0A2B6D]/75">

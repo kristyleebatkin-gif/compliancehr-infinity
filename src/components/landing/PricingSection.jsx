@@ -10,7 +10,7 @@ export const COMPLIANCE_HR_PACKAGES = [
   {
     id: 'tier-20',
     packageName: 'ComplianceHR Subscription',
-    name: 'Smart Enhanced All-In-One Elite Package · Up to 20 Users',
+    name: 'Smart Enhanced All-In-One Elite Package',
     badge: 'Most Popular · Elite Pack',
     users: 'Up to 20 Users',
     previousMonthly: 600,
@@ -21,18 +21,18 @@ export const COMPLIANCE_HR_PACKAGES = [
     integrationCredits: '50,000 integration credits / mo',
     featured: true,
     benefits: [
-      'Includes full access to ComplianceHR app & full access to all documents',
-      'Includes Elite Package Tokens, valued at $160 per a month',
+      'Full access to ComplianceHR app & all 100+ tailored documents',
+      'Includes $160/mo Elite Package Tokens in every subscription',
       '1,200 message credits & 50,000 integration credits per month',
       'Dedicated compliance & technical support included',
-      'Includes Master Compliance Audit Checklist (17 Categories · 356 Checkpoints)',
+      'Master Compliance Audit Checklist (17 Categories · 356 Checkpoints)',
       '14-Day Free Trial — Test every module live with your team',
     ],
   },
   {
     id: 'tier-30',
     packageName: 'ComplianceHR Subscription',
-    name: 'Smart Enhanced All-In-One Elite Package · 21–30 Users',
+    name: 'Smart Enhanced All-In-One Elite Package',
     badge: 'Elite Pack Included',
     users: '21–30 Users',
     previousMonthly: 660,
@@ -42,8 +42,8 @@ export const COMPLIANCE_HR_PACKAGES = [
     messageCredits: '1,200 message credits / mo',
     integrationCredits: '50,000 integration credits / mo',
     benefits: [
-      'Includes full access to ComplianceHR app & full access to all documents',
-      'Includes Elite Package Tokens, valued at $160 per a month',
+      'Full access to ComplianceHR app & all 100+ tailored documents',
+      'Includes $160/mo Elite Package Tokens in every subscription',
       '1,200 message credits & 50,000 integration credits per month',
       'Dedicated compliance & technical support included',
       'Smart Rostering, Shift Notes, NDIS Price Guide Invoicing & Payroll',
@@ -53,7 +53,7 @@ export const COMPLIANCE_HR_PACKAGES = [
   {
     id: 'tier-40',
     packageName: 'ComplianceHR Subscription',
-    name: 'Smart Enhanced All-In-One Elite Package · 31–40 Users',
+    name: 'Smart Enhanced All-In-One Elite Package',
     badge: 'Elite Pack Included',
     users: '31–40 Users',
     previousMonthly: 760,
@@ -63,8 +63,8 @@ export const COMPLIANCE_HR_PACKAGES = [
     messageCredits: '1,200 message credits / mo',
     integrationCredits: '50,000 integration credits / mo',
     benefits: [
-      'Includes full access to ComplianceHR app & full access to all documents',
-      'Includes Elite Package Tokens, valued at $160 per a month',
+      'Full access to ComplianceHR app & all 100+ tailored documents',
+      'Includes $160/mo Elite Package Tokens in every subscription',
       '1,200 message credits & 50,000 integration credits per month',
       'Dedicated compliance & technical support included',
       'Automated 30-Action & 30-Completed-Task PDF/CSV Audit Batch Reports',
@@ -74,7 +74,7 @@ export const COMPLIANCE_HR_PACKAGES = [
   {
     id: 'tier-50',
     packageName: 'ComplianceHR Subscription',
-    name: 'Smart Enhanced All-In-One Elite Package · 41–50 Users',
+    name: 'Smart Enhanced All-In-One Elite Package',
     badge: 'Elite Pack Included',
     users: '41–50 Users',
     previousMonthly: 839,
@@ -84,8 +84,8 @@ export const COMPLIANCE_HR_PACKAGES = [
     messageCredits: '1,200 message credits / mo',
     integrationCredits: '50,000 integration credits / mo',
     benefits: [
-      'Includes full access to ComplianceHR app & full access to all documents',
-      'Includes Elite Package Tokens, valued at $160 per a month',
+      'Full access to ComplianceHR app & all 100+ tailored documents',
+      'Includes $160/mo Elite Package Tokens in every subscription',
       '1,200 message credits & 50,000 integration credits per month',
       'Dedicated compliance & technical support included',
       'Multi-team Rostering, Labour Forecasting, Coverage Heatmap & Exceptions',
@@ -95,7 +95,7 @@ export const COMPLIANCE_HR_PACKAGES = [
   {
     id: 'tier-100',
     packageName: 'ComplianceHR Subscription',
-    name: 'Smart Enhanced All-In-One Elite Package · 51–100 Users',
+    name: 'Smart Enhanced All-In-One Elite Package',
     badge: 'Elite Pack Included',
     users: '51–100 Users',
     previousMonthly: 940,
@@ -105,8 +105,8 @@ export const COMPLIANCE_HR_PACKAGES = [
     messageCredits: '1,200 message credits / mo',
     integrationCredits: '50,000 integration credits / mo',
     benefits: [
-      'Includes full access to ComplianceHR app & full access to all documents',
-      'Includes Elite Package Tokens, valued at $160 per a month',
+      'Full access to ComplianceHR app & all 100+ tailored documents',
+      'Includes $160/mo Elite Package Tokens in every subscription',
       '1,200 message credits & 50,000 integration credits per month',
       'Dedicated compliance & technical support included',
       '65+ Live Automated Workflows & 100+ Server Functions running 24/7',
@@ -116,7 +116,7 @@ export const COMPLIANCE_HR_PACKAGES = [
   {
     id: 'tier-101-plus',
     packageName: 'ComplianceHR Subscription',
-    name: 'Smart Enhanced All-In-One Elite Package · 101+ Users',
+    name: 'Smart Enhanced All-In-One Elite Package',
     badge: 'Enterprise · Elite Pack',
     users: '101+ Users',
     previousMonthly: 1060,
@@ -126,8 +126,8 @@ export const COMPLIANCE_HR_PACKAGES = [
     messageCredits: '1,200 message credits / mo',
     integrationCredits: '50,000 integration credits / mo',
     benefits: [
-      'Includes full access to ComplianceHR app & full access to all documents',
-      'Includes Elite Package Tokens, valued at $160 per a month',
+      'Full access to ComplianceHR app & all 100+ tailored documents',
+      'Includes $160/mo Elite Package Tokens in every subscription',
       '1,200 message credits & 50,000 integration credits per month',
       'Priority onboarding, bulk intake migration & dedicated compliance support',
       'Unlimited Multi-Site Governance, Auditor Portal & Executive Wall Scenes',
@@ -197,7 +197,7 @@ export default function PricingSection({ onContactSales }) {
           <div className="mx-auto max-w-3xl text-center space-y-4">
             <span className="inline-flex items-center gap-2 rounded-full bg-[#5A00D6]/10 px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-[#5A00D6]">
               <Award className="h-3.5 w-3.5 text-[#FF2E9A]" />
-              Transparent All-In-One NDIS Provider Pricing
+              Transparent All-In-One NDIS &amp; Aged Care Pricing
             </span>
 
             <h2 className="font-editorial text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#0A2B6D]">
@@ -240,7 +240,7 @@ export default function PricingSection({ onContactSales }) {
             </div>
           </div>
 
-          {/* 6 Smart Enhanced Subscription Cards Grid — Strictly Aligned Across Mobile, Tablet (2-col) & Desktop (3-col) */}
+          {/* 6 Smart Enhanced Subscription Cards Grid — Centred Users & Fitted Token Info */}
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 items-stretch">
             {COMPLIANCE_HR_PACKAGES.map((pkg) => {
               const isFeatured = Boolean(pkg.featured);
@@ -256,77 +256,76 @@ export default function PricingSection({ onContactSales }) {
                       : 'linear-gradient(120deg, #cbd5e1 0%, #94a3b8 100%)',
                   }}
                 >
-                  <div className="flex h-full flex-col justify-between rounded-[21px] bg-white p-5 sm:p-6 text-left">
+                  <div className="flex h-full flex-col justify-between rounded-[21px] bg-white p-5 sm:p-6">
                     <div className="flex flex-col">
-                      {/* Aligned Top Badge & User Capacity Row (No Wrapping Collisions) */}
-                      <div className="flex flex-wrap items-center justify-between gap-2 min-h-[28px]">
+                      {/* Centred Top Badge & Centred Users Capacity */}
+                      <div className="flex flex-col items-center justify-center text-center space-y-2">
                         <span
-                          className={`inline-flex items-center rounded-full px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap ${
+                          className={`inline-flex items-center justify-center rounded-full px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap ${
                             isFeatured ? 'bg-[#FF2E9A]' : 'bg-[#0A2B6D]'
                           }`}
                         >
                           {pkg.badge}
                         </span>
-                        <span className="inline-flex items-center rounded-full border border-[#0072FF]/30 bg-[#0072FF]/10 px-2.5 py-1 text-[11px] font-extrabold text-[#0072FF] whitespace-nowrap">
+
+                        <h3 className="font-editorial text-base sm:text-lg font-extrabold text-[#0A2B6D] leading-snug text-center">
+                          {pkg.name}
+                        </h3>
+
+                        {/* Centred Users Pill */}
+                        <div className="inline-flex items-center justify-center rounded-full border-2 border-[#0072FF]/35 bg-[#0072FF]/10 px-4 py-1 text-xs font-extrabold text-[#0072FF] whitespace-nowrap">
                           {pkg.users}
-                        </span>
+                        </div>
                       </div>
 
-                      {/* Uniform-Height Package Heading */}
-                      <h3 className="mt-3.5 min-h-[3.25rem] flex items-center font-editorial text-lg sm:text-xl font-extrabold text-[#0A2B6D] leading-snug">
-                        {pkg.name}
-                      </h3>
-
-                      {/* Exact Configured Price Box (Guaranteed Single-Line Height Across All 6 Tiers) */}
-                      <div className="mt-3 rounded-2xl border border-slate-200/90 bg-slate-50/70 p-4">
-                        <div className="flex items-baseline justify-between gap-2">
-                          <div className="flex items-baseline gap-1.5 whitespace-nowrap">
-                            <span className="font-editorial text-3xl font-extrabold text-[#0A2B6D] leading-none">
-                              ${pkg.monthly.toLocaleString()}
-                            </span>
-                            <span className="text-xs font-bold text-[#0A2B6D]/75">
-                              per a month
-                            </span>
-                          </div>
-                          <span className="shrink-0 whitespace-nowrap rounded-md bg-[#5A00D6]/10 px-2 py-0.5 text-[10px] font-extrabold text-[#5A00D6]">
+                      {/* Exact Configured Price Box — Centred Price & Fitted Token Info */}
+                      <div className="mt-3.5 rounded-2xl border border-slate-200/90 bg-slate-50/70 p-3.5 text-center">
+                        <div className="flex items-baseline justify-center gap-1.5 whitespace-nowrap">
+                          <span className="font-editorial text-3xl font-extrabold text-[#0A2B6D] leading-none">
+                            ${pkg.monthly.toLocaleString()}
+                          </span>
+                          <span className="text-xs font-bold text-[#0A2B6D]/80">
+                            per a month
+                          </span>
+                          <span className="ml-1 rounded-md bg-[#5A00D6]/10 px-2 py-0.5 text-[10px] font-extrabold text-[#5A00D6]">
                             {billing === 'yearly' ? 'Annual' : 'Monthly'}
                           </span>
                         </div>
-                        <div className="mt-2 border-t border-slate-200/70 pt-2 text-[11px] font-bold text-[#5A00D6] truncate">
-                          Base ${pkg.previousMonthly}/mo + ${pkg.eliteAddon}/mo Elite Tokens Included
+                        <div className="mt-2 border-t border-slate-200/70 pt-2 text-[10.5px] font-extrabold text-[#5A00D6] whitespace-nowrap">
+                          Base ${pkg.previousMonthly}/mo + ${pkg.eliteAddon}/mo Elite Tokens
                         </div>
                       </div>
 
                       {/* Symmetrical 2-Column Credit Allowances */}
-                      <div className="mt-3.5 grid grid-cols-2 gap-2.5 items-stretch">
-                        <div className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-3">
-                          <div className="flex items-center justify-between gap-1">
-                            <span className="text-sm font-extrabold text-[#0A2B6D]">1,200</span>
+                      <div className="mt-3 grid grid-cols-2 gap-2 items-stretch">
+                        <div className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-2.5 text-center">
+                          <div className="flex items-center justify-center gap-1">
                             <Zap className="h-3.5 w-3.5 shrink-0 text-[#0072FF]" />
+                            <span className="text-sm font-extrabold text-[#0A2B6D]">1,200</span>
                           </div>
-                          <span className="mt-1 text-[11px] font-semibold text-[#0A2B6D]/75 leading-tight">
+                          <span className="mt-0.5 text-[10.5px] font-semibold text-[#0A2B6D]/75 whitespace-nowrap">
                             Message credits / mo
                           </span>
                         </div>
-                        <div className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-3">
-                          <div className="flex items-center justify-between gap-1">
-                            <span className="text-sm font-extrabold text-[#0A2B6D]">50,000</span>
+                        <div className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-2.5 text-center">
+                          <div className="flex items-center justify-center gap-1">
                             <Layers className="h-3.5 w-3.5 shrink-0 text-[#5A00D6]" />
+                            <span className="text-sm font-extrabold text-[#0A2B6D]">50,000</span>
                           </div>
-                          <span className="mt-1 text-[11px] font-semibold text-[#0A2B6D]/75 leading-tight">
+                          <span className="mt-0.5 text-[10.5px] font-semibold text-[#0A2B6D]/75 whitespace-nowrap">
                             Integration credits / mo
                           </span>
                         </div>
                       </div>
 
                       {/* Benefits List */}
-                      <ul className="mt-4 space-y-2 border-t border-slate-100 pt-4">
+                      <ul className="mt-4 space-y-2 border-t border-slate-100 pt-3.5 text-left">
                         {pkg.benefits.map((b) => (
                           <li
                             key={b}
-                            className="flex items-start gap-2 text-xs font-semibold leading-relaxed text-[#0A2B6D]"
+                            className="flex items-start gap-2 text-xs font-semibold leading-snug text-[#0A2B6D]"
                           >
-                            <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#0072FF]" />
+                            <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#0072FF]" />
                             <span>{b}</span>
                           </li>
                         ))}
@@ -337,7 +336,7 @@ export default function PricingSection({ onContactSales }) {
                     <div className="mt-5 space-y-2 border-t border-slate-100 pt-4">
                       <Link
                         to="/register"
-                        className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-extrabold text-white shadow-md transition hover:opacity-95"
+                        className="inline-flex min-h-[42px] w-full items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-extrabold text-white shadow-md transition hover:opacity-95"
                         style={{
                           background: isFeatured
                             ? 'linear-gradient(115deg, #0072FF 0%, #5A00D6 52%, #FF2E9A 100%)'
@@ -354,7 +353,7 @@ export default function PricingSection({ onContactSales }) {
                           onContactSales &&
                           onContactSales(`Sales Enquiry — ${pkg.users} (${pkg.priceLabel})`)
                         }
-                        className="inline-flex min-h-[38px] w-full items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-extrabold text-[#0A2B6D] transition hover:border-[#0072FF] hover:text-[#0072FF]"
+                        className="inline-flex min-h-[36px] w-full items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-extrabold text-[#0A2B6D] transition hover:border-[#0072FF] hover:text-[#0072FF]"
                       >
                         <PhoneCall className="h-3.5 w-3.5 text-[#5A00D6]" />
                         <span>Contact Sales</span>
@@ -366,7 +365,7 @@ export default function PricingSection({ onContactSales }) {
             })}
           </div>
 
-          {/* 6 Core Platform Benefits Included in Every Plan (Aligned Across Mobile, Tablet & Desktop) */}
+          {/* 6 Core Platform Benefits Included in Every Plan */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
             {CORE_PLATFORM_BENEFITS.map((b) => {
               const Icon = b.icon;
@@ -398,7 +397,7 @@ export default function PricingSection({ onContactSales }) {
             })}
           </div>
 
-          {/* Responsive Feature Comparison Grid (Works Cleanly on Mobile, Tablet & Desktop) */}
+          {/* Responsive Feature Comparison Grid */}
           <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div className="text-left">
@@ -430,12 +429,10 @@ export default function PricingSection({ onContactSales }) {
 
             {showComparison && (
               <div className="overflow-hidden rounded-xl border border-slate-200 divide-y divide-slate-200">
-                {/* Header Row */}
                 <div className="hidden sm:grid sm:grid-cols-12 bg-slate-50 px-4 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
                   <div className="sm:col-span-7">Platform Capability</div>
                   <div className="sm:col-span-5">Inclusion Across Tiers (Up to 20 → 101+ Users)</div>
                 </div>
-                {/* Data Rows */}
                 {FEATURE_COMPARISON_ROWS.map((row) => (
                   <div
                     key={row.feature}

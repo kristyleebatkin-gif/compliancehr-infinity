@@ -61,7 +61,8 @@ export default function LandingHowItWorks() {
           How It Works
         </h2>
         <p className="mt-3 text-base sm:text-lg text-[#0A2B6D]/75">
-          Move from fragmented spreadsheets to continuous NDIS audit readiness in three clear steps.
+          Move from fragmented spreadsheets to continuous NDIS &amp; Aged Care audit readiness
+          <br className="hidden sm:inline" /> in three clear steps.
         </p>
       </div>
 

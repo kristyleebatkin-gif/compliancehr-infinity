@@ -197,7 +197,7 @@ export function SingleMasterComplianceAuditForm({
           businessName: 'ComplianceHR Infinity · Workforce & HR',
           abn: 'Enterprise Operations Edition',
           approvedBy: 'Kristy Lee Whelan, Director',
-          email: 'admin@compliancehr.com.au',
+          email: 'kristyleebatkin@live.com.au',
         }
   );
 

@@ -35,9 +35,9 @@ export default function LandingTestimonialsSection() {
       <div className="mx-auto max-w-3xl text-center">
         <span className="inline-flex items-center gap-2 rounded-full bg-[#FF2E9A]/10 px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-[#FF2E9A]">
           <ShieldCheck className="h-3.5 w-3.5" />
-          Trusted by NDIS &amp; Disability Support Leaders
+          Trusted by NDIS &amp; Aged Care Support Leaders
         </span>
-        <h2 className="mt-3 font-editorial text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#0A2B6D]">
+        <h2 className="mt-3 font-editorial text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#0A2B6D] sm:whitespace-nowrap">
           Built for Leadership, Operations &amp; Compliance Teams
         </h2>
         <p className="mt-3 text-base sm:text-lg text-[#0A2B6D]/75">

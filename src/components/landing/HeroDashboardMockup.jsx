@@ -7,7 +7,7 @@ import {
 const VIEWS = [
   {
     id: 'executive',
-    label: 'Executive Command',
+    label: 'Live Executive',
     score: '98.7%',
     scoreLabel: 'NDIS Audit Readiness',
     metrics: [
@@ -18,7 +18,7 @@ const VIEWS = [
     ],
     checkpoints: [
       { code: 'CORE 1', title: 'Participant Rights & 3-Part Informed Consents', status: 'Verified · 100%' },
-      { code: 'CORE 2', title: 'Provider Governance & 356 Audit Checkpoints', status: 'Audit Ready · 99.2%' },
+      { code: 'CORE 2', title: 'Provider Governance & 356 Audit Checkpoints', status: 'Ready · 99.2%' },
       { code: 'CORE 3', title: 'Provision of Supports & 10-Weekly Reviews', status: 'Current · 98.5%' },
       { code: 'CORE 4', title: 'Safe Environment, Medication & Emergency Drills', status: 'Verified · 99.0%' },
     ],
@@ -29,8 +29,8 @@ const VIEWS = [
     score: '100%',
     scoreLabel: 'Worker Screening Gate',
     metrics: [
-      { label: 'NDIS Screening', value: '100%', delta: 'Auto-Gate Active', color: '#0072FF' },
-      { label: 'First Aid & CPR', value: '98.4%', delta: '14d Auto-Alerts', color: '#5A00D6' },
+      { label: 'NDIS Screening', value: '100%', delta: 'Gate Active', color: '#0072FF' },
+      { label: 'First Aid & CPR', value: '98.4%', delta: '14d Alerts', color: '#5A00D6' },
       { label: 'Shift Coverage', value: '99.1%', delta: 'Fatigue Checked', color: '#FF2E9A' },
       { label: 'Shift Notes', value: '100%', delta: 'Goal Linked', color: '#0A2B6D' },
     ],
@@ -53,10 +53,10 @@ const VIEWS = [
       { label: 'Auditor Portal', value: 'Live', delta: 'Consent-Gated', color: '#0A2B6D' },
     ],
     checkpoints: [
-      { code: 'AUD-01', title: '2-Minute Express Internal Audit Pack', status: '1-Click PDF Ready' },
-      { code: 'AUD-02', title: '24-Hour & 5-Day NDIS Commission Timers', status: 'Automated SLA' },
-      { code: 'AUD-03', title: 'Continuous Improvement Register (CIR) Auto-Routing', status: 'Active' },
-      { code: 'AUD-04', title: 'Consent-Gated External Auditor Portal', status: 'RLS Enforced' },
+      { code: 'AUD-01', title: '2-Minute Express Internal Audit Pack', status: '1-Click PDF' },
+      { code: 'AUD-02', title: '24-Hour & 5-Day NDIS Commission Timers', status: 'Auto SLA' },
+      { code: 'AUD-03', title: 'Continuous Improvement Register (CIR) Routing', status: 'Active' },
+      { code: 'AUD-04', title: 'Consent-Gated External Auditor Portal', status: 'RLS Locked' },
     ],
   },
 ];
@@ -66,33 +66,33 @@ export default function HeroDashboardMockup() {
   const current = VIEWS.find((v) => v.id === activeTab) || VIEWS[0];
 
   return (
-    <div className="flex w-full flex-col justify-between rounded-2xl border border-white/35 bg-white/95 p-1.5 shadow-2xl backdrop-blur-xl">
-      <div className="flex h-full flex-col justify-between overflow-hidden rounded-xl bg-white">
-        {/* Top Executive Window Bar */}
+    <div className="w-full rounded-2xl border border-white/35 bg-white/95 p-1.5 shadow-2xl backdrop-blur-xl">
+      <div className="overflow-hidden rounded-xl bg-white">
+        {/* Top Executive Window Bar — Live Next to Executive */}
         <div
-          className="flex items-center justify-between gap-2 px-3.5 py-2.5 text-white"
+          className="flex items-center justify-between gap-2 px-3.5 py-2 text-white"
           style={{
             background: 'linear-gradient(90deg, #0A2B6D 0%, #0072FF 48%, #5A00D6 100%)',
           }}
         >
           <div className="flex items-center gap-2 min-w-0">
-            <div className="flex shrink-0 items-center gap-1.5">
+            <div className="flex shrink-0 items-center gap-1">
               <span className="h-2.5 w-2.5 rounded-full bg-[#FF2E9A]" />
               <span className="h-2.5 w-2.5 rounded-full bg-white/80" />
               <span className="h-2.5 w-2.5 rounded-full bg-[#00C6FF]" />
             </div>
             <span className="ml-1 truncate text-xs font-extrabold tracking-wide text-white">
-              ComplianceHR Infinity · Live Executive Mockup
+              ComplianceHR Infinity · Live Executive Dashboard
             </span>
           </div>
           <span className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-white/15 px-2.5 py-0.5 text-[10px] font-bold text-white">
-            <span className="h-2 w-2 rounded-full bg-emerald-300 animate-pulse" />
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-300 animate-pulse" />
             46 MODULES SYNCED
           </span>
         </div>
 
-        {/* Interactive View Switcher (Aligned Single Row) */}
-        <div className="flex items-center justify-between gap-2 border-b border-slate-100 bg-slate-50 px-3.5 py-2">
+        {/* Interactive View Switcher (Live Executive First, Single Row) */}
+        <div className="flex items-center justify-between gap-1.5 border-b border-slate-100 bg-slate-50 px-3 py-1.5">
           <div className="grid grid-cols-3 gap-1.5 flex-1">
             {VIEWS.map((view) => {
               const active = view.id === activeTab;
@@ -101,7 +101,7 @@ export default function HeroDashboardMockup() {
                   key={view.id}
                   type="button"
                   onClick={() => setActiveTab(view.id)}
-                  className={`truncate rounded-lg px-2 py-1.5 text-[11px] font-extrabold transition ${
+                  className={`whitespace-nowrap rounded-lg px-2 py-1 text-[11px] font-extrabold transition ${
                     active
                       ? 'bg-[#0A2B6D] text-white shadow-xs'
                       : 'border border-slate-200 bg-white text-[#0A2B6D] hover:bg-slate-100'
@@ -114,63 +114,63 @@ export default function HeroDashboardMockup() {
           </div>
           <Link
             to="/dashboard"
-            className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-lg bg-[#0072FF]/10 px-2.5 py-1.5 text-[11px] font-extrabold text-[#0072FF] hover:bg-[#0072FF] hover:text-white transition"
+            className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-lg bg-[#0072FF]/10 px-2.5 py-1 text-[11px] font-extrabold text-[#0072FF] hover:bg-[#0072FF] hover:text-white transition"
           >
-            <span>Workspace</span>
-            <ArrowUpRight className="h-3.5 w-3.5" />
+            <span>Open</span>
+            <ArrowUpRight className="h-3 w-3" />
           </Link>
         </div>
 
-        {/* Main Dashboard Body */}
-        <div className="flex flex-1 flex-col justify-between p-4 space-y-3">
-          {/* Score Hero Banner */}
+        {/* Main Dashboard Body — Compact Spacing With Zero Empty Gaps */}
+        <div className="p-3 space-y-2.5">
+          {/* Score Hero Banner — Live Executive Telemetry Next to Score */}
           <div
-            className="flex items-center justify-between gap-3 rounded-2xl p-3.5 text-white shadow-sm"
+            className="flex items-center justify-between gap-2.5 rounded-xl px-3.5 py-2.5 text-white shadow-sm"
             style={{
               background: 'linear-gradient(120deg, #0A2B6D 0%, #5A00D6 55%, #FF2E9A 100%)',
             }}
           >
-            <div className="flex items-center gap-3 min-w-0">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/35 bg-white/15 backdrop-blur-xs">
-                <ShieldCheck className="h-6 w-6 text-white" />
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/35 bg-white/15">
+                <ShieldCheck className="h-5 w-5 text-white" />
               </div>
               <div className="text-left min-w-0">
                 <div className="flex items-center gap-1.5">
-                  <span className="truncate text-[10px] font-extrabold uppercase tracking-wider text-white/90">
+                  <span className="whitespace-nowrap text-[10px] font-extrabold uppercase tracking-wider text-white">
                     {current.scoreLabel}
                   </span>
-                  <span className="hidden sm:inline-block shrink-0 whitespace-nowrap rounded-full bg-white/20 px-2 py-0.5 text-[9px] font-extrabold text-white">
-                    LIVE TELEMETRY
+                  <span className="inline-flex items-center rounded-full bg-white/20 px-2 py-0.5 text-[9px] font-extrabold text-white whitespace-nowrap">
+                    LIVE EXECUTIVE
                   </span>
                 </div>
                 <div className="mt-0.5 flex items-baseline gap-2">
-                  <span className="font-editorial text-2xl sm:text-3xl font-extrabold text-white leading-none">
+                  <span className="font-editorial text-2xl font-extrabold text-white leading-none whitespace-nowrap">
                     {current.score}
                   </span>
-                  <span className="truncate text-[11px] font-semibold text-white/90">
-                    +2.4% vs Q3 · Audit Ready
+                  <span className="whitespace-nowrap text-[11px] font-semibold text-white/90">
+                    +2.4% vs Q3 · Audit Pack Ready
                   </span>
                 </div>
               </div>
             </div>
             <Link
               to="/compliance"
-              className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-xl bg-white px-3 py-2 text-xs font-extrabold text-[#0A2B6D] shadow-xs transition hover:bg-slate-50"
+              className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-lg bg-white px-2.5 py-1.5 text-[11px] font-extrabold text-[#0A2B6D] shadow-xs transition hover:bg-slate-50"
             >
               <Award className="h-3.5 w-3.5 text-[#FF2E9A]" />
-              <span>Board Pack</span>
+              <span>Export Pack</span>
             </Link>
           </div>
 
-          {/* 4 Symmetrical KPI Mini Cards (Aligned Baselines) */}
-          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 items-stretch">
+          {/* 4 Symmetrical KPI Mini Cards */}
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 items-stretch">
             {current.metrics.map((m) => (
               <div
                 key={m.label}
-                className="flex h-full flex-col justify-between rounded-xl border border-slate-200/90 bg-slate-50/70 p-2.5 text-left shadow-2xs"
+                className="flex flex-col justify-between rounded-xl border border-slate-200/90 bg-slate-50/70 px-2.5 py-2 text-left shadow-2xs"
               >
                 <div className="flex items-center justify-between gap-1">
-                  <span className="truncate text-[11px] font-extrabold text-[#0A2B6D]/80">
+                  <span className="whitespace-nowrap text-[10px] font-extrabold text-[#0A2B6D]/85">
                     {m.label}
                   </span>
                   <span
@@ -178,45 +178,45 @@ export default function HeroDashboardMockup() {
                     style={{ backgroundColor: m.color }}
                   />
                 </div>
-                <div className="my-1 font-editorial text-xl font-extrabold text-[#0A2B6D] leading-none">
+                <div className="my-0.5 font-editorial text-lg font-extrabold text-[#0A2B6D] leading-tight whitespace-nowrap">
                   {m.value}
                 </div>
                 <div
-                  className="inline-flex items-center gap-1 text-[10px] font-bold"
+                  className="inline-flex items-center gap-1 text-[10px] font-bold whitespace-nowrap"
                   style={{ color: m.color }}
                 >
                   <TrendingUp className="h-2.5 w-2.5 shrink-0" />
-                  <span className="truncate">{m.delta}</span>
+                  <span>{m.delta}</span>
                 </div>
               </div>
             ))}
           </div>
 
           {/* Live Governance & Checkpoint Rows */}
-          <div className="rounded-xl border border-slate-200/90 bg-slate-50/60 p-3 space-y-1.5">
-            <div className="flex items-center justify-between text-[11px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-              <span className="inline-flex items-center gap-1.5">
-                <FileCheck2 className="h-3.5 w-3.5 text-[#5A00D6]" />
+          <div className="rounded-xl border border-slate-200/90 bg-slate-50/60 p-2.5 space-y-1">
+            <div className="flex items-center justify-between text-[10px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+              <span className="inline-flex items-center gap-1">
+                <FileCheck2 className="h-3 w-3 text-[#5A00D6]" />
                 <span>Live NDIS Practice Standard Stream</span>
               </span>
               <span className="text-[#0072FF]">Real-Time Sync</span>
             </div>
-            <div className="space-y-1.5">
+            <div className="space-y-1">
               {current.checkpoints.map((cp) => (
                 <div
                   key={cp.code}
-                  className="flex items-center justify-between gap-2 rounded-lg border border-slate-200/80 bg-white px-3 py-1.5 text-left"
+                  className="flex items-center justify-between gap-2 rounded-lg border border-slate-200/80 bg-white px-2.5 py-1 text-left"
                 >
                   <div className="flex items-center gap-2 min-w-0">
-                    <span className="shrink-0 rounded bg-[#0A2B6D] px-2 py-0.5 text-[10px] font-extrabold text-white">
+                    <span className="shrink-0 rounded bg-[#0A2B6D] px-1.5 py-0.5 text-[9px] font-extrabold text-white whitespace-nowrap">
                       {cp.code}
                     </span>
-                    <span className="truncate text-xs font-bold text-[#0A2B6D]">
+                    <span className="truncate text-[11px] font-bold text-[#0A2B6D]">
                       {cp.title}
                     </span>
                   </div>
                   <span className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full bg-[#0072FF]/10 px-2 py-0.5 text-[10px] font-extrabold text-[#0072FF]">
-                    <CheckCircle2 className="h-3 w-3 text-[#0072FF]" />
+                    <CheckCircle2 className="h-2.5 w-2.5 text-[#0072FF]" />
                     {cp.status}
                   </span>
                 </div>
@@ -225,13 +225,13 @@ export default function HeroDashboardMockup() {
           </div>
 
           {/* Bottom AI Copilot & Security Bar */}
-          <div className="flex items-center justify-between gap-2 rounded-xl border border-[#5A00D6]/20 bg-[#5A00D6]/5 px-3 py-2 text-xs">
-            <div className="flex items-center gap-1.5 font-bold text-[#0A2B6D]">
+          <div className="flex items-center justify-between gap-2 rounded-xl border border-[#5A00D6]/20 bg-[#5A00D6]/5 px-3 py-1.5 text-[11px]">
+            <div className="flex items-center gap-1.5 font-bold text-[#0A2B6D] whitespace-nowrap">
               <Sparkles className="h-3.5 w-3.5 shrink-0 text-[#FF2E9A]" />
-              <span className="truncate">24/7 AI Compliance Copilot active</span>
+              <span>24/7 AI Compliance Copilot active</span>
             </div>
             <div className="flex shrink-0 items-center gap-1 whitespace-nowrap font-extrabold text-[#5A00D6]">
-              <Lock className="h-3.5 w-3.5" />
+              <Lock className="h-3 w-3" />
               <span>Role-Based Security (RLS)</span>
             </div>
           </div>

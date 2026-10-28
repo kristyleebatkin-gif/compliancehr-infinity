@@ -31,14 +31,14 @@ const PILLAR_BAR_DATA = [
 const SHOWCASE_PANELS = [
   {
     id: 'executive',
-    shortLabel: 'Executive Hub',
-    title: 'Executive Dashboard',
+    shortLabel: 'Live Executive',
+    title: 'Live Executive Dashboard',
     icon: LayoutDashboard,
-    badge: 'Command Centre',
+    badge: 'Live Executive',
     color: '#0A2B6D',
     path: '/dashboard',
     summary:
-      'Full-width executive command centre uniting the compliance score gauge, workforce KPIs, participant analytics, risk alerts, and training compliance.',
+      'Full-width live executive command centre uniting the compliance score gauge, workforce KPIs, participant analytics, risk alerts, and training compliance.',
     kpi: '99.2% Audit Readiness',
     metricValue: '99.2%',
     metricSub: '46 Modules Synced Live',
@@ -153,12 +153,12 @@ export default function LandingProductShowcase() {
               }}
             >
               <div className="text-left">
-                <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-white">
+                <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap">
                   <Sparkles className="h-3.5 w-3.5 text-[#00C6FF]" />
-                  <span style={{ color: '#FFFFFF' }}>Full-Width Executive Command Centre</span>
+                  <span style={{ color: '#FFFFFF' }}>Full-Width Live Executive Command Centre</span>
                 </div>
                 <h2
-                  className="mt-1.5 font-editorial text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white"
+                  className="mt-1.5 font-editorial text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight text-white"
                   style={{ color: '#FFFFFF' }}
                 >
                   Everything Connected — Live Executive Dashboard Showcase

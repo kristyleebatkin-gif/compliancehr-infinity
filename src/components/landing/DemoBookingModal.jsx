@@ -233,8 +233,8 @@ export default function DemoBookingModal({ open, onClose, initialTopic = 'Execut
 
               <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
                 <div className="flex items-center gap-2 text-xs font-semibold text-[#0A2B6D]/75">
-                  <ShieldCheck className="h-4 w-4 text-[#0072FF]" />
-                  <span>Tailored walkthrough for Australian NDIS providers</span>
+                  <ShieldCheck className="h-4 w-4 shrink-0 text-[#0072FF]" />
+                  <span>Direct enquiries: kristyleebatkin@live.com.au</span>
                 </div>
                 <button
                   type="submit"

@@ -1,22 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, ShieldCheck, ArrowUpRight } from 'lucide-react';
+import { Mail, ShieldCheck, ArrowUpRight, Phone } from 'lucide-react';
 
 export default function LandingFooter({ onBookDemo }) {
   return (
     <footer className="border-t border-slate-200 bg-white text-[#0A2B6D]">
-      <div className="mx-auto max-w-[1440px] px-4 py-12 sm:px-6 lg:py-16">
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
-          {/* Brand Column */}
-          <div className="lg:col-span-5 text-left space-y-4">
-            <Link to="/" className="inline-flex items-center gap-3">
+      <div className="mx-auto max-w-[1440px] px-4 py-10 sm:px-6 lg:py-12">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 items-start">
+          {/* Brand Column — Centred Logo + Centred Slogan + Single-Line 46 Connected Modules Pill */}
+          <div className="lg:col-span-5 flex flex-col items-center lg:items-start text-center lg:text-left space-y-3.5">
+            <Link to="/" className="inline-flex flex-col sm:flex-row items-center gap-3">
               <img
                 src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/6bf497716_generated_image.png"
                 alt="ComplianceHR Infinity logo"
-                className="h-12 w-14 object-contain"
+                className="h-11 w-12 shrink-0 object-contain"
               />
-              <div>
-                <div className="font-editorial text-2xl font-extrabold tracking-tight text-[#0A2B6D]">
+              <div className="flex flex-col items-center text-center">
+                <div className="font-editorial text-2xl font-extrabold tracking-tight text-[#0A2B6D] leading-none whitespace-nowrap">
                   Compliance
                   <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                     HR
@@ -25,34 +25,35 @@ export default function LandingFooter({ onBookDemo }) {
                     Infinity
                   </span>
                 </div>
-                <div className="text-xs font-bold text-[#0A2B6D]/75">
+                <div className="mt-1 text-[11px] font-extrabold text-[#0A2B6D]/85 text-center whitespace-nowrap">
                   Complete Control. Greater Confidence. Brighter Success.
                 </div>
               </div>
             </Link>
 
-            <p className="max-w-md text-sm leading-relaxed text-[#0A2B6D]/75">
-              The complete compliance, workforce, participant, and operations management platform built for NDIS providers and disability support organisations.
+            <p className="max-w-md text-xs sm:text-sm leading-relaxed text-[#0A2B6D]/75">
+              The complete compliance, workforce, participant, and operations management platform built for NDIS &amp; Aged Care Support providers.
             </p>
 
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#0072FF]/20 bg-[#0072FF]/5 px-3.5 py-1.5 text-xs font-extrabold text-[#0072FF]">
-              <ShieldCheck className="h-4 w-4 text-[#5A00D6]" />
+            {/* 46 Connected Modules on One Single Line */}
+            <div className="inline-flex items-center gap-1.5 rounded-full border border-[#0072FF]/25 bg-[#0072FF]/5 px-3.5 py-1.5 text-[11px] font-extrabold text-[#0072FF] whitespace-nowrap">
+              <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-[#5A00D6]" />
               <span>46 Connected Modules · 356 NDIS Checkpoints · 17 Categories</span>
             </div>
           </div>
 
           {/* Platform Links */}
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-7 text-left">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 lg:col-span-7 text-left">
             <div>
               <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
                 Platform Pillars
               </h3>
-              <ul className="mt-4 space-y-2.5 text-sm font-semibold text-[#0A2B6D]/80">
-                <li><a href="#solution" className="hover:text-[#0072FF]">People &amp; Profiles</a></li>
-                <li><a href="#solution" className="hover:text-[#0072FF]">Service Delivery</a></li>
-                <li><a href="#solution" className="hover:text-[#0072FF]">Compliance &amp; Risk</a></li>
-                <li><a href="#solution" className="hover:text-[#0072FF]">Business Operations</a></li>
-                <li><a href="#blueprint" className="hover:text-[#0072FF]">Explore All 46 Modules</a></li>
+              <ul className="mt-3 space-y-2 text-xs sm:text-sm font-semibold text-[#0A2B6D]/80">
+                <li><a href="#solution" className="whitespace-nowrap hover:text-[#0072FF]">People &amp; Profiles</a></li>
+                <li><a href="#solution" className="whitespace-nowrap hover:text-[#0072FF]">Service Delivery</a></li>
+                <li><a href="#solution" className="whitespace-nowrap hover:text-[#0072FF]">Compliance &amp; Risk</a></li>
+                <li><a href="#solution" className="whitespace-nowrap hover:text-[#0072FF]">Business Operations</a></li>
+                <li><a href="#blueprint" className="whitespace-nowrap hover:text-[#0072FF]">Explore All 46 Modules</a></li>
               </ul>
             </div>
 
@@ -60,12 +61,12 @@ export default function LandingFooter({ onBookDemo }) {
               <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
                 Quick Access
               </h3>
-              <ul className="mt-4 space-y-2.5 text-sm font-semibold text-[#0A2B6D]/80">
-                <li><Link to="/dashboard" className="hover:text-[#0072FF]">Executive Dashboard</Link></li>
-                <li><Link to="/compliance" className="hover:text-[#0072FF]">Compliance Hub</Link></li>
-                <li><Link to="/roster" className="hover:text-[#0072FF]">Smart Rostering</Link></li>
-                <li><Link to="/auditor-portal" className="hover:text-[#0072FF]">External Auditor Portal</Link></li>
-                <li><a href="#pricing" className="hover:text-[#0072FF]">Pricing &amp; Packages</a></li>
+              <ul className="mt-3 space-y-2 text-xs sm:text-sm font-semibold text-[#0A2B6D]/80">
+                <li><Link to="/dashboard" className="whitespace-nowrap hover:text-[#0072FF]">Live Executive Dashboard</Link></li>
+                <li><Link to="/compliance" className="whitespace-nowrap hover:text-[#0072FF]">Compliance Hub</Link></li>
+                <li><Link to="/roster" className="whitespace-nowrap hover:text-[#0072FF]">Smart Rostering</Link></li>
+                <li><Link to="/auditor-portal" className="whitespace-nowrap hover:text-[#0072FF]">External Auditor Portal</Link></li>
+                <li><a href="#pricing" className="whitespace-nowrap hover:text-[#0072FF]">Pricing &amp; Packages</a></li>
               </ul>
             </div>
 
@@ -73,26 +74,26 @@ export default function LandingFooter({ onBookDemo }) {
               <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
                 Get Started &amp; Support
               </h3>
-              <ul className="mt-4 space-y-2.5 text-sm font-semibold text-[#0A2B6D]/80">
+              <ul className="mt-3 space-y-2 text-xs sm:text-sm font-semibold text-[#0A2B6D]/80">
                 <li>
                   <button
                     type="button"
                     onClick={() => onBookDemo && onBookDemo('Book a Personal Demo')}
-                    className="inline-flex items-center gap-1 font-bold text-[#0072FF] hover:underline"
+                    className="inline-flex items-center gap-1 whitespace-nowrap font-extrabold text-[#0072FF] hover:underline"
                   >
                     <span>Book a Personal Demo</span>
-                    <ArrowUpRight className="h-3.5 w-3.5" />
+                    <ArrowUpRight className="h-3.5 w-3.5 shrink-0" />
                   </button>
                 </li>
-                <li><Link to="/register" className="hover:text-[#0072FF]">Start 14-Day Free Trial</Link></li>
-                <li><Link to="/login" className="hover:text-[#0072FF]">Sign In to Workspace</Link></li>
-                <li><Link to="/help" className="hover:text-[#0072FF]">Help &amp; Support Centre</Link></li>
+                <li><Link to="/register" className="whitespace-nowrap hover:text-[#0072FF]">Start 14-Day Free Trial</Link></li>
+                <li><Link to="/login" className="whitespace-nowrap hover:text-[#0072FF]">Sign In to Workspace</Link></li>
+                <li><Link to="/help" className="whitespace-nowrap hover:text-[#0072FF]">Help &amp; Support Centre</Link></li>
                 <li>
                   <a
                     href="mailto:kristyleebatkin@live.com.au"
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#5A00D6] hover:underline"
+                    className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-[#5A00D6]/20 bg-[#5A00D6]/5 px-2.5 py-1 text-xs font-extrabold text-[#5A00D6] hover:bg-[#5A00D6]/10"
                   >
-                    <Mail className="h-3.5 w-3.5" />
+                    <Mail className="h-3.5 w-3.5 shrink-0 text-[#FF2E9A]" />
                     <span>kristyleebatkin@live.com.au</span>
                   </a>
                 </li>
@@ -101,11 +102,20 @@ export default function LandingFooter({ onBookDemo }) {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-100 pt-6 text-xs font-semibold text-[#0A2B6D]/70">
-          <div>
-            © {new Date().getFullYear()} ComplianceHR Infinity. All rights reserved. Lead Developer: Kristy Lee Whelan.
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-slate-100 pt-5 text-xs font-semibold text-[#0A2B6D]/75">
+          <div className="flex flex-wrap items-center justify-center gap-2 text-center sm:text-left">
+            <span>© {new Date().getFullYear()} ComplianceHR Infinity. All rights reserved.</span>
+            <span>•</span>
+            <span className="font-bold text-[#0A2B6D]">Lead Developer: Kristy Lee Whelan</span>
+            <span>•</span>
+            <a
+              href="mailto:kristyleebatkin@live.com.au"
+              className="font-extrabold text-[#5A00D6] hover:underline whitespace-nowrap"
+            >
+              kristyleebatkin@live.com.au
+            </a>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 whitespace-nowrap">
             <Link to="/report-complaint" className="hover:text-[#0072FF]">Public Feedback Portal</Link>
             <span>•</span>
             <Link to="/volunteer-apply" className="hover:text-[#0072FF]">Volunteer Application</Link>
