@@ -4,6 +4,8 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import EnterpriseCompletenessAndMyWorkSuite from '@/components/compliance/EnterpriseCompletenessAndMyWorkSuite';
+import MyWorkArea9Panel from '@/components/profile/MyWorkArea9Panel';
 import {
   PLATFORM_14_FOUNDATION_DOMAINS,
   researchAndGenerateSubjectForm,
@@ -214,6 +216,9 @@ export default function Enterprise12PillarCommandBar({
           })}
         </div>
       </div>
+
+      <MyWorkArea9Panel compact />
+      <EnterpriseCompletenessAndMyWorkSuite />
 
       {/* SAVED REPORT PRESETS BAR (PILLAR 11 & 12) */}
       {onSavePreset && (

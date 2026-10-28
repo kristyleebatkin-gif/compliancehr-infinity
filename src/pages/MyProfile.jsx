@@ -21,6 +21,7 @@ import '@/components/profile/myProfilePastels.css';
 import StaffHome from '@/pages/StaffHome';
 import MyDocuments from '@/pages/MyDocuments';
 import NameTags from '@/pages/NameTags';
+import MyWorkArea9Panel from '@/components/profile/MyWorkArea9Panel';
 
 import { useQueryClient } from '@tanstack/react-query';
 import { logUserAction } from '@/lib/actionLog';
@@ -162,6 +163,7 @@ export default function MyProfile() {
         subtitle={tab === 'participant-details' ? 'Your participant profile, documents and support in one place.' : isParticipant ? 'Your profile, work, documents and support in one place.' : 'Your profile, work, documents and name tag in one place.'}
         showAlerts={false}
       />
+      <MyWorkArea9Panel />
       {!isParticipant && participantProfile && <nav data-dashboard-tabs="" aria-label="My profile views" className="flex flex-wrap gap-2">
         <Button data-dashboard-tab="" data-dashboard-tone="blue" aria-pressed={tab !== 'participant-details'} variant={tab === 'participant-details' ? 'outline' : 'secondary'} onClick={() => setTab('details')}>My Employee Profile &amp; Profession</Button>
         <Button data-dashboard-tab="" data-dashboard-tone="pink" aria-pressed={tab === 'participant-details'} variant={tab === 'participant-details' ? 'secondary' : 'outline'} onClick={() => setTab('participant-details')}>My Participant Profile &amp; NDIS Plan</Button>
