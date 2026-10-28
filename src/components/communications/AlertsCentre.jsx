@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { Badge } from '@/components/ui/badge';
@@ -12,37 +12,67 @@ export default function AlertsCentre({ selfOnly = false } = {}) {
   const [loading, setLoading] = useState(true);
   const [notifications, setNotifications] = useState([]);
   const [flagged, setFlagged] = useState([]);
+  const [errors, setErrors] = useState({ notifications: '', flagged: '' });
+  const [markingRead, setMarkingRead] = useState(false);
+  const loadSequence = useRef(0);
 
-  const load = async () => {
+  const load = useCallback(async () => {
+    const sequence = ++loadSequence.current;
     setLoading(true);
-    try {
-      const page = await base44.entities.Notification.filter({ read: false }, { sort: '-created_date', limit: 50 });
-      setNotifications(page.items || []);
-    } catch { setNotifications([]); }
-
-    try {
-      const page = await base44.entities.CommunicationEntry.filter(
+    if (!user?.id) {
+      setNotifications([]);
+      setFlagged([]);
+      setErrors({ notifications: 'Sign in to view your notifications.', flagged: 'Sign in to view communications.' });
+      setLoading(false);
+      return;
+    }
+    const results = await Promise.allSettled([
+      base44.entities.Notification.filter({ read: false, recipient_id: user.id }, { sort: '-created_date', limit: 50 }),
+      base44.entities.CommunicationEntry.filter(
         { issues_concerns: { $exists: true, $ne: '' } },
         { sort: '-created_date', limit: 50 },
-      );
-      setFlagged((page.items || []).filter((f) => !selfOnly
-        || f.sender_email === (user?.email || '')
-        || f.sender_name === (user?.full_name || '')
-        || (f.staff_involved || []).includes(user?.full_name || '')));
-    } catch { setFlagged([]); }
-
+      ),
+    ]);
+    if (sequence !== loadSequence.current) return;
+    const message = (result) => {
+      const status = result.reason?.status ?? result.reason?.response?.status;
+      return status === 401 || status === 403 ? 'Access denied. Contact your administrator if access is needed.' : 'Could not load this section. Refresh to retry.';
+    };
+    const [notificationResult, flaggedResult] = results;
+    setNotifications(notificationResult.status === 'fulfilled' ? (notificationResult.value.items || []) : []);
+    setFlagged(flaggedResult.status === 'fulfilled' ? (flaggedResult.value.items || []).filter((entry) => !selfOnly
+      || (user.email && entry.sender_email === user.email)
+      || (user.full_name && entry.sender_name === user.full_name)
+      || (user.full_name && (entry.staff_involved || []).includes(user.full_name))) : []);
+    setErrors({
+      notifications: notificationResult.status === 'rejected' ? message(notificationResult) : '',
+      flagged: flaggedResult.status === 'rejected' ? message(flaggedResult) : '',
+    });
     setLoading(false);
-  };
+  }, [selfOnly, user?.id, user?.email, user?.full_name]);
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => {
+    load();
+    const timer = window.setInterval(load, 60000);
+    return () => { window.clearInterval(timer); loadSequence.current += 1; };
+  }, [load]);
 
   const markAllRead = async () => {
-    const unread = notifications.filter((n) => n.read !== true);
+    if (markingRead || !user?.id) return;
+    const unread = notifications.filter((notification) => notification.read !== true && notification.recipient_id === user.id);
     if (!unread.length) return;
-    setNotifications(notifications.map((n) => ({ ...n, read: true })));
+    setMarkingRead(true);
     try {
-      await base44.entities.Notification.bulkUpdate(unread.map((n) => ({ id: n.id, read: true })));
-    } catch { load(); }
+      const results = await Promise.allSettled(unread.map((notification) =>
+        base44.entities.Notification.update(notification.id, { read: true })
+      ));
+      const confirmedIds = new Set(unread.filter((_, index) => results[index].status === 'fulfilled').map((notification) => notification.id));
+      setNotifications((current) => current.filter((notification) => !confirmedIds.has(notification.id)));
+      setErrors((current) => ({ ...current, notifications: confirmedIds.size < unread.length
+        ? 'Some alerts could not be marked read. They remain in this list; refresh before retrying.' : '' }));
+    } finally {
+      setMarkingRead(false);
+    }
   };
 
   return (
@@ -71,15 +101,18 @@ export default function AlertsCentre({ selfOnly = false } = {}) {
           <section className="space-y-2">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <h4 className="flex items-center gap-2 text-sm font-extrabold text-red-700">
-                <Bell className="h-4 w-4 text-red-600" />New Alerts &amp; Notifications ({notifications.length})
+                <Bell className="h-4 w-4 text-red-600" />Your Unread Notifications ({notifications.length} loaded)
               </h4>
               {notifications.length > 0 && (
-                <Button variant="outline" size="sm" onClick={markAllRead} className="font-bold">Mark all read</Button>
+                <Button variant="outline" size="sm" onClick={markAllRead} disabled={markingRead} className="min-h-[44px] font-bold">{markingRead ? 'Saving…' : 'Mark displayed alerts read'}</Button>
               )}
             </div>
-            {notifications.length === 0 ? (
+            {errors.notifications ? (
+              <p role="alert" className="rounded-xl border border-[#C084FC] bg-[#F6F0FF] p-3 text-sm text-[#0A2B6D]">{errors.notifications}</p>
+            ) : null}
+            {!errors.notifications && notifications.length === 0 ? (
               <p className="rounded-xl border-2 border-emerald-400/50 bg-emerald-50 p-3.5 text-sm font-bold text-emerald-800">
-                All clear — no new alerts or unread notifications.
+                No unread notifications were returned for your account.
               </p>
             ) : (
               <div className="space-y-2">
@@ -105,9 +138,11 @@ export default function AlertsCentre({ selfOnly = false } = {}) {
 
           <section className="space-y-2">
             <h4 className="flex items-center gap-2 text-sm font-extrabold text-orange-700">
-              <MessageCircleWarning className="h-4 w-4 text-orange-600" />Flagged Communications ({flagged.length})
+              <MessageCircleWarning className="h-4 w-4 text-orange-600" />Flagged Communications ({flagged.length} loaded)
             </h4>
-            {flagged.length === 0 ? (
+            {errors.flagged ? (
+              <p role="alert" className="rounded-xl border border-[#C084FC] bg-[#F6F0FF] p-3 text-sm text-[#0A2B6D]">{errors.flagged}</p>
+            ) : flagged.length === 0 ? (
               <p className="rounded-xl border border-border/60 bg-white p-3.5 text-sm font-bold text-foreground/75">
                 No diary entries currently flag issues or concerns.
               </p>
