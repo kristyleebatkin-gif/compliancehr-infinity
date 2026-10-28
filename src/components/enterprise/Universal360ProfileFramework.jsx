@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Users, Heart, ShieldAlert, AlertTriangle, ShieldCheck, ClipboardCheck,
@@ -208,49 +208,57 @@ export default function Universal360ProfileFramework({
     supplier: [],
   });
   const [selectedRecordIdx, setSelectedRecordIdx] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [loadStates, setLoadStates] = useState({});
+  const [actionResult, setActionResult] = useState(null);
+  const actionLock = useRef(false);
+  const completedActions = useRef(new Set());
 
   const load360Data = useCallback(async () => {
     setLoading(true);
     try {
-      const [
-        staffRes,
-        partRes,
-        riskRes,
-        incRes,
-        polRes,
-        audRes,
-        docRes,
-        supRes,
-      ] = await Promise.all([
-        base44.entities.StaffProfile.filter({}, { sort: '-created_date', limit: 8 }).catch(() => ({ items: [] })),
-        base44.entities.ParticipantProfile.filter({}, { sort: '-created_date', limit: 8 }).catch(() => ({ items: [] })),
-        base44.entities.Risk.filter({}, { sort: '-created_date', limit: 8 }).catch(() => ({ items: [] })),
-        base44.entities.Incident.filter({}, { sort: '-created_date', limit: 8 }).catch(() => ({ items: [] })),
-        base44.entities.Policy.filter({}, { sort: '-created_date', limit: 8 }).catch(() => ({ items: [] })),
-        base44.entities.InternalAudit.filter({}, { sort: '-created_date', limit: 8 }).catch(() => ({ items: [] })),
-        base44.entities.EmployeeDocument.filter({}, { sort: '-created_date', limit: 8 }).catch(() => ({ items: [] })),
-        base44.entities.Supplier.filter({}, { sort: '-created_date', limit: 8 }).catch(() => ({ items: [] })),
-      ]);
+      const types = ['employee', 'participant', 'risk', 'incident', 'standard', 'audit', 'document', 'supplier'];
+      const entities = ['StaffProfile', 'ParticipantProfile', 'Risk', 'Incident', 'Policy', 'InternalAudit', 'EmployeeDocument', 'Supplier'];
+      const results = await Promise.allSettled(entities.map((entity) =>
+        Promise.resolve().then(() => base44.entities[entity].filter({}, { sort: '-created_date', limit: 8 }))
+      ));
+      const states = {};
+      const responses = results.map((result, index) => {
+        if (result.status === 'rejected') {
+          const status = result.reason?.status ?? result.reason?.response?.status;
+          states[types[index]] = status === 401 || status === 403 ? 'denied' : 'error';
+          return { items: [] };
+        }
+        const value = result.value;
+        const items = Array.isArray(value) ? value : value?.items;
+        if (!Array.isArray(items)) {
+          states[types[index]] = 'error';
+          return { items: [] };
+        }
+        states[types[index]] = items.length ? 'loaded' : 'empty';
+        return { items };
+      });
+      setLoadStates(states);
+      const [staffRes, partRes, riskRes, incRes, polRes, audRes, docRes, supRes] = responses;
 
       setLiveRecords({
         employee: (staffRes?.items || []).map((r) => ({
           id: r.id,
           name: r.full_name || 'Staff Member',
           sub: `${r.position || 'Support Worker'} · ${r.department || 'Service Delivery'}`,
-          status: r.status || 'Active',
+          status: r.status || 'Not recorded',
           owner: r.manager || 'Human Resources Manager',
-          score: '98% Ready',
+          score: 'Readiness not assessed',
           standard: 'NDIS Practice Standard 2 & Aged Care Standard 7 (Workforce)',
           detailUrl: `/our-employees/${r.id}`,
         })),
         participant: (partRes?.items || []).map((r) => ({
           id: r.id,
           name: r.full_name || 'Participant',
-          sub: `NDIS #: ${r.ndis_number || 'Verified'} · ${r.support_type || 'Core & Capacity Building'}`,
-          status: r.status || 'Active',
+          sub: `NDIS #: ${r.ndis_number || 'Not recorded'} · ${r.support_type || 'Core & Capacity Building'}`,
+          status: r.status || 'Not recorded',
           owner: r.support_coordinator || 'Participant Services Lead',
-          score: '100% Protected',
+          score: 'Readiness not assessed',
           standard: 'NDIS Practice Standard 1 & 3 · Aged Care Standard 1 & 3',
           detailUrl: `/our-participants/${r.id}`,
         })),
@@ -258,9 +266,9 @@ export default function Universal360ProfileFramework({
           id: r.id,
           name: r.title || 'Enterprise Risk Record',
           sub: `${r.category || 'Operational'} · Rating: ${r.rating || 'Medium'} (${r.likelihood || 'Possible'} × ${r.consequence || 'Moderate'})`,
-          status: r.status || 'Treating',
+          status: r.status || 'Not recorded',
           owner: r.owner || 'Compliance & Risk Manager',
-          score: r.rating || 'Controlled',
+          score: r.rating || 'Rating not recorded',
           standard: 'ISO 31000 Risk Governance & NDIS Governance Standard 2',
           detailUrl: '/risks',
         })),
@@ -268,61 +276,29 @@ export default function Universal360ProfileFramework({
           id: r.id,
           name: r.title || 'Incident Record',
           sub: `${r.category || 'Safety'} · Severity: ${r.severity || 'Medium'} · ${r.date_occurred || 'Logged'}`,
-          status: r.status || 'Under Investigation',
+          status: r.status || 'Not recorded',
           owner: r.responsible_manager || 'Incident & Safeguarding Lead',
-          score: r.requires_ndis_report ? '24h/5d Reportable' : 'Internal SLA Active',
+          score: 'Reporting requirements need review',
           standard: 'NDIS Reportable Incidents & Aged Care SIRS Framework',
           detailUrl: `/incidents/${r.id}`,
         })),
-        standard: [
-          {
-            id: 'STD-NDIS-01',
-            name: 'NDIS Practice Standards (Core Modules 1–4 & High Intensity)',
-            sub: 'Rights & Responsibilities · Provider Governance · Provision of Supports · Support Environment',
-            status: 'Compliant',
-            owner: 'Compliance Manager',
-            score: '99.2% Readiness',
-            standard: 'NDIS Quality & Safeguards Commission (356 Checkpoints)',
-            detailUrl: '/compliance',
-          },
-          {
-            id: 'STD-AC-01',
-            name: 'Strengthened Aged Care Quality Standards (Standards 1–8 & SIRS)',
-            sub: 'Person-Centred Care · Clinical Governance · Workforce · Safe Environment',
-            status: 'Compliant',
-            owner: 'Quality & Improvement Manager',
-            score: '98.5% Readiness',
-            standard: 'Aged Care Quality & Safety Commission',
-            detailUrl: '/compliance',
-          },
-          {
-            id: 'STD-WHS-01',
-            name: 'WHS, Privacy (APP) & Fair Work Employment Obligations',
-            sub: 'Work Health & Safety Act · Australian Privacy Principles · SCHADS Award',
-            status: 'Verified',
-            owner: 'Provider Administrator',
-            score: '100% Mapped',
-            standard: 'SafeWork Australia · OAIC · Fair Work Ombudsman',
-            detailUrl: '/compliance',
-          },
-          ...(polRes?.items || []).slice(0, 3).map((p) => ({
-            id: p.id,
-            name: p.document_name || 'Organisational Standard / Policy',
-            sub: `${p.category || 'Governance'} · Version ${p.version || 'v2026.1'}`,
-            status: p.status || 'Active',
-            owner: p.approved_by || 'Compliance Manager',
-            score: '100% Controlled',
-            standard: 'Internal Accreditation & Policy Control Standard',
-            detailUrl: '/compliance',
-          })),
-        ],
+        standard: (polRes?.items || []).map((p) => ({
+          id: p.id,
+          name: p.document_name || 'Organisational policy',
+          sub: `${p.category || 'Category not recorded'} · Version ${p.version || 'not recorded'}`,
+          status: p.status || 'Not recorded',
+          owner: p.approved_by || 'Not recorded',
+          score: 'Readiness not assessed',
+          standard: 'Mapping not verified',
+          detailUrl: '/compliance',
+        })),
         audit: (audRes?.items || []).map((r) => ({
           id: r.id,
           name: r.title || r.audit_name || 'Internal Compliance & Quality Audit',
           sub: `${r.scope || 'Full NDIS & Aged Care Scope'} · Auditor: ${r.auditor || 'Lead Quality Auditor'}`,
-          status: r.status || 'Completed',
+          status: r.status || 'Not recorded',
           owner: r.auditor || 'Compliance Manager',
-          score: 'Audit Ready',
+          score: 'Readiness not assessed',
           standard: 'ISO 19011 Auditing & NDIS Mid-Term / Renewal Audit',
           detailUrl: '/auditor-portal',
         })),
@@ -330,19 +306,19 @@ export default function Universal360ProfileFramework({
           id: r.id,
           name: r.title || 'Controlled Compliance Document',
           sub: `${r.document_type || 'Credential'} · Employee: ${r.employee_name || 'Organisation'}`,
-          status: r.status || 'Current',
+          status: r.status || 'Not recorded',
           owner: r.employee_name || 'Document Control Officer',
-          score: r.expiry_date ? `Exp: ${r.expiry_date}` : 'Controlled v1.0',
+          score: r.expiry_date ? `Exp: ${r.expiry_date}` : 'Version not recorded',
           standard: 'Universal Document Vault & Company Safe Standard',
           detailUrl: '/documents',
         })),
         supplier: (supRes?.items || []).map((r) => ({
           id: r.id,
           name: r.name || r.company_name || 'Approved Contractor / Supplier',
-          sub: `${r.category || 'Service Provider'} · ABN: ${r.abn || 'Verified'}`,
-          status: r.status || 'Approved',
+          sub: `${r.category || 'Service Provider'} · ABN: ${r.abn || 'Not recorded'}`,
+          status: r.status || 'Not recorded',
           owner: 'Procurement & Contracts Officer',
-          score: 'Insured & Screened',
+          score: 'Screening not verified',
           standard: 'Contractor WHS, Insurance & NDIS Worker Screening Gate',
           detailUrl: '/procurement',
         })),
@@ -365,7 +341,7 @@ export default function Universal360ProfileFramework({
     if (focusRecord) {
       return [
         {
-          id: focusRecord.id || 'FOCUS-360',
+          id: focusRecord.id || null,
           name:
             focusRecord.full_name ||
             focusRecord.title ||
@@ -377,9 +353,9 @@ export default function Universal360ProfileFramework({
             focusRecord.ndis_number ||
             focusRecord.category ||
             'Live Connected 360° Record',
-          status: focusRecord.status || 'Active',
+          status: focusRecord.status || 'Not recorded',
           owner: focusRecord.owner || focusRecord.responsible_manager || 'Compliance Manager',
-          score: '99% Connected',
+          score: 'Readiness not assessed',
           standard: 'NDIS Practice Standards & Aged Care Quality Standards',
           detailUrl: currentTypeObj.route,
         },
@@ -389,12 +365,12 @@ export default function Universal360ProfileFramework({
     if (list.length > 0) return list;
     return [
       {
-        id: `DEFAULT-${selectedType.toUpperCase()}`,
-        name: `${currentTypeObj.shortLabel} Master Record`,
-        sub: `Connected across all 19 Universal 360° sections & ${currentTypeObj.fields.length} domain attributes`,
-        status: 'Active & Verified',
+        id: null,
+        name: 'No record selected',
+        sub: 'Select an available record before creating a review task.',
+        status: 'Not assessed',
         owner: 'Compliance Manager',
-        score: '100% Audit-Ready',
+        score: 'Readiness not assessed',
         standard: 'NDIS Practice Standards · Aged Care Quality Standards · WHS & Privacy',
         detailUrl: currentTypeObj.route,
       },
@@ -404,36 +380,59 @@ export default function Universal360ProfileFramework({
   const activeRecord = currentList[selectedRecordIdx] || currentList[0];
 
   const triggerMasterAutomation = async () => {
+    const recordId = activeRecord?.id;
+    const actionKey = `${selectedType}:${recordId}`;
+    if (actionLock.current) return;
+    if (!recordId || loading || (!focusRecord && loadStates[selectedType] !== 'loaded')) {
+      toast({ title: 'Select an available record', description: 'A saved record is required to create a review task.', variant: 'destructive' });
+      return;
+    }
+    if (completedActions.current.has(actionKey)) {
+      toast({ title: 'Review task already created', description: 'No additional task was created in this session.' });
+      return;
+    }
+    actionLock.current = true;
     setRunningAutomation(true);
+    setActionResult(null);
+    let taskCreated = false;
     try {
+      const user = await base44.auth.me();
+      if (!user?.id) throw new Error('Authentication required');
       const today = new Date().toISOString().slice(0, 10);
       const due = new Date(Date.now() + 7 * 86400000).toISOString().slice(0, 10);
-      await Promise.allSettled([
-        base44.entities.TodoTask.create({
-          title: `[360° Auto-Action] Verify & Review ${activeRecord.name} (${currentTypeObj.shortLabel})`,
-          task_type: '360° Master Automation',
-          module: currentTypeObj.shortLabel,
-          task_date: today,
-          due_date: due,
-          assigned_to: activeRecord.owner || 'Compliance Manager',
-          priority: 'High',
-          status: 'Pending',
-          how_to_complete: `Complete 12-Step Master Workflow verification and confirm all ${currentTypeObj.fields.length} 360° profile checkpoints are evidenced.`,
-        }),
-        base44.entities.AuditLog.create({
-          action: 'Master 360° Automation Executed',
-          entity_type: currentTypeObj.shortLabel,
-          record_id: String(activeRecord.id),
-          record_title: activeRecord.name,
-          performed_by: 'ComplianceHR Infinity Automation Engine',
-          details: `Triggered all 14 Master Automation outputs (Tasks, Reviews, Assessments, Notifications, Reminders, Escalations, Compliance & Evidence Mapping, Readiness & Health Score sync).`,
-        }),
-      ]);
-      toast({
-        title: '14-Point Master Automation Executed',
-        description: `Tasks, reviews, compliance mapping, evidence links & readiness scores updated for ${activeRecord.name}.`,
+      const task = await base44.entities.TodoTask.create({
+        title: `[360° Review] Verify & Review ${activeRecord.name} (${currentTypeObj.shortLabel})`,
+        task_type: '360° Master Automation',
+        module: currentTypeObj.shortLabel,
+        task_date: today,
+        due_date: due,
+        assigned_to: activeRecord.owner || 'Compliance Manager',
+        priority: 'High',
+        status: 'Pending',
+        how_to_complete: `Review source record ${recordId} and verify the ${currentTypeObj.fields.length} declared profile fields against evidence. Readiness and mapping have not been updated by this action.`,
       });
+      if (!task?.id) throw new Error('Task creation was not confirmed');
+      taskCreated = true;
+      completedActions.current.add(actionKey);
+      await base44.entities.AuditLog.create({
+        action: '360° Review Task Created',
+        entity_type: currentTypeObj.shortLabel,
+        record_id: String(recordId),
+        record_title: activeRecord.name,
+        performed_by: user.email || user.full_name || user.id,
+        details: `Created review task ${task.id}. No readiness scores, compliance mappings, notifications or other automation outputs were updated by this action.`,
+      });
+      const message = 'Review task created and audit entry saved. Readiness and mapping were not changed.';
+      setActionResult(message);
+      toast({ title: 'Review task created', description: message });
+    } catch {
+      const message = taskCreated
+        ? 'Review task created, but its audit entry could not be confirmed. Do not create another task; ask an administrator to reconcile the audit entry.'
+        : 'Task creation could not be confirmed. Check the task register before retrying to avoid duplicates.';
+      setActionResult(message);
+      toast({ title: taskCreated ? 'Audit entry needs review' : 'Task creation not confirmed', description: message, variant: 'destructive' });
     } finally {
+      actionLock.current = false;
       setRunningAutomation(false);
     }
   };
@@ -488,6 +487,18 @@ export default function Universal360ProfileFramework({
       </div>
 
       <div className="p-3 sm:p-4 space-y-3">
+        <div role="status" aria-live="polite" className="rounded-xl border border-[#C084FC] bg-[#F6F0FF] p-3 text-xs font-semibold text-[#0A2B6D]">
+          {actionResult || 'The automation button currently creates one review task and an audit entry. The 14 outputs, workflow steps and related sections below describe the framework; their execution and evidence are not verified here.'}
+        </div>
+        {!focusRecord && (loading || loadStates[selectedType] !== 'loaded') && (
+          <div role="status" className="rounded-xl border border-[#C084FC] bg-white p-3 text-sm font-semibold text-[#0A2B6D]">
+            {loading ? 'Loading records…' : loadStates[selectedType] === 'denied'
+              ? 'Access denied. Your permissions do not allow these records to be loaded.'
+              : loadStates[selectedType] === 'error'
+                ? 'Records could not be loaded. Use Sync to retry.'
+                : 'No records were returned for this profile type.'}
+          </div>
+        )}
         {/* 8 Master 360° Profile Type Selector Tabs */}
         {!focusRecord && (
           <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-4 lg:grid-cols-8">
@@ -598,7 +609,7 @@ export default function Universal360ProfileFramework({
               {currentTypeObj.label} — All {currentTypeObj.fields.length} Connected 360° Domain Components
             </span>
             <span className="text-[10.5px] font-extrabold text-[#0072FF]">
-              100% Connected · Zero Silos · Instant Audit Evidence
+              Available fields · Evidence links require verification
             </span>
           </div>
           <div className="flex flex-wrap gap-1.5">
@@ -642,7 +653,7 @@ export default function Universal360ProfileFramework({
                   </div>
                   <p className="mt-1 text-[11px] font-bold text-[#0A2B6D]">
                     {sec === 'Overview' && `${activeRecord.name} (${activeRecord.status})`}
-                    {sec === 'Status' && `${activeRecord.status} · SLA On Track`}
+                    {sec === 'Status' && `${activeRecord.status} · SLA not assessed`}
                     {sec === 'Ownership' && activeRecord.owner}
                     {sec === 'Related People' && 'Linked Staff, Participants & Nominees'}
                     {sec === 'Related Risks' && '5×5 Matrix Controls & Treatments Linked'}
@@ -656,10 +667,10 @@ export default function Universal360ProfileFramework({
                     {sec === 'Related Documents' && 'Version-Controlled Vault & Safe Copies'}
                     {sec === 'Related Evidence' && '5-Point Stamped Operational Evidence'}
                     {sec === 'Related Standards' && activeRecord.standard}
-                    {sec === 'Compliance Mapping' && `${activeRecord.score} · Zero Unmapped Obligations`}
+                    {sec === 'Compliance Mapping' && `${activeRecord.score} · Mapping not verified`}
                     {sec === 'Timeline' && 'Chronological End-to-End Lifecycle Feed'}
                     {sec === 'Audit Trail' && 'Immutable User, Timestamp & Before/After Diff'}
-                    {sec === 'AI Insights' && 'Next-Best Action: Verified & Audit Ready'}
+                    {sec === 'AI Insights' && 'No verified recommendation loaded'}
                   </p>
                 </div>
               ))}
@@ -675,12 +686,12 @@ export default function Universal360ProfileFramework({
                 12-Step Master Workflow Rule (Zero Bypass of Accountability, Evidence or Reporting)
               </span>
               <span className="text-[10px] font-extrabold text-[#0072FF]">
-                Active Stage: Step {activeWorkflowStep} ({MASTER_12_WORKFLOW_STEPS[activeWorkflowStep - 1]?.label})
+                Preview Step: {activeWorkflowStep} ({MASTER_12_WORKFLOW_STEPS[activeWorkflowStep - 1]?.label})
               </span>
             </div>
             <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 md:grid-cols-4">
               {MASTER_12_WORKFLOW_STEPS.map((s) => {
-                const done = s.step <= activeWorkflowStep;
+                const done = s.step === activeWorkflowStep;
                 return (
                   <button
                     key={s.step}
@@ -696,7 +707,7 @@ export default function Universal360ProfileFramework({
                       <span className="text-[#5A00D6]">
                         {s.step}. {s.label}
                       </span>
-                      {done && <CheckCircle2 className="h-3 w-3 text-[#0072FF]" />}
+                      {done && <Clock className="h-3 w-3 text-[#0072FF]" />}
                     </div>
                     <div className="mt-0.5 text-[9.5px] font-semibold leading-tight text-[#0A2B6D]/85">
                       {s.desc}
@@ -712,7 +723,7 @@ export default function Universal360ProfileFramework({
               <span className="text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
                 14-Point Master Automation Rule (On Create / Update / Close)
               </span>
-              <Badge className="bg-[#0072FF] text-white text-[9.5px]">Armed</Badge>
+              <Badge className="bg-[#0072FF] text-white text-[9.5px]">Not verified</Badge>
             </div>
             <div className="flex flex-wrap gap-1.5">
               {MASTER_14_AUTOMATION_OUTPUTS.map((autoItem) => (
