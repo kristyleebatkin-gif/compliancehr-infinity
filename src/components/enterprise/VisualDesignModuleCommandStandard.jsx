@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
   Search,
   Sparkles,
@@ -139,7 +139,6 @@ function resolveSubjectContext(pathname) {
 
 export default function VisualDesignModuleCommandStandard() {
   const location = useLocation();
-  const navigate = useNavigate();
   const { toast } = useToast();
 
   const [expanded, setExpanded] = useState(false);
