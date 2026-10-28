@@ -55,7 +55,10 @@ export default function GlobalSearch() {
       }
       if (e.key === 'Escape') setOpen(false);
     };
-    const onOpenPalette = () => setOpen(true);
+    const onOpenPalette = (event) => {
+      setQuery(typeof event.detail?.query === 'string' ? event.detail.query : '');
+      setOpen(true);
+    };
     window.addEventListener('keydown', onKey);
     window.addEventListener('chr-open-command-palette', onOpenPalette);
     return () => {
