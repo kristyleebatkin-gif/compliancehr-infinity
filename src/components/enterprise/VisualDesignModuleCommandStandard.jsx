@@ -175,28 +175,11 @@ export default function VisualDesignModuleCommandStandard() {
     };
   }, [location.pathname]);
 
-  const handleUniversalSearch = (e) => {
-    e.preventDefault();
-    const q = searchText.trim().toLowerCase();
-    if (!q) {
-      navigate('/record-intelligence');
-      return;
-    }
-    if (q.includes('participant') || q.includes('ndis') || q.includes('plan')) {
-      navigate('/our-participants');
-    } else if (q.includes('staff') || q.includes('employee') || q.includes('cert')) {
-      navigate('/our-employees');
-    } else if (q.includes('risk') || q.includes('hazard')) {
-      navigate('/risks');
-    } else if (q.includes('incident') || q.includes('sirs')) {
-      navigate('/incidents');
-    } else if (q.includes('doc') || q.includes('vault') || q.includes('policy')) {
-      navigate('/documents');
-    } else if (q.includes('register')) {
-      navigate('/registers');
-    } else {
-      navigate('/universal-storage');
-    }
+  const handleUniversalSearch = (event) => {
+    event.preventDefault();
+    window.dispatchEvent(new CustomEvent('chr-open-command-palette', {
+      detail: { query: searchText.trim() },
+    }));
   };
 
   const handleQuickCreateAction = async () => {
