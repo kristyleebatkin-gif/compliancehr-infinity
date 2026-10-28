@@ -54,6 +54,7 @@ import Standard2026PrintableTemplatesSuite from '@/components/compliance/Standar
 import EnterpriseStandardQualityGateSuite from '@/components/compliance/EnterpriseStandardQualityGateSuite';
 import EasyAccessVisibilityHub from '@/components/compliance/EasyAccessVisibilityHub';
 import IntelligentOperationsGuidanceSuite from '@/components/compliance/IntelligentOperationsGuidanceSuite';
+import EnterpriseToolsAiIntelligencePlatform from '@/components/compliance/EnterpriseToolsAiIntelligencePlatform';
 import BusinessHealthComplianceIntelligenceDashboard from '@/components/compliance/BusinessHealthComplianceIntelligenceDashboard';
 import InfinityCoreEngine from '@/components/compliance/InfinityCoreEngine';
 import InfinityOneClickOperations from '@/components/operations/InfinityOneClickOperations';
@@ -301,7 +302,8 @@ export default function ComplianceHub() {
         )}
       />
 
-      {/* Intelligent Operations, Guidance & Success Standard + Easy Access 3-Click Standard */}
+      {/* Enterprise Tools, AI Capabilities & Intelligence Platform + Intelligent Operations + Easy Access 3-Click Standard */}
+      <EnterpriseToolsAiIntelligencePlatform />
       <IntelligentOperationsGuidanceSuite />
       <EasyAccessVisibilityHub />
 

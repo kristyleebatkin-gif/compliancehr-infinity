@@ -8,6 +8,7 @@ import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGri
 import '@/components/documents/vaultWorkspace.css';
 import BusinessHealthComplianceIntelligenceDashboard from '@/components/compliance/BusinessHealthComplianceIntelligenceDashboard';
 import EnterpriseStandardQualityGateSuite from '@/components/compliance/EnterpriseStandardQualityGateSuite';
+import EnterpriseToolsAiIntelligencePlatform from '@/components/compliance/EnterpriseToolsAiIntelligencePlatform';
 
 const PIE_COLOURS = ['#4f46e5', '#0d9488', '#16a34a', '#ca8a04', '#dc2626', '#9333ea', '#2563eb', '#db2777'];
 const BUCKET_COMPUTED = ['count', 'sum_amount', 'avg_amount', 'min_amount', 'max_amount'];
@@ -96,6 +97,8 @@ export default function AnalyticsHub() {
         icon={BarChart3}
         moduleKey="analytics"
       />
+
+      <EnterpriseToolsAiIntelligencePlatform />
 
       <BusinessHealthComplianceIntelligenceDashboard />
 

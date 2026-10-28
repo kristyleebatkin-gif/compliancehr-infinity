@@ -4,6 +4,7 @@ import AssistantChat from '@/components/assistant/AssistantChat';
 import { ShieldCheck, Sparkles, ReceiptText, CalendarClock, Bot, CheckCircle2, ClipboardList, Wallet, Users2 } from 'lucide-react';
 import AssistantHints from '@/components/assistant/AssistantHints';
 import AdvancedIntelligenceAndToolsSuite from '@/components/operations/AdvancedIntelligenceAndToolsSuite';
+import EnterpriseToolsAiIntelligencePlatform from '@/components/compliance/EnterpriseToolsAiIntelligencePlatform';
 
 const AGENTS = [
   {
@@ -113,6 +114,7 @@ export default function Assistant() {
           );
         })}
       </div>
+      <EnterpriseToolsAiIntelligencePlatform />
       <AssistantHints />
       <AdvancedIntelligenceAndToolsSuite />
 
