@@ -1,3 +1,4 @@
+import { isCurrentEmployeeTraining } from '@/lib/trainingRenewal';
 import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent } from '@/components/ui/card';
@@ -127,15 +128,13 @@ export default function TrainingTemplates() {
         return;
       }
       const completions = await fetchAllRecords(base44.entities.TrainingCompletion, { status: 'Completed' });
-      const current = new Set(
-        completions
-          .filter((c) => !c.expiry_date || c.expiry_date >= today)
-          .map((c) => `${c.employee_name}|${c.module_title}`),
-      );
+
       let created = 0, skipped = 0, failed = 0;
       const actor = await base44.auth.me();
       for (const person of targets) {
-        const missing = titles.filter((title) => !current.has(`${person.full_name}|${title}`));
+        const missing = titles.filter((title) => !completions.some((completion) =>
+          completion.module_title === title && isCurrentEmployeeTraining(completion, person.id, today),
+        ));
         if (!missing.length) { skipped += 1; continue; }
         const reference = `Training assignment: ${assignTemplate.id} / ${person.id}`;
         try {
@@ -143,7 +142,7 @@ export default function TrainingTemplates() {
             task_type: 'Training Assignment', important_info: reference,
             status: { $nin: ['Completed', 'Finalised', 'Cancelled'] },
           }, { limit: 1 });
-          if (existing.items?.length) { skipped += 1; continue; }
+          if ((Array.isArray(existing) ? existing : existing.items || []).length) { skipped += 1; continue; }
           const task = await base44.entities.TodoTask.create({
             title: `Complete training: ${assignTemplate.name}`,
             task_type: 'Training Assignment', module: 'Training',
