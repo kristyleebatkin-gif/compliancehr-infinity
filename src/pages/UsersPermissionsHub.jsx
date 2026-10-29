@@ -12,7 +12,7 @@ export default function UsersPermissionsHub() {
       <ModuleShell
         icon={Users}
         title="Users & Permissions Hub"
-        subtitle="Manage app users, access approvals, and module visibility for the 8 roles defined in the app."
+        subtitle="Manage app users, access approvals, and module visibility for the 9 roles defined in the app."
         moduleKey="users"
       />
 
@@ -27,10 +27,10 @@ export default function UsersPermissionsHub() {
             </p>
           </div>
           <span className="rounded-full bg-[#0284c7] px-2.5 py-0.5 text-[10px] font-black text-white">
-            8 Defined Roles
+            9 Defined Roles
           </span>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-8 gap-1.5">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-9 gap-1.5">
           {[
             ['Guest', 'Guest access', '#6366f1'],
             ['Participant', 'Participant workspace', '#e11d48'],
@@ -40,6 +40,7 @@ export default function UsersPermissionsHub() {
             ['Provider Administrator', 'Provider administration', '#db2777'],
             ['Management', 'Management access', '#0d9488'],
             ['Auditor', 'Auditor access', '#1d4ed8'],
+            ['Volunteer', 'Volunteer access', '#0f766e'],
           ].map(([roleName, desc, hex]) => (
             <div key={roleName} className="rounded-lg border bg-white p-1.5" style={{ borderColor: `${hex}66`, borderTopWidth: '3px', borderTopColor: hex }}>
               <div className="text-[10px] font-black" style={{ color: hex }}>{roleName}</div>
