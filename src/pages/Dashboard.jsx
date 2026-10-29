@@ -25,7 +25,7 @@ import ExecutiveWallScene from '@/components/safe/ExecutiveWallScene';
 
 import Universal360ProfileFramework from '@/components/enterprise/Universal360ProfileFramework';
 import OrganisationalOperatingSystemCommand from '@/components/enterprise/OrganisationalOperatingSystemCommand';
-import LivingOrganisationalEcosystemSuite from '@/components/enterprise/LivingOrganisationalEcosystemSuite';
+
 import {
   Activity, ShieldCheck, Zap, LayoutGrid, Layers, Building2, Cpu, Users,
 } from 'lucide-react';
@@ -68,16 +68,20 @@ export default function Dashboard() {
   const { role, user } = useRole();
   const heading = HEADINGS[role] || HEADINGS[ROLES.SUPPORT];
   const firstName = (user?.full_name || '').split(' ')[0];
-  // Start with the executive overview; keep other workspaces one selection away.
-  const [activeSuite, setActiveSuite] = useState('os-command');
+  // Treat an unresolved role as restricted until the authenticated role is known.
+  const isRestrictedRole = !role || role === ROLES.PARTICIPANT || role === ROLES.SUPPORT;
+  const [activeSuite, setActiveSuite] = useState(() => isRestrictedRole ? 'overview' : 'os-command');
 
-  const isRestrictedRole = role === ROLES.PARTICIPANT || role === ROLES.SUPPORT;
-  const isSuiteVisible = (suiteId) => {
-    if (isRestrictedRole) {
-      return suiteId === activeSuite || (activeSuite === 'os-command' && suiteId === 'os-command');
-    }
-    return activeSuite === suiteId || activeSuite === 'all';
-  };
+  useEffect(() => {
+    setActiveSuite((current) => isRestrictedRole ? 'overview' : current === 'overview' ? 'os-command' : current);
+  }, [isRestrictedRole]);
+
+  const availableSuites = isRestrictedRole
+    ? DASHBOARD_SUITES.filter((suite) => suite.id === 'overview')
+    : DASHBOARD_SUITES;
+  const isSuiteVisible = (suiteId) => isRestrictedRole
+    ? suiteId === 'overview' && activeSuite === 'overview'
+    : activeSuite === suiteId || activeSuite === 'all';
 
   return (
     <div className="bright-dashboard mx-auto w-full max-w-[1440px] px-4 py-4 sm:px-6 lg:px-8 space-y-5">
@@ -95,7 +99,7 @@ export default function Dashboard() {
       </section>
 
       <nav aria-label="Dashboard workspaces" className="grid grid-cols-2 gap-2 sm:grid-cols-4 xl:grid-cols-8">
-        {DASHBOARD_SUITES.map((suite) => {
+        {availableSuites.map((suite) => {
           const Icon = suite.icon;
           const active = activeSuite === suite.id;
           return (
