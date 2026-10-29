@@ -645,7 +645,7 @@ export default function OrganisationalOperatingSystemCommand() {
                   <span>AI Manager Briefing — Today’s Operational Priority</span>
                 </div>
                 <p className="mt-1 text-xs font-semibold text-[#0A2B6D]">
-                  Workforce and participant safeguards are operating at <strong className="text-[#5A00D6]">not calculated from verified evidence</strong>. Priority focus today: review <strong className="text-[#FF2E9A]">{counts.tasksOverdue} overdue task(s)</strong>, monitor <strong className="text-[#0072FF]">{counts.risksCritical} high/critical risk control(s)</strong>, and verify <strong className="text-[#5A00D6]">{counts.documentsExpiring} expiring staff credential(s)</strong> before the next roster publish.
+                  This overview reports record counts only. Confirm task owners, risk controls and credential status in their source modules before acting.
                 </p>
               </div>
             </div>
@@ -676,18 +676,18 @@ export default function OrganisationalOperatingSystemCommand() {
 
               <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
                 {[
-                  { title: 'Organisation Health', value: `$Not calculated Score`, route: '/dashboard' },
-                  { title: 'Compliance Readiness', value: '99.2% (356 / 356 Checkpoints)', route: '/compliance' },
-                  { title: 'Audit Readiness', value: '100% Evidence Mapped', route: '/auditor-portal' },
-                  { title: 'NDIS Readiness', value: 'Core + High Intensity Ready', route: '/ndis-portal' },
-                  { title: 'Aged Care Readiness', value: 'Standards 1–8 & SIRS Ready', route: '/compliance' },
-                  { title: 'Workforce Readiness', value: `${formatCount(counts.employees)} Staff · 100-Pt Verified`, route: '/our-employees' },
-                  { title: 'Governance Readiness', value: `${formatCount(counts.policiesTotal)} Policies · Safe Locked`, route: '/company-safe' },
-                  { title: 'Strategic Objectives', value: `${formatCount(counts.goalsTotal)} Active Objectives & KPIs`, route: '/projects' },
+                  { title: 'Organisation Health', value: 'Not calculated', route: '/dashboard' },
+                  { title: 'Compliance Readiness', value: 'Review evidence in Compliance Centre', route: '/compliance' },
+                  { title: 'Audit Readiness', value: 'Not calculated', route: '/auditor-portal' },
+                  { title: 'NDIS Provider Records', value: 'Review provider details', route: '/ndis-portal' },
+                  { title: 'Aged Care Readiness', value: 'Not calculated', route: '/compliance' },
+                  { title: 'Employee Profiles', value: `${formatCount(counts.employees)} records · status not assessed`, route: '/our-employees' },
+                  { title: 'Policy Records', value: `${formatCount(counts.policiesTotal)} records`, route: '/documents' },
+                  { title: 'Goal Records', value: `${formatCount(counts.goalsTotal)} records`, route: '/projects' },
                   { title: 'Enterprise Risks', value: `${formatCount(counts.risksTotal)} Risks (${formatCount(counts.risksCritical)} High/Critical)`, route: '/risks' },
-                  { title: 'Open Findings', value: `${formatCount(counts.qualityItems)} CAPA & Audit Actions`, route: '/quality' },
-                  { title: 'Open Incidents', value: `${formatCount(counts.incidentsOpen)} Active · Commission SLA`, route: '/incidents' },
-                  { title: 'Board Actions', value: 'Monthly Board Pack & Sign-Off Ready', route: '/compliance' },
+                  { title: 'Quality Records', value: `${formatCount(counts.qualityItems)} records`, route: '/quality' },
+                  { title: 'Unresolved Incident Records', value: `${formatCount(counts.incidentsOpen)} records`, route: '/incidents' },
+                  { title: 'Board Actions', value: 'Review actions in source modules', route: '/compliance' },
                 ].map((card) => (
                   <Link
                     key={card.title}
@@ -706,7 +706,7 @@ export default function OrganisationalOperatingSystemCommand() {
                   <span>Executive AI Briefing — Board &amp; CEO Assurance Summary</span>
                 </div>
                 <p className="mt-1 text-xs font-semibold text-[#0A2B6D]">
-                  ComplianceHR Infinity confirms full traceability across NDIS Practice Standards, Strengthened Aged Care Quality Standards, WHS, Privacy and Financial Governance. All master policies and audit packs are locked in Company Safe with zero unmapped regulatory obligations.
+                  This overview reports operational record counts only. Confirm task owners, risk controls, credential status and evidence in their source modules before making decisions.
                 </p>
               </div>
             </div>
@@ -775,16 +775,16 @@ export default function OrganisationalOperatingSystemCommand() {
               </div>
               <div className="flex flex-wrap gap-1.5">
                 {[
-                  `Missing Information (0)`,
-                  `Missing Evidence (0)`,
+                  `Missing Information (not assessed)`,
+                  `Missing Evidence (not assessed)`,
                   `Missing Reviews (Tracked)`,
-                  `Duplicate Records (0 Blocked)`,
-                  `Expired Training (Synced)`,
+                  `Duplicate Records (not assessed)`,
+                  `Training Expiry (not assessed)`,
                   `Expired Qualifications (${formatCount(counts.documentsExpiring)})`,
-                  `Expired Certifications (${formatCount(counts.documentsExpiring)})`,
-                  `Expired Policies (0)`,
-                  `Compliance Gaps (0)`,
-                  `Incomplete Assessments (0)`,
+                  `Employee Documents Marked Expiring/Expired (${formatCount(counts.documentsExpiring)})`,
+                  `Expired Policies (not assessed)`,
+                  `Compliance Gaps (not assessed)`,
+                  `Incomplete Assessments (not assessed)`,
                 ].map((dq) => (
                   <span
                     key={dq}
