@@ -31,6 +31,14 @@ import {
 } from 'lucide-react';
 
 const HEADINGS = {
+  [ROLES.GUEST]: {
+    title: 'Guest dashboard',
+    sub: 'Guest access is limited to help and system guides.',
+  },
+  [ROLES.VOLUNTEER]: {
+    title: 'Volunteer dashboard',
+    sub: 'Your volunteer workspace and placement records.',
+  },
   [ROLES.ADMIN]: {
     title: 'Business dashboard',
     sub: 'A clear view of organisational priorities, compliance, workforce and participant support.',
@@ -69,7 +77,7 @@ export default function Dashboard() {
   const heading = HEADINGS[role] || HEADINGS[ROLES.SUPPORT];
   const firstName = (user?.full_name || '').split(' ')[0];
   // Treat an unresolved role as restricted until the authenticated role is known.
-  const isRestrictedRole = !role || role === ROLES.PARTICIPANT || role === ROLES.SUPPORT;
+  const isRestrictedRole = !role || role === ROLES.PARTICIPANT || role === ROLES.SUPPORT || role === ROLES.GUEST || role === ROLES.VOLUNTEER;
   const [activeSuite, setActiveSuite] = useState(() => isRestrictedRole ? 'overview' : 'os-command');
 
   useEffect(() => {
@@ -137,7 +145,13 @@ export default function Dashboard() {
               <LiveDashboards />
             </ComplianceDashboardFrame>
           )}
-          {role === ROLES.PARTICIPANT ? (
+          {[ROLES.GUEST, ROLES.VOLUNTEER].includes(role) ? (
+            <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+              <h2 className="text-lg font-bold text-[#0A2B6D]">{role === ROLES.VOLUNTEER ? 'Your volunteer workspace' : 'Guest access'}</h2>
+              <p className="mt-1 text-sm text-slate-600">{role === ROLES.VOLUNTEER ? 'Open your placement details and volunteer records.' : 'This account can open the Help Centre and User Guides. Contact an administrator if you need a different role.'}</p>
+              {role === ROLES.VOLUNTEER && <a className="mt-4 inline-flex rounded-lg bg-[#0A2B6D] px-4 py-2 text-sm font-semibold text-white hover:bg-[#17408b]" href="/volunteers">Open volunteering records</a>}
+            </section>
+          ) : role === ROLES.PARTICIPANT ? (
             <ComplianceDashboardFrame>
               <ParticipantDashboard />
             </ComplianceDashboardFrame>
@@ -148,8 +162,8 @@ export default function Dashboard() {
           ) : (
             <AdminDashboard />
           )}
-          <DashboardQuickStart />
-          <AllModulesHub />
+          {! [ROLES.GUEST, ROLES.VOLUNTEER].includes(role) && <DashboardQuickStart />}
+          {! [ROLES.GUEST, ROLES.VOLUNTEER].includes(role) && <AllModulesHub />
         </div>
       )}
 
