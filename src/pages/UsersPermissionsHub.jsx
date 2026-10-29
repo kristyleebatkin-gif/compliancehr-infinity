@@ -49,7 +49,9 @@ export default function UsersPermissionsHub() {
         </div>
       </div>
 
-      <p className="px-1 text-[11px] text-muted-foreground">The matrix describes module visibility only; it does not confirm record-level or action-level controls.</p>\n\n      <div className="grid min-w-0 gap-2">
+      <p className="px-1 text-[11px] text-muted-foreground">The matrix describes module visibility only; it does not confirm record-level or action-level controls.</p>
+
+      <div className="grid min-w-0 gap-2">
         {/* Left side under the header: users and the permission matrix */}
         <div className="min-w-0 space-y-2">
           <div className="flex items-center gap-2 text-sm font-bold text-foreground/80">
