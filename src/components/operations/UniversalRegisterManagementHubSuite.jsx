@@ -219,15 +219,15 @@ export default function UniversalRegisterManagementHubSuite() {
   const [entryForm, setEntryForm] = useState({
     source_type: 'Shift Note',
     record_id: `REG-${Date.now().toString().slice(-6)}`,
-    subject: 'Daily Living Support, Goal Progress & Safe Medication Supervision',
-    summary: 'Participant completed morning community access goal, medication supervised safely, and environmental check verified.',
-    person: 'Alex Walker',
-    participant: 'Alex Walker',
-    employee: user?.full_name || 'Jordan Taylor',
+    subject: '',
+    summary: '',
+    person: '',
+    participant: '',
+    employee: user?.full_name || '',
     date: today,
     time: nowTime,
-    location: 'North Sydney Residence',
-    status: 'Verified & Indexed',
+    location: '',
+    status: 'Draft',
     category: 'Service Delivery & Clinical Evidence',
     owner: 'Service Delivery Manager',
     review_date: '2026-12-31',
@@ -249,14 +249,14 @@ export default function UniversalRegisterManagementHubSuite() {
   }, [entryForm, autoMatchedRegisters]);
 
   const [healthMetrics, setHealthMetrics] = useState({
-    totalRegisters: 45,
-    missingInfo: 0,
-    missingReviews: 0,
-    missingEvidence: 0,
-    missingOwners: 0,
-    missingSubjects: 0,
-    missingCategories: 0,
-    overdueReviews: 0,
+    totalRegisters: null,
+    missingInfo: null,
+    missingReviews: null,
+    missingEvidence: null,
+    missingOwners: null,
+    missingSubjects: null,
+    missingCategories: null,
+    overdueReviews: null,
   });
 
   const filteredRegisters = useMemo(() => {
@@ -275,7 +275,7 @@ export default function UniversalRegisterManagementHubSuite() {
     });
   }, [selectedGroup, searchQuery]);
 
-  // Execute Automatic Multi-Register Indexing & 8-Destination Sync
+  // Create index records and an audit log; suggested register links require review.
   const handleAutoIndexRecord = async () => {
     setSaving(true);
     try {
@@ -288,7 +288,7 @@ export default function UniversalRegisterManagementHubSuite() {
           status: 'Active',
           last_reviewed: entryForm.date,
           next_review: entryForm.review_date,
-          notes: `Record ID: ${entryForm.record_id} | Summary: ${entryForm.summary} | Participant: ${entryForm.participant} | Employee: ${entryForm.employee} | Location: ${entryForm.location} | Auto-Updated Registers (${autoMatchedRegisters.length}): ${registerListText}`,
+          notes: `Record ID: ${entryForm.record_id} | Summary: ${entryForm.summary} | Participant: ${entryForm.participant} | Employee: ${entryForm.employee} | Location: ${entryForm.location} | Suggested register links for review (${autoMatchedRegisters.length}): ${registerListText}`,
         }).catch(() => null),
         base44.entities.ChecklistDocument.create({
           title: `[Universal Register Index · ${entryForm.record_id}] ${entryForm.subject}`,
@@ -296,14 +296,14 @@ export default function UniversalRegisterManagementHubSuite() {
           status: 'Approved',
           uploaded_by: entryForm.employee,
           uploaded_date: entryForm.date,
-          notes: `13-Attribute Index Extracted & 5-Point Accuracy Validated. Updated Registers: ${registerListText}. Synced to Profiles, Modules, Document Hub, Vault, Company Safe & Executive Reporting.`,
+          notes: `Suggested register links for human review: ${registerListText}. This record does not verify accuracy or sync to other modules.`,
         }).catch(() => null),
         base44.functions
           .invoke('logUserAction', {
             action: 'Create',
             entity_type: 'UniversalRegisterEngine',
             record_title: `${entryForm.record_id} — ${entryForm.subject}`,
-            details: `Auto-updated ${autoMatchedRegisters.length} organisational registers: ${registerListText}`,
+            details: `Created a register index record with ${autoMatchedRegisters.length} suggested links for human review: ${registerListText}`,
             route: window.location.pathname,
           })
           .catch(() => null),
@@ -315,8 +315,8 @@ export default function UniversalRegisterManagementHubSuite() {
       }));
 
       toast({
-        title: `Auto-Updated ${autoMatchedRegisters.length} Organisational Registers!`,
-        description: `Indexed ${entryForm.record_id} across ${autoMatchedRegisters.slice(0, 4).join(', ')} and Document Hub.`,
+        title: 'Register index record created',
+        description: `Suggested links to ${autoMatchedRegisters.length} registers are saved for human review.`,
       });
     } finally {
       setSaving(false);
@@ -331,17 +331,17 @@ export default function UniversalRegisterManagementHubSuite() {
         base44.entities.Checklist.create({
           title: `${chk.title} (${today})`,
           category: 'Register-Generated Compliance Checklist',
-          status: 'Completed',
-          outcome: 'Compliant',
+          status: 'Pending',
+          outcome: 'Pending Review',
           reviewer: user?.full_name || chk.owner,
           review_date: today,
           approval_status: 'Approved',
           notes: `Auto-generated from ${chk.source}. Current Status: ${chk.status}.`,
           items: [
-            { text: `Verify all records in ${chk.source} have Subject, Category & Owner`, done: true },
-            { text: 'Confirm Participant & Employee profile links are intact', done: true },
-            { text: 'Confirm supporting evidence is filed in Document Vault & Company Safe', done: true },
-            { text: 'Confirm next review date is scheduled and escalated if overdue', done: true },
+            { text: `Verify all records in ${chk.source} have Subject, Category & Owner`, done: false },
+            { text: 'Confirm Participant & Employee profile links are intact', done: false },
+            { text: 'Confirm supporting evidence is filed in Document Vault & Company Safe', done: false },
+            { text: 'Confirm next review date is scheduled and escalated if overdue', done: false },
           ],
         }).catch(() => null),
         base44.entities.ChecklistDocument.create({
@@ -356,7 +356,7 @@ export default function UniversalRegisterManagementHubSuite() {
 
       toast({
         title: `${chk.title} Generated & Filed`,
-        description: `Saved to Checklists, Document Hub & Document Vault with 100% verified register links.`,
+        description: `Saved as a pending checklist for reviewer completion; controls are not marked verified.`,
       });
     } finally {
       setSaving(false);
