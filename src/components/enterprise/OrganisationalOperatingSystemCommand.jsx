@@ -222,22 +222,22 @@ export default function OrganisationalOperatingSystemCommand() {
 
   const overallOrgHealth = null;
 
-  // 14 Primary User Outcome Questions Answered in < 30 Seconds
+  // Record counts are shown as operational context; readiness is not scored here.
   const outcome14Questions = [
-    { q: '1. Are we compliant?', a: `YES — ${overallOrgHealth}% Org Health`, sub: 'NDIS, Aged Care, WHS & Privacy mapped', path: '/compliance', tone: '#0072FF' },
-    { q: '2. Are we safe?', a: counts.incidentsOpen === 0 ? 'YES — Zero Open Incidents' : `${formatCount(counts.incidentsOpen)} Active Incident(s)`, sub: 'Live WHS, roll call & safeguarding active', path: '/workforce-presence', tone: '#0A2B6D' },
-    { q: '3. Are we audit ready?', a: '99.2% Audit Ready', sub: '356 checkpoints & 1-click Audit Pack ready', path: '/auditor-portal', tone: '#5A00D6' },
-    { q: '4. Are participants protected?', a: `${formatCount(counts.participants)} Protected`, sub: '3-part consents, risk & support plans verified', path: '/our-participants', tone: '#FF2E9A' },
-    { q: '5. Are staff compliant?', a: `${formatCount(counts.employees)} Screened`, sub: '100-pt ID, NDIS screening, WWCC & First Aid', path: '/our-employees', tone: '#0072FF' },
-    { q: '6. What evidence supports compliance?', a: `${formatCount(counts.documentsTotal)} Vault Files`, sub: '5-point stamped in Vault & Company Safe', path: '/documents', tone: '#5A00D6' },
-    { q: '7. What risks require attention?', a: `${formatCount(counts.risksCritical)} High/Critical`, sub: `Out of ${formatCount(counts.risksTotal)} tracked in 5×5 matrix`, path: '/risks?rating=high-critical', tone: '#FF2E9A' },
-    { q: '8. What incidents require action?', a: `${formatCount(counts.incidentsOpen)} Open`, sub: '24h / 5d NDIS & SIRS timers monitored', path: '/incidents', tone: '#0A2B6D' },
-    { q: '9. What reviews are overdue?', a: 'Tracked Live', sub: '10-weekly participant & 3/6-month staff reviews', path: '/review-due', tone: '#0072FF' },
-    { q: '10. What actions are overdue?', a: `${formatCount(counts.tasksOverdue)} Overdue`, sub: `${formatCount(counts.tasksOpen)} open tasks across all modules`, path: '/tasks', tone: '#FF2E9A' },
-    { q: '11. What training is overdue?', a: 'Matrix Synced', sub: `${formatCount(counts.trainingTotal)} LMS courses & competency checks`, path: '/training', tone: '#5A00D6' },
-    { q: '12. What qualifications are expiring?', a: `${formatCount(counts.documentsExpiring)} Flagged`, sub: '90 / 60 / 30 / 14-day renewal radar active', path: '/documents', tone: '#0A2B6D' },
-    { q: '13. What standards have gaps?', a: '0 Unmapped', sub: 'All NDIS & Aged Care standards evidenced', path: '/compliance', tone: '#0072FF' },
-    { q: '14. What should happen next?', a: 'Prioritised Below', sub: 'AI Copilot & Data Quality actions ready', path: '/operations-centre', tone: '#5A00D6' },
+    { q: '1. Compliance status', a: 'Evidence review required', sub: 'This screen does not calculate an overall compliance result.', path: '/compliance', tone: '#0072FF' },
+    { q: '2. Open incidents', a: `${formatCount(counts.incidentsOpen)} open`, sub: 'Record count only; reportable deadlines are not evaluated here.', path: '/incidents', tone: '#0A2B6D' },
+    { q: '3. Audit readiness', a: 'Not calculated', sub: 'Review audit evidence and actions in the Auditor Portal.', path: '/auditor-portal', tone: '#5A00D6' },
+    { q: '4. Participant records', a: `${formatCount(counts.participants)} records`, sub: 'Profile count only; care and consent status are not evaluated here.', path: '/our-participants', tone: '#FF2E9A' },
+    { q: '5. Employee records', a: `${formatCount(counts.employees)} records`, sub: 'Profile count only; screening status is not evaluated here.', path: '/our-employees', tone: '#0072FF' },
+    { q: '6. Employee document records', a: `${formatCount(counts.documentsTotal)} records`, sub: 'Employee document count only.', path: '/documents', tone: '#5A00D6' },
+    { q: '7. High or critical risks', a: `${formatCount(counts.risksCritical)} records`, sub: `${formatCount(counts.risksTotal)} total risk records.`, path: '/risks', tone: '#FF2E9A' },
+    { q: '8. Incident follow-up', a: 'Review incident records', sub: 'Notification deadlines are managed in the Incident module.', path: '/incidents', tone: '#0A2B6D' },
+    { q: '9. Reviews due', a: 'Open Review Due Board', sub: 'Review schedules and statuses are maintained there.', path: '/review-due', tone: '#0072FF' },
+    { q: '10. Overdue tasks', a: `${formatCount(counts.tasksOverdue)} records`, sub: `${formatCount(counts.tasksOpen)} tasks not marked complete or cancelled.`, path: '/tasks', tone: '#FF2E9A' },
+    { q: '11. Training records', a: `${formatCount(counts.trainingTotal)} modules`, sub: 'Module count only; overdue training is not calculated here.', path: '/training', tone: '#5A00D6' },
+    { q: '12. Employee documents due', a: `${formatCount(counts.documentsExpiring)} records`, sub: 'Count of employee documents marked Expiring Soon or Expired.', path: '/documents', tone: '#0A2B6D' },
+    { q: '13. Standards mapping', a: 'Review in Compliance Centre', sub: 'This screen does not calculate unmapped standards.', path: '/compliance', tone: '#0072FF' },
+    { q: '14. Next step', a: 'Review items in their module', sub: 'Use linked registers to confirm owners, status and evidence.', path: '/operations-centre', tone: '#5A00D6' },
   ];
 
   const runDataQualityRemediation = async () => {
