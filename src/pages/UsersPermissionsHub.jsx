@@ -12,7 +12,7 @@ export default function UsersPermissionsHub() {
       <ModuleShell
         icon={Users}
         title="Users & Permissions Hub"
-        subtitle="Manage app users, 7 Core Roles + Custom Roles, View/Edit/Submit/Approve separation of duties, and per-module permissions."
+        subtitle="Manage app users, access approvals, and module visibility for the 8 roles defined in the app."
         moduleKey="users"
       />
 
@@ -20,26 +20,26 @@ export default function UsersPermissionsHub() {
         <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
           <div>
             <h3 className="text-xs font-black uppercase tracking-wider text-sky-950">
-              Section 3 — 7 Core User Roles &amp; Custom Role Separation of Duties
+              Defined app roles and module visibility
             </h3>
             <p className="text-[10px] font-semibold text-sky-800">
-              Enforces separation between View, Edit, Submit, and Approve across all 45 operational modules
+              The matrix shows which modules each defined role can open.
             </p>
           </div>
           <span className="rounded-full bg-[#0284c7] px-2.5 py-0.5 text-[10px] font-black text-white">
-            7 Core Roles + Custom Roles Active
+            8 Defined Roles
           </span>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-1.5">
+        <div className="grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-8 gap-1.5">
           {[
-            ['Guest', 'Public & Portal Preview', '#6366f1'],
-            ['Participant', 'Own Plan, Goals & Consents', '#e11d48'],
-            ['Employee', 'Roster, Shift Notes & HR', '#2563eb'],
-            ['Administration', 'Operational Registers', '#0891b2'],
-            ['Compliance Administrator', '356 Checkpoints & 98 Docs', '#6d28d9'],
-            ['Provider Administrator', 'Full Executive & Safe Control', '#db2777'],
-            ['Auditor', 'Read-Only Consented Evidence', '#1d4ed8'],
-            ['Custom Roles', 'HR / Finance / Quality / Intake', '#0d9488'],
+            ['Guest', 'Guest access', '#6366f1'],
+            ['Participant', 'Participant workspace', '#e11d48'],
+            ['Employee', 'Employee workspace', '#2563eb'],
+            ['Administration', 'Operations access', '#0891b2'],
+            ['Compliance Administrator', 'Compliance access', '#6d28d9'],
+            ['Provider Administrator', 'Provider administration', '#db2777'],
+            ['Management', 'Management access', '#0d9488'],
+            ['Auditor', 'Auditor access', '#1d4ed8'],
           ].map(([roleName, desc, hex]) => (
             <div key={roleName} className="rounded-lg border bg-white p-1.5" style={{ borderColor: `${hex}66`, borderTopWidth: '3px', borderTopColor: hex }}>
               <div className="text-[10px] font-black" style={{ color: hex }}>{roleName}</div>
@@ -49,7 +49,7 @@ export default function UsersPermissionsHub() {
         </div>
       </div>
 
-      <div className="grid min-w-0 gap-2">
+      <p className="px-1 text-[11px] text-muted-foreground">The matrix describes module visibility only; it does not confirm record-level or action-level controls.</p>\n\n      <div className="grid min-w-0 gap-2">
         {/* Left side under the header: users and the permission matrix */}
         <div className="min-w-0 space-y-2">
           <div className="flex items-center gap-2 text-sm font-bold text-foreground/80">
