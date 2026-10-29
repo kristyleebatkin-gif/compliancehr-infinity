@@ -28,29 +28,8 @@ export const ALL_ROLES = [
   'Management',
   'Auditor',
 ];
-// Open-access window: allows any visitor or user full access to browse the app.
-const OPEN_ACCESS_DURATION_MS = 365 * 24 * 60 * 60 * 1000;
-const OPEN_ACCESS_STORAGE_KEY = 'chr_open_access_window_start_v5';
-// Extended cutoff so ongoing testing, browsing and verification remains uninterrupted
-const OPEN_ACCESS_ABSOLUTE_UNTIL_MS = Date.parse('2027-12-31T23:59:59Z');
-
+// No global access bypass. App access must flow through authentication and role checks.
 export function isOpenAccessWindowActive() {
-  const now = Date.now();
-  if (now <= OPEN_ACCESS_ABSOLUTE_UNTIL_MS) {
-    try {
-      if (typeof window !== 'undefined' && window.localStorage) {
-        let start = Number(window.localStorage.getItem(OPEN_ACCESS_STORAGE_KEY));
-        if (!start || Number.isNaN(start)) {
-          start = now;
-          window.localStorage.setItem(OPEN_ACCESS_STORAGE_KEY, String(start));
-        }
-        return now - start <= OPEN_ACCESS_DURATION_MS;
-      }
-    } catch {
-      return true;
-    }
-    return true;
-  }
   return false;
 }
 
