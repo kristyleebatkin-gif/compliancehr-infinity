@@ -50,18 +50,7 @@ const MINI_RISK_CONTROL_DATA = [
 ];
 
 export default function BusinessHealthComplianceIntelligenceDashboard({ compact = false }) {
-  const [liveCounts, setLiveCounts] = useState({
-    staff: 24,
-    participants: 38,
-    policies: 42,
-    openTasks: 6,
-    completedTasks: 148,
-    incidents: 2,
-    risks: 14,
-    certificates: 64,
-    drills: 8,
-    audits: 12,
-  });
+  const [liveCounts, setLiveCounts] = useState({ staff: null, participants: null, policies: null, openTasks: null, completedTasks: null, incidents: null, risks: null, certificates: null, drills: null, audits: null });
   const [selectedDomainId, setSelectedDomainId] = useState('governance');
   const [horizonFilter, setHorizonFilter] = useState('ALL');
   const [refreshing, setRefreshing] = useState(false);
@@ -114,22 +103,13 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
         base44.entities.InternalAudit.count({}),
       ]);
 
-      const val = (idx, fallback) =>
-        results[idx]?.status === 'fulfilled' && typeof results[idx].value === 'number' && results[idx].value > 0
+      const val = (idx) =>
+        results[idx]?.status === 'fulfilled' && typeof results[idx].value === 'number'
           ? results[idx].value
-          : fallback;
+          : null;
 
       setLiveCounts({
-        staff: val(0, 24),
-        participants: val(1, 38),
-        policies: val(2, 42),
-        openTasks: val(3, 6),
-        completedTasks: val(4, 148),
-        incidents: val(5, 2),
-        risks: val(6, 14),
-        certificates: val(7, 64),
-        drills: val(8, 8),
-        audits: val(9, 12),
+        staff: val(0), participants: val(1), policies: val(2), openTasks: val(3), completedTasks: val(4), incidents: val(5), risks: val(6), certificates: val(7), drills: val(8), audits: val(9),
       });
     } catch {
       // Keep default executive benchmarks if guest/unauthenticated
@@ -384,7 +364,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
   const selectedDomain =
     intelligenceDomains.find((d) => d.id === selectedDomainId) || intelligenceDomains[0];
 
-  const overallScore = 98.7;
+  const overallScore = null;
 
   const topKpis = [
     {
@@ -525,7 +505,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
               </div>
               <Activity className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
               <span className="truncate text-[8.5px] sm:text-[10px] font-extrabold tracking-wide text-white" style={{ color: '#FFFFFF' }}>
-                Live Executive Command · SYS READY · 98.7% Overall Business Health &amp; Verified 2026 NDIS Audit Readiness
+                Live Executive Command · Operational records and review links
               </span>
               <div className="flex shrink-0 items-center justify-center gap-1">
                 {[0, 1, 2].map((bulb) => (
@@ -1272,7 +1252,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
               </div>
 
               <div className="rounded-[6px] bg-white px-2 py-0.5 text-center text-[8px] font-extrabold text-[#0A2B6D] whitespace-nowrap">
-                Audit Readiness (%) &amp; Monthly NDIS Billing ($K) · 98.7% Peak
+                Historical Readiness and Billing Trend · No verified trend data available
               </div>
 
               <div className="h-24 w-full rounded-[6px] bg-white p-1">
