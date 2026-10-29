@@ -207,22 +207,20 @@ export default function OrganisationalOperatingSystemCommand() {
     loadLiveOSMetrics();
   }, [loadLiveOSMetrics]);
 
-  // 9 Calculated Organisation Health Pillars
+  // Operational record counts only; this screen does not calculate compliance or readiness scores.
   const healthPillars = [
-    { label: 'Workforce Health', score: counts.documentsExpiring === 0 ? 99 : 94, detail: `${counts.employees} Staff · Screening & Leave Synced`, path: '/our-employees' },
-    { label: 'Participant Health', score: 99, detail: `${counts.participants} Participants · Plans & Consents Active`, path: '/our-participants' },
-    { label: 'Compliance Health', score: 99, detail: `${counts.policiesTotal} Controlled Policies · 356 Checkpoints`, path: '/compliance' },
-    { label: 'Audit Health', score: 100, detail: `${counts.auditsTotal} Audits · Live Auditor Portal Ready`, path: '/auditor-portal' },
-    { label: 'Governance Health', score: 99, detail: '98 Master Docs · Board & Delegated Authority', path: '/company-safe' },
-    { label: 'Quality Health', score: 98, detail: `${counts.qualityItems} CAPA & Continuous Improvements`, path: '/quality' },
-    { label: 'Training Health', score: 97, detail: `${counts.trainingTotal} Modules · Skills Matrix & LMS`, path: '/training' },
-    { label: 'Safety Health', score: counts.incidentsOpen === 0 ? 100 : 95, detail: `${counts.incidentsOpen} Open Incidents · WHS & Drills`, path: '/incidents' },
-    { label: 'Risk Health', score: counts.risksCritical === 0 ? 99 : 93, detail: `${counts.risksTotal} Risks (${counts.risksCritical} High/Critical)`, path: '/risks' },
+    { label: 'Employee records', detail: `${formatCount(counts.employees)} records in Employee Profiles`, path: '/our-employees' },
+    { label: 'Participant records', detail: `${formatCount(counts.participants)} records in Participant Profiles`, path: '/our-participants' },
+    { label: 'Controlled policies', detail: `${formatCount(counts.policiesTotal)} policy records`, path: '/documents' },
+    { label: 'Internal audits', detail: `${formatCount(counts.auditsTotal)} audit records`, path: '/compliance' },
+    { label: 'Quality items', detail: `${formatCount(counts.qualityItems)} improvement records`, path: '/quality' },
+    { label: 'Training modules', detail: `${formatCount(counts.trainingTotal)} training records`, path: '/training' },
+    { label: 'Open incidents', detail: `${formatCount(counts.incidentsOpen)} incident records`, path: '/incidents' },
+    { label: 'Risk records', detail: `${formatCount(counts.risksTotal)} total · ${formatCount(counts.risksCritical)} high/critical`, path: '/risks' },
+    { label: 'Open tasks', detail: `${formatCount(counts.tasksOpen)} total · ${formatCount(counts.tasksOverdue)} overdue`, path: '/tasks' },
   ];
 
-  const overallOrgHealth = Math.round(
-    healthPillars.reduce((acc, p) => acc + p.score, 0) / healthPillars.length
-  );
+  const overallOrgHealth = null;
 
   // 14 Primary User Outcome Questions Answered in < 30 Seconds
   const outcome14Questions = [
