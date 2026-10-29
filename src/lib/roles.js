@@ -27,6 +27,7 @@ export const ALL_ROLES = [
   'Provider Administrator',
   'Management',
   'Auditor',
+  'Volunteer',
 ];
 // No global access bypass. App access must flow through authentication and role checks.
 export function isOpenAccessWindowActive() {
@@ -35,13 +36,13 @@ export function isOpenAccessWindowActive() {
 
 const FULL_ACCESS = ['admin', ROLES.ADMIN, ROLES.COMPLIANCE_ADMIN, ROLES.MANAGEMENT];
 const OPERATIONS = [...FULL_ACCESS, ROLES.TEAM_LEADER];
-const PERSONAL = [...OPERATIONS, ROLES.EMPLOYEE, ROLES.PARTICIPANT, ROLES.GUEST];
+const PERSONAL = [...OPERATIONS, ROLES.EMPLOYEE, ROLES.PARTICIPANT];
 const FINANCIAL_KEYS = ['invoicing', 'quotes', 'receipts', 'insurance-finance', 'procurement', 'analytics', 'my-payroll'];
 export function normalizeRole(role) {
   if (role === 'admin') return ROLES.ADMIN;
   if (role === 'Compliance Manager' || role === 'Compliance Administrator') return ROLES.COMPLIANCE_ADMIN;
   if (role === 'Team Leader') return ROLES.TEAM_LEADER;
-  if (['user', 'Support Worker', ROLES.FINANCE, ROLES.HR, ROLES.ROSTERING, ROLES.QUALITY, ROLES.MARKETING, ROLES.INTAKE, ROLES.VOLUNTEER].includes(role)) return ROLES.EMPLOYEE;
+  if (['user', 'Support Worker', ROLES.FINANCE, ROLES.HR, ROLES.ROSTERING, ROLES.QUALITY, ROLES.MARKETING, ROLES.INTAKE].includes(role)) return ROLES.EMPLOYEE;
   if (!role && isOpenAccessWindowActive()) return ROLES.ADMIN;
   return role || ROLES.PENDING_APPROVAL;
 }
@@ -49,11 +50,11 @@ export function hasApprovedAccess(user) {
   if (isOpenAccessWindowActive()) return true;
   if (!user || ['Rejected', 'Archived', 'Suspended'].includes(user.account_status)) return false;
   if (['admin', ROLES.ADMIN].includes(user.role)) return true;
-  return user.access_approved === true && user.account_status === 'Active' && ALL_ROLES.includes(user.role);
+  return user.access_approved === true && user.account_status === 'Active' && ALL_ROLES.includes(normalizeRole(user.role));
 }
 export const NAV_PERMISSIONS = {
   'my-profile': PERSONAL, 'our-staff': [...OPERATIONS, ROLES.EMPLOYEE], 'our-participants': [...OPERATIONS, ROLES.PARTICIPANT],
-  dashboard: PERSONAL, 'operations-centre': OPERATIONS, notifications: PERSONAL, assistant: PERSONAL, help: PERSONAL, 'user-guides': PERSONAL,
+  dashboard: [...PERSONAL, ROLES.GUEST, ROLES.VOLUNTEER], 'operations-centre': OPERATIONS, notifications: PERSONAL, assistant: PERSONAL, help: [...PERSONAL, ROLES.GUEST, ROLES.VOLUNTEER], 'user-guides': [...PERSONAL, ROLES.GUEST, ROLES.VOLUNTEER],
   'key-contacts': PERSONAL, 'community-council': PERSONAL, 'community-referral': PERSONAL, 'ndis-news': PERSONAL,
   programs: PERSONAL, events: PERSONAL, 'whats-on': PERSONAL, weather: PERSONAL, 'visual-boards': PERSONAL,
   participants: OPERATIONS, intake: PERSONAL, staff: OPERATIONS, training: PERSONAL, compliance: OPERATIONS,
@@ -65,7 +66,7 @@ export const NAV_PERMISSIONS = {
   'human-resources': PERSONAL, invoicing: FULL_ACCESS, quotes: FULL_ACCESS, manual: PERSONAL, users: FULL_ACCESS,
   forms: OPERATIONS, checklists: OPERATIONS, registers: PERSONAL, 'user-success': PERSONAL, 'record-intelligence': PERSONAL, 'frontline-hub': PERSONAL, 'workforce-presence': PERSONAL, 'emergency-response': PERSONAL, meetings: OPERATIONS,
   'data-control': FULL_ACCESS, receipts: [...FULL_ACCESS, ROLES.EMPLOYEE], 'equipment-manuals': PERSONAL, msds: PERSONAL,
-  'insurance-finance': FULL_ACCESS, 'ndis-provider': OPERATIONS, 'volunteering-placements': OPERATIONS,
+  'insurance-finance': FULL_ACCESS, 'ndis-provider': OPERATIONS, 'volunteering-placements': [...OPERATIONS, ROLES.VOLUNTEER],
   communications: PERSONAL, portal: PERSONAL, 'safety-insights': OPERATIONS, 'incident-analytics': OPERATIONS,
   'staff-progress': OPERATIONS, analytics: FULL_ACCESS, crm: OPERATIONS, procurement: FULL_ACCESS,
   projects: OPERATIONS, 'my-payroll': FULL_ACCESS,
