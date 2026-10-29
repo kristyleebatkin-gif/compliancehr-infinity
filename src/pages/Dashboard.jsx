@@ -162,8 +162,8 @@ export default function Dashboard() {
           ) : (
             <AdminDashboard />
           )}
-          {! [ROLES.GUEST, ROLES.VOLUNTEER].includes(role) && <DashboardQuickStart />}
-          {! [ROLES.GUEST, ROLES.VOLUNTEER].includes(role) && <AllModulesHub />
+          {!([ROLES.GUEST, ROLES.VOLUNTEER].includes(role)) && <DashboardQuickStart />}
+          {!([ROLES.GUEST, ROLES.VOLUNTEER].includes(role)) && <AllModulesHub />}
         </div>
       )}
 
