@@ -1,0 +1,226 @@
+{
+  "name": "AuthorityDeclaration",
+  "type": "object",
+  "properties": {
+    "declaration_type": {
+      "type": "string",
+      "enum": [
+        "Delegation of Authority",
+        "Conflict of Interest",
+        "Child Safety Declaration",
+        "Governance Declaration"
+      ],
+      "default": "Delegation of Authority",
+      "title": "Register Type"
+    },
+    "person_name": {
+      "type": "string",
+      "title": "Person Name"
+    },
+    "role_title": {
+      "type": "string",
+      "title": "Role"
+    },
+    "person_type": {
+      "type": "string",
+      "enum": [
+        "Director",
+        "Key Personnel",
+        "Employee",
+        "Contractor"
+      ],
+      "default": "Key Personnel",
+      "title": "Person Type"
+    },
+    "authority": {
+      "type": "string",
+      "title": "Authority Delegated"
+    },
+    "financial_limit": {
+      "type": "number",
+      "title": "Financial Limit ($)"
+    },
+    "governance_limit": {
+      "type": "string",
+      "title": "Governance Limit"
+    },
+    "effective_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Effective Date"
+    },
+    "review_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Review Date"
+    },
+    "conflict_details": {
+      "type": "string",
+      "title": "Declaration / Conflict Details"
+    },
+    "management_plan": {
+      "type": "string",
+      "title": "Management Plan"
+    },
+    "related_register": {
+      "type": "string",
+      "title": "Related Register"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Declared",
+        "Under Review",
+        "Managed",
+        "Closed",
+        "Expired"
+      ],
+      "default": "Declared",
+      "title": "Status"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    },
+    "audit_consent": {
+      "type": "string",
+      "enum": [
+        "Audit consent received",
+        "Audit declined"
+      ],
+      "default": "Audit consent received",
+      "title": "Auditor Visibility Consent",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "declaration_type",
+    "person_name"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Management"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Human Resources Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Quality & Improvement Manager"
+          }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            },
+            {
+              "data.audit_consent": "Audit consent received"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        }
+      ]
+    }
+  }
+}

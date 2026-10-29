@@ -150,3 +150,211 @@ export const AUDIT_PACK_COLUMNS = [
   { key: 'status', label: 'Status' },
   { key: 'created', label: 'Recorded' },
 ];
+
+// Controlled document categories used by the Document Control Register.
+export const DOCUMENT_CATEGORIES = [
+  'Governance', 'Policy', 'Procedure', 'Clinical', 'Human Resources', 'WHS',
+  'Child Safety', 'Quality', 'Risk', 'Finance', 'IT & Cyber', 'Contracts',
+  'Training', 'Operations',
+];
+
+export const DOCUMENT_STATUSES = ['Draft', 'Review', 'Approved', 'Archived', 'Superseded'];
+
+export const DECLARATION_TYPES = [
+  'Delegation of Authority',
+  'Conflict of Interest',
+  'Child Safety Declaration',
+  'Governance Declaration',
+];
+
+// NDIS Practice Standards → the modules, registers and evidence that prove each one.
+export const NDIS_PRACTICE_STANDARDS = [
+  {
+    key: 'Rights & Responsibilities',
+    modules: ['/compliance', '/documents'],
+    sources: [
+      { label: 'Rights policies', entity: 'Policy', query: { category: 'Rights & Responsibilities' } },
+      { label: 'Information sharing consents', entity: 'InformationSharingConsent', query: {} },
+      { label: 'Complaints', entity: 'Complaint', query: {} },
+    ],
+  },
+  {
+    key: 'Provider Governance',
+    modules: ['/governance', '/projects'],
+    sources: [
+      { label: 'Governance policies', entity: 'Policy', query: { category: 'Governance' } },
+      { label: 'Controlled documents', entity: 'DocumentControl', query: {} },
+      { label: 'Governance controls', entity: 'GovernanceControlRecord', query: {} },
+    ],
+  },
+  {
+    key: 'Operational Management',
+    modules: ['/registers', '/compliance'],
+    sources: [
+      { label: 'Master register entries', entity: 'Register', query: {} },
+      { label: 'Governance objects', entity: 'GovernanceObject', query: {} },
+      { label: 'Staff credentials', entity: 'EmployeeDocument', query: {} },
+    ],
+  },
+  {
+    key: 'Provision of Supports',
+    modules: ['/our-participants', '/goals'],
+    sources: [
+      { label: 'Participant documents', entity: 'ParticipantDocument', query: {} },
+      { label: 'Goals', entity: 'Goal', query: {} },
+      { label: 'Shift notes', entity: 'CommunicationEntry', query: { entry_kind: 'Shift Note' } },
+    ],
+  },
+  {
+    key: 'Support Provision Environment',
+    modules: ['/risks', '/emergency-response'],
+    sources: [
+      { label: 'Risks', entity: 'Risk', query: {} },
+      { label: 'Incidents', entity: 'Incident', query: {} },
+      { label: 'Emergency drills', entity: 'EmergencyDrill', query: {} },
+    ],
+  },
+  {
+    key: 'Support Planning',
+    modules: ['/our-participants', '/goals'],
+    sources: [
+      { label: 'Support plans', entity: 'ParticipantDocument', query: { document_type: 'Participant Support Plan' } },
+      { label: 'Participant goals', entity: 'Goal', query: {} },
+      { label: 'Participant reviews', entity: 'ParticipantReview', query: {} },
+    ],
+  },
+  {
+    key: 'Human Resource Management',
+    modules: ['/our-employees', '/hr', '/training'],
+    sources: [
+      { label: 'Staff profiles', entity: 'StaffProfile', query: {} },
+      { label: 'Training completions', entity: 'TrainingCompletion', query: {} },
+      { label: 'Employee consents', entity: 'EmployeeConsent', query: {} },
+    ],
+  },
+  {
+    key: 'Incident Management',
+    modules: ['/incidents', '/incident-analytics'],
+    sources: [
+      { label: 'Incidents', entity: 'Incident', query: {} },
+      { label: 'Investigations', entity: 'Investigation', query: {} },
+      { label: 'Corrective actions', entity: 'AuditAction', query: {} },
+    ],
+  },
+  {
+    key: 'Feedback & Complaints',
+    modules: ['/feedback'],
+    sources: [
+      { label: 'Feedback', entity: 'Feedback', query: {} },
+      { label: 'Complaints', entity: 'Complaint', query: {} },
+      { label: 'Surveys', entity: 'SatisfactionSurvey', query: {} },
+    ],
+  },
+  {
+    key: 'Information Management',
+    modules: ['/documents', '/governance'],
+    sources: [
+      { label: 'Controlled documents', entity: 'DocumentControl', query: {} },
+      { label: 'Acknowledgements', entity: 'DocumentAcknowledgement', query: {} },
+      { label: 'Data breaches', entity: 'DataBreach', query: {} },
+    ],
+  },
+  {
+    key: 'Risk Management',
+    modules: ['/risks'],
+    sources: [
+      { label: 'Risk reports', entity: 'Risk', query: {} },
+      { label: 'Governance controls', entity: 'GovernanceControlRecord', query: {} },
+      { label: 'Internal audits', entity: 'InternalAudit', query: {} },
+    ],
+  },
+  {
+    key: 'Emergency & Disaster Management',
+    modules: ['/emergency-response'],
+    sources: [
+      { label: 'Emergency plans', entity: 'EmergencyDocument', query: {} },
+      { label: 'Emergency drills', entity: 'EmergencyDrill', query: {} },
+      { label: 'Safety checks', entity: 'SafetyCheck', query: {} },
+    ],
+  },
+  {
+    key: 'Restrictive Practices',
+    modules: ['/our-participants', '/incidents'],
+    sources: [
+      { label: 'Restrictive practice records', entity: 'ParticipantSafeguardRecord', query: { record_type: 'Restrictive Practice' } },
+      { label: 'Restrictive practice plans', entity: 'ParticipantDocument', query: { document_type: 'Restrictive Practices Record' } },
+      { label: 'Related incidents', entity: 'Incident', query: { category: 'Other' } },
+    ],
+  },
+  {
+    key: 'High Intensity Supports',
+    modules: ['/our-participants', '/training'],
+    sources: [
+      { label: 'Medication administration records', entity: 'ParticipantSafeguardRecord', query: { record_type: 'Medication Administration' } },
+      { label: 'Medication consents', entity: 'ParticipantDocument', query: { document_type: 'Medication Consent' } },
+      { label: 'Training completions', entity: 'TrainingCompletion', query: {} },
+    ],
+  },
+  {
+    key: 'Specialist Support Coordination',
+    modules: ['/our-participants', '/meetings'],
+    sources: [
+      { label: 'Participant profiles', entity: 'ParticipantProfile', query: {} },
+      { label: 'Progress notes', entity: 'CommunicationEntry', query: { entry_kind: 'Shift Note' } },
+      { label: 'Meetings', entity: 'Meeting', query: {} },
+    ],
+  },
+];
+
+// Evidence Mapping Engine — the two chains every audit follows.
+export const EVIDENCE_CHAINS = [
+  {
+    key: 'participant',
+    title: 'Participant Evidence Chain',
+    steps: [
+      { label: 'Participant', entity: 'ParticipantProfile', query: {} },
+      { label: 'Support Plan', entity: 'ParticipantDocument', query: { document_type: 'Participant Support Plan' } },
+      { label: 'Goal', entity: 'Goal', query: {} },
+      { label: 'Progress Note', entity: 'CommunicationEntry', query: { entry_kind: 'Shift Note' } },
+      { label: 'Outcome', entity: 'GoalProgressNote', query: {} },
+      { label: 'Evidence', entity: 'DocumentAcknowledgement', query: {} },
+      { label: 'Audit', entity: 'AuditEvidenceFile', query: {} },
+    ],
+  },
+  {
+    key: 'staff',
+    title: 'Staff Evidence Chain',
+    steps: [
+      { label: 'Staff', entity: 'StaffProfile', query: {} },
+      { label: 'Training', entity: 'TrainingCompletion', query: {} },
+      { label: 'Competency', entity: 'Certificate', query: {} },
+      { label: 'Roster', entity: 'Shift', query: {} },
+      { label: 'Participant Support', entity: 'CommunicationEntry', query: { entry_kind: 'Shift Note' } },
+      { label: 'Evidence', entity: 'EmployeeDocument', query: {} },
+      { label: 'Audit', entity: 'AuditEvidenceFile', query: {} },
+    ],
+  },
+];
+
+// Enterprise assurance areas — each one backed by its real register or controlled document.
+export const ASSURANCE_AREAS = [
+  { key: 'Document Control', standard: 'Provider Governance', entity: 'DocumentControl', query: {}, path: '/governance', tab: 'document-control', blurb: 'Version control, approval and review of every controlled document.' },
+  { key: 'Delegations of Authority', standard: 'Provider Governance', entity: 'AuthorityDeclaration', query: { declaration_type: 'Delegation of Authority' }, path: '/governance', tab: 'delegations', blurb: 'Who may approve, sign, close and accept on the provider’s behalf.' },
+  { key: 'Conflict of Interest', standard: 'Provider Governance', entity: 'AuthorityDeclaration', query: { declaration_type: 'Conflict of Interest' }, path: '/governance', tab: 'delegations', blurb: 'Declarations, management plans and reviews for directors and key personnel.' },
+  { key: 'Participant Safeguarding', standard: 'Rights & Responsibilities', entity: 'Incident', query: { category: 'Abuse/Neglect' }, path: '/incidents', blurb: 'Abuse, neglect and exploitation allegations and human rights concerns.' },
+  { key: 'Child Safety', standard: 'Rights & Responsibilities', entity: 'DocumentControl', query: { document_category: 'Child Safety' }, path: '/governance', tab: 'document-control', blurb: 'Child safety policy, code of conduct and child safe risk assessments.' },
+  { key: 'Restrictive Practices', standard: 'Restrictive Practices', entity: 'ParticipantSafeguardRecord', query: { record_type: 'Restrictive Practice' }, path: '/our-participants', blurb: 'Type, authorisation, practitioner, review dates and reduction strategy.' },
+  { key: 'Clinical Governance', standard: 'High Intensity Supports', entity: 'ParticipantSafeguardRecord', query: { record_type: 'Medication Administration' }, path: '/our-participants', blurb: 'Clinical risks, medication, high intensity supports and clinical reviews.' },
+  { key: 'Business Continuity & Recovery', standard: 'Emergency & Disaster Management', entity: 'EmergencyDocument', query: {}, path: '/emergency-response', blurb: 'Continuity, disaster recovery, cyber response and outage procedures.' },
+  { key: 'Cyber Security', standard: 'Information Management', entity: 'DataBreach', query: {}, path: '/documents', blurb: 'Data breaches, cyber incidents and access audit trails.' },
+  { key: 'Contractor Management', standard: 'Human Resource Management', entity: 'VisitorLog', query: { attendance_type: 'Contractor' }, path: '/workforce-presence', blurb: 'Contractor checks, qualifications, insurance and expiry monitoring.' },
+  { key: 'Insurance', standard: 'Provider Governance', entity: 'InsurancePolicy', query: {}, path: '/quotes', blurb: 'Public liability, professional indemnity, workers compensation, vehicle and cyber.' },
+  { key: 'Asset & Equipment Compliance', standard: 'Support Provision Environment', entity: 'AssetMaintenance', query: {}, path: '/assets', blurb: 'Test and tag, maintenance, calibration, servicing and safety checks.' },
+  { key: 'Continuous Improvement', standard: 'Feedback & Complaints', entity: 'ImprovementAction', query: {}, path: '/quality', blurb: 'Complaint, incident, audit or feedback → action → review → effectiveness → closed.' },
+  { key: 'Board & Governance', standard: 'Provider Governance', entity: 'GovernanceControlRecord', query: {}, path: '/projects', blurb: 'Board meetings, governance decisions, strategic plan and risk appetite.' },
+  { key: 'Vendor & Supplier Management', standard: 'Operational Management', entity: 'Supplier', query: {}, path: '/procurement', blurb: 'Supplier register, assessment, reviews, agreements and performance.' },
+  { key: 'Visitor Management', standard: 'Support Provision Environment', entity: 'VisitorLog', query: { attendance_type: 'Visitor' }, path: '/workforce-presence', blurb: 'Visitor register, contractor sign-in and emergency roll call.' },
+  { key: 'Participant Funding Governance', standard: 'Provision of Supports', entity: 'ParticipantDocument', query: { document_type: 'NDIS Plan' }, path: '/invoicing', blurb: 'Plan budget, utilisation, remaining funding and overspend risk.' },
+  { key: 'Staff Wellbeing', standard: 'Human Resource Management', entity: 'StaffMedicalProfile', query: {}, path: '/hr', blurb: 'Wellness checks, EAP, burnout monitoring, injury and return to work.' },
+  { key: 'Evidence Mapping', standard: 'Operational Management', entity: 'AuditEvidenceFile', query: {}, path: '/governance', tab: 'evidence-chain', blurb: 'The participant and staff chains from record to audit evidence.' },
+];

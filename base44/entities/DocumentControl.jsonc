@@ -1,0 +1,240 @@
+{
+  "name": "DocumentControl",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Document Title"
+    },
+    "document_id": {
+      "type": "string",
+      "title": "Document ID"
+    },
+    "version": {
+      "type": "string",
+      "default": "v1.0",
+      "title": "Version"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Review",
+        "Approved",
+        "Archived",
+        "Superseded"
+      ],
+      "default": "Draft",
+      "title": "Status"
+    },
+    "document_category": {
+      "type": "string",
+      "enum": [
+        "Governance",
+        "Policy",
+        "Procedure",
+        "Clinical",
+        "Human Resources",
+        "WHS",
+        "Child Safety",
+        "Quality",
+        "Risk",
+        "Finance",
+        "IT & Cyber",
+        "Contracts",
+        "Training",
+        "Operations"
+      ],
+      "default": "Policy",
+      "title": "Document Category"
+    },
+    "business_unit": {
+      "type": "string",
+      "title": "Business Unit"
+    },
+    "owner": {
+      "type": "string",
+      "title": "Document Owner"
+    },
+    "approved_by": {
+      "type": "string",
+      "title": "Approved By"
+    },
+    "approval_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Approval Date"
+    },
+    "review_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Review Date"
+    },
+    "superseded_version": {
+      "type": "string",
+      "title": "Superseded Version"
+    },
+    "change_summary": {
+      "type": "string",
+      "title": "Change Summary"
+    },
+    "file_url": {
+      "type": "string",
+      "title": "Document Link"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    },
+    "audit_consent": {
+      "type": "string",
+      "enum": [
+        "Audit consent received",
+        "Audit declined"
+      ],
+      "default": "Audit consent received",
+      "title": "Auditor Visibility Consent",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "title",
+    "document_id"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Management"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Team Leader"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Human Resources Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Quality & Improvement Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            },
+            {
+              "data.audit_consent": "Audit consent received"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        }
+      ]
+    }
+  }
+}
