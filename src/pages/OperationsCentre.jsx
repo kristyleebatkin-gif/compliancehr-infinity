@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PageHeader from '@/components/PageHeader';
+
 import ExecutiveOperationsCentre from '@/components/operations/ExecutiveOperationsCentre';
 import UniversalDataStorageRetentionExportSuite from '@/components/compliance/UniversalDataStorageRetentionExportSuite';
 import EnterpriseOperationsAttendancePayrollFramework from '@/components/operations/EnterpriseOperationsAttendancePayrollFramework';
@@ -14,12 +14,12 @@ import LivingOrganisationalEcosystemSuite from '@/components/enterprise/LivingOr
 import { Cpu, Users, Zap, ShieldCheck, FolderOpen, Layers } from 'lucide-react';
 
 const EXEC_TABS = [
-  { id: 'executive-os', label: '1. Executive Centre & Digital Twin', icon: Cpu },
-  { id: 'profiles-360', label: '2. Universal 360° Profiles & Workflow', icon: Users },
-  { id: 'automation-closure', label: '3. Automated Task Closure & Operations', icon: Zap },
-  { id: 'registers-storage', label: '4. 45 Master Registers & Storage Vault', icon: FolderOpen },
-  { id: 'workforce-frontline', label: '5. Workforce, Attendance & Frontline Rapid', icon: ShieldCheck },
-  { id: 'all', label: '6. View All Suites', icon: Layers },
+  { id: 'executive-os', label: 'Executive overview', icon: Cpu },
+  { id: 'profiles-360', label: '360° profiles', icon: Users },
+  { id: 'automation-closure', label: 'Actions & workflows', icon: Zap },
+  { id: 'registers-storage', label: 'Registers & storage', icon: FolderOpen },
+  { id: 'workforce-frontline', label: 'Workforce', icon: ShieldCheck },
+  { id: 'all', label: 'All areas', icon: Layers },
 ];
 
 export default function OperationsCentre() {
@@ -28,13 +28,13 @@ export default function OperationsCentre() {
 
   return (
     <div className="mx-auto w-full max-w-[1440px] bg-white px-4 py-4 sm:px-6 lg:px-8 space-y-4">
-      <PageHeader
-        title="Executive Centre & Organisational Digital Twin"
-        description="Unified executive command across Organisation Health, NDIS & Aged Care Readiness, Strategic Objectives, Enterprise Risks, Board Actions & AI Executive Briefings."
-      />
+      <header className="rounded-2xl border border-slate-200 bg-white px-5 py-5 shadow-sm sm:px-7">
+        <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#5A00D6]">ComplianceHR Infinity</p>
+        <h1 className="mt-1 text-2xl font-bold tracking-tight text-[#0A2B6D] sm:text-3xl">Executive Command</h1>
+        <p className="mt-2 max-w-3xl text-sm text-slate-600">Organisation health, compliance priorities and operational workspaces.</p>
+      </header>
 
-      {/* Focused Executive Tab Bar */}
-      <div className="flex flex-wrap items-center gap-1.5 rounded-2xl border-2 border-[#0A2B6D] bg-[#F6F0FF] p-2">
+      <nav aria-label="Executive workspaces" className="grid grid-cols-2 gap-2 rounded-2xl border border-slate-200 bg-slate-50 p-2 sm:grid-cols-3 lg:grid-cols-6">
         {EXEC_TABS.map((t) => {
           const Icon = t.icon;
           const active = activeTab === t.id;
@@ -43,7 +43,8 @@ export default function OperationsCentre() {
               key={t.id}
               type="button"
               onClick={() => setActiveTab(t.id)}
-              className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-extrabold transition ${
+              aria-pressed={active}
+              className={`inline-flex min-h-11 items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-center text-xs font-bold transition focus:outline-none focus:ring-2 focus:ring-[#0072FF] focus:ring-offset-2 ${
                 active
                   ? 'bg-[#0A2B6D] text-white shadow-sm'
                   : 'border border-slate-200 bg-white text-[#0A2B6D] hover:border-[#0072FF]'
@@ -54,13 +55,16 @@ export default function OperationsCentre() {
             </button>
           );
         })}
-      </div>
+      </nav>
 
       {show('executive-os') && (
         <div className="space-y-4">
           <OrganisationalOperatingSystemCommand />
-          <LivingOrganisationalEcosystemSuite initialTab="security-whitelabel-exec" />
-          <ExecutiveOperationsCentre defaultSuite="all" />
+          <details className="rounded-xl border border-slate-200 bg-white px-4 py-3">
+            <summary className="cursor-pointer text-sm font-semibold text-[#0A2B6D]">Organisation ecosystem tools</summary>
+            <div className="mt-4"><LivingOrganisationalEcosystemSuite initialTab="security-whitelabel-exec" /></div>
+          </details>
+          <ExecutiveOperationsCentre defaultSuite="roster" />
         </div>
       )}
 
