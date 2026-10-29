@@ -8,6 +8,7 @@ import DocumentControlRegister from '@/components/governance/DocumentControlRegi
 import AuthorityDeclarationRegister from '@/components/governance/AuthorityDeclarationRegister';
 import AcknowledgementCentre from '@/components/governance/AcknowledgementCentre';
 import RegisterFramework from '@/components/governance/RegisterFramework';
+import AutomaticLinkEngine from '@/components/governance/AutomaticLinkEngine';
 import NdisStandardsMap from '@/components/governance/NdisStandardsMap';
 import EvidenceChainMap from '@/components/governance/EvidenceChainMap';
 import AssuranceRegisters from '@/components/governance/AssuranceRegisters';
@@ -32,6 +33,7 @@ export default function GovernanceLayer() {
           <TabsTrigger value="delegations">Delegations &amp; Declarations</TabsTrigger>
           <TabsTrigger value="acknowledgements">Acknowledgement Centre</TabsTrigger>
           <TabsTrigger value="registers">Register Framework</TabsTrigger>
+          <TabsTrigger value="links">Automatic Links</TabsTrigger>
           <TabsTrigger value="standards">NDIS Standards Map</TabsTrigger>
           <TabsTrigger value="evidence-chain">Evidence Chain</TabsTrigger>
           <TabsTrigger value="assurance">Assurance Registers</TabsTrigger>
@@ -60,6 +62,10 @@ export default function GovernanceLayer() {
 
         <TabsContent value="registers" className="mt-4">
           <RegisterFramework />
+        </TabsContent>
+
+        <TabsContent value="links" className="mt-4">
+          <AutomaticLinkEngine />
         </TabsContent>
 
         <TabsContent value="standards" className="mt-4">
