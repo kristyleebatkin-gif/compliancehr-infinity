@@ -1,0 +1,369 @@
+{
+  "name": "GovernanceObject",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Object Title"
+    },
+    "object_code": {
+      "type": "string",
+      "title": "Unique ID / Document Code"
+    },
+    "lifecycle_stage": {
+      "type": "string",
+      "enum": [
+        "Policy",
+        "Procedure",
+        "Plan",
+        "Form",
+        "Register",
+        "Record",
+        "Task",
+        "Evidence",
+        "Review",
+        "Audit",
+        "Improvement"
+      ],
+      "default": "Policy",
+      "title": "Lifecycle Stage"
+    },
+    "record_type": {
+      "type": "string",
+      "title": "Record Type"
+    },
+    "module": {
+      "type": "string",
+      "title": "Module"
+    },
+    "document_category": {
+      "type": "string",
+      "enum": [
+        "Policy",
+        "Procedure",
+        "Plan",
+        "Form",
+        "Register",
+        "Evidence",
+        "Record"
+      ],
+      "default": "Record",
+      "title": "Document Category"
+    },
+    "business_owner": {
+      "type": "string",
+      "title": "Business Owner"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Active",
+        "Under Review",
+        "Expired",
+        "Archived"
+      ],
+      "default": "Draft",
+      "title": "Status"
+    },
+    "version": {
+      "type": "string",
+      "default": "v1.0",
+      "title": "Version"
+    },
+    "version_state": {
+      "type": "string",
+      "enum": [
+        "Current",
+        "Archived",
+        "Future"
+      ],
+      "default": "Current",
+      "title": "Version State"
+    },
+    "review_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Review Date"
+    },
+    "assigned_to_type": {
+      "type": "string",
+      "enum": [
+        "Organisation-wide",
+        "Participant",
+        "Employee",
+        "Volunteer",
+        "Contractor",
+        "Asset",
+        "Vehicle",
+        "Business"
+      ],
+      "default": "Organisation-wide",
+      "title": "Assigned To"
+    },
+    "assigned_to_name": {
+      "type": "string",
+      "title": "Assigned To (Name / Reference)"
+    },
+    "related_policy": {
+      "type": "string",
+      "title": "Related Policy"
+    },
+    "related_procedure": {
+      "type": "string",
+      "title": "Related Procedure"
+    },
+    "related_plan": {
+      "type": "string",
+      "title": "Related Plan"
+    },
+    "related_form": {
+      "type": "string",
+      "title": "Related Form"
+    },
+    "related_register": {
+      "type": "string",
+      "title": "Related Register"
+    },
+    "risk_link": {
+      "type": "string",
+      "title": "Risk Link"
+    },
+    "incident_link": {
+      "type": "string",
+      "title": "Incident Link"
+    },
+    "feedback_link": {
+      "type": "string",
+      "title": "Feedback Link"
+    },
+    "audit_link": {
+      "type": "string",
+      "title": "Audit Link"
+    },
+    "capa_link": {
+      "type": "string",
+      "title": "CAPA Link"
+    },
+    "evidence_documents": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "title": "Supporting Documents"
+    },
+    "evidence_images": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "title": "Images"
+    },
+    "signatures": {
+      "type": "string",
+      "title": "Signatures"
+    },
+    "acknowledgements": {
+      "type": "string",
+      "title": "Acknowledgements"
+    },
+    "evidence_notes": {
+      "type": "string",
+      "title": "Evidence Notes"
+    },
+    "retention_period": {
+      "type": "string",
+      "enum": [
+        "1 Year",
+        "3 Years",
+        "7 Years",
+        "10 Years",
+        "25 Years",
+        "Permanent"
+      ],
+      "default": "7 Years",
+      "title": "Retention Period"
+    },
+    "archive_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Archive Date"
+    },
+    "destruction_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Destruction Date"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    },
+    "audit_consent": {
+      "type": "string",
+      "enum": [
+        "Audit consent received",
+        "Audit declined"
+      ],
+      "default": "Audit consent received",
+      "title": "Auditor Visibility Consent",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "title",
+    "lifecycle_stage"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Management"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Team Leader"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Human Resources Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Quality & Improvement Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Participant"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Employee"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Volunteer"
+          }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            },
+            {
+              "data.audit_consent": "Audit consent received"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        }
+      ]
+    }
+  }
+}

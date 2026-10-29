@@ -78,6 +78,7 @@ export const MODULE_DIRECTORY = [
   { key: 'community-referral', label: 'Referrals', path: '/referrals', icon: HeartHandshake, group: '9. CRM, Growth & Relationships', blurb: 'Referrals, crisis information, local services, community contacts and referral PDFs.' },
 
   // 10. GOVERNANCE & STRATEGY
+  { key: 'governance', label: 'Governance Layer', path: '/governance', icon: ShieldCheck, group: '10. Governance & Strategy', blurb: 'Universal object lifecycle, acknowledgement centre, automatic register updates and one-click NDIS audit pack.' },
   { key: 'projects', label: 'Projects Hub', path: '/projects', icon: KanbanSquare, group: '10. Governance & Strategy', blurb: 'Business projects, governance hub, board packs, strategic planning, corporate reporting and KPI framework.' },
 
   // 11. NDIS & REGULATORY
@@ -145,7 +146,7 @@ export const NAV_GROUPS = [
   },
   {
     label: '10. Governance & Strategy',
-    keys: ['projects'],
+    keys: ['governance', 'projects'],
   },
   {
     label: '11. NDIS & Regulatory',

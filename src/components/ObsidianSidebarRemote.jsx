@@ -149,10 +149,11 @@ export const PRIMARY_11_OS_NAV = [
   {
     id: 'governance-strategy',
     label: '10. Governance & Strategy',
-    sub: 'Projects Hub, Governance, Board Packs & KPIs',
-    path: '/projects',
+    sub: 'Governance Layer, Projects, Board Packs & KPIs',
+    path: '/governance',
     icon: Cpu,
     children: [
+      { label: 'Governance Layer', path: '/governance' },
       { label: 'Projects Hub', path: '/projects' },
     ],
   },

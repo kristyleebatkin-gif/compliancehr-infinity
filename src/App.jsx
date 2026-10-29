@@ -88,6 +88,7 @@ import OurEmployeeProfiles from '@/pages/OurEmployeeProfiles';
 import OurParticipantProfiles from '@/pages/OurParticipantProfiles';
 import OurEmployeeDetail from '@/pages/OurEmployeeDetail';
 import OurParticipantDetail from '@/pages/OurParticipantDetail';
+import GovernanceLayer from '@/pages/GovernanceLayer';
 import Landing from '@/pages/Landing';
 import PublicComplaint from '@/pages/PublicComplaint';
 import PublicVolunteer from '@/pages/PublicVolunteer';
@@ -176,6 +177,7 @@ const AuthenticatedApp = () => {
           <Route path="/record-intelligence" element={<UniversalRecordIntelligenceHub />} />
           <Route path="/user-success" element={<UniversalUserSuccessHub />} />
           <Route path="/registers" element={<UniversalRegisterHub />} />
+          <Route path="/governance" element={<RoleGate navKey="governance"><GovernanceLayer /></RoleGate>} />
           <Route path="/programs" element={<RoleGate navKey="programs"><ProgramsEvents /></RoleGate>} />
           <Route path="/communications" element={<RoleGate navKey="communications"><Communications /></RoleGate>} />
           <Route path="/audit" element={<RoleGate navKey="audit-log"><Navigate to="/compliance" replace /></RoleGate>} />
