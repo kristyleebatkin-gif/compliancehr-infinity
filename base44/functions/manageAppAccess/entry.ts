@@ -45,7 +45,7 @@ export default async function(req) {
     const now = new Date();
     const patch = { approved_by: actor.full_name || actor.email, approved_by_user_id: actor.id, approved_date: now.toISOString().slice(0, 10), approved_time: now.toISOString().slice(11, 19) };
     if (body.action === 'approve' || body.action === 'role') {
-      if (!ACCESS_ROLES.includes(body.role)) return Response.json({ error: 'Choose one of the six approved roles.' }, { status: 400 });
+      if (!ACCESS_ROLES.includes(body.role)) return Response.json({ error: 'Choose one of the nine approved roles.' }, { status: 400 });
       if (body.action === 'role' && !hasApprovedAccess(target)) return Response.json({ error: 'Approve the account before changing its active role.' }, { status: 400 });
       Object.assign(patch, { role: body.role, account_status: 'Active', access_approved: true });
     } else {
