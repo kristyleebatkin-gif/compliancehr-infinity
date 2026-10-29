@@ -20,7 +20,7 @@ const AI_DOMAINS_12 = [
     sourceRef: 'DOC-007, DOC-024 · CHK-022..042',
     targetEntity: 'TodoTask',
     defaultDraft:
-      'EXECUTIVE BRIEFING SUMMARY (2026): All 17 NDIS/HR Audit Categories (356 Checkpoints) and 98 Master Controlled Documents are active. Priority focus: maintain 100% worker screening currency and zero overdue 24-hour reportable incidents.',
+      'EXECUTIVE BRIEFING SUMMARY: Review current compliance evidence, controlled documents, worker screening records and reportable-incident deadlines in their source modules before making decisions.',
   },
   {
     id: 'doc-draft',
@@ -96,7 +96,7 @@ const AI_SKILLS_LIBRARY = [
 ];
 
 const ADVANCED_TOOLS_12 = [
-  { name: '1. Universal Workflow Engine', badge: '65 Workflows Active', route: '/operations-centre', desc: 'Event, schedule, and entity-triggered automations across incidents, tasks, expiries & payroll.' },
+  { name: '1. Universal Workflow Engine', badge: 'Workflow catalogue', route: '/operations-centre', desc: 'Event, schedule, and entity-triggered automations across incidents, tasks, expiries & payroll.' },
   { name: '2. Universal Action Centre', badge: '12 Instant Actions', route: '/dashboard', desc: 'Centralized 1-click approval queue, task dispatch, and cross-module sign-off deck.' },
   { name: '3. Regulatory Intelligence', badge: 'NDIS 2026 Live', route: '/ndis-updates', desc: 'Live NDIS Price Guide, Practice Standards, Fair Work & WHS obligation tracking.' },
   { name: '4. Document Intelligence', badge: 'Smart Mailroom', route: '/documents', desc: 'Auto-classification, person matching, duplicate detection & 98-doc version control.' },
