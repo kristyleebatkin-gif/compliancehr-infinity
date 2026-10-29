@@ -162,7 +162,7 @@ function TodaysRosterPictureCard() {
   }, []);
 
   return (
-    <WallHangingPictureFrame title="2. Today's Overview & Flat Screen Live Roster" className="h-full">
+    <WallHangingPictureFrame title="Today's roster" className="h-full">
       <div className="flex h-full flex-col items-center justify-start gap-0.5 bg-white">
         <div className="w-full">
           <RosterMiniOverview />
@@ -309,7 +309,7 @@ function CommunicationAndMailboxTabs() {
   }, []);
 
   return (
-    <WallHangingPictureFrame title="3. Mini Comms Above Red Letterbox & 4. Mini Communication Centre + Small Shared To-Do List">
+    <WallHangingPictureFrame title="Messages & shared actions">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 bg-white items-stretch">
         {/* Left Column: Mini Comms Placed Directly Above the Red Little Box (Letterbox) */}
         <div className="flex flex-col justify-between gap-1.5">
@@ -695,9 +695,9 @@ function OfficeEquipmentWithInteractiveScreen({
 }
 
 const LAYOUT_CHOICES = [
-  { id: 'both', label: 'Both Views Side-by-Side', icon: Columns },
-  { id: 'office', label: 'Office View Only', icon: Building2 },
-  { id: 'profiles', label: 'Roster & Comms View', icon: Users },
+  { id: 'both', label: 'Dual view', description: 'Office, roster and communications', icon: Columns },
+  { id: 'office', label: 'Office view', description: 'Office screens and room', icon: Building2 },
+  { id: 'profiles', label: 'Roster & messages', description: 'Roster and communications', icon: Users },
 ];
 
 export default function ExecutiveWallScene({
@@ -758,12 +758,12 @@ export default function ExecutiveWallScene({
                   <Building2 className="h-2.5 w-2.5" style={{ color: getSymbolView(7).iconColor }} />
                 </span>
                 <span style={{ color: '#FFFFFF' }}>
-                  {companyName} · Dual Executive Office &amp; Profile Workspace
+                  {companyName} · Executive Office
                 </span>
               </div>
             </div>
 
-            <div className="grid w-full grid-cols-2 gap-1.5">
+            <div className="grid w-full grid-cols-2 gap-2 sm:grid-cols-3">
               {LAYOUT_CHOICES.map((choice, idx) => {
                 const Icon = choice.icon;
                 const active = viewMode === choice.id;
@@ -777,9 +777,11 @@ export default function ExecutiveWallScene({
                     <button
                       type="button"
                       onClick={() => selectMode(choice.id)}
-                      className={`gradient-brand flex min-h-[22px] w-full items-center justify-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-extrabold text-white transition-all ${
+                      className={`gradient-brand flex min-h-10 w-full items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-xs font-bold text-white transition-all focus:outline-none focus:ring-2 focus:ring-[#0072FF] focus:ring-offset-2 ${
                         active ? 'ring-2 ring-[#0A2B6D] shadow-sm' : 'opacity-95 hover:opacity-100'
                       }`}
+                      aria-pressed={active}
+                      title={choice.description}
                       style={{ background: getHeaderView(idx), color: '#FFFFFF' }}
                     >
                       <span
@@ -841,7 +843,7 @@ export default function ExecutiveWallScene({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-2 items-stretch">
             <div className="lg:col-span-4 flex flex-col">
               <WallHangingPictureFrame
-                title="5. Silver Screen · Weather & NDIS News"
+                title="Weather & NDIS news"
                 frameAccent={TOP_BORDER_GRADIENT}
                 className="h-full"
               >
