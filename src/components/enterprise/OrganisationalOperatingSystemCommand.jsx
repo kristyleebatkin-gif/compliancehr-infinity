@@ -225,17 +225,17 @@ export default function OrganisationalOperatingSystemCommand() {
   // 14 Primary User Outcome Questions Answered in < 30 Seconds
   const outcome14Questions = [
     { q: '1. Are we compliant?', a: `YES — ${overallOrgHealth}% Org Health`, sub: 'NDIS, Aged Care, WHS & Privacy mapped', path: '/compliance', tone: '#0072FF' },
-    { q: '2. Are we safe?', a: counts.incidentsOpen === 0 ? 'YES — Zero Open Incidents' : `${counts.incidentsOpen} Active Incident(s)`, sub: 'Live WHS, roll call & safeguarding active', path: '/workforce-presence', tone: '#0A2B6D' },
+    { q: '2. Are we safe?', a: counts.incidentsOpen === 0 ? 'YES — Zero Open Incidents' : `${formatCount(counts.incidentsOpen)} Active Incident(s)`, sub: 'Live WHS, roll call & safeguarding active', path: '/workforce-presence', tone: '#0A2B6D' },
     { q: '3. Are we audit ready?', a: '99.2% Audit Ready', sub: '356 checkpoints & 1-click Audit Pack ready', path: '/auditor-portal', tone: '#5A00D6' },
-    { q: '4. Are participants protected?', a: `${counts.participants} Protected`, sub: '3-part consents, risk & support plans verified', path: '/our-participants', tone: '#FF2E9A' },
-    { q: '5. Are staff compliant?', a: `${counts.employees} Screened`, sub: '100-pt ID, NDIS screening, WWCC & First Aid', path: '/our-employees', tone: '#0072FF' },
-    { q: '6. What evidence supports compliance?', a: `${counts.documentsTotal} Vault Files`, sub: '5-point stamped in Vault & Company Safe', path: '/documents', tone: '#5A00D6' },
-    { q: '7. What risks require attention?', a: `${counts.risksCritical} High/Critical`, sub: `Out of ${counts.risksTotal} tracked in 5×5 matrix`, path: '/risks?rating=high-critical', tone: '#FF2E9A' },
-    { q: '8. What incidents require action?', a: `${counts.incidentsOpen} Open`, sub: '24h / 5d NDIS & SIRS timers monitored', path: '/incidents', tone: '#0A2B6D' },
+    { q: '4. Are participants protected?', a: `${formatCount(counts.participants)} Protected`, sub: '3-part consents, risk & support plans verified', path: '/our-participants', tone: '#FF2E9A' },
+    { q: '5. Are staff compliant?', a: `${formatCount(counts.employees)} Screened`, sub: '100-pt ID, NDIS screening, WWCC & First Aid', path: '/our-employees', tone: '#0072FF' },
+    { q: '6. What evidence supports compliance?', a: `${formatCount(counts.documentsTotal)} Vault Files`, sub: '5-point stamped in Vault & Company Safe', path: '/documents', tone: '#5A00D6' },
+    { q: '7. What risks require attention?', a: `${formatCount(counts.risksCritical)} High/Critical`, sub: `Out of ${formatCount(counts.risksTotal)} tracked in 5×5 matrix`, path: '/risks?rating=high-critical', tone: '#FF2E9A' },
+    { q: '8. What incidents require action?', a: `${formatCount(counts.incidentsOpen)} Open`, sub: '24h / 5d NDIS & SIRS timers monitored', path: '/incidents', tone: '#0A2B6D' },
     { q: '9. What reviews are overdue?', a: 'Tracked Live', sub: '10-weekly participant & 3/6-month staff reviews', path: '/review-due', tone: '#0072FF' },
-    { q: '10. What actions are overdue?', a: `${counts.tasksOverdue} Overdue`, sub: `${counts.tasksOpen} open tasks across all modules`, path: '/tasks', tone: '#FF2E9A' },
-    { q: '11. What training is overdue?', a: 'Matrix Synced', sub: `${counts.trainingTotal} LMS courses & competency checks`, path: '/training', tone: '#5A00D6' },
-    { q: '12. What qualifications are expiring?', a: `${counts.documentsExpiring} Flagged`, sub: '90 / 60 / 30 / 14-day renewal radar active', path: '/documents', tone: '#0A2B6D' },
+    { q: '10. What actions are overdue?', a: `${formatCount(counts.tasksOverdue)} Overdue`, sub: `${formatCount(counts.tasksOpen)} open tasks across all modules`, path: '/tasks', tone: '#FF2E9A' },
+    { q: '11. What training is overdue?', a: 'Matrix Synced', sub: `${formatCount(counts.trainingTotal)} LMS courses & competency checks`, path: '/training', tone: '#5A00D6' },
+    { q: '12. What qualifications are expiring?', a: `${formatCount(counts.documentsExpiring)} Flagged`, sub: '90 / 60 / 30 / 14-day renewal radar active', path: '/documents', tone: '#0A2B6D' },
     { q: '13. What standards have gaps?', a: '0 Unmapped', sub: 'All NDIS & Aged Care standards evidenced', path: '/compliance', tone: '#0072FF' },
     { q: '14. What should happen next?', a: 'Prioritised Below', sub: 'AI Copilot & Data Quality actions ready', path: '/operations-centre', tone: '#5A00D6' },
   ];
@@ -301,7 +301,7 @@ export default function OrganisationalOperatingSystemCommand() {
               Organisation Health
             </div>
             <div className="font-editorial text-lg font-extrabold text-white">
-              {overallOrgHealth}% Verified
+              Not calculated
             </div>
           </div>
           <Button
@@ -441,7 +441,7 @@ export default function OrganisationalOperatingSystemCommand() {
                     Organisation Health (9 Calculated Pillars)
                   </span>
                   <span className="rounded-full bg-[#0072FF] px-2.5 py-0.5 text-[10px] font-extrabold text-white">
-                    {overallOrgHealth}% Composite
+                    Not calculated
                   </span>
                 </div>
                 <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-3">
@@ -453,7 +453,7 @@ export default function OrganisationalOperatingSystemCommand() {
                     >
                       <div className="flex items-center justify-between">
                         <span className="text-[10px] font-extrabold text-[#0A2B6D]">{h.label}</span>
-                        <span className="text-[11px] font-black text-[#5A00D6]">{h.score}%</span>
+                        <span className="text-[10px] font-bold text-slate-500">Counts</span>
                       </div>
                       <p className="mt-0.5 text-[9.5px] font-semibold text-[#0A2B6D]/80 leading-tight">
                         {h.detail}
@@ -523,10 +523,10 @@ export default function OrganisationalOperatingSystemCommand() {
                   <span>AI Recommendations</span>
                 </div>
                 {[
-                  { tag: 'What Changed', text: `${counts.employees} staff & ${counts.participants} participant profiles synced to 360° assurance.` },
-                  { tag: 'What Is Overdue', text: `${counts.tasksOverdue} overdue tasks flagged for immediate sign-off.` },
-                  { tag: 'What Is At Risk', text: `${counts.risksCritical} high/critical risks monitored under active controls.` },
-                  { tag: 'Requires Attention', text: `${counts.documentsExpiring} credentials in 90/60/30-day renewal window.` },
+                  { tag: 'What Changed', text: `${formatCount(counts.employees)} staff & ${formatCount(counts.participants)} participant profiles synced to 360° assurance.` },
+                  { tag: 'What Is Overdue', text: `${formatCount(counts.tasksOverdue)} overdue tasks flagged for immediate sign-off.` },
+                  { tag: 'What Is At Risk', text: `${formatCount(counts.risksCritical)} high/critical risks monitored under active controls.` },
+                  { tag: 'Requires Attention', text: `${formatCount(counts.documentsExpiring)} credentials in 90/60/30-day renewal window.` },
                   { tag: 'What Happens Next', text: 'Run 1-click Data Quality & 360° Automation sweep to close open items.' },
                 ].map((rec) => (
                   <div key={rec.tag} className="rounded-lg border border-[#C084FC]/50 bg-white p-2 text-[10.5px]">
@@ -553,23 +553,23 @@ export default function OrganisationalOperatingSystemCommand() {
                   </h3>
                 </div>
                 <Badge className="bg-[#0A2B6D] text-white text-[10px]">
-                  Live Synchronised Digital Twin · {overallOrgHealth}% Health
+                  Live record counts
                 </Badge>
               </div>
 
               <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
                 {[
-                  { title: '1. Workforce Twin', metric: `${counts.employees} Staff Profiles`, status: '100-Pt Screened & Rostered', path: '/our-employees', color: '#0072FF' },
-                  { title: '2. Participants Twin', metric: `${counts.participants} Participants`, status: 'Plans, Consents & Goals Active', path: '/our-participants', color: '#FF2E9A' },
+                  { title: '1. Workforce Twin', metric: `${formatCount(counts.employees)} Staff Profiles`, status: '100-Pt Screened & Rostered', path: '/our-employees', color: '#0072FF' },
+                  { title: '2. Participants Twin', metric: `${formatCount(counts.participants)} Participants`, status: 'Plans, Consents & Goals Active', path: '/our-participants', color: '#FF2E9A' },
                   { title: '3. Compliance Twin', metric: '356 / 356 Checkpoints', status: 'NDIS & Aged Care Standards Live', path: '/compliance', color: '#5A00D6' },
-                  { title: '4. Governance Twin', metric: `${counts.policiesTotal} Controlled Policies`, status: 'Board, Delegations & Safe Locked', path: '/company-safe', color: '#0A2B6D' },
-                  { title: '5. Quality Twin', metric: `${counts.qualityItems} Quality Actions`, status: 'Closed-Loop CAPA & Reviews', path: '/quality', color: '#0072FF' },
-                  { title: '6. Risk Twin', metric: `${counts.risksTotal} Active Risks`, status: `${counts.risksCritical} High/Critical Controlled`, path: '/risks', color: '#5A00D6' },
-                  { title: '7. Safety Twin', metric: `${counts.incidentsOpen} Open Incidents`, status: 'WHS, Roll Call & SIRS Active', path: '/workforce-presence', color: '#FF2E9A' },
-                  { title: '8. Audits Twin', metric: `${counts.auditsTotal} Audits Logged`, status: 'Auditor Portal & Evidence Ready', path: '/auditor-portal', color: '#0A2B6D' },
-                  { title: '9. Training Twin', metric: `${counts.trainingTotal} LMS Modules`, status: 'Skills Matrix & Certs Synced', path: '/training', color: '#0072FF' },
-                  { title: '10. Actions Twin', metric: `${counts.tasksOpen} Active Tasks`, status: `${counts.tasksOverdue} Overdue · Auto-Escalated`, path: '/tasks', color: '#5A00D6' },
-                  { title: '11. Evidence Vault Twin', metric: `${counts.documentsTotal} Controlled Files`, status: 'OCR, Signatures & Retention Active', path: '/documents', color: '#A100FF' },
+                  { title: '4. Governance Twin', metric: `${formatCount(counts.policiesTotal)} Controlled Policies`, status: 'Board, Delegations & Safe Locked', path: '/company-safe', color: '#0A2B6D' },
+                  { title: '5. Quality Twin', metric: `${formatCount(counts.qualityItems)} Quality Actions`, status: 'Closed-Loop CAPA & Reviews', path: '/quality', color: '#0072FF' },
+                  { title: '6. Risk Twin', metric: `${formatCount(counts.risksTotal)} Active Risks`, status: `${formatCount(counts.risksCritical)} High/Critical Controlled`, path: '/risks', color: '#5A00D6' },
+                  { title: '7. Safety Twin', metric: `${formatCount(counts.incidentsOpen)} Open Incidents`, status: 'WHS, Roll Call & SIRS Active', path: '/workforce-presence', color: '#FF2E9A' },
+                  { title: '8. Audits Twin', metric: `${formatCount(counts.auditsTotal)} Audits Logged`, status: 'Auditor Portal & Evidence Ready', path: '/auditor-portal', color: '#0A2B6D' },
+                  { title: '9. Training Twin', metric: `${formatCount(counts.trainingTotal)} LMS Modules`, status: 'Skills Matrix & Certs Synced', path: '/training', color: '#0072FF' },
+                  { title: '10. Actions Twin', metric: `${formatCount(counts.tasksOpen)} Active Tasks`, status: `${formatCount(counts.tasksOverdue)} Overdue · Auto-Escalated`, path: '/tasks', color: '#5A00D6' },
+                  { title: '11. Evidence Vault Twin', metric: `${formatCount(counts.documentsTotal)} Controlled Files`, status: 'OCR, Signatures & Retention Active', path: '/documents', color: '#A100FF' },
                   { title: '12. Organisation Health Twin', metric: `${overallOrgHealth}% Overall Score`, status: 'All 5 Architecture Layers Green', path: '/operations-centre', color: '#0A2B6D' },
                 ].map((node) => (
                   <Link
@@ -615,17 +615,17 @@ export default function OrganisationalOperatingSystemCommand() {
 
               <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
                 {[
-                  { title: 'Workforce Compliance', value: `${counts.employees} Staff · ${counts.documentsExpiring} Expiring`, route: '/our-employees' },
-                  { title: 'Participant Compliance', value: `${counts.participants} Participants · Consents Active`, route: '/our-participants' },
-                  { title: 'Risks', value: `${counts.risksTotal} Total (${counts.risksCritical} High/Critical)`, route: '/risks' },
-                  { title: 'Incidents', value: `${counts.incidentsOpen} Open · 24h/5d SLA Tracked`, route: '/incidents' },
-                  { title: 'Complaints', value: `${counts.complaintsOpen} Open · 5-Day Resolution SLA`, route: '/feedback' },
+                  { title: 'Workforce Compliance', value: `${formatCount(counts.employees)} Staff · ${formatCount(counts.documentsExpiring)} Expiring`, route: '/our-employees' },
+                  { title: 'Participant Compliance', value: `${formatCount(counts.participants)} Participants · Consents Active`, route: '/our-participants' },
+                  { title: 'Risks', value: `${formatCount(counts.risksTotal)} Total (${formatCount(counts.risksCritical)} High/Critical)`, route: '/risks' },
+                  { title: 'Incidents', value: `${formatCount(counts.incidentsOpen)} Open · 24h/5d SLA Tracked`, route: '/incidents' },
+                  { title: 'Complaints', value: `${formatCount(counts.complaintsOpen)} Open · 5-Day Resolution SLA`, route: '/feedback' },
                   { title: 'Reviews Due', value: '10-Weekly & 3/6-Monthly Schedule', route: '/review-due' },
-                  { title: 'Training Due', value: `${counts.trainingTotal} Courses & Competency Matrix`, route: '/training' },
-                  { title: 'Audits Due', value: `${counts.auditsTotal} Scheduled & Internal Audits`, route: '/auditor-portal' },
+                  { title: 'Training Due', value: `${formatCount(counts.trainingTotal)} Courses & Competency Matrix`, route: '/training' },
+                  { title: 'Audits Due', value: `${formatCount(counts.auditsTotal)} Scheduled & Internal Audits`, route: '/auditor-portal' },
                   { title: 'Missing Evidence', value: '0 Unverified Checkpoints', route: '/documents' },
-                  { title: 'Overdue Actions', value: `${counts.tasksOverdue} Overdue (${counts.tasksOpen} Open)`, route: '/tasks' },
-                  { title: 'Goal Progress', value: `${counts.goalsTotal} Active Goals & Outcomes`, route: '/goals' },
+                  { title: 'Overdue Actions', value: `${formatCount(counts.tasksOverdue)} Overdue (${formatCount(counts.tasksOpen)} Open)`, route: '/tasks' },
+                  { title: 'Goal Progress', value: `${formatCount(counts.goalsTotal)} Active Goals & Outcomes`, route: '/goals' },
                   { title: 'Team Performance', value: 'Appraisals, Supervision & Recognition', route: '/hr' },
                 ].map((card) => (
                   <Link
@@ -645,7 +645,7 @@ export default function OrganisationalOperatingSystemCommand() {
                   <span>AI Manager Briefing — Today’s Operational Priority</span>
                 </div>
                 <p className="mt-1 text-xs font-semibold text-[#0A2B6D]">
-                  Workforce and participant safeguards are operating at <strong className="text-[#5A00D6]">{overallOrgHealth}% readiness</strong>. Priority focus today: review <strong className="text-[#FF2E9A]">{counts.tasksOverdue} overdue task(s)</strong>, monitor <strong className="text-[#0072FF]">{counts.risksCritical} high/critical risk control(s)</strong>, and verify <strong className="text-[#5A00D6]">{counts.documentsExpiring} expiring staff credential(s)</strong> before the next roster publish.
+                  Workforce and participant safeguards are operating at <strong className="text-[#5A00D6]">not calculated from verified evidence</strong>. Priority focus today: review <strong className="text-[#FF2E9A]">{counts.tasksOverdue} overdue task(s)</strong>, monitor <strong className="text-[#0072FF]">{counts.risksCritical} high/critical risk control(s)</strong>, and verify <strong className="text-[#5A00D6]">{counts.documentsExpiring} expiring staff credential(s)</strong> before the next roster publish.
                 </p>
               </div>
             </div>
@@ -676,17 +676,17 @@ export default function OrganisationalOperatingSystemCommand() {
 
               <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
                 {[
-                  { title: 'Organisation Health', value: `${overallOrgHealth}% Composite Score`, route: '/dashboard' },
+                  { title: 'Organisation Health', value: `$Not calculated Score`, route: '/dashboard' },
                   { title: 'Compliance Readiness', value: '99.2% (356 / 356 Checkpoints)', route: '/compliance' },
                   { title: 'Audit Readiness', value: '100% Evidence Mapped', route: '/auditor-portal' },
                   { title: 'NDIS Readiness', value: 'Core + High Intensity Ready', route: '/ndis-portal' },
                   { title: 'Aged Care Readiness', value: 'Standards 1–8 & SIRS Ready', route: '/compliance' },
-                  { title: 'Workforce Readiness', value: `${counts.employees} Staff · 100-Pt Verified`, route: '/our-employees' },
-                  { title: 'Governance Readiness', value: `${counts.policiesTotal} Policies · Safe Locked`, route: '/company-safe' },
-                  { title: 'Strategic Objectives', value: `${counts.goalsTotal} Active Objectives & KPIs`, route: '/projects' },
-                  { title: 'Enterprise Risks', value: `${counts.risksTotal} Risks (${counts.risksCritical} High/Critical)`, route: '/risks' },
-                  { title: 'Open Findings', value: `${counts.qualityItems} CAPA & Audit Actions`, route: '/quality' },
-                  { title: 'Open Incidents', value: `${counts.incidentsOpen} Active · Commission SLA`, route: '/incidents' },
+                  { title: 'Workforce Readiness', value: `${formatCount(counts.employees)} Staff · 100-Pt Verified`, route: '/our-employees' },
+                  { title: 'Governance Readiness', value: `${formatCount(counts.policiesTotal)} Policies · Safe Locked`, route: '/company-safe' },
+                  { title: 'Strategic Objectives', value: `${formatCount(counts.goalsTotal)} Active Objectives & KPIs`, route: '/projects' },
+                  { title: 'Enterprise Risks', value: `${formatCount(counts.risksTotal)} Risks (${formatCount(counts.risksCritical)} High/Critical)`, route: '/risks' },
+                  { title: 'Open Findings', value: `${formatCount(counts.qualityItems)} CAPA & Audit Actions`, route: '/quality' },
+                  { title: 'Open Incidents', value: `${formatCount(counts.incidentsOpen)} Active · Commission SLA`, route: '/incidents' },
                   { title: 'Board Actions', value: 'Monthly Board Pack & Sign-Off Ready', route: '/compliance' },
                 ].map((card) => (
                   <Link
@@ -780,8 +780,8 @@ export default function OrganisationalOperatingSystemCommand() {
                   `Missing Reviews (Tracked)`,
                   `Duplicate Records (0 Blocked)`,
                   `Expired Training (Synced)`,
-                  `Expired Qualifications (${counts.documentsExpiring})`,
-                  `Expired Certifications (${counts.documentsExpiring})`,
+                  `Expired Qualifications (${formatCount(counts.documentsExpiring)})`,
+                  `Expired Certifications (${formatCount(counts.documentsExpiring)})`,
                   `Expired Policies (0)`,
                   `Compliance Gaps (0)`,
                   `Incomplete Assessments (0)`,
