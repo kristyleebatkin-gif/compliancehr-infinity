@@ -8,7 +8,9 @@
       "enum": [
         "admin",
         "user",
+        "Guest",
         "Provider Administrator",
+        "Compliance Administrator",
         "Management",
         "Employee",
         "Compliance Manager",
