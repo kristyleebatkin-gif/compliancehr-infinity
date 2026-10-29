@@ -19,21 +19,8 @@ export default async function loadPersonalProfile(user) {
     try {
       const byEmail = await entity.filter({ email: user.email }, { limit: 1 });
       prof = byEmail?.items?.[0] || null;
-      if (!prof) {
-        const anyPage = await entity.list({ sort: '-created_date', limit: 1 });
-        prof = anyPage?.items?.[0] || (Array.isArray(anyPage) ? anyPage[0] : null) || null;
-      }
     } catch {
       prof = null;
-    }
-  }
-
-  if (!participant && !pProf) {
-    try {
-      const anyPart = await base44.entities.ParticipantProfile.list({ sort: '-created_date', limit: 1 });
-      pProf = anyPart?.items?.[0] || (Array.isArray(anyPart) ? anyPart[0] : null) || null;
-    } catch {
-      pProf = null;
     }
   }
 
