@@ -153,27 +153,27 @@ const EXECUTIVE_RESOURCE_SUITES = [
 export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }) {
   const [activeSuite, setActiveSuite] = useState(defaultSuite);
   const [kpi, setKpi] = useState({
-    staff: 0,
-    participants: 0,
-    shifts: 0,
-    tasks: 0,
-    incidents: 0,
-    risks: 0,
-    documents: 0,
-    policies: 0,
+    staff: null,
+    participants: null,
+    shifts: null,
+    tasks: null,
+    incidents: null,
+    risks: null,
+    documents: null,
+    policies: null,
   });
 
   const loadKpi = useCallback(async () => {
     const [staff, participants, shifts, tasks, incidents, risks, documents, policies] =
       await Promise.all([
-        base44.entities.StaffProfile.count().catch(() => 0),
-        base44.entities.ParticipantProfile.count().catch(() => 0),
-        base44.entities.Shift.count().catch(() => 0),
-        base44.entities.TodoTask.count().catch(() => 0),
-        base44.entities.Incident.count().catch(() => 0),
-        base44.entities.Risk.count().catch(() => 0),
-        base44.entities.EmployeeDocument.count().catch(() => 0),
-        base44.entities.Policy.count().catch(() => 0),
+        base44.entities.StaffProfile.count().catch(() => null),
+        base44.entities.ParticipantProfile.count().catch(() => null),
+        base44.entities.Shift.count().catch(() => null),
+        base44.entities.TodoTask.count().catch(() => null),
+        base44.entities.Incident.count().catch(() => null),
+        base44.entities.Risk.count().catch(() => null),
+        base44.entities.EmployeeDocument.count().catch(() => null),
+        base44.entities.Policy.count().catch(() => null),
       ]);
     setKpi({ staff, participants, shifts, tasks, incidents, risks, documents, policies });
   }, []);
@@ -210,7 +210,7 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
                   </span>
                 </div>
                 <h1 className="mt-1 text-lg sm:text-xl font-extrabold tracking-tight text-white">
-                  ComplianceHR Infinity — Executive Operations Centre &amp; Live Roster Hub
+                  ComplianceHR Infinity — Executive Operations Centre
                 </h1>
                 <p className="mt-0.5 text-[11px] font-medium text-white/95">
                   Software: ComplianceHR Infinity · Developer: Kristy Lee Whelan · Complete Control. Greater Confidence. Brighter Success.
@@ -241,14 +241,14 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
         <div className="bg-white p-3 space-y-3">
           <div className="grid auto-rows-fr grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-8 items-stretch">
             {[
-              { label: 'Active Staff', value: kpi.staff, sub: 'HR & Screening', path: '/our-employees' },
-              { label: 'Participants', value: kpi.participants, sub: 'NDIS Plans & Goals', path: '/our-participants' },
-              { label: 'Rostered Shifts', value: kpi.shifts, sub: 'Validated Coverage', path: '/roster' },
-              { label: 'Command Tasks', value: kpi.tasks, sub: 'Shared To-Do Board', path: '/tasks' },
-              { label: 'Incidents', value: kpi.incidents, sub: '24h/5d NDIS SLA', path: '/incidents' },
-              { label: 'Active Risks', value: kpi.risks, sub: 'ISO 31000 Controls', path: '/risks' },
-              { label: 'Vault Credentials', value: kpi.documents, sub: 'Expiry Monitored', path: '/documents' },
-              { label: 'Active Policies', value: kpi.policies, sub: 'Version Controlled', path: '/compliance' },
+              { label: 'Staff Records', value: kpi.staff, sub: 'Screening status not assessed here', path: '/our-employees' },
+              { label: 'Participant Records', value: kpi.participants, sub: 'Plan and goal status not assessed here', path: '/our-participants' },
+              { label: 'Shift Records', value: kpi.shifts, sub: 'Coverage status not assessed here', path: '/roster' },
+              { label: 'Task Records', value: kpi.tasks, sub: 'Open task workspace', path: '/tasks' },
+              { label: 'Incident Records', value: kpi.incidents, sub: 'Reporting deadlines not assessed here', path: '/incidents' },
+              { label: 'Risk Records', value: kpi.risks, sub: 'Controls not assessed here', path: '/risks' },
+              { label: 'Employee Documents', value: kpi.documents, sub: 'Document status not assessed here', path: '/documents' },
+              { label: 'Policy Records', value: kpi.policies, sub: 'Control status not assessed here', path: '/compliance' },
             ].map((item, idx) => {
               const headerBg = getHeaderView(idx);
               return (
@@ -266,7 +266,7 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
                         {item.label}
                       </span>
                       <span className="rounded-full bg-white px-1.5 py-0.2 text-[9.5px] font-black text-[#0A2B6D]">
-                        {item.value}
+                        {item.value ?? '—'}
                       </span>
                     </div>
                     <div className="flex min-h-[34px] flex-1 items-center justify-between gap-1 border-t border-[#0A2B6D]/10 bg-white px-1.5 py-1">
