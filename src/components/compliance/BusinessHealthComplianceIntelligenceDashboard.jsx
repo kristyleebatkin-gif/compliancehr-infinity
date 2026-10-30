@@ -23,40 +23,23 @@ import {
 const TOP_BORDER_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
 
+const formatRecordCount = (value) => value == null ? 'Unavailable' : value.toLocaleString();
+const formatScore = (value) => value == null ? 'Unassessed' : `${value}%`;
+
 const UNIFORM_SPRAY_BG =
   'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF';
 
-const TREND_DATA_2026 = [
-  { month: 'May 26', compliance: 94.2, health: 92.8, revenueK: 118, auditReadiness: 93 },
-  { month: 'Jun 26', compliance: 95.4, health: 94.1, revenueK: 126, auditReadiness: 95 },
-  { month: 'Jul 26', compliance: 96.5, health: 95.6, revenueK: 134, auditReadiness: 96 },
-  { month: 'Aug 26', compliance: 97.3, health: 96.8, revenueK: 141, auditReadiness: 97 },
-  { month: 'Sep 26', compliance: 98.1, health: 97.7, revenueK: 149, auditReadiness: 98 },
-  { month: 'Oct 26', compliance: 98.7, health: 98.4, revenueK: 158, auditReadiness: 99 },
-];
+const TREND_DATA_2026 = [];
 
-const MINI_RISK_SEVERITY_DATA = [
-  { level: 'Low', count: 8, fill: '#0072FF' },
-  { level: 'Med', count: 4, fill: '#5A00D6' },
-  { level: 'High', count: 2, fill: '#F97316' },
-  { level: 'Crit', count: 0, fill: '#EF4444' },
-];
+const MINI_RISK_SEVERITY_DATA = [];
 
-const MINI_RISK_CONTROL_DATA = [
-  { stage: 'Elim', pct: 96 },
-  { stage: 'Min', pct: 99 },
-  { stage: 'Isol', pct: 98 },
-  { stage: 'Train', pct: 100 },
-];
+const MINI_RISK_CONTROL_DATA = [];
 
 export default function BusinessHealthComplianceIntelligenceDashboard({ compact = false }) {
   const [liveCounts, setLiveCounts] = useState({ staff: null, participants: null, policies: null, openTasks: null, completedTasks: null, incidents: null, risks: null, certificates: null, drills: null, audits: null });
   const [selectedDomainId, setSelectedDomainId] = useState('governance');
   const [horizonFilter, setHorizonFilter] = useState('ALL');
   const [refreshing, setRefreshing] = useState(false);
-  const [litKpiIdx, setLitKpiIdx] = useState(4);
-  const [trafficStep, setTrafficStep] = useState(0);
-  const [riskWaveTick, setRiskWaveTick] = useState(0);
   const [dayLightSwitches, setDayLightSwitches] = useState({
     '90': true,
     '60': true,
@@ -67,25 +50,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
 
   const toggleDaySwitch = (dayKey) => {
     setDayLightSwitches((prev) => ({ ...prev, [dayKey]: !prev[dayKey] }));
-    setRiskWaveTick((prev) => prev + 1);
   };
-
-  // Live moving pulse so Risk Charts visibly move with real-time & user changes
-  useEffect(() => {
-    const waveTimer = setInterval(() => {
-      setRiskWaveTick((prev) => (prev + 1) % 12);
-    }, 3500);
-    return () => clearInterval(waveTimer);
-  }, []);
-
-  // Light up TWO tiles under Live Executive at a time for 30 seconds each, then go left to the next pair, cycling Green, Yellow & Red
-  useEffect(() => {
-    const timer30 = setInterval(() => {
-      setLitKpiIdx((prev) => (prev - 1 + 6) % 6);
-      setTrafficStep((prev) => (prev + 1) % 3);
-    }, 30000);
-    return () => clearInterval(timer30);
-  }, []);
 
   const loadLiveIntelligence = useCallback(async () => {
     setRefreshing(true);
@@ -112,7 +77,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
         staff: val(0), participants: val(1), policies: val(2), openTasks: val(3), completedTasks: val(4), incidents: val(5), risks: val(6), certificates: val(7), drills: val(8), audits: val(9),
       });
     } catch {
-      // Keep default executive benchmarks if guest/unauthenticated
+      // Counts that could not be loaded remain unavailable.
     } finally {
       setRefreshing(false);
     }
@@ -124,237 +89,61 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
 
   const intelligenceDomains = [
     {
-      id: 'governance',
-      name: 'NDIS Governance & Policy Control',
-      shortName: 'Governance',
-      standard: 'NDIS Core Module 2 · 356 Checkpoints',
-      score: 99.2,
-      status: 'Audit Ready',
-      colour: '#5A00D6',
-      icon: ShieldCheck,
-      route: '/compliance',
-      metricLabel: 'Controlled Policies & SOPs',
-      metricValue: `${liveCounts.policies} Active · 100% Current`,
-      detail: 'All 17 Audit Categories & 46 Module SOPs mapped to 2026 Practice Standards',
-      ActionItems: [
-        'Annual Governance & Legislative Register verified against 2026 NDIS Rules',
-        '100% Key Personnel conflict-of-interest & board quorum minutes ratified',
-        'Dual Master Audit Checklists (CHR-AUD-001 & CHR-AUD-002) active',
-      ],
+      id: 'governance', name: 'NDIS Governance & Policy Control', shortName: 'Governance',
+      standard: 'NDIS governance and policy records', colour: '#5A00D6', icon: ShieldCheck, route: '/compliance',
     },
     {
-      id: 'workforce',
-      name: 'Workforce & 100-Point HR Assurance',
-      shortName: 'HR & Screening',
-      standard: 'Worker Screening Rules & SCHADS',
-      score: 98.8,
-      status: '100% Cleared',
-      colour: '#0072FF',
-      icon: Users,
-      route: '/hr',
-      metricLabel: 'Cleared Staff & Credentials',
-      metricValue: `${liveCounts.staff} Staff · ${liveCounts.certificates} Certs`,
-      detail: '100% NDIS Worker Screening, Blue Card, Police Check & First Aid/CPR verified',
-      ActionItems: [
-        'Zero unscreened workers permitted on Shift Roster (Automated Roster Gate active)',
-        '14-Day & 30-Day automated credential expiry email/push sweeps running',
-        'Quarterly staff supervision & 360° performance appraisals tracked',
-      ],
+      id: 'workforce', name: 'Workforce & HR Assurance', shortName: 'HR & Screening',
+      standard: 'Worker screening and workforce records', colour: '#0072FF', icon: Users, route: '/hr',
     },
     {
-      id: 'participants',
-      name: 'Participant Care, Consents & Goals',
-      shortName: 'Participants',
-      standard: 'NDIS Core Modules 1 & 3 · Rights & Care',
-      score: 98.5,
-      status: 'Audit Ready',
-      colour: '#FF2E9A',
-      icon: HeartHandshake,
-      route: '/our-participants',
-      metricLabel: 'Active Participant Profiles',
-      metricValue: `${liveCounts.participants} Profiles · 3-Part Consents`,
-      detail: 'Service Agreements, 3-Part Consents (Sharing/Advocacy/Med) & 10-Weekly Notes',
-      ActionItems: [
-        'All active participants hold signed 2026 Service Agreements & Support Schedules',
-        '3-Part Informed Consent & Audit Opt-In/Declined flags enforced by RLS',
-        '10-Weekly progress note copies & 3-monthly plan reviews automated',
-      ],
+      id: 'participants', name: 'Participant Care, Consents & Goals', shortName: 'Participants',
+      standard: 'Participant support and profile records', colour: '#FF2E9A', icon: HeartHandshake, route: '/our-participants',
     },
     {
-      id: 'safety',
-      name: 'WHS, Incidents & NDIS Reportables',
-      shortName: 'WHS & Incidents',
-      standard: 'NDIS Incident Rules 2018 & WHS Act',
-      score: 97.9,
-      status: 'Zero Overdue SLA',
-      colour: '#FF2E9A',
-      icon: AlertTriangle,
-      route: '/incidents',
-      metricLabel: 'Incidents & Active Risk Controls',
-      metricValue: `${liveCounts.incidents} Incidents · ${liveCounts.risks} Risk Controls`,
-      detail: '24-Hour & 5-Day NDIS Commission notification timers & root-cause CAPA linked',
-      ActionItems: [
-        '100% of reportable incidents assessed within statutory 24-hour window',
-        'Individual & Home 6-monthly risk assessments linked to shift briefings',
-        'Pre-shift Take-5 safety checks and vehicle inspections logged daily',
-      ],
+      id: 'safety', name: 'WHS, Incidents & NDIS Reportables', shortName: 'WHS & Incidents',
+      standard: 'Risk and incident records', colour: '#FF2E9A', icon: AlertTriangle, route: '/incidents',
     },
     {
-      id: 'emergency',
-      name: 'Emergency Drills, Kits & Facility Safe',
-      shortName: 'Emergency & Kits',
-      standard: 'Emergency & Disaster Management Standard',
-      score: 99.0,
-      status: '6-Mo Verified',
-      colour: '#A100FF',
-      icon: Flame,
-      route: '/emergency-response',
-      metricLabel: 'Evacuation Drills & Kit Audits',
-      metricValue: `${liveCounts.drills} Drills · All Kits Green`,
-      detail: '6-Monthly Fire Drills, First Aid Kits, Natural Disaster Kits & PEEPs current',
-      ActionItems: [
-        '6-Monthly Evacuation Drills timed and debriefed across all sites',
-        'First Aid Kits, Smoke Alarms, Fire Extinguishers & MSDS registers in-date',
-        'Digital Visitor Sign-In/Out & Contractor screening active at reception',
-      ],
+      id: 'emergency', name: 'Emergency Drills, Kits & Facility Safety', shortName: 'Emergency & Kits',
+      standard: 'Emergency response records', colour: '#A100FF', icon: Flame, route: '/emergency-response',
     },
     {
-      id: 'finance',
-      name: 'Financial Health, NDIS Claims & Roster',
-      shortName: 'Finance & Roster',
-      standard: 'NDIS 2025–26 Price Guide & ATO Rules',
-      score: 98.4,
-      status: 'Balanced & Verified',
-      colour: '#0072FF',
-      icon: DollarSign,
-      route: '/invoicing',
-      metricLabel: '3-Way Claim Reconciliation',
-      metricValue: '99.4% Claim Accuracy · 4.2d DSO',
-      detail: 'Every NDIS invoice line reconciled against signed-off roster & shift note',
-      ActionItems: [
-        '3-Way Match: Rostered Shift → Completed Progress Note → NDIS Invoice Line',
-        'Real-time participant NDIS plan budget utilisation alerts',
-        'Automated bank statement reconciliation & SCHADS payroll award compliance',
-      ],
+      id: 'finance', name: 'Financial Health, NDIS Claims & Roster', shortName: 'Finance & Roster',
+      standard: 'Financial and roster records', colour: '#0072FF', icon: DollarSign, route: '/invoicing',
     },
     {
-      id: 'quality',
-      name: 'Quality (QMS), Complaints & Audits',
-      shortName: 'Quality & CIR',
-      standard: 'NDIS Complaints Rules & ISO 9001 QMS',
-      score: 98.2,
-      status: 'Continuous Improv.',
-      colour: '#5A00D6',
-      icon: Award,
-      route: '/quality',
-      metricLabel: 'Internal Audits & Closed Tasks',
-      metricValue: `${liveCounts.audits} Audits · ${liveCounts.completedTasks} Closed Actions`,
-      detail: '24h Complaint SLA, Procedural Fairness & Continuous Improvement Register',
-      ActionItems: [
-        '100% of complaints acknowledged within 24 hours with independent advocate offer',
-        'Every incident, audit finding & suggestion auto-routed to Continuous Improvement',
-        'Weekly & Monthly Board Quality Intelligence PDF packs generated automatically',
-      ],
+      id: 'quality', name: 'Quality, Complaints & Audits', shortName: 'Quality & CIR',
+      standard: 'Audit and quality records', colour: '#5A00D6', icon: Award, route: '/quality',
     },
     {
-      id: 'vault',
-      name: 'Document Vault, Privacy & Data Control',
-      shortName: 'Vault & Privacy',
-      standard: 'Privacy Act 1988, NDB Scheme & RLS',
-      score: 99.6,
-      status: 'Zero Data Breaches',
-      colour: '#FF2E9A',
-      icon: Lock,
-      route: '/documents',
-      metricLabel: '2026 Master Docs & Binders',
-      metricValue: '125+ Docs · 6 Binders · 0 Breaches',
-      detail: 'Strict Role-Based Access (RLS), Private Signed URLs & Immutable Audit Trail',
-      ActionItems: [
-        'All 125+ 2026-compliant templates & 12 A4 printable office masters active',
-        'Strict Row-Level Security (RLS) isolates Auditor, Staff & Participant records',
-        'Notifiable Data Breach (NDB) register at zero open breaches; full user action log',
-      ],
+      id: 'vault', name: 'Document Vault, Privacy & Data Control', shortName: 'Vault & Privacy',
+      standard: 'Document and privacy records', colour: '#FF2E9A', icon: Lock, route: '/documents',
     },
-  ];
+  ].map((domain) => {
+    const metrics = {
+      governance: `${formatRecordCount(liveCounts.policies)} policy records`,
+      workforce: `${formatRecordCount(liveCounts.staff)} staff records · ${formatRecordCount(liveCounts.certificates)} certificate records`,
+      participants: `${formatRecordCount(liveCounts.participants)} participant records`,
+      safety: `${formatRecordCount(liveCounts.incidents)} incident records · ${formatRecordCount(liveCounts.risks)} risk records`,
+      emergency: `${formatRecordCount(liveCounts.drills)} emergency drill records`,
+      finance: 'Financial reconciliation data unavailable in this view',
+      quality: `${formatRecordCount(liveCounts.audits)} audit records · ${formatRecordCount(liveCounts.completedTasks)} completed task records`,
+      vault: 'Document and breach assessment data unavailable in this view',
+    };
+    return {
+      ...domain,
+      score: null,
+      status: 'Unassessed',
+      metricLabel: 'Source record counts',
+      metricValue: metrics[domain.id],
+      detail: 'This dashboard shows source-record counts only. Compliance status requires linked, verified evidence.',
+      ActionItems: [],
+    };
+  });
 
   // Ordered descending by days (90 -> 60 -> 30 -> 21 -> 14): Largest amount of days is RED, then ORANGE, GREEN, BLUE, WHITE real lights
-  const predictiveAlerts = [
-    {
-      id: 'AL-5',
-      dayKey: '90',
-      days: 90,
-      horizon: '90 DAYS',
-      lightName: 'RED LIGHT',
-      lightHex: '#EF4444',
-      lightGlow: '0 0 14px 4px rgba(239, 68, 68, 0.95)',
-      severity: 'Critical Horizon',
-      colour: '#EF4444',
-      title: 'NDIS Mid-Term Quality & Safeguards Commission Readiness Mock Audit',
-      action: 'Auto-scheduled · 356 Checkpoints at 98.7% verified readiness',
-      owner: 'Provider Administrator',
-      route: '/compliance',
-    },
-    {
-      id: 'AL-4',
-      dayKey: '60',
-      days: 60,
-      horizon: '60 DAYS',
-      lightName: 'ORANGE LIGHT',
-      lightHex: '#F97316',
-      lightGlow: '0 0 14px 4px rgba(249, 115, 22, 0.95)',
-      severity: 'High Horizon',
-      colour: '#F97316',
-      title: 'Q4 6-Monthly Facility Fire Evacuation Drill & First Aid Kit Restock',
-      action: 'Auto-calendar sync active · Kit checklist (CHR-2026-SAF-03) assigned',
-      owner: 'Facility Warden',
-      route: '/emergency-response',
-    },
-    {
-      id: 'AL-2',
-      dayKey: '30',
-      days: 30,
-      horizon: '30 DAYS',
-      lightName: 'GREEN LIGHT',
-      lightHex: '#10B981',
-      lightGlow: '0 0 14px 4px rgba(16, 185, 129, 0.95)',
-      severity: 'Medium Horizon',
-      colour: '#10B981',
-      title: '4 Participant 10-Weekly Progress Snapshots & Plan Budget Reviews Due',
-      action: 'Auto-filled 2026 Progress Review Forms queued for Team Leader sign-off',
-      owner: 'Team Leader / Support Coordination',
-      route: '/our-participants',
-    },
-    {
-      id: 'AL-3',
-      dayKey: '21',
-      days: 21,
-      horizon: '21 DAYS',
-      lightName: 'BLUE LIGHT',
-      lightHex: '#0072FF',
-      lightGlow: '0 0 14px 4px rgba(0, 114, 255, 0.95)',
-      severity: 'Active Horizon',
-      colour: '#0072FF',
-      title: '6-Monthly Home Environment Risk Assessment & PEEP Check Cycle',
-      action: 'Auto-queued on Review Due Board (CHR-2026-SAF-02 printable sheet ready)',
-      owner: 'Compliance & Safety Officer',
-      route: '/risks',
-    },
-    {
-      id: 'AL-1',
-      dayKey: '14',
-      days: 14,
-      horizon: '14 DAYS',
-      lightName: 'WHITE LIGHT',
-      lightHex: '#FFFFFF',
-      lightGlow: '0 0 16px 5px rgba(255, 255, 255, 1), 0 0 8px 2px #00C6FF',
-      severity: 'Immediate',
-      colour: '#0A2B6D',
-      title: '2 Staff HLTAID009 CPR Certificates Approaching Annual Renewal',
-      action: 'Auto-reminder sent · Refresher booked via Training & LMS Centre',
-      owner: 'Human Resources Manager',
-      route: '/certificates',
-    },
-  ];
+  const predictiveAlerts = [];
 
   const filteredAlerts =
     horizonFilter === 'ALL'
@@ -368,52 +157,46 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
 
   const topKpis = [
     {
-      category: 'Governance & Audit',
-      icon: ShieldCheck,
-      label: 'Overall Business & Compliance Health',
-      value: `${overallScore}%`,
-      sub: 'Audit-Ready across 17 Categories & 356 Checkpoints',
-      badge: '+2.4% vs Q3',
+      category: 'Governance & Audit', icon: ShieldCheck,
+      label: 'Governance & Policy Records',
+      value: formatRecordCount(liveCounts.policies),
+      sub: `${formatRecordCount(liveCounts.audits)} internal audit records`,
+      badge: 'Status unassessed',
     },
     {
-      category: 'People & HR Screening',
-      icon: Users,
-      label: 'Workforce 100-Point Screening',
-      value: '100%',
-      sub: `${liveCounts.staff} Active Staff · ${liveCounts.certificates} Verified Credentials`,
-      badge: 'Zero Unscreened Shifts',
+      category: 'People & HR', icon: Users,
+      label: 'Workforce Records',
+      value: formatRecordCount(liveCounts.staff),
+      sub: `${formatRecordCount(liveCounts.certificates)} certificate records`,
+      badge: 'Screening unassessed',
     },
     {
-      category: 'Care & Consents',
-      icon: HeartHandshake,
-      label: 'Participant Consents & Care Plans',
-      value: '99.1%',
-      sub: `${liveCounts.participants} Participants · 3-Part Consents Current`,
-      badge: '10-Wk Reviews Active',
+      category: 'Care & Consents', icon: HeartHandshake,
+      label: 'Participant Records',
+      value: formatRecordCount(liveCounts.participants),
+      sub: 'Consent and support evidence not assessed here',
+      badge: 'Status unassessed',
     },
     {
-      category: 'Safety & WHS SLA',
-      icon: AlertTriangle,
-      label: 'WHS, Incident & Reportable SLA',
-      value: '100% On-Time',
-      sub: `${liveCounts.incidents} Incidents · ${liveCounts.risks} Active Risk Controls`,
-      badge: '24h / 5d SLA Met',
+      category: 'Safety & WHS', icon: AlertTriangle,
+      label: 'Incident & Risk Records',
+      value: formatRecordCount(liveCounts.incidents),
+      sub: `${formatRecordCount(liveCounts.risks)} risk records`,
+      badge: 'SLA status unassessed',
     },
     {
-      category: 'Finance & Claims',
-      icon: DollarSign,
+      category: 'Finance & Claims', icon: DollarSign,
       label: 'NDIS Billing & Financial Health',
-      value: '99.4%',
-      sub: '3-Way Roster, Note & Invoice Match · 4.2d DSO',
-      badge: 'PRODA Claim Ready',
+      value: 'Unassessed',
+      sub: 'Claim reconciliation data is not available in this view',
+      badge: 'Status unassessed',
     },
     {
-      category: 'Tasks & Quality',
-      icon: CheckCircle2,
-      label: 'Action & Task Closure Velocity',
-      value: `${liveCounts.completedTasks} Closed`,
-      sub: `${liveCounts.openTasks} Open Tasks · ${liveCounts.audits} Internal Audits`,
-      badge: '96.1% On-Time SLA',
+      category: 'Tasks & Quality', icon: CheckCircle2,
+      label: 'Task & Audit Records',
+      value: `${formatRecordCount(liveCounts.completedTasks)} completed tasks`,
+      sub: `${formatRecordCount(liveCounts.openTasks)} open tasks · ${formatRecordCount(liveCounts.audits)} audits`,
+      badge: 'Counts only',
     },
   ];
 
@@ -527,34 +310,22 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
           const KpiIcon = k.icon;
           const sym = getSymbolView(idx);
           const isGovernanceTile = idx === 0;
-          const isLit = idx === litKpiIdx || idx === (litKpiIdx + 1) % 6;
-          const trafficPalette = [
-            { label: 'GREEN', bg: '#10B981', ring: 'rgba(16, 185, 129, 0.85)' },
-            { label: 'YELLOW', bg: '#EAB308', ring: 'rgba(234, 179, 8, 0.85)' },
-            { label: 'RED', bg: '#EF4444', ring: 'rgba(239, 68, 68, 0.85)' },
-          ][trafficStep % 3];
+          const isLit = false;
+          const trafficPalette = { ring: 'rgba(71, 85, 105, 0.25)' };
           const outerBg = isGovernanceTile
             ? '#EAB308'
-            : isLit
-              ? trafficPalette.bg
-              : getHeaderView(idx);
+            : getHeaderView(idx);
           return (
             <div
               key={k.label}
-              onClick={() => {
-                setLitKpiIdx(idx);
-                setTrafficStep((prev) => (prev + 1) % 3);
-              }}
               className={`flex h-full cursor-pointer rounded-xl border-2 border-[#0A2B6D] p-[3px] transition-all duration-300 ${
-                isLit || isGovernanceTile ? '-translate-y-0.5 shadow-md' : 'shadow-2xs'
+                isGovernanceTile ? '-translate-y-0.5 shadow-md' : 'shadow-2xs'
               }`}
               style={{
                 background: outerBg,
                 boxShadow: isGovernanceTile
                   ? '0 0 16px 4px rgba(234, 179, 8, 0.95), 0 0 10px 2px #FFFFFF'
-                  : isLit
-                    ? `0 0 0 3px ${trafficPalette.ring}, 0 0 14px 3px rgba(255, 255, 255, 0.95)`
-                    : '0 0 8px 2px rgba(255, 255, 255, 0.85)',
+                  : '0 0 8px 2px rgba(255, 255, 255, 0.85)',
               }}
             >
               <div className="flex h-full w-full flex-col items-center justify-between gap-1 rounded-[8px] bg-white p-1 text-center">
@@ -575,10 +346,10 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                     />
                     <KpiIcon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
                     <span className="truncate text-[7px] font-extrabold uppercase tracking-tight text-white" style={{ color: '#FFFFFF' }}>
-                      {isGovernanceTile ? 'LIVE TRACKER · YELLOW' : k.category}
+                      {k.category}
                     </span>
                   </span>
-                  <span className="text-[6.5px] font-extrabold text-white" style={{ color: '#FFFFFF' }}>SYS READY</span>
+                  <span className="text-[6.5px] font-extrabold text-white" style={{ color: '#FFFFFF' }}>UNASSESSED</span>
                 </div>
 
                 {/* Writing Box 1: Pure White Background */}
@@ -697,9 +468,9 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                                   : '0 0 6px 2px #10B981',
                               }}
                             />
-                            <span>{isGovernance ? 'LIVE TRACKER · YELLOW' : 'LIVE TRACKER'}</span>
+                            <span>{isGovernance ? 'ASSESSMENT · UNASSESSED' : 'ASSESSMENT · UNASSESSED'}</span>
                           </span>
-                          <span className="text-[7px] font-extrabold text-[#0A2B6D]">{dom.score}%</span>
+                          <span className="text-[7px] font-extrabold text-[#0A2B6D]">{formatScore(dom.score)}</span>
                         </div>
 
                         {/* App-Design Coloured Header Bar With Glowing White Light */}
@@ -717,7 +488,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                           />
                           <DomainIcon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
                           <span className="truncate text-white" style={{ color: '#FFFFFF' }}>
-                            {dom.shortName} · {dom.score}%
+                            {dom.shortName} · {formatScore(dom.score)}
                           </span>
                         </div>
 
@@ -741,7 +512,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                             <div
                               className="h-full rounded-full"
                               style={{
-                                width: `${dom.score}%`,
+                                width: `${formatScore(dom.score)}`,
                                 background: isGovernance ? '#EAB308' : TOP_BORDER_GRADIENT,
                               }}
                             />
@@ -825,17 +596,17 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                         className="h-2.5 w-2.5 shrink-0 rounded-full border border-[#0A2B6D]/40 bg-[#EAB308]"
                         style={{ boxShadow: '0 0 8px 3px #EAB308' }}
                       />
-                      <span>LIVE TRACKER · GOVERNANCE YELLOW LIT ✦</span>
+                      <span>ASSESSMENT · UNASSESSED LIT ✦</span>
                     </span>
                     <div className="flex items-center gap-1.5">
                       <div className="h-1.5 w-14 overflow-hidden rounded-full border border-[#0A2B6D]/25 bg-white">
                         <div
                           className="h-full rounded-full"
-                          style={{ width: `${selectedDomain.score}%`, background: '#EAB308' }}
+                          style={{ width: `${formatScore(selectedDomain.score)}`, background: '#EAB308' }}
                         />
                       </div>
                       <span className="text-[8px] font-extrabold text-[#0A2B6D]">
-                        {selectedDomain.score}%
+                        {formatScore(selectedDomain.score)}
                       </span>
                     </div>
                   </div>
@@ -859,7 +630,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                           className="font-editorial text-xs sm:text-sm font-extrabold uppercase tracking-wide text-[#0A2B6D] truncate"
                           style={{ color: '#0A2B6D' }}
                         >
-                          SELECTED · NDIS {selectedDomain.shortName.toUpperCase()} ({selectedDomain.score}%) · YELLOW LIT
+                          SELECTED · {selectedDomain.shortName.toUpperCase()} · {formatScore(selectedDomain.score)}
                         </span>
                       </div>
                     </div>
@@ -868,7 +639,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                     <div className="flex w-full items-center justify-center gap-1 rounded-lg border border-[#0A2B6D]/20 bg-white px-2 py-0.5 text-center whitespace-nowrap overflow-hidden">
                       <Sparkles className="h-3 w-3 shrink-0 text-[#0A2B6D]" />
                       <span className="truncate text-[8.5px] font-extrabold text-[#0A2B6D]">
-                        AI Insight: {selectedDomain.name} verified at {selectedDomain.score}% ({selectedDomain.metricValue}).
+                        Assessment: {formatScore(selectedDomain.score)} · {selectedDomain.metricValue}.
                       </span>
                     </div>
 
@@ -889,45 +660,15 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                           className="truncate text-[8px] font-extrabold uppercase tracking-wide text-[#0A2B6D]"
                           style={{ color: '#0A2B6D' }}
                         >
-                          RED ALERT LIVE · {selectedDomain.ActionItems[0]}
+                          Assessment status · {selectedDomain.status}
                         </span>
                       </div>
                     </div>
 
                     {/* 4. SMALL FLAT SCREEN WITH TWO LIVE MOVING RISK CHARTS + GLOWING WHITE LIGHTS */}
                     {(() => {
-                      const domainIndex = Math.max(0, intelligenceDomains.findIndex((d) => d.id === selectedDomain.id));
-                      const activeSwitchCount = Object.values(dayLightSwitches).filter(Boolean).length;
-                      const waveOffset = (riskWaveTick + domainIndex + activeSwitchCount) % 4;
-                      const liveSeverityData = [
-                        {
-                          level: 'Low',
-                          count: Math.max(4, (liveCounts.risks || 14) - 4 + ((waveOffset + 1) % 3)),
-                          fill: '#0072FF',
-                        },
-                        {
-                          level: 'Med',
-                          count: Math.max(2, 3 + ((waveOffset + domainIndex) % 4)),
-                          fill: '#5A00D6',
-                        },
-                        {
-                          level: 'High',
-                          count: Math.max(1, (liveCounts.incidents || 2) + (waveOffset % 2)),
-                          fill: '#F97316',
-                        },
-                        {
-                          level: 'Crit',
-                          count: waveOffset === 3 ? 1 : 0,
-                          fill: '#EF4444',
-                        },
-                      ];
-                      const baseScore = Math.round(selectedDomain.score);
-                      const liveControlData = [
-                        { stage: 'Elim', pct: Math.min(100, Math.max(92, baseScore - 2 + (waveOffset % 3))) },
-                        { stage: 'Min', pct: Math.min(100, Math.max(94, baseScore - 1 + ((waveOffset + 1) % 2))) },
-                        { stage: 'Isol', pct: Math.min(100, Math.max(95, baseScore - (waveOffset % 2))) },
-                        { stage: 'Train', pct: 100 },
-                      ];
+                      const liveSeverityData = [];
+                      const liveControlData = [];
 
                       return (
                         <div className="flex flex-col items-center w-full">
@@ -945,18 +686,18 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                                   style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF' }}
                                 />
                                 <Monitor className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
-                                <span style={{ color: '#FFFFFF' }}>LIVE INTERACTIVE RISK CHARTS · {selectedDomain.shortName.toUpperCase()}</span>
+                                <span style={{ color: '#FFFFFF' }}>RISK RECORDS · {selectedDomain.shortName.toUpperCase()}</span>
                               </span>
                               <button
                                 type="button"
-                                onClick={() => setRiskWaveTick((prev) => prev + 1)}
+                                onClick={loadLiveIntelligence}
                                 className="inline-flex items-center gap-1 rounded-full bg-white px-2 py-0 text-[7px] font-extrabold text-[#0A2B6D]"
                               >
                                 <span
                                   className="h-1.5 w-1.5 rounded-full bg-[#10B981]"
                                   style={{ boxShadow: '0 0 6px 2px #10B981' }}
                                 />
-                                <span>Pulse Live ↻</span>
+                                <span>Refresh counts</span>
                               </button>
                             </div>
 
@@ -971,7 +712,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                                     />
                                     <span>1. Risk Severity</span>
                                   </span>
-                                  <span>{liveSeverityData.reduce((s, d) => s + d.count, 0)} Active</span>
+                                  <span>{formatRecordCount(liveCounts.risks)} records · severity unassessed</span>
                                 </div>
                                 <div className="h-12 w-full">
                                   <ResponsiveContainer width="100%" height="100%">
@@ -1005,7 +746,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                                     />
                                     <span>2. Control (%)</span>
                                   </span>
-                                  <span>{liveControlData[1].pct}%</span>
+                                  <span>Unassessed</span>
                                 </div>
                                 <div className="h-12 w-full">
                                   <ResponsiveContainer width="100%" height="100%">
@@ -1079,7 +820,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                         </div>
                       </div>
 
-                      {/* Right Column: 6 Digital Light Live Trackers With Pure White Writing Boxes */}
+                      {/* Right Column: 6 Module shortcuts With Pure White Writing Boxes */}
                       <div
                         className="flex rounded-lg p-[2.5px] shadow-2xs"
                         style={{ background: getHeaderView(5) }}
@@ -1091,9 +832,9 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                                 className="h-2 w-2 shrink-0 rounded-full border border-[#0A2B6D]/30 bg-white"
                                 style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF' }}
                               />
-                              <span>Digital Light Live Trackers</span>
+                              <span>Module shortcuts</span>
                             </span>
-                            <span className="text-[7px] font-extrabold text-[#0A2B6D]">6 LIVE</span>
+                            <span className="text-[7px] font-extrabold text-[#0A2B6D]">{rightTrackerItems.length} areas</span>
                           </div>
 
                           <div className="grid grid-cols-2 gap-1">
@@ -1121,7 +862,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                                   <div className="mt-0.5 h-1 w-full overflow-hidden rounded-full bg-white border border-[#0A2B6D]/15">
                                     <div
                                       className="h-full rounded-full"
-                                      style={{ width: `${rt.trackerPct}%`, background: TOP_BORDER_GRADIENT }}
+                                      style={{ width: '0%', background: TOP_BORDER_GRADIENT }}
                                     />
                                   </div>
                                 </Link>
@@ -1135,9 +876,9 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                     {/* 6. THREE DEVICES ROW (50% COMPACT): PHONE, PC MONITOR, IPAD — Pure White Inside Writing Boxes */}
                     <div className="grid grid-cols-3 gap-1.5 items-stretch">
                       {[
-                        { tag: '01 · PHONE', val: '27 Oct · 24°C', to: null },
-                        { tag: '02 · PC NDIS', val: '2026 Price Guide', to: '/ndis-updates' },
-                        { tag: '03 · IPAD', val: 'Sydney 24°C Clear', to: null },
+                        { tag: '01 · PHONE', val: 'Current device data unavailable', to: null },
+                        { tag: '02 · PC NDIS', val: 'NDIS update link', to: '/ndis-updates' },
+                        { tag: '03 · IPAD', val: 'Weather data unavailable', to: null },
                       ].map((dev, dIdx) => (
                         <div
                           key={dev.tag}
@@ -1173,7 +914,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                   <div className="w-full space-y-1 pt-0.5">
                     <div className="flex w-full items-center justify-center gap-1.5 rounded-full border border-[#0A2B6D]/25 bg-white px-2.5 py-0.5 text-[8px] font-extrabold text-[#0A2B6D] whitespace-nowrap">
                       <Calendar className="h-2.5 w-2.5 text-[#0A2B6D]" />
-                      <span>Date: Tuesday, 27 October 2026 · Live Verified</span>
+                      <span>Report date: ${new Date().toLocaleDateString('en-AU')} · Source counts only</span>
                     </div>
 
                     <div className="grid w-full grid-cols-2 gap-1.5">
@@ -1252,7 +993,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
               </div>
 
               <div className="rounded-[6px] bg-white px-2 py-0.5 text-center text-[8px] font-extrabold text-[#0A2B6D] whitespace-nowrap">
-                Historical Readiness and Billing Trend · No verified trend data available
+                Historical compliance and billing trend · Source data unavailable
               </div>
 
               <div className="h-24 w-full rounded-[6px] bg-white p-1">
@@ -1302,7 +1043,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                 />
                 <ShieldCheck className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
                 <span className="truncate text-[9px] font-extrabold uppercase tracking-wider" style={{ color: '#FFFFFF' }}>
-                  8-Domain Compliance Benchmark (%)
+                  Compliance assessment by domain
                 </span>
                 <span
                   className="h-2.5 w-2.5 shrink-0 rounded-full border border-white bg-white"
@@ -1311,7 +1052,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
               </div>
 
               <div className="rounded-[6px] bg-white px-2 py-0.5 text-center text-[8px] font-extrabold text-[#0A2B6D] whitespace-nowrap">
-                Every Department Exceeds the 95% NDIS Audit Threshold
+                Verified domain scores are not available in this view
               </div>
 
               <div className="h-24 w-full rounded-[6px] bg-white p-1">
@@ -1351,14 +1092,14 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
               >
                 <span className="inline-flex items-center gap-1 text-[8.5px] font-extrabold uppercase tracking-wider text-white">
                   <ShieldCheck className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-                  <span style={{ color: '#FFFFFF' }}>Predictive 90/60/30/21/14d Radar</span>
+                  <span style={{ color: '#FFFFFF' }}>Upcoming record alerts</span>
                 </span>
                 <span className="inline-flex items-center gap-1 text-[7.5px] font-extrabold text-white">
                   <span
                     className="h-2 w-2 rounded-full bg-white"
                     style={{ boxShadow: '0 0 8px 2px #FFFFFF' }}
                   />
-                  SPOTLIGHTS ON
+                  SOURCE DATA
                 </span>
               </div>
 
@@ -1425,6 +1166,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
 
               {/* 50% Smaller Predictive Alert Tiles — Pink/Blue/Purple Spray & Dark Blue Writing Inside */}
               <div className="space-y-1 max-h-32 overflow-y-auto pr-0.5">
+                {filteredAlerts.length === 0 && <p className="rounded-md border border-slate-200 bg-slate-50 px-2 py-2 text-center text-[8px] font-semibold text-slate-600">No upcoming records are loaded. Review due dates in the source modules.</p>}
                 {filteredAlerts.map((al, aIdx) => {
                   const isLightOn = dayLightSwitches[al.dayKey] !== false;
                   return (
