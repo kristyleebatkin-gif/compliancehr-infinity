@@ -16,9 +16,11 @@ const TASK_PENDING = ['Pending', 'Pending Approval', 'In Progress', 'Open', 'Ove
 export default function StaffProgressDashboard({ embedded = false, search = '' }) {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState('');
 
   const load = useCallback(async () => {
     setLoading(true);
+    setLoadError('');
     try {
       const term = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const ownerQuery = term ? { assigned_to: { $regex: term, $options: 'i' } } : {};
@@ -46,6 +48,9 @@ export default function StaffProgressDashboard({ embedded = false, search = '' }
         tasksCompleted: tasksDoneMap[name] || 0,
         tasksPending: tasksPendingMap[name] || 0,
       })));
+    } catch (error) {
+      setRows([]);
+      setLoadError(error?.message || 'Unable to load staff progress. Retry to try again.');
     } finally {
       setLoading(false);
     }
@@ -84,6 +89,8 @@ export default function StaffProgressDashboard({ embedded = false, search = '' }
         <div className="flex items-center justify-center gap-2 py-16 text-sm text-muted-foreground">
           <Loader2 className="h-5 w-5 animate-spin" /> Loading staff progress…
         </div>
+      ) : loadError ? (
+        <div role="alert" className="rounded-xl border border-destructive/30 bg-destructive/5 p-4 text-sm text-destructive">{loadError} <button type="button" className="ml-2 underline" onClick={load}>Retry</button></div>
       ) : (
         <>
           <StaffComplianceFlags />
