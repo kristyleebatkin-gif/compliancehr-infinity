@@ -333,11 +333,11 @@ function Rostering({ profile, profileKind, ourView = false, embedded = false } =
             </>
           }
           small={[
-            ['Shifts this week', stats.week],
-            ['Completed this week', stats.completed],
-            ['Unfilled (next 14 days)', stats.unfilled],
-            ['Awaiting approval', stats.pending],
-            ['Awaiting confirmation', stats.awaitingConfirmation],
+            ['Shifts this week', stats?.week],
+            ['Completed this week', stats?.completed],
+            ['Unfilled (next 14 days)', stats?.unfilled],
+            ['Awaiting approval', stats?.pending],
+            ['Awaiting confirmation', stats?.awaitingConfirmation],
           ].map(([label, value]) => (
             <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{stats ? value : statsError ? '—' : '…'}</p></div>
           ))}
