@@ -808,20 +808,9 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                                       <RtIcon className="h-2 w-2 shrink-0 text-[#0A2B6D]" />
                                       <span className="truncate">{rt.label}</span>
                                     </span>
-                                    <span
-                                      className="h-1.5 w-1.5 shrink-0 rounded-full"
-                                      style={{
-                                        backgroundColor: rt.lightColor,
-                                        boxShadow: `0 0 4px 1px ${rt.lightColor}`,
-                                      }}
-                                    />
+                                    <span className="shrink-0 text-[6px] font-semibold text-slate-500">Open</span>
                                   </div>
-                                  <div className="mt-0.5 h-1 w-full overflow-hidden rounded-full bg-white border border-[#0A2B6D]/15">
-                                    <div
-                                      className="h-full rounded-full"
-                                      style={{ width: '0%', background: TOP_BORDER_GRADIENT }}
-                                    />
-                                  </div>
+
                                 </Link>
                               );
                             })}
