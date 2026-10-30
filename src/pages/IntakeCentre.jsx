@@ -50,7 +50,7 @@ function ReadinessRing({ value, total, available }) {
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="font-display text-xl font-extrabold tabular-nums text-white">{available ? `${pct}%` : '—'}</span>
+        <span className="font-display text-xl font-extrabold tabular-nums text-white">{available && total > 0 ? `${pct}%` : '—'}</span>
         <span className="text-[10px] font-bold uppercase tracking-wider text-white/70">for review</span>
       </div>
     </div>
