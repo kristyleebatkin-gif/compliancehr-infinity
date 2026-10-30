@@ -24,6 +24,7 @@ export default function KeyContacts({ readOnly = false } = {}) {
   const { toast } = useToast();
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState('');
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState(null);
   const [saving, setSaving] = useState(false);
@@ -33,9 +34,13 @@ export default function KeyContacts({ readOnly = false } = {}) {
 
   const load = useCallback(async () => {
     setLoading(true);
+    setLoadError('');
     try {
-      const page = await base44.entities.Contact.filter({}, { sort: '-created_date', limit: 100 });
-      setContacts(page.items);
+      const rows = await fetchAllRecords(base44.entities.Contact, {}, '-created_date');
+      setContacts(rows);
+    } catch (error) {
+      setContacts([]);
+      setLoadError(error?.message || 'Unable to load key contacts. Retry to try again.');
     } finally {
       setLoading(false);
     }
@@ -93,7 +98,7 @@ export default function KeyContacts({ readOnly = false } = {}) {
         search={<ModuleSearchBar value={query} onChange={setQuery} placeholder="Search contacts…" />}
         actions={<>
           {!readOnly && <Button onClick={openNew}><Plus className="mr-2 h-4 w-4" />Add key personnel contact</Button>}
-          <Button variant="outline" onClick={exportContacts} disabled={loading || contacts.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
+          <Button variant="outline" onClick={exportContacts} disabled={loading || Boolean(loadError) || contacts.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
           {readOnly && <p className="text-xs text-muted-foreground">View only — key personnel contacts are managed in Staff and Participant profiles.</p>}
         </>}
         small={[
@@ -103,12 +108,14 @@ export default function KeyContacts({ readOnly = false } = {}) {
         ].map(([label, value]) => (
           <div key={label}>
             <p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p>
-            <p className="mt-1 text-2xl font-bold tabular-nums">{value}</p>
+            <p className="mt-1 text-2xl font-bold tabular-nums">{loading ? '…' : loadError ? '—' : value}</p>
           </div>
         ))}
       >
       {loading ? (
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
+      ) : loadError ? (
+        <div role="alert" className="rounded-xl border border-destructive/30 bg-destructive/5 p-4 text-sm text-destructive">{loadError} <button type="button" className="ml-2 underline" onClick={load}>Retry</button></div>
       ) : contacts.length === 0 ? (
         <EmptyState icon={ContactIcon} modulePath="/key-contacts" title="No key personnel contacts yet" message="Add your first contact to build the register." />
       ) : (
