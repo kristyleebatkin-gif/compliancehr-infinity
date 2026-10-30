@@ -86,7 +86,7 @@ const Chip = ({ children }) => <li className="break-words rounded-md bg-white px
 export default function ComplianceSchedulesDashboard() {
   return <EmployeeProfileSection title="NDIS Compliance Schedule & Registers Dashboard" tone="red" defaultOpen>
     <div className="space-y-3">
-      <p className="rounded-lg bg-white p-3 text-sm leading-relaxed text-black">Schedule reference only. Profile reviews are due every 3 calendar months and staff training every 12 calendar months under provider policy. A request or assignment is not evidence of completion. Reminder delivery and completion evidence must be checked in the linked records.</p>
+      <p className="rounded-lg bg-white p-3 text-sm leading-relaxed text-black">Schedule reference only. The cycles below describe expected controls; they do not confirm that reminders, escalations, registers, or evidence are configured or complete. Verify current settings and source records. Profile reviews are due every 3 calendar months and staff training every 12 calendar months under provider policy. An assignment is not evidence of completion.</p>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {CADENCES.map((cadence) => <div key={cadence.title} className={`rounded-lg ${cadence.tone} p-3`}>
           <p className="text-xs font-bold text-black">{cadence.title}</p>
@@ -107,15 +107,15 @@ export default function ComplianceSchedulesDashboard() {
             <Chip>Every action recorded on completion as evidence and corrective action</Chip>
             <Chip>All meetings documented (minutes, attendees, actions)</Chip>
             <Chip>Managers receive a copy of all incidents, risks, issues, concerns, tasks, corrective actions, feedback and follow-ups; most need a follow-up review completed and recorded</Chip>
-            <Chip>Built (2026-10-22): every incident, risk (any rating) and feedback is auto-routed to a manager copy the moment it is recorded</Chip>
+            <Chip>Routing requirement: verify that incidents, risks and feedback are routed to management and check delivery records.</Chip>
           </ul>
         </div>
         <div className="flex flex-col gap-3">
           <div className="rounded-lg bg-brand/10 p-3">
             <p className="text-xs font-bold text-black">NDIS Registration Audits</p>
             <ul className="mt-1.5 space-y-1.5">
-              <Chip>Evidence pack and registration groups kept audit-ready</Chip>
-              <Chip>Drawing on the safety checks, drills, audits, registers and business documents above</Chip>
+              <Chip>Audit readiness is not assessed in this panel.</Chip>
+              <Chip>Review source records to confirm evidence, registration groups, currency, approvals and links.</Chip>
             </ul>
           </div>
           <div className="rounded-lg bg-chart-4/10 p-3">
@@ -129,7 +129,7 @@ export default function ComplianceSchedulesDashboard() {
         </div>
       </div>
 
-      <p className="text-xs leading-snug text-black">Evidence for every check, drill, audit and corrective action is stored with the record it belongs to, ready for NDIS registration audits.</p>
+      <p className="text-xs leading-snug text-black">Use the source modules to confirm whether each record exists, is current, is linked to this profile and has been reviewed. This panel is a schedule and navigation aid; it does not verify audit readiness or reminder delivery.</p>
     </div>
   </EmployeeProfileSection>;
 }
