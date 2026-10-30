@@ -26,8 +26,7 @@ const TOP_BORDER_GRADIENT =
 const formatRecordCount = (value) => value == null ? 'Unavailable' : value.toLocaleString();
 const formatScore = (value) => value == null ? 'Unassessed' : `${value}%`;
 
-const UNIFORM_SPRAY_BG =
-  'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.62) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.62) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.62) 0%, transparent 52%), #FFFFFF';
+const UNIFORM_SPRAY_BG = '#FFFFFF';
 
 const TREND_DATA_2026 = [];
 
@@ -221,8 +220,8 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
             </span>
           </h2>
 
-          <p className="mx-auto max-w-4xl text-[10px] sm:text-xs font-extrabold text-[#0072FF] leading-tight">
-            Real-time cross-module intelligence uniting NDIS Practice Standards, 100-Point HR Screening, Participant Safeguarding, WHS Risk Radar, and Financial Claim Integrity.
+          <p className="mx-auto max-w-4xl text-[10px] sm:text-xs font-semibold text-slate-600 leading-tight">
+            Source-record counts are shown where available. Compliance scores, completion status and alerts need linked, verified evidence.
           </p>
 
           <div className="grid w-full grid-cols-1 sm:grid-cols-2 gap-1.5">
@@ -237,7 +236,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                 style={{ background: getHeaderView(5), color: '#FFFFFF' }}
               >
                 <RefreshCw className={`h-3 w-3 text-white ${refreshing ? 'animate-spin' : ''}`} style={{ color: '#FFFFFF' }} />
-                <span style={{ color: '#FFFFFF' }}>Sync Live Telemetry</span>
+                <span style={{ color: '#FFFFFF' }}>Refresh source counts</span>
               </button>
             </div>
 
@@ -349,7 +348,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                       {k.category}
                     </span>
                   </span>
-                  <span className="text-[6.5px] font-extrabold text-white" style={{ color: '#FFFFFF' }}>UNASSESSED</span>
+                  <span className="text-[6.5px] font-extrabold text-white" style={{ color: '#FFFFFF' }}>COUNTS ONLY</span>
                 </div>
 
                 {/* Writing Box 1: Pure White Background */}
@@ -428,7 +427,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                 <div className="flex items-center justify-center gap-1 rounded-[6px] bg-white px-2 py-0.5 text-center">
                   <Sparkles className="h-3 w-3 shrink-0 text-[#0A2B6D]" />
                   <span className="text-[8.5px] sm:text-[9.5px] font-extrabold text-[#0A2B6D] leading-tight">
-                    AI Insight: All 8 NDIS Practice Standard pillars exceed 97.9% with 100% worker screening.
+                    Domain scores are unassessed until linked evidence is available.
                   </span>
                 </div>
               </div>
@@ -512,7 +511,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                             <div
                               className="h-full rounded-full"
                               style={{
-                                width: `${formatScore(dom.score)}`,
+                                width: dom.score == null ? '0%' : `${dom.score}%`,
                                 background: isGovernance ? '#EAB308' : TOP_BORDER_GRADIENT,
                               }}
                             />
@@ -596,13 +595,13 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                         className="h-2.5 w-2.5 shrink-0 rounded-full border border-[#0A2B6D]/40 bg-[#EAB308]"
                         style={{ boxShadow: '0 0 8px 3px #EAB308' }}
                       />
-                      <span>ASSESSMENT · UNASSESSED LIT ✦</span>
+                      <span>ASSESSMENT · UNASSESSED</span>
                     </span>
                     <div className="flex items-center gap-1.5">
                       <div className="h-1.5 w-14 overflow-hidden rounded-full border border-[#0A2B6D]/25 bg-white">
                         <div
                           className="h-full rounded-full"
-                          style={{ width: `${formatScore(selectedDomain.score)}`, background: '#EAB308' }}
+                          style={{ width: selectedDomain.score == null ? '0%' : `${selectedDomain.score}%`, background: '#EAB308' }}
                         />
                       </div>
                       <span className="text-[8px] font-extrabold text-[#0A2B6D]">
@@ -744,7 +743,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                                       className="h-2 w-2 rounded-full border border-[#0A2B6D]/30 bg-white"
                                       style={{ boxShadow: '0 0 6px 2px #FFFFFF, 0 0 10px 2px #00C6FF' }}
                                     />
-                                    <span>2. Control (%)</span>
+                                    <span>2. Control completion</span>
                                   </span>
                                   <span>Unassessed</span>
                                 </div>
@@ -914,7 +913,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                   <div className="w-full space-y-1 pt-0.5">
                     <div className="flex w-full items-center justify-center gap-1.5 rounded-full border border-[#0A2B6D]/25 bg-white px-2.5 py-0.5 text-[8px] font-extrabold text-[#0A2B6D] whitespace-nowrap">
                       <Calendar className="h-2.5 w-2.5 text-[#0A2B6D]" />
-                      <span>Report date: ${new Date().toLocaleDateString('en-AU')} · Source counts only</span>
+                      <span>{`Report date: ${new Date().toLocaleDateString('en-AU')} · Source counts only`}</span>
                     </div>
 
                     <div className="grid w-full grid-cols-2 gap-1.5">
