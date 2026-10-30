@@ -92,22 +92,30 @@ function Rostering({ profile, profileKind, ourView = false, embedded = false } =
   const [bulkOpen, setBulkOpen] = useState(false);
   const [availForm, setAvailForm] = useState({ staff_name: '', type: 'Unavailable', date: '', start_time: '', end_time: '', all_day: false, notes: '' });
 
-  const [stats, setStats] = useState({ week: 0, unfilled: 0, pending: 0, completed: 0, awaitingConfirmation: 0 });
+  const [stats, setStats] = useState(null);
+  const [statsError, setStatsError] = useState(false);
   const [myName, setMyName] = useState('');
   const { toast } = useToast();
 
   const loadStats = useCallback(async () => {
+    setStatsError(false);
     const mon = format(startOfWeek(new Date(), { weekStartsOn: 1 }), 'yyyy-MM-dd');
     const sun = format(endOfWeek(new Date(), { weekStartsOn: 1 }), 'yyyy-MM-dd');
     const in14 = format(addDays(new Date(), 14), 'yyyy-MM-dd');
-    const [week, unfilled, pending, completed, awaitingConfirmation] = await Promise.all([
-      base44.entities.Shift.count({ ...scope, date: { $gte: mon, $lte: sun } }),
-      profileKind === 'staff' ? Promise.resolve(0) : base44.entities.Shift.count({ ...scope, date: { $gte: format(new Date(), 'yyyy-MM-dd'), $lte: in14 }, employee_name: null }),
-      base44.entities.Shift.count({ ...scope, approval_status: 'Pending Approval' }),
-      base44.entities.Shift.count({ ...scope, status: 'Completed', date: { $gte: mon, $lte: sun } }),
-      base44.entities.Shift.count({ ...scope, staff_confirmation: 'Pending Confirmation', date: { $gte: format(new Date(), 'yyyy-MM-dd'), $lte: in14 } }),
-    ]);
-    setStats({ week, unfilled, pending, completed, awaitingConfirmation });
+    try {
+      const [week, unfilled, pending, completed, awaitingConfirmation] = await Promise.all([
+        base44.entities.Shift.count({ ...scope, date: { $gte: mon, $lte: sun } }),
+        profileKind === 'staff' ? Promise.resolve(0) : base44.entities.Shift.count({ ...scope, date: { $gte: format(new Date(), 'yyyy-MM-dd'), $lte: in14 }, employee_name: null }),
+        base44.entities.Shift.count({ ...scope, approval_status: 'Pending Approval' }),
+        base44.entities.Shift.count({ ...scope, status: 'Completed', date: { $gte: mon, $lte: sun } }),
+        base44.entities.Shift.count({ ...scope, staff_confirmation: 'Pending Confirmation', date: { $gte: format(new Date(), 'yyyy-MM-dd'), $lte: in14 } }),
+      ]);
+      setStats({ week, unfilled, pending, completed, awaitingConfirmation });
+    } catch (error) {
+      console.error('Unable to load shift summary counts', error);
+      setStats(null);
+      setStatsError(true);
+    }
   }, [scope, profileKind]);
 
   const loadBoard = useCallback(async (start) => {
@@ -331,10 +339,11 @@ function Rostering({ profile, profileKind, ourView = false, embedded = false } =
             ['Awaiting approval', stats.pending],
             ['Awaiting confirmation', stats.awaitingConfirmation],
           ].map(([label, value]) => (
-            <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{value}</p></div>
+            <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{stats ? value : statsError ? '—' : '…'}</p></div>
           ))}
         >
 
+        {statsError && <p role="alert" className="mb-2 rounded-md border border-destructive/30 bg-destructive/5 p-2 text-sm text-destructive">Shift summary counts are unavailable. <button type="button" className="underline" onClick={loadStats}>Retry</button></p>}
         <TabsContent value="roster" className="mt-4 space-y-4">
           <RosterWeekToolbar weekStart={weekStart} onWeekChange={setWeekStart} onRepeat={repeatLastWeek} onSchedule={() => openNew()} saving={saving} />
           {!profile && <RosterSuggestions onChanged={refresh} />}
