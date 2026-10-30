@@ -45,7 +45,7 @@ const EXECUTIVE_RESOURCE_SUITES = [
     subject: 'Full Executive Command',
     icon: Building2,
     color: '#5A00D6',
-    badge: 'Complete Suite',
+    badge: 'All workspaces',
     description: 'View the roster alongside the other executive workspaces.',
   },
   {
@@ -91,7 +91,7 @@ const EXECUTIVE_RESOURCE_SUITES = [
   {
     id: 'printable-2026',
     label: '6. Standard 2026 Printable Office Templates',
-    shortLabel: '6. 12 A4 Office Templates',
+    shortLabel: '6. Printable Templates',
     subject: 'Printable A4 Forms',
     icon: FileText,
     color: '#A100FF',
@@ -112,7 +112,7 @@ const EXECUTIVE_RESOURCE_SUITES = [
     id: 'screen-audit-2026',
     label: '8. Screen-by-Screen Master Audit & Filing Studio',
     shortLabel: '8. Audit Studio',
-    subject: '45-Screen Audit',
+    subject: 'Screen-by-Screen Audit',
     icon: Sparkles,
     color: '#00C6FF',
     badge: 'Audit workspace',
@@ -140,9 +140,9 @@ const EXECUTIVE_RESOURCE_SUITES = [
   },
   {
     id: 'module-matrix',
-    label: '11. All Platform Modules & Registers Directory',
+    label: '11. Platform Modules & Registers Directory',
     shortLabel: '11. All Modules Matrix',
-    subject: 'All 45 Modules',
+    subject: 'Module Directory',
     icon: Layers,
     color: '#FF6EDB',
     badge: `${MODULE_DIRECTORY.length} Modules`,
@@ -382,11 +382,11 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
                     1st Option · Subject: Rostering, Shifts &amp; Staff Coverage
                   </span>
                   <span className="rounded-full bg-[#00C6FF] px-2 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
-                    Live Roster Board
+                    Roster Board
                   </span>
                 </div>
                 <h2 className="mt-0.5 text-base sm:text-lg font-extrabold tracking-tight text-white">
-                  1. Live Roster, Shift Scheduling &amp; Coverage Command Centre
+                  1. Roster, Shift Scheduling &amp; Coverage
                 </h2>
                 <p className="text-[11px] font-medium text-white/90">
                   View today&apos;s rostered shifts, weekly shift calendar, open shift fill, staff availability, timesheet approvals, and SCHADS labour forecast.
