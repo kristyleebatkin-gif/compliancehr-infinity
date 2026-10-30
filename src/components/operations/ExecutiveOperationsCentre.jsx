@@ -365,7 +365,7 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
         </div>
       </div>
 
-      {/* ==================== 1ST OPTION IN OPERATIONS CENTRE: LIVE ROSTER & SHIFT COVERAGE COMMAND ==================== */}
+      {/* ==================== ROSTER & SHIFT COVERAGE ==================== */}
       {(activeSuite === 'roster' || activeSuite === 'all') && (
         <section className="overflow-hidden rounded-2xl border-2 border-[#0072FF] bg-white shadow-lg">
           <div
@@ -408,7 +408,7 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
         </section>
       )}
 
-      {/* ==================== SUITE: INFINITY CONTROL CENTRE, 356 CHECKS, 98 DOCS & 31 DEV REGISTER ==================== */}
+      {/* ==================== SUITE: INFINITY CONTROL CENTRE ==================== */}
       {activeSuite === 'all' && <InfinityControlCentreMasterSuite />}
 
       {/* ==================== SUITE 1: INFINITY ONE-CLICK OPERATIONS DECK ==================== */}
@@ -437,7 +437,7 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
         <MasterComplianceAuditForms />
       )}
 
-      {/* ==================== SUITE 7: 45-SCREEN 2026 MASTER AUDIT & SMART-FILL STUDIO ==================== */}
+      {/* ==================== SUITE: MASTER AUDIT & FILING STUDIO ==================== */}
       {(activeSuite === 'all' || activeSuite === 'screen-audit-2026') && (
         <ScreenByScreenMasterAudit2026 />
       )}
