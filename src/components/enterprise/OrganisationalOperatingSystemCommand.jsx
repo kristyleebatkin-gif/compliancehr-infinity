@@ -27,7 +27,7 @@ const ASSURANCE_17_STAGES = [
   'Audit', 'Verify', 'Improve Again',
 ];
 
-const UNIVERSAL_18_ENGINES = [
+const PLATFORM_WORKSPACES = [
   { name: 'Intake Engine', route: '/intake', sub: 'Participant and employee intake workspaces' },
   { name: 'Assessment Engine', route: '/checklists', sub: 'Assessments and checklists' },
   { name: 'Checklist Engine', route: '/checklists', sub: 'Working and audit checklists' },
@@ -48,7 +48,7 @@ const UNIVERSAL_18_ENGINES = [
   { name: 'AI Engine', route: '/assistant', sub: 'Assistant and knowledge resources' },
 ];
 
-const AI_6_COPILOTS = [
+const REVIEW_ENTRY_POINTS = [
   {
     role: 'Compliance Review',
     focus: 'Obligations · Evidence · Open findings',
@@ -483,7 +483,7 @@ export default function OrganisationalOperatingSystemCommand() {
                   <span>Operational Snapshot Notes</span>
                 </div>
                 {[
-                  { tag: 'What Changed', text: `${formatCount(counts.employees)} staff and ${formatCount(counts.participants)} participant profile records are available in their source modules.` },
+                  { tag: 'Profile records available', text: `${formatCount(counts.employees)} staff and ${formatCount(counts.participants)} participant profiles are in their source modules.` },
                   { tag: 'What Is Overdue', text: `${formatCount(counts.tasksOverdue)} tasks are marked overdue; check owners and next steps in Tasks.` },
                   { tag: 'What Is At Risk', text: `${formatCount(counts.risksCritical)} risk records are rated high or critical; review controls and owners in Risk Management.` },
                   { tag: 'Requires Attention', text: `${formatCount(counts.documentsExpiring)} employee documents are marked Expiring Soon or Expired in the source records.` },
@@ -586,7 +586,7 @@ export default function OrganisationalOperatingSystemCommand() {
                   { title: 'Missing Evidence', value: 'Not assessed in this overview', route: '/documents' },
                   { title: 'Overdue Actions', value: `${formatCount(counts.tasksOverdue)} Overdue (${formatCount(counts.tasksOpen)} Open)`, route: '/tasks' },
                   { title: 'Goal Records', value: `${formatCount(counts.goalsTotal)} records · status not assessed`, route: '/goals' },
-                  { title: 'Team Performance', value: 'Appraisals, Supervision & Recognition', route: '/hr' },
+                  { title: 'Team and HR Records', value: 'Open the HR workspace', route: '/hr' },
                 ].map((card) => (
                   <Link
                     key={card.title}
@@ -637,7 +637,7 @@ export default function OrganisationalOperatingSystemCommand() {
               <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
                 {[
                   { title: 'Organisation Health', value: 'Not calculated', route: '/dashboard' },
-                  { title: 'Compliance Readiness', value: 'Review evidence in Compliance Centre', route: '/compliance' },
+                  { title: 'Compliance Review', value: 'Not assessed in this overview', route: '/compliance' },
                   { title: 'Audit Readiness', value: 'Not calculated', route: '/auditor-portal' },
                   { title: 'NDIS Provider Records', value: 'Review provider details', route: '/ndis-portal' },
                   { title: 'Aged Care Readiness', value: 'Not calculated', route: '/compliance' },
@@ -691,7 +691,7 @@ export default function OrganisationalOperatingSystemCommand() {
                 </Link>
               </div>
               <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
-                {AI_6_COPILOTS.map((ai) => (
+                {REVIEW_ENTRY_POINTS.map((ai) => (
                   <Link
                     key={ai.role}
                     to={ai.route}
@@ -731,11 +731,10 @@ export default function OrganisationalOperatingSystemCommand() {
                 {[
                   `Missing Information (not assessed)`,
                   `Missing Evidence (not assessed)`,
-                  `Missing Reviews (Tracked)`,
+                  `Missing Reviews (not assessed)`,
                   `Duplicate Records (not assessed)`,
                   `Training Expiry (not assessed)`,
-                  `Expired Qualifications (${formatCount(counts.documentsExpiring)})`,
-                  `Employee Documents Marked Expiring/Expired (${formatCount(counts.documentsExpiring)})`,
+                  `Employee documents marked Expiring Soon or Expired (${formatCount(counts.documentsExpiring)})`,
                   `Expired Policies (not assessed)`,
                   `Compliance Gaps (not assessed)`,
                   `Incomplete Assessments (not assessed)`,
@@ -757,7 +756,7 @@ export default function OrganisationalOperatingSystemCommand() {
                 Platform Workspaces
               </span>
               <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 md:grid-cols-6">
-                {UNIVERSAL_18_ENGINES.map((eng) => (
+                {PLATFORM_WORKSPACES.map((eng) => (
                   <Link
                     key={eng.name}
                     to={eng.route}
