@@ -62,7 +62,7 @@ export default function OurProfilesTab({ kind, basePath, scoped = true, director
     return () => { active = false; };
   }, [directory, isParticipant, selfOnly, scoped, role, user?.id, user?.email, reload]);
 
-  const groupKey = (r) => (isParticipant ? (r.status || 'Active') : (r.role || 'Unassigned'));
+  const groupKey = (r) => (isParticipant ? (r.status || 'Status not set') : (r.role || 'Unassigned'));
   const groups = useMemo(() => {
     const map = new Map();
     records.forEach((r) => {
@@ -92,7 +92,7 @@ export default function OurProfilesTab({ kind, basePath, scoped = true, director
   }, [directory, records, search, group, isParticipant]);
 
   const initials = (name) => (name || '?').split(' ').filter(Boolean).slice(0, 2).map((p) => p[0].toUpperCase()).join('');
-  const activeCount = directory ? 0 : records.filter((r) => (r.status || 'Active') === 'Active').length;
+  const activeCount = directory ? 0 : records.filter((r) => r.status === 'Active').length;
   const attentionCount = records.length - activeCount;
   const Icon = isParticipant ? Heart : Users;
 
@@ -132,7 +132,7 @@ export default function OurProfilesTab({ kind, basePath, scoped = true, director
             <h2>{records[0].full_name}</h2>
             <p>{isParticipant ? (records[0].support_type || 'Participant') : (records[0].position || records[0].role || 'Employee')} · {records[0].email}</p>
           </div>
-          <Badge className="ml-auto shrink-0 border-0 bg-white/20 text-white">{records[0].status || 'Active'}</Badge>
+          <Badge className="ml-auto shrink-0 border-0 bg-white/20 text-white">{records[0].status || 'Status not set'}</Badge>
         </div>
       )}
       {!selfOnly && <>
@@ -146,7 +146,7 @@ export default function OurProfilesTab({ kind, basePath, scoped = true, director
         {[
           { label: 'Total profiles', value: records.length, Icon: Users, grad: 'bg-indigo-500' },
           { label: 'Active', value: activeCount, Icon: UserCheck, grad: 'bg-emerald-500' },
-          { label: isParticipant ? 'On hold / inactive' : 'On leave / inactive', value: attentionCount, Icon: Clock, grad: 'bg-amber-500' },
+          { label: isParticipant ? 'Other / unset status' : 'Other / unset status', value: attentionCount, Icon: Clock, grad: 'bg-amber-500' },
         ].map((s) => (
           <div key={s.label} className={`flex items-center gap-3 rounded-2xl ${s.grad} p-4 text-white shadow-md`}>
             <div className="rounded-xl bg-white/20 p-2.5"><s.Icon className="h-5 w-5" /></div>
@@ -194,7 +194,7 @@ export default function OurProfilesTab({ kind, basePath, scoped = true, director
                             <div className="min-w-0 flex-1">
                               <div className="flex items-start justify-between gap-2">
                                 <div className="min-w-0 break-words text-[15px] font-extrabold leading-[19px] text-[#0A2B6D]">{r.full_name}</div>
-                                <Badge className={`shrink-0 whitespace-nowrap text-[10px] font-extrabold ${statusTone(r.status || 'Active')}`}>{r.status || 'Active'}</Badge>
+                                <Badge className={`shrink-0 whitespace-nowrap text-[10px] font-extrabold ${statusTone(r.status || 'Status not set')}`}>{r.status || 'Status not set'}</Badge>
                               </div>
                               <div className="mt-1 flex flex-wrap gap-1">
                                 {isParticipant
