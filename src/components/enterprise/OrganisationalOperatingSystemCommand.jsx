@@ -18,7 +18,7 @@ const FIVE_MASTER_LAYERS = [
   { id: 'work', step: '02', label: 'WORK', sub: 'Rosters, Shifts, Tasks, Goals, Programs, Projects & Fleet', route: '/roster', color: '#0A2B6D' },
   { id: 'compliance', step: '03', label: 'COMPLIANCE', sub: 'NDIS, Aged Care, WHS, Privacy, Governance & Audits', route: '/compliance', color: '#5A00D6' },
   { id: 'evidence', step: '04', label: 'EVIDENCE', sub: 'Document Vault, Company Safe, Signatures, OCR & Version Control', route: '/documents', color: '#A100FF' },
-  { id: 'intelligence', step: '05', label: 'INTELLIGENCE', sub: '6 AI Copilots, Digital Twin, Predictive Analytics & Board Reports', route: '/analytics', color: '#FF2E9A' },
+  { id: 'intelligence', step: '05', label: 'INTELLIGENCE', sub: 'Analytics, reporting and assistant entry points', route: '/analytics', color: '#FF2E9A' },
 ];
 
 const ASSURANCE_17_STAGES = [
@@ -28,66 +28,66 @@ const ASSURANCE_17_STAGES = [
 ];
 
 const UNIVERSAL_18_ENGINES = [
-  { name: 'Intake Engine', route: '/intake', sub: 'Participant & Employee 1-click onboarding' },
-  { name: 'Assessment Engine', route: '/checklists', sub: 'Clinical, home & competency assessments' },
-  { name: 'Checklist Engine', route: '/checklists', sub: 'Working & audit checklists with sign-off' },
-  { name: 'Review Engine', route: '/review-due', sub: '10-weekly, 3-monthly & annual review cycles' },
+  { name: 'Intake Engine', route: '/intake', sub: 'Participant and employee intake workspaces' },
+  { name: 'Assessment Engine', route: '/checklists', sub: 'Assessments and checklists' },
+  { name: 'Checklist Engine', route: '/checklists', sub: 'Working and audit checklists' },
+  { name: 'Review Engine', route: '/review-due', sub: 'Open review schedules and due dates' },
   { name: 'Goal Engine', route: '/goals', sub: 'Participant & staff goals, notes & funding' },
-  { name: 'Training Engine', route: '/training', sub: 'LMS, AI quizzes, skills matrix & certificates' },
-  { name: 'Action Engine', route: '/tasks', sub: 'CAPA, shared to-do & automatic closure' },
+  { name: 'Training Engine', route: '/training', sub: 'Training records, skills and certificates' },
+  { name: 'Action Engine', route: '/tasks', sub: 'Tasks and improvement actions' },
   { name: 'Audit Engine', route: '/auditor-portal', sub: 'Internal audit records and evidence review' },
-  { name: 'Incident Engine', route: '/incidents', sub: '24h/5d NDIS & SIRS reportable triage' },
+  { name: 'Incident Engine', route: '/incidents', sub: 'Incident records and investigations' },
   { name: 'Improvement Engine', route: '/quality', sub: 'Continuous improvement & lessons learned' },
-  { name: 'Evidence Engine', route: '/documents', sub: '5-point stamped Vault & Company Safe' },
-  { name: 'Workflow Engine', route: '/operations-centre', sub: '65 automated workflows & 12-step lifecycle' },
-  { name: 'Notification Engine', route: '/notifications', sub: 'In-app, email & SMS/push alerts' },
-  { name: 'Escalation Engine', route: '/compliance', sub: 'Overdue task, screening & SLA escalations' },
+  { name: 'Evidence Engine', route: '/documents', sub: 'Document Vault and Company Safe' },
+  { name: 'Workflow Engine', route: '/operations-centre', sub: 'Workflow records and process overview' },
+  { name: 'Notification Engine', route: '/notifications', sub: 'Open notifications and alerts' },
+  { name: 'Escalation Engine', route: '/compliance', sub: 'Review overdue tasks and compliance items' },
   { name: 'Communication Engine', route: '/communications', sub: 'Email, messages, calls, meetings & surveys' },
-  { name: 'Search Engine', route: '/universal-storage', sub: 'Instant natural-language enterprise search' },
-  { name: 'Reporting Engine', route: '/analytics', sub: '13 report suites in PDF, Word, Excel & CSV' },
-  { name: 'AI Engine', route: '/assistant', sub: '6 specialist AI copilots & knowledge engine' },
+  { name: 'Search Engine', route: '/universal-storage', sub: 'Open record and document search' },
+  { name: 'Reporting Engine', route: '/analytics', sub: 'Available report views and exports' },
+  { name: 'AI Engine', route: '/assistant', sub: 'Assistant and knowledge resources' },
 ];
 
 const AI_6_COPILOTS = [
   {
-    role: 'AI Compliance Officer',
-    focus: 'Gap analysis · Readiness reviews · Evidence reviews',
+    role: 'Compliance Review',
+    focus: 'Obligations · Evidence · Open findings',
     insight: 'Review obligations, mapped evidence and open findings in the Compliance Centre.',
     route: '/compliance',
     color: '#0072FF',
   },
   {
-    role: 'AI Risk Analyst',
-    focus: 'Emerging risks · Trend detection · Forecasts',
+    role: 'Risk Review',
+    focus: 'Risk ratings · Controls · Review dates',
     insight: 'Review risk ratings, controls, owners and scheduled reviews in Risk Management.',
     route: '/risks',
     color: '#5A00D6',
   },
   {
-    role: 'AI Investigator',
-    focus: 'Incident summaries · Root cause support · CAPA linkage',
+    role: 'Incident Review',
+    focus: 'Incident records · Investigations · Follow-up',
     insight: 'Review incident records and applicable reporting deadlines in Incident Management.',
     route: '/incidents',
     color: '#FF2E9A',
   },
   {
-    role: 'AI Workforce Assistant',
-    focus: 'Training gaps · Competency gaps · Screening expiry radar',
+    role: 'Workforce Review',
+    focus: 'Screening · Qualifications · Training records',
     insight: 'Review staff screening, qualifications and training records in Workforce and Training.',
     route: '/training',
     color: '#0A2B6D',
   },
   {
-    role: 'AI Executive Assistant',
-    focus: 'Executive summaries · Board reports · Strategic insights',
+    role: 'Executive Reporting',
+    focus: 'Source records · Management reporting',
     insight: 'Open the executive workspace to review source records and prepare management reporting.',
     route: '/operations-centre',
     color: '#A100FF',
   },
   {
-    role: 'AI Knowledge Engine',
-    focus: 'Natural language search across every person, policy, risk & evidence file',
-    insight: 'Press Ctrl+K anywhere or open AI Assistant for instant cross-platform answers.',
+    role: 'Knowledge Resources',
+    focus: 'Open the assistant and knowledge resources',
+    insight: 'Open the Assistant page for available help and knowledge resources.',
     route: '/assistant',
     color: '#0072FF',
   },
@@ -682,7 +682,7 @@ export default function OrganisationalOperatingSystemCommand() {
             <div className="rounded-xl border border-slate-200 bg-white p-3 space-y-2">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                  AI Platform — 6 Specialist Organisational Copilots &amp; Natural-Language Knowledge Engine
+                  Assistant and Knowledge Entry Points
                 </span>
                 <Link
                   to="/assistant"
