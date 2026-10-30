@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ShieldCheck, Activity, Users, Heart, AlertTriangle, ShieldAlert,
-  ClipboardCheck, Sparkles, CheckCircle2, ArrowRight, RefreshCw,
+  ClipboardCheck, Sparkles, ArrowRight, RefreshCw,
   Cpu, Layers, Eye, Zap, Award, Lock, BarChart3, Search, PlusCircle,
   Clock, Bell, FileCheck2, Building2, Target, GraduationCap,
 } from 'lucide-react';
@@ -780,6 +780,9 @@ export default function OrganisationalOperatingSystemCommand() {
                 </span>
                 <Badge className="bg-[#0072FF] text-white text-[10px]">Review required</Badge>
               </div>
+              <p className="text-[11px] font-semibold text-[#0A2B6D]/80">
+                These are review prompts, not assessment results. Confirm each area in its source workflow before treating it as complete.
+              </p>
               <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 {ACCEPTANCE_22_CHECKS.map((chk) => (
                   <div
