@@ -274,7 +274,7 @@ export default function OrganisationalOperatingSystemCommand() {
             className="bg-white text-[#0A2B6D] hover:bg-slate-100 font-extrabold text-xs"
           >
             <RefreshCw className={`mr-1 h-3.5 w-3.5 text-[#0072FF] ${loading ? 'animate-spin' : ''}`} />
-            <span style={{ color: '#0A2B6D' }}>Refresh Live OS</span>
+            <span style={{ color: '#0A2B6D' }}>Refresh record counts</span>
           </Button>
         </div>
       </div>
@@ -676,7 +676,7 @@ export default function OrganisationalOperatingSystemCommand() {
         {/* ==================== MODE 5: PLATFORM WORKSPACES, REVIEW ENTRY POINTS & DATA QUALITY ==================== */}
         {activeMode === 'engines' && (
           <div className="space-y-3">
-            {/* 6 AI Platform Copilots */}
+            {/* Review and assistant entry points */}
             <div className="rounded-xl border border-slate-200 bg-white p-3 space-y-2">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
