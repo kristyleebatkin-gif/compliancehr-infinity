@@ -427,7 +427,7 @@ export default function OrganisationalOperatingSystemCommand() {
               <div className="lg:col-span-4 rounded-xl border border-slate-200 bg-white p-3 space-y-2.5">
                 <div>
                   <div className="text-xs font-extrabold uppercase tracking-wider text-[#0072FF]">
-                    Today — Scheduled &amp; Due Items
+                    Workload &amp; Record Shortcuts
                   </div>
                   <div className="mt-1.5 grid grid-cols-2 gap-1.5 sm:grid-cols-3">
                     {[
@@ -523,11 +523,11 @@ export default function OrganisationalOperatingSystemCommand() {
                   { title: '2. Participants Twin', metric: `${formatCount(counts.participants)} Participants`, status: 'Plan, consent and goal status not assessed here', path: '/our-participants', color: '#FF2E9A' },
                   { title: '3. Compliance Records', metric: 'Open Compliance Centre', status: 'Obligation and evidence status not assessed here', path: '/compliance', color: '#5A00D6' },
                   { title: '4. Governance Twin', metric: `${formatCount(counts.policiesTotal)} Policy Records`, status: 'Review governance records in Company Safe', path: '/company-safe', color: '#0A2B6D' },
-                  { title: '5. Quality Twin', metric: `${formatCount(counts.qualityItems)} Quality Actions`, status: 'Review improvement actions and due dates', path: '/quality', color: '#0072FF' },
+                  { title: '5. Quality Records', metric: `${formatCount(counts.qualityItems)} Quality Records`, status: 'Review improvement actions and due dates', path: '/quality', color: '#0072FF' },
                   { title: '6. Risk Twin', metric: `${formatCount(counts.risksTotal)} Risk Records`, status: `${formatCount(counts.risksCritical)} rated high or critical; controls not assessed here`, path: '/risks', color: '#5A00D6' },
                   { title: '7. Safety Twin', metric: `${formatCount(counts.incidentsOpen)} Open Incidents`, status: 'Review incident and safety records in source modules', path: '/workforce-presence', color: '#FF2E9A' },
                   { title: '8. Audits Twin', metric: `${formatCount(counts.auditsTotal)} Audits Logged`, status: 'Evidence readiness not assessed here', path: '/auditor-portal', color: '#0A2B6D' },
-                  { title: '9. Training Twin', metric: `${formatCount(counts.trainingTotal)} LMS Modules`, status: 'Review staff training and certificate records', path: '/training', color: '#0072FF' },
+                  { title: '9. Training Records', metric: `${formatCount(counts.trainingTotal)} Training Modules`, status: 'Review staff training and certificate records', path: '/training', color: '#0072FF' },
                   { title: '10. Actions Twin', metric: `${formatCount(counts.tasksOpen)} Open Tasks`, status: `${formatCount(counts.tasksOverdue)} marked overdue; escalation not assessed here`, path: '/tasks', color: '#5A00D6' },
                   { title: '11. Evidence Vault Twin', metric: `${formatCount(counts.documentsTotal)} Employee Document Records`, status: 'Review document controls and retention in source records', path: '/documents', color: '#A100FF' },
                   { title: '12. Organisation Snapshot', metric: 'Not calculated', status: 'No overall health score is calculated here', path: '/operations-centre', color: '#0A2B6D' },
@@ -575,13 +575,13 @@ export default function OrganisationalOperatingSystemCommand() {
 
               <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
                 {[
-                  { title: 'Workforce Compliance', value: `${formatCount(counts.employees)} Staff · ${formatCount(counts.documentsExpiring)} Expiring`, route: '/our-employees' },
-                  { title: 'Participant Compliance', value: `${formatCount(counts.participants)} participant records · consent status not assessed`, route: '/our-participants' },
+                  { title: 'Workforce Records', value: `${formatCount(counts.employees)} staff profiles · ${formatCount(counts.documentsExpiring)} employee documents marked Expiring Soon or Expired`, route: '/our-employees' },
+                  { title: 'Participant Records', value: `${formatCount(counts.participants)} records · consent status not assessed`, route: '/our-participants' },
                   { title: 'Risks', value: `${formatCount(counts.risksTotal)} Total (${formatCount(counts.risksCritical)} High/Critical)`, route: '/risks' },
                   { title: 'Incidents', value: `${formatCount(counts.incidentsOpen)} unresolved records · deadlines not assessed`, route: '/incidents' },
                   { title: 'Complaints', value: `${formatCount(counts.complaintsOpen)} unresolved records`, route: '/feedback' },
-                  { title: 'Reviews Due', value: '10-Weekly & 3/6-Monthly Schedule', route: '/review-due' },
-                  { title: 'Training Due', value: `${formatCount(counts.trainingTotal)} Courses & Competency Matrix`, route: '/training' },
+                  { title: 'Review Schedules', value: 'Open review due board', route: '/review-due' },
+                  { title: 'Training Records', value: `${formatCount(counts.trainingTotal)} training modules`, route: '/training' },
                   { title: 'Audit Records', value: `${formatCount(counts.auditsTotal)} records`, route: '/auditor-portal' },
                   { title: 'Missing Evidence', value: 'Not assessed in this overview', route: '/documents' },
                   { title: 'Overdue Actions', value: `${formatCount(counts.tasksOverdue)} Overdue (${formatCount(counts.tasksOpen)} Open)`, route: '/tasks' },
@@ -643,7 +643,7 @@ export default function OrganisationalOperatingSystemCommand() {
                   { title: 'Aged Care Readiness', value: 'Not calculated', route: '/compliance' },
                   { title: 'Employee Profiles', value: `${formatCount(counts.employees)} records · status not assessed`, route: '/our-employees' },
                   { title: 'Policy Records', value: `${formatCount(counts.policiesTotal)} records`, route: '/documents' },
-                  { title: 'Goal Records', value: `${formatCount(counts.goalsTotal)} records`, route: '/projects' },
+                  { title: 'Goal Records', value: `${formatCount(counts.goalsTotal)} records`, route: '/goals' },
                   { title: 'Enterprise Risks', value: `${formatCount(counts.risksTotal)} Risks (${formatCount(counts.risksCritical)} High/Critical)`, route: '/risks' },
                   { title: 'Quality Records', value: `${formatCount(counts.qualityItems)} records`, route: '/quality' },
                   { title: 'Unresolved Incident Records', value: `${formatCount(counts.incidentsOpen)} records`, route: '/incidents' },
