@@ -536,54 +536,12 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
             {(() => {
               const SelectedIcon = selectedDomain.icon;
               const rightTrackerItems = [
-                {
-                  label: 'Communication - Emails',
-                  icon: Mail,
-                  lightColor: '#10B981',
-                  trackerPct: 100,
-                  statusText: '24/7 Synced',
-                  route: '/communications',
-                },
-                {
-                  label: 'Rosters',
-                  icon: Calendar,
-                  lightColor: '#00C6FF',
-                  trackerPct: 99,
-                  statusText: `${liveCounts.staff} Staff Screened`,
-                  route: '/roster',
-                },
-                {
-                  label: 'Risk',
-                  icon: AlertTriangle,
-                  lightColor: '#F97316',
-                  trackerPct: 98,
-                  statusText: `${liveCounts.risks} Controls`,
-                  route: '/risks',
-                },
-                {
-                  label: 'Incidents',
-                  icon: Flame,
-                  lightColor: '#EF4444',
-                  trackerPct: 100,
-                  statusText: `${liveCounts.incidents} SLA Met`,
-                  route: '/incidents',
-                },
-                {
-                  label: 'Feedback',
-                  icon: MessageSquare,
-                  lightColor: '#A100FF',
-                  trackerPct: 99,
-                  statusText: '100% <24h',
-                  route: '/feedback',
-                },
-                {
-                  label: 'Audits',
-                  icon: ClipboardCheck,
-                  lightColor: '#0072FF',
-                  trackerPct: 100,
-                  statusText: `${liveCounts.audits} Audits`,
-                  route: '/compliance',
-                },
+                { label: 'Communications', icon: Mail, route: '/communications' },
+                { label: 'Rosters', icon: Calendar, route: '/roster' },
+                { label: 'Risk', icon: AlertTriangle, route: '/risks' },
+                { label: 'Incidents', icon: Flame, route: '/incidents' },
+                { label: 'Feedback', icon: MessageSquare, route: '/feedback' },
+                { label: 'Audits', icon: ClipboardCheck, route: '/compliance' },
               ];
 
               return (
@@ -595,7 +553,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                         className="h-2.5 w-2.5 shrink-0 rounded-full border border-[#0A2B6D]/40 bg-[#EAB308]"
                         style={{ boxShadow: '0 0 8px 3px #EAB308' }}
                       />
-                      <span>ASSESSMENT · UNASSESSED</span>
+                      <span>STATUS · UNASSESSED</span>
                     </span>
                     <div className="flex items-center gap-1.5">
                       <div className="h-1.5 w-14 overflow-hidden rounded-full border border-[#0A2B6D]/25 bg-white">
@@ -833,7 +791,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                               />
                               <span>Module shortcuts</span>
                             </span>
-                            <span className="text-[7px] font-extrabold text-[#0A2B6D]">{rightTrackerItems.length} areas</span>
+                            <span className="text-[7px] font-extrabold text-[#0A2B6D]">{rightTrackerItems.length} links</span>
                           </div>
 
                           <div className="grid grid-cols-2 gap-1">
@@ -983,7 +941,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
                 />
                 <ShieldCheck className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
                 <span className="truncate text-[9px] font-extrabold uppercase tracking-wider" style={{ color: '#FFFFFF' }}>
-                  6-Month Compliance vs. Business Health
+                  Historical compliance and billing records
                 </span>
                 <span
                   className="h-2.5 w-2.5 shrink-0 rounded-full border border-white bg-white"
