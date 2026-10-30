@@ -146,7 +146,7 @@ export default function OurProfilesTab({ kind, basePath, scoped = true, director
         {[
           { label: 'Total profiles', value: records.length, Icon: Users, grad: 'bg-indigo-500' },
           { label: 'Active', value: activeCount, Icon: UserCheck, grad: 'bg-emerald-500' },
-          { label: isParticipant ? 'Other / unset status' : 'Other / unset status', value: attentionCount, Icon: Clock, grad: 'bg-amber-500' },
+          { label: 'Not marked active', value: attentionCount, Icon: Clock, grad: 'bg-amber-500' },
         ].map((s) => (
           <div key={s.label} className={`flex items-center gap-3 rounded-2xl ${s.grad} p-4 text-white shadow-md`}>
             <div className="rounded-xl bg-white/20 p-2.5"><s.Icon className="h-5 w-5" /></div>
