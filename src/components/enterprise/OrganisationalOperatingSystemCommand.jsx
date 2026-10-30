@@ -673,7 +673,7 @@ export default function OrganisationalOperatingSystemCommand() {
           </div>
         )}
 
-        {/* ==================== MODE 5: 18 UNIVERSAL ENGINES, 6 AI COPILOTS, DATA QUALITY & 22 CHECKS ==================== */}
+        {/* ==================== MODE 5: PLATFORM WORKSPACES, REVIEW ENTRY POINTS & DATA QUALITY ==================== */}
         {activeMode === 'engines' && (
           <div className="space-y-3">
             {/* 6 AI Platform Copilots */}
@@ -750,7 +750,7 @@ export default function OrganisationalOperatingSystemCommand() {
               </div>
             </div>
 
-            {/* 18 Universal Engines Grid */}
+            {/* Platform Workspaces Grid */}
             <div className="rounded-xl border border-slate-200 bg-white p-3 space-y-2">
               <span className="text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
                 Platform Workspaces
