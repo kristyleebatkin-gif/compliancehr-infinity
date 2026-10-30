@@ -26,7 +26,9 @@ export default function IntakeReadinessExport({ activeCase, readiness, stats, lo
           const statuses = stats[key];
           const total = Object.values(statuses).reduce((sum, count) => sum + count, 0);
           const ready = statuses['Ready for Review'] || 0;
-          rows.push({ field: label, value: `Total: ${total}\nActive: ${['Draft', 'Information Required', 'Ready for Review'].reduce((sum, status) => sum + (statuses[status] || 0), 0)}\nReady for review: ${ready}\nReady: ${total ? Math.round(ready / total * 100) : 0}%\n${Object.entries(statuses).map(([status, count]) => `${status}: ${count}`).join('\n')}` });
+          const inProgress = ['Draft', 'Information Required', 'Ready for Review'].reduce((sum, status) => sum + (statuses[status] || 0), 0);
+          const reviewShare = total ? `${Math.round(ready / total * 100)}%` : 'not applicable (no cases)';
+          rows.push({ field: label, value: `Total cases: ${total}\nDraft / information required / review: ${inProgress}\nCurrently in Ready for Review: ${ready} of ${total} (${reviewShare})\n${Object.entries(statuses).map(([status, count]) => `${status}: ${count}`).join('\n')}` });
         }
       }
       rows.push({ field: 'Important note', value: 'Readiness supports NDIS onboarding controls and conditional safeguards. It does not replace provider-specific legal advice or an external certification audit.' });
