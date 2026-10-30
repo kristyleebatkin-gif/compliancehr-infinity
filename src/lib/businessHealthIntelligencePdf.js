@@ -4,7 +4,7 @@ import { jsPDF } from 'jspdf';
  * Generates an A4 Executive Business Health & Compliance Intelligence Report PDF.
  */
 export function downloadBusinessHealthIntelligencePdf({
-  overallScore = 98.7,
+  overallScore = null,
   domains = [],
   kpis = [],
   predictiveAlerts = [],
@@ -38,7 +38,7 @@ export function downloadBusinessHealthIntelligencePdf({
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(7.5);
   doc.text(
-    `Generated: ${new Date().toISOString().slice(0, 10)} · Scope: All 45 Connected Modules, 17 Audit Categories & 8 Intelligence Domains`,
+    `Generated: ${new Date().toISOString().slice(0, 10)} · Data supplied: ${domains.length} domains · ${kpis.length} KPIs · ${predictiveAlerts.length} alerts`,
     M + 3,
     M + 18.5
   );
@@ -46,7 +46,7 @@ export function downloadBusinessHealthIntelligencePdf({
   // Overall Score Badge on right
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(14);
-  doc.text(`${overallScore}%`, W - M - 4, M + 11, { align: 'right' });
+  doc.text(overallScore == null ? 'UNASSESSED' : `${overallScore}%`, W - M - 4, M + 11, { align: 'right' });
   doc.setFontSize(7);
   doc.text('OVERALL HEALTH SCORE', W - M - 4, M + 16.5, { align: 'right' });
 
@@ -58,7 +58,7 @@ export function downloadBusinessHealthIntelligencePdf({
   doc.setTextColor(255, 255, 255);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(7.5);
-  doc.text('1. EXECUTIVE BUSINESS HEALTH & NDIS SAFEGUARD KPI SNAPSHOT', M + 2.5, y + 3.9);
+  doc.text('1. EXECUTIVE BUSINESS HEALTH & COMPLIANCE SNAPSHOT', M + 2.5, y + 3.9);
   y += 6.5;
 
   const kpiCols = 3;
@@ -91,13 +91,13 @@ export function downloadBusinessHealthIntelligencePdf({
 
   y += Math.ceil(Math.min(kpis.length, 6) / kpiCols) * kpiH + 4;
 
-  // Section 2: 8-Domain Business Health & Compliance Intelligence Matrix
+  // Section 2: Business Health & Compliance Data Matrix
   doc.setFillColor(124, 58, 237);
   doc.rect(M, y, contentW, 5.5, 'F');
   doc.setTextColor(255, 255, 255);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(7.5);
-  doc.text('2. 8-PILLAR DEPARTMENTAL HEALTH & 2026 NDIS AUDIT READINESS MATRIX', M + 2.5, y + 3.9);
+  doc.text(`2. BUSINESS HEALTH & COMPLIANCE DATA MATRIX (${domains.length} DOMAINS)`, M + 2.5, y + 3.9);
   y += 5.5;
 
   // Table header
@@ -109,7 +109,7 @@ export function downloadBusinessHealthIntelligencePdf({
   doc.text('INTELLIGENCE DOMAIN', M + 2.5, y + 3.8);
   doc.text('SCORE', M + 68, y + 3.8);
   doc.text('STATUS', M + 84, y + 3.8);
-  doc.text('LIVE METRIC / VERIFIED EVIDENCE', M + 112, y + 3.8);
+  doc.text('METRIC / SUPPORTING DETAIL', M + 112, y + 3.8);
   y += 5.5;
 
   domains.forEach((d, idx) => {
@@ -130,11 +130,11 @@ export function downloadBusinessHealthIntelligencePdf({
     doc.setTextColor(15, 23, 42);
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(7.5);
-    doc.text(`${d.score}%`, M + 68, y + 5.8);
+    doc.text(d.score == null ? '—' : `${d.score}%`, M + 68, y + 5.8);
 
     doc.setFontSize(6.5);
-    doc.setTextColor(22, 101, 52);
-    doc.text(String(d.status || 'Audit Ready'), M + 84, y + 5.8);
+    doc.setTextColor(71, 85, 105);
+    doc.text(String(d.status || 'Unassessed'), M + 84, y + 5.8);
 
     doc.setTextColor(15, 23, 42);
     doc.setFont('helvetica', 'normal');
@@ -146,13 +146,13 @@ export function downloadBusinessHealthIntelligencePdf({
 
   y += 4;
 
-  // Section 3: Predictive Risk, Credential & Review Radar (30/60/90-Day Horizon)
+  // Section 3: Risk, Credential & Review Alerts
   doc.setFillColor(219, 39, 119);
   doc.rect(M, y, contentW, 5.5, 'F');
   doc.setTextColor(255, 255, 255);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(7.5);
-  doc.text('3. PREDICTIVE RISK, CREDENTIAL EXPIRY & STATUTORY SLA RADAR', M + 2.5, y + 3.9);
+  doc.text('3. RISK, CREDENTIAL & REVIEW ALERTS', M + 2.5, y + 3.9);
   y += 5.5;
 
   predictiveAlerts.slice(0, 6).forEach((al, idx) => {
