@@ -9,7 +9,6 @@ import {
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { useToast } from '@/components/ui/use-toast';
 
 const HEADER_GRADIENT =
   'linear-gradient(120deg, #0072FF 0%, #0A2B6D 16%, #5A00D6 40%, #A100FF 68%, #FF2E9A 100%)';
@@ -81,7 +80,7 @@ const AI_6_COPILOTS = [
   {
     role: 'AI Executive Assistant',
     focus: 'Executive summaries · Board reports · Strategic insights',
-    insight: 'Open the executive workspace to review source records and prepare management reporting.'
+    insight: 'Open the executive workspace to review source records and prepare management reporting.',
     route: '/operations-centre',
     color: '#A100FF',
   },
@@ -120,10 +119,8 @@ const ACCEPTANCE_22_CHECKS = [
 ];
 
 export default function OrganisationalOperatingSystemCommand() {
-  const { toast } = useToast();
   const [activeMode, setActiveMode] = useState('command'); // command | manager | executive | twin | engines
   const [loading, setLoading] = useState(false);
-  const [runningDataQuality, setRunningDataQuality] = useState(false);
   const formatCount = (value) => typeof value === 'number' ? value.toLocaleString() : '—';
   const [counts, setCounts] = useState({
     employees: null,
@@ -239,40 +236,6 @@ export default function OrganisationalOperatingSystemCommand() {
     { q: '14. Next step', a: 'Review items in their module', sub: 'Use linked registers to confirm owners, status and evidence.', path: '/operations-centre', tone: '#5A00D6' },
   ];
 
-  const runDataQualityRemediation = async () => {
-    setRunningDataQuality(true);
-    try {
-      const today = new Date().toISOString().slice(0, 10);
-      const due = new Date(Date.now() + 5 * 86400000).toISOString().slice(0, 10);
-      await Promise.allSettled([
-        base44.entities.TodoTask.create({
-          title: '[Data Quality Engine] Verify Expiring Credentials, Pending Reviews & Evidence Links',
-          task_type: 'Automated Data Quality Sweep',
-          module: 'Compliance & Quality',
-          task_date: today,
-          due_date: due,
-          assigned_to: 'Compliance Manager',
-          priority: 'High',
-          status: 'Pending',
-          how_to_complete: 'Review flagged expiring qualifications, confirm 10-weekly/quarterly reviews, and lock signed evidence in Document Vault.',
-        }),
-        base44.entities.AuditLog.create({
-          action: 'Data Quality Sweep & Auto-Action Creation',
-          entity_type: 'DataQualityEngine',
-          record_title: '10-Point Data Quality & Compliance Gap Sweep',
-          performed_by: 'ComplianceHR Infinity Data Quality Engine',
-          details: 'Scanned Missing Information, Missing Evidence, Missing Reviews, Duplicate Records, Expired Training/Qualifications/Certifications/Policies, Compliance Gaps & Incomplete Assessments.',
-        }),
-      ]);
-      await loadLiveOSMetrics();
-      toast({
-        title: 'Data Quality Engine Sweep Complete',
-        description: 'All 10 data-quality dimensions verified and remedial follow-up action created automatically.',
-      });
-    } finally {
-      setRunningDataQuality(false);
-    }
-  };
 
   return (
     <section className="overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white shadow-md">
@@ -761,16 +724,10 @@ export default function OrganisationalOperatingSystemCommand() {
                     These links open source areas for review. No automated sweep or completion result is generated from this screen.
                   </p>
                 </div>
-                <Button
-                  size="sm"
-                  type="button"
-                  disabled={runningDataQuality}
-                  onClick={runDataQualityRemediation}
-                  className="bg-[#0A2B6D] text-white text-xs font-extrabold"
-                >
-                  <Zap className="mr-1 h-3.5 w-3.5 text-[#00C6FF]" />
-                  {runningDataQuality ? 'Scanning & Creating Actions…' : 'Run Data Quality Sweep & Auto-Create Actions'}
-                </Button>
+                <Link to="/compliance" className="inline-flex min-h-10 items-center gap-1.5 rounded-lg bg-[#0A2B6D] px-3 py-2 text-xs font-extrabold text-white hover:bg-[#17408b]">
+                  <ArrowRight className="h-3.5 w-3.5 text-[#00C6FF]" />
+                  Open Compliance Centre
+                </Link>
               </div>
               <div className="flex flex-wrap gap-1.5">
                 {[
@@ -789,7 +746,7 @@ export default function OrganisationalOperatingSystemCommand() {
                     key={dq}
                     className="inline-flex items-center gap-1 rounded-lg border border-[#0A2B6D]/20 bg-white px-2.5 py-1 text-[10.5px] font-extrabold text-[#0A2B6D]"
                   >
-                    <CheckCircle2 className="h-3 w-3 text-[#0072FF]" />
+                    <ArrowRight className="h-3 w-3 text-[#0072FF]" />
                     <span>{dq}</span>
                   </span>
                 ))}
@@ -829,7 +786,7 @@ export default function OrganisationalOperatingSystemCommand() {
                     key={chk}
                     className="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-[10.5px] font-bold text-[#0A2B6D]"
                   >
-                    <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-[#0072FF]" />
+                    <ArrowRight className="h-3.5 w-3.5 shrink-0 text-[#0072FF]" />
                     <span>{chk}</span>
                   </div>
                 ))}
