@@ -35,7 +35,7 @@ const STREAMS = [
   },
 ];
 
-function ReadinessRing({ value, total }) {
+function ReadinessRing({ value, total, available }) {
   const pct = total > 0 ? Math.round((value / total) * 100) : 0;
   const r = 38;
   const c = 2 * Math.PI * r;
@@ -50,8 +50,8 @@ function ReadinessRing({ value, total }) {
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="font-display text-xl font-extrabold tabular-nums text-white">{pct}%</span>
-        <span className="text-[10px] font-bold uppercase tracking-wider text-white/70">ready</span>
+        <span className="font-display text-xl font-extrabold tabular-nums text-white">{available ? `${pct}%` : '—'}</span>
+        <span className="text-[10px] font-bold uppercase tracking-wider text-white/70">for review</span>
       </div>
     </div>
   );
@@ -77,10 +77,10 @@ function StreamPanel({ stream, stats }) {
       </div>
       <h2 className="relative font-display text-2xl font-extrabold text-white">{stream.title}</h2>
       <p className="relative max-w-sm text-sm leading-6 text-white/75">{stream.desc}</p>
-      <ReadinessRing value={ready} total={total} />
+      <ReadinessRing value={ready} total={total} available={Boolean(stats)} />
       <div className="relative flex flex-wrap justify-center gap-2">
-        <span className="rounded-lg bg-white/15 px-2.5 py-1 text-xs font-bold text-white" style={{ backdropFilter: 'blur(4px)' }}>Active <span className="tabular-nums opacity-80">{stats ? active : '…'}</span></span>
-        <span className="rounded-lg bg-white/15 px-2.5 py-1 text-xs font-bold text-white" style={{ backdropFilter: 'blur(4px)' }}>Ready for review <span className="tabular-nums opacity-80">{stats ? ready : '…'}</span></span>
+        <span className="rounded-lg bg-white/15 px-2.5 py-1 text-xs font-bold text-white" style={{ backdropFilter: 'blur(4px)' }}>Draft / info / review <span className="tabular-nums opacity-80">{stats ? active : '…'}</span></span>
+        <span className="rounded-lg bg-white/15 px-2.5 py-1 text-xs font-bold text-white" style={{ backdropFilter: 'blur(4px)' }}>In review <span className="tabular-nums opacity-80">{stats ? ready : '…'}</span></span>
         <span className="rounded-lg bg-white/15 px-2.5 py-1 text-xs font-bold text-white" style={{ backdropFilter: 'blur(4px)' }}>Total <span className="tabular-nums opacity-80">{stats ? total : '…'}</span></span>
       </div>
       <span className="relative mt-2 inline-flex items-center gap-2 rounded-xl bg-white px-5 py-2.5 text-sm font-bold shadow-lg transition-all group-hover:gap-3" style={{ color: stream.cta }}>
