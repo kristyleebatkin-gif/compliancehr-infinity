@@ -1,90 +1,12 @@
-/* Page Navigation — Visually matched to the Quick Access iPad-screen section */
+/* Clean enterprise tab bar layout */
 .app-readable [data-dashboard-tabs][role="tablist"],
 .app-readable nav[data-dashboard-tabs] {
-  display: grid !important;
-  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-  grid-auto-rows: 1fr;
-  align-items: stretch !important;
-  width: 100%;
-  height: auto !important;
-  gap: 0.5rem !important;
-  padding: 0.75rem !important;
-  border: 1px solid #e2e8f0 !important;
-  border-radius: 1rem !important;
-  background: #ffffff !important;
-  box-shadow: 0 1px 3px rgba(10, 43, 109, 0.06), 0 10px 26px -14px rgba(90, 0, 214, 0.22) !important;
-  overflow: hidden;
-}
-
-.app-readable [data-dashboard-tabs] > [data-dashboard-tab] {
-  position: relative;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: stretch !important;
-  justify-content: space-between !important;
-  min-width: 0;
-  min-height: 92px !important;
-  height: 100% !important;
-  gap: 3px !important;
-  padding: 3px !important;
-  border: 2px solid #0A2B6D !important;
-  border-radius: 0.75rem !important;
-  background: #0A2B6D !important;
-  text-align: left !important;
-  white-space: normal !important;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-}
-
-.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:hover {
-  transform: translateY(-2px);
-  border-color: #0072FF !important;
-  box-shadow: 0 4px 12px -2px rgba(10, 43, 109, 0.22);
-}
-
-.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:is([data-state="active"], [aria-pressed="true"]) {
-  border-color: #5A00D6 !important;
-  box-shadow: 0 0 0 2px rgba(90, 0, 214, 0.25), 0 4px 12px -2px rgba(90, 0, 214, 0.3) !important;
-}
-
-.app-readable [data-dashboard-tabs] > [data-dashboard-tab] .qa-tab-header,
-.app-readable [data-dashboard-tabs] > [data-dashboard-tab] .qa-tab-header * {
-  color: #FFFFFF !important;
-}
-
-.app-readable [data-dashboard-tabs] > [data-dashboard-tab] .qa-tab-body {
-  background: #FFFFFF !important;
-}
-
-.app-readable [data-dashboard-tabs] > [data-dashboard-tab] .qa-tab-body span {
-  color: #0A2B6D !important;
-}
-
-.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:focus-visible {
-  outline: 2px solid hsl(var(--ring));
-  outline-offset: 2px;
-}
-
-.app-readable [data-dashboard-tabs] > [data-dashboard-tab]:disabled {
-  opacity: 0.5;
-}
-
-@media (min-width: 640px) {
-  .app-readable [data-dashboard-tabs][role="tablist"],
-  .app-readable nav[data-dashboard-tabs] {
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-  }
-}
-
-@media (min-width: 1024px) {
-  .app-readable [data-dashboard-tabs][role="tablist"],
-  .app-readable nav[data-dashboard-tabs] {
-    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-  }
-}
-
-@media (min-width: 1280px) {
-  .app-readable [data-dashboard-tabs][role="tablist"],
-  .app-readable nav[data-dashboard-tabs] {
-    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  background: #ffffff;
 }

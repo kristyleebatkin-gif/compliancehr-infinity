@@ -5,9 +5,6 @@ import CollapsibleSection from '@/components/module/CollapsibleSection';
 import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
 import '@/components/module/moduleShell.css';
 
-const TOP_BORDER_GRADIENT =
-  'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
-
 export default function ModuleShell({
   embedded = false,
   header = null,
@@ -26,18 +23,15 @@ export default function ModuleShell({
   large = [],
   children,
 }) {
-  const colour = moduleKeyColour(moduleKey) || '#0072FF';
+  const colour = moduleKeyColour(moduleKey) || '#4F46E5';
   const rows = (
     <div className="module-shell-workspace min-w-0 space-y-4" style={{ '--module-colour': colour }}>
       {!insightAfterTiles && insight}
       {!insightAfterTiles && insightModule && <RegisterInsights module={insightModule} />}
 
       {actions && (
-        <div
-          className="rounded-3xl p-[10px] shadow-md"
-          style={{ background: TOP_BORDER_GRADIENT }}
-        >
-          <div role="group" aria-label={`${title || 'Module'} actions`} className="module-shell-actions module-action-bar flex flex-wrap items-center justify-center rounded-[14px] bg-white p-3 [&_button]:rounded-full [&_button]:border-2 [&_button]:border-[#0A2B6D]">
+        <div className="rounded-2xl border border-slate-200 bg-white p-3.5 shadow-2xs">
+          <div role="group" aria-label={`${title || 'Module'} actions`} className="module-shell-actions module-action-bar flex flex-wrap items-center gap-2">
             {actions}
           </div>
         </div>
@@ -46,39 +40,26 @@ export default function ModuleShell({
       {tabs && <div className="min-w-0 w-full">{tabs}</div>}
 
       {search && (
-        <div
-          className="rounded-3xl p-[10px] shadow-md"
-          style={{ background: TOP_BORDER_GRADIENT }}
-        >
-          <div role="search" aria-label={`${title || 'Module'} search and filters`} className="module-shell-search min-w-0 rounded-[14px] bg-white p-3">{search}</div>
+        <div className="rounded-2xl border border-slate-200 bg-white p-3.5 shadow-2xs">
+          <div role="search" aria-label={`${title || 'Module'} search and filters`} className="module-shell-search min-w-0">{search}</div>
         </div>
       )}
 
       {small && (
         <div
-          className="rounded-3xl p-[10px] shadow-md"
-          style={{ background: TOP_BORDER_GRADIENT }}
+          className={`module-shell-tiles grid gap-3 sm:grid-cols-2 ${
+            React.Children.count(small) === 5
+              ? 'md:grid-cols-3 lg:grid-cols-5'
+              : 'lg:grid-cols-4'
+          } [&>*]:rounded-2xl [&>*]:border [&>*]:border-slate-200 [&>*]:bg-white [&>*]:p-4 [&>*]:shadow-2xs`}
         >
-          <div
-            className={`module-shell-tiles grid gap-2.5 rounded-[14px] bg-white p-3 sm:grid-cols-2 ${
-              React.Children.count(small) === 5
-                ? 'md:grid-cols-3 lg:grid-cols-5'
-                : ' lg:grid-cols-4'
-            } [&>*]:rounded-2xl [&>*]:border-2 [&>*]:border-[#0A2B6D] [&>*]:bg-white [&>*]:p-3.5`}
-          >
-            {small}
-          </div>
+          {small}
         </div>
       )}
 
       {medium && (
-        <div
-          className="rounded-3xl p-[10px] shadow-md"
-          style={{ background: TOP_BORDER_GRADIENT }}
-        >
-          <div className="module-shell-tiles grid gap-3 rounded-[14px] bg-white p-3.5 md:grid-cols-2 [&>*]:rounded-2xl [&>*]:border-2 [&>*]:border-[#0A2B6D] [&>*]:bg-white [&>*]:p-4">
-            {medium}
-          </div>
+        <div className="module-shell-tiles grid gap-3 md:grid-cols-2 [&>*]:rounded-2xl [&>*]:border [&>*]:border-slate-200 [&>*]:bg-white [&>*]:p-4 [&>*]:shadow-2xs">
+          {medium}
         </div>
       )}
     </div>

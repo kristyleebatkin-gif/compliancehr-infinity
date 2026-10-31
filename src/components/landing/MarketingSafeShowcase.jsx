@@ -56,7 +56,7 @@ const PACKS = [
     subtitle:
       'Per month, up to 20 users · Includes Elite Package Tokens ($160/mo value) · Full access to ComplianceHR app & over 100 downloadable documents tailored to Business Details (WHS, Risk, Incident, Medication, Support Plan, Consents, Intake, Policies, Procedures, Registers & Business Plans)',
     bullets: [
-      '1. Includes Elite Package Tokens valued at $160 per a month (1,200 Message Credits & 50,000 Integration Credits)',
+      '1. Includes Elite Package Tokens valued at $160 per month (1,200 Message Credits & 50,000 Integration Credits)',
       '2. Full access to over 100 documents downloadable at any stage & tailored to Business Details',
       '3. Includes WHS, Risk, Incident, Medication, Waste, Support Plan, Service Delivery, Infection Control & Continuity',
       '4. Includes Staff Training, Consents, Intake (Employee & Participant), Progress, Skills, Review, Policies, Registers & Business Plans',
@@ -64,9 +64,9 @@ const PACKS = [
     ],
     importantInfoTitle: 'Important Subscription Info & Included Document Suite',
     importantInfoRows: [
-      'Up to 20 Users: $760 per a month · 21–30 Users: $820 per a month',
-      '31–40 Users: $920 per a month · 41–50 Users: $999 per a month',
-      '51–100 Users: $1,100 per a month · 101+ Users: $1,220 per a month',
+      'Up to 20 Users: $760 per month · 21–30 Users: $820 per month',
+      '31–40 Users: $920 per month · 41–50 Users: $999 per month',
+      '51–100 Users: $1,100 per month · 101+ Users: $1,220 per month',
       'Includes 100+ tailored documents (WHS, Risk, Incident, Medication, Intake, Policies, Registers & Business Plans) + 1,200 Msg & 50,000 Int. Credits',
     ],
     primaryCta: { label: 'Start 14-Day Free Trial', to: '/register' },
@@ -81,7 +81,7 @@ const PACKS = [
     badgeLine2: '& Compliance Documents Pack',
     topPriceHeading: 'ComplianceHR',
     priceMain: '$999',
-    priceSuffix: 'or $125 per a month subscription (24 month contract)',
+    priceSuffix: 'or $125 per month subscription (24 month contract)',
     subtitle:
       'Full access to document suite · Document access, tailor business details, only · Downloadable at any stage (over 100 documents) · No payment plan on $999',
     bullets: [
@@ -93,7 +93,7 @@ const PACKS = [
     ],
     importantInfoTitle: 'Important Document Package Info & Inclusions',
     importantInfoRows: [
-      '$999 Outright (no payment plan) · $125 per a month subscription (24 month contract)',
+      '$999 Outright (no payment plan) · $125 per month subscription (24 month contract)',
       'Full access to document suite · Document access & tailor business details only',
       'WHS, Risk, Incident, Medication, Waste, Support Plan, Service Delivery, Infection Control & Continuity',
       'Staff Training, Consents, Intake (Employee & Participant), Progress, Skills, Review, Conflict, Safe Meal, Policies, Procedures, Registers & Business Plans',
@@ -186,7 +186,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                 reasons: [
                   {
                     title: '46 Live Modules in One Subscription',
-                    sub: '100% Connected Super-Platform · From $760 per a month',
+                    sub: '100% Connected Super-Platform · From $760 per month',
                     detail: 'Replaces 8 separate HR, Roster, CRM, LMS, Risk, Finance & Audit subscriptions.',
                     points: [
                       'Saves $1,400+ per month vs separate tools',

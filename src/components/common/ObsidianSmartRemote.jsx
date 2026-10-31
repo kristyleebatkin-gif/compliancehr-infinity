@@ -1,13 +1,5 @@
 import React from 'react';
-import { getHeaderView } from '@/lib/fullColourTiles';
-import { Image } from '@/components/ui/image';
 import { ArrowRight, ShieldCheck } from 'lucide-react';
-
-const BRAND_GRADIENT =
-  'linear-gradient(120deg, #0072FF 0%, #0A2B6D 18%, #5A00D6 42%, #A100FF 68%, #FF2E9A 100%)';
-
-const CHR_LOGO =
-  'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png';
 
 const DEFAULT_CHANNEL_SUBTITLES = {
   'auditor-portal': 'Read-only external NDIS auditor view',
@@ -49,12 +41,7 @@ const DEFAULT_CHANNEL_SUBTITLES = {
   'activity-feed': 'Live platform audit & action stream',
 };
 
-/**
- * Page Navigation — Small logo at top, platform name below logo, optional category/screen filters,
- * and iPad-style screens underneath visually matching Quick Access.
- */
 export default function ObsidianSmartRemote({
-  subtitle = 'Interactive workspace screens',
   screenModes = [],
   activeScreenMode,
   onSelectScreenMode,
@@ -68,35 +55,9 @@ export default function ObsidianSmartRemote({
   columnsClass = 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6',
 }) {
   return (
-    <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-panel">
-      {/* Top Brand Gradient Strip Matching Quick Access */}
-      <div className="h-1 w-full" style={{ background: BRAND_GRADIENT }} />
-
-      {/* Platform Name on Top + Smaller-Length Logo Below App Name + Blue/Purple/Pink Slogan */}
-      <div className="flex flex-col items-center px-3.5 pb-1.5 pt-2.5 text-center sm:px-4">
-        <span className="font-editorial text-[13px] font-extrabold leading-tight tracking-tight text-[#0A2B6D] whitespace-nowrap">
-          Compliance
-          <span className="font-editorial-italic text-[#5A00D6]">HR</span>{' '}
-          <span className="bg-gradient-to-r from-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-            Infinity
-          </span>
-        </span>
-        <Image
-          src={CHR_LOGO}
-          alt="ComplianceHR Infinity"
-          fittingType="fit"
-          className="mt-1 h-5 w-14 rounded-md border border-slate-200 bg-white px-1 py-0.5 shadow-2xs"
-        />
-        <span className="mt-1 text-[8.5px] font-extrabold leading-tight">
-          <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
-          <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
-          <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
-        </span>
-      </div>
-
-      {/* Optional Dual-Screen & Category Filter Bar (Used on Compliance Hub) */}
+    <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xs">
       {(screenModes.length > 0 || banks.length > 0) && (
-        <div className="flex flex-wrap items-center justify-between gap-2 border-y border-slate-100 bg-slate-50/70 px-3 py-2">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 bg-slate-50 px-3.5 py-2.5">
           {banks.length > 0 && (
             <div className="flex flex-wrap items-center gap-1.5">
               {banks.map((b) => {
@@ -106,10 +67,10 @@ export default function ObsidianSmartRemote({
                     key={b.id}
                     type="button"
                     onClick={() => onSelectBank && onSelectBank(b.id)}
-                    className={`rounded-lg px-2.5 py-1 text-[11px] font-extrabold leading-tight transition ${
+                    className={`rounded-lg px-3 py-1.5 text-xs font-semibold leading-tight transition ${
                       isBankActive
-                        ? 'bg-[#0A2B6D] text-white shadow-2xs'
-                        : 'border border-slate-200 bg-white text-[#0A2B6D] hover:border-[#0072FF] hover:text-[#0072FF]'
+                        ? 'bg-indigo-600 text-white shadow-2xs'
+                        : 'border border-slate-200 bg-white text-slate-700 hover:border-indigo-300 hover:text-indigo-600'
                     }`}
                   >
                     {b.label}
@@ -120,7 +81,7 @@ export default function ObsidianSmartRemote({
           )}
 
           {screenModes.length > 0 && (
-            <div className="flex flex-wrap items-center gap-1 ml-auto">
+            <div className="flex flex-wrap items-center gap-1.5 ml-auto">
               {screenModes.map((m) => {
                 const isModeActive = m.key === activeScreenMode;
                 return (
@@ -128,10 +89,10 @@ export default function ObsidianSmartRemote({
                     key={m.key}
                     type="button"
                     onClick={() => onSelectScreenMode && onSelectScreenMode(m.key)}
-                    className={`rounded-lg px-2.5 py-1 text-[10.5px] font-extrabold leading-tight transition ${
+                    className={`rounded-lg px-3 py-1.5 text-xs font-semibold leading-tight transition ${
                       isModeActive
-                        ? 'bg-[#5A00D6] text-white shadow-2xs'
-                        : 'border border-slate-200 bg-white text-[#0A2B6D] hover:border-[#5A00D6]'
+                        ? 'bg-indigo-600 text-white shadow-2xs'
+                        : 'border border-slate-200 bg-white text-slate-700 hover:border-indigo-300'
                     }`}
                   >
                     {m.label}
@@ -143,12 +104,10 @@ export default function ObsidianSmartRemote({
         </div>
       )}
 
-      {/* Screens / Modules Underneath — Visually Matching Quick Access */}
-      <div className={`grid auto-rows-fr gap-2.5 p-3 pt-2.5 items-stretch ${columnsClass}`}>
-        {channels.map((ch, idx) => {
+      <div className={`grid auto-rows-fr gap-2.5 p-3 items-stretch ${columnsClass}`}>
+        {channels.map((ch) => {
           const Icon = ch.icon || ShieldCheck;
           const active = ch.key === activeKey;
-          const headerBg = getHeaderView(idx);
           const resolvedSub =
             ch.sub || DEFAULT_CHANNEL_SUBTITLES[ch.key] || `${ch.label} workspace`;
 
@@ -162,51 +121,33 @@ export default function ObsidianSmartRemote({
               }}
               aria-pressed={active}
               title={`${ch.label} — ${resolvedSub}`}
-              className={`group flex h-full min-h-[100px] flex-col gap-[3px] rounded-xl border-2 bg-[#0A2B6D] p-[3px] text-left transition-all duration-200 focus-visible:outline-none ${
+              className={`group flex h-full flex-col justify-between rounded-xl border p-3 text-left transition-all ${
                 active
-                  ? 'border-[#5A00D6] shadow-md ring-2 ring-[#5A00D6]/25 ring-offset-1'
-                  : 'border-[#0A2B6D] hover:-translate-y-0.5 hover:border-[#0072FF] hover:shadow-md'
+                  ? 'border-indigo-600 bg-indigo-50/60 shadow-xs ring-1 ring-indigo-600/20'
+                  : 'border-slate-200 bg-white hover:border-indigo-300 hover:bg-slate-50/50'
               }`}
             >
-              {/* Screen */}
-              <div className="flex w-full flex-1 flex-col overflow-hidden rounded-[8px] bg-white">
-                {/* Coloured Header Inside Screen */}
-                <div
-                  className="flex min-h-[40px] w-full items-center justify-between gap-1.5 px-2 py-1.5 text-white"
-                  style={{ background: headerBg }}
-                >
-                  <div className="flex min-w-0 items-center gap-1.5">
-                    <Icon className="h-3.5 w-3.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+              <div>
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex min-w-0 items-center gap-2">
                     <span
-                      className="min-w-0 text-[10px] font-extrabold leading-[12px] tracking-tight text-white"
-                      style={{ color: '#FFFFFF', wordBreak: 'normal', overflowWrap: 'normal' }}
+                      className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-lg ${
+                        active ? 'bg-indigo-600 text-white' : 'bg-indigo-50 text-indigo-600'
+                      }`}
                     >
+                      <Icon className="h-3.5 w-3.5" />
+                    </span>
+                    <span className="min-w-0 text-xs font-bold leading-snug text-slate-900">
                       {ch.label}
                     </span>
                   </div>
-                  <span
-                    className={`h-1.5 w-1.5 shrink-0 rounded-full ${
-                      active ? 'bg-[#00C6FF]' : 'bg-white/75'
-                    }`}
-                  />
                 </div>
-
-                {/* White Writing Area With Supporting Detail */}
-                <div className="flex min-h-[42px] w-full flex-1 items-center justify-between gap-1.5 border-t border-[#0A2B6D]/10 bg-white px-2 py-1.5">
-                  <span className="min-w-0 flex-1 break-words text-[10px] font-bold leading-[12.5px] text-[#0A2B6D]/85">
-                    {resolvedSub}
-                  </span>
-                  <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#0072FF] transition group-hover:translate-x-0.5 group-hover:text-[#FF2E9A]" />
-                </div>
+                <p className="mt-1.5 text-[11px] font-medium leading-snug text-slate-600">
+                  {resolvedSub}
+                </p>
               </div>
-
-              {/* iPad Home Indicator Bar */}
-              <div className="flex h-[5px] w-full items-center justify-center">
-                <span
-                  className={`h-[2.5px] w-6 rounded-full transition-all ${
-                    active ? 'w-8 bg-[#00C6FF]' : 'bg-white/45 group-hover:bg-white/80'
-                  }`}
-                />
+              <div className="mt-2 flex items-center justify-end">
+                <ArrowRight className="h-3 w-3 text-indigo-600 transition group-hover:translate-x-0.5" />
               </div>
             </button>
           );

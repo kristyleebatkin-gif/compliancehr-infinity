@@ -13,10 +13,10 @@ import { SQUISHED_GRADIENT } from '@/components/safe/ExecutiveWallScene';
 const EMPTY = {
   business_name: 'ComplianceHR Infinity', trading_name: '', abn: '11769681650', acn: '', ndis_provider_number: '4-LPHJR5O',
   address_line: 'U5/14 Keane Street, Currajong, QLD, 4812', postal_address: '', suburb: 'Currajong', state: 'QLD', postcode: '4812',
-  phone: '0402 165 668', after_hours_phone: '', email: 'kristyleebatkin@live.com.au', website: '',
-  contact_person: 'Administration', contact_person_phone: '0402 165 668', contact_person_email: 'kristyleebatkin@live.com.au',
+  phone: '0402 165 668', after_hours_phone: '', email: 'support@compliancehr.com.au', website: '',
+  contact_person: 'Administration', contact_person_phone: '0402 165 668', contact_person_email: 'support@compliancehr.com.au',
   business_structure: 'Registered NDIS Provider', registration_date: '', asic_registration: '', business_activity: 'NDIS Disability Support Services', key_contact: 'Administration',
-  operating_hours: 'Mon–Fri 8:00am – 5:00pm (24/7 On-Call Support)', preferred_communication: 'Email & Phone', business_owner: 'Kristy Lee Whelan', authorised_contact_name: 'Administration', authorised_contact: '0402 165 668 | kristyleebatkin@live.com.au',
+  operating_hours: 'Mon–Fri 8:00am – 5:00pm (24/7 On-Call Support)', preferred_communication: 'Email & Phone', business_owner: 'ComplianceHR Infinity', authorised_contact_name: 'Administration', authorised_contact: '0402 165 668 | support@compliancehr.com.au',
   organisational_structure: '', delegation_of_authority: '', tax_file_number: '',
   purpose: 'Empowering participants with safe, compliant, person-centred support.',
   vision: 'Complete Control. Greater Confidence. Brighter Success.',

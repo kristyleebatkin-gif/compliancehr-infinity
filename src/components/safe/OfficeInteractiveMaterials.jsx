@@ -135,29 +135,23 @@ export function CompanySafeMaterialPanel({ companyName = 'ComplianceHR Infinity'
           </div>
           <div className="min-w-0">
             <div className="truncate text-xs font-extrabold text-blue-950">ComplianceHR Infinity</div>
-            <div className="text-[9px] font-extrabold">
-              <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
-              <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
-              <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
+            <div className="text-[9px] font-medium text-slate-500">
+              Complete Control. Greater Confidence. Brighter Success.
             </div>
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-[9.5px]">
-          <div className="flex items-center justify-between gap-1.5 rounded border border-blue-200 bg-white px-2 py-1">
-            <span className="font-bold text-blue-700">Software</span>
-            <span className="font-extrabold text-blue-950 whitespace-nowrap">ComplianceHR Infinity</span>
+          <div className="flex items-center justify-between gap-1.5 rounded border border-slate-200 bg-white px-2 py-1">
+            <span className="font-bold text-slate-600">Software</span>
+            <span className="font-extrabold text-slate-900 whitespace-nowrap">ComplianceHR Infinity</span>
           </div>
-          <div className="flex items-center justify-between gap-1.5 rounded border border-purple-200 bg-white px-2 py-1">
-            <span className="font-bold text-purple-700">Business</span>
-            <span className="font-extrabold text-purple-950 whitespace-nowrap">{resolvedBusinessName}</span>
+          <div className="flex items-center justify-between gap-1.5 rounded border border-slate-200 bg-white px-2 py-1">
+            <span className="font-bold text-slate-600">Business</span>
+            <span className="font-extrabold text-slate-900 whitespace-nowrap">{resolvedBusinessName}</span>
           </div>
-          <div className="flex items-center justify-between gap-1.5 rounded border border-pink-200 bg-white px-2 py-1">
-            <span className="font-bold text-pink-700">Developer</span>
-            <span className="font-extrabold text-pink-950 whitespace-nowrap">Kristy Lee Whelan</span>
-          </div>
-          <div className="sm:col-span-2 flex items-center justify-between gap-1.5 rounded border border-indigo-200 bg-white px-2 py-1">
-            <span className="font-bold text-indigo-700">Email</span>
-            <span className="font-extrabold text-indigo-950 whitespace-nowrap">kristyleebatkin@live.com.au</span>
+          <div className="sm:col-span-2 flex items-center justify-between gap-1.5 rounded border border-slate-200 bg-white px-2 py-1">
+            <span className="font-bold text-slate-600">Support Email</span>
+            <span className="font-extrabold text-indigo-600 whitespace-nowrap">support@compliancehr.com.au</span>
           </div>
         </div>
       </div>

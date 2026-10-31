@@ -1,20 +1,15 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { getHeaderView } from '@/lib/fullColourTiles';
 import { Image } from '@/components/ui/image';
 import {
-  LogOut, ArrowRight, ChevronDown, ChevronRight, LayoutDashboard, ClipboardList,
-  Users, CalendarClock, ShieldCheck, ShieldAlert, FolderOpen, Megaphone,
+  LogOut, ChevronDown, ChevronRight, LayoutDashboard, ClipboardList,
+  Users, ShieldCheck, ShieldAlert, FolderOpen, Megaphone,
   BarChart3, Cpu, Settings,
 } from 'lucide-react';
-
-const BRAND_GRADIENT =
-  'linear-gradient(120deg, #0072FF 0%, #0A2B6D 18%, #5A00D6 42%, #A100FF 68%, #FF2E9A 100%)';
 
 const CHR_LOGO =
   'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png';
 
-// Permanent 13-Group Architectural Map (Single Source of Truth, Zero Duplicates)
 export const PRIMARY_11_OS_NAV = [
   {
     id: 'dashboard-executive',
@@ -198,7 +193,7 @@ export default function ObsidianSidebarRemote({
   onLogout,
 }) {
   const location = useLocation();
-  const [navMode, setNavMode] = useState('os11'); // 'os11' (13 Permanent Categories) | 'all' (All Modules)
+  const [navMode, setNavMode] = useState('os11');
   const [expandedPillar, setExpandedPillar] = useState('dashboard-executive');
 
   const modules = visiblePrimary.filter(
@@ -207,227 +202,167 @@ export default function ObsidianSidebarRemote({
   );
 
   return (
-    <div className="flex h-full w-full min-w-0 min-h-0 flex-col overflow-hidden bg-white p-2.5 select-none">
-      <section className="flex h-full min-h-0 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-panel">
-        {/* Top Brand Gradient Bar */}
-        <div className="h-1 w-full shrink-0" style={{ background: BRAND_GRADIENT }} />
-
-        {/* Platform Name on Top + Smaller-Length Logo Below App Name + Blue/Purple/Pink Slogan */}
-        <div className="flex shrink-0 flex-col items-center border-b border-slate-100 bg-[#F5F0FF]/40 px-3 py-2.5 text-center">
-          <span className="font-editorial text-[13px] font-extrabold leading-tight tracking-tight text-[#0A2B6D] whitespace-nowrap">
-            Compliance
-            <span className="font-editorial-italic text-[#5A00D6]">HR</span>{' '}
-            <span className="bg-gradient-to-r from-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-              Infinity
-            </span>
-          </span>
+    <div className="flex h-full w-full min-w-0 min-h-0 flex-col overflow-hidden bg-white select-none">
+      {/* Brand Lockup */}
+      <div className="flex shrink-0 flex-col border-b border-slate-200 bg-white px-4 py-3.5">
+        <div className="flex items-center gap-2.5">
           <Image
             src={CHR_LOGO}
             alt="ComplianceHR Infinity"
             fittingType="fit"
-            className="mt-1 h-5 w-14 rounded-md border border-slate-200 bg-white px-1 py-0.5 shadow-2xs"
+            className="h-8 w-8 shrink-0 rounded-lg border border-slate-200 bg-white p-1 shadow-2xs"
           />
-          <span className="mt-1 text-[8px] font-extrabold leading-tight">
-            <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
-            <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
-            <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
-          </span>
-
-          {/* Mode Toggle: 11 Primary OS Pillars vs All Modules */}
-          <div className="mt-2 grid w-full grid-cols-2 gap-1 rounded-lg border border-slate-200 bg-white p-0.5">
-            <button
-              type="button"
-              onClick={() => setNavMode('os11')}
-              className={`rounded-md py-1 text-[9.5px] font-extrabold transition ${
-                navMode === 'os11'
-                  ? 'bg-[#0A2B6D] text-white'
-                  : 'text-[#0A2B6D] hover:bg-[#F5F0FF]'
-              }`}
-            >
-              13 OS Categories
-            </button>
-            <button
-              type="button"
-              onClick={() => setNavMode('all')}
-              className={`rounded-md py-1 text-[9.5px] font-extrabold transition ${
-                navMode === 'all'
-                  ? 'bg-[#5A00D6] text-white'
-                  : 'text-[#0A2B6D] hover:bg-[#F5F0FF]'
-              }`}
-            >
-              All Direct Screens
-            </button>
+          <div className="min-w-0">
+            <div className="text-sm font-extrabold leading-tight tracking-tight text-slate-900 whitespace-nowrap">
+              Compliance<span className="text-indigo-600">HR Infinity</span>
+            </div>
+            <div className="mt-0.5 text-[9.5px] font-medium leading-tight text-slate-500">
+              Complete Control. Greater Confidence. Brighter Success.
+            </div>
           </div>
         </div>
 
-        {/* Navigation List (Max 2 Levels) */}
-        <nav
-          aria-label="Page navigation"
-          className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-2 space-y-1.5"
-        >
-          {navMode === 'os11'
-            ? PRIMARY_11_OS_NAV.map((pillar, idx) => {
-                const Icon = pillar.icon;
-                const pillarActive =
-                  isActive(pillar.path) ||
-                  pillar.children.some((c) => location.pathname === c.path || location.pathname.startsWith(`${c.path}/`));
-                const isExpanded = expandedPillar === pillar.id || pillarActive;
-                const headerBg = getHeaderView(idx);
+        {/* Mode Toggle */}
+        <div className="mt-3 grid w-full grid-cols-2 gap-1 rounded-lg border border-slate-200 bg-slate-100 p-0.5">
+          <button
+            type="button"
+            onClick={() => setNavMode('os11')}
+            className={`rounded-md py-1 text-[10px] font-semibold transition ${
+              navMode === 'os11'
+                ? 'bg-indigo-600 text-white shadow-2xs'
+                : 'text-slate-700 hover:text-slate-900'
+            }`}
+          >
+            Categories
+          </button>
+          <button
+            type="button"
+            onClick={() => setNavMode('all')}
+            className={`rounded-md py-1 text-[10px] font-semibold transition ${
+              navMode === 'all'
+                ? 'bg-indigo-600 text-white shadow-2xs'
+                : 'text-slate-700 hover:text-slate-900'
+            }`}
+          >
+            All Modules
+          </button>
+        </div>
+      </div>
 
-                return (
-                  <div key={pillar.id} className="space-y-1">
-                    <div
-                      className={`group flex flex-col gap-[2px] rounded-xl border-2 bg-[#0A2B6D] p-[2.5px] transition-all duration-200 ${
-                        pillarActive
-                          ? 'border-[#5A00D6] shadow-md ring-2 ring-[#5A00D6]/25'
-                          : 'border-[#0A2B6D] hover:border-[#0072FF]'
-                      }`}
-                    >
-                      <div className="flex flex-1 flex-col overflow-hidden rounded-[7px] bg-white">
-                        <div
-                          className="flex min-h-[32px] items-center justify-between gap-1 px-2 py-1 text-white"
-                          style={{ background: headerBg }}
-                        >
-                          <Link
-                            to={pillar.path}
-                            onClick={() => setExpandedPillar(pillar.id)}
-                            className="flex min-w-0 flex-1 items-center gap-1.5"
-                          >
-                            <Icon className="h-3.5 w-3.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-                            <span
-                              className="min-w-0 text-[10px] font-extrabold leading-tight tracking-tight text-white"
-                              style={{ color: '#FFFFFF' }}
-                            >
-                              {pillar.label}
-                            </span>
-                          </Link>
-                          <button
-                            type="button"
-                            aria-label={`Toggle ${pillar.label}`}
-                            onClick={() =>
-                              setExpandedPillar((prev) => (prev === pillar.id ? '' : pillar.id))
-                            }
-                            className="rounded p-0.5 text-white hover:bg-white/20"
-                          >
-                            {isExpanded ? (
-                              <ChevronDown className="h-3.5 w-3.5 text-white" />
-                            ) : (
-                              <ChevronRight className="h-3.5 w-3.5 text-white" />
-                            )}
-                          </button>
-                        </div>
+      {/* Navigation List */}
+      <nav
+        aria-label="Page navigation"
+        className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-2.5 space-y-1"
+      >
+        {navMode === 'os11'
+          ? PRIMARY_11_OS_NAV.map((pillar) => {
+              const Icon = pillar.icon;
+              const pillarActive =
+                isActive(pillar.path) ||
+                pillar.children.some((c) => location.pathname === c.path || location.pathname.startsWith(`${c.path}/`));
+              const isExpanded = expandedPillar === pillar.id || pillarActive;
 
-                        <Link
-                          to={pillar.path}
-                          onClick={() => setExpandedPillar(pillar.id)}
-                          className="flex items-center justify-between gap-1 border-t border-[#0A2B6D]/10 bg-white px-2 py-1"
-                        >
-                          <span className="text-[9.5px] font-bold text-[#0A2B6D]/85">
-                            {pillar.sub}
-                          </span>
-                          <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#0072FF]" />
-                        </Link>
-                      </div>
-                    </div>
-
-                    {/* Level 2 Sub-Navigation (Maximum 2 Levels) */}
-                    {isExpanded && (
-                      <div className="ml-2.5 space-y-1 border-l-2 border-[#C084FC] pl-2 py-0.5">
-                        {pillar.children.map((child) => {
-                          const subActive =
-                            location.pathname === child.path ||
-                            (child.path !== '/dashboard' && location.pathname.startsWith(`${child.path}/`));
-                          return (
-                            <Link
-                              key={child.path}
-                              to={child.path}
-                              className={`flex items-center justify-between rounded-lg px-2 py-1 text-[10px] font-extrabold transition ${
-                                subActive
-                                  ? 'bg-[#5A00D6] text-white shadow-2xs'
-                                  : 'bg-[#F6F0FF]/70 text-[#0A2B6D] hover:bg-[#EDE9FE]'
-                              }`}
-                            >
-                              <span style={{ color: subActive ? '#FFFFFF' : '#0A2B6D' }}>
-                                {child.label}
-                              </span>
-                              <ArrowRight
-                                className={`h-2.5 w-2.5 shrink-0 ${
-                                  subActive ? 'text-[#00C6FF]' : 'text-[#5A00D6]'
-                                }`}
-                              />
-                            </Link>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
-                );
-              })
-            : modules.map((item, idx) => {
-                const Icon = item.icon;
-                const active = isActive(item.path);
-                const label = navLabel(item);
-                const subtitle = item.blurb || item.group || 'Open workspace';
-                const headerBg = getHeaderView(idx);
-
-                return (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    title={`${label} — ${subtitle}`}
-                    className={`group flex flex-col gap-[3px] rounded-xl border-2 bg-[#0A2B6D] p-[3px] transition-all duration-200 focus-visible:outline-none ${
-                      active
-                        ? 'border-[#5A00D6] shadow-md ring-2 ring-[#5A00D6]/25 ring-offset-1'
-                        : 'border-[#0A2B6D] hover:-translate-y-0.5 hover:border-[#0072FF] hover:shadow-md'
+              return (
+                <div key={pillar.id} className="space-y-1">
+                  <div
+                    className={`flex items-center justify-between gap-1 rounded-xl border px-2.5 py-2 transition ${
+                      pillarActive
+                        ? 'border-indigo-200 bg-indigo-50/70 text-indigo-900'
+                        : 'border-transparent bg-white text-slate-700 hover:bg-slate-50'
                     }`}
                   >
-                    <div className="flex flex-1 flex-col overflow-hidden rounded-[8px] bg-white">
-                      <div
-                        className="flex min-h-[32px] items-center justify-between gap-1 px-1.5 py-1 text-white"
-                        style={{ background: headerBg }}
+                    <Link
+                      to={pillar.path}
+                      onClick={() => setExpandedPillar(pillar.id)}
+                      className="flex min-w-0 flex-1 items-center gap-2"
+                    >
+                      <span
+                        className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-lg ${
+                          pillarActive ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-indigo-600'
+                        }`}
                       >
-                        <div className="flex min-w-0 items-center gap-1">
-                          <Icon className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-                          <span
-                            className="min-w-0 text-[9.5px] font-extrabold leading-[11px] tracking-tight text-white"
-                            style={{ color: '#FFFFFF' }}
+                        <Icon className="h-3.5 w-3.5" />
+                      </span>
+                      <span className="min-w-0 text-xs font-semibold leading-snug">
+                        {pillar.label}
+                      </span>
+                    </Link>
+                    <button
+                      type="button"
+                      aria-label={`Toggle ${pillar.label}`}
+                      onClick={() =>
+                        setExpandedPillar((prev) => (prev === pillar.id ? '' : pillar.id))
+                      }
+                      className="rounded p-1 text-slate-400 hover:bg-slate-200/60 hover:text-slate-700"
+                    >
+                      {isExpanded ? (
+                        <ChevronDown className="h-3.5 w-3.5" />
+                      ) : (
+                        <ChevronRight className="h-3.5 w-3.5" />
+                      )}
+                    </button>
+                  </div>
+
+                  {isExpanded && (
+                    <div className="ml-3.5 space-y-0.5 border-l border-slate-200 pl-2.5 py-0.5">
+                      {pillar.children.map((child) => {
+                        const subActive =
+                          location.pathname === child.path ||
+                          (child.path !== '/dashboard' && location.pathname.startsWith(`${child.path}/`));
+                        return (
+                          <Link
+                            key={child.path}
+                            to={child.path}
+                            className={`flex items-center justify-between rounded-lg px-2.5 py-1.5 text-xs font-medium transition ${
+                              subActive
+                                ? 'bg-indigo-600 font-semibold text-white shadow-2xs'
+                                : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                            }`}
                           >
-                            {label}
-                          </span>
-                        </div>
-                        <span
-                          className={`h-1.5 w-1.5 shrink-0 rounded-full ${
-                            active ? 'bg-[#00C6FF]' : 'bg-white/75'
-                          }`}
-                        />
-                      </div>
-
-                      <div className="flex min-h-[30px] flex-1 items-center justify-between gap-1 border-t border-[#0A2B6D]/10 bg-white px-1.5 py-1">
-                        <span className="min-w-0 flex-1 break-words text-[9.5px] font-bold leading-[12px] text-[#0A2B6D]/85">
-                          {subtitle}
-                        </span>
-                        <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#0072FF]" />
-                      </div>
+                            <span>{child.label}</span>
+                          </Link>
+                        );
+                      })}
                     </div>
-                  </Link>
-                );
-              })}
-        </nav>
+                  )}
+                </div>
+              );
+            })
+          : modules.map((item) => {
+              const Icon = item.icon;
+              const active = isActive(item.path);
+              const label = navLabel(item);
 
-        {/* Minimal Sign-Out Action */}
-        {onLogout && (
-          <div className="shrink-0 border-t border-slate-100 p-2">
-            <button
-              type="button"
-              onClick={onLogout}
-              className="flex w-full items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-[10.5px] font-extrabold text-[#0A2B6D] transition hover:border-[#0072FF]/50 hover:bg-[#F5F0FF] hover:text-[#5A00D6]"
-            >
-              <LogOut className="h-3 w-3 text-[#FF2E9A]" />
-              <span>Sign out</span>
-            </button>
-          </div>
-        )}
-      </section>
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold transition ${
+                    active
+                      ? 'bg-indigo-600 text-white shadow-2xs'
+                      : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
+                  }`}
+                >
+                  <Icon className={`h-4 w-4 shrink-0 ${active ? 'text-white' : 'text-indigo-600'}`} />
+                  <span className="truncate">{label}</span>
+                </Link>
+              );
+            })}
+      </nav>
+
+      {/* Sign-Out Action */}
+      {onLogout && (
+        <div className="shrink-0 border-t border-slate-200 p-3">
+          <button
+            type="button"
+            onClick={onLogout}
+            className="flex w-full items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 transition hover:border-indigo-300 hover:bg-slate-50 hover:text-indigo-600"
+          >
+            <LogOut className="h-3.5 w-3.5 text-slate-500" />
+            <span>Sign out</span>
+          </button>
+        </div>
+      )}
     </div>
   );
 }

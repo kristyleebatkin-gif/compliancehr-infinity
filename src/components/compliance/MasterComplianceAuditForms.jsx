@@ -187,7 +187,7 @@ export function SingleMasterComplianceAuditForm({
           businessName: 'ComplianceHR Infinity · Governance & NDIS',
           abn: 'Registered Provider Edition',
           approvedBy: 'Kristy Lee Whelan, Managing Director',
-          email: 'kristyleebatkin@live.com.au',
+          email: 'support@compliancehr.com.au',
         }
       : {
           docNumber: 'CHR-AUD-002',
@@ -197,7 +197,7 @@ export function SingleMasterComplianceAuditForm({
           businessName: 'ComplianceHR Infinity · Workforce & HR',
           abn: 'Enterprise Operations Edition',
           approvedBy: 'Kristy Lee Whelan, Director',
-          email: 'kristyleebatkin@live.com.au',
+          email: 'support@compliancehr.com.au',
         }
   );
 
@@ -719,7 +719,7 @@ export function SingleMasterComplianceAuditForm({
                   <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-purple-950 text-white">
                     <Mail className="h-2 w-2" />
                   </span>
-                  kristyleebatkin@live.com.au
+                  support@compliancehr.com.au
                 </span>
                 <span className="inline-flex items-center gap-1 rounded-full bg-white/90 px-1.5 py-0.5 shadow-sm">
                   <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-amber-400 text-purple-950">

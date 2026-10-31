@@ -31,55 +31,27 @@ export default function Landing() {
   };
 
   return (
-    <div className="landing-page relative min-h-screen overflow-x-hidden bg-[#F6F0FF] font-elegant text-[#0A2B6D] antialiased">
-      {/* Top Enterprise SaaS Navigation */}
+    <div className="landing-page relative min-h-screen overflow-x-hidden bg-slate-50 font-body text-slate-900 antialiased">
       <LandingNav onBookDemo={openDemoModal} />
 
       <main className="landing-main relative z-10 mx-auto w-full max-w-[1440px] px-4 py-6 sm:px-6 lg:px-8 space-y-8 pb-14">
-        {/* 1. Hero Section (Landscape) */}
         <LandingHero onBookDemo={openDemoModal} />
-
-        {/* Evidence-First Operating Standard */}
         <LandingEvidenceStandardSection />
-
-        {/* Universal Register Engine Standard */}
         <LandingRegisterEngineSection />
-
-        {/* 2. Dashboard Showcase Section (Landscape) */}
         <LandingProductShowcase />
-
-        {/* 3. Feature Pillars Section (Landscape) */}
         <LandingSolutionSection />
-
-        {/* 4. Statistics Section (Landscape) */}
         <LandingStatsSection />
-
-        {/* 5. Why Choose Us Section (Landscape) */}
         <BenefitsSection />
-
-        {/* 6. How It Works Section (Landscape) */}
         <LandingHowItWorks />
-
-        {/* 7. Testimonials Section (Landscape) */}
         <LandingTestimonialsSection />
-
-        {/* 8. Pricing Section (Landscape — Exact Existing Pricing Preserved) */}
         <PricingSection onContactSales={openDemoModal} />
-
-        {/* 9. Module Explorer Section (Landscape — 46 Connected Modules Architecture Map) */}
         <BlueprintPreviewSection />
-
-        {/* FAQ Section */}
         <LandingFaqSection />
-
-        {/* 10. Final CTA Section (Landscape) */}
         <LandingCTA onBookDemo={openDemoModal} />
       </main>
 
-      {/* Enterprise Multi-Column Footer */}
       <LandingFooter onBookDemo={openDemoModal} />
 
-      {/* Interactive Demo & Sales Booking Modal */}
       <DemoBookingModal
         open={demoModalOpen}
         onClose={() => setDemoModalOpen(false)}

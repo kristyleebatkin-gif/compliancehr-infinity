@@ -43,7 +43,7 @@ const SPRAY_BGS = [
 // 4 Merged Package & Document Suite Tiles — All Sections Lined Up & Styled in App Design Colours
 export const WHAT_YOU_GET_ITEMS = [
   {
-    title: 'Outright Documents · $999 or $125 per a month',
+    title: 'Outright Documents · $999 or $125 per month',
     included: '24 Month Contract · Full Access to Document Suite',
     detail: 'Over 100 documents downloadable at any stage — document access & tailor business details only (no payment plan on $999).',
   },
@@ -58,7 +58,7 @@ export const WHAT_YOU_GET_ITEMS = [
     detail: 'Includes Staff Training Modules, Progress, Skill Assessments & Review tailored to your Business Details.',
   },
   {
-    title: 'Our Elite Package · $760 per a month',
+    title: 'Our Elite Package · $760 per month',
     included: 'Includes Full Access to Our Application & Support',
     detail: 'Includes 1,200 message credits, 50,000 integration credits & all documents — a resource to complete audits easier, simpler and faster.',
   },
@@ -226,7 +226,7 @@ export default function MustHaveFunctionsReview() {
                 {MODULE_DIRECTORY.length} Modules · 17 Audit Categories · 356 Checkpoints · 100+ Functions · 65+ Workflows
               </span>
               <span className="block text-[#0A2B6D]">
-                $760 per a month or $999 Outright Documents
+                $760 per month or $999 Outright Documents
               </span>
             </p>
           </div>
@@ -251,7 +251,7 @@ export default function MustHaveFunctionsReview() {
         {/* 50% Smaller 8 Executive KPI Tiles — Pink/Blue/Purple Spray Between Outer & Title Border, App-Coloured Header, White Box & Dark Blue Writing */}
         <div className="grid w-full grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-1.5 items-stretch">
           {[
-            { category: 'Platform', icon: Layers, val: `${MODULE_DIRECTORY.length} Modules`, label: '$760 per a month' },
+            { category: 'Platform', icon: Layers, val: `${MODULE_DIRECTORY.length} Modules`, label: '$760 per month' },
             { category: 'Documents', icon: BookOpen, val: 'All Documents', label: 'Full Access Incl.' },
             { category: 'Suite', icon: ClipboardCheck, val: '100+ Documents', label: 'Tailored to Business' },
             { category: 'Outright', icon: Sparkles, val: '$999 / $125m', label: 'Outright Documents' },
@@ -353,7 +353,7 @@ export default function MustHaveFunctionsReview() {
 
                         <div className="font-editorial text-sm sm:text-base font-extrabold leading-tight text-[#0A2B6D]">
                           <span className="block text-[#0A2B6D]">
-                            $760 per a month
+                            $760 per month
                           </span>
                           <span className="block text-[#0A2B6D]">
                             or $999 Outright Documents
@@ -361,7 +361,7 @@ export default function MustHaveFunctionsReview() {
                         </div>
 
                         <div className="text-[9px] font-extrabold text-[#0A2B6D]">
-                          or $125 per a month subscription, 24 month contract
+                          or $125 per month subscription, 24 month contract
                         </div>
 
                         <div className="w-full rounded-[6px] border border-[#0A2B6D]/25 bg-white px-2 py-0.5">
