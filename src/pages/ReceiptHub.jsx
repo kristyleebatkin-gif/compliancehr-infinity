@@ -15,7 +15,7 @@ import { Download, History, Plus, Receipt as ReceiptIcon, ScanLine, Trash2, Chec
 import EmptyState from '@/components/EmptyState';
 import ModuleShell from '@/components/module/ModuleShell';
 import { format } from 'date-fns';
-import { downloadCsv } from '@/lib/csvExport';
+import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import { exportModuleAccessLog } from '@/lib/accessLogExport';
 import ReceiptScanner from '@/components/receipts/ReceiptScanner';
 import ScanToPdf from '@/components/receipts/ScanToPdf';
@@ -30,6 +30,7 @@ export default function ReceiptHub({ profile } = {}) {
   const { toast } = useToast();
   const [receipts, setReceipts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [open, setOpen] = useState(false);
   const [scanOpen, setScanOpen] = useState(false);
   const [pdfOpen, setPdfOpen] = useState(false);
@@ -39,9 +40,13 @@ export default function ReceiptHub({ profile } = {}) {
 
   const load = useCallback(async () => {
     setLoading(true);
+    setLoadError(false);
     try {
-      const page = await base44.entities.Receipt.filter(profile ? { $or: [{ paid_by: profile.full_name }, { reimburse_to: profile.full_name }] } : {}, { sort: '-date', limit: 200 });
-      setReceipts(page.items);
+      const rows = await fetchAllRecords(base44.entities.Receipt, profile ? { $or: [{ paid_by: profile.full_name }, { reimburse_to: profile.full_name }] } : {}, '-date');
+      setReceipts(rows);
+    } catch (error) {
+      console.error(error);
+      setLoadError(true);
     } finally {
       setLoading(false);
     }
@@ -134,9 +139,9 @@ export default function ReceiptHub({ profile } = {}) {
         </>}
         search={<ReceiptFilters filters={filters} setFilters={setFilters} count={shownReceipts.length} total={receipts.length} />}
         small={[
-          ['Receipts', String(receipts.length)],
-          ['Unreconciled', money(unrecTotal)],
-          ['To reimburse', money(reimburseTotal)],
+          ['Receipts', loading ? '…' : loadError ? '—' : String(receipts.length)],
+          ['Unreconciled', loading ? '…' : loadError ? '—' : money(unrecTotal)],
+          ['To reimburse', loading ? '…' : loadError ? '—' : money(reimburseTotal)],
         ].map(([label, value]) => (
           <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{value}</p></div>
         ))}
@@ -148,11 +153,14 @@ export default function ReceiptHub({ profile } = {}) {
         <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={() => setOpen(true)}><Plus className="mr-2 h-4 w-4" />Log receipt</Button>
       </div>
 
+      {loadError && <div role="alert" className="flex items-center justify-between gap-3 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">Receipt records could not be confirmed; totals and lists are unavailable.<Button size="sm" variant="outline" onClick={load}>Retry</Button></div>}
       <ReceiptScanner open={scanOpen} onOpenChange={setScanOpen} onSaved={load} />
       <ScanToPdf open={pdfOpen} onOpenChange={setPdfOpen} />
 
       {loading ? (
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
+      ) : loadError ? (
+        <EmptyState icon={ReceiptIcon} title="Receipt register unavailable" message="Retry after confirming access or connectivity." />
       ) : receipts.length === 0 ? (
         <EmptyState icon={ReceiptIcon} modulePath="/receipts" title="No receipts logged yet" message="Scan or log your first receipt to start reconciling." />
       ) : (
