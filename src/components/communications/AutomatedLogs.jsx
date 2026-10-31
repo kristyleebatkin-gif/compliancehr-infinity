@@ -21,7 +21,10 @@ const sourceBadge = (entry) => {
   if (entry.sender_name === 'System (Compliance Reminders)') {
     return { label: 'Document expiry alert', className: 'bg-pink-100 text-pink-800 dark:bg-pink-500/20 dark:text-pink-200' };
   }
-  return { label: 'Task reminder', className: 'bg-violet-100 text-violet-800 dark:bg-violet-500/20 dark:text-violet-200' };
+  if (entry.sender_name === 'Automated Compliance Reminder') {
+    return { label: 'Task reminder', className: 'bg-violet-100 text-violet-800 dark:bg-violet-500/20 dark:text-violet-200' };
+  }
+  return { label: 'Automated message', className: 'bg-slate-100 text-slate-800 dark:bg-slate-500/20 dark:text-slate-200' };
 };
 
 const parseRecipients = (entry) => {
@@ -39,31 +42,42 @@ export default function AutomatedLogs() {
   const [cursor, setCursor] = useState(null);
   const [hasMore, setHasMore] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [expanded, setExpanded] = useState(null);
 
   const load = async (term, cursorArg) => {
     setLoading(true);
+    setLoadError('');
     const query = term
       ? { ...AUTOMATED_FILTER, $and: [{ subject: { $regex: term, $options: 'i' } }] }
       : { ...AUTOMATED_FILTER };
     const options = { sort: '-created_date', limit: PAGE_SIZE, ...(cursorArg ? { cursor: cursorArg } : {}) };
     const today = new Date().toLocaleDateString('en-CA', { timeZone: 'Australia/Brisbane' });
-    const [page, total, emails, todayCount] = await Promise.all([
-      base44.entities.CommunicationEntry.filter(query, options),
-      cursorArg ? Promise.resolve(null) : base44.entities.CommunicationEntry.count(AUTOMATED_FILTER),
-      cursorArg ? Promise.resolve(null) : base44.entities.CommunicationEntry.count({ ...AUTOMATED_FILTER, email_sent: true }),
-      cursorArg ? Promise.resolve(null) : base44.entities.CommunicationEntry.count({ ...AUTOMATED_FILTER, entry_date: today }),
-    ]);
-    if (!cursorArg) {
-      setStats({ total: total ?? 0, emails: emails ?? 0, today: todayCount ?? 0 });
-      setEntries(page.items || []);
-    } else {
-      setEntries((prev) => [...prev, ...(page.items || [])]);
+    try {
+      const [page, total, emails, todayCount] = await Promise.all([
+        base44.entities.CommunicationEntry.filter(query, options),
+        cursorArg ? Promise.resolve(null) : base44.entities.CommunicationEntry.count(AUTOMATED_FILTER),
+        cursorArg ? Promise.resolve(null) : base44.entities.CommunicationEntry.count({ ...AUTOMATED_FILTER, email_sent: true }),
+        cursorArg ? Promise.resolve(null) : base44.entities.CommunicationEntry.count({ ...AUTOMATED_FILTER, entry_date: today }),
+      ]);
+      if (!cursorArg) {
+        setStats({ total: total ?? null, emails: emails ?? null, today: todayCount ?? null });
+        setEntries(page.items || []);
+      } else {
+        setEntries((prev) => [...prev, ...(page.items || [])]);
+      }
+      setCursor(page.next_cursor || null);
+      setHasMore(Boolean(page.has_more));
+    } catch {
+      if (!cursorArg) {
+        setStats({ total: null, emails: null, today: null });
+        setEntries([]);
+      }
+      setLoadError('Unable to load automated communication records. Refresh or search again to retry.');
+    } finally {
+      setLoading(false);
     }
-    setCursor(page.next_cursor || null);
-    setHasMore(Boolean(page.has_more));
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -123,10 +137,12 @@ export default function AutomatedLogs() {
 
         {loading && entries.length === 0 ? (
           <div className="flex justify-center py-4"><Loader2 className="h-4 w-4 animate-spin text-primary" /></div>
+        ) : loadError ? (
+          <div role="alert" className="rounded-xl border border-destructive/30 bg-destructive/5 px-3 py-2 text-xs text-destructive">{loadError}</div>
         ) : entries.length === 0 ? (
           <div className="flex items-center gap-2 rounded-xl border border-violet-200/60 bg-white/80 px-3 py-2 text-xs text-muted-foreground">
             <Bot className="h-4 w-4 shrink-0 text-primary" />
-            <span>No automated alerts recorded yet. Daily compliance and expiry reminders appear here automatically.</span>
+            <span>No automated alert records were returned for this filter.</span>
           </div>
         ) : (
           <div className="max-h-44 space-y-1.5 overflow-y-auto pr-1">
@@ -146,7 +162,7 @@ export default function AutomatedLogs() {
                         <Badge className={`border-transparent text-[10px] ${badge.className}`}>{badge.label}</Badge>
                         <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-primary">
                           <Mail className="h-2.5 w-2.5" />
-                          {entry.email_sent ? 'Email sent' : 'In-app'}
+                          {entry.email_sent === true ? 'Email marked sent' : entry.email_sent === false ? 'Email not marked sent' : 'Email status unavailable'}
                         </span>
                         <span className="truncate text-xs font-bold text-foreground">{entry.subject || '(no subject)'}</span>
                       </div>
