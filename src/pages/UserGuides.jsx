@@ -23,10 +23,10 @@ const ACCENTS = {
 
 const ACCENT_BY_KEY = {
   dashboard: ACCENTS.overview, users: ACCENTS.overview, documents: ACCENTS.overview, 'company-safe': ACCENTS.overview, help: ACCENTS.support,
-  participants: ACCENTS.care, goals: ACCENTS.care, 'visual-boards': ACCENTS.care, 'community-referral': ACCENTS.care, 'community-council': ACCENTS.care,
+  'our-participants': ACCENTS.care, participants: ACCENTS.care, goals: ACCENTS.care, 'visual-boards': ACCENTS.care, 'community-referral': ACCENTS.care, 'community-council': ACCENTS.care,
   incidents: ACCENTS.safety, risks: ACCENTS.safety, 'emergency-response': ACCENTS.safety, 'equipment-manuals': ACCENTS.safety,
   invoicing: ACCENTS.finance, quotes: ACCENTS.finance, receipts: ACCENTS.finance, procurement: ACCENTS.finance, assets: ACCENTS.finance,
-  staff: ACCENTS.people, 'human-resources': ACCENTS.people, training: ACCENTS.people, 'volunteering-placements': ACCENTS.people, 'key-contacts': ACCENTS.people,
+  'our-staff': ACCENTS.people, staff: ACCENTS.people, 'human-resources': ACCENTS.people, training: ACCENTS.people, 'volunteering-placements': ACCENTS.people, 'key-contacts': ACCENTS.people,
   intake: ACCENTS.operations, rostering: ACCENTS.operations, tasks: ACCENTS.operations, meetings: ACCENTS.operations, certificates: ACCENTS.operations,
   compliance: ACCENTS.growth, 'ndis-provider': ACCENTS.growth, 'ndis-news': ACCENTS.growth, quality: ACCENTS.growth, programs: ACCENTS.growth,
   communications: ACCENTS.growth, analytics: ACCENTS.growth, crm: ACCENTS.growth, projects: ACCENTS.growth, feedback: ACCENTS.growth,
@@ -34,7 +34,7 @@ const ACCENT_BY_KEY = {
 ACCENT_BY_KEY.intake = ACCENTS.operations;
 
 const GROUPS = [
-  { id: 'work', label: 'Work & service delivery', keys: ['dashboard', 'intake', 'participants', 'staff', 'rostering', 'goals', 'visual-boards', 'tasks'] },
+  { id: 'work', label: 'Work & service delivery', keys: ['dashboard', 'intake', 'our-participants', 'our-staff', 'rostering', 'goals', 'visual-boards', 'tasks'] },
   { id: 'safe', label: 'Safety & compliance', keys: ['incidents', 'risks', 'emergency-response', 'compliance', 'quality', 'ndis-provider', 'ndis-news', 'certificates'] },
   { id: 'money', label: 'Money & assets', keys: ['invoicing', 'quotes', 'receipts', 'procurement', 'assets', 'equipment-manuals'] },
   { id: 'people', label: 'People & communications', keys: ['communications', 'meetings', 'training', 'human-resources', 'volunteering-placements', 'key-contacts', 'feedback'] },
