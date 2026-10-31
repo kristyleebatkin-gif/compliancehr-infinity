@@ -352,14 +352,6 @@ export default function BestInClassBenchmarkSuite({ onRefresh }) {
       const today = new Date().toISOString().slice(0, 10);
       const nextYear = new Date(Date.now() + 365 * 86400000).toISOString().slice(0, 10);
       await Promise.all([
-        base44.entities.NDISPriceGuideItem.create({
-          item_number: '01_011_0107_1_1',
-          item_name: 'Assistance With Self-Care Activities - Standard - Weekday Daytime',
-          registration_group: '0107 Daily Personal Activities',
-          unit: 'Hour',
-          price_limit_national: 67.56,
-          effective_from: '2026-07-01',
-        }).catch(() => null),
         base44.entities.RosterValidationRule.create({
           rule_name: 'SCHADS Minimum 10-Hour Break Between Shifts & Screening Gate',
           category: 'Fatigue & Screening',
@@ -377,18 +369,18 @@ export default function BestInClassBenchmarkSuite({ onRefresh }) {
           next_review: nextYear,
         }).catch(() => null),
         base44.entities.TodoTask.create({
-          title: 'Quarterly NDIS Practice Standards & 356-Checkpoint Evidence Verification',
+          title: 'Quarterly NDIS Practice Standards Evidence Review',
           task_type: 'Compliance Audit',
           module: 'Compliance Hub',
           due_date: today,
           priority: 'High',
           status: 'Open',
-          how_to_complete: 'Review all 17 categories and verify operational evidence across live registers.',
+          how_to_complete: 'Review current NDIS Practice Standards requirements and confirm supporting evidence in operational registers.'
         }).catch(() => null),
       ]);
       toast({
-        title: '2026 Benchmark Data Pack Loaded',
-        description: 'NDIS Price Guide item, SCHADS validation rule, NDIS statutory requirement & audit task verified.',
+        title: 'Benchmark tasks created',
+        description: 'No NDIS price-guide items were seeded. Import and verify the official schedule before using price limits.'
       });
       onRefresh?.();
     } finally {
