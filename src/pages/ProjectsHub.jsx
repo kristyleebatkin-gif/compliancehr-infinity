@@ -164,7 +164,7 @@ export default function ProjectsHub() {
       {screenPage !== 'page2' && (loading ? (
         <Card><CardContent className="p-8 text-center text-sm text-muted-foreground">Loading projects...</CardContent></Card>
       ) : loadError ? (
-        <Card><CardContent className="p-8 text-center text-sm text-muted-foreground">Project board unavailable. Retry after confirming access or connectivity.</Card></Card>
+        <Card><CardContent className="p-8 text-center text-sm text-muted-foreground">Project board unavailable. Retry after confirming access or connectivity.</CardContent></Card>
       ) : projects.length === 0 ? (
         <Card><CardContent className="p-8 text-center text-sm text-muted-foreground">No projects yet. Create your first business improvement project above.</CardContent></Card>
       ) : (
