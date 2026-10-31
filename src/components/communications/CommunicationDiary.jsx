@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Loader2, Paperclip, Reply, Trash2, Download } from 'lucide-react';
 import { openAttachment, exportCsv } from '@/lib/commTypes';
+import { fetchAllRecords } from '@/lib/csvExport';
 import ReplyDialog from './ReplyDialog';
 
 const parseJson = (value, fallback = []) => { try { return JSON.parse(value || '') || fallback; } catch { return fallback; } };
@@ -13,6 +14,7 @@ const parseJson = (value, fallback = []) => { try { return JSON.parse(value || '
 export default function CommunicationDiary() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState('');
   const [filters, setFilters] = useState({ kind: '', person_type: '', person: '', search: '', from: '', to: '' });
   const [replyTarget, setReplyTarget] = useState(null);
   const [personLinks, setPersonLinks] = useState({});
@@ -41,9 +43,13 @@ export default function CommunicationDiary() {
 
   const load = async () => {
     setLoading(true);
+    setLoadError('');
     try {
-      const page = await base44.entities.CommunicationEntry.filter({}, { sort: '-created_date', limit: 200 });
-      setItems(page.items || []);
+      const rows = await fetchAllRecords(base44.entities.CommunicationEntry, {}, '-created_date');
+      setItems(rows);
+    } catch {
+      setItems([]);
+      setLoadError('Unable to load the communication diary. Refresh to try again.');
     } finally {
       setLoading(false);
     }
@@ -151,6 +157,8 @@ export default function CommunicationDiary() {
 
       {loading ? (
         <div className="flex justify-center py-12"><Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /></div>
+      ) : loadError ? (
+        <div role="alert" className="rounded-xl border border-destructive/30 bg-destructive/5 p-4 text-sm text-destructive">{loadError} <Button type="button" variant="outline" size="sm" className="ml-2" onClick={load}>Retry</Button></div>
       ) : filtered.length === 0 ? (
         <p className="py-8 text-center text-sm text-muted-foreground">Nothing in the diary yet - shift notes, employee logs, messages, emails and broadcasts all appear here.</p>
       ) : (
