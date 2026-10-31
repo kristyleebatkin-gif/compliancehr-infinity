@@ -64,7 +64,7 @@ export function buildPayslipPayload(detail, row, pay, periodStart, periodEnd) {
   };
   const gross = pay.totalPay;
   const payg = estimatePayg(gross, periodsPerYear);
-  const superAmount = pay.earnings * ((Number(detail.super_rate) || 11.5) / 100);
+  const superAmount = pay.earnings * (Number(detail.super_rate ?? 12) / 100);
   const deductions = Number(detail.salary_sacrifice) || 0;
   return {
     earnings_json: JSON.stringify(earningsJson),
