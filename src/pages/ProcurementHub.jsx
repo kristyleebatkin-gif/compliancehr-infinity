@@ -12,7 +12,7 @@ import '@/components/dashboard/operationsWorkspace.css';
 import ThreeWayMatch from '@/components/procurement/ThreeWayMatch';
 import ExpenseReconciliation from '@/components/procurement/ExpenseReconciliation';
 import RegisterInsights from '@/components/RegisterInsights';
-import { downloadCsv } from '@/lib/csvExport';
+import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 
 const today = () => new Date().toISOString().slice(0, 10);
 const money = (v) => `$${Number(v || 0).toLocaleString('en-AU', { maximumFractionDigits: 2 })}`;
@@ -23,19 +23,27 @@ export default function ProcurementHub() {
   const [orders, setOrders] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [showPoForm, setShowPoForm] = useState(false);
   const [showSupplierForm, setShowSupplierForm] = useState(false);
   const [saving, setSaving] = useState(false);
 
   const load = useCallback(async () => {
     setLoading(true);
-    const [o, s] = await Promise.all([
-      base44.entities.PurchaseOrder.filter({}, { sort: '-created_date', limit: 100 }),
-      base44.entities.Supplier.filter({}, { sort: '-created_date', limit: 100 }),
-    ]);
-    setOrders(o.items || []);
-    setSuppliers(s.items || []);
-    setLoading(false);
+    setLoadError(false);
+    try {
+      const [orderRows, supplierRows] = await Promise.all([
+        fetchAllRecords(base44.entities.PurchaseOrder, {}, '-created_date'),
+        fetchAllRecords(base44.entities.Supplier, {}, '-created_date'),
+      ]);
+      setOrders(orderRows);
+      setSuppliers(supplierRows);
+    } catch (error) {
+      console.error(error);
+      setLoadError(true);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => { load(); }, [load]);
@@ -84,7 +92,11 @@ export default function ProcurementHub() {
       return;
     }
     const patch = { status: next };
-    if (next === 'Approved') patch.approved_by = 'You';
+    if (next === 'Approved') {
+      const actor = await base44.auth.me().catch(() => null);
+      patch.approved_by = actor?.full_name || actor?.email || '';
+      patch.approved_date = today();
+    }
     if (next === 'Received') patch.received_date = today();
     await base44.entities.PurchaseOrder.update(po.id, patch);
     load();
@@ -104,10 +116,10 @@ export default function ProcurementHub() {
         moduleKey="procurement"
         insightModule="suppliers"
         small={[
-          ['Spend received', money(totalSpend)],
-          ['Committed (submitted + approved)', money(committed)],
-          ['Open orders', orders.filter((o) => !['Received', 'Cancelled'].includes(o.status)).length],
-          ['Active suppliers', suppliers.filter((s) => s.status === 'Active').length],
+          ['Spend received', loadError ? '—' : money(totalSpend)],
+          ['Committed (submitted + approved)', loadError ? '—' : money(committed)],
+          ['Open orders', loadError ? '—' : orders.filter((o) => !['Received', 'Cancelled'].includes(o.status)).length],
+          ['Active suppliers', loadError ? '—' : suppliers.filter((s) => s.status === 'Active').length],
         ].map(([label, value]) => (
           <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{value}</p></div>
         ))}
@@ -121,6 +133,7 @@ export default function ProcurementHub() {
         </>}
       />
 
+      {loadError && <div role="alert" className="flex items-center justify-between gap-3 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">Purchase order and supplier records could not be confirmed; totals and lists are unavailable.<Button size="sm" variant="outline" onClick={load}>Retry</Button></div>}
       <Tabs value={tab} onValueChange={setTab}>
         <TabsList>
           <TabsTrigger value="orders">Purchase orders</TabsTrigger>
@@ -152,7 +165,7 @@ export default function ProcurementHub() {
               </form>
             </CardContent></Card>
           )}
-          {loading ? <Card><CardContent className="p-8 text-center text-sm text-muted-foreground">Loading...</CardContent></Card> : orders.length === 0 ? (
+          {loading ? <Card><CardContent className="p-8 text-center text-sm text-muted-foreground">Loading...</CardContent></Card> : loadError ? <Card><CardContent className="p-8 text-center text-sm text-amber-900">Purchase orders unavailable.</CardContent></Card> : orders.length === 0 ? (
             <Card><CardContent className="p-8 text-center text-sm text-muted-foreground">No purchase orders yet.</CardContent></Card>
           ) : (
             <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
@@ -213,7 +226,7 @@ export default function ProcurementHub() {
               </form>
             </CardContent></Card>
           )}
-          {loading ? <Card><CardContent className="p-8 text-center text-sm text-muted-foreground">Loading...</CardContent></Card> : suppliers.length === 0 ? (
+          {loading ? <Card><CardContent className="p-8 text-center text-sm text-muted-foreground">Loading...</CardContent></Card> : loadError ? <Card><CardContent className="p-8 text-center text-sm text-amber-900">Supplier records unavailable.</CardContent></Card> : suppliers.length === 0 ? (
             <Card><CardContent className="p-8 text-center text-sm text-muted-foreground">No suppliers yet. Add your first supplier, then raise purchase orders against it.</CardContent></Card>
           ) : (
             <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
