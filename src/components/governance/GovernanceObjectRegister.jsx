@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import GovernanceObjectForm from '@/components/governance/GovernanceObjectForm';
 import { LIFECYCLE_STAGES } from '@/lib/governanceFramework';
+import { fetchAllRecords } from '@/lib/csvExport';
 import { Loader2, Plus, Pencil } from 'lucide-react';
 
 export default function GovernanceObjectRegister() {
@@ -14,8 +15,8 @@ export default function GovernanceObjectRegister() {
 
   const load = async () => {
     const query = stage === 'all' ? {} : { lifecycle_stage: stage };
-    const page = await base44.entities.GovernanceObject.filter(query, { sort: '-updated_date', limit: 100 });
-    setItems(page.items || []);
+    const rows = await fetchAllRecords(base44.entities.GovernanceObject, query, '-updated_date');
+    setItems(rows);
   };
 
   useEffect(() => {
