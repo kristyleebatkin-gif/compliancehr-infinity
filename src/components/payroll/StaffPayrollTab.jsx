@@ -66,7 +66,7 @@ export default function StaffPayrollTab() {
       employee_id: staffProfile?.employee_number || '',
       hourly_rate: Number(f.get('hourly_rate') || 0),
       pay_cycle: f.get('pay_cycle') || 'Fortnightly',
-      super_rate: 11.5,
+      super_rate: 12,
       extracted_from_intake: false,
     });
     setSaving(false);
