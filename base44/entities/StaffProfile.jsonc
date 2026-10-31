@@ -170,19 +170,219 @@
     },
     "banking_details": {
       "type": "string",
-      "title": "Banking Details"
+      "title": "Banking Details",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Human Resources Manager"
+              }
+            }
+          ]
+        },
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Human Resources Manager"
+              }
+            }
+          ]
+        }
+      }
     },
     "superannuation_details": {
       "type": "string",
-      "title": "Superannuation Details"
+      "title": "Superannuation Details",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Human Resources Manager"
+              }
+            }
+          ]
+        },
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Human Resources Manager"
+              }
+            }
+          ]
+        }
+      }
     },
     "hourly_rate": {
       "type": "number",
-      "title": "Hourly Rate ($)"
+      "title": "Hourly Rate ($)",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Human Resources Manager"
+              }
+            }
+          ]
+        },
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Human Resources Manager"
+              }
+            }
+          ]
+        }
+      }
     },
     "tax_file_number": {
       "type": "string",
-      "title": "Tax File Number"
+      "title": "Tax File Number",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Human Resources Manager"
+              }
+            }
+          ]
+        },
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Human Resources Manager"
+              }
+            }
+          ]
+        }
+      }
     },
     "car_rego": {
       "type": "string",
