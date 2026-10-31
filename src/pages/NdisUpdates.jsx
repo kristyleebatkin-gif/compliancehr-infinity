@@ -12,6 +12,7 @@ import { useToast } from '@/components/ui/use-toast';
 import NdisUpdateList from '@/components/ndis/NdisUpdateList';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import ModuleAlertsButton from '@/components/ModuleAlertsButton';
+import { fetchAllRecords } from '@/lib/csvExport';
 import { Newspaper, ExternalLink, Mail } from 'lucide-react';
 
 const TYPE_FILTERS = ['News', 'Update', 'Consultation'];
@@ -36,6 +37,7 @@ export default function NdisUpdates() {
   const [items, setItems] = useState([]);
   const [stats, setStats] = useState({ total: 0, recent: 0, byType: {} });
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [typeFilter, setTypeFilter] = useState('all');
   const [search, setSearch] = useState('');
@@ -43,6 +45,7 @@ export default function NdisUpdates() {
 
   const load = useCallback(async () => {
     setLoading(true);
+    setLoadError(false);
     try {
       const agg = await base44.entities.NdisUpdate.aggregate({ groupBy: 'news_type' });
       const byType = {};
@@ -51,8 +54,11 @@ export default function NdisUpdates() {
       const cutoff = format(new Date(Date.now() - 30 * 86400000), 'yyyy-MM-dd');
       const recent = await base44.entities.NdisUpdate.count({ published_date: { $gte: cutoff } });
       setStats({ total, recent, byType });
-      const list = await base44.entities.NdisUpdate.filter(buildQuery(tab, typeFilter, search), { sort: '-published_date', limit: 60 });
-      setItems(list.items);
+      const rows = await fetchAllRecords(base44.entities.NdisUpdate, buildQuery(tab, typeFilter, search), '-published_date');
+      setItems(rows);
+    } catch (error) {
+      console.error(error);
+      setLoadError(true);
     } finally {
       setLoading(false);
     }
@@ -96,7 +102,8 @@ export default function NdisUpdates() {
       </div>
       <Tabs value={tab} onValueChange={setTab} className="space-y-4">
         <NdisNewsToolbar refresh={refresh} refreshing={refreshing} search={search} onSearch={setSearch} />
-        <NdisNewsDashboard stats={stats} />
+        {loadError && <div role="alert" className="flex items-center justify-between gap-3 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">NDIS updates could not be confirmed; statistics and lists are unavailable.<button className="rounded-md border px-3 py-1 text-xs font-semibold" onClick={load}>Retry</button></div>}
+      <NdisNewsDashboard stats={loadError ? { total: '—', recent: '—', byType: {} } : stats} />
         <TabsContent value="updates">
           <div className="module-filter-bar mb-2 flex flex-wrap items-center">
             <p className="text-sm font-semibold">Filter by type</p>
@@ -109,7 +116,7 @@ export default function NdisUpdates() {
             </Select>
 
           </div>
-          <NdisUpdateList items={items} loading={loading} />
+          <NdisUpdateList items={loadError ? [] : items} loading={loading} />
         </TabsContent>
         <TabsContent value="newsletters">
           <div className="mb-3 grid gap-3 md:grid-cols-2">
@@ -128,7 +135,7 @@ export default function NdisUpdates() {
               </CardContent>
             </Card>
           </div>
-          <NdisUpdateList items={items} loading={loading} emptyText="No newsletters fetched yet - use Refresh updates." />
+          <NdisUpdateList items={loadError ? [] : items} loading={loading} emptyText="No newsletters fetched yet - use Refresh updates." />
         </TabsContent>
       </Tabs>
     </div>
