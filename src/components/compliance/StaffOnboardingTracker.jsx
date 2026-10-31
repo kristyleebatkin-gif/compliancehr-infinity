@@ -34,11 +34,14 @@ const intakeTone = (status) => {
 export default function StaffOnboardingTracker() {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
+  const [refresh, setRefresh] = useState(0);
   const [expanded, setExpanded] = useState(null);
 
   useEffect(() => {
     let cancelled = false;
     const load = async () => {
+      setLoadError(false);
       try {
         const today = format(new Date(), 'yyyy-MM-dd');
         const [tasks, staff, intakes] = await Promise.all([
@@ -93,13 +96,16 @@ export default function StaffOnboardingTracker() {
         });
 
         setRows(rowsOut);
+      } catch (error) {
+        console.error(error);
+        if (!cancelled) setLoadError(true);
       } finally {
         if (!cancelled) setLoading(false);
       }
     };
     load();
     return () => { cancelled = true; };
-  }, []);
+  }, [refresh]);
 
   const barTone = (pct, overdue) => {
     if (pct === 100) return 'bg-emerald-500';
@@ -112,6 +118,7 @@ export default function StaffOnboardingTracker() {
       <Loader2 className="h-4 w-4 animate-spin" />Loading onboarding progress...
     </CardContent></Card>;
   }
+  if (loadError) return <Card><CardContent className="flex items-center justify-between gap-3 p-4 text-sm text-amber-900" role="alert">Onboarding task or profile records could not be confirmed.<button type="button" className="underline" onClick={() => setRefresh((v) => v + 1)}>Retry</button></CardContent></Card>;
 
   return (
     <Card className="shadow-panel">
