@@ -6,6 +6,7 @@ const BADGES = {
   'Not Started': ['bg-muted text-muted-foreground', 'Not started'],
   Current: ['bg-safe/10 text-safe', 'Current'],
   'Expiring Soon': ['bg-warning/10 text-warning', 'Expiring soon'],
+  'Validity Unconfirmed': ['bg-warning/10 text-warning', 'Expiry unconfirmed'],
   Expired: ['bg-danger/10 text-danger', 'Expired'],
 };
 
