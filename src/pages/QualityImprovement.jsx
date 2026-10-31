@@ -43,6 +43,7 @@ export default function QualityImprovement() {
   const [logs, setLogs] = useState([]);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState(null);
   const [sending, setSending] = useState('');
@@ -51,6 +52,7 @@ export default function QualityImprovement() {
 
   const load = useCallback(async () => {
     setLoading(true);
+    setLoadError(false);
     try {
       const [itemPage, logPage, userPage] = await Promise.all([
         base44.entities.QualityItem.filter({}, { sort: '-created_date', limit: 300 }),
@@ -60,6 +62,9 @@ export default function QualityImprovement() {
       setItems(itemPage.items);
       setLogs(logPage.items);
       setUsers(userPage);
+    } catch (error) {
+      console.error(error);
+      setLoadError(true);
     } finally {
       setLoading(false);
     }
@@ -182,8 +187,8 @@ export default function QualityImprovement() {
         insightModule="quality"
         small={[
           ['Ideas', items.filter((i) => matchesTab(i, TABS[0])).length],
-          ['Suggestions', items.filter((i) => matchesTab(i, TABS[1])).length],
-          ['Corrective actions', items.filter((i) => matchesTab(i, TABS[2])).length],
+          ['Suggestions', items.filter((i) => matchesTab(i, TABS[4])).length],
+          ['Corrective actions', items.filter((i) => matchesTab(i, TABS[1])).length],
           ['Still open', items.filter((i) => i.status === 'New' || i.status === 'In Progress').length],
         ].map(([label, value]) => (
           <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{value}</p></div>
@@ -197,6 +202,8 @@ export default function QualityImprovement() {
 
             {loading ? (
               <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
+            ) : loadError ? (
+              <div role="alert" className="flex items-center justify-between gap-3 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">Quality register data could not be confirmed.<Button variant="outline" size="sm" onClick={load}>Retry</Button></div>
             ) : items.filter((i) => matchesTab(i, tab)).length === 0 ? (
               <EmptyState icon={Lightbulb} modulePath="/quality" title={`No ${tab.label.toLowerCase()} recorded yet`} message="Raise your first idea, suggestion or corrective action." />
             ) : (
