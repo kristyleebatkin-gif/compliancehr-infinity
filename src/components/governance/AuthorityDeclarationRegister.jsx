@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { DECLARATION_TYPES } from '@/lib/governanceFramework';
+import { fetchAllRecords } from '@/lib/csvExport';
 import { Loader2, Pencil, Plus, Trash2 } from 'lucide-react';
 
 const EMPTY = {
@@ -143,8 +144,8 @@ export default function AuthorityDeclarationRegister() {
 
   const load = async () => {
     const query = type === 'all' ? {} : { declaration_type: type };
-    const page = await base44.entities.AuthorityDeclaration.filter(query, { sort: '-updated_date', limit: 100 });
-    setItems(page.items || []);
+    const rows = await fetchAllRecords(base44.entities.AuthorityDeclaration, query, '-updated_date');
+    setItems(rows);
   };
 
   useEffect(() => {
