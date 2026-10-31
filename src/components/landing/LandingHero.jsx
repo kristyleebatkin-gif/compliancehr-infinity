@@ -7,9 +7,9 @@ import { base44 } from '@/api/base44Client';
 import HeroDashboardMockup from '@/components/landing/HeroDashboardMockup';
 
 const TRUST_BADGES = [
-  'Audit Ready',
-  'AI Powered',
-  '46 Connected Modules',
+  'Readiness Tracking',
+  'AI Tools',
+  'Connected Modules',
   'NDIS & Aged Care',
 ];
 
@@ -17,22 +17,22 @@ const GLASS_KPIS = [
   {
     icon: ShieldCheck,
     label: 'NDIS Audit Readiness',
-    value: '99.2%',
-    sub: '356 / 356 Checkpoints',
+    value: 'Not verified',
+    sub: 'No organisation data loaded',
     accent: '#00C6FF',
   },
   {
     icon: Users,
-    label: '100-Pt Screening',
-    value: '100%',
-    sub: 'Automated Roster Gate',
+    label: 'Worker Screening',
+    value: 'Not verified',
+    sub: 'Status not assessed in preview',
     accent: '#FF6EDB',
   },
   {
     icon: Activity,
-    label: '24h / 5d Incident SLA',
-    value: 'Zero Overdue',
-    sub: 'Commission Timers',
+    label: 'Incident SLA',
+    value: 'Not verified',
+    sub: 'Overdue status not assessed',
     accent: '#00C6FF',
   },
 ];
@@ -151,7 +151,7 @@ export default function LandingHero({ onBookDemo }) {
               </div>
             </div>
 
-            {/* Right Column: First Shown Live Executive Dashboard Mockup (Tight, Zero Dead Space) */}
+            {/* Right Column: Executive dashboard preview */}}
             <div className="lg:col-span-6 flex items-center">
               <HeroDashboardMockup />
             </div>
