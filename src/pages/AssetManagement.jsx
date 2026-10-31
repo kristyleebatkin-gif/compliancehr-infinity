@@ -22,15 +22,20 @@ export default function AssetManagement() {
   const [query, setQuery] = useState('');
   const [assets, setAssets] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState({ name: '', category: 'Other', serial_number: '', purchase_date: '', condition: 'Good', next_service_date: '', status: 'In Use', location: '' });
 
   const load = useCallback(async () => {
     setLoading(true);
+    setLoadError(false);
     try {
-      const page = await base44.entities.Asset.filter({ status: { $ne: 'Retired' } }, { sort: '-created_date', limit: 50 });
-      setAssets(page.items);
+      const rows = await fetchAllRecords(base44.entities.Asset, { status: { $ne: 'Retired' } }, '-created_date');
+      setAssets(rows);
+    } catch (error) {
+      console.error(error);
+      setLoadError(true);
     } finally {
       setLoading(false);
     }
@@ -52,7 +57,7 @@ export default function AssetManagement() {
   };
 
   const exportAssets = async () => {
-    const rows = await fetchAllRecords(base44.entities.Asset, {}, 'name');
+    const rows = await fetchAllRecords(base44.entities.Asset, { status: { $ne: 'Retired' } }, 'name');
     downloadCsv('Asset-Register.csv', [
       { key: 'name', label: 'Asset Name' }, { key: 'category', label: 'Category' },
       { key: 'serial_number', label: 'Serial Number' }, { key: 'purchase_date', label: 'Purchase Date' },
@@ -75,10 +80,11 @@ export default function AssetManagement() {
           <Button variant="outline" onClick={exportAssets}><Download className="mr-2 h-4 w-4" />Export register</Button>
         </>}
         small={[['Assets', assets.length], ['In use', assets.filter((a) => a.status === 'In Use').length], ['In maintenance', assets.filter((a) => a.status === 'In Maintenance').length]].map(([label, value]) => (
-          <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{loading ? '…' : value}</p></div>
+          <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{loading ? '…' : loadError ? '—' : value}</p></div>
         ))}
       >
-        <Dialog open={open} onOpenChange={setOpen}>
+        {loadError && <div role="alert" className="flex items-center justify-between gap-3 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">Asset records could not be confirmed; totals and lists are unavailable.<Button size="sm" variant="outline" onClick={load}>Retry</Button></div>}
+      <Dialog open={open} onOpenChange={setOpen}>
           <DialogContent>
             <DialogHeader><DialogTitle>New asset</DialogTitle></DialogHeader>
             <div className="grid gap-3">
@@ -118,6 +124,8 @@ export default function AssetManagement() {
 
       {loading ? (
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
+      ) : loadError ? (
+        <EmptyState icon={Boxes} title="Asset register unavailable" message="Retry after confirming access or connectivity." />
       ) : assets.length === 0 ? (
         <EmptyState icon={Boxes} modulePath="/assets" title="No assets recorded yet" message="Add your first asset to start the register." />
       ) : (
