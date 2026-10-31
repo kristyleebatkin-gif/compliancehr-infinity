@@ -192,6 +192,7 @@ export default function ComplianceHub() {
   const [policies, setPolicies] = useState([]);
   const [requirements, setRequirements] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [pOpen, setPOpen] = useState(false);
   const [rOpen, setROpen] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -225,6 +226,7 @@ export default function ComplianceHub() {
 
   const load = useCallback(async () => {
     setLoading(true);
+    setLoadError(false);
     try {
       const [p, r] = await Promise.all([
         base44.entities.Policy.filter({}, { sort: '-created_date', limit: 50 }),
@@ -232,6 +234,9 @@ export default function ComplianceHub() {
       ]);
       setPolicies(p.items);
       setRequirements(r.items);
+    } catch (error) {
+      console.error(error);
+      setLoadError(true);
     } finally {
       setLoading(false);
     }
@@ -304,6 +309,7 @@ export default function ComplianceHub() {
         )}
       />
 
+      {loadError && <div role="alert" className="flex items-center justify-between gap-3 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">Policy and legal-requirement data could not be confirmed. <Button size="sm" variant="outline" onClick={load} disabled={loading}>Retry</Button></div>}
       {/* Universal Data Storage, Retention, Traceability & Export Standard + Five-Layer Framework */}
       <UniversalDataStorageRetentionExportSuite />
       <FiveLayerEnterpriseAcceptanceSuite />
