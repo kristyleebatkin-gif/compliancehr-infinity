@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Target, Loader2, ArrowRight } from 'lucide-react';
 import { statusTone } from '@/lib/statusStyles';
+import { fetchAllRecords } from '@/lib/csvExport';
 
 const TONE_BAR = {
   'On Track': 'bg-gradient-to-r from-emerald-500 to-teal-500',
@@ -20,8 +21,8 @@ export default function ProviderKpiWidget() {
 
   useEffect(() => {
     let live = true;
-    base44.entities.KPI.filter({}, { sort: 'category', limit: 50 })
-      .then((page) => { if (live) setKpis(page.items || []); })
+    fetchAllRecords(base44.entities.KPI, {}, 'category')
+      .then((rows) => { if (live) setKpis(rows); })
       .catch(() => { if (live) setKpis([]); });
     return () => { live = false; };
   }, []);
