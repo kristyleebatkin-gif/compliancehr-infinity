@@ -98,7 +98,7 @@ export default function BestInClassBenchmarkSuite({ onRefresh }) {
   const selectedLevelObj = SCHADS_LEVELS.find((l) => l.code === schadsLevel) || SCHADS_LEVELS[0];
   const selectedPenaltyObj = SHIFT_PENALTIES.find((p) => p.id === penaltyType) || SHIFT_PENALTIES[0];
   const effectiveMultiplier = selectedPenaltyObj.multiplier + (casualLoading ? 0.25 : 0);
-  const hourlyWageCost = selectedLevelObj.baseRate * effectiveMultiplier * 1.12; // incl 11.5% Superannuation
+  const hourlyWageCost = selectedLevelObj.baseRate * effectiveMultiplier * 1.12; // incl 12% Superannuation
   const totalShiftWage = hourlyWageCost * Number(shiftHours || 0);
   const totalNdisClaim = Number(ndisBillRate || 0) * Number(shiftHours || 0);
   const marginPct = totalNdisClaim > 0 ? Math.round(((totalNdisClaim - totalShiftWage) / totalNdisClaim) * 100) : 0;
