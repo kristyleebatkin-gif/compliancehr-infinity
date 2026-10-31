@@ -151,7 +151,7 @@ export default function LandingHero({ onBookDemo }) {
               </div>
             </div>
 
-            {/* Right Column: Executive dashboard preview */}}
+            {/* Right Column: Executive dashboard preview */}
             <div className="lg:col-span-6 flex items-center">
               <HeroDashboardMockup />
             </div>
