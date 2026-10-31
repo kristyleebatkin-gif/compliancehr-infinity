@@ -13,12 +13,14 @@ export default function ProfileCommDiary({ participant }) {
   const [entries, setEntries] = useState([]);
   const [goals, setGoals] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState('');
   const [groupBy, setGroupBy] = useState('goal');
   const [filters, setFilters] = useState({ from: '', to: '', shift_type: '', goal: '' });
   const [replyTarget, setReplyTarget] = useState(null);
 
   const load = async () => {
     setLoading(true);
+    setLoadError('');
     try {
       const [entryPage, goalPage] = await Promise.all([
         base44.entities.CommunicationEntry.filter({ person_type: 'Participant', person_name: participant.full_name }, { sort: '-created_date', limit: 300 }),
@@ -26,6 +28,9 @@ export default function ProfileCommDiary({ participant }) {
       ]);
       setEntries(entryPage.items || []);
       setGoals(goalPage.items || []);
+    } catch {
+      setEntries([]);
+      setLoadError('Unable to load this participant’s communication diary. Refresh to try again.');
     } finally {
       setLoading(false);
     }
@@ -72,8 +77,10 @@ export default function ProfileCommDiary({ participant }) {
 
       {loading ? (
         <div className="flex justify-center py-8"><Loader2 className="h-5 w-5 animate-spin text-muted-foreground" /></div>
+      ) : loadError ? (
+        <p role="alert" className="text-sm text-destructive">{loadError} <button type="button" className="underline" onClick={load}>Retry</button></p>
       ) : groups.length === 0 || groups.every((g) => g.entries.length === 0) ? (
-        <p className="text-sm text-muted-foreground">No communication diary entries yet - notes recorded in the Communication Centre appear here.</p>
+        <p className="text-sm text-muted-foreground">No communication diary entries were returned for this participant.</p>
       ) : (
         groups.map((group) => (
           <div key={group.key} className="space-y-2">
