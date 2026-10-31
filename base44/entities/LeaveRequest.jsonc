@@ -15,6 +15,10 @@
         "Unpaid",
         "Long Service",
         "Study",
+        "Family & Domestic Violence",
+        "Compassionate / Bereavement",
+        "Community Service",
+        "Parental",
         "Other"
       ],
       "default": "Annual",
