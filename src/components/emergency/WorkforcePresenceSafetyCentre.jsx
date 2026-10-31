@@ -79,6 +79,7 @@ export default function WorkforcePresenceSafetyCentre() {
   const [entries, setEntries] = useState([]);
   const [activityLogs, setActivityLogs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadErrors, setLoadErrors] = useState({});
   const [saving, setSaving] = useState(false);
   const [emergencyType, setEmergencyType] = useState('Fire Evacuation');
   const [selectedReport, setSelectedReport] = useState('workforce-presence');
@@ -92,34 +93,34 @@ export default function WorkforcePresenceSafetyCentre() {
   const [form, setForm] = useState({
     visitor_name: '',
     attendance_type: 'Employee',
-    employee_id: 'EMP-2026-01',
-    department: 'Service Delivery & Clinical',
-    position: 'Senior Support Worker',
-    site: SITES[0],
-    building: 'Main Building — Level 2',
-    areas_accessed: 'Reception, Clinical Suite, Participant Lounge',
-    program: 'NDIS & Aged Care',
-    manager: 'Sarah Jenkins (Operations Manager)',
-    organisation: 'ComplianceHR Infinity',
+    employee_id: '',
+    department: '',
+    position: '',
+    site: '',
+    building: '',
+    areas_accessed: '',
+    program: '',
+    manager: '',
+    organisation: '',
     email: '',
     phone: '',
     vehicle_registration: '',
-    host: 'Reception / Site Coordinator',
-    purpose: 'Scheduled Shift & Participant Support Delivery',
+    host: '',
+    purpose: '',
     contractor_trade: '',
     contractor_insurance: '',
     contractor_qualifications: '',
-    badge_number: `BDG-${String(Math.floor(100 + Math.random() * 900))}`,
-    id_verified: true,
-    first_aid_officer: true,
+    badge_number: '',
+    id_verified: false,
+    first_aid_officer: false,
     fire_warden: false,
     manager_on_site: false,
     after_hours: false,
-    ack_privacy: true,
-    ack_confidentiality: true,
-    ack_whs: true,
-    ack_emergency: true,
-    ack_conditions: true,
+    ack_privacy: false,
+    ack_confidentiality: false,
+    ack_whs: false,
+    ack_emergency: false,
+    ack_conditions: false,
     digital_signature: '',
     sign_in_method: 'Kiosk',
   });
@@ -127,12 +128,16 @@ export default function WorkforcePresenceSafetyCentre() {
   const loadData = useCallback(async () => {
     setLoading(true);
     try {
-      const [visPage, logPage] = await Promise.all([
-        base44.entities.VisitorLog.filter({}, { sort: '-created_date', limit: 100 }).catch(() => ({ items: [] })),
-        base44.entities.AuditLog.filter({}, { sort: '-created_date', limit: 35 }).catch(() => ({ items: [] })),
+      const results = await Promise.allSettled([
+        base44.entities.VisitorLog.filter({}, { sort: '-created_date', limit: 100 }),
+        base44.entities.AuditLog.filter({}, { sort: '-created_date', limit: 35 }),
       ]);
-      setEntries(visPage?.items || []);
-      setActivityLogs(logPage?.items || []);
+      const errors = {};
+      if (results[0].status === 'fulfilled' && Array.isArray(results[0].value?.items)) setEntries(results[0].value.items);
+      else { errors.attendance = 'Attendance records unavailable'; setEntries([]); }
+      if (results[1].status === 'fulfilled' && Array.isArray(results[1].value?.items)) setActivityLogs(results[1].value.items);
+      else { errors.activity = 'Activity log unavailable'; setActivityLogs([]); }
+      setLoadErrors(errors);
     } finally {
       setLoading(false);
     }
@@ -948,18 +953,6 @@ export default function WorkforcePresenceSafetyCentre() {
             <div className="space-y-1.5 max-h-60 overflow-y-auto">
               {entries
                 .filter((e) => ['Contractor', 'Service Provider', 'Consultant'].includes(e.attendance_type))
-                .concat([
-                  {
-                    id: 'sample-contractor-1',
-                    visitor_name: 'Marcus Vance (Apex Fire & Electrical)',
-                    contractor_trade: 'Fire Safety & Emergency Lighting Technician',
-                    contractor_insurance: '$20M Public Liability (Current)',
-                    contractor_qualifications: 'Licensed Electrician + NDIS Worker Screening',
-                    site: SITES[0],
-                    time_in: '08:30',
-                    time_out: '11:45',
-                  },
-                ])
                 .slice(0, 10)
                 .map((c) => (
                   <div
@@ -969,14 +962,14 @@ export default function WorkforcePresenceSafetyCentre() {
                     <div className="flex items-center justify-between">
                       <span className="font-extrabold text-[#0A2B6D]">{c.visitor_name}</span>
                       <Badge className="bg-[#5A00D6] text-white text-[10px]">
-                        {c.time_in || '08:30'} - {c.time_out || 'On Site'}
+                        {c.time_in || 'Time not recorded'} - {c.time_out || (c.time_in ? 'On site status unconfirmed' : 'Time not recorded')}
                       </Badge>
                     </div>
                     <div className="text-[10.5px] font-semibold text-[#5A00D6]">
-                      Trade: {c.contractor_trade || 'Facilities Maintenance'} · Insurance: {c.contractor_insurance || '$20M Verified'}
+                      Trade: {c.contractor_trade || 'Not recorded'} · Insurance: {c.contractor_insurance || 'Not recorded'}
                     </div>
                     <div className="text-[10px] text-muted-foreground">
-                      Qualifications: {c.contractor_qualifications || 'Verified Licence & Screening'} · Site: {c.site || SITES[0]}
+                      Qualifications: {c.contractor_qualifications || 'Not recorded'} · Site: {c.site || 'Not recorded'}
                     </div>
                   </div>
                 ))}
@@ -1062,7 +1055,7 @@ export default function WorkforcePresenceSafetyCentre() {
                       {e.visitor_name} ({e.attendance_type || 'Visitor'})
                     </td>
                     <td className="p-2 text-[11px] font-semibold text-[#0A2B6D]">
-                      {e.site || SITES[0]} · {e.areas_accessed || 'Main Building'}
+                      {e.site || 'Site not recorded'} · {e.areas_accessed || 'Area not recorded'}
                     </td>
                     <td className="p-2">
                       <Badge
@@ -1074,7 +1067,7 @@ export default function WorkforcePresenceSafetyCentre() {
                             : 'bg-[#0A2B6D] text-white'
                         }
                       >
-                        {e.emergency_accountability_status || (e.time_out ? 'Signed Out' : 'Present')}
+                        {e.emergency_accountability_status || (e.time_out ? 'Signed Out' : 'Unconfirmed')}
                       </Badge>
                     </td>
                     <td className="p-2">
@@ -1091,7 +1084,7 @@ export default function WorkforcePresenceSafetyCentre() {
                             type="button"
                             onClick={() => handleEmergencyStatusChange(e, st)}
                             className={`rounded border px-2 py-0.5 text-[10px] font-extrabold transition ${
-                              (e.emergency_accountability_status || 'Present') === st
+                              e.emergency_accountability_status === st
                                 ? 'border-[#0A2B6D] bg-[#0A2B6D] text-white'
                                 : 'border-slate-300 bg-white text-[#0A2B6D] hover:border-[#0072FF]'
                             }`}
