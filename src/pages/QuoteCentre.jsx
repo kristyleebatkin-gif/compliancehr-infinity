@@ -12,7 +12,7 @@ import { ClipboardList, Download, FileDown, Eye, Loader2, Mail, Plus, Trash2, Pe
 import EmptyState from '@/components/EmptyState';
 import { Input } from '@/components/ui/input';
 import { format, addDays } from 'date-fns';
-import { downloadCsv } from '@/lib/csvExport';
+import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import { lineAmount, parseLineItems, PRICE_GUIDE_VERSION } from '@/lib/ndisPriceGuide';
 import { downloadQuotePdf, downloadQuoteTemplatePdf, printQuotePdf, quotePdfBase64, quotePdfFilename } from '@/lib/quotePdf';
 import QuoteBuilder from '@/components/quotes/QuoteBuilder';
@@ -32,6 +32,7 @@ export default function QuoteCentre() {
   const [quotes, setQuotes] = useState([]);
   const [business, setBusiness] = useState({});
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [builderOpen, setBuilderOpen] = useState(false);
   const [editing, setEditing] = useState(null);
   const [previewing, setPreviewing] = useState(null);
@@ -42,14 +43,18 @@ export default function QuoteCentre() {
 
   const load = useCallback(async () => {
     setLoading(true);
+    setLoadError(false);
     try {
-      const [quotePage, businessPage] = await Promise.all([
-        base44.entities.Quote.filter({}, { sort: '-created_date', limit: 200 }),
+      const [quoteRows, businessPage] = await Promise.all([
+        fetchAllRecords(base44.entities.Quote, {}, '-created_date'),
         base44.entities.BusinessDetails.list({ sort: '-created_date', limit: 1 }),
         loadCompanyBranding(),
       ]);
-      setQuotes(quotePage.items);
+      setQuotes(quoteRows);
       setBusiness(businessPage.items?.[0] || {});
+    } catch (error) {
+      console.error(error);
+      setLoadError(true);
     } finally {
       setLoading(false);
     }
@@ -129,7 +134,7 @@ export default function QuoteCentre() {
   const totalValue = quotes.reduce((sum, q) => sum + (Number(q.total) || 0), 0);
   const acceptedValue = quotes.filter((q) => q.status === 'Accepted').reduce((sum, q) => sum + (Number(q.total) || 0), 0);
   const responded = quotes.filter((q) => ['Accepted', 'Declined'].includes(q.status)).length;
-  const winRate = responded ? Math.round((quotes.filter((q) => q.status === 'Accepted').length / responded) * 100) : 0;
+  const winRate = responded ? `${Math.round((quotes.filter((q) => q.status === 'Accepted').length / responded) * 100)}%` : '—';
   const expiringSoon = quotes.filter((q) => q.expiry_date && ['Draft', 'Sent'].includes(q.status) && q.expiry_date >= todayStr && q.expiry_date <= soonStr).length;
 
   const visibleQuotes = quotes.filter((q) =>
@@ -163,11 +168,12 @@ export default function QuoteCentre() {
   return (
     <div className="finance-workspace quotes-workspace space-y-4">
       <ModuleShell title="Quote Centre" subtitle="NDIS support quotations with price guide items, business details and terms from Company Safe." icon={ClipboardList} moduleKey="quotes" insightModule="quotes" actions={<ModuleAlertsButton />} />
+      {loadError && <div role="alert" className="flex items-center justify-between gap-3 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">Quote records could not be confirmed; totals and lists are unavailable.<Button size="sm" variant="outline" onClick={load}>Retry</Button></div>}
       <FinanceMetricCards entries={[
         { label: 'Quotes', value: String(quotes.length), Icon: ClipboardList, tone: 'primary' },
         { label: 'Quoted value', value: money(totalValue), Icon: FileText, tone: 'evidence' },
         { label: 'Accepted', value: money(acceptedValue), Icon: BadgeCheck, tone: 'safe' },
-        { label: 'Win rate', value: `${winRate}%`, Icon: TrendingUp, tone: 'pink' },
+        { label: 'Win rate', value: winRate, Icon: TrendingUp, tone: 'pink' },
         { label: 'Expiring soon', value: String(expiringSoon), Icon: CalendarClock, tone: 'warning' },
       ]} />
 
@@ -194,6 +200,8 @@ export default function QuoteCentre() {
 
       {loading ? (
         <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
+      ) : loadError ? (
+        <EmptyState icon={FileText} title="Quote register unavailable" message="Retry after confirming access or connectivity." />
       ) : quotes.length === 0 ? (
         <EmptyState icon={FileText} modulePath="/quotes" title="No quotes yet" message="Create your first quote to start winning work." />
       ) : visibleQuotes.length === 0 ? (
