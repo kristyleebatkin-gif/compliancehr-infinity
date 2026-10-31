@@ -132,7 +132,7 @@ export default function Training({ profile, embedded = false } = {}) {
               <div className="flex shrink-0 items-center justify-center">
                 {loadError ? <div className="flex h-[120px] w-[120px] items-center justify-center rounded-full border text-center text-xs text-muted-foreground">Unavailable</div> : <ScoreRing value={progressPct} size={120} label="complete" />
               </div>
-              <div className="grid flex-1 grid-cols-2 gap-3 sm:grid-cols-4">
+              <div className="grid flex-1 grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
                 <Stat icon={CheckCircle2} label="Current" value={loadError ? '—' : stats.current} tone="safe" />
                 <Stat icon={Clock} label="Expiring soon" value={loadError ? '—' : stats.expiring} tone="warning" />
                 <Stat icon={AlertTriangle} label="Expired" value={loadError ? '—' : stats.expired} tone="danger" />
