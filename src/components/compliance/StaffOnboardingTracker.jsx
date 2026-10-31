@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { format } from 'date-fns';
 import { base44 } from '@/api/base44Client';
+import { fetchAllRecords } from '@/lib/csvExport';
 import { Card, CardContent } from '@/components/ui/card';
 import { Loader2, ListChecks, ChevronDown, ChevronRight } from 'lucide-react';
 
@@ -41,21 +42,19 @@ export default function StaffOnboardingTracker() {
   useEffect(() => {
     let cancelled = false;
     const load = async () => {
+      setLoading(true);
       setLoadError(false);
       try {
         const today = format(new Date(), 'yyyy-MM-dd');
-        const [tasks, staff, intakes] = await Promise.all([
-          base44.entities.TodoTask.filter(
-            { title: { $regex: `^${PREFIX}`, $options: 'i' } },
-            { sort: 'due_date', limit: 500, fields: ['title', 'status', 'due_date'] }
-          ),
-          base44.entities.StaffProfile.list(),
-          base44.entities.IntakeCase.filter({ intake_type: 'Employee' }, { sort: '-created_date', limit: 200, fields: ['applicant_name', 'status'] }),
+        const [taskRows, staffRows, intakeRows] = await Promise.all([
+          fetchAllRecords(base44.entities.TodoTask, { title: { $regex: `^${PREFIX}`, $options: 'i' } }, 'due_date'),
+          fetchAllRecords(base44.entities.StaffProfile, {}, 'full_name'),
+          fetchAllRecords(base44.entities.IntakeCase, { intake_type: 'Employee' }, '-created_date'),
         ]);
         if (cancelled) return;
 
         const byStaff = new Map();
-        (tasks.items || []).forEach((t) => {
+        taskRows.forEach((t) => {
           const rest = t.title.slice(PREFIX.length);
           const name = rest.slice(0, rest.lastIndexOf(' - ')).trim();
           const step = rest.slice(rest.lastIndexOf(' - ') + 3).trim();
@@ -65,12 +64,12 @@ export default function StaffOnboardingTracker() {
         });
 
         const intakeByName = new Map();
-        (intakes.items || []).forEach((i) => {
+        intakeRows.forEach((i) => {
           const name = String(i.applicant_name || '').trim();
           if (name && !intakeByName.has(name)) intakeByName.set(name, i.status);
         });
 
-        const rowsOut = (staff.items || []).map((s) => {
+        const rowsOut = staffRows.map((s) => {
           const name = s.full_name;
           const steps = byStaff.get(name) || [];
           const done = steps.filter((st) => st.status === 'Completed' || st.status === 'Finalised').length;
