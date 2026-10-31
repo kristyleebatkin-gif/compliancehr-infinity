@@ -214,7 +214,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
                 <div className="grid gap-1.5"><Label>Staff member *</Label><Input name="staff_name" required defaultValue={profile?.full_name || (isManager ? undefined : me?.full_name || '')} readOnly={!isManager} /></div>
                 <div className="grid gap-1.5"><Label>Leave type</Label>
                   <select name="leave_type" className="h-9 rounded-md border border-input bg-transparent px-3 text-sm">
-                    {['Annual', 'Personal / Sick', "Carer's", 'Unpaid', 'Long Service', 'Study', 'Other'].map((t) => <option key={t}>{t}</option>)}
+                    {['Annual', 'Personal / Sick', "Carer's", 'Family & Domestic Violence', 'Compassionate / Bereavement', 'Community Service', 'Parental', 'Unpaid', 'Long Service', 'Study', 'Other'].map((t) => <option key={t}>{t}</option>)}
                   </select>
                 </div>
                 <div className="grid gap-1.5"><Label>Start date</Label><Input name="start_date" type="date" defaultValue={today()} /></div>
