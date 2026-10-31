@@ -471,6 +471,8 @@ export default function WorkforcePresenceSafetyCentre() {
       aria-label="Workforce Presence, Visitor Management, Site Attendance & Emergency Accountability Centre"
       className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 shadow-md space-y-4"
     >
+      {(loadErrors.attendance || loadErrors.activity) && <div role="alert" className="flex items-center justify-between gap-3 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900"><span>{[loadErrors.attendance, loadErrors.activity].filter(Boolean).join(' · ')}. This view may be incomplete.</span><Button size="sm" variant="outline" onClick={loadData}>Retry</Button></div>}
+      {loading && <div className="text-sm text-muted-foreground">Loading workforce and attendance records…</div>}
       {/* Top Executive Header */}
       <div
         className="rounded-2xl p-4 text-white shadow-sm"
