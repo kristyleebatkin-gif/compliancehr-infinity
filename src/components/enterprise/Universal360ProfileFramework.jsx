@@ -473,7 +473,7 @@ export default function Universal360ProfileFramework({
           >
             <Zap className="mr-1 h-3.5 w-3.5 text-[#FF2E9A]" />
             <span style={{ color: '#0A2B6D' }}>
-              {runningAutomation ? 'Running 14 Automations…' : 'Run 14-Point Master Automation'}
+              {runningAutomation ? 'Creating review task…' : 'Create review task'}
             </span>
           </Button>
           {!focusRecord && (
