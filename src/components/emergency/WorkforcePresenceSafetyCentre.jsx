@@ -149,7 +149,7 @@ export default function WorkforcePresenceSafetyCentre() {
 
   // Live On-Site vs Signed-Out calculations
   const currentlyOnSite = useMemo(
-    () => entries.filter((e) => !e.time_out && e.emergency_accountability_status !== 'Signed Out'),
+    () => entries.filter((e) => !e.time_out && ['Present', 'Accounted For'].includes(e.emergency_accountability_status)),
     [entries]
   );
 
@@ -323,7 +323,7 @@ export default function WorkforcePresenceSafetyCentre() {
   };
 
   const handleSiteTransfer = async (entry) => {
-    const currentIdx = SITES.indexOf(entry.site || SITES[0]);
+    const currentIdx = SITES.indexOf(entry.site);
     const nextSite = SITES[(currentIdx + 1) % SITES.length];
     await base44.entities.VisitorLog.update(entry.id, {
       site: nextSite,
@@ -825,18 +825,18 @@ export default function WorkforcePresenceSafetyCentre() {
                       <td className="p-2">
                         <div className="font-extrabold text-[#0A2B6D]">{e.visitor_name}</div>
                         <div className="text-[10px] font-bold text-[#5A00D6]">
-                          {e.attendance_type || 'Visitor'} · {e.organisation || 'ComplianceHR'} ·{' '}
-                          {e.badge_number || 'BDG-VERIFIED'}
+                          {e.attendance_type || 'Role not recorded'} · {e.organisation || 'Organisation not recorded'} ·{' '}
+                          {e.badge_number || 'Badge not recorded'}
                         </div>
                       </td>
                       <td className="p-2">
-                        <div className="font-bold text-[#0A2B6D]">{e.site || SITES[0]}</div>
+                        <div className="font-bold text-[#0A2B6D]">{e.site || 'Site not recorded'}</div>
                         <div className="text-[10px] text-muted-foreground">
-                          {e.areas_accessed || 'Main Facility & Reception'}
+                          {e.areas_accessed || 'Areas not recorded'}
                         </div>
                       </td>
                       <td className="p-2">
-                        <div className="font-bold text-[#0A2B6D]">Host: {e.host || 'Site Coordinator'}</div>
+                        <div className="font-bold text-[#0A2B6D]">Host: {e.host || 'Not recorded'}</div>
                         <div className="text-[10px] text-muted-foreground">{e.purpose || 'Site Attendance'}</div>
                       </td>
                       <td className="p-2">
@@ -932,7 +932,7 @@ export default function WorkforcePresenceSafetyCentre() {
                         {e.visitor_name} ({e.employee_id || 'EMP-VERIFIED'})
                       </div>
                       <div className="text-[10px] text-muted-foreground">
-                        {e.department || 'Service Delivery'} · {e.site || SITES[0]} · Manager: {e.manager || 'Sarah Jenkins'}
+                        {e.department || 'Service Delivery'} · {e.site || 'Site not recorded'} · Manager: {e.manager || 'Sarah Jenkins'}
                       </div>
                     </div>
                     <Badge className="bg-[#0A2B6D] text-white text-[10px]">
@@ -1122,17 +1122,17 @@ export default function WorkforcePresenceSafetyCentre() {
                 {activityLogs.slice(0, 20).map((log) => (
                   <tr key={log.id}>
                     <td className="p-2 font-mono text-[10.5px] font-bold text-[#5A00D6]">
-                      {(log.created_date || '').replace('T', ' ').slice(0, 16) || today}
+                      {(log.created_date || '').replace('T', ' ').slice(0, 16) || 'Timestamp not recorded'}
                     </td>
                     <td className="p-2 font-extrabold text-[#0A2B6D]">
-                      {log.user_name || log.user_email || 'Authorised Staff'}
+                      {log.user_name || log.user_email || 'User not recorded'}
                     </td>
                     <td className="p-2">
                       <Badge className="bg-[#0A2B6D] text-white text-[9.5px]">{log.action || 'Activity'}</Badge>{' '}
                       <span className="font-bold text-[#0A2B6D]">{log.entity_type}</span>
                     </td>
                     <td className="p-2 text-[11px] text-muted-foreground">
-                      {log.record_title} — {log.details || 'Verified session & device'}
+                      {log.record_title} — {log.details || 'Details not recorded'}
                     </td>
                   </tr>
                 ))}
