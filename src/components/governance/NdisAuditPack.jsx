@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { AUDIT_PACK_SECTIONS, AUDIT_PACK_COLUMNS } from '@/lib/governanceFramework';
-import { downloadCsv } from '@/lib/csvExport';
+import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import { Download, Loader2, ShieldCheck } from 'lucide-react';
 
 const keyOf = (sectionKey, source) => `${sectionKey}|${source.entity}|${source.label}`;
@@ -37,8 +37,8 @@ export default function NdisAuditPack() {
         AUDIT_PACK_SECTIONS.map(async (section) => {
           const lists = await Promise.all(
             section.sources.map(async (source) => {
-              const page = await base44.entities[source.entity].filter({}, { sort: '-created_date', limit: 300 });
-              return (page.items || []).map((record) => ({
+              const records = await fetchAllRecords(base44.entities[source.entity], {}, '-created_date');
+              return records.map((record) => ({
                 section: section.key,
                 category: source.label,
                 record: record[source.title] || record.title || record.id,
