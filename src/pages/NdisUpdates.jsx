@@ -103,7 +103,7 @@ export default function NdisUpdates() {
       <Tabs value={tab} onValueChange={setTab} className="space-y-4">
         <NdisNewsToolbar refresh={refresh} refreshing={refreshing} search={search} onSearch={setSearch} />
         {loadError && <div role="alert" className="flex items-center justify-between gap-3 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">NDIS updates could not be confirmed; statistics and lists are unavailable.<button className="rounded-md border px-3 py-1 text-xs font-semibold" onClick={load}>Retry</button></div>}
-      <NdisNewsDashboard stats={loadError ? { total: '—', recent: '—', byType: {} } : stats} />
+      <NdisNewsDashboard stats={loadError ? { total: '—', recent: '—', byType: { News: '—', Update: '—', Newsletter: '—', Consultation: '—' } } : stats} />
         <TabsContent value="updates">
           <div className="module-filter-bar mb-2 flex flex-wrap items-center">
             <p className="text-sm font-semibold">Filter by type</p>
