@@ -89,7 +89,7 @@ export default async function(req) {
           employee_id: profile.employee_number || '',
           employment_type: parsed.employment_type || 'Casual',
           pay_cycle: 'Fortnightly',
-          super_rate: 11.5,
+          super_rate: 12,
           source_intake_case_id: c.id,
           extracted_from_intake: true,
           ...filled,
