@@ -58,8 +58,8 @@ export const UNIVERSAL_28_REGISTER_SOURCES = [
 ];
 
 export const MASTER_45_REGISTERS = [
-  { id: 'reg-01', name: '1. Participant Register', group: 'People & Presence', owner: 'Intake & Service Lead', standard: 'NDIS Standard 1 & 2', path: '/our-participants', count: 48, reviewDate: '2026-12-31' },
-  { id: 'reg-02', name: '2. Employee Register', group: 'People & Presence', owner: 'HR & Workforce Manager', standard: 'NDIS Standard 2 · Aged Care Std 7', path: '/our-employees', count: 64, reviewDate: '2026-12-31' },
+  { id: 'reg-01', name: '1. Participant Register', group: 'People & Presence', owner: 'Intake & Service Lead', standard: 'NDIS Standard 1 & 2', path: '/our-participants', count: null, reviewDate: null },
+  { id: 'reg-02', name: '2. Employee Register', group: 'People & Presence', owner: 'HR & Workforce Manager', standard: 'NDIS Standard 2 · Aged Care Std 7', path: '/our-employees', count: null, reviewDate: null },
   { id: 'reg-03', name: '3. Contractor Register', group: 'People & Presence', owner: 'Procurement & WHS Officer', standard: 'WHS & Contractor Standard', path: '/workforce-presence', count: 19, reviewDate: '2026-11-30' },
   { id: 'reg-04', name: '4. Visitor Register', group: 'People & Presence', owner: 'Site Administration', standard: 'Emergency & Site Security', path: '/workforce-presence', count: 142, reviewDate: '2026-11-15' },
   { id: 'reg-05', name: '5. Communication Register', group: 'Communications & Delivery', owner: 'Communications Lead', standard: 'NDIS Standard 1 & 3', path: '/communications', count: 318, reviewDate: '2026-11-30' },
@@ -74,7 +74,7 @@ export const MASTER_45_REGISTERS = [
   { id: 'reg-14', name: '14. Action Register', group: 'Governance & Audits', owner: 'Operations Manager', standard: 'Continuous Improvement Std', path: '/tasks', count: 84, reviewDate: '2026-11-15' },
   { id: 'reg-15', name: '15. Task Register', group: 'Governance & Audits', owner: 'Team Leader', standard: 'Operational Delivery SLA', path: '/tasks', count: 129, reviewDate: '2026-11-15' },
   { id: 'reg-16', name: '16. Consent Register', group: 'Outcomes & Agreements', owner: 'Privacy & Consent Officer', standard: 'Privacy Act · NDIS Std 1', path: '/compliance', count: 112, reviewDate: '2026-12-31' },
-  { id: 'reg-17', name: '17. Service Agreement Register', group: 'Outcomes & Agreements', owner: 'Intake & Contracts Lead', standard: 'NDIS Service Agreement Std', path: '/our-participants', count: 48, reviewDate: '2026-12-31' },
+  { id: 'reg-17', name: '17. Service Agreement Register', group: 'Outcomes & Agreements', owner: 'Intake & Contracts Lead', standard: 'NDIS Service Agreement Std', path: '/our-participants', count: null, reviewDate: null },
   { id: 'reg-18', name: '18. Review Register', group: 'Governance & Audits', owner: 'Quality Manager', standard: '90-Day & Annual Review Std', path: '/review-due', count: 74, reviewDate: '2026-11-30' },
   { id: 'reg-19', name: '19. Audit Register', group: 'Governance & Audits', owner: 'Compliance Manager', standard: 'NDIS Stage 1 & 2 Audit Std', path: '/auditor-portal', count: 28, reviewDate: '2026-12-15' },
   { id: 'reg-20', name: '20. Audit Findings Register', group: 'Governance & Audits', owner: 'Compliance Manager', standard: 'ISO 19011 Audit Standard', path: '/auditor-portal', count: 16, reviewDate: '2026-12-15' },
@@ -82,8 +82,8 @@ export const MASTER_45_REGISTERS = [
   { id: 'reg-22', name: '22. Continuous Improvement Register', group: 'Governance & Audits', owner: 'Quality & Improvement Manager', standard: 'NDIS Standard 2 · AC Std 8', path: '/quality', count: 53, reviewDate: '2026-12-15' },
   { id: 'reg-23', name: '23. Complaint Register', group: 'Communications & Delivery', owner: 'Complaints & Feedback Officer', standard: 'NDIS Complaints Management', path: '/feedback', count: 9, reviewDate: '2026-11-30' },
   { id: 'reg-24', name: '24. Feedback Register', group: 'Communications & Delivery', owner: 'Complaints & Feedback Officer', standard: 'NDIS Standard 1 & 2', path: '/feedback', count: 61, reviewDate: '2026-12-15' },
-  { id: 'reg-25', name: '25. Skills Assessment Register', group: 'Credentials & Clinical', owner: 'Training & Clinical Lead', standard: 'High-Intensity Support Skills', path: '/training', count: 64, reviewDate: '2026-12-31' },
-  { id: 'reg-26', name: '26. Competency Register', group: 'Credentials & Clinical', owner: 'Training & Clinical Lead', standard: 'NDIS Workforce Competency', path: '/training', count: 64, reviewDate: '2026-12-31' },
+  { id: 'reg-25', name: '25. Skills Assessment Register', group: 'Credentials & Clinical', owner: 'Training & Clinical Lead', standard: 'High-Intensity Support Skills', path: '/training', count: null, reviewDate: null },
+  { id: 'reg-26', name: '26. Competency Register', group: 'Credentials & Clinical', owner: 'Training & Clinical Lead', standard: 'NDIS Workforce Competency', path: '/training', count: null, reviewDate: null },
   { id: 'reg-27', name: '27. Certification Register', group: 'Credentials & Clinical', owner: 'HR & Screening Officer', standard: 'NDIS Worker Screening & WWCC', path: '/certificates', count: 192, reviewDate: '2026-12-15' },
   { id: 'reg-28', name: '28. Qualification Register', group: 'Credentials & Clinical', owner: 'HR Manager', standard: 'AQF & Professional Reg', path: '/hr', count: 88, reviewDate: '2026-12-31' },
   { id: 'reg-29', name: '29. Medication Competency Register', group: 'Credentials & Clinical', owner: 'Clinical Nurse Lead', standard: 'NDIS Medication Management', path: '/training', count: 52, reviewDate: '2026-12-01' },
@@ -100,27 +100,27 @@ export const MASTER_45_REGISTERS = [
   { id: 'reg-40', name: '40. Document Register', group: 'Documents & Executive', owner: 'Document Controller', standard: 'ISO 9001 Document Control', path: '/documents', count: 640, reviewDate: '2026-12-31' },
   { id: 'reg-41', name: '41. Training Register', group: 'Credentials & Clinical', owner: 'L&D Coordinator', standard: 'Mandatory Workforce Training', path: '/training', count: 310, reviewDate: '2026-12-15' },
   { id: 'reg-42', name: '42. Workforce Compliance Register', group: 'Credentials & Clinical', owner: 'HR & Compliance Manager', standard: '100% Worker Clearance Gate', path: '/hr', count: 64, reviewDate: '2026-11-30' },
-  { id: 'reg-43', name: '43. NDIS Evidence Register', group: 'Documents & Executive', owner: 'Compliance Manager', standard: 'NDIS Practice Standards 1–8', path: '/compliance', count: 420, reviewDate: '2026-12-31' },
+  { id: 'reg-43', name: '43. NDIS Evidence Register', group: 'Documents & Executive', owner: 'Compliance Manager', standard: 'NDIS Practice Standards 1–8', path: '/compliance', count: null, reviewDate: null },
   { id: 'reg-44', name: '44. Governance Register', group: 'Documents & Executive', owner: 'Chief Executive / Board', standard: 'Corporate & Clinical Governance', path: '/operations-centre', count: 55, reviewDate: '2026-12-31' },
   { id: 'reg-45', name: '45. Executive Reporting Register', group: 'Documents & Executive', owner: 'Executive Leadership Team', standard: 'Board & Statutory Reporting', path: '/operations-centre', count: 36, reviewDate: '2026-12-31' },
 ];
 
 export const REGISTER_6_AUTO_CHECKLISTS = [
-  { id: 'chk-reviews', title: '1. Missing Reviews Checklist', source: 'Review Register · Participant & Employee Registers', status: '0 Overdue · 3 Due in 14 Days', owner: 'Quality Manager' },
-  { id: 'chk-consents', title: '2. Missing Consents Checklist', source: 'Consent Register · Participant & Employee Registers', status: '100% Active & Signed', owner: 'Privacy Officer' },
-  { id: 'chk-certs', title: '3. Missing Certifications Checklist', source: 'Certification, Qualification & Medication Competency Registers', status: '99.2% Current · 2 Renewing', owner: 'HR Manager' },
-  { id: 'chk-actions', title: '4. Outstanding Actions Checklist', source: 'Action, Task & Corrective Actions Registers', status: 'All High-Priority On Track', owner: 'Operations Manager' },
-  { id: 'chk-shiftnotes', title: '5. Incomplete Shift Notes Checklist', source: 'Shift Note & Communication Registers', status: '100% Verified via 7-Gate Shift Close', owner: 'Service Delivery Lead' },
-  { id: 'chk-evidence', title: '6. Missing Evidence Checklist', source: 'NDIS Evidence, Audit & Document Registers', status: '99.5% Linked to Vault & Safe', owner: 'Compliance Manager' },
+  { id: 'chk-reviews', title: '1. Missing Reviews Checklist', source: 'Review Register · Participant & Employee Registers', status: 'Not assessed from source records', owner: 'Quality Manager' },
+  { id: 'chk-consents', title: '2. Missing Consents Checklist', source: 'Consent Register · Participant & Employee Registers', status: 'Not assessed from source records', owner: 'Privacy Officer' },
+  { id: 'chk-certs', title: '3. Missing Certifications Checklist', source: 'Certification, Qualification & Medication Competency Registers', status: 'Not assessed from source records', owner: 'HR Manager' },
+  { id: 'chk-actions', title: '4. Outstanding Actions Checklist', source: 'Action, Task & Corrective Actions Registers', status: 'Not assessed from source records', owner: 'Operations Manager' },
+  { id: 'chk-shiftnotes', title: '5. Incomplete Shift Notes Checklist', source: 'Shift Note & Communication Registers', status: 'Not assessed from source records', owner: 'Service Delivery Lead' },
+  { id: 'chk-evidence', title: '6. Missing Evidence Checklist', source: 'NDIS Evidence, Audit & Document Registers', status: 'Not assessed from source records', owner: 'Compliance Manager' },
 ];
 
 export const DOCUMENT_HUB_6_SECTIONS = [
-  { key: 'Active Registers', count: '45 Live Master Registers', desc: 'Real-time auto-updated organisational registers with 13 indexed attributes', badge: 'Live Auto-Sync' },
-  { key: 'Evidence Packs', count: 'NDIS 1–8 & Aged Care 1–8', desc: 'Pre-bundled signed evidence mapped to every Practice & Quality Standard', badge: 'Audit Ready' },
-  { key: 'Compliance Packs', count: 'Workforce, Consent & Safety', desc: 'Complete screening, training, consent, WHS & clinical compliance bundles', badge: '100% Verified' },
-  { key: 'Audit Packs', count: 'Stage 1, Stage 2 & Mid-Term', desc: '1-click auditor-ready packages with full register indexes and file URIs', badge: '1-Click Export' },
+  { key: 'Active Registers', count: '45 register definitions', desc: 'Register types listed in this workspace; live record counts are not connected here.', badge: 'Source linkage unassessed' },
+  { key: 'Evidence Packs', count: 'NDIS & Aged Care mappings', desc: 'Evidence pack mapping templates. Source records and signatures require review.', badge: 'Readiness not assessed' },
+  { key: 'Compliance Packs', count: 'Workforce, Consent & Safety', desc: 'Pack categories listed; completeness and source records require review.', badge: 'Not verified' },
+  { key: 'Audit Packs', count: 'Stage 1, Stage 2 & Mid-Term', desc: 'Export options are available; contents and completeness depend on the source records.', badge: 'Review exports' },
   { key: 'Reports', count: 'Register Summaries & Trends', desc: 'Executive, Board, Governance, Risk, Incident & Service Delivery reports', badge: '4 Formats' },
-  { key: 'Historical Archives', count: '7-Layer Non-Destructive Vault', desc: 'Immutable 7:00 PM daily snapshots & historical register versions', badge: 'Tamper-Evident' },
+  { key: 'Historical Archives', count: 'Archive workspace', desc: 'Archive capability is listed; snapshot schedule and retention are not assessed here.', badge: 'Archive status unassessed' },
 ];
 
 function mapSourceToRegisters(sourceType, bodyText = '') {
@@ -365,23 +365,23 @@ export default function UniversalRegisterManagementHubSuite() {
 
   // Multi-Format Export (PDF / Word / Excel / CSV) across 4 Scopes
   const handleExportRegisters = (formatType, scopeLabel = 'Master Register Pack (All 45 Registers)') => {
-    const rows = filteredRegisters.map((r, idx) => ({
-      record_id: `REG-2026-${String(idx + 1).padStart(3, '0')}`,
+    const rows = filteredRegisters.map((r) => ({
+      record_id: r.id,
       register_name: r.name,
       category: r.group,
       subject: `${r.name} — Master Organisational Index`,
       owner: r.owner,
-      records_indexed: r.count,
+      records_indexed: r.count ?? 'Not connected to a live source',
       standard_mapped: r.standard,
-      review_date: r.reviewDate,
-      accuracy_validation: '5/5 Verified (Subject · Category · Owner · Profile Links · Standard)',
+      review_date: r.reviewDate || 'Not recorded',
+      accuracy_validation: 'Not assessed',
     }));
 
     exportUniversalData(
       formatType,
       `Universal-Registers-${scopeLabel.replace(/[^a-zA-Z0-9]+/g, '-')}-${today}`,
       [
-        { key: 'record_id', label: 'Record ID' },
+        { key: 'record_id', label: 'Register Reference' },
         { key: 'register_name', label: 'Register Name' },
         { key: 'category', label: 'Category' },
         { key: 'subject', label: 'Subject' },
@@ -389,7 +389,7 @@ export default function UniversalRegisterManagementHubSuite() {
         { key: 'records_indexed', label: 'Indexed Records' },
         { key: 'standard_mapped', label: 'Compliance Standard Mapping' },
         { key: 'review_date', label: 'Review Date' },
-        { key: 'accuracy_validation', label: 'Accuracy Validation' },
+        { key: 'accuracy_validation', label: 'Assessment Status' },
       ],
       rows,
       `Universal Register Management, Record Indexing & Document Hub — ${scopeLabel}`
@@ -835,7 +835,7 @@ export default function UniversalRegisterManagementHubSuite() {
                 <div>
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-extrabold text-[#0A2B6D]">{chk.title}</span>
-                    <Badge className="bg-[#0072FF] text-white text-[9.5px]">Auto-Generated</Badge>
+                    <Badge className="bg-[#0072FF] text-white text-[9.5px]">Checklist template</Badge>
                   </div>
                   <div className="mt-1 text-[10.5px] font-bold text-[#5A00D6]">{chk.status}</div>
                   <div className="text-[10px] font-medium text-[#0A2B6D]">
