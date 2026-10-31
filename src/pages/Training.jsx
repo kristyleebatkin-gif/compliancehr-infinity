@@ -112,7 +112,7 @@ export default function Training({ profile, embedded = false } = {}) {
         search={<ModuleSearchBar value={query} onChange={(q) => { setQuery(q); if (q.trim()) setView('modules'); }} placeholder="Search training modules..." />}
         insightModule={employee ? undefined : 'training'}
       >
-      {loadError && <p role="alert" className="text-sm text-destructive">{loadError}<Button variant="outline" onClick={load}>Retry</Button></p>}
+
 
       <LivingOrganisationalEcosystemSuite initialTab="training-competency" />
       <TrainingStreaks completions={completions} meName={profile?.full_name || user?.full_name || ''} />
@@ -144,7 +144,9 @@ export default function Training({ profile, embedded = false } = {}) {
         )}
       </div>
 
-      {view === 'skills' ? (
+      {loadError ? (
+        <div role="alert" className="rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">Training records could not be confirmed. Progress, insights, and competency summaries are unavailable until the load succeeds. <Button variant="outline" onClick={load}>Retry</Button></div>
+      ) : view === 'skills' ? (
         <div className="space-y-4">
           <MasterSkillsAndInstructionsStudio onChanged={load} />
           {loading ? (
