@@ -21,24 +21,19 @@ export default function ComplianceScore({ compact = false }) {
   const { toast } = useToast();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
 
   const load = useCallback(async () => {
+    setLoading(true);
+    setLoadError(false);
     try {
       const res = await base44.functions.invoke('complianceScore', {});
       if (res.data?.error) throw new Error(res.data.error);
+      if (!res.data || typeof res.data.score !== 'number' || !Array.isArray(res.data.controls)) throw new Error('Compliance assessment response was incomplete');
       setData(res.data);
     } catch {
-      setData((prev) => prev || {
-        score: 98,
-        registers_monitored: 10,
-        generated_at: new Date().toISOString(),
-        controls: [
-          { key: 'staff-screening', label: 'Worker Screening & Clearances', detail: '100-Point ID, NDIS & Police Checks verified', status: 'pass', source: 'Staff Register', path: '/our-employees' },
-          { key: 'participant-consents', label: 'Participant 3-Part Consents & Plans', detail: 'Information sharing, advocacy & medication consents active', status: 'pass', source: 'Consent Register', path: '/our-participants' },
-          { key: 'incidents-sirs', label: 'Reportable Incidents (24h / 5-Day SLA)', detail: 'All statutory notifications within timeframe', status: 'pass', source: 'Incident Register', path: '/incidents' },
-          { key: 'risks-capa', label: 'Enterprise Risk & CAPA Register', detail: '5×5 Risk Matrix & treatments up to date', status: 'pass', source: 'Risk Register', path: '/risks' },
-        ],
-      });
+      setData(null);
+      setLoadError(true);
     } finally {
       setLoading(false);
     }
@@ -51,7 +46,7 @@ export default function ComplianceScore({ compact = false }) {
     return () => clearInterval(timer);
   }, [load]);
 
-  const score = data?.score ?? 0;
+  const score = data?.score;
 
   return (
     <Card className="shadow-panel">
@@ -60,25 +55,26 @@ export default function ComplianceScore({ compact = false }) {
           <div className="flex items-center gap-4">
             {loading && !data ? (
               <div className={compact ? 'h-24 w-24 animate-pulse rounded-full bg-muted' : 'h-[140px] w-[140px] animate-pulse rounded-full bg-muted'} />
-            ) : (
-              <ScoreRing value={score} size={compact ? 96 : 140} label="Live score" />
-            )}
+            ) : data ? (
+              <ScoreRing value={score} size={compact ? 96 : 140} label="Reported score" />
+            ) : <div className="flex h-24 w-24 items-center justify-center rounded-full border text-center text-xs text-muted-foreground">{loadError ? 'Score unavailable' : 'Not assessed'}</div>}
             <div>
               <div className={compact ? 'font-display text-sm font-bold' : 'font-display text-lg font-bold'}>Continuous compliance score</div>
               <p className="mt-1 max-w-xs text-xs text-muted-foreground">
-                Collected automatically from {data?.registers_monitored ?? 10} connected registers — no manual tick-and-flick. Re-collected every two minutes.
+                {data ? `Reported from ${data.registers_monitored ?? 'an unspecified number of'} connected registers.` : 'No compliance score is available until an assessment response is confirmed.'}
               </p>
               {data?.generated_at && (
                 <p className="mt-1 text-[11px] text-muted-foreground">Last collected {format(new Date(data.generated_at), 'd MMM yyyy, h:mm a')}</p>
               )}
               <Button variant="outline" size="sm" className="mt-2" onClick={load} disabled={loading}>
-                <RefreshCw className={`mr-2 h-3.5 w-3.5 ${loading ? 'animate-spin' : ''}`} />Collect evidence now
+                <RefreshCw className={`mr-2 h-3.5 w-3.5 ${loading ? 'animate-spin' : ''}`} />{loadError ? 'Retry assessment' : 'Refresh assessment'}
               </Button>
+              {loadError && <p role="alert" className="mt-1 text-xs text-amber-700">Assessment could not be loaded. No pass status is inferred.</p>}
             </div>
           </div>
 
           <div className="flex-1 space-y-1.5">
-            {(data?.controls || []).map((c) => (
+            {data?.controls?.map((c) => (
               <Link
                 key={c.key}
                 to={c.path}
@@ -93,6 +89,7 @@ export default function ComplianceScore({ compact = false }) {
                 <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
               </Link>
             ))}
+            {!data && <p className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">Control evidence is unavailable until the assessment loads.</p>}
           </div>
         </div>
       </CardContent>
