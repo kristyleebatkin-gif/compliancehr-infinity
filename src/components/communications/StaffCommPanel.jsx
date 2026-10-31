@@ -14,14 +14,16 @@ const parseJson = (value, fallback = []) => { try { return JSON.parse(value || '
 function StaffCommPanel({ staff }) {
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState('');
   const [replyTarget, setReplyTarget] = useState(null);
 
   const load = async () => {
     setLoading(true);
+    setLoadError('');
     try {
       const [logPage, inboxPage] = await Promise.all([
         base44.entities.CommunicationEntry.filter({ person_type: 'Employee', person_name: staff.full_name }, { sort: '-created_date', limit: 200 }),
-        base44.entities.CommunicationEntry.filter({}, { sort: '-created_date', limit: 300 }).catch(() => ({ items: [] })),
+        base44.entities.CommunicationEntry.filter({}, { sort: '-created_date', limit: 300 }).catch(() => ({ items: [], unavailable: true })),
       ]);
       const involved = (logPage.items || []).slice();
       const myEmail = String(staff.email || '').toLowerCase();
@@ -32,6 +34,10 @@ function StaffCommPanel({ staff }) {
           || (e.staff_involved || []).includes(staff.full_name));
       });
       setEntries([...involved, ...inbox]);
+      if (inboxPage.unavailable) setLoadError('Some recent inbox messages could not be checked. The profile log entries shown may be incomplete.');
+    } catch {
+      setEntries([]);
+      setLoadError('Unable to load employee communication records. Refresh to try again.');
     } finally {
       setLoading(false);
     }
@@ -54,10 +60,13 @@ function StaffCommPanel({ staff }) {
           })))}><Download className="h-4 w-4" />Export</Button>
         )}
       </div>
+      {!loading && loadError && grouped.length > 0 && <p role="status" className="text-xs text-amber-700">{loadError}</p>}
       {loading ? (
         <div className="flex justify-center py-8"><Loader2 className="h-5 w-5 animate-spin text-muted-foreground" /></div>
+      ) : loadError && grouped.length === 0 ? (
+        <p role="alert" className="text-sm text-destructive">{loadError} <button type="button" className="underline" onClick={load}>Retry</button></p>
       ) : grouped.length === 0 ? (
-        <p className="text-sm text-muted-foreground">No communication log entries yet - logs recorded in the Communication Centre and messages sent to this person appear here.</p>
+        <p className="text-sm text-muted-foreground">No communication log entries were returned for this employee.</p>
       ) : (
         grouped.map((group) => (
           <div key={group.type} className="space-y-2">
