@@ -45,17 +45,16 @@ function playPulseChime() {
 }
 
 export default function LiveSuperPlatformPulseBar() {
-  const [pulseScore, setPulseScore] = useState(98.9);
+
   const [sweeping, setSweeping] = useState(false);
   const [quickFilter, setQuickFilter] = useState('');
   const [activeTickerIdx, setActiveTickerIdx] = useState(0);
 
   const liveTickers = [
-    '46 Modules Online · 356 NDIS Checkpoints Verified',
-    '100-Point Staff Screening Gate: 100% Active',
-    '24h / 5d NDIS Incident Commission Timers: Zero Overdue',
-    '3-Way Roster → Shift Note → NDIS Claim Match: 99.4%',
-    '65+ Autonomous Workflows & 100+ Functions Armed',
+    'Operational metrics are not verified in this public preview',
+    'Worker screening status is not assessed here',
+    'Incident SLA status is not assessed here',
+    'Claim reconciliation metrics are not connected here',
   ];
 
   useEffect(() => {
@@ -67,11 +66,7 @@ export default function LiveSuperPlatformPulseBar() {
 
   const triggerLiveSweep = () => {
     setSweeping(true);
-    playPulseChime();
-    setTimeout(() => {
-      setPulseScore((prev) => (prev >= 99.9 ? 99.2 : Number((prev + 0.3).toFixed(1))));
-      setSweeping(false);
-    }, 650);
+    setTimeout(() => setSweeping(false), 650);
   };
 
   const matchedModules = quickFilter.trim()
@@ -98,7 +93,7 @@ export default function LiveSuperPlatformPulseBar() {
             />
             <Radio className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
             <span className="truncate text-[7.5px] sm:text-[8.5px] font-extrabold uppercase tracking-wide text-white" style={{ color: '#FFFFFF' }}>
-              Live Super-Platform Command &amp; Instant Module Launcher · {pulseScore}% Ready
+              Module launcher · public preview · metrics not verified
             </span>
           </div>
 
@@ -110,7 +105,7 @@ export default function LiveSuperPlatformPulseBar() {
           >
             <Zap className={`h-2 w-2 text-white ${sweeping ? 'animate-spin' : ''}`} style={{ color: '#FFFFFF' }} />
             <span style={{ color: '#FFFFFF' }}>
-              {sweeping ? 'Sweeping…' : '1-Click Live Audit Pulse ♫'}
+              {sweeping ? 'Checking…' : 'Refresh preview'}
             </span>
           </button>
         </div>
@@ -124,7 +119,7 @@ export default function LiveSuperPlatformPulseBar() {
                 type="search"
                 value={quickFilter}
                 onChange={(e) => setQuickFilter(e.target.value)}
-                placeholder="Quick-jump any of the 46 live modules…"
+                placeholder="Search available modules…"
                 className="w-full bg-white pl-1.5 pr-1 text-[8px] font-extrabold text-[#0A2B6D] placeholder:text-[#0A2B6D]/70 focus:outline-none"
               />
             </div>
@@ -137,7 +132,7 @@ export default function LiveSuperPlatformPulseBar() {
                 <span>{liveTickers[activeTickerIdx]}</span>
               </span>
               <span className="shrink-0 rounded-full bg-[#10B981] px-1.5 py-0 text-[7px] font-extrabold text-white">
-                LIVE
+                PREVIEW
               </span>
             </div>
           </div>
@@ -166,7 +161,7 @@ export default function LiveSuperPlatformPulseBar() {
 
                   <div className="flex items-center justify-between gap-1 rounded border border-[#0A2B6D]/20 bg-white px-1.5 py-0.5">
                     <span className="text-[7px] font-extrabold text-[#0A2B6D]">
-                      Audit Ready
+                      Open module
                     </span>
                     <ArrowUpRight className="h-2 w-2 shrink-0 text-[#0A2B6D]" />
                   </div>
