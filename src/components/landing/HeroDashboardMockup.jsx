@@ -35,10 +35,10 @@ const VIEWS = [
       { label: 'Shift Notes', value: 'Not verified', delta: 'No live data', color: '#0A2B6D' }
     ],
     checkpoints: [
-      { code: 'GATE 01', title: 'Unscreened Worker Shift Block', status: 'Armed · Active' },
-      { code: 'GATE 02', title: 'SCHADS Award & Fatigue Break Validation', status: 'Armed · Active' },
-      { code: 'GATE 03', title: '30/60/90-Day Credential Expiry Sweep', status: 'Running 24/7' },
-      { code: 'GATE 04', title: 'Shift Note → NDIS Invoice Line Reconciliation', status: 'Synced Live' },
+      { code: 'GATE 01', title: 'Unscreened Worker Shift Block', status: 'Not assessed' },
+      { code: 'GATE 02', title: 'SCHADS Award & Fatigue Break Validation', status: 'Not assessed' },
+      { code: 'GATE 03', title: '30/60/90-Day Credential Expiry Sweep', status: 'Not assessed' },
+      { code: 'GATE 04', title: 'Shift Note → NDIS Invoice Line Reconciliation', status: 'Not assessed' },
     ],
   },
   {
@@ -53,10 +53,10 @@ const VIEWS = [
       { label: 'Auditor Portal', value: 'Not verified', delta: 'Preview only', color: '#0A2B6D' }
     ],
     checkpoints: [
-      { code: 'AUD-01', title: '2-Minute Express Internal Audit Pack', status: '1-Click PDF' },
-      { code: 'AUD-02', title: '24-Hour & 5-Day NDIS Commission Timers', status: 'Auto SLA' },
-      { code: 'AUD-03', title: 'Continuous Improvement Register (CIR) Routing', status: 'Active' },
-      { code: 'AUD-04', title: 'Consent-Gated External Auditor Portal', status: 'RLS Locked' },
+      { code: 'AUD-01', title: '2-Minute Express Internal Audit Pack', status: 'Not assessed' },
+      { code: 'AUD-02', title: '24-Hour & 5-Day NDIS Commission Timers', status: 'Not assessed' },
+      { code: 'AUD-03', title: 'Continuous Improvement Register (CIR) Routing', status: 'Not assessed' },
+      { code: 'AUD-04', title: 'Consent-Gated External Auditor Portal', status: 'Not assessed' },
     ],
   },
 ];
