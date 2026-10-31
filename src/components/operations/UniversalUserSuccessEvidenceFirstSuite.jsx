@@ -25,37 +25,37 @@ import {
 export const UX_6_AUTO_ANSWERS = [
   {
     q: '1. Where is this stored?',
-    a: 'Auto-saved simultaneously across Relevant Profile, Module, Compliance Centre, Audit Centre, Document Hub, Document Vault, Executive Hub & Company Safe.',
+    a: 'Storage locations depend on the owning module and have not been verified for every record type.',
     path: '/universal-storage',
     cta: 'Open 8-Hub Storage',
   },
   {
     q: '2. Which module is this in?',
-    a: 'Accessible directly from Profiles, Dashboards, Search, Tasks, Notifications, Related Records & Timelines — zero module hunting required.',
+    a: 'Use the module links shown on this page; cross-module access and role visibility require validation.',
     path: '/record-intelligence',
     cta: 'Open Record Intelligence',
   },
   {
     q: '3. How do I find this?',
-    a: '11-Attribute Global Search & Personalised Role Workspaces surface every record in <= 2 clicks.',
+    a: 'Search and role workspace behaviour, result completeness and click counts have not been measured.',
     path: '/documents',
     cta: 'Search All Records',
   },
   {
     q: '4. What form do I use?',
-    a: 'Smart Templates & Auto-Fill select and pre-populate the exact NDIS/Aged Care controlled form for your task.',
+    a: 'Form selection and auto-fill are intended capabilities; available forms and runtime behaviour require verification.',
     path: '/checklists',
     cta: 'Launch Smart Forms',
   },
   {
     q: '5. What document do I need?',
-    a: 'Evidence-First Guidance automatically attaches the required NDIS Practice Standard & Aged Care Quality Standard checklist.',
+    a: 'Use the owning module to locate relevant documents; automatic standards-based attachment is not verified.',
     path: '/compliance',
     cta: 'View Evidence Map',
   },
   {
     q: '6. What am I supposed to do next?',
-    a: 'The No-Dead-Ends Bar & Finish My Shift 7-Gate Assistant highlight your exact next action in real time.',
+    a: 'The intended design is to show the next action. Runtime behaviour and role-specific guidance have not been verified.',
     path: '/frontline-hub',
     cta: 'Open My Day & Next Action',
   },
@@ -63,7 +63,7 @@ export const UX_6_AUTO_ANSWERS = [
 
 export const ROLE_5_WORKSPACES = {
   participant: {
-    label: 'Participant Workspace (7 Live Panels)',
+    label: 'Participant Workspace (7 Panels · validation pending)',
     subtitle: 'Everything a participant or nominee needs in one clear, accessible view.',
     items: [
       { title: '1. Services', metric: 'Active Schedule', desc: 'Current & upcoming daily living and community supports', path: '/roster' },
@@ -76,7 +76,7 @@ export const ROLE_5_WORKSPACES = {
     ],
   },
   employee: {
-    label: 'Employee Workspace (10 Live Panels)',
+    label: 'Employee Workspace (10 Panels · validation pending)',
     subtitle: 'Mobile-first rapid workspace so frontline staff focus 100% on care, not admin.',
     items: [
       { title: '1. My Day', metric: 'Live Shift Ready', desc: 'Today’s assigned participants, shift goals, alerts & checklists', path: '/frontline-hub' },
@@ -92,7 +92,7 @@ export const ROLE_5_WORKSPACES = {
     ],
   },
   manager: {
-    label: 'Manager Workspace & Unified Review Mode (8 Live Panels)',
+    label: 'Manager Workspace & Unified Review Mode (8 Panels · validation pending)',
     subtitle: 'Review team notes, risks, goals, shifts, documentation and compliance from one location.',
     items: [
       { title: '1. Team Compliance', metric: '99.2% Cleared', desc: 'Clearances, mandatory training, policies & expiring credentials', path: '/hr' },
@@ -106,7 +106,7 @@ export const ROLE_5_WORKSPACES = {
     ],
   },
   compliance: {
-    label: 'Compliance Workspace (8 Live Panels)',
+    label: 'Compliance Workspace (8 Panels · validation pending)',
     subtitle: 'Continuous NDIS & Aged Care evidence verification with zero manual chasing.',
     items: [
       { title: '1. Evidence', metric: '99.5% Mapped', desc: 'Signed Vault & Company Safe evidence linked to every control', path: '/compliance' },
@@ -120,7 +120,7 @@ export const ROLE_5_WORKSPACES = {
     ],
   },
   executive: {
-    label: 'Executive Workspace (8 Live Panels)',
+    label: 'Executive Workspace (8 Panels · validation pending)',
     subtitle: 'Board-ready governance, workforce, clinical quality and financial intelligence.',
     items: [
       { title: '1. Compliance Health', metric: '99.4% Optimal', desc: 'Whole-of-organisation regulatory & accreditation posture', path: '/operations-centre' },
@@ -136,14 +136,14 @@ export const ROLE_5_WORKSPACES = {
 };
 
 export const SPEED_8_BENCHMARKS = [
-  { id: 'clock_in', task: '1. Clock In', target: '< 10 seconds', actual: '3.2s avg', standard: 'NDIS Standard 2 · SCHADS Award', path: '/frontline-hub' },
-  { id: 'clock_out', task: '2. Clock Out', target: '< 10 seconds', actual: '4.1s avg', standard: 'NDIS Standard 2 · 7-Gate Verified', path: '/frontline-hub' },
-  { id: 'vehicle_check', task: '3. Vehicle Check', target: '< 2 minutes', actual: '45s avg', standard: 'WHS & Fleet Safety Standard', path: '/frontline-hub' },
-  { id: 'shift_note', task: '4. Shift Note', target: '< 5 minutes', actual: '1m 50s avg', standard: 'NDIS Standard 3 · Voice/AI Assisted', path: '/frontline-hub' },
-  { id: 'progress_note', task: '5. Progress Note', target: '< 5 minutes', actual: '2m 10s avg', standard: 'NDIS Standard 3 · Auto-Routed', path: '/record-intelligence' },
-  { id: 'goal_update', task: '6. Goal Update', target: '< 2 minutes', actual: '38s avg', standard: 'NDIS Outcome Framework', path: '/goals' },
-  { id: 'review_approval', task: '7. Review Approval', target: '< 2 minutes', actual: '30s avg', standard: 'Clinical & Operational Governance', path: '/review-due' },
-  { id: 'doc_upload', task: '8. Document Upload', target: '< 1 minute', actual: '18s avg', standard: 'Document Vault & Company Safe', path: '/documents' },
+  { id: 'clock_in', task: '1. Clock In', target: '< 10 seconds', actual: 'Not measured', standard: 'NDIS Standard 2 · SCHADS Award', path: '/frontline-hub' },
+  { id: 'clock_out', task: '2. Clock Out', target: '< 10 seconds', actual: 'Not measured', standard: 'NDIS Standard 2 · 7-Gate Verified', path: '/frontline-hub' },
+  { id: 'vehicle_check', task: '3. Vehicle Check', target: '< 2 minutes', actual: 'Not measured', standard: 'WHS & Fleet Safety Standard', path: '/frontline-hub' },
+  { id: 'shift_note', task: '4. Shift Note', target: '< 5 minutes', actual: 'Not measured', standard: 'NDIS Standard 3 · Voice/AI Assisted', path: '/frontline-hub' },
+  { id: 'progress_note', task: '5. Progress Note', target: '< 5 minutes', actual: 'Not measured', standard: 'NDIS Standard 3 · Auto-Routed', path: '/record-intelligence' },
+  { id: 'goal_update', task: '6. Goal Update', target: '< 2 minutes', actual: 'Not measured', standard: 'NDIS Outcome Framework', path: '/goals' },
+  { id: 'review_approval', task: '7. Review Approval', target: '< 2 minutes', actual: 'Not measured', standard: 'Clinical & Operational Governance', path: '/review-due' },
+  { id: 'doc_upload', task: '8. Document Upload', target: '< 1 minute', actual: 'Not measured', standard: 'Document Vault & Company Safe', path: '/documents' },
 ];
 
 export const UNIFIED_AUDIT_7_VIEWS = [
@@ -222,7 +222,7 @@ export default function UniversalUserSuccessEvidenceFirstSuite() {
 
     toast({
       title: `Evidence-First Pack (${formatType.toUpperCase()}) Exported`,
-      description: 'Includes 5-Point Evidence Stamp, Role Workspace Metrics & Standards Mapping.',
+      description: 'Exports the workspace configuration; status, evidence links and standards mapping are marked unverified.'
     });
   };
 
