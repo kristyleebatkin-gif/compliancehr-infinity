@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { KanbanSquare, Plus, Trash2, ChevronLeft, ChevronRight, CircleCheck, Briefcase } from 'lucide-react';
-import { downloadCsv } from '@/lib/csvExport';
+import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import CrmHub from '@/pages/CrmHub';
 import '@/components/dashboard/brightActions.css';
 
@@ -23,14 +23,22 @@ export default function ProjectsHub() {
   const [screenPage, setScreenPage] = useState('both');
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [saving, setSaving] = useState(false);
 
   const load = useCallback(async () => {
     setLoading(true);
-    const page = await base44.entities.BusinessProject.filter({}, { sort: '-created_date', limit: 100 });
-    setProjects(page.items || []);
-    setLoading(false);
+    setLoadError(false);
+    try {
+      const rows = await fetchAllRecords(base44.entities.BusinessProject, {}, '-created_date');
+      setProjects(rows);
+    } catch (error) {
+      console.error(error);
+      setLoadError(true);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => { load(); }, [load]);
@@ -93,9 +101,11 @@ export default function ProjectsHub() {
           ['Overdue', overdue.length],
           ['Average progress', `${avgProgress}%`],
         ].map(([label, value]) => (
-          <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{value}</p></div>
+          <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{loadError ? '—' : value}</p></div>
         ))}
       />
+
+      {loadError && screenPage !== 'page2' && <div role="alert" className="flex items-center justify-between gap-3 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">Project records could not be confirmed; totals, board and exports are unavailable.<Button size="sm" variant="outline" onClick={load}>Retry</Button></div>}
 
       {/* Page 1 (Projects) & Page 2 (CRM & Leads) Screen Switcher */}
       <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-sm">
@@ -153,6 +163,8 @@ export default function ProjectsHub() {
 
       {screenPage !== 'page2' && (loading ? (
         <Card><CardContent className="p-8 text-center text-sm text-muted-foreground">Loading projects...</CardContent></Card>
+      ) : loadError ? (
+        <Card><CardContent className="p-8 text-center text-sm text-muted-foreground">Project board unavailable. Retry after confirming access or connectivity.</Card></Card>
       ) : projects.length === 0 ? (
         <Card><CardContent className="p-8 text-center text-sm text-muted-foreground">No projects yet. Create your first business improvement project above.</CardContent></Card>
       ) : (
