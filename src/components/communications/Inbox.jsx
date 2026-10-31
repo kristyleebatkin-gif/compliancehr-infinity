@@ -6,6 +6,7 @@ import { Loader2, Paperclip, Reply } from 'lucide-react';
 import { openAttachment } from '@/lib/commTypes';
 import ReplyDialog from './ReplyDialog';
 import { SmallSafeVaultBar } from '@/components/safe/ExecutiveWallScene';
+import { fetchAllRecords } from '@/lib/csvExport';
 
 const parseJson = (value, fallback = []) => { try { return JSON.parse(value || '') || fallback; } catch { return fallback; } };
 
@@ -13,16 +14,21 @@ export default function Inbox() {
   const [me, setMe] = useState(null);
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState('');
   const [box, setBox] = useState('received');
   const [replyTarget, setReplyTarget] = useState(null);
 
   const load = async () => {
     setLoading(true);
+    setLoadError('');
     try {
       const user = await base44.auth.me();
       setMe(user);
-      const page = await base44.entities.CommunicationEntry.filter({}, { sort: '-created_date', limit: 300 });
-      setItems(page.items || []);
+      const rows = await fetchAllRecords(base44.entities.CommunicationEntry, {}, '-created_date');
+      setItems(rows);
+    } catch {
+      setItems([]);
+      setLoadError('Unable to load inbox messages. Refresh to try again.');
     } finally {
       setLoading(false);
     }
@@ -48,11 +54,13 @@ export default function Inbox() {
   return (
     <div className="space-y-4">
       <div className="flex gap-2">
-        <Button size="sm" variant={box === 'received' ? 'default' : 'outline'} onClick={() => setBox('received')}>Received ({received.length})</Button>
-        <Button size="sm" variant={box === 'sent' ? 'default' : 'outline'} onClick={() => setBox('sent')}>Sent ({sent.length})</Button>
+        <Button size="sm" variant={box === 'received' ? 'default' : 'outline'} onClick={() => setBox('received')}>Received ({loading ? '…' : loadError ? '—' : received.length})</Button>
+        <Button size="sm" variant={box === 'sent' ? 'default' : 'outline'} onClick={() => setBox('sent')}>Sent ({loading ? '…' : loadError ? '—' : sent.length})</Button>
       </div>
       {loading ? (
         <div className="flex justify-center py-12"><Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /></div>
+      ) : loadError ? (
+        <div role="alert" className="rounded-xl border border-destructive/30 bg-destructive/5 p-4 text-sm text-destructive">{loadError} <Button type="button" variant="outline" size="sm" className="ml-2" onClick={load}>Retry</Button></div>
       ) : list.length === 0 ? (
         <p className="py-8 text-center text-sm text-muted-foreground">
           {box === 'received' ? 'No messages addressed to you yet - bulk messages, emails, replies and shift note copies sent to you will appear here.' : 'Nothing sent yet.'}
