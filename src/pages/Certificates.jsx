@@ -6,7 +6,7 @@ import ModuleSearchBar from '@/components/module/ModuleSearchBar';
 import StatusBadge from '@/components/StatusBadge';
 import { Button } from '@/components/ui/button';
 import { Plus, Award, Pencil, Trash2, Download, Trophy, Users, Heart, Sparkles } from 'lucide-react';
-import { downloadCsv } from '@/lib/csvExport';
+import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import BulkEditBar from '@/components/documents/BulkEditBar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import StaffRecognition from '@/components/staff/StaffRecognition';
@@ -18,6 +18,7 @@ export default function Certificates() {
   const [query, setQuery] = useState('');
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [editing, setEditing] = useState(null);
   const [staffProfiles, setStaffProfiles] = useState([]);
@@ -26,7 +27,7 @@ export default function Certificates() {
   const [selectedParticipantId, setSelectedParticipantId] = useState('');
   const [form, setForm] = useState({
     certificate_number: '', staff_id: '', staff_name: '', module_title: '', issue_date: '',
-    expiry_date: '', score: 0, status: 'Current', issued_by: '',
+    expiry_date: '', score: 0, status: 'Pending Verification', issued_by: ''
   });
 
   useEffect(() => { load(); }, []);
@@ -34,21 +35,20 @@ export default function Certificates() {
 
   const load = async () => {
     setLoading(true);
+    setLoadError(false);
     try {
-      const [certPage, staffPage, partPage] = await Promise.all([
-        base44.entities.Certificate.filter({}, { sort: '-expiry_date', limit: 500 }),
-        base44.entities.StaffProfile.filter({}, { sort: 'full_name', limit: 500 }),
-        base44.entities.ParticipantProfile.filter({}, { sort: 'full_name', limit: 500 }).catch(() => ({ items: [] })),
+      const [certRows, sList, pList] = await Promise.all([
+        fetchAllRecords(base44.entities.Certificate, {}, '-expiry_date'),
+        fetchAllRecords(base44.entities.StaffProfile, {}, 'full_name'),
+        fetchAllRecords(base44.entities.ParticipantProfile, {}, 'full_name'),
       ]);
-      const sList = staffPage.items || [];
-      const pList = partPage.items || [];
-      setItems(certPage.items || []);
+      setItems(certRows);
       setStaffProfiles(sList);
       setParticipantProfiles(pList);
       if (sList.length && !selectedStaffId) setSelectedStaffId(sList[0].id);
       if (pList.length && !selectedParticipantId) setSelectedParticipantId(pList[0].id);
     }
-    catch (e) { console.error(e); }
+    catch (e) { console.error(e); setLoadError(true); }
     finally { setLoading(false); }
   };
 
@@ -309,7 +309,7 @@ export default function Certificates() {
             <div><label className="block text-sm font-medium text-foreground/70 mb-1.5">Expiry Date</label><input type="date" value={form.expiry_date || ''} onChange={e => set('expiry_date', e.target.value)} className={input} /></div>
             <div><label className="block text-sm font-medium text-foreground/70 mb-1.5">Score (%)</label><input type="number" value={form.score} onChange={e => set('score', Number(e.target.value))} className={input} /></div>
           </div>
-          <div><label className="block text-sm font-medium text-foreground/70 mb-1.5">Status</label><select value={form.status} onChange={e => set('status', e.target.value)} className={input}>{['Current','Expiring Soon','Expired','Revoked'].map(c => <option key={c}>{c}</option>)}</select></div>
+          <div><label className="block text-sm font-medium text-foreground/70 mb-1.5">Status</label><select value={form.status} onChange={e => set('status', e.target.value)} className={input}>{['Pending Verification','Current','Expiring Soon','Expired','Revoked'].map(c => <option key={c}>{c}</option>)}</select></div>
           <div className="flex justify-end gap-3"><Button type="button" variant="outline" onClick={() => setShowForm(false)}>Cancel</Button><Button type="submit">Save Certificate</Button></div>
         </form>
       )}
@@ -317,6 +317,8 @@ export default function Certificates() {
       <div className="rounded-xl border border-border bg-card overflow-hidden">
         {loading ? (
           <div className="flex items-center justify-center py-16"><div className="w-7 h-7 border-4 border-border border-t-foreground rounded-full animate-spin" /></div>
+        ) : loadError ? (
+          <div role="alert" className="flex items-center justify-between gap-3 p-4 text-sm text-amber-900">Certificate and profile records could not be confirmed.<Button variant="outline" size="sm" onClick={load}>Retry</Button></div>
         ) : items.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16 text-muted-foreground"><Award className="h-8 w-8 mb-2" /><p className="text-sm">No certificates issued</p></div>
         ) : (
