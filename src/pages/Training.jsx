@@ -130,7 +130,7 @@ export default function Training({ profile, embedded = false } = {}) {
           <div className="border-t border-border/60 p-4">
             <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
               <div className="flex shrink-0 items-center justify-center">
-                {loadError ? <div className="flex h-[120px] w-[120px] items-center justify-center rounded-full border text-center text-xs text-muted-foreground">Unavailable</div> : <ScoreRing value={progressPct} size={120} label="complete" />
+                {loadError ? <div className="flex h-[120px] w-[120px] items-center justify-center rounded-full border text-center text-xs text-muted-foreground">Unavailable</div> : <ScoreRing value={progressPct} size={120} label="complete" />}
               </div>
               <div className="grid flex-1 grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
                 <Stat icon={CheckCircle2} label="Current" value={loadError ? '—' : stats.current} tone="safe" />
