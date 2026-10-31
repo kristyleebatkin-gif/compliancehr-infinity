@@ -68,6 +68,7 @@ function Risks({ profile, profileKind, embedded = false } = {}) {
   const { toast } = useToast();
   const [risks, setRisks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [editing, setEditing] = useState(null);
   const [form, setForm] = useState(blank);
   const [ratingFilter, setRatingFilter] = useState(searchParams.get('rating') === 'high-critical' ? 'High / Critical' : 'All');
@@ -78,11 +79,12 @@ function Risks({ profile, profileKind, embedded = false } = {}) {
 
   const load = async () => {
     setLoading(true);
+    setLoadError(false);
     try {
       const query = profile ? profileKind === 'participant' ? { $or: [{ participant_id: profile.id }, { participant_name: profile.full_name }] } : { owner: profile.full_name } : {};
       const page = await base44.entities.Risk.filter(query, { sort: '-identified_date', limit: 500 });
       setRisks(page.items || []);
-    } catch (e) { console.error(e); }
+    } catch (e) { console.error(e); setLoadError(true); }
     setLoading(false);
   };
   useEffect(() => { load(); }, []);
@@ -240,6 +242,7 @@ function Risks({ profile, profileKind, embedded = false } = {}) {
 
   return (
     <div className="safety-workspace mx-auto min-w-0 max-w-[1440px] space-y-4">
+      {loadError && <div role="alert" className="flex items-center justify-between gap-3 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">Risk data could not be confirmed; displayed totals may be incomplete.<button type="button" onClick={load} className="rounded border px-3 py-1">Retry</button></div>}
       {embedded ? (
         <>
           <RegisterInsights module="risks" />
