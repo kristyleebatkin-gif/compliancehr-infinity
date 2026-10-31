@@ -1,11 +1,11 @@
 /**
- * NDIS Pricing Schedule 2026-27 (effective 1 July 2026) - common national price limits.
- * Every rate and item number is editable on each invoice line, so a line can be
- * corrected or extended for any support not pre-listed here.
+ * Partial internal NDIS item reference list. It is not the verified current catalogue.
+ * The official 2026-27 schedule is effective 24 September 2026 and must be imported
+ * before these reference rates are relied on for pricing or claims.
  */
-export const PRICE_GUIDE_VERSION = 'NDIS Pricing Schedule 2026-27 (effective 1 July 2026, national limits)';
+export const PRICE_GUIDE_VERSION = 'Partial internal reference list — not verified against the 2026-27 schedule';
 
-export const PRICE_GUIDE_NOTE = 'Rates below are 2026-27 national price limits and are editable on every line. Verify support item numbers and prices against the current NDIS Pricing Schedule before sending your invoice.';
+export const PRICE_GUIDE_NOTE = 'This is a partial internal reference list, not the verified NDIS catalogue. The official 2026-27 schedule is effective 24 September 2026 and has not been imported into the app. Verify each support item and price against the official schedule before quoting or invoicing.';
 
 export const SUPPORT_ITEMS = [
   { code: '01_011_0107_1_1', description: 'Assistance With Self-Care Activities - Standard - Weekday Daytime', unit: 'hour', rate: 73.58, group: 'Assistance in Daily Life' },
