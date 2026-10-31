@@ -131,6 +131,7 @@ export default function LandingNav({ onBookDemo }) {
               ['Company Safe', '/company-safe'],
               ['Compliance Centre', '/compliance'],
               ['Operations Centre', '/operations-centre'],
+              ['Connect AI (MCP)', '/connect'],
             ].map(([label, path]) => (
               <Link
                 key={path}

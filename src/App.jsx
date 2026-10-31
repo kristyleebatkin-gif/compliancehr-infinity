@@ -92,6 +92,7 @@ import GovernanceLayer from '@/pages/GovernanceLayer';
 import Landing from '@/pages/Landing';
 import PublicComplaint from '@/pages/PublicComplaint';
 import PublicVolunteer from '@/pages/PublicVolunteer';
+import Connect from '@/pages/Connect';
 import RoleGate from '@/components/RoleGate';
 
 const AuthenticatedApp = () => {
@@ -121,6 +122,7 @@ const AuthenticatedApp = () => {
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
+      <Route path="/connect" element={<Connect />} />
       <Route path="/report-complaint" element={<PublicComplaint />} />
       <Route path="/volunteer-apply" element={<PublicVolunteer />} />
       <Route path="/login" element={<Login />} />
