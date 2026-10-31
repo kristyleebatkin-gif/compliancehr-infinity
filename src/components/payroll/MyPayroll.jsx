@@ -74,7 +74,7 @@ export default function MyPayroll() {
               <p>Employee ID: {detail.employee_id || 'not recorded'}</p>
               <p>Hourly rate: {money(detail.hourly_rate)}</p>
               <p>Pay cycle: {detail.pay_cycle || 'Fortnightly'}</p>
-              <p>Super rate: {detail.super_rate || 11.5}%</p>
+              <p>Super rate: {detail.super_rate ?? 12}%</p>
               <p>TFN: {detail.tfn_number ? 'recorded (private)' : 'not recorded - contact payroll'}</p>
               <p>Tax declaration: {detail.tax_declaration || 'not recorded'}</p>
             </div>
