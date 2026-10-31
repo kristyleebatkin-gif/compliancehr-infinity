@@ -1,0 +1,102 @@
+{
+  "name": "TenantMembership",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Tenant ID"
+    },
+    "user_id": {
+      "type": "string",
+      "title": "User ID"
+    },
+    "membership_role": {
+      "type": "string",
+      "title": "Tenant Role"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Invited",
+        "Active",
+        "Suspended",
+        "Ended"
+      ],
+      "default": "Invited"
+    },
+    "starts_on": {
+      "type": "string",
+      "format": "date",
+      "title": "Starts On"
+    },
+    "ends_on": {
+      "type": "string",
+      "format": "date",
+      "title": "Ends On"
+    },
+    "invited_by_user_id": {
+      "type": "string",
+      "title": "Invited By User ID"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "user_id",
+    "membership_role",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
