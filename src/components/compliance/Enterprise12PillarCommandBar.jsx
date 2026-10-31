@@ -54,19 +54,23 @@ export default function Enterprise12PillarCommandBar({
     setSubjectTopic('');
   };
 
+  const telemetryValue = (value) => value !== null && value !== undefined && value !== '' && Number.isFinite(Number(value))
+    ? Number(value).toLocaleString()
+    : 'Not verified';
+
   const kpi12Cards = [
-    { label: 'Incidents', value: `${liveTelemetry.incidents ?? 0} Open`, sub: '24h / 5d NDIS SLA Ready', tone: '#FF2E9A' },
-    { label: 'Risks', value: `${liveTelemetry.risks ?? 0} Active`, sub: 'ISO 31000 Matrix & Controls', tone: '#5A00D6' },
-    { label: 'Audits', value: `${liveTelemetry.audits ?? 0} Scheduled`, sub: '17 Categories · 356 Checks', tone: '#0072FF' },
-    { label: 'Reviews', value: '100% Tracked', sub: '10-Weekly & 6-Monthly', tone: '#0A2B6D' },
-    { label: 'Actions', value: `${liveTelemetry.tasks ?? 0} Tracked`, sub: 'CAPA & Shared To-Do Linked', tone: '#0072FF' },
-    { label: 'Training', value: '17-Pt Matrix', sub: 'LMS, Quizzes & Certs Synced', tone: '#5A00D6' },
-    { label: 'Compliance Status', value: 'Audit-Ready', sub: 'Live Operational Evidence', tone: '#0072FF' },
-    { label: 'NDIS Status', value: 'Core + Modules', sub: '3-Part Consents Enforced', tone: '#5A00D6' },
-    { label: 'Governance Status', value: '98 Controlled', sub: 'Company Safe Master Copies', tone: '#0A2B6D' },
-    { label: 'Overdue Items', value: '0 Unassigned', sub: '8:30 AM Escalation Sweep', tone: '#FF2E9A' },
-    { label: 'Upcoming Reviews', value: 'Next 30/90d', sub: 'Automated Review Triggers', tone: '#0072FF' },
-    { label: 'Upcoming Audits', value: 'Continuous', sub: 'Internal & Commission Ready', tone: '#5A00D6' },
+    { label: 'Incidents', value: telemetryValue(liveTelemetry.incidents), sub: 'Live count; SLA status not assessed here', tone: '#FF2E9A' },
+    { label: 'Risks', value: telemetryValue(liveTelemetry.risks), sub: 'Live count; control effectiveness not assessed here', tone: '#5A00D6' },
+    { label: 'Audits', value: telemetryValue(liveTelemetry.audits), sub: 'Live count; audit coverage not assessed here', tone: '#0072FF' },
+    { label: 'Reviews', value: 'Not verified', sub: 'Review completion data is not connected here', tone: '#0A2B6D' },
+    { label: 'Actions', value: telemetryValue(liveTelemetry.tasks), sub: 'Live count; CAPA linkage not assessed here', tone: '#0072FF' },
+    { label: 'Training', value: 'Not verified', sub: 'Training and certificate currency not assessed here', tone: '#5A00D6' },
+    { label: 'Compliance Status', value: 'Not verified', sub: 'No readiness calculation is supplied to this panel', tone: '#0072FF' },
+    { label: 'NDIS Status', value: 'Not verified', sub: 'Consent and registration status not assessed here', tone: '#5A00D6' },
+    { label: 'Governance Status', value: 'Not verified', sub: 'Controlled document count is not supplied here', tone: '#0A2B6D' },
+    { label: 'Overdue Items', value: 'Not verified', sub: 'Overdue and assignment counts are not supplied here', tone: '#FF2E9A' },
+    { label: 'Upcoming Reviews', value: 'Not verified', sub: 'Review schedule data is not supplied here', tone: '#0072FF' },
+    { label: 'Upcoming Audits', value: 'Not verified', sub: 'Audit schedule data is not supplied here', tone: '#5A00D6' },
   ];
 
   return (
@@ -85,7 +89,7 @@ export default function Enterprise12PillarCommandBar({
             </span>
           </div>
           <Badge className="bg-[#0A2B6D] text-white text-[10px]">
-            Zero Demo / Duplicate Data · 100% Connected Lifecycle
+            Live values shown only where source data is supplied · Lifecycle coverage not verified
           </Badge>
         </div>
 
