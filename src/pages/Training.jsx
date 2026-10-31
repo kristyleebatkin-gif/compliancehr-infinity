@@ -31,7 +31,7 @@ function statusFor(title, completions) {
   const latest = recs.sort((a, b) => (b.completed_date || '').localeCompare(a.completed_date || ''))[0];
   const today = new Date();
   const exp = latest.expiry_date ? new Date(latest.expiry_date) : null;
-  if (!exp) return { status: 'Validity Unconfirmed', completion: latest };
+  if (!exp || Number.isNaN(exp.getTime())) return { status: 'Validity Unconfirmed', completion: latest };
   if (exp < today) return { status: 'Expired', completion: latest };
   if ((exp - today) / 86400000 <= 30) return { status: 'Expiring Soon', completion: latest };
   return { status: 'Current', completion: latest };
