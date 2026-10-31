@@ -102,7 +102,7 @@ export default function PayRunsTab() {
       employment_type: p.position || 'Casual',
       hourly_rate: Number(p.hourly_rate) || 0,
       pay_cycle: 'Fortnightly',
-      super_rate: 11.5,
+      super_rate: 12,
     }));
     if (missing.length) await base44.entities.StaffPayrollDetail.bulkCreate(missing);
     setSyncing(false);
@@ -140,7 +140,7 @@ export default function PayRunsTab() {
           employment_type: p.position || 'Casual',
           hourly_rate: Number(p.hourly_rate) || 0,
           pay_cycle: 'Weekly',
-          super_rate: 11.5,
+          super_rate: 12,
         };
       });
       if (missing.length) await base44.entities.StaffPayrollDetail.bulkCreate(missing);
