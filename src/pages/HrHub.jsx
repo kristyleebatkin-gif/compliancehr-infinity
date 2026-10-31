@@ -126,14 +126,21 @@ export default function HrHub({ profile, embedded = false } = {}) {
   const payrollVisible = !profile || profile.email?.toLowerCase() === me?.email?.toLowerCase();
   const loadMore = async (kind) => {
     setLoading(true);
-    const personalReviews = !!profile || (!!me && !MANAGER_ROLES.includes(me.role));
-    const page = kind === 'leave'
-      ? await base44.entities.LeaveRequest.filter(profile ? { staff_name: profile.full_name } : !isManager ? { created_by_id: me.id } : {}, { sort: '-created_date', limit: 100, cursor: leavePage.next_cursor })
-      : personalReviews ? (await base44.functions.invoke('hrPaperwork', { action: 'list', kind: 'review', ...(profile?.id ? { staff_profile_id: profile.id } : {}), cursor: reviewPage.next_cursor })).data
-      : await base44.entities.PerformanceReview.filter({}, { sort: '-review_date', limit: 100, cursor: reviewPage.next_cursor });
-    if (kind === 'leave') { setLeaves((old) => [...old, ...page.items]); setLeavePage(page); }
-    else { setReviews((old) => [...old, ...page.items]); setReviewPage(page); }
-    setLoading(false);
+    try {
+      const personalReviews = !!profile || (!!me && !MANAGER_ROLES.includes(me.role));
+      const page = kind === 'leave'
+        ? await base44.entities.LeaveRequest.filter(profile ? { staff_name: profile.full_name } : !isManager ? { created_by_id: me.id } : {}, { sort: '-created_date', limit: 100, cursor: leavePage.next_cursor })
+        : personalReviews ? (await base44.functions.invoke('hrPaperwork', { action: 'list', kind: 'review', ...(profile?.id ? { staff_profile_id: profile.id } : {}), cursor: reviewPage.next_cursor })).data
+        : await base44.entities.PerformanceReview.filter({}, { sort: '-review_date', limit: 100, cursor: reviewPage.next_cursor });
+      if (kind === 'leave') { setLeaves((old) => [...old, ...(page.items || [])]); setLeavePage(page); }
+      else { setReviews((old) => [...old, ...(page.items || [])]); setReviewPage(page); }
+      setLoadError(false);
+    } catch (error) {
+      console.error(error);
+      setLoadError(true);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const needle = query.trim().toLowerCase();
@@ -148,7 +155,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
   ].map(([label, value]) => (
     <div key={label}>
       <p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p>
-      <p className="mt-1 text-2xl font-bold tabular-nums">{loading ? '…' : value}</p>
+      <p className="mt-1 text-2xl font-bold tabular-nums">{loading ? '…' : loadError ? '—' : value}</p>
     </div>
   ));
 
