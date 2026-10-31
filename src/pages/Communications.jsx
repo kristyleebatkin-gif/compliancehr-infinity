@@ -109,7 +109,7 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
           title="Communication Centre"
           subtitle={employeeSelf
             ? 'Your alerts, your own shift notes and employee log, email, and the communication entries linked to you.'
-            : 'Live system alerts, unread notifications, professional emails, bulk messages, the unified communication diary, shift notes and the employee log. Every entry is recorded on the Communication Register, linked to the person\u2019s participant or staff record, and note types route to their matching module.'}
+            : 'Manage alerts, emails, bulk messages, diary notes, shift notes and employee communications. Record storage, delivery status and profile links depend on the tool and selected details; verify each item in its source record.'}
           icon={MessagesSquare}
           moduleKey="communications"
           tabs={!(embedded || participantOnly) && (
