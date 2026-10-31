@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { UsersRound, Plus, Trash2, Check, X, CalendarClock, ClipboardCheck, Download } from 'lucide-react';
-import { downloadCsv } from '@/lib/csvExport';
+import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import HrPaperworkPanel from '@/components/hr/HrPaperworkPanel';
 import AppraisalComplianceDashboard from '@/components/hr/AppraisalComplianceDashboard';
 import StaffFileCompletenessWidget from '@/components/hr/StaffFileCompletenessWidget';
@@ -32,6 +32,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
   const [leaves, setLeaves] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [showLeaveForm, setShowLeaveForm] = useState(false);
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -43,25 +44,34 @@ export default function HrHub({ profile, embedded = false } = {}) {
 
   const load = useCallback(async () => {
     setLoading(true);
-    const user = await base44.auth.me().catch(() => null);
-    setMe(user);
-    const scoped = !!user && !MANAGER_ROLES.includes(user.role);
-    const leaveQuery = profile ? { staff_name: profile.full_name } : scoped ? { created_by_id: user.id } : {};
-    const personalReviews = !!profile || scoped;
-    const [l, r, pendingCount, approvedCount, reviewStats] = await Promise.all([
-      base44.entities.LeaveRequest.filter(leaveQuery, { sort: '-created_date', limit: 100 }),
-      personalReviews ? base44.functions.invoke('hrPaperwork', { action: 'list', kind: 'review', ...(profile?.id ? { staff_profile_id: profile.id } : {}) }).then((res) => res.data) : base44.entities.PerformanceReview.filter({}, { sort: '-review_date', limit: 100 }),
-      base44.entities.LeaveRequest.count({ ...leaveQuery, status: 'Pending' }),
-      base44.entities.LeaveRequest.count({ ...leaveQuery, status: 'Approved', end_date: { $gte: today() } }),
-      personalReviews ? Promise.resolve(null) : base44.entities.PerformanceReview.aggregate({ groupBy: 'status' }),
-    ]);
-    setLeaves(l.items || []);
-    setReviews(r.items || []);
-    setLeavePage(l);
-    setReviewPage(r);
-    const rows = r.status_counts || reviewStats?.rows || [];
-    setSummary({ pending: pendingCount, approved: approvedCount, scheduled: rows.find((row) => row.status === 'Scheduled')?.count || 0, completed: rows.find((row) => row.status === 'Completed')?.count || 0 });
-    setLoading(false);
+    setLoadError(false);
+    try {
+      const user = await base44.auth.me();
+      if (!user) throw new Error('Sign-in is required to load HR records.');
+      setMe(user);
+      const scoped = !MANAGER_ROLES.includes(user.role);
+      const leaveQuery = profile ? { staff_name: profile.full_name } : scoped ? { created_by_id: user.id } : {};
+      const personalReviews = !!profile || scoped;
+      const [leaveRows, reviewsResult, pendingCount, approvedCount, reviewStats] = await Promise.all([
+        fetchAllRecords(base44.entities.LeaveRequest, leaveQuery, '-created_date'),
+        personalReviews ? base44.functions.invoke('hrPaperwork', { action: 'list', kind: 'review', ...(profile?.id ? { staff_profile_id: profile.id } : {}) }).then((res) => res.data) : fetchAllRecords(base44.entities.PerformanceReview, {}, '-review_date'),
+        base44.entities.LeaveRequest.count({ ...leaveQuery, status: 'Pending' }),
+        base44.entities.LeaveRequest.count({ ...leaveQuery, status: 'Approved', end_date: { $gte: today() } }),
+        personalReviews ? Promise.resolve(null) : base44.entities.PerformanceReview.aggregate({ groupBy: 'status' }),
+      ]);
+      const reviewRows = reviewsResult.items || [];
+      setLeaves(leaveRows);
+      setReviews(reviewRows);
+      setLeavePage({ has_more: false });
+      setReviewPage({ ...reviewsResult, has_more: false });
+      const rows = reviewsResult.status_counts || reviewStats?.rows || [];
+      setSummary({ pending: pendingCount, approved: approvedCount, scheduled: rows.find((row) => row.status === 'Scheduled')?.count || reviewRows.filter((row) => row.status === 'Scheduled').length, completed: rows.find((row) => row.status === 'Completed')?.count || reviewRows.filter((row) => row.status === 'Completed').length });
+    } catch (error) {
+      console.error(error);
+      setLoadError(true);
+    } finally {
+      setLoading(false);
+    }
   }, [profile?.id, profile?.full_name]);
 
   useEffect(() => { load(); }, [load]);
