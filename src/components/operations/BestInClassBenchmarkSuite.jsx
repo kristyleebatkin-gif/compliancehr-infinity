@@ -98,7 +98,7 @@ export default function BestInClassBenchmarkSuite({ onRefresh }) {
   const selectedLevelObj = SCHADS_LEVELS.find((l) => l.code === schadsLevel) || SCHADS_LEVELS[0];
   const selectedPenaltyObj = SHIFT_PENALTIES.find((p) => p.id === penaltyType) || SHIFT_PENALTIES[0];
   const effectiveMultiplier = selectedPenaltyObj.multiplier + (casualLoading ? 0.25 : 0);
-  const hourlyWageCost = selectedLevelObj.baseRate * effectiveMultiplier * 1.115; // incl 11.5% Superannuation
+  const hourlyWageCost = selectedLevelObj.baseRate * effectiveMultiplier * 1.12; // incl 11.5% Superannuation
   const totalShiftWage = hourlyWageCost * Number(shiftHours || 0);
   const totalNdisClaim = Number(ndisBillRate || 0) * Number(shiftHours || 0);
   const marginPct = totalNdisClaim > 0 ? Math.round(((totalNdisClaim - totalShiftWage) / totalNdisClaim) * 100) : 0;
@@ -514,7 +514,7 @@ export default function BestInClassBenchmarkSuite({ onRefresh }) {
                 2. SCHADS Award Labour Cost &amp; NDIS Margin Forecaster
               </h3>
               <p className="text-[7.5px] font-semibold text-purple-800">
-                Single-source SCHADS penalty multipliers (Sat 1.5x, Sun 2.0x, PH 2.5x, Evening 1.25x, Casual +25%, Super 11.5%)
+                Single-source SCHADS penalty multipliers (Sat 1.5x, Sun 2.0x, PH 2.5x, Evening 1.25x, Casual +25%, Super 12%)
               </p>
             </div>
             <Badge className="bg-[#5A00D6] text-white text-[7.5px]">Lumary / Deputy Standard</Badge>
