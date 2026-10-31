@@ -1,0 +1,114 @@
+{
+  "name": "Tenant",
+  "type": "object",
+  "properties": {
+    "tenant_key": {
+      "type": "string",
+      "title": "Tenant Key",
+      "description": "Stable unique identifier used for tenant routing and migration."
+    },
+    "legal_name": {
+      "type": "string",
+      "title": "Legal Name"
+    },
+    "trading_name": {
+      "type": "string",
+      "title": "Trading Name"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Provisioning",
+        "Active",
+        "Suspended",
+        "Archived"
+      ],
+      "default": "Provisioning"
+    },
+    "primary_domain": {
+      "type": "string",
+      "title": "Primary Domain"
+    },
+    "logo_url": {
+      "type": "string",
+      "title": "Logo URL"
+    },
+    "brand_primary_color": {
+      "type": "string",
+      "title": "Primary Brand Colour"
+    },
+    "brand_secondary_color": {
+      "type": "string",
+      "title": "Secondary Brand Colour"
+    },
+    "timezone": {
+      "type": "string",
+      "title": "Timezone",
+      "default": "Australia/Brisbane"
+    },
+    "default_locale": {
+      "type": "string",
+      "title": "Default Locale",
+      "default": "en-AU"
+    },
+    "provisioning_notes": {
+      "type": "string",
+      "title": "Provisioning Notes"
+    }
+  },
+  "required": [
+    "tenant_key",
+    "legal_name",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Provider Administrator"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
