@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
 import { changeStatus } from '@/lib/statusLog';
+import { fetchAllRecords } from '@/lib/csvExport';
 import { buildReferralDocument, downloadReferralDocument } from '@/lib/referralPdf';
 import { Download, Send, UploadCloud, FileText, Pencil, Trash2, Loader2, Eye } from 'lucide-react';
 import ReferralSendDialog from './ReferralSendDialog';
@@ -23,15 +24,20 @@ export default function ReferralLog({ onEdit }) {
   const { toast } = useToast();
   const [referrals, setReferrals] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [sending, setSending] = useState(null);
   const [viewing, setViewing] = useState(null);
   const [storingId, setStoringId] = useState(null);
 
   const load = useCallback(async () => {
     setLoading(true);
+    setLoadError(false);
     try {
-      const page = await base44.entities.Referral.filter({}, { sort: '-created_date', limit: 100 });
-      setReferrals(page.items);
+      const rows = await fetchAllRecords(base44.entities.Referral, {}, '-created_date');
+      setReferrals(rows);
+    } catch (error) {
+      console.error(error);
+      setLoadError(true);
     } finally {
       setLoading(false);
     }
@@ -79,6 +85,10 @@ export default function ReferralLog({ onEdit }) {
 
   if (loading) {
     return <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>;
+  }
+
+  if (loadError) {
+    return <div role="alert" className="flex items-center justify-between gap-3 rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">Referral register unavailable; records could not be confirmed.<Button size="sm" variant="outline" onClick={load}>Retry</Button></div>;
   }
 
   return (
