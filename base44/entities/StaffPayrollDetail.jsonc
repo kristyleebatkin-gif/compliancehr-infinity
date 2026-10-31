@@ -63,7 +63,7 @@
     "super_rate": {
       "type": "number",
       "title": "Super Rate (%)",
-      "default": 11.5
+      "default": 12
     },
     "tfn_number": {
       "type": "string",
