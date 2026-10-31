@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Link } from 'react-router-dom';
 import { Loader2, Users, Heart, ClipboardCheck, Building2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { fetchAllRecords } from '@/lib/csvExport';
 
-const pageOf = async (entity, sort, limit = 50) => {
-  const page = await base44.entities[entity].filter({}, { sort, limit });
-  return page.items || [];
-};
+const pageOf = (entity, sort) => fetchAllRecords(base44.entities[entity], {}, sort);
 
-const countOf = (entity, query) => base44.entities[entity].count(query).catch(() => 0);
+const countOf = (entity, query) => base44.entities[entity].count(query);
 
 function AckCard({ icon: Icon, title, total, blurb, link, linkLabel, rows }) {
   return (
@@ -44,29 +43,32 @@ function AckCard({ icon: Icon, title, total, blurb, link, linkLabel, rows }) {
 
 export default function AcknowledgementCentre() {
   const [data, setData] = useState(null);
-
-  useEffect(() => {
-    let active = true;
-    Promise.all([
-      pageOf('PolicyAcknowledgement', '-acknowledged_date'),
-      pageOf('DocumentAcknowledgement', '-acknowledged_at'),
-      pageOf('InformationSharingConsent', '-updated_date'),
-      countOf('ParticipantProfile', { audit_consent: 'Audit consent received' }),
-      countOf('Policy', { category: 'Governance' }),
-      countOf('PolicyAcknowledgement', {}),
-    ])
-      .then(([policyAcks, docAcks, consents, auditConsent, declarations, staffAckCount]) => {
-        if (!active) return;
-        setData({ policyAcks, docAcks, consents, auditConsent, declarations, staffAckCount });
-      })
-      .catch(() => {
-        if (active) setData({ policyAcks: [], docAcks: [], consents: [], auditConsent: 0, declarations: 0, staffAckCount: 0 });
-      });
-    return () => { active = false; };
+  const [loadError, setLoadError] = useState(false);
+  const load = useCallback(async () => {
+    setData(null);
+    setLoadError(false);
+    try {
+      const [policyAcks, docAcks, consents, auditConsent, declarations, staffAckCount] = await Promise.all([
+        pageOf('PolicyAcknowledgement', '-acknowledged_date'),
+        pageOf('DocumentAcknowledgement', '-acknowledged_at'),
+        pageOf('InformationSharingConsent', '-updated_date'),
+        countOf('ParticipantProfile', { audit_consent: 'Audit consent received' }),
+        countOf('Policy', { category: 'Governance' }),
+        countOf('PolicyAcknowledgement', {}),
+      ]);
+      setData({ policyAcks, docAcks, consents, auditConsent, declarations, staffAckCount });
+    } catch (error) {
+      console.error(error);
+      setLoadError(true);
+    }
   }, []);
 
+  useEffect(() => { load(); }, [load]);
+
   if (data === null) {
-    return <div className="flex justify-center py-12"><Loader2 className="h-6 w-6 animate-spin text-primary" /></div>;
+    return loadError
+      ? <div role="alert" className="flex items-center justify-between gap-3 rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">Acknowledgement records could not be confirmed.<Button size="sm" variant="outline" onClick={load}>Retry</Button></div>
+      : <div className="flex justify-center py-12"><Loader2 className="h-6 w-6 animate-spin text-primary" /></div>;
   }
 
   const staffDocs = data.docAcks.filter((row) => ['Employee', 'Administration', 'Support Worker'].includes(row.acknowledged_by_role));
