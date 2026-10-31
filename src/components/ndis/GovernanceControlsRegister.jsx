@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Loader2, Scale } from 'lucide-react';
 import { statusTone } from '@/lib/statusStyles';
+import { fetchAllRecords } from '@/lib/csvExport';
 
 const TEST_TONE = {
   'Effective': 'bg-emerald-500/10 text-emerald-600',
@@ -17,8 +18,8 @@ export default function GovernanceControlsRegister() {
 
   useEffect(() => {
     let live = true;
-    base44.entities.GovernanceControlRecord.filter({}, { sort: '-created_date', limit: 100 })
-      .then((page) => { if (live) setItems(page.items || []); })
+    fetchAllRecords(base44.entities.GovernanceControlRecord, {}, '-created_date')
+      .then((rows) => { if (live) setItems(rows); })
       .catch(() => { if (live) setItems([]); });
     return () => { live = false; };
   }, []);
