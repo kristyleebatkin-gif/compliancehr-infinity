@@ -122,7 +122,7 @@ export default function Training({ profile, embedded = false } = {}) {
         <button onClick={() => setProgressOpen((v) => !v)} className="flex w-full items-center justify-between gap-2 px-4 py-3">
           <span className="flex items-center gap-2 text-sm font-bold font-display text-foreground">
             <TrendingUp className="h-4 w-4 text-brand" />Your progress
-            <span className="text-xs font-medium text-foreground/50">· {stats.completed} of {stats.total} modules completed</span>
+            <span className="text-xs font-medium text-foreground/50">· {loadError ? 'Progress unavailable' : stats.completed + ' of ' + stats.total + ' modules completed'}</span>
           </span>
           <span className="text-xs font-semibold text-brand">{progressOpen ? 'Minimise' : 'Expand'}</span>
         </button>
@@ -130,14 +130,14 @@ export default function Training({ profile, embedded = false } = {}) {
           <div className="border-t border-border/60 p-4">
             <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
               <div className="flex shrink-0 items-center justify-center">
-                <ScoreRing value={progressPct} size={120} label="complete" />
+                {loadError ? <div className="flex h-[120px] w-[120px] items-center justify-center rounded-full border text-center text-xs text-muted-foreground">Unavailable</div> : <ScoreRing value={progressPct} size={120} label="complete" />
               </div>
               <div className="grid flex-1 grid-cols-2 gap-3 sm:grid-cols-4">
-                <Stat icon={CheckCircle2} label="Current" value={stats.current} tone="safe" />
-                <Stat icon={Clock} label="Expiring soon" value={stats.expiring} tone="warning" />
-                <Stat icon={AlertTriangle} label="Expired" value={stats.expired} tone="danger" />
-                <Stat icon={Clock} label="Expiry unconfirmed" value={stats.validityUnconfirmed} tone="warning" />
-                <Stat icon={BookOpen} label="Not started" value={stats.notStarted} tone="muted" />
+                <Stat icon={CheckCircle2} label="Current" value={loadError ? '—' : stats.current} tone="safe" />
+                <Stat icon={Clock} label="Expiring soon" value={loadError ? '—' : stats.expiring} tone="warning" />
+                <Stat icon={AlertTriangle} label="Expired" value={loadError ? '—' : stats.expired} tone="danger" />
+                <Stat icon={Clock} label="Expiry unconfirmed" value={loadError ? '—' : stats.validityUnconfirmed} tone="warning" />
+                <Stat icon={BookOpen} label="Not started" value={loadError ? '—' : stats.notStarted} tone="muted" />
               </div>
             </div>
           </div>
