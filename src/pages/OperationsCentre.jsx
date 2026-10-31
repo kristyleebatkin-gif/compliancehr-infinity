@@ -9,6 +9,7 @@ import UniversalUserSuccessEvidenceFirstSuite from '@/components/operations/Univ
 import AutomaticTaskCompletionEvidenceClosureEngine from '@/components/operations/AutomaticTaskCompletionEvidenceClosureEngine';
 import UniversalRegisterManagementHubSuite from '@/components/operations/UniversalRegisterManagementHubSuite';
 import OrganisationalOperatingSystemCommand from '@/components/enterprise/OrganisationalOperatingSystemCommand';
+import OrganisationHealthScoreFramework from '@/components/enterprise/OrganisationHealthScoreFramework';
 import Universal360ProfileFramework from '@/components/enterprise/Universal360ProfileFramework';
 import LivingOrganisationalEcosystemSuite from '@/components/enterprise/LivingOrganisationalEcosystemSuite';
 import { Cpu, Users, Zap, ShieldCheck, FolderOpen, Layers } from 'lucide-react';
@@ -59,6 +60,7 @@ export default function OperationsCentre() {
 
       {show('executive-os') && (
         <div className="space-y-4">
+          <OrganisationHealthScoreFramework />
           <OrganisationalOperatingSystemCommand />
           <details className="rounded-xl border border-slate-200 bg-white px-4 py-3">
             <summary className="cursor-pointer text-sm font-semibold text-[#0A2B6D]">Organisation ecosystem tools</summary>

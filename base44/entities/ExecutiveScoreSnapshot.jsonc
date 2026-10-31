@@ -1,0 +1,47 @@
+{
+  "name": "ExecutiveScoreSnapshot",
+  "type": "object",
+  "properties": {
+    "snapshot_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Snapshot Date"
+    },
+    "organisation_health_score": {
+      "type": "number",
+      "title": "Organisation Health Score (%)"
+    },
+    "compliance_score": {
+      "type": "number",
+      "title": "Compliance Score (%)"
+    },
+    "workforce_score": {
+      "type": "number",
+      "title": "Workforce Score (%)"
+    },
+    "risk_score": {
+      "type": "number",
+      "title": "Risk Score (%)"
+    },
+    "quality_score": {
+      "type": "number",
+      "title": "Quality Score (%)"
+    },
+    "metrics_summary_json": {
+      "type": "string",
+      "title": "Contributing Metrics Summary (JSON)"
+    },
+    "recorded_by": {
+      "type": "string",
+      "title": "Recorded By"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Snapshot Notes"
+    }
+  },
+  "required": [
+    "snapshot_date",
+    "organisation_health_score"
+  ]
+}

@@ -25,6 +25,7 @@ import ExecutiveWallScene from '@/components/safe/ExecutiveWallScene';
 
 import Universal360ProfileFramework from '@/components/enterprise/Universal360ProfileFramework';
 import OrganisationalOperatingSystemCommand from '@/components/enterprise/OrganisationalOperatingSystemCommand';
+import OrganisationHealthScoreFramework from '@/components/enterprise/OrganisationHealthScoreFramework';
 
 import {
   Activity, ShieldCheck, Zap, LayoutGrid, Layers, Building2, Cpu, Users,
@@ -120,7 +121,12 @@ export default function Dashboard() {
         })}
       </nav>
 
-      {isSuiteVisible('os-command') && <OrganisationalOperatingSystemCommand />}
+      {isSuiteVisible('os-command') && (
+        <div className="space-y-5">
+          <OrganisationHealthScoreFramework />
+          <OrganisationalOperatingSystemCommand />
+        </div>
+      )}
 
       {/* 2. Full Universal 360° Profile, 12-Step Master Workflow & 14-Point Automation Explorer */}
       {isSuiteVisible('universal-360') && (
@@ -186,6 +192,7 @@ export default function Dashboard() {
       {/* 6. NDIS & Aged Care Health & Readiness + Management Review */}
       {isSuiteVisible('health-intelligence') && (
         <div className="space-y-5">
+          <OrganisationHealthScoreFramework />
           <BusinessHealthComplianceIntelligenceDashboard />
           {role !== ROLES.PARTICIPANT && role !== ROLES.SUPPORT && <ManagementReviewReport />}
           {canAccessNav(role, 'safety-insights') && (

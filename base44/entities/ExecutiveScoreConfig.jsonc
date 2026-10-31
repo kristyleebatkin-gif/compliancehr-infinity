@@ -1,0 +1,51 @@
+{
+  "name": "ExecutiveScoreConfig",
+  "type": "object",
+  "properties": {
+    "score_key": {
+      "type": "string",
+      "enum": [
+        "organisation_health",
+        "compliance",
+        "workforce",
+        "risk",
+        "quality"
+      ],
+      "title": "Score Identifier"
+    },
+    "title": {
+      "type": "string",
+      "title": "Score Title"
+    },
+    "warning_threshold": {
+      "type": "number",
+      "default": 80,
+      "title": "Warning Threshold (%)"
+    },
+    "critical_threshold": {
+      "type": "number",
+      "default": 65,
+      "title": "Critical Threshold (%)"
+    },
+    "weights_json": {
+      "type": "string",
+      "title": "Component Weightings (JSON)"
+    },
+    "formula_description": {
+      "type": "string",
+      "title": "Formula Description"
+    },
+    "updated_by_email": {
+      "type": "string",
+      "title": "Last Updated By"
+    },
+    "change_reason": {
+      "type": "string",
+      "title": "Configuration Change Reason"
+    }
+  },
+  "required": [
+    "score_key",
+    "title"
+  ]
+}
