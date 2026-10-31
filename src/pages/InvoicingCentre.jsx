@@ -23,7 +23,7 @@ import AgedReceivables from '@/components/invoicing/AgedReceivables';
 import BankReconciliation from '@/components/invoicing/BankReconciliation';
 import FinanceSummary from '@/components/invoicing/FinanceSummary';
 import { downloadInvoicePdf, printInvoicePdf, invoicePdfBase64 } from '@/lib/invoicePdf';
-import { downloadCsv } from '@/lib/csvExport';
+import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import exportProdaClaims from '@/lib/prodaClaimExport';
 import BestInClassBenchmarkSuite from '@/components/operations/BestInClassBenchmarkSuite';
 import { Plus, Trash2, FileSpreadsheet, Printer, Send, FileDown, Loader2, BadgeCheck, AlertTriangle } from 'lucide-react';
@@ -38,6 +38,7 @@ export default function InvoicingCentre() {
   const [invoices, setInvoices] = useState([]);
   const [business, setBusiness] = useState({});
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [builderOpen, setBuilderOpen] = useState(false);
   const [preview, setPreview] = useState(null);
   const [sendTarget, setSendTarget] = useState(null);
@@ -46,14 +47,18 @@ export default function InvoicingCentre() {
 
   const load = useCallback(async () => {
     setLoading(true);
+    setLoadError(false);
     try {
-      const [page, bizPage] = await Promise.all([
-        base44.entities.Invoice.filter({}, { sort: '-created_date', limit: 100 }),
+      const [invoiceRows, bizPage] = await Promise.all([
+        fetchAllRecords(base44.entities.Invoice, {}, '-created_date'),
         base44.entities.BusinessDetails.list({ sort: '-created_date', limit: 1 }),
         loadCompanyBranding(),
       ]);
-      setInvoices(page.items);
-      setBusiness(bizPage.items[0] || {});
+      setInvoices(invoiceRows);
+      setBusiness(bizPage.items?.[0] || {});
+    } catch (error) {
+      console.error(error);
+      setLoadError(true);
     } finally {
       setLoading(false);
     }
@@ -160,10 +165,11 @@ export default function InvoicingCentre() {
           ].map(([label, value]) => (
             <div key={label}>
               <p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p>
-              <p className="mt-1 text-2xl font-bold tabular-nums">{loading ? '…' : value}</p>
+              <p className="mt-1 text-2xl font-bold tabular-nums">{loading ? '…' : loadError ? '—' : value}</p>
             </div>
           ))}
         >
+          {loadError && <div role="alert" className="flex items-center justify-between gap-3 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">Invoice records could not be confirmed; totals and lists are unavailable.<Button size="sm" variant="outline" onClick={load}>Retry</Button></div>}
           <AgedReceivables invoices={invoices} onChanged={load} />
 
           {!business.business_name && !loading && (
@@ -174,6 +180,8 @@ export default function InvoicingCentre() {
 
           {loading ? (
             <div className="flex justify-center py-16"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
+          ) : loadError ? (
+            <Card><CardContent className="p-8 text-center text-sm text-amber-900">Invoice register unavailable.</CardContent></Card>
           ) : invoices.length === 0 ? (
             <Card><CardContent className="p-10 text-center text-muted-foreground">No invoices yet. Click Generate invoice to create your first NDIS invoice.</CardContent></Card>
           ) : (
