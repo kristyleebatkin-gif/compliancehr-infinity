@@ -10,10 +10,14 @@ import { format } from 'date-fns';
 export default function IssuesDashboardWidget() {
   const [stats, setStats] = useState(null);
   const [overdue, setOverdue] = useState([]);
+  const [loadError, setLoadError] = useState(false);
+  const [refresh, setRefresh] = useState(0);
   const colour = moduleKeyColour('compliance');
 
   useEffect(() => {
     let cancelled = false;
+    setStats(null);
+    setLoadError(false);
     const today = new Date().toISOString().slice(0, 10);
     Promise.all([
       base44.entities.ComplianceIssue.aggregate({ groupBy: 'status' }),
@@ -28,12 +32,12 @@ export default function IssuesDashboardWidget() {
       const get = (s) => rows.find((r) => r.status === s)?.count || 0;
       setStats({ open: get('Open'), progress: get('In Progress'), resolved: get('Resolved') + get('Closed'), overdue: overdueCount });
       setOverdue(overdueItems.items || []);
-    }).catch(() => { if (!cancelled) setStats({ open: 0, progress: 0, resolved: 0, overdue: 0 }); });
+    }).catch(() => { if (!cancelled) setLoadError(true); });
     return () => { cancelled = true; };
-  }, []);
+  }, [refresh]);
 
   if (!stats) {
-    return <div className="flex justify-center py-8"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>;
+    return loadError ? <div role="alert" className="flex items-center justify-between gap-3 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">Compliance issue counts are unavailable.<Button variant="outline" size="sm" onClick={() => setRefresh((v) => v + 1)}>Retry</Button></div> : <div className="flex justify-center py-8"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>;
   }
 
   const tiles = [

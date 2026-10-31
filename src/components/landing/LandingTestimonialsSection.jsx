@@ -10,6 +10,7 @@ const TESTIMONIALS = [
     quote:
       'Before ComplianceHR Infinity, preparing for our NDIS mid-term and renewal audits took weeks of pulling spreadsheets across HR, rostering, and clinical folders. Now our Board and Executive team have a live 98%+ readiness score every morning, and our external auditor verified our 356 checkpoints in record time.',
     metric: '100% NDIS Audit Pass · Zero Non-Conformities',
+    accent: '#0072FF',
   },
   {
     role: 'Operations Manager',
@@ -17,6 +18,7 @@ const TESTIMONIALS = [
     quote:
       'Having participant intake, 100-point worker screening, smart rostering, shift handover notes, and NDIS Price Guide invoicing inside one platform eliminated hours of duplicate admin every week. The automated roster gate alone ensures an unscreened or expired worker can never be accidentally rostered.',
     metric: '14+ Hours Saved Per Week Across Rostering & Claims',
+    accent: '#5A00D6',
   },
   {
     role: 'Compliance Manager',
@@ -24,15 +26,17 @@ const TESTIMONIALS = [
     quote:
       'The statutory 24-hour and 5-day NDIS Commission reportable incident timers, 3-part participant informed consents, and automated 90/60/30-day credential expiry alerts give us complete peace of mind. Every incident, risk assessment, and feedback entry flows straight into our Continuous Improvement Register.',
     metric: '100% On-Time Statutory Reporting & Screening SLA',
+    accent: '#FF2E9A',
   },
 ];
 
 export default function LandingTestimonialsSection() {
   return (
     <section id="testimonials" className="w-full scroll-mt-20">
-      <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 lg:p-10 shadow-sm space-y-7">
+      <div className="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-8 lg:p-10 shadow-lg space-y-7">
         <LandingSectionHeader
           badge="Trusted by NDIS & Aged Care Support Leaders"
+          tone="pink"
           icon={MessageSquareQuote}
           title="Built for Leadership, Operations & Compliance Teams"
           description="See how executive leaders and compliance managers use ComplianceHR Infinity to protect participants and pass NDIS audits with confidence."
@@ -43,32 +47,40 @@ export default function LandingTestimonialsSection() {
             <Reveal
               key={item.role}
               delay={idx * 0.08}
-              className="flex h-full flex-col justify-between rounded-2xl border border-slate-200 bg-slate-50/50 p-6 text-left transition-all hover:-translate-y-0.5 hover:border-indigo-300 hover:bg-white hover:shadow-md"
+              className="flex h-full flex-col justify-between rounded-3xl p-[2.5px] shadow-md transition-all hover:-translate-y-0.5 hover:shadow-xl"
+              style={{
+                background: 'linear-gradient(120deg, #0072FF 0%, #5A00D6 52%, #FF2E9A 100%)',
+              }}
             >
-              <div>
-                <div className="flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-1 text-indigo-600" aria-label="5 out of 5 stars">
-                    {[0, 1, 2, 3, 4].map((s) => (
-                      <Star key={s} className="h-4 w-4 fill-indigo-600 text-indigo-600" />
-                    ))}
+              <div className="flex h-full flex-col justify-between rounded-[21px] bg-white p-6 text-left">
+                <div>
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-1 text-amber-400" aria-label="5 out of 5 stars">
+                      {[0, 1, 2, 3, 4].map((s) => (
+                        <Star key={s} className="h-4 w-4 fill-amber-400 text-amber-400" />
+                      ))}
+                    </div>
+                    <Quote className="h-6 w-6 text-[#5A00D6]/30" />
                   </div>
-                  <Quote className="h-6 w-6 text-indigo-200" />
+
+                  <p className="mt-4 text-xs sm:text-sm font-medium leading-relaxed text-[#0A2B6D]">
+                    &ldquo;{item.quote}&rdquo;
+                  </p>
                 </div>
 
-                <p className="mt-4 text-xs sm:text-sm font-medium leading-relaxed text-slate-700">
-                  &ldquo;{item.quote}&rdquo;
-                </p>
-              </div>
-
-              <div className="mt-5 border-t border-slate-200/80 pt-4">
-                <div className="inline-flex items-center rounded-full bg-indigo-50 px-3 py-1 text-[11px] font-bold text-indigo-700">
-                  {item.metric}
-                </div>
-                <div className="mt-2.5 text-base font-bold text-slate-900">
-                  {item.role}
-                </div>
-                <div className="text-xs font-medium text-slate-500">
-                  {item.org}
+                <div className="mt-5 border-t border-slate-100 pt-4">
+                  <div
+                    className="inline-flex items-center rounded-full px-3 py-1 text-[11px] font-extrabold text-white"
+                    style={{ backgroundColor: item.accent }}
+                  >
+                    {item.metric}
+                  </div>
+                  <div className="mt-2.5 font-editorial text-lg font-extrabold text-[#0A2B6D]">
+                    {item.role}
+                  </div>
+                  <div className="text-xs font-semibold text-[#0A2B6D]/70">
+                    {item.org}
+                  </div>
                 </div>
               </div>
             </Reveal>
