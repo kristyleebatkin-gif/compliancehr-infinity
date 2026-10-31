@@ -140,7 +140,7 @@ const PROMPT_ARCHITECTURES = [
 const MASTER_AUDIT_SECTIONS = {
   gaps: [
     { area: 'Executive Scoring Persistence', gap: 'Previously displayed static or unassessed placeholders without stored weightings or historical trend snapshots.', resolution: 'CLOSED — Added ExecutiveScoreConfig & ExecutiveScoreSnapshot entities + live calculation engine.' },
-    { area: 'Multi-Tenant Organisation ID Isolation', gap: 'Single-instance deployment scopes by site/department/role rather than hard tenant_id foreign keys on every table.', resolution: 'BACKLOG (Sprint 2) — Add organisation_id tenant key + RLS tenant condition for multi-organisation SaaS hosting.' },
+    { area: 'Multi-Tenant Organisation ID Isolation', gap: 'Tenant and TenantMembership schemas exist, but there are no tenant records or membership records; core entities and branding remain unscoped.', resolution: 'IN PROGRESS — Foundation schemas only. Before activation, duplicate the app, map the existing provider, plan a complete record backfill, add server-side tenant context and RLS/query filters, then verify cross-tenant denial and rollback.' },
     { area: 'Guardian / Family Dedicated Sub-Role', gap: 'Participants have a dedicated role; Guardians/Nominees currently share Participant portal access via InformationSharingConsent.', resolution: 'BACKLOG (Sprint 2) — Add Guardian/Nominee role view filtered by authorised InformationSharingConsent records.' },
     { area: 'BCP / DR System Recovery RTO/RPO Register', gap: 'Emergency drills and site evacuation are live; IT system RTO/RPO recovery testing register can be expanded.', resolution: 'BACKLOG (Sprint 3) — Add ContinuitySystemTest register view under Emergency & Governance.' },
   ],
