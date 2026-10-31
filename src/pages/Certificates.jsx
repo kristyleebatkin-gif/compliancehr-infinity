@@ -128,7 +128,7 @@ export default function Certificates() {
                 <Sparkles className="mr-1.5 h-3.5 w-3.5" /> All Displayed Together
               </TabsTrigger>
               <TabsTrigger value="certificates" className="border border-[#0A2B6D]/40 font-extrabold">
-                <Award className="mr-1.5 h-3.5 w-3.5" /> My Certificates ({items.length})
+                <Award className="mr-1.5 h-3.5 w-3.5" /> My Certificates ({loading ? '…' : loadError ? '—' : items.length})
               </TabsTrigger>
               <TabsTrigger value="recognition" className="border border-[#0A2B6D]/40 font-extrabold">
                 <Trophy className="mr-1.5 h-3.5 w-3.5" /> Recognition &amp; Leaderboard
@@ -155,13 +155,13 @@ export default function Certificates() {
           }
           small={[
             ['My Certificates', items.length],
-            ['Current & Valid', items.filter((c) => c.status === 'Current').length],
+            ['Marked Current', items.filter((c) => c.status === 'Current').length],
             ['Staff Journeys', staffProfiles.length],
             ['Participant Journeys', participantProfiles.length],
           ].map(([label, value]) => (
             <div key={label} className="border-2 border-[#0A2B6D] bg-white">
               <p className="text-[10px] font-extrabold uppercase tracking-wide text-[#5A00D6]">{label}</p>
-              <p className="mt-1 text-2xl font-extrabold tabular-nums text-[#0A2B6D]">{loading ? '…' : value}</p>
+              <p className="mt-1 text-2xl font-extrabold tabular-nums text-[#0A2B6D]">{loading ? '…' : loadError ? '—' : value}</p>
             </div>
           ))}
         />
