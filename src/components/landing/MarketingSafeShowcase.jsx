@@ -186,7 +186,7 @@ export default function MarketingSafeShowcase({ embedded = false }) {
                 reasons: [
                   {
                     title: '46 Live Modules in One Subscription',
-                    sub: '100% Connected Super-Platform · From $760 per month',
+                    sub: '100% Connected Super-Platform · From $760 per a month',
                     detail: 'Replaces 8 separate HR, Roster, CRM, LMS, Risk, Finance & Audit subscriptions.',
                     points: [
                       'Saves $1,400+ per month vs separate tools',

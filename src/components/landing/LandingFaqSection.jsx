@@ -55,79 +55,56 @@ const FAQS = [
 ];
 
 export default function LandingFaqSection() {
-  // All 8 FAQ items start open so every question displays its written answer immediately, while remaining interactive
-  const [openItems, setOpenItems] = useState(() => FAQS.map((_, idx) => idx));
-
-  const toggleItem = (idx) => {
-    setOpenItems((prev) =>
-      prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]
-    );
-  };
-
-  const allOpen = openItems.length === FAQS.length;
+  const [openIndex, setOpenIndex] = useState(0);
 
   return (
     <section id="faq" className="w-full scroll-mt-20">
-      <Reveal className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 lg:p-10 shadow-sm space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div className="flex-1">
-            <LandingSectionHeader
-              badge="Frequently Asked Questions"
-              tone="indigo"
-              icon={HelpCircle}
-              title="Answers to Key Questions"
-              description="Everything you need to know about NDIS & Aged Care compliance and security, from implementation to day-to-day operations."
-            />
-          </div>
-          <button
-            type="button"
-            onClick={() =>
-              setOpenItems(allOpen ? [] : FAQS.map((_, idx) => idx))
-            }
-            className="self-start sm:self-end shrink-0 rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-50 hover:text-indigo-600"
-          >
-            {allOpen ? 'Collapse All' : 'Expand All'}
-          </button>
-        </div>
+      <Reveal className="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-8 lg:p-10 shadow-lg space-y-7">
+        <LandingSectionHeader
+          badge="Frequently Asked Questions"
+          tone="blue"
+          icon={HelpCircle}
+          title="Answers to Key Questions"
+          description="Everything you need to know about NDIS & Aged Care compliance and security, from implementation to day-to-day operations."
+        />
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 items-start">
           {FAQS.map((faq, idx) => {
-            const isOpen = openItems.includes(idx);
+            const isOpen = openIndex === idx;
             return (
               <div
                 key={faq.topic}
                 className={`rounded-2xl border transition-all ${
                   isOpen
-                    ? 'border-indigo-200 bg-slate-50/70 shadow-xs'
-                    : 'border-slate-200 bg-white hover:border-indigo-200'
+                    ? 'border-[#5A00D6] bg-slate-50/60 shadow-md'
+                    : 'border-slate-200 bg-white hover:border-[#0072FF]/40'
                 }`}
               >
                 <button
                   type="button"
-                  onClick={() => toggleItem(idx)}
+                  onClick={() => setOpenIndex(isOpen ? -1 : idx)}
                   aria-expanded={isOpen}
                   className="flex w-full items-start justify-between gap-3 p-5 text-left"
                 >
                   <div>
-                    <span className="inline-block rounded-full bg-indigo-50 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider text-indigo-600">
+                    <span className="inline-block rounded-full bg-[#0072FF]/10 px-2.5 py-0.5 text-[11px] font-extrabold uppercase tracking-wider text-[#0072FF]">
                       {faq.topic}
                     </span>
-                    <h3 className="mt-2 text-base font-bold text-slate-900">
+                    <h3 className="mt-2 text-base font-extrabold text-[#0A2B6D]">
                       {faq.question}
                     </h3>
                   </div>
                   <ChevronDown
-                    className={`mt-1 h-5 w-5 shrink-0 text-indigo-600 transition-transform ${
+                    className={`mt-1 h-5 w-5 shrink-0 text-[#5A00D6] transition-transform ${
                       isOpen ? 'rotate-180' : ''
                     }`}
                   />
                 </button>
-                <div
-                  hidden={!isOpen}
-                  className="border-t border-slate-200/80 px-5 pb-5 pt-3 text-left text-sm leading-relaxed text-slate-600"
-                >
-                  <p>{faq.answer}</p>
-                </div>
+                {isOpen && (
+                  <div className="border-t border-slate-200/70 px-5 pb-5 pt-3 text-left text-sm leading-relaxed text-[#0A2B6D]/80">
+                    {faq.answer}
+                  </div>
+                )}
               </div>
             );
           })}

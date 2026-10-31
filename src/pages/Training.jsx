@@ -31,8 +31,9 @@ function statusFor(title, completions) {
   const latest = recs.sort((a, b) => (b.completed_date || '').localeCompare(a.completed_date || ''))[0];
   const today = new Date();
   const exp = latest.expiry_date ? new Date(latest.expiry_date) : null;
-  if (exp && exp < today) return { status: 'Expired', completion: latest };
-  if (exp && (exp - today) / 86400000 <= 30) return { status: 'Expiring Soon', completion: latest };
+  if (!exp) return { status: 'Validity Unconfirmed', completion: latest };
+  if (exp < today) return { status: 'Expired', completion: latest };
+  if ((exp - today) / 86400000 <= 30) return { status: 'Expiring Soon', completion: latest };
   return { status: 'Current', completion: latest };
 }
 
@@ -54,17 +55,11 @@ export default function Training({ profile, embedded = false } = {}) {
   const load = async () => {
     setLoading(true); setLoadError('');
     try {
-      const allPage = employee ? (await base44.functions.invoke('employeePersonalRecords', { action: 'list', view: 'training' })).data : await base44.entities.TrainingCompletion.filter(
-        completionQuery,
-        { sort: '-completed_date', limit: 200, fields: ['learner_name', 'learner_type', 'module_title', 'completed_date', 'expiry_date', 'score', 'status'] },
-      );
+      const allPage = employee ? (await base44.functions.invoke('employeePersonalRecords', { action: 'list', view: 'training' })).data : { items: await fetchAllRecords(base44.entities.TrainingCompletion, completionQuery, '-completed_date') };
       setAllCompletions(allPage.items || []);
       const identity = user?.id || '';
       const name = user?.full_name || '';
-      const minePage = employee ? allPage : await base44.entities.TrainingCompletion.filter(
-        profile ? completionQuery : { $or: [{ learner_id: identity }, { created_by_id: identity }, ...(name ? [{ employee_name: name }] : [])] },
-        { sort: '-completed_date', limit: 200 },
-      );
+      const minePage = employee ? allPage : { items: await fetchAllRecords(base44.entities.TrainingCompletion, profile ? completionQuery : { $or: [{ learner_id: identity }, { created_by_id: identity }, ...(name ? [{ employee_name: name }] : [])] }, '-completed_date') };
       setCompletions(minePage.items || []);
     } catch (e) { setLoadError(e.response?.data?.error || e.message); }
     setLoading(false);
@@ -83,14 +78,15 @@ export default function Training({ profile, embedded = false } = {}) {
   };
 
   const stats = useMemo(() => {
-    let completed = 0, current = 0, expiring = 0, expired = 0;
+    let completed = 0, current = 0, expiring = 0, expired = 0, validityUnconfirmed = 0;
     LMS_MODULES.forEach((m) => {
       const { status } = statusFor(m.title, completions);
       if (status === 'Current') { completed++; current++; }
       else if (status === 'Expiring Soon') { completed++; expiring++; }
       else if (status === 'Expired') { completed++; expired++; }
+      else if (status === 'Validity Unconfirmed') { completed++; validityUnconfirmed++; }
     });
-    return { completed, current, expiring, expired, total: LMS_MODULES.length, notStarted: LMS_MODULES.length - completed };
+    return { completed, current, expiring, expired, validityUnconfirmed, total: LMS_MODULES.length, notStarted: LMS_MODULES.length - completed };
   }, [completions]);
 
   const progressPct = Math.round((stats.completed / stats.total) * 100);
@@ -140,6 +136,7 @@ export default function Training({ profile, embedded = false } = {}) {
                 <Stat icon={CheckCircle2} label="Current" value={stats.current} tone="safe" />
                 <Stat icon={Clock} label="Expiring soon" value={stats.expiring} tone="warning" />
                 <Stat icon={AlertTriangle} label="Expired" value={stats.expired} tone="danger" />
+                <Stat icon={Clock} label="Expiry unconfirmed" value={stats.validityUnconfirmed} tone="warning" />
                 <Stat icon={BookOpen} label="Not started" value={stats.notStarted} tone="muted" />
               </div>
             </div>
@@ -184,6 +181,8 @@ export default function Training({ profile, embedded = false } = {}) {
 
           {loading ? (
             <div className="py-12 text-center text-sm text-foreground/40">Loading curriculum...</div>
+          ) : loadError ? (
+            <div role="alert" className="rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">Training records could not be confirmed. Retry to load learner progress.</div>
           ) : (
             <div className="space-y-4">
               {Object.entries(grouped).map(([group, mods]) => {

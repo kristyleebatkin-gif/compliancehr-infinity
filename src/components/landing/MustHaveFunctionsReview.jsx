@@ -353,7 +353,7 @@ export default function MustHaveFunctionsReview() {
 
                         <div className="font-editorial text-sm sm:text-base font-extrabold leading-tight text-[#0A2B6D]">
                           <span className="block text-[#0A2B6D]">
-                            $760 per month
+                            $760 per a month
                           </span>
                           <span className="block text-[#0A2B6D]">
                             or $999 Outright Documents
@@ -361,7 +361,7 @@ export default function MustHaveFunctionsReview() {
                         </div>
 
                         <div className="text-[9px] font-extrabold text-[#0A2B6D]">
-                          or $125 per month subscription, 24 month contract
+                          or $125 per a month subscription, 24 month contract
                         </div>
 
                         <div className="w-full rounded-[6px] border border-[#0A2B6D]/25 bg-white px-2 py-0.5">

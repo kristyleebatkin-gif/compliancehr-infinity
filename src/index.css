@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Manrope:wght@400..800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -189,13 +189,19 @@
 }
 
 @layer utilities {
-  /* Single coherent type system across the entire platform */
-  .font-editorial,
-  .font-editorial-italic,
-  .font-elegant,
-  .font-heading,
-  .font-display,
-  .font-body {
+  .font-editorial {
+    font-family: "Fraunces", Georgia, "Times New Roman", serif;
+  }
+  .font-editorial-italic {
+    font-family: "Fraunces", Georgia, "Times New Roman", serif;
+    font-style: italic;
+    display: inline-block;
+    padding-right: 0.14em;
+  }
+  .font-elegant {
+    font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  }
+  .app-readable :is(.font-editorial, .font-editorial-italic, .font-elegant, .font-heading, .font-display, .font-body) {
     font-family: "Manrope", ui-sans-serif, system-ui, -apple-system, sans-serif !important;
     font-style: normal !important;
   }
