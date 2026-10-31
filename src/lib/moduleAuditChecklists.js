@@ -42,8 +42,9 @@ export function buildModuleAuditChecklist(audit) {
     ? { item: 'Current forms are available in the Forms Library', status: 'Pass', evidence: `${forms} form(s) on file (Employee: ${empForms}, Participant: ${parForms}).` }
     : { item: 'Current forms are available in the Forms Library', status: 'Attention', evidence: 'Forms Library has no entries yet.' });
 
-  // 5. Exports
-  items.push({ item: 'Register exports (CSV and branded PDF) are available for this module', status: 'Pass', evidence: 'Verified in the platform build.' });
+  // 5. Export availability is not proven by the register data gathered here.
+  // Keep this unverified until the module's CSV and branded PDF actions are exercised.
+  items.push({ item: 'Register exports (CSV and branded PDF) are available for this module', status: 'Attention', evidence: 'Export actions were not verified during this live data check.' });
 
   // 6. Prior audit evidence
   items.push((audit.priorAudits || 0) > 0
