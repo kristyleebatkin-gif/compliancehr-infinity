@@ -170,11 +170,11 @@ export default function QuoteCentre() {
       <ModuleShell title="Quote Centre" subtitle="NDIS support quotations with price guide items, business details and terms from Company Safe." icon={ClipboardList} moduleKey="quotes" insightModule="quotes" actions={<ModuleAlertsButton />} />
       {loadError && <div role="alert" className="flex items-center justify-between gap-3 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">Quote records could not be confirmed; totals and lists are unavailable.<Button size="sm" variant="outline" onClick={load}>Retry</Button></div>}
       <FinanceMetricCards entries={[
-        { label: 'Quotes', value: String(quotes.length), Icon: ClipboardList, tone: 'primary' },
-        { label: 'Quoted value', value: money(totalValue), Icon: FileText, tone: 'evidence' },
-        { label: 'Accepted', value: money(acceptedValue), Icon: BadgeCheck, tone: 'safe' },
-        { label: 'Win rate', value: winRate, Icon: TrendingUp, tone: 'pink' },
-        { label: 'Expiring soon', value: String(expiringSoon), Icon: CalendarClock, tone: 'warning' },
+        { label: 'Quotes', value: loadError ? '—' : String(quotes.length), Icon: ClipboardList, tone: 'primary' },
+        { label: 'Quoted value', value: loadError ? '—' : money(totalValue), Icon: FileText, tone: 'evidence' },
+        { label: 'Accepted', value: loadError ? '—' : money(acceptedValue), Icon: BadgeCheck, tone: 'safe' },
+        { label: 'Win rate', value: loadError ? '—' : winRate, Icon: TrendingUp, tone: 'pink' },
+        { label: 'Expiring soon', value: loadError ? '—' : String(expiringSoon), Icon: CalendarClock, tone: 'warning' },
       ]} />
 
       <div className="quote-actions flex flex-wrap items-center gap-2">
