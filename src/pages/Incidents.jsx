@@ -50,6 +50,7 @@ function Incidents({ profile, profileKind, embedded = false } = {}) {
   const [items, setItems] = useState([]);
   const [investigations, setInvestigations] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [search, setSearch] = useState('');
   const [invSearch, setInvSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState(searchParams.get('status') === 'open' ? 'Open' : 'All');
@@ -96,6 +97,7 @@ function Incidents({ profile, profileKind, embedded = false } = {}) {
 
   const load = async () => {
     setLoading(true);
+    setLoadError(false);
     try {
       const [incPage, invPage] = await Promise.all([
         base44.entities.Incident.filter(profile ? profileKind === 'participant' ? { $or: [{ participant_id: profile.id }, { participant_name: profile.full_name }] } : { $or: [{ staff_id: profile.id }, { staff_name: profile.full_name }] } : {}, { sort: '-date_occurred', limit: 500 }),
@@ -103,7 +105,7 @@ function Incidents({ profile, profileKind, embedded = false } = {}) {
       ]);
       setItems(incPage.items || []);
       setInvestigations(invPage.items || []);
-    } catch (e) { console.error(e); }
+    } catch (e) { console.error(e); setLoadError(true); }
     finally { setLoading(false); }
   };
 
@@ -328,6 +330,7 @@ function Incidents({ profile, profileKind, embedded = false } = {}) {
 
       <IncidentLog />
 
+      {loadError && <div role="alert" className="flex items-center justify-between gap-3 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">Incident and investigation data could not be confirmed; displayed totals may be incomplete.<Button size="sm" variant="outline" onClick={load}>Retry</Button></div>}
       <StatusDashboard
         title="Incident Status Dashboard"
         description="Every incident and its current status — change a status here and the register updates"
