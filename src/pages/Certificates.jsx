@@ -52,7 +52,7 @@ export default function Certificates() {
     finally { setLoading(false); }
   };
 
-  const openNew = () => { setEditing(null); setForm({ certificate_number: '', staff_id: '', staff_name: '', module_title: '', issue_date: '', expiry_date: '', score: 0, status: 'Current', issued_by: '' }); setShowForm(true); };
+  const openNew = () => { setEditing(null); setForm({ certificate_number: '', staff_id: '', staff_name: '', module_title: '', issue_date: '', expiry_date: '', score: 0, status: 'Pending Verification', issued_by: '' }); setShowForm(true); };
   const openEdit = (c) => { setEditing(c); setForm({ ...c }); setShowForm(true); };
 
   const selectStaff = (staffId) => {
