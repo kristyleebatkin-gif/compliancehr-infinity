@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Loader2, CalendarClock } from 'lucide-react';
 import { statusTone } from '@/lib/statusStyles';
+import { fetchAllRecords } from '@/lib/csvExport';
 
 const daysUntil = (date) => {
   if (!date) return null;
@@ -19,8 +20,8 @@ export default function NdisDeadlineTracker() {
 
   useEffect(() => {
     let live = true;
-    base44.entities.NDISComplianceDeadline.filter({}, { sort: 'due_date', limit: 100 })
-      .then((page) => { if (live) setItems(page.items || []); })
+    fetchAllRecords(base44.entities.NDISComplianceDeadline, {}, 'due_date')
+      .then((rows) => { if (live) setItems(rows); })
       .catch(() => { if (live) setItems([]); });
     return () => { live = false; };
   }, []);
