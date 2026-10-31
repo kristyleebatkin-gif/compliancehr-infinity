@@ -421,8 +421,8 @@ export default function WorkforcePresenceSafetyCentre() {
       host: e.host || 'Site Coordinator',
       purpose: e.purpose || 'Site Attendance',
       date: e.date || today,
-      time_in: e.time_in || '09:00',
-      time_out: e.time_out || 'Currently On Site',
+      time_in: e.time_in || '',
+      time_out: e.time_out || (['Present', 'Accounted For'].includes(e.emergency_accountability_status) ? 'On site' : 'Unconfirmed'),
       break_window: e.break_start ? `${e.break_start} - ${e.break_end || 'Active'}` : 'None',
       safety_roles: [
         e.first_aid_officer ? 'First Aid Officer' : '',
@@ -431,7 +431,7 @@ export default function WorkforcePresenceSafetyCentre() {
       ]
         .filter(Boolean)
         .join(', ') || 'Standard',
-      emergency_status: e.emergency_accountability_status || 'Present',
+      emergency_status: e.emergency_accountability_status || 'Unconfirmed',
       sign_in_method: e.sign_in_method || 'Kiosk',
       digital_signature: e.digital_signature || 'Signed',
     }));
@@ -841,7 +841,7 @@ export default function WorkforcePresenceSafetyCentre() {
                       </td>
                       <td className="p-2">
                         <div className="font-extrabold text-[#0072FF]">
-                          In: {e.time_in || '09:00'} · Out: {e.time_out || 'ON SITE'}
+                          In: {e.time_in || 'Not recorded'} · Out: {e.time_out || (['Present', 'Accounted For'].includes(e.emergency_accountability_status) ? 'On site' : 'Unconfirmed')}
                         </div>
                         <div className="text-[10px] text-muted-foreground">
                           {e.date} {e.break_start ? `· Break: ${e.break_start}-${e.break_end || 'Active'}` : ''}
@@ -929,14 +929,14 @@ export default function WorkforcePresenceSafetyCentre() {
                   >
                     <div>
                       <div className="font-extrabold text-[#0A2B6D]">
-                        {e.visitor_name} ({e.employee_id || 'EMP-VERIFIED'})
+                        {e.visitor_name} ({e.employee_id || 'Employee ID not recorded'})
                       </div>
                       <div className="text-[10px] text-muted-foreground">
-                        {e.department || 'Service Delivery'} · {e.site || 'Site not recorded'} · Manager: {e.manager || 'Sarah Jenkins'}
+                        {e.department || 'Department not recorded'} · {e.site || 'Site not recorded'} · Manager: {e.manager || 'Not recorded'}
                       </div>
                     </div>
                     <Badge className="bg-[#0A2B6D] text-white text-[10px]">
-                      {e.time_in || '09:00'} → {e.time_out || 'Active'}
+                      {e.time_in || 'Time not recorded'} → {e.time_out || (['Present', 'Accounted For'].includes(e.emergency_accountability_status) ? 'On site' : 'Status unconfirmed')}
                     </Badge>
                   </div>
                 ))}
