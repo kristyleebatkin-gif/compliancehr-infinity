@@ -63,7 +63,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
       setLeaves(leaveRows);
       setReviews(reviewRows);
       setLeavePage({ has_more: false });
-      setReviewPage({ ...reviewsResult, has_more: false });
+      setReviewPage(reviewsResult);
       const rows = reviewsResult.status_counts || reviewStats?.rows || [];
       setSummary({ pending: pendingCount, approved: approvedCount, scheduled: rows.find((row) => row.status === 'Scheduled')?.count || reviewRows.filter((row) => row.status === 'Scheduled').length, completed: rows.find((row) => row.status === 'Completed')?.count || reviewRows.filter((row) => row.status === 'Completed').length });
     } catch (error) {
@@ -188,6 +188,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
         search={<ModuleSearchBar value={query} onChange={setQuery} placeholder="Search leave, volunteering and reviews…" />}
         small={tiles}
       >
+        {loadError && <div role="alert" className="mb-3 flex items-center justify-between gap-3 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">HR records could not be confirmed; leave and review totals and lists are unavailable.<Button size="sm" variant="outline" onClick={load}>Retry</Button></div>}
         <TabsContent value="shoreline" className="mt-4">
           <ShorelineCommandCenter />
         </TabsContent>
@@ -220,7 +221,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
               </form>
             </CardContent></Card>
           )}
-          {loading ? <Card><CardContent className="p-8 text-center text-sm text-muted-foreground">Loading...</CardContent></Card> : leaves.length === 0 ? (
+          {loading ? <Card><CardContent className="p-8 text-center text-sm text-muted-foreground">Loading...</CardContent></Card> : loadError ? <Card><CardContent className="p-8 text-center text-sm text-muted-foreground">Leave register unavailable. Retry after confirming access or connectivity.</CardContent></Card> : leaves.length === 0 ? (
             <Card><CardContent className="p-8 text-center text-sm text-muted-foreground">No leave requests yet.</CardContent></Card>
           ) : (
             <div className="grid gap-3 md:grid-cols-2">
@@ -273,7 +274,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
               </form>
             </CardContent></Card>
           )}
-          {loading ? <Card><CardContent className="p-8 text-center text-sm text-muted-foreground">Loading...</CardContent></Card> : reviews.length === 0 ? (
+          {loading ? <Card><CardContent className="p-8 text-center text-sm text-muted-foreground">Loading...</CardContent></Card> : loadError ? <Card><CardContent className="p-8 text-center text-sm text-muted-foreground">Review register unavailable. Retry after confirming access or connectivity.</CardContent></Card> : reviews.length === 0 ? (
             <Card><CardContent className="p-8 text-center text-sm text-muted-foreground">No reviews scheduled yet.</CardContent></Card>
           ) : (
             <div className="grid gap-3 md:grid-cols-2">
