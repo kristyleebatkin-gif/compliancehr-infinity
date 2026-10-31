@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Briefcase, Plus, Trash2, Flame, Trophy, Bell, UserPlus } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
-import { downloadCsv } from '@/lib/csvExport';
+import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 
 const STAGES = ['New', 'Contacted', 'Proposal Sent', 'Negotiation', 'Won', 'Lost'];
 const STAGE_TONES = {
@@ -31,6 +31,7 @@ export default function CrmHub({ embedded = false } = {}) {
   const [leads, setLeads] = useState([]);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [saving, setSaving] = useState(false);
   const [allocating, setAllocating] = useState(null); // lead id with the allocate panel open
@@ -38,13 +39,20 @@ export default function CrmHub({ embedded = false } = {}) {
 
   const load = useCallback(async () => {
     setLoading(true);
-    const [page, userPage] = await Promise.all([
-      base44.entities.Lead.filter({}, { sort: '-created_date', limit: 200 }),
-      base44.entities.User.list(),
-    ]);
-    setLeads(page.items || []);
-    setUsers(userPage.items || []);
-    setLoading(false);
+    setLoadError(false);
+    try {
+      const [leadRows, userPage] = await Promise.all([
+        fetchAllRecords(base44.entities.Lead, {}, '-created_date'),
+        base44.entities.User.list(),
+      ]);
+      setLeads(leadRows);
+      setUsers(userPage.items || []);
+    } catch (error) {
+      console.error(error);
+      setLoadError(true);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => { load(); }, [load]);
@@ -148,11 +156,13 @@ export default function CrmHub({ embedded = false } = {}) {
           ['Win rate', closedCount > 0 ? `${Math.round((wonCount / closedCount) * 100)}%` : 'n/a'],
           ['Follow-ups due', followUpsDue.length],
         ].map(([label, value]) => (
-          <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{value}</p></div>
+          <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{loadError ? '—' : value}</p></div>
         ))}
       />
 
-      {followUpsDue.length > 0 && (
+      {loadError && <div role="alert" className="flex items-center justify-between gap-3 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">Lead and owner records could not be confirmed; pipeline totals and lists are unavailable.<Button size="sm" variant="outline" onClick={load}>Retry</Button></div>}
+
+      {!loadError && followUpsDue.length > 0 && (
         <Card className="border-warning/40 bg-warning/5"><CardContent className="p-4">
           <p className="flex items-center gap-2 text-sm font-bold"><Flame className="h-4 w-4 text-warning" />Follow-ups due today ({followUpsDue.length})</p>
           <div className="mt-2 flex flex-wrap gap-2">
@@ -192,6 +202,8 @@ export default function CrmHub({ embedded = false } = {}) {
 
       {loading ? (
         <Card><CardContent className="p-8 text-center text-sm text-muted-foreground">Loading pipeline...</CardContent></Card>
+      ) : loadError ? (
+        <Card><CardContent className="p-8 text-center text-sm text-muted-foreground">Lead pipeline unavailable. Retry after confirming access or connectivity.</CardContent></Card>
       ) : leads.length === 0 ? (
         <Card><CardContent className="p-8 text-center text-sm text-muted-foreground">No leads yet. Add your first enquiry to start the pipeline.</CardContent></Card>
       ) : (
