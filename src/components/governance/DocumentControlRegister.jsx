@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import DocumentControlForm from '@/components/governance/DocumentControlForm';
 import { DOCUMENT_STATUSES } from '@/lib/governanceFramework';
+import { fetchAllRecords } from '@/lib/csvExport';
 import { CheckCircle2, Copy, Loader2, Pencil, Plus } from 'lucide-react';
 
 const today = () => new Date().toISOString().slice(0, 10);
@@ -23,8 +24,8 @@ export default function DocumentControlRegister() {
 
   const load = async () => {
     const query = status === 'all' ? {} : { status };
-    const page = await base44.entities.DocumentControl.filter(query, { sort: '-updated_date', limit: 100 });
-    setItems(page.items || []);
+    const rows = await fetchAllRecords(base44.entities.DocumentControl, query, '-updated_date');
+    setItems(rows);
   };
 
   useEffect(() => {
