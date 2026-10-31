@@ -157,7 +157,7 @@ export default function StaffOnboardingTracker() {
                         <span className="font-bold tabular-nums">{r.pct == null ? '—' : `${r.pct}%`}</span>
                       </div>
                     </td>
-                    <td className="px-3 py-2 text-right font-bold tabular-nums">{r.done}/{r.total || REQUIRED_STEPS.length}</td>
+                    <td className="px-3 py-2 text-right font-bold tabular-nums">{r.total ? `${r.done}/${r.total}` : 'Pack not generated'}</td>
                     <td className="px-3 py-2 text-right font-bold tabular-nums">
                       {r.overdue > 0 ? <span className="text-red-600 dark:text-red-400">{r.overdue}</span> : <span className="text-foreground/30">0</span>}
                     </td>
