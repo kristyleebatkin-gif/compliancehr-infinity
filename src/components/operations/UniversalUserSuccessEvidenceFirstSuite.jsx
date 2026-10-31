@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { base44 } from '@/api/base44Client';
-import { useAuth } from '@/lib/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/components/ui/use-toast';
@@ -159,89 +157,36 @@ export const UNIFIED_AUDIT_7_VIEWS = [
 ];
 
 export default function UniversalUserSuccessEvidenceFirstSuite() {
-  const { user } = useAuth();
   const { toast } = useToast();
 
   const [activeTab, setActiveTab] = useState('workspaces');
   const [selectedRoleKey, setSelectedRoleKey] = useState('employee');
-  const [executingId, setExecutingId] = useState('');
-  const [lastEvidenceStamp, setLastEvidenceStamp] = useState({
-    what_occurred: 'Shift Note, Goal Update & Vehicle Pre-Trip Check Completed',
-    when_occurred: new Date().toISOString().replace('T', ' ').slice(0, 19),
-    who_completed: user?.full_name || 'Authorised Support Worker',
-    evidence_exists: 'Signed Record + Voice/Template Transcript + Vault & Safe URI',
-    standards_supported: 'NDIS Practice Standards 1, 2, 3 & 4 · Aged Care Standards 1–8 · WHS & SCHADS',
+  const [lastEvidenceStamp] = useState({
+    what_occurred: 'Not recorded',
+    when_occurred: 'Not recorded',
+    who_completed: 'Not recorded',
+    evidence_exists: 'Not recorded',
+    standards_supported: 'Not recorded',
   });
 
   const today = new Date().toISOString().slice(0, 10);
 
-  // Execute any of the 8 Speed Standard Tasks in 1 Click & Auto-Generate 5-Point Evidence Stamp
-  const handleInstantSpeedAction = async (benchmark) => {
-    setExecutingId(benchmark.id);
-    const stampTime = new Date().toISOString().replace('T', ' ').slice(0, 19);
-    const actor = user?.full_name || 'Authorised Staff';
-
-    try {
-      await Promise.all([
-        base44.entities.ChecklistDocument.create({
-          title: `[Evidence-First Rapid Action · ${benchmark.task}] Completed in ${benchmark.actual} (${today})`,
-          category: 'Evidence-First Rapid Standard',
-          status: 'Approved',
-          uploaded_by: actor,
-          uploaded_date: today,
-          notes: `1. What Occurred: ${benchmark.task} | 2. When: ${stampTime} | 3. Who: ${actor} | 4. Evidence: Verified Digital Record & Signature | 5. Standards: ${benchmark.standard}. Auto-routed to Profile, Module, Compliance, Audit, Document Hub, Vault, Executive Hub & Company Safe.`,
-        }).catch(() => null),
-        base44.functions
-          .invoke('logUserAction', {
-            action: 'Approve',
-            entity_type: 'EvidenceFirstSpeedStandard',
-            record_title: `${benchmark.task} (${benchmark.target})`,
-            details: `Completed ${benchmark.task} with automatic 5-point evidence generation.`,
-            route: window.location.pathname,
-          })
-          .catch(() => null),
-      ]);
-
-      setLastEvidenceStamp({
-        what_occurred: `${benchmark.task} (Target ${benchmark.target} · Completed in ${benchmark.actual})`,
-        when_occurred: stampTime,
-        who_completed: actor,
-        evidence_exists: `Immutable Audit Log + Document Vault Certificate + Company Safe Record`,
-        standards_supported: benchmark.standard,
-      });
-
-      toast({
-        title: `${benchmark.task} Completed (${benchmark.actual})`,
-        description:
-          '5-Point Evidence automatically created and routed to Profile, Compliance, Vault & Company Safe.',
-      });
-    } finally {
-      setExecutingId('');
-    }
+  // This overview shortcut does not complete the operational workflow or create evidence.
+  const handleInstantSpeedAction = (benchmark) => {
+    toast({
+      title: 'Workflow action not connected',
+      description: `No ${benchmark.task} action or evidence was recorded. Open the linked module to complete the real workflow.`,
+      variant: 'destructive',
+    });
   };
 
-  // Batch Manager Review Sign-Off (Reviews all 6 Team Areas from 1 Location)
-  const handleBatchManagerSignOff = async () => {
-    setExecutingId('manager_batch');
-    const actor = user?.full_name || 'Responsible Manager';
-    try {
-      await base44.entities.ChecklistDocument.create({
-        title: `[Manager Review Mode · 6-Area Batch Sign-Off] Team Notes, Risks, Goals, Shifts, Docs & Compliance (${today})`,
-        category: 'Manager Review Mode',
-        status: 'Approved',
-        uploaded_by: actor,
-        uploaded_date: today,
-        notes: `Reviewed and approved Team Notes, Team Risks, Team Goals, Team Shifts, Team Documentation & Team Compliance from single location by ${actor}.`,
-      }).catch(() => null);
-
-      toast({
-        title: 'Manager 6-Area Batch Review Approved!',
-        description:
-          'Team Notes, Risks, Goals, Shifts, Documentation & Compliance signed off and archived in Vault & Safe.',
-      });
-    } finally {
-      setExecutingId('');
-    }
+  // Batch approval is unavailable until the underlying reviews can be verified individually.
+  const handleBatchManagerSignOff = () => {
+    toast({
+      title: 'Batch sign-off not connected',
+      description: 'No approval was recorded. Review and approve each item in its owning module.',
+      variant: 'destructive',
+    });
   };
 
   // Export User Success & Evidence-First Audit Pack (PDF / Word / Excel / CSV)
@@ -250,7 +195,7 @@ export default function UniversalUserSuccessEvidenceFirstSuite() {
     const rows = activeWorkspace.items.map((it) => ({
       workspace: activeWorkspace.label,
       panel: it.title,
-      status: it.metric,
+      status: 'Not verified',
       detail: it.desc,
       what_occurred: lastEvidenceStamp.what_occurred,
       when_occurred: lastEvidenceStamp.when_occurred,
@@ -264,7 +209,7 @@ export default function UniversalUserSuccessEvidenceFirstSuite() {
       [
         { key: 'workspace', label: 'Role Workspace' },
         { key: 'panel', label: 'Workspace Panel' },
-        { key: 'status', label: 'Live Status / Metric' },
+        { key: 'status', label: 'Live Status / Metric (not verified)' },
         { key: 'detail', label: 'Operational Scope' },
         { key: 'what_occurred', label: 'Evidence: What Occurred' },
         { key: 'when_occurred', label: 'Evidence: When' },
@@ -313,12 +258,12 @@ export default function UniversalUserSuccessEvidenceFirstSuite() {
             <Button
               size="sm"
               onClick={handleBatchManagerSignOff}
-              disabled={executingId === 'manager_batch'}
+              disabled
               className="bg-white text-[#0A2B6D] font-extrabold hover:bg-slate-100"
             >
               <CheckCircle2 className="mr-1.5 h-3.5 w-3.5 text-[#5A00D6]" />
               <span style={{ color: '#0A2B6D' }}>
-                {executingId === 'manager_batch' ? 'Approving...' : '1-Click Manager 6-Area Sign-Off'}
+                Batch sign-off not connected
               </span>
             </Button>
             <Button
@@ -338,10 +283,10 @@ export default function UniversalUserSuccessEvidenceFirstSuite() {
       <div className="rounded-xl border-2 border-[#0A2B6D] bg-[#F5F0FF]/50 p-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <span className="text-[10.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-            Evidence-First Design — Every Action Automatically Demonstrates All 5 Audit Points Without Extra Work
+            Evidence-first design standard — capture these five points when a real action is completed
           </span>
           <Badge className="bg-[#0072FF] text-white text-[10px]">
-            Single Source of Truth · Zero Duplicate Entry
+            Record links and duplicate controls require validation
           </Badge>
         </div>
         <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-5">
@@ -444,12 +389,12 @@ export default function UniversalUserSuccessEvidenceFirstSuite() {
                   <div>
                     <div className="flex items-center justify-between gap-1">
                       <span className="text-xs font-extrabold text-[#0A2B6D]">{item.title}</span>
-                      <Badge className="bg-[#0A2B6D] text-white text-[9.5px]">{item.metric}</Badge>
+                      <Badge className="bg-[#0A2B6D] text-white text-[9.5px]">Not verified</Badge>
                     </div>
                     <p className="mt-1 text-[10.5px] font-medium text-[#0A2B6D]">{item.desc}</p>
                   </div>
                   <div className="mt-2 pt-1.5 border-t border-slate-200 flex items-center justify-between">
-                    <span className="text-[9.5px] font-bold text-[#5A00D6]">Evidence Auto-Linked</span>
+                    <span className="text-[9.5px] font-bold text-[#5A00D6]">Evidence linking not verified</span>
                     <Link
                       to={item.path}
                       className="inline-flex items-center text-[10.5px] font-extrabold text-[#0072FF] hover:underline"
@@ -481,7 +426,7 @@ export default function UniversalUserSuccessEvidenceFirstSuite() {
                     </Badge>
                   </div>
                   <div className="mt-1 text-xs font-black text-[#5A00D6]">
-                    Live Platform Speed: {bm.actual}
+                    Runtime speed not measured
                   </div>
                   <div className="text-[10px] font-medium text-[#0A2B6D]">{bm.standard}</div>
                 </div>
@@ -489,10 +434,10 @@ export default function UniversalUserSuccessEvidenceFirstSuite() {
                   <Button
                     size="sm"
                     onClick={() => handleInstantSpeedAction(bm)}
-                    disabled={executingId === bm.id}
+                    disabled
                     className="h-7 flex-1 bg-[#0A2B6D] text-white text-[10.5px] font-extrabold hover:bg-[#0072FF]"
                   >
-                    {executingId === bm.id ? 'Recording...' : '1-Tap Complete & Evidence'}
+                    Workflow action not connected
                   </Button>
                   <Link
                     to={bm.path}
@@ -602,7 +547,7 @@ export default function UniversalUserSuccessEvidenceFirstSuite() {
                     <span className="ml-2 text-[10px] font-medium text-[#0A2B6D]">— {av.detail}</span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <Badge className="bg-[#0A2B6D] text-white text-[9.5px]">{av.count}</Badge>
+                    <Badge className="bg-[#0A2B6D] text-white text-[9.5px]">Not verified</Badge>
                     <Link
                       to={av.path}
                       className="text-[10px] font-extrabold text-[#0072FF] hover:underline"
