@@ -548,7 +548,12 @@ export default function ComplianceHub() {
                           <p className="text-sm text-muted-foreground">{p.category}{p.version ? ` · v${p.version}` : ''}</p>
                         </div>
                       </div>
-                      <Badge className={statusTone(p.status)}>{p.status}</Badge>
+                      <div className="flex flex-col items-end gap-1">
+                        <Badge className={statusTone(p.status)}>{p.status}</Badge>
+                        {p.review_date && new Date(p.review_date + 'T23:59:59') < new Date() && (
+                          <Badge className="bg-destructive text-destructive-foreground">Review overdue</Badge>
+                        )}
+                      </div>
                     </div>
                     <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
                       <span>{p.review_date ? `Review due ${format(new Date(p.review_date), 'd MMM yyyy')}` : 'No review date set'}</span>
