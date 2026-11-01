@@ -38,9 +38,9 @@ export default function LandingFooter({ onBookDemo }) {
             </p>
 
             {/* 46 Connected Modules on One Single Line */}
-            <div className="inline-flex items-center gap-1.5 rounded-full border border-[#0072FF]/25 bg-[#0072FF]/5 px-3 py-1.5 text-[10px] xl:text-[11px] font-extrabold text-[#0072FF] whitespace-nowrap">
+            <div className="inline-flex max-w-full flex-wrap items-center justify-center gap-1.5 rounded-full border border-[#0072FF]/25 bg-[#0072FF]/5 px-3 py-1.5 text-center text-[10px] xl:text-[11px] font-extrabold text-[#0072FF]">
               <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-[#5A00D6]" />
-              <span>46 Connected Modules · 356 NDIS Checkpoints · 17 Categories</span>
+              <span>Platform Modules · NDIS Reference Checkpoints · Compliance Categories</span>
             </div>
           </div>
 
@@ -104,10 +104,10 @@ export default function LandingFooter({ onBookDemo }) {
                 <li>
                   <a
                     href="mailto:kristyleebatkin@live.com.au"
-                    className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-[#5A00D6]/25 bg-[#5A00D6]/5 px-2.5 py-1.5 text-[11px] xl:text-xs font-extrabold text-[#5A00D6] hover:bg-[#5A00D6]/10"
+                    className="inline-flex max-w-full flex-wrap items-center gap-1.5 rounded-lg border border-[#5A00D6]/25 bg-[#5A00D6]/5 px-2.5 py-1.5 text-[11px] xl:text-xs font-extrabold text-[#5A00D6] hover:bg-[#5A00D6]/10"
                   >
                     <Mail className="h-3.5 w-3.5 shrink-0 text-[#FF2E9A]" />
-                    <span>kristyleebatkin@live.com.au</span>
+                    <span className="break-all sm:break-normal">kristyleebatkin@live.com.au</span>
                   </a>
                 </li>
               </ul>
