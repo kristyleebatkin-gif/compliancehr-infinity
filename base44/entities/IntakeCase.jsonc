@@ -376,7 +376,57 @@
     },
     "banking_details": {
       "type": "string",
-      "title": "Banking Details (BSB, Account, Account Name)"
+      "title": "Banking Details (BSB, Account, Account Name)",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Human Resources Manager"
+              }
+            }
+          ]
+        },
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Human Resources Manager"
+              }
+            }
+          ]
+        }
+      }
     },
     "superannuation_details": {
       "type": "string",
@@ -384,7 +434,57 @@
     },
     "tax_file_number": {
       "type": "string",
-      "title": "Tax File Number"
+      "title": "Tax File Number",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Human Resources Manager"
+              }
+            }
+          ]
+        },
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Human Resources Manager"
+              }
+            }
+          ]
+        }
+      }
     },
     "current_rego": {
       "type": "string",
@@ -798,17 +898,10 @@
           }
         },
         {
-          "user_condition": {
-            "role": "Support Worker"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Participant"
-          }
-        },
-        {
           "data.email": "{{user.email}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
         }
       ]
     },
@@ -825,14 +918,10 @@
           }
         },
         {
-          "user_condition": {
-            "role": "Support Worker"
-          }
+          "created_by_id": "{{user.id}}"
         },
         {
-          "user_condition": {
-            "role": "Participant"
-          }
+          "data.email": "{{user.email}}"
         }
       ]
     },
