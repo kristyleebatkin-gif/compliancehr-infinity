@@ -69,11 +69,6 @@
           "user_condition": {
             "role": "Team Leader"
           }
-        },
-        {
-          "user_condition": {
-            "role": "Support Worker"
-          }
         }
       ]
     },
@@ -103,11 +98,6 @@
           "user_condition": {
             "role": "Team Leader"
           }
-        },
-        {
-          "user_condition": {
-            "role": "Support Worker"
-          }
         }
       ]
     },
@@ -131,11 +121,6 @@
         {
           "user_condition": {
             "role": "Team Leader"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Support Worker"
           }
         }
       ]
