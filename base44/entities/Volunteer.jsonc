@@ -125,11 +125,6 @@
           }
         },
         {
-          "user_condition": {
-            "role": "Auditor"
-          }
-        },
-        {
           "data.email": "{{user.email}}"
         },
         {
