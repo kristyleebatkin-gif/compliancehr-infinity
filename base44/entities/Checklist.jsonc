@@ -210,11 +210,6 @@
           "user_condition": {
             "role": "Volunteer"
           }
-        },
-        {
-          "user_condition": {
-            "role": "Auditor"
-          }
         }
       ]
     },
