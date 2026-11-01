@@ -2,7 +2,6 @@
 .landing-page {
   background-color: #F6F0FF;
   color: #0A2B6D;
-<<<<<<< ours
   font-family: "Manrope", ui-sans-serif, system-ui, sans-serif !important;
 }
 
@@ -17,10 +16,6 @@
   display: inline-block;
 }
 
-=======
-}
-
->>>>>>> theirs
 /* Prevent global app-readable / dark-navy heading rule in index.css from overriding white headings on gradient sections */
 .landing-page :is(h1, h2, h3, h4).text-white,
 .landing-page .text-white :is(h1, h2, h3, h4) {

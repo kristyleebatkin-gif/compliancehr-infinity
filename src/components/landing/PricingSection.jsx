@@ -16,16 +16,12 @@ export const COMPLIANCE_HR_PACKAGES = [
     previousMonthly: 600,
     eliteAddon: 160,
     monthly: 760,
-    priceLabel: '$760 per a month',
+    priceLabel: '$760 per month',
     messageCredits: '1,200 message credits / mo',
     integrationCredits: '50,000 integration credits / mo',
     featured: true,
     benefits: [
-<<<<<<< ours
       'Access to the ComplianceHR app; confirm document template availability with our team',
-=======
-      'Full access to ComplianceHR app & all 100+ tailored documents',
->>>>>>> theirs
       'Includes $160/mo Elite Package Tokens in every subscription',
       '1,200 message credits & 50,000 integration credits per month',
       'Dedicated compliance & technical support included',
@@ -42,15 +38,11 @@ export const COMPLIANCE_HR_PACKAGES = [
     previousMonthly: 660,
     eliteAddon: 160,
     monthly: 820,
-    priceLabel: '$820 per a month',
+    priceLabel: '$820 per month',
     messageCredits: '1,200 message credits / mo',
     integrationCredits: '50,000 integration credits / mo',
     benefits: [
-<<<<<<< ours
       'Access to the ComplianceHR app; confirm document template availability with our team',
-=======
-      'Full access to ComplianceHR app & all 100+ tailored documents',
->>>>>>> theirs
       'Includes $160/mo Elite Package Tokens in every subscription',
       '1,200 message credits & 50,000 integration credits per month',
       'Dedicated compliance & technical support included',
@@ -67,15 +59,11 @@ export const COMPLIANCE_HR_PACKAGES = [
     previousMonthly: 760,
     eliteAddon: 160,
     monthly: 920,
-    priceLabel: '$920 per a month',
+    priceLabel: '$920 per month',
     messageCredits: '1,200 message credits / mo',
     integrationCredits: '50,000 integration credits / mo',
     benefits: [
-<<<<<<< ours
       'Access to the ComplianceHR app; confirm document template availability with our team',
-=======
-      'Full access to ComplianceHR app & all 100+ tailored documents',
->>>>>>> theirs
       'Includes $160/mo Elite Package Tokens in every subscription',
       '1,200 message credits & 50,000 integration credits per month',
       'Dedicated compliance & technical support included',
@@ -92,15 +80,11 @@ export const COMPLIANCE_HR_PACKAGES = [
     previousMonthly: 839,
     eliteAddon: 160,
     monthly: 999,
-    priceLabel: '$999 per a month',
+    priceLabel: '$999 per month',
     messageCredits: '1,200 message credits / mo',
     integrationCredits: '50,000 integration credits / mo',
     benefits: [
-<<<<<<< ours
       'Access to the ComplianceHR app; confirm document template availability with our team',
-=======
-      'Full access to ComplianceHR app & all 100+ tailored documents',
->>>>>>> theirs
       'Includes $160/mo Elite Package Tokens in every subscription',
       '1,200 message credits & 50,000 integration credits per month',
       'Dedicated compliance & technical support included',
@@ -117,15 +101,11 @@ export const COMPLIANCE_HR_PACKAGES = [
     previousMonthly: 940,
     eliteAddon: 160,
     monthly: 1100,
-    priceLabel: '$1,100 per a month',
+    priceLabel: '$1,100 per month',
     messageCredits: '1,200 message credits / mo',
     integrationCredits: '50,000 integration credits / mo',
     benefits: [
-<<<<<<< ours
       'Access to the ComplianceHR app; confirm document template availability with our team',
-=======
-      'Full access to ComplianceHR app & all 100+ tailored documents',
->>>>>>> theirs
       'Includes $160/mo Elite Package Tokens in every subscription',
       '1,200 message credits & 50,000 integration credits per month',
       'Dedicated compliance & technical support included',
@@ -142,15 +122,11 @@ export const COMPLIANCE_HR_PACKAGES = [
     previousMonthly: 1060,
     eliteAddon: 160,
     monthly: 1220,
-    priceLabel: '$1,220 per a month',
+    priceLabel: '$1,220 per month',
     messageCredits: '1,200 message credits / mo',
     integrationCredits: '50,000 integration credits / mo',
     benefits: [
-<<<<<<< ours
       'Access to the ComplianceHR app; confirm document template availability with our team',
-=======
-      'Full access to ComplianceHR app & all 100+ tailored documents',
->>>>>>> theirs
       'Includes $160/mo Elite Package Tokens in every subscription',
       '1,200 message credits & 50,000 integration credits per month',
       'Priority onboarding, bulk intake migration & dedicated compliance support',
@@ -231,44 +207,10 @@ export default function PricingSection({ onContactSales }) {
             </h2>
 
             <p className="text-sm sm:text-base font-medium leading-relaxed text-[#0A2B6D]/80">
-<<<<<<< ours
               Monthly subscription pricing is shown below. Confirm included modules, document availability, usage allowances, support and any annual billing options with our team before purchase.
             </p>
 
             </div>
-=======
-              Every Smart Enhanced tier includes full access to all 46 connected modules, 100+ tailored Business Details documents, $160/mo Elite Package Tokens, 1,200 message credits, 50,000 integration credits, and dedicated support.
-            </p>
-
-            {/* Equal-Width Responsive Monthly / Annual Toggle */}
-            <div className="mx-auto w-full max-w-lg pt-1">
-              <div className="grid grid-cols-1 gap-1.5 rounded-2xl border border-slate-200 bg-slate-100/80 p-1.5 sm:grid-cols-2">
-                <button
-                  type="button"
-                  onClick={() => setBilling('monthly')}
-                  className={`flex min-h-[40px] w-full items-center justify-center rounded-xl px-4 py-2 text-xs sm:text-sm font-extrabold transition ${
-                    billing === 'monthly'
-                      ? 'bg-[#0A2B6D] text-white shadow-sm'
-                      : 'bg-white/60 text-[#0A2B6D] hover:text-[#0072FF]'
-                  }`}
-                >
-                  Monthly Subscription
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setBilling('yearly')}
-                  className={`flex min-h-[40px] w-full items-center justify-center rounded-xl px-4 py-2 text-xs sm:text-sm font-extrabold transition ${
-                    billing === 'yearly'
-                      ? 'bg-[#5A00D6] text-white shadow-sm'
-                      : 'bg-white/60 text-[#0A2B6D] hover:text-[#5A00D6]'
-                  }`}
-                >
-                  Annual Billing (Monthly Rate)
-                </button>
-              </div>
-            </div>
-          </div>
->>>>>>> theirs
 
           {/* 6 Smart Enhanced Subscription Cards Grid — Centred Users & Fitted Token Info */}
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 items-stretch">
@@ -310,7 +252,6 @@ export default function PricingSection({ onContactSales }) {
 
                       {/* Exact Configured Price Box — Centred Price & Fitted Token Info */}
                       <div className="mt-3.5 rounded-2xl border border-slate-200/90 bg-slate-50/70 p-3.5 text-center">
-<<<<<<< ours
                         <div className="flex flex-wrap items-baseline justify-center gap-x-1.5 gap-y-1">
                           <span className="font-editorial text-3xl font-extrabold text-[#0A2B6D] leading-none">
                             ${pkg.monthly.toLocaleString()}
@@ -320,17 +261,6 @@ export default function PricingSection({ onContactSales }) {
                           </span>
                           <span className="ml-1 rounded-md bg-[#5A00D6]/10 px-2 py-0.5 text-[10px] font-extrabold text-[#5A00D6]">
                             Monthly
-=======
-                        <div className="flex items-baseline justify-center gap-1.5 whitespace-nowrap">
-                          <span className="font-editorial text-3xl font-extrabold text-[#0A2B6D] leading-none">
-                            ${pkg.monthly.toLocaleString()}
-                          </span>
-                          <span className="text-xs font-bold text-[#0A2B6D]/80">
-                            per a month
-                          </span>
-                          <span className="ml-1 rounded-md bg-[#5A00D6]/10 px-2 py-0.5 text-[10px] font-extrabold text-[#5A00D6]">
-                            {billing === 'yearly' ? 'Annual' : 'Monthly'}
->>>>>>> theirs
                           </span>
                         </div>
                         <div className="mt-2 border-t border-slate-200/70 pt-2 text-[10.5px] font-extrabold text-[#5A00D6] whitespace-nowrap">

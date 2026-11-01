@@ -7,7 +7,6 @@ import {
   Workflow,
   Layers,
   Search,
-  ArrowUpRight,
   Users,
   Calendar,
   AlertTriangle,
@@ -16,10 +15,6 @@ import {
   DollarSign,
 } from 'lucide-react';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
-import { getHeaderView } from '@/lib/fullColourTiles';
-
-const BRAND_GRADIENT =
-  'linear-gradient(120deg, #0A2B6D 0%, #0072FF 34%, #5A00D6 68%, #FF2E9A 100%)';
 
 const BRAND_GRADIENT =
   'linear-gradient(120deg, #0A2B6D 0%, #0072FF 34%, #5A00D6 68%, #FF2E9A 100%)';
@@ -590,11 +585,7 @@ export default function BlueprintPreviewSection() {
                 <div className="grid auto-rows-fr grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-5 items-stretch">
                   {group.modules.map((mod, idx) => {
                     const Icon = mod.icon || ShieldCheck;
-<<<<<<< ours
                     const headerBg = getLandingHeaderView(idx);
-=======
-                    const headerBg = getHeaderView(idx);
->>>>>>> theirs
                     return (
                       <Link
                         key={mod.key}

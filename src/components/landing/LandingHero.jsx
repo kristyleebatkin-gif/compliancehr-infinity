@@ -17,39 +17,22 @@ const GLASS_KPIS = [
   {
     icon: ShieldCheck,
     label: 'NDIS Audit Readiness',
-<<<<<<< ours
     value: 'Not verified',
     sub: 'No organisation data loaded',
-=======
-    value: '99.2%',
-    sub: '356 / 356 Checkpoints',
->>>>>>> theirs
     accent: '#00C6FF',
   },
   {
     icon: Users,
-<<<<<<< ours
     label: 'Worker Screening',
     value: 'Not verified',
     sub: 'Status not assessed in preview',
-=======
-    label: '100-Pt Screening',
-    value: '100%',
-    sub: 'Automated Roster Gate',
->>>>>>> theirs
     accent: '#FF6EDB',
   },
   {
     icon: Activity,
-<<<<<<< ours
     label: 'Incident SLA',
     value: 'Not verified',
     sub: 'Overdue status not assessed',
-=======
-    label: '24h / 5d Incident SLA',
-    value: 'Zero Overdue',
-    sub: 'Commission Timers',
->>>>>>> theirs
     accent: '#00C6FF',
   },
 ];
@@ -168,11 +151,7 @@ export default function LandingHero({ onBookDemo }) {
               </div>
             </div>
 
-<<<<<<< ours
             {/* Right Column: Executive dashboard preview */}
-=======
-            {/* Right Column: First Shown Live Executive Dashboard Mockup (Tight, Zero Dead Space) */}
->>>>>>> theirs
             <div className="lg:col-span-6 flex items-center">
               <HeroDashboardMockup />
             </div>
