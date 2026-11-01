@@ -16,12 +16,12 @@ export const COMPLIANCE_HR_PACKAGES = [
     previousMonthly: 600,
     eliteAddon: 160,
     monthly: 760,
-    priceLabel: '$760 per a month',
+    priceLabel: '$760 per month',
     messageCredits: '1,200 message credits / mo',
     integrationCredits: '50,000 integration credits / mo',
     featured: true,
     benefits: [
-      'Full access to ComplianceHR app & all 100+ tailored documents',
+      'Access to the ComplianceHR app; confirm document template availability with our team',
       'Includes $160/mo Elite Package Tokens in every subscription',
       '1,200 message credits & 50,000 integration credits per month',
       'Dedicated compliance & technical support included',
@@ -38,11 +38,11 @@ export const COMPLIANCE_HR_PACKAGES = [
     previousMonthly: 660,
     eliteAddon: 160,
     monthly: 820,
-    priceLabel: '$820 per a month',
+    priceLabel: '$820 per month',
     messageCredits: '1,200 message credits / mo',
     integrationCredits: '50,000 integration credits / mo',
     benefits: [
-      'Full access to ComplianceHR app & all 100+ tailored documents',
+      'Access to the ComplianceHR app; confirm document template availability with our team',
       'Includes $160/mo Elite Package Tokens in every subscription',
       '1,200 message credits & 50,000 integration credits per month',
       'Dedicated compliance & technical support included',
@@ -59,11 +59,11 @@ export const COMPLIANCE_HR_PACKAGES = [
     previousMonthly: 760,
     eliteAddon: 160,
     monthly: 920,
-    priceLabel: '$920 per a month',
+    priceLabel: '$920 per month',
     messageCredits: '1,200 message credits / mo',
     integrationCredits: '50,000 integration credits / mo',
     benefits: [
-      'Full access to ComplianceHR app & all 100+ tailored documents',
+      'Access to the ComplianceHR app; confirm document template availability with our team',
       'Includes $160/mo Elite Package Tokens in every subscription',
       '1,200 message credits & 50,000 integration credits per month',
       'Dedicated compliance & technical support included',
@@ -80,11 +80,11 @@ export const COMPLIANCE_HR_PACKAGES = [
     previousMonthly: 839,
     eliteAddon: 160,
     monthly: 999,
-    priceLabel: '$999 per a month',
+    priceLabel: '$999 per month',
     messageCredits: '1,200 message credits / mo',
     integrationCredits: '50,000 integration credits / mo',
     benefits: [
-      'Full access to ComplianceHR app & all 100+ tailored documents',
+      'Access to the ComplianceHR app; confirm document template availability with our team',
       'Includes $160/mo Elite Package Tokens in every subscription',
       '1,200 message credits & 50,000 integration credits per month',
       'Dedicated compliance & technical support included',
@@ -101,11 +101,11 @@ export const COMPLIANCE_HR_PACKAGES = [
     previousMonthly: 940,
     eliteAddon: 160,
     monthly: 1100,
-    priceLabel: '$1,100 per a month',
+    priceLabel: '$1,100 per month',
     messageCredits: '1,200 message credits / mo',
     integrationCredits: '50,000 integration credits / mo',
     benefits: [
-      'Full access to ComplianceHR app & all 100+ tailored documents',
+      'Access to the ComplianceHR app; confirm document template availability with our team',
       'Includes $160/mo Elite Package Tokens in every subscription',
       '1,200 message credits & 50,000 integration credits per month',
       'Dedicated compliance & technical support included',
@@ -122,11 +122,11 @@ export const COMPLIANCE_HR_PACKAGES = [
     previousMonthly: 1060,
     eliteAddon: 160,
     monthly: 1220,
-    priceLabel: '$1,220 per a month',
+    priceLabel: '$1,220 per month',
     messageCredits: '1,200 message credits / mo',
     integrationCredits: '50,000 integration credits / mo',
     benefits: [
-      'Full access to ComplianceHR app & all 100+ tailored documents',
+      'Access to the ComplianceHR app; confirm document template availability with our team',
       'Includes $160/mo Elite Package Tokens in every subscription',
       '1,200 message credits & 50,000 integration credits per month',
       'Priority onboarding, bulk intake migration & dedicated compliance support',
@@ -159,7 +159,7 @@ export const CORE_PLATFORM_BENEFITS = [
   },
   {
     icon: Lock,
-    title: 'Strict Role-Based NDIS & HR Security',
+    title: 'Role-Based Access Controls',
     desc: 'Granular permissions across 115+ entities for Admins, Team Leaders, Support Workers, Finance, HR, Participants and Auditors.',
   },
   {
@@ -170,18 +170,17 @@ export const CORE_PLATFORM_BENEFITS = [
 ];
 
 const FEATURE_COMPARISON_ROWS = [
-  { feature: 'All 46 Connected Platform Modules', included: 'Included in Every Tier' },
-  { feature: '100+ Tailored Business Details Documents', included: 'Included in Every Tier' },
+  { feature: 'Platform modules', included: 'Confirm availability for your plan' },
+  { feature: 'Business document templates', included: 'Availability may vary by plan' },
   { feature: '17 Audit Categories & 356 NDIS Checkpoints', included: 'Included in Every Tier' },
   { feature: 'Elite Package Tokens ($160/mo value)', included: 'Included in Every Tier' },
   { feature: 'Monthly Message Credits', included: '1,200 message credits / mo' },
   { feature: 'Monthly Integration Credits', included: '50,000 integration credits / mo' },
-  { feature: 'Consent-Gated External NDIS Auditor Portal', included: 'Included in Every Tier' },
+  { feature: 'Auditor Portal access', included: 'Role and record permissions apply' },
   { feature: 'Dedicated Compliance & Technical Support', included: 'Included in Every Tier' },
 ];
 
 export default function PricingSection({ onContactSales }) {
-  const [billing, setBilling] = useState('monthly');
   const [showComparison, setShowComparison] = useState(true);
 
   return (
@@ -208,10 +207,10 @@ export default function PricingSection({ onContactSales }) {
             </h2>
 
             <p className="text-sm sm:text-base font-medium leading-relaxed text-[#0A2B6D]/80">
-              Every Smart Enhanced tier includes full access to all 46 connected modules, 100+ tailored Business Details documents, $160/mo Elite Package Tokens, 1,200 message credits, 50,000 integration credits, and dedicated support.
+              Monthly subscription pricing is shown below. Confirm included modules, document availability, usage allowances, support and any annual billing options with our team before purchase.
             </p>
 
-            {/* Equal-Width Responsive Monthly / Annual Toggle */}
+            {/* Pricing period note; annual rates require a confirmed quote. */}
             <div className="mx-auto w-full max-w-lg pt-1">
               <div className="grid grid-cols-1 gap-1.5 rounded-2xl border border-slate-200 bg-slate-100/80 p-1.5 sm:grid-cols-2">
                 <button
@@ -285,10 +284,10 @@ export default function PricingSection({ onContactSales }) {
                             ${pkg.monthly.toLocaleString()}
                           </span>
                           <span className="text-xs font-bold text-[#0A2B6D]/80">
-                            per a month
+                            per month
                           </span>
                           <span className="ml-1 rounded-md bg-[#5A00D6]/10 px-2 py-0.5 text-[10px] font-extrabold text-[#5A00D6]">
-                            {billing === 'yearly' ? 'Annual' : 'Monthly'}
+                            Monthly
                           </span>
                         </div>
                         <div className="mt-2 border-t border-slate-200/70 pt-2 text-[10.5px] font-extrabold text-[#5A00D6] whitespace-nowrap">
