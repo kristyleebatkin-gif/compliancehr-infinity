@@ -156,11 +156,6 @@
           "user_condition": {
             "role": "Participant"
           }
-        },
-        {
-          "user_condition": {
-            "role": "Auditor"
-          }
         }
       ]
     },
