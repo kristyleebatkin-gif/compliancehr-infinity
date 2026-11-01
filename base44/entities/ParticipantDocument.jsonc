@@ -290,25 +290,17 @@
           }
         },
         {
-          "data.team_worker_ids": "{{user.id}}"
+          "data.team_worker_ids": {
+            "$in": [
+              "{{user.id}}"
+            ]
+          }
         },
         {
           "data.participant_user_id": "{{user.id}}"
         },
         {
           "created_by_id": "{{user.id}}"
-        },
-        {
-          "$and": [
-            {
-              "user_condition": {
-                "role": "Support Worker"
-              }
-            },
-            {
-              "data.admin_approved": true
-            }
-          ]
         },
         {
           "$and": [
