@@ -160,7 +160,7 @@ export const CORE_PLATFORM_BENEFITS = [
   {
     icon: Lock,
     title: 'Role-Based Access Controls',
-    desc: 'Granular permissions across 115+ entities for Admins, Team Leaders, Support Workers, Finance, HR, Participants and Auditors.',
+    desc: 'Role and record-level access rules govern what each account can view or change. Review access scopes before inviting external users.',
   },
   {
     icon: RefreshCw,
@@ -210,8 +210,7 @@ export default function PricingSection({ onContactSales }) {
               Monthly subscription pricing is shown below. Confirm included modules, document availability, usage allowances, support and any annual billing options with our team before purchase.
             </p>
 
-            <p className="mx-auto max-w-lg text-center text-xs sm:text-sm font-semibold text-[#0A2B6D]/70">Monthly prices shown. Contact us for annual billing options and a written quote.</p>
-          </div>
+            </div>
 
           {/* 6 Smart Enhanced Subscription Cards Grid — Centred Users & Fitted Token Info */}
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 items-stretch">
@@ -253,11 +252,11 @@ export default function PricingSection({ onContactSales }) {
 
                       {/* Exact Configured Price Box — Centred Price & Fitted Token Info */}
                       <div className="mt-3.5 rounded-2xl border border-slate-200/90 bg-slate-50/70 p-3.5 text-center">
-                        <div className="flex items-baseline justify-center gap-1.5 whitespace-nowrap">
+                        <div className="flex flex-wrap items-baseline justify-center gap-x-1.5 gap-y-1">
                           <span className="font-editorial text-3xl font-extrabold text-[#0A2B6D] leading-none">
                             ${pkg.monthly.toLocaleString()}
                           </span>
-                          <span className="text-xs font-bold text-[#0A2B6D]/80">
+                          <span className="whitespace-nowrap text-xs font-bold text-[#0A2B6D]/80">
                             per month
                           </span>
                           <span className="ml-1 rounded-md bg-[#5A00D6]/10 px-2 py-0.5 text-[10px] font-extrabold text-[#5A00D6]">
