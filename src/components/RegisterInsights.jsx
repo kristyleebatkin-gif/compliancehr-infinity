@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
+import { useAuth } from '@/lib/AuthContext';
 import { Sparkles, RefreshCw, Loader2 } from 'lucide-react';
 
 const TOP_BORDER_GRADIENT =
@@ -8,10 +9,16 @@ const ICON_GRADIENT =
   'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 60%, #A100FF 80%, #FF2E9A 100%)';
 
 export default function RegisterInsights({ module, compact = true, wrapSummary = true, recordsClassName }) {
+  const { user, isAuthenticated } = useAuth();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const load = useCallback(async () => {
+    if (!isAuthenticated || !user) {
+      setData(null);
+      setLoading(false);
+      return;
+    }
     setLoading(true);
     try {
       const res = await base44.functions.invoke('registerInsights', { module });
@@ -21,7 +28,7 @@ export default function RegisterInsights({ module, compact = true, wrapSummary =
     } finally {
       setLoading(false);
     }
-  }, [module]);
+  }, [module, isAuthenticated, user]);
 
   useEffect(() => {
     load();
