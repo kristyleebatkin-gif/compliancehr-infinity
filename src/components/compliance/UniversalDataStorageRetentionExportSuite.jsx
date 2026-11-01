@@ -507,7 +507,7 @@ export default function UniversalDataStorageRetentionExportSuite() {
                     key={c}
                     className="rounded-md border border-slate-200 bg-slate-50 px-2 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D]"
                   >
-                    🔒 {c}
+                    <FolderLock className="mr-1 inline-block h-3.5 w-3.5" aria-hidden="true" /> {c}
                   </span>
                 ))}
               </div>
