@@ -41,8 +41,15 @@ export default function LandingNav({ onBookDemo }) {
             alt="ComplianceHR Infinity"
             className="mt-1 h-5 w-14 shrink-0 rounded-md border border-slate-200 bg-white px-1 py-0.5 object-contain shadow-2xs"
           />
+<<<<<<< ours
           <div className="mt-1 text-[8.5px] font-bold text-slate-600 leading-none whitespace-nowrap">
             Complete Control. Greater Confidence. Brighter Success.
+=======
+          <div className="mt-1 text-[8.5px] font-extrabold leading-none whitespace-nowrap">
+            <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
+            <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
+            <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
+>>>>>>> theirs
           </div>
         </Link>
 
@@ -73,7 +80,11 @@ export default function LandingNav({ onBookDemo }) {
           </Link>
           <Link
             to="/login"
+<<<<<<< ours
             className="hidden sm:inline-flex items-center justify-center whitespace-nowrap rounded-lg px-2.5 py-1.5 text-[11px] xl:text-xs font-extrabold text-[#0A2B6D] transition hover:text-[#0072FF]"
+=======
+            className="hidden sm:inline-flex items-center justify-center whitespace-nowrap rounded-lg px-2 py-1.5 text-[11px] xl:text-xs font-extrabold text-[#0A2B6D] transition hover:bg-slate-100"
+>>>>>>> theirs
           >
             Sign In
           </Link>
@@ -81,7 +92,11 @@ export default function LandingNav({ onBookDemo }) {
           <button
             type="button"
             onClick={() => onBookDemo && onBookDemo('Book a Personal Demo')}
+<<<<<<< ours
             className="hidden md:inline-flex items-center gap-1 whitespace-nowrap rounded-lg border-2 border-[#0A2B6D] bg-white px-3 py-1.5 text-[11px] xl:text-xs font-extrabold text-[#0A2B6D] transition hover:bg-[#0A2B6D] hover:text-white"
+=======
+            className="hidden md:inline-flex items-center gap-1 whitespace-nowrap rounded-lg border-2 border-[#0A2B6D] bg-white px-2.5 py-1.5 text-[11px] xl:text-xs font-extrabold text-[#0A2B6D] transition hover:bg-[#0A2B6D] hover:text-white"
+>>>>>>> theirs
           >
             <Calendar className="h-3.5 w-3.5 shrink-0 text-[#0072FF]" />
             <span>Book a Demo</span>
@@ -89,7 +104,11 @@ export default function LandingNav({ onBookDemo }) {
 
           <Link
             to="/register"
+<<<<<<< ours
             className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-lg px-3.5 py-1.5 text-[11px] xl:text-xs font-extrabold text-white shadow-sm transition hover:opacity-95"
+=======
+            className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-lg px-3 py-1.5 text-[11px] xl:text-xs font-extrabold text-white shadow-sm transition hover:opacity-95"
+>>>>>>> theirs
             style={{
               background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
             }}
@@ -110,7 +129,11 @@ export default function LandingNav({ onBookDemo }) {
         </div>
       </div>
 
+<<<<<<< ours
       {/* Direct 1-Click Workspace & Route Bar visible across Desktop, Tablet & Mobile */}
+=======
+      {/* Direct 1-Click Workspace & Route Bar visible across Desktop, Tablet (769px) & Mobile */}
+>>>>>>> theirs
       <div className="border-t border-slate-200/80 bg-[#F5F0FF]/80 px-3 py-1.5 sm:px-5">
         <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-1.5">
           <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
@@ -124,12 +147,20 @@ export default function LandingNav({ onBookDemo }) {
               ['Record Intelligence Hub', '/record-intelligence'],
               ['Frontline Rapid Hub', '/frontline-hub'],
               ['Workforce Presence & Safety', '/workforce-presence'],
+<<<<<<< ours
               ['Universal Storage Hub', '/universal-storage'],
+=======
+              ['Universal Storage & Export Hub', '/universal-storage'],
+>>>>>>> theirs
               ['Document Vault', '/documents'],
               ['Company Safe', '/company-safe'],
               ['Compliance Centre', '/compliance'],
               ['Operations Centre', '/operations-centre'],
+<<<<<<< ours
               ['Connect AI Agent', '/connect'],
+=======
+              ['Connect AI (MCP)', '/connect'],
+>>>>>>> theirs
             ].map(([label, path]) => (
               <Link
                 key={path}

@@ -382,8 +382,10 @@ export default function InfinityCoreEngine({ compact = false }) {
               </span>
             </h2>
 
-            <p className="mx-auto max-w-3xl text-center text-xs font-medium text-slate-500">
-              Complete Control. Greater Confidence. Brighter Success.
+            <p className="mx-auto max-w-3xl text-center text-[10px] sm:text-xs font-extrabold">
+              <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
+              <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
+              <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
             </p>
           </div>
 

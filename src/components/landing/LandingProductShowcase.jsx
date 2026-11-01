@@ -12,7 +12,18 @@ import Reveal from '@/components/landing/Reveal';
 
 const TRAJECTORY_DATA = [];
 
+<<<<<<< ours
 const PILLAR_BAR_DATA = [];
+=======
+const PILLAR_BAR_DATA = [
+  { name: 'Gov', score: 99.2, fill: '#0A2B6D' },
+  { name: 'HR', score: 100.0, fill: '#0072FF' },
+  { name: 'Care', score: 99.1, fill: '#5A00D6' },
+  { name: 'WHS', score: 98.8, fill: '#FF2E9A' },
+  { name: 'LMS', score: 98.9, fill: '#0072FF' },
+  { name: 'Claims', score: 99.4, fill: '#5A00D6' },
+];
+>>>>>>> theirs
 
 const SHOWCASE_PANELS = [
   {
@@ -20,7 +31,11 @@ const SHOWCASE_PANELS = [
     shortLabel: 'Executive Preview',
     title: 'Executive Dashboard Preview',
     icon: LayoutDashboard,
+<<<<<<< ours
     badge: 'Preview',
+=======
+    badge: 'Live Executive',
+>>>>>>> theirs
     color: '#0A2B6D',
     path: '/dashboard',
     summary:
@@ -34,7 +49,11 @@ const SHOWCASE_PANELS = [
     shortLabel: 'Compliance Score',
     title: 'Compliance Score',
     icon: ShieldCheck,
+<<<<<<< ours
     badge: 'Not verified',
+=======
+    badge: '99.2% Verified',
+>>>>>>> theirs
     color: '#0072FF',
     path: '/compliance',
     summary:
@@ -48,7 +67,11 @@ const SHOWCASE_PANELS = [
     shortLabel: 'Staff Credentials',
     title: 'Staff Credentials & Workforce KPIs',
     icon: BadgeCheck,
+<<<<<<< ours
     badge: 'Status not assessed',
+=======
+    badge: '100-Pt Cleared',
+>>>>>>> theirs
     color: '#5A00D6',
     path: '/hr',
     summary:
@@ -76,7 +99,11 @@ const SHOWCASE_PANELS = [
     shortLabel: 'Risk & Incidents',
     title: 'Open Incidents & Risk Alerts',
     icon: AlertTriangle,
+<<<<<<< ours
     badge: 'Status not assessed',
+=======
+    badge: '100% On-Time SLA',
+>>>>>>> theirs
     color: '#FF2E9A',
     path: '/incidents',
     summary:
@@ -90,7 +117,11 @@ const SHOWCASE_PANELS = [
     shortLabel: 'Training & LMS',
     title: 'Training Compliance',
     icon: GraduationCap,
+<<<<<<< ours
     badge: 'Status not assessed',
+=======
+    badge: '98.9% Current',
+>>>>>>> theirs
     color: '#5A00D6',
     path: '/training',
     summary:
@@ -141,13 +172,21 @@ export default function LandingProductShowcase() {
               <div className="text-left">
                 <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap">
                   <Sparkles className="h-3.5 w-3.5 text-[#00C6FF]" />
+<<<<<<< ours
                   <span style={{ color: '#FFFFFF' }}>Dashboard layout preview</span>
+=======
+                  <span style={{ color: '#FFFFFF' }}>Full-Width Live Executive Command Centre</span>
+>>>>>>> theirs
                 </div>
                 <h2
                   className="mt-1.5 font-editorial text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight text-white"
                   style={{ color: '#FFFFFF' }}
                 >
+<<<<<<< ours
                   Connected platform dashboard preview
+=======
+                  Everything Connected — Live Executive Dashboard Showcase
+>>>>>>> theirs
                 </h2>
               </div>
 
@@ -211,7 +250,11 @@ export default function LandingProductShowcase() {
                       </h3>
                     </div>
                     <span className="shrink-0 rounded-full bg-[#0072FF]/10 px-2.5 py-0.5 text-[10px] font-extrabold text-[#0072FF]">
+<<<<<<< ours
                       PREVIEW · NOT VERIFIED
+=======
+                      LIVE GAUGE
+>>>>>>> theirs
                     </span>
                   </div>
 
@@ -242,15 +285,26 @@ export default function LandingProductShowcase() {
                         strokeWidth="12"
                         strokeLinecap="round"
                         strokeDasharray="314"
+<<<<<<< ours
                         strokeDashoffset="314"
+=======
+                        strokeDashoffset="4"
+>>>>>>> theirs
                       />
                     </svg>
                     <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
                       <span className="font-editorial text-3xl font-extrabold text-[#0A2B6D] leading-none">
+<<<<<<< ours
                         Not verified
                       </span>
                       <span className="mt-1 text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
                         Status not assessed
+=======
+                        99.2%
+                      </span>
+                      <span className="mt-1 text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                        Audit Ready
+>>>>>>> theirs
                       </span>
                     </div>
                   </div>
@@ -258,11 +312,19 @@ export default function LandingProductShowcase() {
                   {/* Aligned Footer Strip */}
                   <div className="grid grid-cols-2 gap-2 border-t border-slate-100 pt-3 text-center">
                     <div className="rounded-lg bg-slate-50 px-2 py-1.5">
+<<<<<<< ours
                       <div className="text-xs font-extrabold text-[#0A2B6D]">Not verified</div>
                       <div className="text-[10px] font-semibold text-[#0A2B6D]/70">Checkpoints</div>
                     </div>
                     <div className="rounded-lg bg-slate-50 px-2 py-1.5">
                       <div className="text-xs font-extrabold text-[#5A00D6]">Not verified</div>
+=======
+                      <div className="text-xs font-extrabold text-[#0A2B6D]">356 / 356</div>
+                      <div className="text-[10px] font-semibold text-[#0A2B6D]/70">Checkpoints</div>
+                    </div>
+                    <div className="rounded-lg bg-slate-50 px-2 py-1.5">
+                      <div className="text-xs font-extrabold text-[#5A00D6]">17 / 17</div>
+>>>>>>> theirs
                       <div className="text-[10px] font-semibold text-[#0A2B6D]/70">Categories</div>
                     </div>
                   </div>
@@ -281,7 +343,11 @@ export default function LandingProductShowcase() {
                     </div>
                     <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[11px] font-extrabold text-emerald-700">
                       <TrendingUp className="h-3 w-3" />
+<<<<<<< ours
                       Trend not available
+=======
+                      +5.0% 6-Mo Gain
+>>>>>>> theirs
                     </span>
                   </div>
 
@@ -328,6 +394,7 @@ export default function LandingProductShowcase() {
                     <div className="flex items-center gap-4">
                       <span className="inline-flex items-center gap-1.5">
                         <span className="h-2.5 w-2.5 rounded-full bg-[#0072FF]" />
+<<<<<<< ours
                         <span>Audit readiness · not verified</span>
                       </span>
                       <span className="inline-flex items-center gap-1.5">
@@ -336,6 +403,16 @@ export default function LandingProductShowcase() {
                       </span>
                     </div>
                     <span className="text-[11px] font-extrabold text-[#5A00D6]">Verification unavailable</span>
+=======
+                        <span>Audit Readiness (99.2%)</span>
+                      </span>
+                      <span className="inline-flex items-center gap-1.5">
+                        <span className="h-2.5 w-2.5 rounded-full bg-[#FF2E9A]" />
+                        <span>3-Way Claim Match (99.4%)</span>
+                      </span>
+                    </div>
+                    <span className="text-[11px] font-extrabold text-[#5A00D6]">PRODA Verified</span>
+>>>>>>> theirs
                   </div>
                 </div>
 
@@ -347,11 +424,19 @@ export default function LandingProductShowcase() {
                         Department Benchmarks
                       </span>
                       <h3 className="font-editorial text-base font-extrabold text-[#0A2B6D]">
+<<<<<<< ours
                         6-Domain Readiness Preview
                       </h3>
                     </div>
                     <span className="shrink-0 rounded-full bg-[#5A00D6]/10 px-2.5 py-0.5 text-[10px] font-extrabold text-[#5A00D6]">
                       NOT VERIFIED
+=======
+                        6-Domain Live Readiness (%)
+                      </h3>
+                    </div>
+                    <span className="shrink-0 rounded-full bg-[#5A00D6]/10 px-2.5 py-0.5 text-[10px] font-extrabold text-[#5A00D6]">
+                      &gt;98.8% ALL PILLARS
+>>>>>>> theirs
                     </span>
                   </div>
 
@@ -378,8 +463,13 @@ export default function LandingProductShowcase() {
 
                   {/* Aligned Footer Strip */}
                   <div className="flex items-center justify-between gap-2 border-t border-slate-100 pt-3 text-xs font-bold text-[#0A2B6D]">
+<<<<<<< ours
                     <span>Benchmark not assessed</span>
                     <span className="text-[#0072FF] font-extrabold">No assessment available</span>
+=======
+                    <span>NDIS Benchmark Threshold: 95.0%</span>
+                    <span className="text-[#0072FF] font-extrabold">All 6 Exceed Target</span>
+>>>>>>> theirs
                   </div>
                 </div>
               </div>

@@ -19,10 +19,10 @@ export const SOFTWARE_INFO = {
   slogan: 'Complete Control. Greater Confidence. Brighter Success',
   description: 'All-in-one, Smart, Comprehensive, Business Super, Documentation Platform',
   developer: {
-    name: 'ComplianceHR Support Team',
-    location: 'Australia',
+    name: 'Kristy Lee Whelan',
+    location: 'North QLD',
     phone: '0402 165 668',
-    email: 'support@compliancehr.com.au',
+    email: 'kristyleebatkin@live.com.au',
   },
   business: {
     business_name: 'ComplianceHR Infinity',
@@ -33,7 +33,7 @@ export const SOFTWARE_INFO = {
     address_line: 'U5/14 Keane Street, Currajong, QLD, 4812',
     contact_person: 'Administration',
     phone: '0402 165 668',
-    email: 'support@compliancehr.com.au',
+    email: 'kristyleebatkin@live.com.au',
   },
 };
 
@@ -143,8 +143,11 @@ export default function SoftwareAndSafeBanner({ compact = false }) {
       {/* Squashed Quick Bar to Edit & Save Logo, Name & Slogan */}
       {!compact && (
         <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-violet-300 bg-white px-3 py-1.5 shadow-sm">
-          <span className="text-[11px] font-semibold text-slate-600">
-            ComplianceHR Infinity · Complete Control. Greater Confidence. Brighter Success.
+          <span className="text-[11px] font-extrabold text-[#0A2B6D]">
+            Software: ComplianceHR Infinity ·{' '}
+            <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
+            <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
+            <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
           </span>
           <button
             type="button"

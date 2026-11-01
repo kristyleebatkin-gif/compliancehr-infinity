@@ -212,8 +212,8 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
                 <h1 className="mt-1 text-lg sm:text-xl font-extrabold tracking-tight text-white">
                   ComplianceHR Infinity — Executive Operations Centre
                 </h1>
-                <p className="mt-0.5 text-[11px] font-medium text-white/90">
-                  ComplianceHR Infinity · Complete Control. Greater Confidence. Brighter Success.
+                <p className="mt-0.5 text-[11px] font-medium text-white/95">
+                  Software: ComplianceHR Infinity · Developer: Kristy Lee Whelan · Complete Control. Greater Confidence. Brighter Success.
                 </p>
               </div>
             </div>

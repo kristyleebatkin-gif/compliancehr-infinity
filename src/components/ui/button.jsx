@@ -5,25 +5,25 @@ import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-normal text-center leading-snug rounded-lg text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-normal text-center leading-snug rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         default:
-          "bg-indigo-600 text-white shadow-xs hover:bg-indigo-700",
+          "bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#A100FF] text-white shadow-sm hover:opacity-95",
         destructive:
-          "bg-rose-600 text-white shadow-xs hover:bg-rose-700",
+          "bg-[#FF2E9A] text-white shadow-sm hover:bg-[#FF2E9A]/90",
         outline:
-          "border border-slate-300 bg-white text-slate-800 shadow-2xs hover:bg-slate-50 hover:text-indigo-600 hover:border-indigo-300",
+          "border border-[#C084FC]/60 bg-white text-[#0A2B6D] shadow-2xs hover:bg-[#F5F0FF] hover:text-[#5A00D6]",
         secondary:
-          "bg-slate-100 text-slate-900 border border-slate-200 shadow-2xs hover:bg-slate-200/80",
-        ghost: "text-slate-700 hover:bg-slate-100 hover:text-indigo-600",
-        link: "text-indigo-600 underline-offset-4 hover:text-indigo-700 hover:underline",
+          "bg-[#F5F0FF] text-[#0A2B6D] border border-[#C084FC]/50 shadow-2xs hover:bg-[#EDE9FE]",
+        ghost: "text-[#0A2B6D] hover:bg-[#F5F0FF] hover:text-[#5A00D6]",
+        link: "text-[#0072FF] underline-offset-4 hover:text-[#5A00D6] hover:underline",
       },
       size: {
         default: "min-h-9 h-auto px-4 py-2",
-        sm: "min-h-8 h-auto rounded-lg px-3 py-1.5 text-xs",
-        lg: "min-h-10 h-auto rounded-lg px-8 py-2",
+        sm: "min-h-8 h-auto rounded-md px-3 py-1.5 text-xs",
+        lg: "min-h-10 h-auto rounded-md px-8 py-2",
         icon: "h-9 w-9",
       },
     },

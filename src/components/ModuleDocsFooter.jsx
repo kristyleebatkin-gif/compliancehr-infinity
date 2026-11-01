@@ -5,7 +5,17 @@ import { Eye, ExternalLink, FileText, FolderOpen, Loader2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { safeUrl } from '@/lib/safeUrl';
+import {
+  getTilePalette,
+  getHeaderView,
+  getTitleGradientView,
+  getSubheaderColourView,
+  getSymbolView,
+} from '@/lib/fullColourTiles';
 import '@/components/employeeDocumentsCompact.css';
+
+const TOP_BORDER_GRADIENT =
+  'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
 
 const MODULE_DOCS = [
   {
@@ -145,105 +155,128 @@ export default function ModuleDocsFooter() {
   return (
     <div
       className={cn(
-        'mx-auto max-w-[1440px] px-4 pb-10 pt-4 sm:px-6 lg:px-8',
+        'mx-auto max-w-6xl px-4 pb-10 pt-6 md:px-8',
         ['EmployeeDocument', 'ParticipantDocument'].includes(cfg.entity) && 'employee-documents-footer'
       )}
     >
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs space-y-4">
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-3">
-          <div className="flex items-center gap-3">
-            <span className="inline-flex items-center gap-2 rounded-full bg-indigo-50 px-3.5 py-1 text-xs font-semibold text-indigo-700">
-              <FolderOpen className="h-3.5 w-3.5 text-indigo-600" />
-              <span>{cfg.title}</span>
-            </span>
-            <div className="text-xs font-medium text-slate-600">
-              {cfg.subtitle}
+      <section
+        className="rounded-3xl p-[12px] shadow-lg"
+        style={{ background: TOP_BORDER_GRADIENT }}
+      >
+        <div className="rounded-[16px] bg-white p-4 sm:p-5 space-y-4">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-[#0A2B6D]/15 pb-3">
+            <div className="flex items-center gap-3">
+              <span
+                className="inline-flex min-h-[36px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs font-extrabold text-white shadow-2xs"
+                style={{ background: getHeaderView(2) }}
+              >
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
+                  <FolderOpen className="h-3 w-3 text-white" />
+                </span>
+                <span>{cfg.title}</span>
+              </span>
+              <div
+                className="text-xs font-extrabold"
+                style={{ color: getSubheaderColourView(2) }}
+              >
+                {cfg.subtitle}
+              </div>
             </div>
+            <Link
+              to={`/documents?focus=${cfg.focus}`}
+              className="inline-flex min-h-[36px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
+              style={{ background: getHeaderView(0) }}
+            >
+              <span>Open in Document Vault</span>
+              <ExternalLink className="h-3.5 w-3.5 text-white" />
+            </Link>
           </div>
-          <Link
-            to={`/documents?focus=${cfg.focus}`}
-            className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-2xs transition hover:bg-indigo-700"
-          >
-            <span>Open in Document Vault</span>
-            <ExternalLink className="h-3.5 w-3.5 text-white" />
-          </Link>
-        </div>
 
-        <div>
-          {loading ? (
-            <div className="flex items-center gap-2 text-xs font-semibold text-slate-600">
-              <Loader2 className="h-4 w-4 animate-spin text-indigo-600" /> Loading documents…
-            </div>
-          ) : items.length === 0 ? (
-            <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-dashed border-slate-300 bg-slate-50 p-4">
-              <div className="text-xs font-medium text-slate-600">
-                No documents filed yet for {cfg.title}. Upload a record or generate a controlled template to populate this register automatically.
+          <div>
+            {loading ? (
+              <div className="flex items-center gap-2 text-xs font-extrabold text-[#0A2B6D]">
+                <Loader2 className="h-4 w-4 animate-spin text-[#5A00D6]" /> Loading documents…
               </div>
-              <div className="flex flex-wrap items-center gap-2">
-                <Link
-                  to={`/documents?focus=${cfg.focus}`}
-                  className="inline-flex items-center gap-1 rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-indigo-700"
-                >
-                  + Upload Document
-                </Link>
-                <Link
-                  to="/checklists"
-                  className="inline-flex items-center gap-1 rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50"
-                >
-                  Complete Controlled Form
-                </Link>
-              </div>
-            </div>
-          ) : (
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {items.map((d) => {
-                const date = cfg.date(d);
-                return (
-                  <div
-                    key={d.id}
-                    className="flex flex-col gap-2 rounded-xl border border-slate-200 bg-slate-50/70 p-3.5"
+            ) : items.length === 0 ? (
+              <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border-2 border-dashed border-[#0A2B6D]/25 bg-[#F5F0FF]/40 p-3.5">
+                <div className="text-xs font-extrabold text-[#0A2B6D]">
+                  No documents filed yet for {cfg.title}. Upload a record or generate a controlled template to populate this register automatically.
+                </div>
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <Link
+                    to={`/documents?focus=${cfg.focus}`}
+                    className="inline-flex items-center gap-1 rounded-full bg-[#0A2B6D] px-3 py-1 text-[11px] font-extrabold text-white hover:bg-[#5A00D6]"
                   >
-                    <div className="flex items-start gap-2.5">
-                      <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600">
-                        <FileText className="h-3.5 w-3.5" />
-                      </span>
-                      <div className="min-w-0">
-                        <div className="text-xs font-bold text-slate-900" title={cfg.label(d)}>
-                          {cfg.label(d)}
-                        </div>
-                        <div className="text-[11px] font-medium text-slate-500" title={cfg.meta(d)}>
-                          {cfg.meta(d) || ' '}
+                    + Upload Document
+                  </Link>
+                  <Link
+                    to="/checklists"
+                    className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] bg-white px-3 py-1 text-[11px] font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
+                  >
+                    Complete Controlled Form
+                  </Link>
+                  <Link
+                    to="/registers"
+                    className="inline-flex items-center gap-1 rounded-full border border-[#0A2B6D] bg-white px-3 py-1 text-[11px] font-extrabold text-[#5A00D6] hover:bg-[#F5F0FF]"
+                  >
+                    Open Register Hub
+                  </Link>
+                </div>
+              </div>
+            ) : (
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                {items.map((d, idx) => {
+                  const date = cfg.date(d);
+                  const tile = getTilePalette(idx);
+                  const sym = getSymbolView(idx);
+                  return (
+                    <div
+                      key={d.id}
+                      className="flex flex-col gap-2 rounded-2xl border-2 border-[#0A2B6D] p-3.5 shadow-2xs"
+                      style={{ backgroundColor: tile.bg, color: tile.text }}
+                    >
+                      <div className="flex items-start gap-2">
+                        <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] bg-white">
+                          <FileText className="h-3.5 w-3.5" style={{ color: sym.iconColor }} />
+                        </span>
+                        <div className="min-w-0">
+                          <div className="text-xs font-extrabold" style={{ color: tile.text }} title={cfg.label(d)}>
+                            {cfg.label(d)}
+                          </div>
+                          <div className="text-[11px] font-bold" style={{ color: tile.subtext }} title={cfg.meta(d)}>
+                            {cfg.meta(d) || ' '}
+                          </div>
                         </div>
                       </div>
+                      <div className="mt-auto flex items-center justify-between gap-2 pt-1">
+                        {date ? (
+                          <span className="rounded-full border border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
+                            {cfg.dateLabel}: {format(new Date(date), 'd MMM yyyy')}
+                          </span>
+                        ) : (
+                          <span />
+                        )}
+                        {d.file_url || d.file_uri ? (
+                          <button
+                            onClick={() => open(d)}
+                            disabled={opening === d.id}
+                            className="inline-flex items-center gap-1 rounded-full border-2 border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF] disabled:opacity-50"
+                          >
+                            {opening === d.id ? (
+                              <Loader2 className="h-3 w-3 animate-spin" />
+                            ) : (
+                              <Eye className="h-3 w-3 text-[#0072FF]" />
+                            )}
+                            View
+                          </button>
+                        ) : null}
+                      </div>
                     </div>
-                    <div className="mt-auto flex items-center justify-between gap-2 pt-1">
-                      {date ? (
-                        <span className="rounded-md border border-slate-200 bg-white px-2 py-0.5 text-[10px] font-semibold text-slate-600">
-                          {cfg.dateLabel}: {format(new Date(date), 'd MMM yyyy')}
-                        </span>
-                      ) : (
-                        <span />
-                      )}
-                      {d.file_url || d.file_uri ? (
-                        <button
-                          onClick={() => open(d)}
-                          disabled={opening === d.id}
-                          className="inline-flex items-center gap-1 rounded-lg border border-slate-300 bg-white px-2.5 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-50 disabled:opacity-50"
-                        >
-                          {opening === d.id ? (
-                            <Loader2 className="h-3 w-3 animate-spin" />
-                          ) : (
-                            <Eye className="h-3 w-3 text-indigo-600" />
-                          )}
-                          View
-                        </button>
-                      ) : null}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
+                  );
+                })}
+              </div>
+            )}
+          </div>
         </div>
       </section>
     </div>

@@ -101,9 +101,17 @@ export default function LandingFaqSection() {
                     }`}
                   />
                 </button>
+<<<<<<< ours
                 <div id={`faq-answer-${idx}`} hidden={!isOpen} className="border-t border-slate-200/70 px-5 pb-5 pt-3 text-left text-sm leading-relaxed text-[#0A2B6D]/80">
                   {faq.answer}
                 </div>
+=======
+                {isOpen && (
+                  <div className="border-t border-slate-200/70 px-5 pb-5 pt-3 text-left text-sm leading-relaxed text-[#0A2B6D]/80">
+                    {faq.answer}
+                  </div>
+                )}
+>>>>>>> theirs
               </div>
             );
           })}

@@ -20,7 +20,7 @@ const DEFAULTS = {
   addressLine: 'U5/14 Keane Street, Currajong, QLD, 4812',
   abn: '11769681650',
   phone: '0402 165 668',
-  email: 'support@compliancehr.com.au',
+  email: 'kristyleebatkin@live.com.au',
 };
 
 const composeAddress = (business) => [

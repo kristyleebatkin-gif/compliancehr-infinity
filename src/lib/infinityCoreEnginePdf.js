@@ -35,7 +35,7 @@ export function downloadInfinityCoreEnginePdf({
   );
   doc.setFontSize(7.5);
   doc.text(
-    'Software: ComplianceHR Infinity | Business: ComplianceHR Infinity | Email: support@compliancehr.com.au',
+    'Software: ComplianceHR Infinity | Business: ComplianceHR Infinity | Developer: Kristy Lee Whelan | Email: kristyleebatkin@live.com.au',
     margin + 4,
     y + 18.5
   );
@@ -198,7 +198,7 @@ export function downloadInfinityCoreEnginePdf({
   doc.setFontSize(7);
   doc.setTextColor(109, 40, 217);
   doc.text(
-    'ComplianceHR Infinity Core Engine · Complete Control. Greater Confidence. Brighter Success. · support@compliancehr.com.au',
+    'ComplianceHR Infinity Core Engine · Complete Control. Greater Confidence. Brighter Success. · Developer: Kristy Lee Whelan',
     margin,
     290
   );
