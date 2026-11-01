@@ -515,18 +515,13 @@
             },
             {
               "data.admin_approved": true
-            }
-          ]
-        },
-        {
-          "$and": [
-            {
-              "user_condition": {
-                "role": "Employee"
-              }
             },
             {
-              "data.admin_approved": true
+              "data.support_team": {
+                "$in": [
+                  "{{user.id}}"
+                ]
+              }
             }
           ]
         },
