@@ -113,11 +113,6 @@
           "user_condition": {
             "role": "Support Worker"
           }
-        },
-        {
-          "user_condition": {
-            "role": "Auditor"
-          }
         }
       ]
     },
