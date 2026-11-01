@@ -29,20 +29,20 @@ export default function TemplateGenerateDialog({ template, open, onOpenChange })
       toast({ title: 'Could not generate the form', variant: 'destructive' });
     } finally { setBusy(''); }
   };
-  const renderField = (f) => (
+  const renderField = (f, scope = 'subject') => (
     <div key={f.label} className="grid gap-1.5">
-      <Label htmlFor={`review-${f.label}`}>{f.label}</Label>
+      <Label htmlFor={`review-${scope}-${encodeURIComponent(f.label)}`}>{f.label}</Label>
       {f.type === 'Long text' ? (
-        <Textarea id={`review-${f.label}`} rows={3} value={values[f.label] || ''} onChange={(e) => setValue(f.label, e.target.value)} />
+        <Textarea id={`review-${scope}-${encodeURIComponent(f.label)}`} rows={3} value={values[f.label] || ''} onChange={(e) => setValue(f.label, e.target.value)} />
       ) : f.type === 'Yes / No' ? (
         <Select value={values[f.label] || ''} onValueChange={(v) => setValue(f.label, v)}>
-          <SelectTrigger id={`review-${f.label}`}><SelectValue placeholder="Select…" /></SelectTrigger>
+          <SelectTrigger id={`review-${scope}-${encodeURIComponent(f.label)}`}><SelectValue placeholder="Select…" /></SelectTrigger>
           <SelectContent><SelectItem value="Yes">Yes</SelectItem><SelectItem value="No">No</SelectItem></SelectContent>
         </Select>
-      ) : <Input id={`review-${f.label}`} type={f.type === 'Date' ? 'date' : 'text'} value={values[f.label] || ''} onChange={(e) => setValue(f.label, e.target.value)} />}
+      ) : <Input id={`review-${scope}-${encodeURIComponent(f.label)}`} type={f.type === 'Date' ? 'date' : 'text'} value={values[f.label] || ''} onChange={(e) => setValue(f.label, e.target.value)} />}
     </div>
   );
-  const extra = (labels) => CONTROLLED_REVIEW_FIELDS.filter(([label]) => labels.includes(label)).map(([label, type]) => renderField({ label, type }));
+  const extra = (labels) => CONTROLLED_REVIEW_FIELDS.filter(([label]) => labels.includes(label)).map(([label, type]) => renderField({ label, type }, 'control'));
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[85vh] max-w-2xl overflow-y-auto">
@@ -60,7 +60,7 @@ export default function TemplateGenerateDialog({ template, open, onOpenChange })
           <section><h3 className="font-semibold">3. Purpose</h3><p className="text-sm">{record.purpose}</p></section>
           <section><h3 className="font-semibold">4. Scope and instructions</h3><p className="text-sm">{record.scope}</p></section>
           <section><h3 className="font-semibold">5. Related documents</h3><p className="text-sm">{record.relatedDocuments.join(' · ')}</p></section>
-          <section className="space-y-3"><h3 className="font-semibold">6. Main content</h3>{fields.map(renderField)}</section>
+          <section className="space-y-3"><h3 className="font-semibold">6. Main content</h3>{fields.map((field) => renderField(field))}</section>
           <section className="space-y-3"><h3 className="font-semibold">7. Evidence</h3>{extra(['Evidence references and findings'])}</section>
           <section className="space-y-3"><h3 className="font-semibold">8. Actions</h3>{extra(['Actions and responsible person'])}</section>
           <section className="space-y-3"><h3 className="font-semibold">9. Review</h3>{extra(['Reviewer', 'Review outcome', 'Review findings and recommendations'])}</section>
