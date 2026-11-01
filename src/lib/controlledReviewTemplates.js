@@ -14,7 +14,7 @@ export function parseReviewFields(template) {
   } catch { return []; }
 }
 export function controlledReviewRecord(template, values = {}) {
-  const code = template.title.match(/^F\d{3}\b/)?.[0] || `RFT-${template.id.toUpperCase()}`;
+  const code = template.title.match(/^F\d{3}\b/)?.[0] || `RFT-${template.id.slice(-6).toUpperCase()}`;
   return {
     documentName: template.title, documentNumber: code, recordId: template.id,
     versionNumber: template.version || '1.0', status: template.status || 'Draft',
