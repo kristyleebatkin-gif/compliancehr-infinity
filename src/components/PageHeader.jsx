@@ -1,32 +1,24 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { LayoutGrid } from 'lucide-react';
+import ModuleAuditButton from '@/components/ModuleAuditButton';
+import ModuleAuditChecklistButton from '@/components/ModuleAuditChecklistButton';
 import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import { useLocation } from 'react-router-dom';
 import AutoRegisterInsights from '@/components/AutoRegisterInsights';
 import { resolveAuditModule } from '@/lib/moduleAuditReport';
 
-function resolveHeaderSubject(title = '', seg = '') {
-  const t = `${title} ${seg}`.toLowerCase();
-  if (/roster|shift|availab|schedule/.test(t)) return 'Rostering & Shift Management';
-  if (/participant|ndis|goal|intake/.test(t)) return 'Participant Care & NDIS Plans';
-  if (/employee|staff|hr|payroll|appraisal|badge/.test(t)) return 'Workforce, HR & Staff Credentials';
-  if (/incident|emergency|drill|hazard|msds|equipment/.test(t)) return 'WHS, Incident & Emergency Safety';
-  if (/risk|safeguard/.test(t)) return 'Enterprise & Participant Risk Control';
-  if (/compliance|audit|quality|policy|checklist|review/.test(t)) return 'NDIS Governance, Audit & Quality';
-  if (/invoic|quote|receipt|financ|procure/.test(t)) return 'Finance, Claims & Reconciliation';
-  if (/comm|briefing|meeting|feedback|complaint/.test(t)) return 'Communications, Meetings & Logs';
-  if (/train|certificate|skill/.test(t)) return 'Training Academy & Competency';
-  if (/document|safe|vault|storage/.test(t)) return 'Smart Vault & Document Control';
-  if (/operation|control|dashboard|analytics/.test(t)) return 'Executive Command & Operations';
-  return 'ComplianceHR Infinity';
-}
-
+/*
+ * LOCKED HEADER STANDARD (src/HEADER_RULES.md) — restored 2 Nov 2026 at the owner's request.
+ * Exactly 3cm tall, app blue-purple-pink gradient, black outer border, white text with a black outline,
+ * standard body font, short professional description, modular icon tile on the LEFT.
+ * Directly beneath: live compliance tracker, Audit Checklist export and Audit Report — always shown.
+ * Sizing/colour/border/font are enforced in src/index.css (".app-page-header").
+ */
 export default function PageHeader({
   title,
   subtitle,
   description: descriptionProp,
-  subject,
   action,
   actions,
   icon: Icon = LayoutGrid,
@@ -36,60 +28,48 @@ export default function PageHeader({
   afterAudit,
   compactActions = true,
   actionClassName,
+  auditClassName,
 }) {
   const { pathname } = useLocation();
   const seg = `/${pathname.split('/')[1] || ''}`;
-  const modMeta = resolveAuditModule(seg);
-  const description = subtitle || descriptionProp || modMeta?.blurb || '';
-  const subjectLabel = subject || modMeta?.group || resolveHeaderSubject(title, seg);
+  const description = subtitle || descriptionProp || resolveAuditModule(seg)?.blurb || '';
   const resolvedActions = action || actions;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-2.5">
       <div
-        className={cn(
-          'rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 shadow-xs',
-          className
-        )}
+        className={cn('app-page-header relative flex items-center overflow-hidden rounded-2xl px-4 shadow-lg', className)}
+        style={{ background: 'var(--header-gradient)' }}
       >
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <div className="min-w-0 space-y-1.5 text-left">
-            <div className="inline-flex items-center gap-2 rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-700">
-              <Icon className="h-3.5 w-3.5 shrink-0 text-indigo-600" />
-              <span>{subjectLabel}</span>
-            </div>
-
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 leading-tight">
-              {title}
-            </h1>
-
-            {description && (
-              <p className="max-w-3xl text-xs sm:text-sm font-medium leading-relaxed text-slate-600">
-                {description}
-              </p>
-            )}
+        <div className="relative flex min-w-0 w-full items-center gap-3">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/15 shadow-md ring-1 ring-white/30">
+            <Icon className="h-5 w-5" />
           </div>
-
-          {(resolvedActions || beforeAudit || afterAudit) && (
-            <div
-              className={cn(
-                'flex flex-wrap items-center gap-2 shrink-0',
-                compactActions ? 'module-action-bar' : '',
-                actionClassName
-              )}
-            >
-              {beforeAudit}
-              {resolvedActions}
-              {afterAudit}
-            </div>
-          )}
-        </div>
-
-        <div className="mt-4 border-t border-slate-100 pt-3">
-          <ModuleComplianceStrip path={seg} />
+          <div className="min-w-0 flex-1">
+            <h1>{title}</h1>
+            {description && <p className="line-clamp-2">{description}</p>}
+          </div>
         </div>
       </div>
-
+      <div
+        className={cn(
+          'flex flex-wrap items-center border border-border/60 bg-card shadow-sm',
+          compactActions ? 'module-action-bar gap-1 rounded-lg px-1.5 py-1' : 'gap-1.5 rounded-xl p-2'
+        )}
+      >
+        <ModuleComplianceStrip path={seg} />
+        {beforeAudit}
+        <div className={cn('flex shrink-0 items-center gap-1 [&>button]:h-7 [&>button]:gap-1 [&>button]:px-2 [&>button]:text-[11px] [&>button_svg]:mr-0 [&>button_svg]:size-3', auditClassName)}>
+          <ModuleAuditChecklistButton />
+          <ModuleAuditButton />
+        </div>
+        {afterAudit}
+        {resolvedActions && (
+          <div className={cn('flex flex-wrap items-center', compactActions ? 'gap-1' : 'gap-2', actionClassName)}>
+            {resolvedActions}
+          </div>
+        )}
+      </div>
       {under}
       {['Certificates', 'Equipment & MSDS', 'CRM & Leads', 'Projects Hub', 'Feedback & Surveys'].includes(title) && (
         <AutoRegisterInsights placement="header" />
@@ -98,17 +78,7 @@ export default function PageHeader({
   );
 }
 
+// Row of controls rendered just below the header card (left-aligned by default).
 export function HeaderUnderRow({ children, className }) {
-  return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-3.5 shadow-2xs">
-      <div
-        className={cn(
-          'module-action-bar flex flex-wrap items-center gap-2',
-          className
-        )}
-      >
-        {children}
-      </div>
-    </div>
-  );
+  return <div className={cn('module-action-bar flex flex-wrap items-center gap-1', className)}>{children}</div>;
 }
