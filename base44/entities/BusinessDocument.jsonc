@@ -123,11 +123,6 @@
           "user_condition": {
             "role": "Provider Administrator"
           }
-        },
-        {
-          "user_condition": {
-            "role": "Auditor"
-          }
         }
       ]
     },
