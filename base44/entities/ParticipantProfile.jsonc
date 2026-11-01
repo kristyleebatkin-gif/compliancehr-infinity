@@ -495,9 +495,16 @@
           }
         },
         {
-          "user_condition": {
-            "role": "Auditor"
-          }
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            },
+            {
+              "data.audit_consent": "Audit consent received"
+            }
+          ]
         },
         {
           "$and": [
