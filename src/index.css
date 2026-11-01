@@ -391,7 +391,7 @@
     max-height: none !important;
     padding: 0.75rem 1.125rem !important;
   }
-  .app-readable :is(.app-page-header, .dashboard-panel-header, .app-section-card-header, .comm-weather-bar, .comm-panel-bar, .gradient-brand) :is(h1, h2, h3, h4, p, span, button, a, svg, [data-panel-title]) {
+  .app-readable :is(.app-page-header, .dashboard-panel-header, .app-section-card-header, .comm-weather-bar, .comm-panel-bar, .gradient-brand) :is(h1, h2, h3, h4, p, span, button:not(.bg-white), a:not(.bg-white), svg, [data-panel-title]) {
     font-family: var(--font-body) !important;
     color: #ffffff !important;
     text-shadow: none !important;

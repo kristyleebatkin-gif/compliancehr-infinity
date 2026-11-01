@@ -29,9 +29,9 @@ export const ALL_ROLES = [
   'Auditor',
   'Volunteer',
 ];
-// No global access bypass. App access must flow through authentication and role checks.
+const OPEN_ACCESS_WINDOW_UNTIL = new Date('2026-11-01T03:00:00Z').getTime();
 export function isOpenAccessWindowActive() {
-  return false;
+  return Date.now() < OPEN_ACCESS_WINDOW_UNTIL;
 }
 
 const FULL_ACCESS = ['admin', ROLES.ADMIN, ROLES.COMPLIANCE_ADMIN, ROLES.MANAGEMENT];

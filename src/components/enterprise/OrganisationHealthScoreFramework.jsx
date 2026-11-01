@@ -152,10 +152,10 @@ export default function OrganisationHealthScoreFramework({ onScoresLoaded }) {
             type="button"
             onClick={handleRecordSnapshot}
             disabled={recordingSnapshot || loading}
-            className="bg-white text-[#0A2B6D] hover:bg-slate-100 font-extrabold text-xs"
+            className="border border-white/35 bg-white/15 text-white hover:bg-white/25 font-extrabold text-xs"
           >
-            <Camera className="mr-1 h-3.5 w-3.5 text-[#5A00D6]" />
-            <span style={{ color: '#0A2B6D' }}>
+            <Camera className="mr-1 h-3.5 w-3.5 text-white" />
+            <span>
               {recordingSnapshot ? 'Recording…' : 'Record Score Snapshot'}
             </span>
           </Button>
@@ -164,19 +164,19 @@ export default function OrganisationHealthScoreFramework({ onScoresLoaded }) {
             type="button"
             onClick={handleExportCsv}
             disabled={loading || !data}
-            className="bg-white text-[#0A2B6D] hover:bg-slate-100 font-extrabold text-xs"
+            className="border border-white/35 bg-white/15 text-white hover:bg-white/25 font-extrabold text-xs"
           >
-            <Download className="mr-1 h-3.5 w-3.5 text-[#0072FF]" />
-            <span style={{ color: '#0A2B6D' }}>Export Report (CSV)</span>
+            <Download className="mr-1 h-3.5 w-3.5 text-white" />
+            <span>Export Report (CSV)</span>
           </Button>
           <Button
             size="sm"
             type="button"
             onClick={() => setShowBlueprint((v) => !v)}
-            className="bg-white text-[#0A2B6D] hover:bg-slate-100 font-extrabold text-xs"
+            className="border border-white/35 bg-white/15 text-white hover:bg-white/25 font-extrabold text-xs"
           >
-            <Layers className="mr-1 h-3.5 w-3.5 text-[#FF2E9A]" />
-            <span style={{ color: '#0A2B6D' }}>
+            <Layers className="mr-1 h-3.5 w-3.5 text-white" />
+            <span>
               {showBlueprint ? 'Hide 8-Prompt Blueprint' : '8-Prompt Blueprint & Gap Audit'}
             </span>
           </Button>
@@ -185,10 +185,10 @@ export default function OrganisationHealthScoreFramework({ onScoresLoaded }) {
             type="button"
             onClick={refreshScores}
             disabled={loading}
-            className="bg-white text-[#0A2B6D] hover:bg-slate-100 font-extrabold text-xs"
+            className="border border-white/35 bg-white/15 text-white hover:bg-white/25 font-extrabold text-xs"
           >
-            <RefreshCw className={`mr-1 h-3.5 w-3.5 text-[#0072FF] ${loading ? 'animate-spin' : ''}`} />
-            <span style={{ color: '#0A2B6D' }}>Recalculate</span>
+            <RefreshCw className={`mr-1 h-3.5 w-3.5 text-white ${loading ? 'animate-spin' : ''}`} />
+            <span>Recalculate</span>
           </Button>
         </div>
       </div>
@@ -230,7 +230,7 @@ export default function OrganisationHealthScoreFramework({ onScoresLoaded }) {
                     <div className="text-xs font-extrabold uppercase tracking-wider text-[#5A00D6]">
                       {sc.title}
                     </div>
-                    <div className="mt-0.5 flex items-baseline gap-2">
+                    <div className="mt-0.5 flex flex-wrap items-baseline justify-between gap-1">
                       <span className="font-editorial text-2xl font-extrabold text-[#0A2B6D]">
                         {sc.score !== null ? `${sc.score}%` : 'Unassessed'}
                       </span>
