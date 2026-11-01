@@ -77,6 +77,9 @@ export default async function (req) {
       generated_at: new Date().toISOString(),
     });
   } catch (error) {
-    return Response.json({ error: error.message }, { status: 500 });
+    const status = error.status ?? error.response?.status;
+    if (status === 401) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    if (status === 403) return Response.json({ error: 'Forbidden' }, { status: 403 });
+    return Response.json({ error: 'Unable to load register insights' }, { status: 500 });
   }
 }

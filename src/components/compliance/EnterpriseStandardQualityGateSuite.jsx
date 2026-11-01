@@ -346,7 +346,7 @@ export default function EnterpriseStandardQualityGateSuite() {
               ComplianceHR Infinity — Enterprise Document Control, Reporting, Vault &amp; Quality Gate Studio
             </h2>
             <p className="text-xs font-semibold text-white/95">
-              11-Section Controlled Forms · 16-Field Document Control · 5-Mode Preview · 4-Format Exports (PDF, Excel, Word, CSV) · 16 Quick Date Ranges · Auto-Filing to Document Vault &amp; Company Safe
+              11-Section Controlled Forms · 16-Field Document Control · 5-Mode Preview · 4-Format Exports (PDF, Excel, Word, CSV) · {QUICK_16_DATE_FILTERS.length} Quick Date Ranges · Auto-Filing to Document Vault &amp; Company Safe
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-1.5 shrink-0">
@@ -911,7 +911,7 @@ export default function EnterpriseStandardQualityGateSuite() {
             <div className="flex flex-wrap items-center justify-between gap-2">
               <span className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
                 <Calendar className="h-3.5 w-3.5 text-[#0072FF]" />
-                Quick Date Filters (16 Standard Horizons + Custom Date Range)
+                Quick Date Filters ({QUICK_16_DATE_FILTERS.length} Standard Horizons + Custom Date Range)
               </span>
               <div className="flex flex-wrap items-center gap-2 text-xs font-bold text-[#0A2B6D]">
                 <span>Custom From:</span>

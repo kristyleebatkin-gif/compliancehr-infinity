@@ -85,7 +85,7 @@ export default function Enterprise12PillarCommandBar({
               className="h-6 w-6 rounded-md border border-slate-200 bg-white p-0.5"
             />
             <span className="text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-              12-Pillar Executive Telemetry &amp; 14 Foundation Domains (Microsoft 365 / ServiceNow / Workday Grade)
+              12-Pillar Executive Telemetry &amp; {PLATFORM_14_FOUNDATION_DOMAINS.length} Foundation Domains (Microsoft 365 / ServiceNow / Workday Grade)
             </span>
           </div>
           <Badge className="bg-[#0A2B6D] text-white text-[10px]">

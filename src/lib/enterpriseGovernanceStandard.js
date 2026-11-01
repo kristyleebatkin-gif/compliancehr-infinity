@@ -95,7 +95,7 @@ export const QUALITY_GATE_19_CHECKS = [
   { id: 'QG-08', label: 'Correct workflow routing' },
   { id: 'QG-09', label: 'Correct storage location (Vault & Company Safe)' },
   { id: 'QG-10', label: 'Correct module classification' },
-  { id: 'QG-11', label: 'Correct relationships (16 linked domains)' },
+  { id: 'QG-11', label: `Correct relationship targets (${RECORD_16_RELATIONSHIP_TARGETS.length} available domains)` },
   { id: 'QG-12', label: 'Correct reporting' },
   { id: 'QG-13', label: 'Correct exports (PDF, Excel, Word, CSV)' },
   { id: 'QG-14', label: 'Correct auditing & permanent change history' },
