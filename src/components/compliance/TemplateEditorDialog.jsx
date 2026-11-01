@@ -51,8 +51,8 @@ export default function TemplateEditorDialog({ open, onOpenChange, template, onS
         description: description.trim(),
         instructions: instructions.trim(),
         fields_schema: JSON.stringify(clean),
-        status: 'Active',
-        created_by: user?.full_name || '',
+        status: template?.status || 'Draft',
+        created_by: template?.created_by || user?.full_name || '',
       };
       if (template) await base44.entities.FormTemplate.update(template.id, payload);
       else await base44.entities.FormTemplate.create(payload);
