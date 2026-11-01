@@ -210,33 +210,7 @@ export default function PricingSection({ onContactSales }) {
               Monthly subscription pricing is shown below. Confirm included modules, document availability, usage allowances, support and any annual billing options with our team before purchase.
             </p>
 
-            {/* Pricing period note; annual rates require a confirmed quote. */}
-            <div className="mx-auto w-full max-w-lg pt-1">
-              <div className="grid grid-cols-1 gap-1.5 rounded-2xl border border-slate-200 bg-slate-100/80 p-1.5 sm:grid-cols-2">
-                <button
-                  type="button"
-                  onClick={() => setBilling('monthly')}
-                  className={`flex min-h-[40px] w-full items-center justify-center rounded-xl px-4 py-2 text-xs sm:text-sm font-extrabold transition ${
-                    billing === 'monthly'
-                      ? 'bg-[#0A2B6D] text-white shadow-sm'
-                      : 'bg-white/60 text-[#0A2B6D] hover:text-[#0072FF]'
-                  }`}
-                >
-                  Monthly Subscription
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setBilling('yearly')}
-                  className={`flex min-h-[40px] w-full items-center justify-center rounded-xl px-4 py-2 text-xs sm:text-sm font-extrabold transition ${
-                    billing === 'yearly'
-                      ? 'bg-[#5A00D6] text-white shadow-sm'
-                      : 'bg-white/60 text-[#0A2B6D] hover:text-[#5A00D6]'
-                  }`}
-                >
-                  Annual Billing (Monthly Rate)
-                </button>
-              </div>
-            </div>
+            <p className="mx-auto max-w-lg text-center text-xs sm:text-sm font-semibold text-[#0A2B6D]/70">Monthly prices shown. Contact us for annual billing options and a written quote.</p>
           </div>
 
           {/* 6 Smart Enhanced Subscription Cards Grid — Centred Users & Fitted Token Info */}
