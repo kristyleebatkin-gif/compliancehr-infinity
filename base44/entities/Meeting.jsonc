@@ -170,11 +170,6 @@
           "user_condition": {
             "role": "Intake Officer"
           }
-        },
-        {
-          "user_condition": {
-            "role": "Auditor"
-          }
         }
       ]
     },
