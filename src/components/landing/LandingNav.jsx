@@ -41,10 +41,8 @@ export default function LandingNav({ onBookDemo }) {
             alt="ComplianceHR Infinity"
             className="mt-1 h-5 w-14 shrink-0 rounded-md border border-slate-200 bg-white px-1 py-0.5 object-contain shadow-2xs"
           />
-          <div className="mt-1 text-[8.5px] font-extrabold leading-none whitespace-nowrap">
-            <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
-            <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
-            <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
+          <div className="mt-1 text-[8.5px] font-bold text-slate-600 leading-none whitespace-nowrap">
+            Complete Control. Greater Confidence. Brighter Success.
           </div>
         </Link>
 
@@ -60,22 +58,10 @@ export default function LandingNav({ onBookDemo }) {
           ))}
         </nav>
 
-        <div className="flex shrink-0 items-center gap-1.5">
-          <Link
-            to="/dashboard"
-            className="inline-flex items-center justify-center whitespace-nowrap rounded-lg border-2 border-[#0A2B6D] bg-white px-2.5 py-1.5 text-[11px] xl:text-xs font-extrabold text-[#0A2B6D] shadow-2xs transition hover:border-[#0072FF] hover:text-[#0072FF]"
-          >
-            Dashboard
-          </Link>
-          <Link
-            to="/universal-storage"
-            className="hidden sm:inline-flex items-center justify-center whitespace-nowrap rounded-lg border-2 border-[#5A00D6] bg-[#F5F0FF] px-2.5 py-1.5 text-[11px] xl:text-xs font-extrabold text-[#5A00D6] shadow-2xs transition hover:bg-[#5A00D6] hover:text-white"
-          >
-            Universal Storage Hub
-          </Link>
+        <div className="flex shrink-0 items-center gap-2">
           <Link
             to="/login"
-            className="hidden sm:inline-flex items-center justify-center whitespace-nowrap rounded-lg px-2 py-1.5 text-[11px] xl:text-xs font-extrabold text-[#0A2B6D] transition hover:bg-slate-100"
+            className="hidden sm:inline-flex items-center justify-center whitespace-nowrap rounded-lg px-2.5 py-1.5 text-[11px] xl:text-xs font-extrabold text-[#0A2B6D] transition hover:text-[#0072FF]"
           >
             Sign In
           </Link>
@@ -83,7 +69,7 @@ export default function LandingNav({ onBookDemo }) {
           <button
             type="button"
             onClick={() => onBookDemo && onBookDemo('Book a Personal Demo')}
-            className="hidden md:inline-flex items-center gap-1 whitespace-nowrap rounded-lg border-2 border-[#0A2B6D] bg-white px-2.5 py-1.5 text-[11px] xl:text-xs font-extrabold text-[#0A2B6D] transition hover:bg-[#0A2B6D] hover:text-white"
+            className="hidden md:inline-flex items-center gap-1 whitespace-nowrap rounded-lg border-2 border-[#0A2B6D] bg-white px-3 py-1.5 text-[11px] xl:text-xs font-extrabold text-[#0A2B6D] transition hover:bg-[#0A2B6D] hover:text-white"
           >
             <Calendar className="h-3.5 w-3.5 shrink-0 text-[#0072FF]" />
             <span>Book a Demo</span>
@@ -91,7 +77,7 @@ export default function LandingNav({ onBookDemo }) {
 
           <Link
             to="/register"
-            className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-lg px-3 py-1.5 text-[11px] xl:text-xs font-extrabold text-white shadow-sm transition hover:opacity-95"
+            className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-lg px-3.5 py-1.5 text-[11px] xl:text-xs font-extrabold text-white shadow-sm transition hover:opacity-95"
             style={{
               background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
             }}
@@ -109,39 +95,6 @@ export default function LandingNav({ onBookDemo }) {
           >
             {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
           </button>
-        </div>
-      </div>
-
-      {/* Direct 1-Click Workspace & Route Bar visible across Desktop, Tablet (769px) & Mobile */}
-      <div className="border-t border-slate-200/80 bg-[#F5F0FF]/80 px-3 py-1.5 sm:px-5">
-        <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-1.5">
-          <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-            Direct Workspace Routes:
-          </span>
-          <div className="flex flex-wrap items-center gap-1.5">
-            {[
-              ['Dashboard', '/dashboard'],
-              ['45 Master Registers Hub', '/registers'],
-              ['User Success & Evidence Hub', '/user-success'],
-              ['Record Intelligence Hub', '/record-intelligence'],
-              ['Frontline Rapid Hub', '/frontline-hub'],
-              ['Workforce Presence & Safety', '/workforce-presence'],
-              ['Universal Storage & Export Hub', '/universal-storage'],
-              ['Document Vault', '/documents'],
-              ['Company Safe', '/company-safe'],
-              ['Compliance Centre', '/compliance'],
-              ['Operations Centre', '/operations-centre'],
-              ['Connect AI Agent', '/connect'],
-            ].map(([label, path]) => (
-              <Link
-                key={path}
-                to={path}
-                className="rounded-md border border-[#0A2B6D]/30 bg-white px-2 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D] transition hover:border-[#0072FF] hover:bg-[#0A2B6D] hover:text-white"
-              >
-                {label}
-              </Link>
-            ))}
-          </div>
         </div>
       </div>
 

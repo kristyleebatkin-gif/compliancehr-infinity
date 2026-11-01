@@ -70,8 +70,8 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
   const [tab, setTab] = useState('documents');
   const canViewUploads = isVaultManager(me?.role);
   const canViewDataControl = isVaultProvider(me?.role);
-  const canManageAll = canViewUploads || ['Compliance Manager', 'Administration', 'Team Leader', 'Human Resources Manager'].includes(me?.role);
-  const canEditDoc = (d) => canManageAll || (me?.role === 'Support Worker' && d.employee_name === me?.full_name);
+  const canManageAll = canViewUploads || ['Compliance Manager', 'Compliance Administrator', 'Administration', 'Team Leader', 'Human Resources Manager', 'Quality & Improvement Manager'].includes(me?.role);
+  const canEditDoc = (d) => canManageAll || (['Support Worker', 'Employee'].includes(me?.role) && d.employee_name === me?.full_name);
 
   const load = useCallback(async () => {
     setLoading(true);

@@ -190,13 +190,13 @@
 
 @layer utilities {
   .font-editorial {
-    font-family: "Fraunces", Georgia, "Times New Roman", serif;
+    font-family: "Manrope", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-style: normal;
   }
   .font-editorial-italic {
-    font-family: "Fraunces", Georgia, "Times New Roman", serif;
-    font-style: italic;
+    font-family: "Manrope", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-style: normal;
     display: inline-block;
-    padding-right: 0.14em;
   }
   .font-elegant {
     font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;

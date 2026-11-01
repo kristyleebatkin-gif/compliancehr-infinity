@@ -233,11 +233,11 @@ export default function DemoBookingModal({ open, onClose, initialTopic = 'Execut
 
               <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
                 <a
-                  href="mailto:kristyleebatkin@live.com.au"
+                  href="mailto:support@compliancehr.com.au"
                   className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-[#5A00D6]/20 bg-[#5A00D6]/5 px-2.5 py-1.5 text-xs font-extrabold text-[#5A00D6] hover:bg-[#5A00D6]/10"
                 >
                   <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-[#0072FF]" />
-                  <span>kristyleebatkin@live.com.au</span>
+                  <span>support@compliancehr.com.au</span>
                 </a>
                 <button
                   type="submit"

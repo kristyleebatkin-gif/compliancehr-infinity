@@ -50,11 +50,11 @@ export default function PublicPageShell({ children }) {
             <span>© {new Date().getFullYear()} {COMPANY_NAME}. All rights reserved.</span>
           </span>
           <a
-            href="mailto:kristyleebatkin@live.com.au"
+            href="mailto:support@compliancehr.com.au"
             className="inline-flex items-center gap-1.5 rounded-lg bg-white/15 px-2.5 py-1 font-extrabold text-white transition hover:bg-white/25 whitespace-nowrap"
           >
             <Mail className="h-3.5 w-3.5 shrink-0 text-[#00C6FF]" />
-            <span>kristyleebatkin@live.com.au</span>
+            <span>support@compliancehr.com.au</span>
           </a>
         </div>
       </div>

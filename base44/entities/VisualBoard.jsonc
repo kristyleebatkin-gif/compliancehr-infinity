@@ -197,16 +197,6 @@
               "{{user.id}}"
             ]
           }
-        },
-        {
-          "user_condition": {
-            "role": "Support Worker"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Participant"
-          }
         }
       ]
     },
@@ -233,7 +223,11 @@
           }
         },
         {
-          "data.team_worker_ids": "{{user.id}}"
+          "data.team_worker_ids": {
+            "$in": [
+              "{{user.id}}"
+            ]
+          }
         },
         {
           "data.participant_user_id": "{{user.id}}"
@@ -249,16 +243,6 @@
               "data.audit_consent": "Audit consent received"
             }
           ]
-        },
-        {
-          "user_condition": {
-            "role": "Support Worker"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Participant"
-          }
         }
       ]
     },

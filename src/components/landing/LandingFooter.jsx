@@ -25,10 +25,8 @@ export default function LandingFooter({ onBookDemo }) {
                     Infinity
                   </span>
                 </div>
-                <div className="mt-1 text-[10px] xl:text-[11px] font-extrabold whitespace-nowrap">
-                  <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
-                  <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
-                  <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
+                <div className="mt-1 text-[10px] xl:text-[11px] font-bold text-slate-600 whitespace-nowrap">
+                  Complete Control. Greater Confidence. Brighter Success.
                 </div>
               </div>
             </Link>
@@ -103,11 +101,11 @@ export default function LandingFooter({ onBookDemo }) {
                 <li><Link to="/help" className="whitespace-nowrap hover:text-[#0072FF]">Help &amp; Support Centre</Link></li>
                 <li>
                   <a
-                    href="mailto:kristyleebatkin@live.com.au"
+                    href="mailto:support@compliancehr.com.au"
                     className="inline-flex max-w-full flex-wrap items-center gap-1.5 rounded-lg border border-[#5A00D6]/25 bg-[#5A00D6]/5 px-2.5 py-1.5 text-[11px] xl:text-xs font-extrabold text-[#5A00D6] hover:bg-[#5A00D6]/10"
                   >
                     <Mail className="h-3.5 w-3.5 shrink-0 text-[#FF2E9A]" />
-                    <span className="break-all sm:break-normal">kristyleebatkin@live.com.au</span>
+                    <span className="break-all sm:break-normal">support@compliancehr.com.au</span>
                   </a>
                 </li>
               </ul>
@@ -119,13 +117,13 @@ export default function LandingFooter({ onBookDemo }) {
           <div className="flex flex-wrap items-center justify-center gap-2 text-center sm:text-left">
             <span>© {new Date().getFullYear()} ComplianceHR Infinity. All rights reserved.</span>
             <span>•</span>
-            <span className="font-bold text-[#0A2B6D]">Lead Developer: Kristy Lee Whelan</span>
+            <span className="font-bold text-[#0A2B6D]">ComplianceHR Enterprise Support</span>
             <span>•</span>
             <a
-              href="mailto:kristyleebatkin@live.com.au"
+              href="mailto:support@compliancehr.com.au"
               className="font-extrabold text-[#5A00D6] hover:underline whitespace-nowrap"
             >
-              kristyleebatkin@live.com.au
+              support@compliancehr.com.au
             </a>
           </div>
           <div className="flex items-center gap-4 whitespace-nowrap">

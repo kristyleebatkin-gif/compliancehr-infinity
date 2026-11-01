@@ -60,7 +60,7 @@ export const NAV_PERMISSIONS = {
   participants: OPERATIONS, intake: PERSONAL, staff: OPERATIONS, training: PERSONAL, compliance: OPERATIONS,
   'daily-briefing': OPERATIONS, incidents: PERSONAL, risks: PERSONAL, 'audit-centre': OPERATIONS,
   'universal-storage': PERSONAL, documents: PERSONAL, 'company-safe': FULL_ACCESS, certificates: OPERATIONS, 'audit-log': OPERATIONS,
-  'auditor-portal': [...FULL_ACCESS, ROLES.AUDITOR], feedback: PERSONAL, tasks: PERSONAL, quality: OPERATIONS,
+  'auditor-portal': [...FULL_ACCESS, ROLES.AUDITOR], feedback: PERSONAL, tasks: PERSONAL, quality: OPERATIONS, 'review-due': OPERATIONS,
   'suggestions-hub': OPERATIONS, assets: OPERATIONS, goals: PERSONAL, shifts: PERSONAL, rostering: PERSONAL,
   governance: OPERATIONS,
   'human-resources': PERSONAL, invoicing: FULL_ACCESS, quotes: FULL_ACCESS, manual: PERSONAL, users: FULL_ACCESS,
