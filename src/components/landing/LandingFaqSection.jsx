@@ -8,49 +8,49 @@ const FAQS = [
     topic: 'NDIS Compliance',
     question: 'How does ComplianceHR Infinity align with the NDIS Practice Standards and Quality Indicators?',
     answer:
-      'ComplianceHR Infinity is purpose-built around the NDIS Practice Standards, featuring 17 compliance categories and 356 pre-mapped verification checkpoints. Every policy, participant consent, risk assessment, incident report, and staff credential links directly to its corresponding standard.',
+      'ComplianceHR Infinity includes NDIS Practice Standards reference categories and verification checkpoints to help teams organise evidence. Providers should confirm that their records and evidence meet the current requirements for their services.',
   },
   {
     topic: 'Data Security',
     question: 'How is sensitive participant and employee information protected?',
     answer:
-      'All records are protected by strict Row-Level Security (RLS), private encrypted document storage with time-limited signed URLs, immutable user audit logs, and built-in Notifiable Data Breach (NDB) governance controls aligned with the Australian Privacy Act 1988.',
+      'Access is controlled through role and record-level permissions. Controls vary by record type, so administrators should review the configured permissions and storage settings before adding sensitive live records.',
   },
   {
     topic: 'User Access',
     question: 'Can we control what Support Workers, Team Leaders, Finance, Participants, and Auditors see?',
     answer:
-      'Yes. Granular role-based access controls enforce strict boundaries across 15 organisational roles. Support workers only view approved profiles and assigned shifts, participants access their own portal, and external NDIS auditors only see records where explicit audit consent has been granted.',
+      'Access is controlled by app role and record permissions. Some participant records require explicit audit consent; other records remain restricted to roles that have an explicit read rule. Review the configured scope before inviting an external auditor.',
   },
   {
     topic: 'Training Records',
     question: 'How are staff credentials, NDIS Worker Screening, and training expiries managed?',
     answer:
-      'The platform tracks 100-point HR files including NDIS Worker Screening Checks, Working with Children / Blue Cards, Police Checks, First Aid, CPR, and LMS modules. Automated 90/60/30/14-day alerts notify staff and managers before expiry, and the Roster Gate blocks unscreened shifts.',
+      'Staff records can include screening checks, qualifications and training information. Available expiry reminders and rostering checks depend on the records and configuration in your workspace.',
   },
   {
     topic: 'Audit Preparation',
     question: 'How quickly can we prepare for an NDIS mid-term or certification audit?',
     answer:
-      'With our 2-Minute Express Audit engine and Dual Master Audit Checklists, you can verify evidence across all 17 categories, generate A4 PDF board and auditor packs in one click, and invite external auditors into the read-only, consent-gated Auditor Portal.',
+      'The app includes audit tools and a read-only review portal. Available evidence depends on the records entered and the permissions configured for the auditor account.',
   },
   {
     topic: 'Reporting',
     question: 'What executive, clinical, and financial reports are included?',
     answer:
-      'You can export instant A4 PDF and CSV reports for Board Quality Intelligence, 24h/5d Reportable Incidents, ISO 31000 Risk Matrices, 10-Weekly Participant Progress Reviews, 30-Action Batch Audit Logs, and 3-Way NDIS Claim Reconciliation.',
+      'Report and export options vary by module and by the records available in your workspace. Review each report before relying on it for governance, claims or regulatory submissions.',
   },
   {
     topic: 'AI Assistant',
     question: 'How does the 24/7 AI Assistant help our team day to day?',
     answer:
-      'Our built-in 24/7 AI Copilot assists with drafting NDIS-compliant policies and shift notes, suggesting support line items, generating LMS training quizzes, triaging incident follow-ups, and scanning all 46 modules for overdue compliance actions.',
+      'The AI assistant can help draft and organise operational content. A qualified person should review generated material before it is used for participant care, payroll, claims or compliance decisions.',
   },
   {
     topic: 'Implementation Process',
     question: 'How fast can our organisation onboard and migrate existing records?',
     answer:
-      'You can start immediately with a 14-day free trial. Bulk CSV/Excel import tools, 100+ tailored Business Details document templates, and guided 4-step setup allow NDIS providers to go live across all 46 modules in days rather than months.',
+      'You can start with a 14-day free trial. Setup time depends on your data, configuration and migration needs; confirm import options and implementation support for your workspace.',
   },
 ];
 
@@ -84,6 +84,7 @@ export default function LandingFaqSection() {
                   type="button"
                   onClick={() => setOpenIndex(isOpen ? -1 : idx)}
                   aria-expanded={isOpen}
+                  aria-controls={`faq-answer-${idx}`}
                   className="flex w-full items-start justify-between gap-3 p-5 text-left"
                 >
                   <div>
@@ -101,7 +102,7 @@ export default function LandingFaqSection() {
                   />
                 </button>
                 {isOpen && (
-                  <div className="border-t border-slate-200/70 px-5 pb-5 pt-3 text-left text-sm leading-relaxed text-[#0A2B6D]/80">
+                  <div id={`faq-answer-${idx}`} className="border-t border-slate-200/70 px-5 pb-5 pt-3 text-left text-sm leading-relaxed text-[#0A2B6D]/80">
                     {faq.answer}
                   </div>
                 )}
