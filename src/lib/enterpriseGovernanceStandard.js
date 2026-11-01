@@ -989,10 +989,10 @@ export function exportControlledRecordAsPdf(record, { save = true, log = true } 
   let y = 40;
   const clean = (value) => String(value ?? '').replace(/[\u2013\u2014]/g, '-').replace(/\u2022/g, ' / ');
   const nextPage = () => { doc.addPage(); y = 40; };
-  const line = (text, { bold = false, size = 9, indent = 0 } = {}) => {
+  const line = (text, { bold = false, size = 9, indent = 0, white = false } = {}) => {
     doc.setFont('helvetica', bold ? 'bold' : 'normal');
     doc.setFontSize(size);
-    doc.setTextColor(10, 43, 109);
+    doc.setTextColor(...(white ? [255, 255, 255] : [10, 43, 109]));
     const lines = doc.splitTextToSize(clean(text || '____________________'), contentWidth - indent);
     for (const item of lines) {
       if (y + size + 4 > 780) nextPage();
@@ -1008,10 +1008,14 @@ export function exportControlledRecordAsPdf(record, { save = true, log = true } 
     line(body);
     y += 6;
   };
-  line('1. COMPLIANCEHR INFINITY - CONTROLLED FORM', { bold: true, size: 10 });
-  line(record.documentName || record.title || 'Controlled Record', { bold: true, size: 15 });
-  line(`Document ${record.documentNumber} | Version ${record.versionNumber} | Status ${record.status}`);
-  y += 12;
+  doc.setFillColor(10, 43, 109);
+  doc.rect(0, 0, width, 94, 'F');
+  doc.setFillColor(255, 46, 154);
+  doc.rect(0, 94, width, 4, 'F');
+  line('1. COMPLIANCEHR INFINITY - CONTROLLED FORM', { bold: true, size: 10, white: true });
+  line(record.documentName || record.title || 'Controlled Record', { bold: true, size: 15, white: true });
+  line(`Document ${record.documentNumber} | Version ${record.versionNumber} | Status ${record.status}`, { white: true });
+  y = Math.max(y + 12, 118);
   line('2. DOCUMENT CONTROL', { bold: true, size: 10 });
   const meta = [
     ['Document name', record.documentName], ['Document number', record.documentNumber],
@@ -1022,7 +1026,24 @@ export function exportControlledRecordAsPdf(record, { save = true, log = true } 
     ['Next review date', record.nextReviewDate], ['Review frequency', record.reviewFrequency],
     ['Approved by', record.approvedBy], ['Approval date', record.approvalDate],
   ];
-  for (const [label, value] of meta) line(`${label}: ${value || '____________________'}`);
+  for (let index = 0; index < meta.length; index += 2) {
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(8);
+    doc.setTextColor(10, 43, 109);
+    const cells = meta.slice(index, index + 2).map(([label, value]) =>
+      doc.splitTextToSize(clean(`${label}: ${value || '____________________'}`), contentWidth / 2 - 14)
+    );
+    const height = Math.max(...cells.map((cell) => cell.length)) * 11 + 10;
+    if (y + height > 780) nextPage();
+    cells.forEach((cell, column) => {
+      const x = margin + column * contentWidth / 2;
+      doc.setDrawColor(217, 217, 217);
+      doc.rect(x, y, contentWidth / 2, height);
+      doc.text(cell, x + 7, y + 13);
+    });
+    y += height;
+  }
+  y += 8;
   section('3. PURPOSE', record.purpose);
   section('4. SCOPE AND INSTRUCTIONS', record.scope);
   section('5. RELATED DOCUMENTS AND OBLIGATIONS', (record.relatedDocuments || []).join('\n'));
