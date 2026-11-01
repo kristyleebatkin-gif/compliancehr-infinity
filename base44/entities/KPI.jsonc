@@ -140,11 +140,6 @@
           }
         },
         {
-          "user_condition": {
-            "role": "Auditor"
-          }
-        },
-        {
           "data.employee_user_id": "{{user.id}}"
         }
       ]
