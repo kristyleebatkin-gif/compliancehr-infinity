@@ -92,11 +92,6 @@
           "user_condition": {
             "role": "Support Workers (SN)"
           }
-        },
-        {
-          "user_condition": {
-            "role": "Auditor"
-          }
         }
       ]
     },
