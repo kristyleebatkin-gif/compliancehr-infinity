@@ -32,11 +32,11 @@ export default function AuditorsPortal({ embedded = false } = {}) {
   const load = async () => {
     const today2 = today;
     const [auditsPage, openActions, overdueActions, totalActions, obsPage] = await Promise.all([
-      base44.entities.Audit.filter({}, { sort: '-created_date', limit: 100 }),
-      base44.entities.AuditAction.count({ status: 'Open' }),
-      base44.entities.AuditAction.count({ due_date: { $lt: today2 }, status: { $nin: ['Completed', 'Cancelled'] } }),
-      base44.entities.AuditAction.count({}),
-      base44.entities.AuditorObservation.filter({}, { sort: '-created_date', limit: 100 }),
+      base44.entities.Audit.filter({}, { sort: '-created_date', limit: 100 }).catch(() => ({ items: [] })),
+      base44.entities.AuditAction.count({ status: 'Open' }).catch(() => 0),
+      base44.entities.AuditAction.count({ due_date: { $lt: today2 }, status: { $nin: ['Completed', 'Cancelled'] } }).catch(() => 0),
+      base44.entities.AuditAction.count({}).catch(() => 0),
+      base44.entities.AuditorObservation.filter({}, { sort: '-created_date', limit: 100 }).catch(() => ({ items: [] })),
     ]);
     const audits = auditsPage.items || [];
     const obs = obsPage.items || [];
@@ -77,7 +77,7 @@ export default function AuditorsPortal({ embedded = false } = {}) {
         embedded={embedded}
         icon={ClipboardCheck}
         title="Auditor Portal"
-        subtitle="Live read-only collaboration view for internal and external auditors: compliance evidence, audits, corrective actions and observation log."
+        subtitle="Review audit information permitted by your role. Auditors can submit observations; access to source records depends on the record's consent and permission rules."
         moduleKey="auditor-portal"
         small={data ? [
           ['Audits on record', audits.length],
@@ -93,14 +93,14 @@ export default function AuditorsPortal({ embedded = false } = {}) {
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
             <span className="font-extrabold uppercase tracking-wider text-[#5A00D6]">
-              Permission-Based Auditing · Consent &amp; Authority Gate Active
+              Role and Consent Controls
             </span>
             <p className="mt-0.5 font-semibold text-[#0A2B6D]">
-              NDIS Auditors, External Auditors and Internal Auditors are only shown records where active Consent exists, Authority exists, and Access is permitted. Withdrawn consent records remain protected and excluded.
+              Participant records are shown to auditors only where audit consent is recorded. Records without an explicit consent or auditor-scope rule remain restricted.
             </p>
           </div>
           <span className="rounded-full bg-[#0A2B6D] px-3 py-1 text-[10px] font-extrabold text-white">
-            Verified Consent Filter Enforced
+            Access restricted by record permissions
           </span>
         </div>
       </div>
@@ -144,7 +144,7 @@ export default function AuditorsPortal({ embedded = false } = {}) {
             <TabsContent value="observations" className="mt-4 space-y-4">
               <Card>
                 <CardContent className="space-y-3 p-4">
-                  <p className="text-sm font-bold">Record an observation</p>
+                  <p className="text-sm font-bold">Submit an auditor observation</p>
                   <Textarea
                     placeholder="What did you observe? (evidence seen, good practice, gap identified...)"
                     value={form.observation}
