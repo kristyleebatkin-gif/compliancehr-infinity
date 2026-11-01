@@ -44,7 +44,7 @@ export default function ReviewFormTemplates() {
       description: tpl.description || '',
       instructions: tpl.instructions || '',
       fields_schema: tpl.fields_schema || '[]',
-      status: 'Active',
+      status: 'Draft',
       created_by: tpl.created_by || '',
     });
     toast({ title: 'Template duplicated', description: `${tpl.title} (copy)` });
