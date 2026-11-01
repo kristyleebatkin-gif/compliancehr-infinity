@@ -151,11 +151,6 @@
           "user_condition": {
             "role": "Administration"
           }
-        },
-        {
-          "user_condition": {
-            "role": "Auditor"
-          }
         }
       ]
     },
