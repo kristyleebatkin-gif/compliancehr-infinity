@@ -53,9 +53,16 @@
           }
         },
         {
-          "user_condition": {
-            "role": "Auditor"
-          }
+          "$and": [
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            },
+            {
+              "created_by_id": "{{user.id}}"
+            }
+          ]
         },
         {
           "user_condition": {
