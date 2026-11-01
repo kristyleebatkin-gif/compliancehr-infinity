@@ -985,6 +985,7 @@ export function exportControlledRecordAsPdf(record, { save = true, log = true } 
   const doc = new jsPDF({ unit: 'pt', format: 'a4' });
   const width = doc.internal.pageSize.getWidth();
   const margin = 36;
+  const versionLabel = String(record.versionNumber || '').replace(/^v/i, '');
   const contentWidth = width - margin * 2;
   let y = 40;
   const clean = (value) => String(value ?? '').replace(/[\u2013\u2014]/g, '-').replace(/\u2022/g, ' / ');
@@ -1074,10 +1075,10 @@ export function exportControlledRecordAsPdf(record, { save = true, log = true } 
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(7.5);
     doc.setTextColor(90, 0, 214);
-    doc.text(clean(`11. CONTROLLED FOOTER | ${record.documentNumber} v${record.versionNumber} | ${record.status}`), margin, 812);
+    doc.text(clean(`11. CONTROLLED FOOTER | ${record.documentNumber} v${versionLabel} | ${record.status}`), margin, 812);
     doc.text(`Page ${page} of ${pages}`, width - margin, 812, { align: 'right' });
   }
-  if (save) doc.save(`${record.documentNumber}-v${record.versionNumber}.pdf`);
+  if (save) doc.save(`${record.documentNumber}-v${versionLabel}.pdf`);
   if (log) base44.functions.invoke('logUserAction', {
     action: 'Export', entity_type: record.module || 'ControlledDocument',
     record_id: record.documentNumber, record_title: record.documentName,
