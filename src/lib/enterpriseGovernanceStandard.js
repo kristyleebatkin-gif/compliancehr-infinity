@@ -1001,7 +1001,11 @@ export function exportControlledRecordAsPdf(record, { save = true, log = true } 
     }
   };
   const section = (heading, body) => {
-    if (y + 48 > 780) nextPage();
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    const bodyHeight = doc.splitTextToSize(clean(body || '____________________'), contentWidth).length * 13;
+    const keepHeight = Math.min(bodyHeight + 42, 740);
+    if (y + keepHeight > 780) nextPage();
     y += 8;
     line(heading, { bold: true, size: 10 });
     y += 4;
