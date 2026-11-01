@@ -20,7 +20,7 @@ import { useAuth } from '@/lib/AuthContext';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 
-const MY_WORK_11_STREAMS = [
+export const MY_WORK_11_STREAMS = [
   { id: 'tasks', label: 'My Tasks', icon: CheckSquare, href: '/tasks' },
   { id: 'actions', label: 'My Actions', icon: CheckSquare, href: '/quality' },
   { id: 'reviews', label: 'My Reviews', icon: CalendarClock, href: '/review-due' },
@@ -141,13 +141,13 @@ export default function MyWorkArea9Panel({ compact = false }) {
 
   return (
     <section
-      aria-label="My Workspace — 11 Personalised Operational & Compliance Streams"
+      aria-label={`My Workspace — ${MY_WORK_11_STREAMS.length} Personalised Operational & Compliance Streams`}
       className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 shadow-sm space-y-3"
     >
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-2.5">
         <div>
           <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
-            My Workspace &amp; My Compliance Standard · 11 Personalised Streams · 1-Click Completion
+            My Workspace &amp; My Compliance Standard · {MY_WORK_11_STREAMS.length} Personalised Streams · 1-Click Completion
           </span>
           <h3 className="text-sm sm:text-base font-extrabold text-[#0A2B6D]">
             My Tasks · Actions · Reviews · Approvals · Communications · Skills Assessments · Certifications · Consents · Documents · Schedule · Compliance

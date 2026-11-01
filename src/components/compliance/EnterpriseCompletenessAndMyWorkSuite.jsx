@@ -21,6 +21,7 @@ import {
   autoFileToVaultAndCompanySafe,
   ENTERPRISE_12_FORM_TEMPLATES,
 } from '@/lib/enterpriseGovernanceStandard';
+import { MY_WORK_11_STREAMS } from '@/components/profile/MyWorkArea9Panel';
 import DataQualityAndContinuousImprovementCentre from '@/components/compliance/DataQualityAndContinuousImprovementCentre';
 
 export const BUSINESS_10_PROCESS_STAGES = [
@@ -78,7 +79,7 @@ export const FOUR_STAGE_READINESS_AUDIT = [
       'Complete 10-stage business process lifecycle on every record',
       'Connect automated tasks, reminders, reviews, approvals & escalations',
       'Connect 6-dimension report builder with auto-filing to Document Vault',
-      'Connect My Work 9-stream personal productivity workspace',
+      `Connect My Work ${MY_WORK_11_STREAMS.length}-stream personal productivity workspace`,
     ],
   },
   {
@@ -96,7 +97,7 @@ export const FOUR_STAGE_READINESS_AUDIT = [
       'Zero demo, sample, test or duplicate records in database',
       'Every form, workflow, review, approval & communication logged',
       'PDF, Excel, Word & CSV exports verified with controlled footer',
-      'Provider Administration 14 no-code controls live for production use',
+      `Verify all ${PROVIDER_14_ADMIN_CONTROLS.length} provider administration controls before production use`,
     ],
   },
 ];
@@ -427,7 +428,7 @@ export default function EnterpriseCompletenessAndMyWorkSuite() {
           <div className="flex items-center justify-between">
             <span className="text-xs font-extrabold text-[#0A2B6D] flex items-center gap-1.5">
               <Sliders className="h-3.5 w-3.5 text-[#5A00D6]" />
-              Provider Administration — 14 No-Code Self-Service Controls
+              Provider Administration — {PROVIDER_14_ADMIN_CONTROLS.length} Self-Service Controls
             </span>
             <span className="text-[10px] font-bold text-[#5A00D6]">Zero Redevelopment Required</span>
           </div>

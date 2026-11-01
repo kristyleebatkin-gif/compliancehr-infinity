@@ -403,25 +403,25 @@ export default function EnterpriseStandardQualityGateSuite() {
           {
             id: 'controlled-forms',
             label: '11-Section Forms',
-            sub: '12 Domains & 5 Previews',
+            sub: `${allTemplates.length} Templates & ${PREVIEW_MODES.length} Previews`,
             icon: FileCheck2,
           },
           {
             id: 'enterprise-reports',
             label: 'Reports & Filters',
-            sub: '12 Reports · 16 Date Ranges',
+            sub: `${ENTERPRISE_12_REPORT_TYPES.length} Reports · ${QUICK_16_DATE_FILTERS.length} Date Ranges`,
             icon: Filter,
           },
           {
             id: 'vault-safe-master',
             label: 'Vault & Safe Master',
-            sub: '15 Vault Areas · Version History',
+            sub: `${VAULT_15_CATEGORIES.length} Vault Areas · Version History`,
             icon: FolderLock,
           },
           {
             id: 'traceability-logs',
             label: '6-Log Traceability',
-            sub: 'Audit, Change & 16 Links',
+            sub: `Audit, Change & ${RECORD_16_RELATIONSHIP_TARGETS.length} Link Targets`,
             icon: GitBranch,
           },
           {
@@ -479,7 +479,7 @@ export default function EnterpriseStandardQualityGateSuite() {
           <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-3 space-y-2">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <span className="text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                Select Editable Enterprise Form / Template Domain (12 Subject-Specific Master Templates)
+                Select Editable Enterprise Form / Template Domain ({allTemplates.length} Subject-Specific Templates)
               </span>
               {/* 5-Mode Preview Switcher */}
               <div className="flex flex-wrap items-center gap-1">
@@ -785,10 +785,10 @@ export default function EnterpriseStandardQualityGateSuite() {
                 <div className="rounded-xl border border-slate-200 bg-white p-3">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <span className="text-[10.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                      Automatic Record Relationships (Zero Disconnected Data — Linked Across 16 Domains)
+                      Record Relationship Targets ({RECORD_16_RELATIONSHIP_TARGETS.length} Available Domains)
                     </span>
                     <span className="text-[10px] font-extrabold text-[#0072FF]">
-                      {linkedRelationships.length} / 16 Domains Connected
+                      {linkedRelationships.length} / {RECORD_16_RELATIONSHIP_TARGETS.length} Domains Selected
                     </span>
                   </div>
                   <div className="mt-2 flex flex-wrap gap-1.5">
@@ -958,7 +958,7 @@ export default function EnterpriseStandardQualityGateSuite() {
                 onChange={(e) => setFilterCategory(e.target.value)}
                 className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold text-[#0A2B6D]"
               >
-                <option value="ALL">All 15 Vault Categories</option>
+                <option value="ALL">All {VAULT_15_CATEGORIES.length} Vault Categories</option>
                 {VAULT_15_CATEGORIES.map((c) => (
                   <option key={c} value={c}>Category: {c}</option>
                 ))}
@@ -1054,7 +1054,7 @@ export default function EnterpriseStandardQualityGateSuite() {
           <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-3 space-y-2">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <span className="text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                Document Vault Structure — 15 Mandatory Searchable &amp; Version-Controlled Categories
+                Document Vault Structure — {VAULT_15_CATEGORIES.length} Searchable Categories
               </span>
               <span className="text-xs font-extrabold text-[#5A00D6]">
                 Protected Master Copy + Working Copy + Version / Review / Approval / Change History
@@ -1070,7 +1070,7 @@ export default function EnterpriseStandardQualityGateSuite() {
                     : 'border border-slate-200 bg-white text-[#0A2B6D]'
                 }`}
               >
-                All 15 Categories
+                All {VAULT_15_CATEGORIES.length} Categories
               </button>
               {VAULT_15_CATEGORIES.map((cat) => (
                 <button

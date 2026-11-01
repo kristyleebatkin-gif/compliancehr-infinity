@@ -53,6 +53,7 @@
       "type": "string",
       "title": "File Name"
     },
+    "file_url": { "type": "string", "title": "Attached master file URL" },
     "file_uri": {
       "type": "string",
       "title": "File URI"
