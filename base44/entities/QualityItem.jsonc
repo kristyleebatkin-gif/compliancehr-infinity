@@ -196,11 +196,6 @@
         },
         {
           "user_condition": {
-            "role": "Auditor"
-          }
-        },
-        {
-          "user_condition": {
             "role": "Team Leader"
           }
         }
