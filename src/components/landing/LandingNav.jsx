@@ -58,7 +58,19 @@ export default function LandingNav({ onBookDemo }) {
           ))}
         </nav>
 
-        <div className="flex shrink-0 items-center gap-2">
+        <div className="flex shrink-0 items-center gap-1.5">
+          <Link
+            to="/dashboard"
+            className="inline-flex items-center justify-center whitespace-nowrap rounded-lg border-2 border-[#0A2B6D] bg-white px-2.5 py-1.5 text-[11px] xl:text-xs font-extrabold text-[#0A2B6D] shadow-2xs transition hover:border-[#0072FF] hover:text-[#0072FF]"
+          >
+            Dashboard
+          </Link>
+          <Link
+            to="/universal-storage"
+            className="hidden sm:inline-flex items-center justify-center whitespace-nowrap rounded-lg border-2 border-[#5A00D6] bg-[#F5F0FF] px-2.5 py-1.5 text-[11px] xl:text-xs font-extrabold text-[#5A00D6] shadow-2xs transition hover:bg-[#5A00D6] hover:text-white"
+          >
+            Universal Storage Hub
+          </Link>
           <Link
             to="/login"
             className="hidden sm:inline-flex items-center justify-center whitespace-nowrap rounded-lg px-2.5 py-1.5 text-[11px] xl:text-xs font-extrabold text-[#0A2B6D] transition hover:text-[#0072FF]"
@@ -95,6 +107,39 @@ export default function LandingNav({ onBookDemo }) {
           >
             {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
           </button>
+        </div>
+      </div>
+
+      {/* Direct 1-Click Workspace & Route Bar visible across Desktop, Tablet & Mobile */}
+      <div className="border-t border-slate-200/80 bg-[#F5F0FF]/80 px-3 py-1.5 sm:px-5">
+        <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-1.5">
+          <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+            Direct Workspace Routes:
+          </span>
+          <div className="flex flex-wrap items-center gap-1.5">
+            {[
+              ['Dashboard', '/dashboard'],
+              ['45 Master Registers Hub', '/registers'],
+              ['User Success & Evidence Hub', '/user-success'],
+              ['Record Intelligence Hub', '/record-intelligence'],
+              ['Frontline Rapid Hub', '/frontline-hub'],
+              ['Workforce Presence & Safety', '/workforce-presence'],
+              ['Universal Storage Hub', '/universal-storage'],
+              ['Document Vault', '/documents'],
+              ['Company Safe', '/company-safe'],
+              ['Compliance Centre', '/compliance'],
+              ['Operations Centre', '/operations-centre'],
+              ['Connect AI Agent', '/connect'],
+            ].map(([label, path]) => (
+              <Link
+                key={path}
+                to={path}
+                className="rounded-md border border-[#0A2B6D]/30 bg-white px-2 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D] transition hover:border-[#0072FF] hover:bg-[#0A2B6D] hover:text-white"
+              >
+                {label}
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
 

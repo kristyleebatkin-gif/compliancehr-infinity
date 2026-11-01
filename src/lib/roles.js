@@ -29,7 +29,7 @@ export const ALL_ROLES = [
   'Auditor',
   'Volunteer',
 ];
-const OPEN_ACCESS_WINDOW_UNTIL = new Date('2026-11-01T03:00:00Z').getTime();
+const OPEN_ACCESS_WINDOW_UNTIL = new Date('2026-12-01T00:00:00Z').getTime();
 export function isOpenAccessWindowActive() {
   return Date.now() < OPEN_ACCESS_WINDOW_UNTIL;
 }

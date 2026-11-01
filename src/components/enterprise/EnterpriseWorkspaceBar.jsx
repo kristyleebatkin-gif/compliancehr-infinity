@@ -306,6 +306,13 @@ export default function EnterpriseWorkspaceBar({
             className="flex min-w-0 flex-wrap items-center gap-1 text-[11px] font-bold text-[#0A2B6D]"
           >
             <Link
+              to="/"
+              className="inline-flex items-center gap-1 rounded-md border border-slate-200 bg-slate-50 px-1.5 py-0.5 text-[#0A2B6D] transition hover:bg-[#F5F0FF] hover:text-[#0072FF]"
+            >
+              <span>Landing</span>
+            </Link>
+            <ChevronRight className="h-3 w-3 shrink-0 text-slate-400" />
+            <Link
               to="/dashboard"
               className="inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[#0A2B6D] transition hover:bg-[#F5F0FF] hover:text-[#0072FF]"
             >

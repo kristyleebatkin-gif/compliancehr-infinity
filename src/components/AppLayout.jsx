@@ -17,8 +17,10 @@ import {
 } from 'lucide-react';
 import GlobalSearch from '@/components/GlobalSearch';
 import AutoRegisterInsights from '@/components/AutoRegisterInsights';
+import QuickAppBar from '@/components/QuickAppBar';
 import ObsidianSidebarRemote from '@/components/ObsidianSidebarRemote';
 import EnterpriseWorkspaceBar from '@/components/enterprise/EnterpriseWorkspaceBar';
+import VisualDesignModuleCommandStandard from '@/components/enterprise/VisualDesignModuleCommandStandard';
 import { Image } from '@/components/ui/image';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import PendingApprovalNotice from '@/components/users/PendingApprovalNotice';
@@ -432,6 +434,8 @@ export default function AppLayout() {
             darkMode={darkMode}
             onToggleDarkMode={() => setDarkMode((d) => !d)}
           />
+          <QuickAppBar />
+          <VisualDesignModuleCommandStandard />
           <div className={location.pathname === '/staff' || location.pathname.startsWith('/staff/') ? 'mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8' : 'mx-auto max-w-[1440px] px-4 pt-3 sm:px-6 lg:px-8'}>
             <PendingApprovalNotice />
             <ModuleGuide />
