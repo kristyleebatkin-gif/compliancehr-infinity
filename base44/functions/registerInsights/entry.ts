@@ -4,7 +4,16 @@ import { REGISTRY } from '../../shared/registerRegistry.ts';
 export default async function (req) {
   try {
     const base44 = createClientFromRequest(req);
-    const user = await base44.auth.me();
+    let user;
+    try {
+      user = await base44.auth.me();
+    } catch (error) {
+      const status = error.status ?? error.response?.status;
+      if (status === 401 || status === 403) {
+        return Response.json({ error: 'Unauthorized' }, { status: 401 });
+      }
+      throw error;
+    }
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
 
     const { module: moduleKey } = await req.json();
