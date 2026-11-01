@@ -981,133 +981,85 @@ export function matchQuickDateFilter(dateStr, filterId, customFrom, customTo) {
   }
 }
 
-export function exportControlledRecordAsPdf(record) {
+export function exportControlledRecordAsPdf(record, { save = true, log = true } = {}) {
   const doc = new jsPDF({ unit: 'pt', format: 'a4' });
-  const pageWidth = doc.internal.pageSize.getWidth();
-  let y = 36;
-
-  // Header wave band
-  doc.setFillColor(10, 43, 109);
-  doc.rect(0, 0, pageWidth, 68, 'F');
-  doc.setFillColor(255, 46, 154);
-  doc.rect(0, 68, pageWidth, 4, 'F');
-
-  doc.setTextColor(255, 255, 255);
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(9);
-  doc.text('COMPLIANCEHR INFINITY · CONTROLLED ENTERPRISE DOCUMENT & AUDIT RECORD', 36, 22);
-  doc.setFontSize(14);
-  doc.text(String(record.documentName || record.title || 'Controlled Record').slice(0, 75), 36, 42);
-  doc.setFontSize(8.5);
-  doc.text(
-    `Doc No: ${record.documentNumber} · Record ID: ${record.recordId} · Version: ${record.versionNumber} · Status: ${record.status}`,
-    36,
-    58
-  );
-
-  y = 90;
-  doc.setTextColor(10, 43, 109);
-  doc.setFontSize(10);
-  doc.text('2. MANDATORY 16-FIELD DOCUMENT CONTROL LEDGER', 36, y);
-  y += 8;
-
-  const metaPairs = [
-    ['Document Name', record.documentName],
-    ['Document Number', record.documentNumber],
-    ['Record ID', record.recordId],
-    ['Version Number', record.versionNumber],
-    ['Status', record.status],
-    ['Module', record.module],
-    ['Category', record.category],
-    ['Owner', record.owner],
-    ['Department', record.department],
-    ['Created Date', record.createdDate],
-    ['Modified Date', record.modifiedDate],
-    ['Last Review Date', record.lastReviewDate],
-    ['Next Review Date', record.nextReviewDate],
-    ['Review Frequency', record.reviewFrequency],
-    ['Approved By', record.approvedBy],
-    ['Approval Date', record.approvalDate],
-  ];
-
-  doc.setFontSize(8);
-  metaPairs.forEach((pair, idx) => {
-    const col = idx % 2;
-    const row = Math.floor(idx / 2);
-    const x = col === 0 ? 36 : pageWidth / 2 + 6;
-    const rowY = y + row * 15;
-    doc.setFont('helvetica', 'bold');
-    doc.text(`${pair[0]}:`, x, rowY);
-    doc.setFont('helvetica', 'normal');
-    doc.text(String(pair[1] || '—').slice(0, 42), x + 92, rowY);
-  });
-
-  y += Math.ceil(metaPairs.length / 2) * 15 + 14;
-
-  const writeSection = (heading, bodyText) => {
-    if (y > 740) {
-      doc.addPage();
-      y = 40;
-    }
-    doc.setFillColor(245, 240, 255);
-    doc.rect(36, y - 10, pageWidth - 72, 16, 'F');
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(9.5);
-    doc.setTextColor(90, 0, 214);
-    doc.text(heading, 42, y + 1);
-    y += 16;
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(8.5);
+  const width = doc.internal.pageSize.getWidth();
+  const margin = 36;
+  const contentWidth = width - margin * 2;
+  let y = 40;
+  const clean = (value) => String(value ?? '').replace(/[\u2013\u2014]/g, '-').replace(/\u2022/g, ' / ');
+  const nextPage = () => { doc.addPage(); y = 40; };
+  const line = (text, { bold = false, size = 9, indent = 0 } = {}) => {
+    doc.setFont('helvetica', bold ? 'bold' : 'normal');
+    doc.setFontSize(size);
     doc.setTextColor(10, 43, 109);
-    const lines = doc.splitTextToSize(String(bodyText || '—'), pageWidth - 80);
-    doc.text(lines, 40, y);
-    y += lines.length * 11 + 10;
+    const lines = doc.splitTextToSize(clean(text || '____________________'), contentWidth - indent);
+    for (const item of lines) {
+      if (y + size + 4 > 780) nextPage();
+      doc.text(item, margin + indent, y);
+      y += size + 4;
+    }
   };
-
-  writeSection('3. PURPOSE', record.purpose);
-  writeSection('4. SCOPE', record.scope);
-  writeSection('5. RELATED DOCUMENTS & OBLIGATIONS', (record.relatedDocuments || []).join(' · '));
-  writeSection(
-    '6. MAIN CONTROLLED CONTENT & VERIFICATION FIELDS',
-    (record.mainFields || []).map((f) => `${f.label}: ${f.value}`).join('\n')
-  );
-  writeSection('7. EVIDENCE SECTION', (record.evidenceItems || []).map((e, i) => `${i + 1}. ${e}`).join('\n'));
-  writeSection('8. ACTIONS SECTION', (record.actionsItems || []).map((a, i) => `${i + 1}. ${a}`).join('\n'));
-  writeSection(
-    '9. REVIEW SECTION',
-    `Reviewer: ${record.reviewer || record.owner} · Review Date: ${record.lastReviewDate} · Outcome: ${record.reviewOutcome || 'Compliant & Verified'} · Next Review: ${record.nextReviewDate}\nFindings & Recommendations: ${record.reviewNotes || 'All NDIS & enterprise governance checkpoints verified.'}`
-  );
-  writeSection(
-    '10. APPROVAL SECTION',
-    `Approver: ${record.approvedBy} · Approval Date: ${record.approvalDate} · Status: ${record.status}\nApproval Notes: ${record.approvalNotes || 'Approved for live production use and filed to Document Vault & Company Safe.'}`
-  );
-
-  // 11. Footer + Page Numbering across all pages
-  const totalPages = doc.internal.getNumberOfPages();
-  for (let p = 1; p <= totalPages; p++) {
-    doc.setPage(p);
-    doc.setFont('helvetica', 'bold');
+  const section = (heading, body) => {
+    if (y + 48 > 780) nextPage();
+    y += 8;
+    line(heading, { bold: true, size: 10 });
+    y += 4;
+    line(body);
+    y += 6;
+  };
+  line('1. COMPLIANCEHR INFINITY - CONTROLLED FORM', { bold: true, size: 10 });
+  line(record.documentName || record.title || 'Controlled Record', { bold: true, size: 15 });
+  line(`Document ${record.documentNumber} | Version ${record.versionNumber} | Status ${record.status}`);
+  y += 12;
+  line('2. DOCUMENT CONTROL', { bold: true, size: 10 });
+  const meta = [
+    ['Document name', record.documentName], ['Document number', record.documentNumber],
+    ['Record ID', record.recordId], ['Version', record.versionNumber], ['Status', record.status],
+    ['Module', record.module], ['Category', record.category], ['Owner', record.owner],
+    ['Department', record.department], ['Created date', record.createdDate],
+    ['Modified date', record.modifiedDate], ['Last review date', record.lastReviewDate],
+    ['Next review date', record.nextReviewDate], ['Review frequency', record.reviewFrequency],
+    ['Approved by', record.approvedBy], ['Approval date', record.approvalDate],
+  ];
+  for (const [label, value] of meta) line(`${label}: ${value || '____________________'}`);
+  section('3. PURPOSE', record.purpose);
+  section('4. SCOPE AND INSTRUCTIONS', record.scope);
+  section('5. RELATED DOCUMENTS AND OBLIGATIONS', (record.relatedDocuments || []).join('\n'));
+  section('6. MAIN CONTENT', (record.mainFields || []).map((f) => `${f.label}: ${f.value || '____________________'}`).join('\n'));
+  section('7. EVIDENCE', (record.evidenceItems || []).join('\n'));
+  section('8. ACTIONS', (record.actionsItems || []).join('\n'));
+  section('9. REVIEW', [
+    `Reviewer: ${record.reviewer || '____________________'}`,
+    `Review date: ${record.lastReviewDate || '____________________'}`,
+    `Outcome: ${record.reviewOutcome || '____________________'}`,
+    `Next review: ${record.nextReviewDate || '____________________'}`,
+    `Findings and recommendations: ${record.reviewNotes || '____________________'}`,
+  ].join('\n'));
+  section('10. APPROVAL', [
+    `Approver: ${record.approvedBy || '____________________'}`,
+    `Approval date: ${record.approvalDate || '____________________'}`,
+    `Status: ${record.status || 'Draft'}`,
+    `Approval notes and signature reference: ${record.approvalNotes || '____________________'}`,
+    'Generating this document does not approve or activate it.',
+  ].join('\n'));
+  const pages = doc.internal.getNumberOfPages();
+  for (let page = 1; page <= pages; page++) {
+    doc.setPage(page);
+    doc.setFont('helvetica', 'normal');
     doc.setFontSize(7.5);
     doc.setTextColor(90, 0, 214);
-    doc.text(
-      `11. CONTROLLED FOOTER — Vault (${record.category}) & Company Safe Master Copy (${record.documentNumber} ${record.versionNumber})`,
-      36,
-      818
-    );
-    doc.text(`Page ${p} of ${totalPages}`, pageWidth - 95, 818);
+    doc.text(clean(`11. CONTROLLED FOOTER | ${record.documentNumber} v${record.versionNumber} | ${record.status}`), margin, 812);
+    doc.text(`Page ${page} of ${pages}`, width - margin, 812, { align: 'right' });
   }
-
-  doc.save(`${record.documentNumber}-${record.versionNumber}.pdf`);
-  base44.functions
-    .invoke('logUserAction', {
-      action: 'Export',
-      entity_type: record.module || 'ControlledDocument',
-      record_id: record.documentNumber,
-      record_title: record.documentName,
-      details: `Exported PDF (${record.documentNumber} ${record.versionNumber}) | Previous: Stored | New: Exported PDF`,
-      route: typeof window !== 'undefined' ? window.location.pathname : '/dashboard',
-    })
-    .catch(() => {});
+  if (save) doc.save(`${record.documentNumber}-v${record.versionNumber}.pdf`);
+  if (log) base44.functions.invoke('logUserAction', {
+    action: 'Export', entity_type: record.module || 'ControlledDocument',
+    record_id: record.documentNumber, record_title: record.documentName,
+    details: `Exported PDF (${record.documentNumber} ${record.versionNumber})`,
+    route: typeof window !== 'undefined' ? window.location.pathname : '/compliance',
+  }).catch(() => {});
+  return doc;
 }
 
 export function exportControlledRecordAsWord(record) {

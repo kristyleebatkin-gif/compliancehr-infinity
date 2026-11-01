@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import DocumentControlForm from '@/components/governance/DocumentControlForm';
+import { DOCUMENT_NUMBERING_RULES } from '@/lib/documentNumberingRules';
 import { DOCUMENT_STATUSES } from '@/lib/governanceFramework';
 import { fetchAllRecords } from '@/lib/csvExport';
 import { CheckCircle2, Copy, Loader2, Pencil, Plus } from 'lucide-react';
@@ -94,6 +95,11 @@ export default function DocumentControlRegister() {
         New documents are created in Draft. A document only becomes live once it is approved, which records the
         approver and the approval date. Superseding a document keeps the previous version on file for audit.
       </p>
+
+      <details className="rounded-xl border border-border p-3">
+        <summary className="cursor-pointer text-sm font-semibold">Document numbering and version control rules</summary>
+        <ul className="mt-2 list-disc space-y-2 pl-5 text-sm">{DOCUMENT_NUMBERING_RULES.map((rule) => <li key={rule}>{rule}</li>)}</ul>
+      </details>
 
       {items === null ? (
         <div className="flex justify-center py-12"><Loader2 className="h-6 w-6 animate-spin text-primary" /></div>
