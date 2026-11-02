@@ -1,4 +1,4 @@
-/* My Profile: ONLY App Design Coloured Gradient Borders around every section, header, and item in white sections, with Dark Blue (#0A2B6D) writing and App Design Coloured Symbols. */
+/* My Profile: ONLY App Design Coloured Gradient Borders around every section, header, heading/title, label, and single word/item in white sections, with Dark Blue (#0A2B6D) writing and App Design Coloured Symbols. */
 html body .my-profile-pastels .app-section-card-header {
   border: 2px solid transparent !important;
   background:
@@ -19,7 +19,9 @@ html body .my-profile-pastels .profile-left-fill > details,
 html body .my-profile-pastels .profile-left-fill > :not(details),
 html body .my-profile-pastels details[data-profile-tone],
 html body .my-profile-pastels section[data-profile-tone],
-html body .my-profile-pastels .profile-dark-blue-box {
+html body .my-profile-pastels .profile-dark-blue-box,
+html body .my-profile-pastels section,
+html body .my-profile-pastels details {
   border: 2px solid transparent !important;
   border-radius: 0.75rem !important;
   background:
@@ -29,16 +31,18 @@ html body .my-profile-pastels .profile-dark-blue-box {
   color: #0A2B6D !important;
 }
 
-/* App Design Coloured Gradient Border around individual items inside white profile sections */
+/* App Design Coloured Gradient Border around headings, titles, labels, badges, and individual items inside white profile sections */
 html body .my-profile-pastels .profile-uniform-box li,
 html body .my-profile-pastels .profile-left-fill li,
-html body .my-profile-pastels .profile-item-box {
+html body .my-profile-pastels .profile-item-box,
+html body .my-profile-pastels :is(h1, h2, h3, h4, label, summary):not(.preserve-island-theme *) {
   border: 2px solid transparent !important;
   border-radius: 0.625rem !important;
   background:
     linear-gradient(#ffffff, #ffffff) padding-box,
     linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box !important;
   color: #0A2B6D !important;
+  padding: 0.2rem 0.6rem !important;
 }
 
 /* Uniform box sizing */

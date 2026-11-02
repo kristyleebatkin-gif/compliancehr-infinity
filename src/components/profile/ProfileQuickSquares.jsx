@@ -104,23 +104,32 @@ export default function ProfileQuickSquares({ profile, kind, personal = false })
   );
   const dateOnly = (value) => (value ? String(value).slice(0, 10) : '');
 
+  const NoteBox = ({ children }) => (
+    <p
+      className="rounded-lg px-2.5 py-1 text-[11px] font-bold text-[#0A2B6D]"
+      style={GRADIENT_BORDER_STYLE}
+    >
+      <span style={{ color: '#5A00D6' }}>◉</span> {children}
+    </p>
+  );
+
   const rosterBlock = (
-    <div>
+    <div className="space-y-1">
       <MiniTitle icon={Clock}>Roster Connection</MiniTitle>
-      {shifts.isPending ? <p className="text-[11px] text-black">Loading shifts…</p>
+      {shifts.isPending ? <NoteBox>Loading shifts…</NoteBox>
         : shiftList.length ? <ul className="space-y-1">{shiftList.slice(0, 6).map((s) => <Row key={s.id}>{dateOnly(s.date)} · {s.start_time || ''}{s.end_time ? `-${s.end_time}` : ''} · {s.status || 'Scheduled'}</Row>)}</ul>
-        : <p className="text-[11px] text-black">No shifts in the last four weeks.</p>}
+        : <NoteBox>No shifts in the last four weeks.</NoteBox>}
     </div>
   );
 
   const alertsBlock = (
-    <div>
+    <div className="space-y-1">
       <MiniTitle icon={BellRing}>My Alerts</MiniTitle>
       {personal
-        ? (alerts.isPending ? <p className="text-[11px] text-black">Loading alerts…</p>
+        ? (alerts.isPending ? <NoteBox>Loading alerts…</NoteBox>
           : alertList.length ? <ul className="space-y-1">{alertList.slice(0, 4).map((n) => <Row key={n.id}>{dateOnly(n.created_date)} · {n.type}: {n.message}</Row>)}</ul>
-          : <p className="text-[11px] text-black">No alerts addressed to you.</p>)
-        : <p className="text-[11px] text-black">Alerts are visible to the person themself on their own profile.</p>}
+          : <NoteBox>No alerts addressed to you.</NoteBox>)
+        : <NoteBox>Alerts are visible to the person themself on their own profile.</NoteBox>}
     </div>
   );
 
@@ -130,29 +139,29 @@ export default function ProfileQuickSquares({ profile, kind, personal = false })
         <div className="space-y-1.5">
           {rosterBlock}
           {alertsBlock}
-          <div>
+          <div className="space-y-1">
             <MiniTitle icon={CalendarClock}>Availability</MiniTitle>
             {personal ? <MyAvailability />
-              : availability.isPending ? <p className="text-[11px] text-black">Loading availability…</p>
+              : availability.isPending ? <NoteBox>Loading availability…</NoteBox>
               : availabilityList.length ? <ul className="space-y-1">{availabilityList.map((a) => <Row key={a.id}>{dateOnly(a.date)} · {a.type}{a.all_day ? ' · All day' : a.start_time ? ` · ${a.start_time}${a.end_time ? `-${a.end_time}` : ''}` : ''}</Row>)}</ul>
-              : <p className="text-[11px] text-black">No availability recorded yet.</p>}
+              : <NoteBox>No availability recorded yet.</NoteBox>}
           </div>
         </div>
       </EmployeeProfileSection>
       : <EmployeeProfileSection title="Roster, Goals, Steps & Invoices" tone="violet" uniform defaultOpen>
         <div className="space-y-1.5">
           {rosterBlock}
-          <div>
+          <div className="space-y-1">
             <MiniTitle icon={Target}>Goals & Steps</MiniTitle>
-            {goals.isPending ? <p className="text-[11px] text-black">Loading goals…</p>
+            {goals.isPending ? <NoteBox>Loading goals…</NoteBox>
               : goalList.length ? <ul className="space-y-1">{goalList.map((g) => <Row key={g.id}>{dateOnly(g.date)} · {g.goal}{g.progress_pct != null ? ` · ${g.progress_pct}% towards goal` : ''}{g.achievement ? ` · ${g.achievement}` : g.progress_towards_goal ? ` · ${g.progress_towards_goal}` : ''}</Row>)}</ul>
-              : <p className="text-[11px] text-black">No goal progress recorded yet.</p>}
+              : <NoteBox>No goal progress recorded yet.</NoteBox>}
           </div>
-          <div>
+          <div className="space-y-1">
             <MiniTitle icon={Receipt}>Invoice Copies</MiniTitle>
-            {invoices.isPending ? <p className="text-[11px] text-black">Loading invoices…</p>
+            {invoices.isPending ? <NoteBox>Loading invoices…</NoteBox>
               : invoiceList.length ? <ul className="space-y-1">{invoiceList.map((inv) => <Row key={inv.id}>{inv.invoice_number || 'Invoice'} · {inv.status || 'Issued'}{inv.total != null ? ` · $${inv.total}` : ''}</Row>)}</ul>
-              : <p className="text-[11px] text-black">No invoice copies on file yet.</p>}
+              : <NoteBox>No invoice copies on file yet.</NoteBox>}
           </div>
           {alertsBlock}
         </div>
@@ -162,14 +171,16 @@ export default function ProfileQuickSquares({ profile, kind, personal = false })
         <Row>Emergency contact: {profile.emergency_contact || 'Not recorded yet'}</Row>
         <Row>Emergency phone: {profile.emergency_contact_phone || 'Not recorded yet'}</Row>
       </ul>
-      {!isStaff && <div className="mt-1.5">
+      {!isStaff && <div className="mt-1.5 space-y-1">
         <MiniTitle icon={ShieldCheck}>Personal Emergency Plan</MiniTitle>
-        {emergencyPlan.isPending ? <p className="text-[11px] text-black">Loading plan…</p>
+        {emergencyPlan.isPending ? <NoteBox>Loading plan…</NoteBox>
           : emergencyPlan.data
-            ? <Button size="sm" variant="outline" className="mt-1 h-6 bg-white px-2 text-[11px] text-black" onClick={openEmergencyPlan}>Open {emergencyPlan.data.title || 'Personal Emergency Plan'}</Button>
-            : <p className="text-[11px] text-black">No personal emergency plan on file yet. Upload one (Personal Emergency Form or Record) in the Document Vault.</p>}
+            ? <Button size="sm" variant="outline" className="mt-1 h-6 px-2 text-[11px] font-extrabold text-[#0A2B6D]" style={GRADIENT_BORDER_STYLE} onClick={openEmergencyPlan}>Open {emergencyPlan.data.title || 'Personal Emergency Plan'}</Button>
+            : <NoteBox>No personal emergency plan on file yet. Upload one (Personal Emergency Form or Record) in the Document Vault.</NoteBox>}
       </div>}
-      <p className="mt-1 text-[11px] text-black">Update contact details in the Details form.</p>
+      <div className="mt-1.5">
+        <NoteBox>Update contact details in the Details form.</NoteBox>
+      </div>
     </EmployeeProfileSection>
   </>;
 }

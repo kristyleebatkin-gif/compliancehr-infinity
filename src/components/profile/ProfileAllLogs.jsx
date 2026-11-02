@@ -10,6 +10,13 @@ import EmployeeProfileSection from '@/components/profile/EmployeeProfileSection'
 const CONSENT = /(?:audit consent|consent to share information|consent to act as an advocate|medication consent):/i;
 const COLUMNS = [{ key: 'type', label: 'Log' }, { key: 'entry', label: 'Entry' }];
 
+const GRADIENT_BORDER_STYLE = {
+  border: '2px solid transparent',
+  background:
+    'linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box',
+  color: '#0A2B6D',
+};
+
 export default function ProfileAllLogs({ profile }) {
   const { data } = useQuery({
     queryKey: ['profile-acknowledgements', profile.id],
@@ -33,14 +40,60 @@ export default function ProfileAllLogs({ profile }) {
   const exportCsv = () => downloadCsv(`${(profile.full_name || 'profile').replace(/\s+/g, '-')}-all-logs.csv`, COLUMNS, rows);
   const [exportingPdf, setExportingPdf] = React.useState(false);
   const exportPdf = async () => { setExportingPdf(true); try { await exportProfileLogsPdf(profile.full_name, rows); } finally { setExportingPdf(false); } };
-  return <EmployeeProfileSection title="All Logs (Exportable)" tone="journey" uniform>
-    <div className="mb-1 flex items-center justify-between gap-2">
-      <span className="text-[11px] text-black">{rows.length} logged {rows.length === 1 ? 'entry' : 'entries'}</span>
-      <span className="flex items-center gap-1">
-        <Button size="sm" variant="outline" className="h-6 bg-white px-2 text-[11px] text-black" onClick={exportPdf} disabled={!rows.length || exportingPdf}><Download className="h-3 w-3" />{exportingPdf ? 'Preparing…' : 'Export PDF'}</Button>
-        <Button size="sm" variant="outline" className="h-6 bg-white px-2 text-[11px] text-black" onClick={exportCsv} disabled={!rows.length}><Download className="h-3 w-3" />Export CSV</Button>
-      </span>
-    </div>
-    {rows.length ? <ul className="space-y-1">{rows.map((r, i) => <li key={i} className="break-words rounded-md bg-white px-2 py-1 text-[11px] leading-relaxed text-black"><b>{r.type}:</b> {r.entry}</li>)}</ul> : <p className="text-[11px] text-black">No logged entries yet.</p>}
-  </EmployeeProfileSection>;
+  return (
+    <EmployeeProfileSection title="All Logs (Exportable)" tone="journey" uniform>
+      <div className="mb-1.5 flex flex-wrap items-center justify-between gap-2">
+        <span
+          className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-extrabold text-[#0A2B6D]"
+          style={GRADIENT_BORDER_STYLE}
+        >
+          <span style={{ color: '#0072FF' }}>◉</span> {rows.length} logged {rows.length === 1 ? 'entry' : 'entries'}
+        </span>
+        <span className="flex items-center gap-1">
+          <Button
+            size="sm"
+            variant="outline"
+            className="h-6 rounded-full px-2.5 text-[11px] font-extrabold text-[#0A2B6D]"
+            style={GRADIENT_BORDER_STYLE}
+            onClick={exportPdf}
+            disabled={!rows.length || exportingPdf}
+          >
+            <Download className="h-3 w-3 text-[#0072FF]" />
+            {exportingPdf ? 'Preparing…' : 'Export PDF'}
+          </Button>
+          <Button
+            size="sm"
+            variant="outline"
+            className="h-6 rounded-full px-2.5 text-[11px] font-extrabold text-[#0A2B6D]"
+            style={GRADIENT_BORDER_STYLE}
+            onClick={exportCsv}
+            disabled={!rows.length}
+          >
+            <Download className="h-3 w-3 text-[#5A00D6]" />
+            Export CSV
+          </Button>
+        </span>
+      </div>
+      {rows.length ? (
+        <ul className="space-y-1">
+          {rows.map((r, i) => (
+            <li
+              key={i}
+              className="break-words rounded-lg px-2.5 py-1 text-[11px] font-bold leading-relaxed text-[#0A2B6D]"
+              style={GRADIENT_BORDER_STYLE}
+            >
+              <span style={{ color: '#5A00D6' }}>◉</span> <b>{r.type}:</b> {r.entry}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p
+          className="rounded-lg px-2.5 py-1.5 text-[11px] font-bold text-[#0A2B6D]"
+          style={GRADIENT_BORDER_STYLE}
+        >
+          <span style={{ color: '#0072FF' }}>◉</span> No logged entries yet.
+        </p>
+      )}
+    </EmployeeProfileSection>
+  );
 }
