@@ -73,7 +73,7 @@ export default function EmployeeDocumentDialog({ open, onOpenChange, staff, me, 
             toast({ title: 'Uploaded document reviewed', description: `Extracted into the profile: ${[...(extract.data.consent_types || []), ...(extract.data.filled_fields || [])].join(', ')}` });
           }
           if (extract.data?.needs_review) {
-            toast({ title: 'Please check consent manually', description: `This document may contain ${(extract.data.unconfirmed_consent_types || []).join(', ')} consent, but the decision wasn't clear. No consent was recorded — please review the document and record it on the profile.` });
+            toast({ title: 'Please check consent manually', description: `This document may contain ${(extract.data.unconfirmed_consent_types || []).join(', ') || 'a'} consent, but the decision wasn't clear. No consent was recorded — please review the document and record it on the profile.` });
           }
         } catch (e) { console.error(e); }
       }
