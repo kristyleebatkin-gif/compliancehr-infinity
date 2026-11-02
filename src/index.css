@@ -630,14 +630,14 @@
     box-shadow: 0 1px 3px rgba(10, 43, 109, 0.06), 0 18px 40px -24px rgba(10, 43, 109, 0.30) !important;
   }
 
-  /* Small tiles & cards inside grids across all modules: pink/blue/purple spray between outer border and inner writing border, pure white inside writing areas, and dark blue writing (#0A2B6D) */
+  /* Small tiles & cards inside grids across all modules: app design coloured border (#5A00D6 / #0072FF), pure white inside writing areas, and dark blue writing (#0A2B6D) */
   :root:not(.dark) .app-dashboard-canvas .grid > :is(
     .rounded-xl.border,
     .rounded-2xl.border,
     .rounded-lg.border,
     .rounded-2xl.border-2
   ):not(.preserve-island-theme):not(.preserve-island-theme *) {
-    border: 2px solid #0A2B6D !important;
+    border: 2px solid #5A00D6 !important;
     background: #FFFFFF !important;
     color: #0A2B6D !important;
     padding: 0.375rem !important;

@@ -34,9 +34,20 @@ export default function ModuleAuditButton() {
 
   if (!inScope) return null;
   return (
-    <Button variant="outline" size="sm" onClick={run} disabled={busy} className="h-7 shrink-0 gap-1 rounded-lg border-border/60 bg-card/75 px-2 text-[11px] font-semibold shadow-sm hover:bg-muted [&_svg]:mr-0 [&_svg]:size-3">
-      {busy ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : <Download className="mr-1.5 h-3.5 w-3.5" />}
-      Audit report
+    <Button
+      variant="outline"
+      size="sm"
+      onClick={run}
+      disabled={busy}
+      className="h-7 shrink-0 gap-1.5 rounded-full border-2 border-[#FF2E9A] bg-white px-3 py-1 text-[11px] font-extrabold text-[#0A2B6D] shadow-2xs hover:bg-[#F5F0FF] [&_svg]:mr-0 [&_svg]:size-3.5"
+      style={{ borderColor: '#FF2E9A', color: '#0A2B6D' }}
+    >
+      {busy ? (
+        <Loader2 className="h-3.5 w-3.5 shrink-0 animate-spin" style={{ color: '#FF2E9A' }} />
+      ) : (
+        <Download className="h-3.5 w-3.5 shrink-0" style={{ color: '#FF2E9A' }} />
+      )}
+      <span style={{ color: '#0A2B6D' }}>Audit report</span>
     </Button>
   );
 }

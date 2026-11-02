@@ -11,12 +11,13 @@ import { resolveAuditModule } from '@/lib/moduleAuditReport';
 /*
  * CANONICAL COMPLIANCEHR INFINITY HEADER TEMPLATE (src/DESIGN_TEMPLATE_SPEC.md):
  * - Separated by an App Design Coloured Gradient Border.
- * - White background inside the header/topic section outside the small tiles up to the header border.
+ * - White background outside the tiles inside the header/topic section only, up to the header border.
  * - Dark Navy (#0A2B6D) outside the header border to the side of the page.
- * - Main Header Title: Dark Blue (#0A2B6D) writing changing into App Design Colours towards the end,
- *   with an App Design Coloured Symbol and App Design Coloured Border on a White background.
- * - Small Header Tiles: Fit neatly in 1–2 rows with App Design Coloured Borders, Dark Blue (#0A2B6D) writing,
- *   and App Design Coloured Symbols on a White background (or App Design Coloured Gradient for primary highlights).
+ * - Main Header Title: App Design Coloured Border, White background, App Design Coloured Symbol,
+ *   and Dark Blue (#0A2B6D) writing changing into App Design Colours towards the end.
+ * - Small Header Tiles: Fit neatly in 1–2 rows directly on the white header background, each with its own
+ *   App Design Coloured Border, White background, Dark Blue (#0A2B6D) writing, and App Design Coloured Symbol
+ *   (unless highlighting something, where the background is App Design Coloured).
  */
 /** @param {any} props */
 export default function PageHeader({
@@ -55,21 +56,21 @@ export default function PageHeader({
         )}
         style={{ background: APP_BORDER_GRADIENT }}
       >
-        {/* White Background Outside the Tiles Inside the Header/Topic Section */}
-        <div className="rounded-[13px] bg-white p-2.5 sm:p-3 space-y-2">
-          {/* Main Topic Header Tile: App Design Border + White Background + App Symbol + Dark Blue -> App Colour Title */}
+        {/* White Background Outside the Tiles Inside the Header/Topic Section Only */}
+        <div className="rounded-[13px] bg-white p-2.5 sm:p-3.5 space-y-2.5">
+          {/* Main Header Inside Page Header: App Design Coloured Border + White Background + App Design Coloured Symbol + Dark Blue -> App Colour Writing */}
           <div
             className="rounded-2xl p-[2px] shadow-2xs"
             style={{ background: APP_BORDER_GRADIENT }}
           >
-            <div className="flex min-w-0 w-full items-center gap-3 rounded-[14px] bg-white px-3.5 py-2.5">
-              <div
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#F5F0FF] shadow-2xs"
-                style={{ border: '2px solid #0072FF' }}
-              >
-                <Icon className="h-5 w-5 shrink-0" style={{ color: '#0072FF' }} />
-              </div>
-              <div className="min-w-0 flex-1">
+            <div className="flex min-w-0 w-full flex-wrap items-center justify-between gap-2.5 rounded-[14px] bg-white px-3.5 py-2.5">
+              <div className="flex min-w-0 items-center gap-2.5">
+                <div
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white shadow-2xs"
+                  style={{ border: '2px solid #0072FF' }}
+                >
+                  <Icon className="h-4.5 w-4.5 shrink-0" style={{ color: '#0072FF' }} />
+                </div>
                 <h1 className="text-base sm:text-xl font-extrabold leading-tight tracking-tight">
                   <span style={{ color: '#5A00D6' }}>◉</span>{' '}
                   <span
@@ -79,53 +80,54 @@ export default function PageHeader({
                     {title}
                   </span>
                 </h1>
-                {description && (
+              </div>
+
+              {description && (
+                <div
+                  className="rounded-full p-[1.5px]"
+                  style={{ background: APP_BORDER_GRADIENT }}
+                >
                   <p
-                    className="mt-0.5 text-xs sm:text-sm font-bold leading-snug text-[#0A2B6D]"
+                    className="rounded-full bg-white px-3 py-0.5 text-[11px] sm:text-xs font-extrabold leading-snug text-[#0A2B6D]"
                     style={{ color: '#0A2B6D' }}
                   >
-                    {description}
+                    <span style={{ color: '#0072FF' }}>◉</span> {description}
                   </p>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Small Header Tiles Row (1–2 Rows): App Design Border + White Background + Dark Blue Writing + Coloured Symbols */}
-          <div
-            className="rounded-xl p-[1.5px]"
-            style={{ background: APP_BORDER_GRADIENT }}
-          >
-            <div
-              className={cn(
-                'flex flex-wrap items-center rounded-[10.5px] bg-white',
-                compactActions ? 'module-action-bar gap-1.5 px-2.5 py-1.5' : 'gap-2 p-2'
-              )}
-            >
-              <ModuleComplianceStrip path={seg} />
-              {beforeAudit}
-              <div
-                className={cn(
-                  'flex shrink-0 items-center gap-1.5 [&>button]:h-7 [&>button]:gap-1 [&>button]:px-2.5 [&>button]:text-[11px] [&>button_svg]:mr-0 [&>button_svg]:size-3',
-                  auditClassName
-                )}
-              >
-                <ModuleAuditChecklistButton />
-                <ModuleAuditButton />
-              </div>
-              {afterAudit}
-              {resolvedActions && (
-                <div
-                  className={cn(
-                    'flex flex-wrap items-center',
-                    compactActions ? 'gap-1.5' : 'gap-2',
-                    actionClassName
-                  )}
-                >
-                  {resolvedActions}
                 </div>
               )}
             </div>
+          </div>
+
+          {/* Small Header Tiles in 1–2 Rows Directly on the White Header Background (White Outside the Tiles) */}
+          <div
+            className={cn(
+              'flex flex-wrap items-center bg-white',
+              compactActions ? 'module-action-bar gap-2' : 'gap-2.5'
+            )}
+          >
+            <ModuleComplianceStrip path={seg} />
+            {beforeAudit}
+            <div
+              className={cn(
+                'flex shrink-0 flex-wrap items-center gap-2',
+                auditClassName
+              )}
+            >
+              <ModuleAuditChecklistButton />
+              <ModuleAuditButton />
+            </div>
+            {afterAudit}
+            {resolvedActions && (
+              <div
+                className={cn(
+                  'flex flex-wrap items-center',
+                  compactActions ? 'gap-2' : 'gap-2.5',
+                  actionClassName
+                )}
+              >
+                {resolvedActions}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -139,5 +141,5 @@ export default function PageHeader({
 
 // Row of controls rendered just below the header card (left-aligned by default).
 export function HeaderUnderRow({ children, className = undefined }) {
-  return <div className={cn('module-action-bar flex flex-wrap items-center gap-1.5', className)}>{children}</div>;
+  return <div className={cn('module-action-bar flex flex-wrap items-center gap-2', className)}>{children}</div>;
 }

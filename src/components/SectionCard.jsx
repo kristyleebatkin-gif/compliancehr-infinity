@@ -4,14 +4,14 @@ import {
   AlertTriangle, FileText, DollarSign, GraduationCap, MessagesSquare, Sparkles,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import {
-  getHeaderView,
-  getTitleGradientView,
-  getSubheaderColourView,
-} from '@/lib/fullColourTiles';
 
 const TOP_BORDER_GRADIENT =
-  'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
+  'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)';
+
+const HEADING_TEXT_GRADIENT =
+  'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)';
+
+const APP_COLOURS = ['#0072FF', '#5A00D6', '#FF2E9A', '#A100FF', '#00C6FF'];
 
 function hashIndex(str = '') {
   let h = 0;
@@ -76,72 +76,81 @@ export default function SectionCard({
   const SubjectIcon = subjectInfo.Icon;
   const resolvedSubject = subject || subjectInfo.label;
   const seed = hashIndex(`${title}-${resolvedSubject}`);
+  const symColor = APP_COLOURS[seed % APP_COLOURS.length];
 
   return (
     <div
       className={cn(
-        'dashboard-panel rounded-3xl p-[10px] shadow-lg transition-all duration-200',
+        'dashboard-panel rounded-2xl p-[3px] shadow-lg transition-all duration-200',
         className
       )}
       style={{ background: TOP_BORDER_GRADIENT }}
       {...props}
     >
-      <div className="overflow-hidden rounded-[16px] bg-white">
+      <div className="overflow-hidden rounded-[13px] bg-white">
         {(title || action) && (
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-[#0A2B6D]/15 bg-white px-4 py-3.5 sm:px-5">
-            <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2.5">
-              {/* Subject Header Pill with WHITE Small Symbol */}
+          <div className="flex flex-wrap items-center justify-between gap-2.5 border-b-2 border-[#5A00D6]/25 bg-white px-3.5 py-2.5 sm:px-4">
+            <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
+              {/* Small Subject Tile: App Design Coloured Border + White Background + Dark Blue Writing + App Design Coloured Symbol */}
               <span
-                className="inline-flex min-h-[34px] items-center gap-2 rounded-full border-2 border-[#0A2B6D] px-3.5 py-1 text-[11px] font-extrabold uppercase tracking-wider text-white shadow-2xs"
-                style={{ background: getHeaderView(seed) }}
+                className="inline-flex min-h-[30px] items-center gap-1.5 rounded-full bg-white px-3 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D] shadow-2xs"
+                style={{ border: `2px solid ${symColor}`, color: '#0A2B6D' }}
               >
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-                  <SubjectIcon className="h-3 w-3 text-white" />
-                </span>
-                <span>{resolvedSubject}</span>
+                <SubjectIcon className="h-3.5 w-3.5 shrink-0" style={{ color: symColor }} />
+                <span style={{ color: '#0A2B6D' }}>{resolvedSubject}</span>
               </span>
 
-              <div className="min-w-0 flex-1">
-                {title &&
-                  (collapsible ? (
-                    <button
-                      type="button"
-                      aria-expanded={expanded}
-                      aria-controls={contentId}
-                      onClick={() => setExpanded((value) => !value)}
-                      className="flex items-center gap-2 text-left font-editorial text-base sm:text-lg font-extrabold"
-                    >
-                      <ChevronDown
-                        className={`h-4 w-4 shrink-0 text-[#5A00D6] transition-transform ${
-                          expanded ? '' : '-rotate-90'
-                        }`}
-                      />
-                      <span
-                        data-panel-title
-                        className="bg-clip-text text-transparent"
-                        style={{ backgroundImage: getTitleGradientView(seed) }}
+              {/* Main Section Header Tile: App Design Coloured Border + White Background + Dark Blue -> App Colour Writing */}
+              {title && (
+                <div
+                  className="rounded-xl p-[1.5px] shadow-2xs"
+                  style={{ background: TOP_BORDER_GRADIENT }}
+                >
+                  <div className="flex flex-wrap items-center gap-2 rounded-[10.5px] bg-white px-3 py-1">
+                    {collapsible ? (
+                      <button
+                        type="button"
+                        aria-expanded={expanded}
+                        aria-controls={contentId}
+                        onClick={() => setExpanded((value) => !value)}
+                        className="flex items-center gap-1.5 text-left font-editorial text-sm sm:text-base font-extrabold"
                       >
-                        {title}
-                      </span>
-                    </button>
-                  ) : (
-                    <div
-                      data-panel-title
-                      className="break-words font-editorial text-base sm:text-lg font-extrabold tracking-tight bg-clip-text text-transparent"
-                      style={{ backgroundImage: getTitleGradientView(seed) }}
-                    >
-                      {title}
-                    </div>
-                  ))}
-                {description && (
-                  <p
-                    className="mt-0.5 break-words text-xs font-semibold"
-                    style={{ color: getSubheaderColourView(seed) }}
-                  >
-                    {description}
-                  </p>
-                )}
-              </div>
+                        <ChevronDown
+                          className={`h-4 w-4 shrink-0 text-[#5A00D6] transition-transform ${
+                            expanded ? '' : '-rotate-90'
+                          }`}
+                        />
+                        <span
+                          data-panel-title
+                          className="bg-clip-text text-transparent"
+                          style={{ backgroundImage: HEADING_TEXT_GRADIENT }}
+                        >
+                          {title}
+                        </span>
+                      </button>
+                    ) : (
+                      <div
+                        data-panel-title
+                        className="break-words font-editorial text-sm sm:text-base font-extrabold tracking-tight bg-clip-text text-transparent"
+                        style={{ backgroundImage: HEADING_TEXT_GRADIENT }}
+                      >
+                        <span style={{ color: symColor }}>◉</span> {title}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Description Pill: App Design Coloured Border + White Background + Dark Blue Writing */}
+              {description && (
+                <span
+                  className="inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-0.5 text-[11px] font-bold text-[#0A2B6D]"
+                  style={{ border: '1.5px solid #0072FF', color: '#0A2B6D' }}
+                >
+                  <span style={{ color: '#0072FF' }}>◉</span>
+                  <span style={{ color: '#0A2B6D' }}>{description}</span>
+                </span>
+              )}
             </div>
             {action && <div className="flex flex-wrap items-center gap-1.5">{action}</div>}
           </div>
