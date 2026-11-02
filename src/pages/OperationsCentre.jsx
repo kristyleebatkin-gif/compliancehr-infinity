@@ -15,12 +15,12 @@ import LivingOrganisationalEcosystemSuite from '@/components/enterprise/LivingOr
 import { Cpu, Users, Zap, ShieldCheck, FolderOpen, Layers } from 'lucide-react';
 
 const EXEC_TABS = [
-  { id: 'executive-os', label: 'Executive overview', icon: Cpu },
-  { id: 'profiles-360', label: '360° profiles', icon: Users },
-  { id: 'automation-closure', label: 'Actions & workflows', icon: Zap },
-  { id: 'registers-storage', label: 'Registers & storage', icon: FolderOpen },
-  { id: 'workforce-frontline', label: 'Workforce', icon: ShieldCheck },
-  { id: 'all', label: 'All areas', icon: Layers },
+  { id: 'executive-os', label: 'Executive overview', sub: 'Health, Twin & Roster', icon: Cpu, ring: '#00C6FF' },
+  { id: 'profiles-360', label: '360° profiles', sub: 'Staff & Participants', icon: Users, ring: '#0072FF' },
+  { id: 'automation-closure', label: 'Actions & workflows', sub: 'Routing & Closure', icon: Zap, ring: '#FF2E9A' },
+  { id: 'registers-storage', label: 'Registers & storage', sub: '45 Registers & Vault', icon: FolderOpen, ring: '#A100FF' },
+  { id: 'workforce-frontline', label: 'Workforce', sub: 'Frontline & Payroll', icon: ShieldCheck, ring: '#00C6FF' },
+  { id: 'all', label: 'All areas', sub: 'Complete Command', icon: Layers, ring: '#FF6EDB' },
 ];
 
 export default function OperationsCentre() {
@@ -28,14 +28,29 @@ export default function OperationsCentre() {
   const show = (id) => activeTab === id || activeTab === 'all';
 
   return (
-    <div className="mx-auto w-full max-w-[1440px] bg-white px-4 py-4 sm:px-6 lg:px-8 space-y-4">
-      <header className="rounded-2xl border border-slate-200 bg-white px-5 py-5 shadow-sm sm:px-7">
-        <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#5A00D6]">ComplianceHR Infinity</p>
-        <h1 className="mt-1 text-2xl font-bold tracking-tight text-[#0A2B6D] sm:text-3xl">Executive Command</h1>
-        <p className="mt-2 max-w-3xl text-sm text-slate-600">Organisation health, compliance priorities and operational workspaces.</p>
+    <div className="mx-auto w-full max-w-[1440px] bg-white px-4 py-3 sm:px-6 lg:px-8 space-y-3">
+      <header className="app-page-header rounded-2xl border-2 border-[#0A2B6D] px-5 py-3 text-white shadow-md">
+        <div>
+          <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-white">
+            ◉ Executive Operations &amp; Mission Control
+          </p>
+          <h1 className="mt-0.5 text-xl font-extrabold tracking-tight text-white sm:text-2xl">
+            Operations Centre — Executive Command Pods
+          </h1>
+          <p className="mt-0.5 max-w-3xl text-xs font-semibold text-white/95">
+            Organisation health, compliance priorities, 360° profiles, automated workflows, registers and operational workspaces.
+          </p>
+        </div>
       </header>
 
-      <nav aria-label="Executive workspaces" className="grid grid-cols-2 gap-2 rounded-2xl border border-slate-200 bg-slate-50 p-2 sm:grid-cols-3 lg:grid-cols-6">
+      <nav
+        aria-label="Executive workspaces"
+        className="preserve-island-theme grid grid-cols-2 gap-1.5 rounded-2xl border-2 border-[#0A2B6D] p-2 shadow-lg sm:grid-cols-3 lg:grid-cols-6"
+        style={{
+          background:
+            'radial-gradient(circle at 50% 40%, rgba(0, 198, 255, 0.20) 0%, rgba(90, 0, 214, 0.34) 40%, rgba(10, 43, 109, 0.96) 80%, #061539 100%)',
+        }}
+      >
         {EXEC_TABS.map((t) => {
           const Icon = t.icon;
           const active = activeTab === t.id;
@@ -45,14 +60,48 @@ export default function OperationsCentre() {
               type="button"
               onClick={() => setActiveTab(t.id)}
               aria-pressed={active}
-              className={`inline-flex min-h-11 items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-center text-xs font-bold transition focus:outline-none focus:ring-2 focus:ring-[#0072FF] focus:ring-offset-2 ${
+              className={`group flex min-h-[48px] items-center gap-2 rounded-full border px-2.5 py-1.5 text-left backdrop-blur-md transition-all duration-200 focus:outline-none ${
                 active
-                  ? 'bg-[#0A2B6D] text-white shadow-sm'
-                  : 'border border-slate-200 bg-white text-[#0A2B6D] hover:border-[#0072FF]'
+                  ? 'border-[#00C6FF] bg-white text-[#0A2B6D] shadow-[0_0_18px_rgba(0,198,255,0.75)] scale-[1.01]'
+                  : 'border-white/25 bg-white/10 text-white hover:border-[#00C6FF] hover:bg-white/20'
               }`}
             >
-              <Icon className={`h-3.5 w-3.5 ${active ? 'text-[#00C6FF]' : 'text-[#5A00D6]'}`} />
-              <span>{t.label}</span>
+              <span className="relative flex h-7 w-7 shrink-0 items-center justify-center">
+                <svg className="pointer-events-none absolute inset-0 h-full w-full -rotate-90" viewBox="0 0 28 28">
+                  <circle cx="14" cy="14" r="12" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="2.5" />
+                  <circle
+                    cx="14"
+                    cy="14"
+                    r="12"
+                    fill="none"
+                    stroke={t.ring}
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeDasharray="75"
+                    strokeDashoffset="8"
+                  />
+                </svg>
+                <span
+                  className="relative z-10 flex h-5 w-5 items-center justify-center rounded-full text-white"
+                  style={{ background: 'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)' }}
+                >
+                  <Icon className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                </span>
+              </span>
+              <span className="min-w-0 flex-1">
+                <span
+                  className="block text-[9.5px] font-extrabold leading-tight"
+                  style={{ color: active ? '#0A2B6D' : '#FFFFFF' }}
+                >
+                  ◉ {t.label}
+                </span>
+                <span
+                  className="block text-[8px] font-bold leading-tight"
+                  style={{ color: active ? '#5A00D6' : '#00C6FF' }}
+                >
+                  {t.sub}
+                </span>
+              </span>
             </button>
           );
         })}

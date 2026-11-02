@@ -150,21 +150,24 @@ const TabsList = React.forwardRef(
         data-dashboard-tabs=""
         ref={ref}
         className={cn(
-          "preserve-island-theme overflow-hidden rounded-2xl border-2 border-[#0A2B6D] shadow-xl",
+          "preserve-island-theme overflow-hidden rounded-2xl border-2 border-[#0A2B6D] shadow-lg",
           className
         )}
         style={{ background: DARK_NAVY_CHASSIS }}
         {...props}
       >
-        {/* Centred Brand Lockup: Logo Top -> Name Middle -> Slogan Bottom on White Header */}
-        <div className="col-span-full -mx-3 -mt-3 mb-1 border-b border-white/15 bg-white">
-          <div className="h-1.5 w-full" style={{ background: BRAND_GRADIENT }} />
-          <div className="flex flex-col items-center px-3 py-1.5 text-center">
-            <BrandLogoLockup size="xs" theme="light" />
+        {/* 50% Compact Centred Brand Lockup Header */}
+        <div className="col-span-full -mx-2 -mt-2 mb-0.5 border-b border-white/15 bg-white">
+          <div className="h-1 w-full" style={{ background: BRAND_GRADIENT }} />
+          <div className="flex items-center justify-between px-3 py-1">
+            <BrandLogoLockup size="xs" theme="light" showSlogan={false} />
+            <span className="rounded-full bg-[#0A2B6D] px-2 py-0.5 text-[8px] font-black uppercase tracking-wider text-[#00C6FF]">
+              ◉ Module Control Pods
+            </span>
           </div>
         </div>
 
-        {/* Remote Control + Command Centre + Glassmorphism Buttons */}
+        {/* Circular Control-Pod Tab Triggers */}
         {indexedChildren}
       </TabsPrimitive.List>
     </DashboardTabsContext.Provider>
@@ -184,7 +187,7 @@ const TabsTrigger = React.forwardRef(
         data-dashboard-tone={dashboardTabTone(props.value)}
         ref={ref}
         className={cn(
-          "inline-flex min-h-[38px] items-center justify-center gap-1.5 whitespace-nowrap rounded-full border-2 border-[#0A2B6D] bg-white px-3.5 py-1.5 text-xs font-extrabold text-[#0A2B6D] [&_svg]:mr-0 [&_svg]:size-3.5 [&_svg]:shrink-0 ring-offset-background transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-white data-[state=active]:shadow-sm",
+          "inline-flex min-h-[32px] items-center justify-center gap-1.5 whitespace-nowrap rounded-full border-2 border-[#0A2B6D] bg-white px-3 py-1 text-xs font-extrabold text-[#0A2B6D] [&_svg]:mr-0 [&_svg]:size-3.5 [&_svg]:shrink-0 ring-offset-background transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-white data-[state=active]:shadow-sm",
           className
         )}
         {...props}
@@ -207,51 +210,64 @@ const TabsTrigger = React.forwardRef(
       data-dashboard-tone={dashboardTabTone(props.value)}
       ref={ref}
       className={cn(
-        "group flex h-full min-h-[82px] w-full flex-col rounded-2xl p-[2px] text-left transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_0_14px_rgba(161,0,255,0.5)] focus-visible:outline-none data-[state=active]:shadow-[0_0_20px_rgba(0,198,255,0.75)] data-[state=active]:scale-[1.01] disabled:pointer-events-none disabled:opacity-50",
+        "group relative flex h-full min-h-[48px] w-full items-center gap-2 rounded-3xl border border-white/25 px-2.5 py-1.5 text-left backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:border-[#00C6FF] hover:shadow-[0_0_12px_rgba(161,0,255,0.5)] focus-visible:outline-none data-[state=active]:border-[#00C6FF] data-[state=active]:shadow-[0_0_18px_rgba(0,198,255,0.75)] data-[state=active]:scale-[1.01] disabled:pointer-events-none disabled:opacity-50",
         className
       )}
-      style={{ background: BRAND_GRADIENT }}
+      style={{
+        background:
+          'radial-gradient(circle at 30% 25%, rgba(255,255,255,0.22) 0%, rgba(10, 43, 109, 0.92) 72%, #061539 100%)',
+      }}
       {...props}
     >
-      {/* Glassmorphic Remote Button on Dark Navy */}
-      <span className="flex w-full flex-1 flex-col justify-between overflow-hidden rounded-[14px] bg-[#0A2B6D]/90 backdrop-blur-md">
-        {/* White Title Background */}
-        <span className="qa-tab-header flex min-h-[34px] w-full items-center justify-between gap-1.5 bg-white px-2 py-1">
-          <span className="flex min-w-0 items-center gap-1.5">
+      {/* Glowing Circular Ring Orb */}
+      <span className="relative flex h-7 w-7 shrink-0 items-center justify-center">
+        <svg className="pointer-events-none absolute inset-0 h-full w-full -rotate-90" viewBox="0 0 28 28">
+          <circle cx="14" cy="14" r="12" fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="2.5" />
+          <circle
+            cx="14"
+            cy="14"
+            r="12"
+            fill="none"
+            stroke="#00C6FF"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeDasharray="75"
+            strokeDashoffset="10"
+          />
+        </svg>
+        <span
+          className="relative z-10 flex h-5 w-5 items-center justify-center rounded-full text-white shadow-2xs"
+          style={{ background: BRAND_GRADIENT }}
+        >
+          {iconNode}
+        </span>
+      </span>
+
+      {/* White Title Pill + Subtitle */}
+      <span className="min-w-0 flex-1">
+        <span className="flex items-center justify-between gap-1">
+          <span className="inline-flex max-w-full items-center gap-1 rounded-full bg-white px-2 py-0.2 shadow-2xs">
+            <span className="text-[8px] leading-none text-[#0072FF]">◉</span>
             <span
-              className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-md p-0.5 text-white"
-              style={{ background: BRAND_GRADIENT }}
-            >
-              {iconNode}
-            </span>
-            <span
-              className="min-w-0 text-[9.5px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]"
-              style={{ color: '#0A2B6D', wordBreak: 'normal', overflowWrap: 'normal' }}
+              className="text-[9.5px] font-extrabold leading-tight text-[#0A2B6D]"
+              style={{ color: '#0A2B6D' }}
             >
               {labelText}
             </span>
           </span>
-          {/* Status Indicator + LED Active Glow */}
-          <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-[#F5F0FF] px-1.5 py-0 text-[7px] font-black uppercase text-[#5A00D6] group-data-[state=active]:bg-[#0A2B6D] group-data-[state=active]:text-[#00C6FF]">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#FF2E9A] group-data-[state=active]:bg-[#00C6FF] group-data-[state=active]:shadow-[0_0_6px_1px_#00C6FF]" />
+          <span className="inline-flex shrink-0 items-center gap-0.5 rounded-full bg-white/15 px-1.5 py-0 text-[6.5px] font-black uppercase text-white group-data-[state=active]:bg-[#00C6FF] group-data-[state=active]:text-[#0A2B6D]">
             <span>LIVE</span>
           </span>
         </span>
 
-        {/* Dark Navy Glassmorphic Body */}
-        <span className="qa-tab-body flex min-h-[34px] w-full flex-1 items-center justify-between gap-1 px-2 py-1">
+        <span className="mt-0.5 flex items-center justify-between gap-1">
           <span
-            className="min-w-0 flex-1 break-words text-[9px] font-bold leading-snug text-white/95"
-            style={{ color: '#FFFFFF' }}
+            className="min-w-0 flex-1 break-words text-[8.5px] font-bold leading-tight text-white/90"
+            style={{ color: '#E2E8F0' }}
           >
             {subtitle}
           </span>
           <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#00C6FF] transition group-hover:translate-x-0.5" />
-        </span>
-
-        {/* iPad LED Home Indicator Bar */}
-        <span className="flex h-[5px] w-full items-center justify-center pb-0.5">
-          <span className="h-[2.5px] w-6 rounded-full bg-white/40 transition-all group-hover:bg-white/80 group-data-[state=active]:w-9 group-data-[state=active]:bg-[#00C6FF] group-data-[state=active]:shadow-[0_0_8px_#00C6FF]" />
         </span>
       </span>
     </TabsPrimitive.Trigger>

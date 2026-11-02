@@ -26,62 +26,79 @@ export default function AllModulesHub() {
     >
       <div className="h-1.5 w-full" style={{ background: BRAND_GRADIENT }} />
 
-      {/* Centred Brand Lockup: Logo Top -> Name Middle -> Slogan Bottom */}
-      <div id="all-modules-hub" className="flex flex-col items-center border-b border-white/15 bg-white px-3.5 py-2 text-center">
-        <BrandLogoLockup size="xs" theme="light" />
+      {/* 50% Compact Brand Lockup Header */}
+      <div id="all-modules-hub" className="flex items-center justify-between border-b border-white/15 bg-white px-3 py-1">
+        <BrandLogoLockup size="xs" theme="light" showSlogan={false} />
+        <span className="rounded-full bg-[#0A2B6D] px-2 py-0.5 text-[8px] font-black uppercase tracking-wider text-[#00C6FF]">
+          ◉ All {modules.length} Platform Control Pods
+        </span>
       </div>
 
-      {/* Remote Control + Command Centre + Glassmorphism Buttons */}
-      <div className="grid auto-rows-fr grid-cols-2 gap-2.5 p-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 items-stretch">
-        {modules.map((module) => {
+      {/* 50% Compact Circular Control Pods Grid */}
+      <div className="grid auto-rows-fr grid-cols-2 gap-1.5 p-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 items-stretch">
+        {modules.map((module, idx) => {
           const Icon = module.icon;
+          const ringColor = idx % 2 === 0 ? '#00C6FF' : '#FF6EDB';
           return (
             <Link
               key={module.key}
               to={module.path}
               title={`${module.label} — ${module.blurb}`}
-              className="group flex h-full min-h-[84px] flex-col rounded-2xl p-[2px] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_0_16px_rgba(0,198,255,0.65)] focus-visible:outline-none"
-              style={{ background: BRAND_GRADIENT }}
+              className="group flex h-full min-h-[52px] items-center gap-2 rounded-3xl border border-white/25 px-2.5 py-1.5 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#00C6FF] hover:shadow-[0_0_16px_rgba(0,198,255,0.65)] focus-visible:outline-none"
+              style={{
+                background:
+                  'radial-gradient(circle at 30% 25%, rgba(255,255,255,0.22) 0%, rgba(10, 43, 109, 0.92) 72%, #061539 100%)',
+              }}
             >
-              <div className="flex flex-1 flex-col justify-between overflow-hidden rounded-[14px] bg-[#0A2B6D]/90 backdrop-blur-md">
-                {/* White Title Background */}
-                <div className="flex min-h-[34px] items-center justify-between gap-1.5 bg-white px-2.5 py-1">
-                  <div className="flex min-w-0 items-center gap-1.5">
-                    <span
-                      className="flex h-5 w-5 shrink-0 items-center justify-center rounded-lg text-white"
-                      style={{ background: BRAND_GRADIENT }}
-                    >
-                      <Icon className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+              <span className="relative flex h-7 w-7 shrink-0 items-center justify-center">
+                <svg className="pointer-events-none absolute inset-0 h-full w-full -rotate-90" viewBox="0 0 28 28">
+                  <circle cx="14" cy="14" r="12" fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="2.5" />
+                  <circle
+                    cx="14"
+                    cy="14"
+                    r="12"
+                    fill="none"
+                    stroke={ringColor}
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeDasharray="75"
+                    strokeDashoffset="10"
+                  />
+                </svg>
+                <span
+                  className="relative z-10 flex h-5 w-5 items-center justify-center rounded-full text-white"
+                  style={{ background: BRAND_GRADIENT }}
+                >
+                  <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                </span>
+              </span>
+
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center justify-between gap-1">
+                  <span className="inline-flex max-w-full items-center gap-0.5 rounded-full bg-white px-2 py-0.2 shadow-2xs">
+                    <span className="text-[8px] leading-none" style={{ color: ringColor }}>
+                      ◉
                     </span>
                     <span
-                      className="min-w-0 text-[9.5px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]"
+                      className="text-[9.5px] font-extrabold leading-tight text-[#0A2B6D]"
                       style={{ color: '#0A2B6D' }}
                     >
                       {module.label}
                     </span>
-                  </div>
-                  <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-[#F5F0FF] px-1.5 py-0 text-[7px] font-black uppercase text-[#5A00D6]">
-                    <span
-                      className="h-1.5 w-1.5 rounded-full bg-[#00C6FF]"
-                      style={{ boxShadow: '0 0 6px 1px #00C6FF' }}
-                    />
+                  </span>
+                  <span className="rounded-full bg-white/15 px-1 py-0 text-[6.5px] font-black uppercase text-[#00C6FF]">
                     LIVE
                   </span>
                 </div>
 
-                {/* Dark Navy Glassmorphic Body */}
-                <div className="flex min-h-[34px] flex-1 items-center justify-between gap-1.5 px-2.5 py-1">
+                <div className="mt-0.5 flex items-center justify-between gap-1">
                   <span
-                    className="min-w-0 flex-1 break-words text-[9px] font-bold leading-snug text-white/95"
-                    style={{ color: '#FFFFFF' }}
+                    className="min-w-0 flex-1 break-words text-[8px] font-bold leading-tight text-white/90"
+                    style={{ color: '#E2E8F0' }}
                   >
                     {module.blurb}
                   </span>
                   <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#00C6FF] transition group-hover:translate-x-0.5" />
-                </div>
-
-                <div className="flex h-[5px] items-center justify-center pb-0.5">
-                  <span className="h-[2.5px] w-6 rounded-full bg-white/40 transition-all group-hover:w-9 group-hover:bg-[#00C6FF]" />
                 </div>
               </div>
             </Link>

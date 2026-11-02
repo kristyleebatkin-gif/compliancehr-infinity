@@ -95,24 +95,39 @@ export default function CompleteProfile13SectionNavigator({ kind = 'staff', prof
         </div>
       </div>
 
-      {/* 9 Mandatory Ordered Profile Layout Sections */}
-      <div className="flex flex-wrap gap-1.5">
-        {sections.map((sec) => {
+      {/* 9 Mandatory Ordered Profile Layout Circular Control Pods */}
+      <div
+        className="preserve-island-theme grid grid-cols-1 gap-1.5 rounded-2xl border-2 border-[#0A2B6D] p-2 sm:grid-cols-2 md:grid-cols-3"
+        style={{
+          background:
+            'radial-gradient(circle at 50% 40%, rgba(0, 198, 255, 0.20) 0%, rgba(90, 0, 214, 0.34) 40%, rgba(10, 43, 109, 0.96) 80%, #061539 100%)',
+        }}
+      >
+        {sections.map((sec, idx) => {
           const isInternal = sec.to.startsWith('#');
+          const active = selectedSection === sec.id;
+          const ringColor = idx % 2 === 0 ? '#00C6FF' : '#FF6EDB';
           if (isInternal) {
             return (
               <button
                 key={sec.id}
                 type="button"
                 onClick={() => setSelectedSection(sec.id)}
-                className={`inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-[11px] font-extrabold transition ${
-                  selectedSection === sec.id
-                    ? 'bg-[#0A2B6D] text-white'
-                    : 'border border-slate-200 bg-[#F5F0FF] text-[#0A2B6D] hover:border-[#0072FF]'
+                className={`flex min-h-[38px] items-center justify-between gap-2 rounded-full border px-2.5 py-1 text-left backdrop-blur-md transition-all ${
+                  active
+                    ? 'border-[#00C6FF] bg-white text-[#0A2B6D] shadow-[0_0_14px_rgba(0,198,255,0.75)]'
+                    : 'border-white/25 bg-white/10 text-white hover:border-[#00C6FF]'
                 }`}
               >
-                <CheckCircle2 className="h-3 w-3 text-[#00C6FF]" />
-                <span>{sec.label}</span>
+                <span className="flex items-center gap-1.5 min-w-0">
+                  <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-[#00C6FF]" />
+                  <span className="text-[9.5px] font-extrabold leading-tight" style={{ color: active ? '#0A2B6D' : '#FFFFFF' }}>
+                    ◉ {sec.label}
+                  </span>
+                </span>
+                <span className="rounded-full bg-[#0A2B6D] px-1.5 py-0 text-[7px] font-black text-[#00C6FF]">
+                  ACTIVE
+                </span>
               </button>
             );
           }
@@ -120,10 +135,17 @@ export default function CompleteProfile13SectionNavigator({ kind = 'staff', prof
             <Link
               key={sec.id}
               to={sec.to}
-              className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-extrabold text-[#0A2B6D] transition hover:border-[#0072FF] hover:bg-[#F5F0FF]"
+              className="flex min-h-[38px] items-center justify-between gap-2 rounded-full border border-white/25 bg-white/10 px-2.5 py-1 text-left text-white backdrop-blur-md transition-all hover:-translate-y-0.5 hover:border-[#00C6FF] hover:bg-white/20"
             >
-              <span>{sec.label}</span>
-              <ArrowUpRight className="h-3 w-3 text-[#5A00D6]" />
+              <span className="flex items-center gap-1.5 min-w-0">
+                <span className="text-[9px] leading-none shrink-0" style={{ color: ringColor }}>
+                  ◉
+                </span>
+                <span className="text-[9.5px] font-extrabold leading-tight text-white" style={{ color: '#FFFFFF' }}>
+                  {sec.label}
+                </span>
+              </span>
+              <ArrowUpRight className="h-3 w-3 shrink-0 text-[#00C6FF]" />
             </Link>
           );
         })}

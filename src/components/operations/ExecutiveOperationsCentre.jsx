@@ -236,148 +236,165 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
           </div>
         </div>
 
-        {/* Executive Live KPI Command Bar — Visually Matching Quick Access */}
-        <div className="bg-white p-3 space-y-3">
-          <div className="grid auto-rows-fr grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-8 items-stretch">
+        {/* Executive Live KPI Circular Control Pods — 50% Compact & Better Data Fit */}
+        <div className="bg-white p-2.5 space-y-2.5">
+          <div
+            className="preserve-island-theme grid auto-rows-fr grid-cols-2 gap-1.5 rounded-2xl border-2 border-[#0A2B6D] p-2 sm:grid-cols-4 lg:grid-cols-8 items-stretch"
+            style={{
+              background:
+                'radial-gradient(circle at 50% 40%, rgba(0, 198, 255, 0.20) 0%, rgba(90, 0, 214, 0.34) 40%, rgba(10, 43, 109, 0.96) 80%, #061539 100%)',
+            }}
+          >
             {[
-              { label: 'Staff Records', value: kpi.staff, sub: 'Screening status not assessed here', path: '/our-employees' },
-              { label: 'Participant Records', value: kpi.participants, sub: 'Plan and goal status not assessed here', path: '/our-participants' },
-              { label: 'Shift Records', value: kpi.shifts, sub: 'Coverage status not assessed here', path: '/roster' },
-              { label: 'Task Records', value: kpi.tasks, sub: 'Open task workspace', path: '/tasks' },
-              { label: 'Incident Records', value: kpi.incidents, sub: 'Reporting deadlines not assessed here', path: '/incidents' },
-              { label: 'Risk Records', value: kpi.risks, sub: 'Controls not assessed here', path: '/risks' },
-              { label: 'Employee Documents', value: kpi.documents, sub: 'Document status not assessed here', path: '/documents' },
-              { label: 'Policy Records', value: kpi.policies, sub: 'Control status not assessed here', path: '/compliance' },
-            ].map((item, idx) => {
-              const headerBg = getHeaderView(idx);
-              return (
-                <Link
-                  key={item.label}
-                  to={item.path}
-                  className="group flex h-full min-h-[86px] flex-col gap-[3px] rounded-xl border-2 border-[#0A2B6D] bg-[#0A2B6D] p-[3px] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#0072FF] hover:shadow-md"
-                >
-                  <div className="flex flex-1 flex-col overflow-hidden rounded-[8px] bg-white">
-                    <div
-                      className="flex min-h-[34px] items-center justify-between gap-1 px-1.5 py-1 text-white"
-                      style={{ background: headerBg }}
-                    >
-                      <span className="min-w-0 text-[9.5px] font-extrabold leading-[11px] tracking-tight text-white">
-                        {item.label}
-                      </span>
-                      <span className="rounded-full bg-white px-1.5 py-0.2 text-[9.5px] font-black text-[#0A2B6D]">
-                        {item.value ?? '—'}
-                      </span>
-                    </div>
-                    <div className="flex min-h-[34px] flex-1 items-center justify-between gap-1 border-t border-[#0A2B6D]/10 bg-white px-1.5 py-1">
-                      <span className="line-clamp-2 min-w-0 flex-1 break-words text-[10px] font-bold leading-[12.5px] text-[#0A2B6D]/85">
-                        {item.sub}
-                      </span>
-                      <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#0072FF] transition group-hover:translate-x-0.5 group-hover:text-[#FF2E9A]" />
-                    </div>
-                  </div>
-                  <div className="flex h-[5px] items-center justify-center">
-                    <span className="h-[2.5px] w-6 rounded-full bg-white/45 transition-all group-hover:bg-white/80" />
-                  </div>
-                </Link>
-              );
-            })}
+              { label: 'Staff', value: kpi.staff, sub: 'Screening & HR', path: '/our-employees', ring: '#00C6FF' },
+              { label: 'Participants', value: kpi.participants, sub: 'Plans & Goals', path: '/our-participants', ring: '#0072FF' },
+              { label: 'Shifts', value: kpi.shifts, sub: 'Roster Coverage', path: '/roster', ring: '#A100FF' },
+              { label: 'Tasks', value: kpi.tasks, sub: 'Open Actions', path: '/tasks', ring: '#FF6EDB' },
+              { label: 'Incidents', value: kpi.incidents, sub: '24h/5d SLA', path: '/incidents', ring: '#FF2E9A' },
+              { label: 'Risks', value: kpi.risks, sub: 'Risk Controls', path: '/risks', ring: '#00C6FF' },
+              { label: 'Documents', value: kpi.documents, sub: 'Vault Records', path: '/documents', ring: '#0072FF' },
+              { label: 'Policies', value: kpi.policies, sub: 'Controlled Docs', path: '/compliance', ring: '#A100FF' },
+            ].map((item) => (
+              <Link
+                key={item.label}
+                to={item.path}
+                className="group flex h-full min-h-[54px] flex-col justify-between rounded-3xl border border-white/25 bg-white/10 px-2.5 py-1.5 text-left backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:border-[#00C6FF] hover:shadow-[0_0_14px_rgba(0,198,255,0.6)]"
+                style={{
+                  background:
+                    'radial-gradient(circle at 30% 25%, rgba(255,255,255,0.22) 0%, rgba(10, 43, 109, 0.92) 72%, #061539 100%)',
+                }}
+              >
+                <div className="flex items-center justify-between gap-1">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-white px-2 py-0.2 shadow-2xs">
+                    <span className="text-[8px] leading-none" style={{ color: item.ring }}>
+                      ◉
+                    </span>
+                    <span className="text-[9px] font-extrabold leading-tight text-[#0A2B6D]" style={{ color: '#0A2B6D' }}>
+                      {item.label}
+                    </span>
+                  </span>
+                  <span
+                    className="rounded-full px-1.5 py-0 text-[9px] font-black text-white"
+                    style={{ backgroundColor: item.ring, color: '#0A2B6D' }}
+                  >
+                    {item.value ?? '—'}
+                  </span>
+                </div>
+                <div className="mt-1 flex items-center justify-between gap-1">
+                  <span className="text-[8px] font-bold leading-tight text-white/90" style={{ color: '#E2E8F0' }}>
+                    {item.sub}
+                  </span>
+                  <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#00C6FF] transition group-hover:translate-x-0.5" />
+                </div>
+              </Link>
+            ))}
           </div>
 
-          {/* Executive Resource Suite Navigator — Remote Control + Command Centre + Glassmorphism */}
+          {/* Executive Resource Suite Navigator — 50% Compact Circular Control Pods */}
           <section
-            className="preserve-island-theme overflow-hidden rounded-2xl border-2 border-[#0A2B6D] shadow-xl"
+            className="preserve-island-theme overflow-hidden rounded-2xl border-2 border-[#0A2B6D] shadow-lg"
             style={{ background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)' }}
           >
-            <div className="h-1.5 w-full" style={{ background: SQUISHED_GRADIENT }} />
+            <div className="h-1 w-full" style={{ background: SQUISHED_GRADIENT }} />
 
-            <div className="flex flex-col items-center border-b border-white/15 bg-white px-3.5 py-2 text-center">
-              <Image
-                src={CHR_LOGO}
-                alt="ComplianceHR Infinity"
-                fittingType="fit"
-                className="h-5 w-14 rounded-md border border-slate-200 bg-white px-1 py-0.5 shadow-2xs"
-              />
-              <span className="mt-0.5 font-editorial text-[12px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]" style={{ color: '#0A2B6D' }}>
-                Compliance
-                <span className="font-editorial-italic text-[#5A00D6]">HR</span>{' '}
-                <span className="bg-gradient-to-r from-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                  Infinity
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/15 bg-white px-3 py-1">
+              <div className="flex items-center gap-2">
+                <Image
+                  src={CHR_LOGO}
+                  alt="ComplianceHR Infinity"
+                  fittingType="fit"
+                  className="h-5 w-12 rounded border border-slate-200 bg-white px-1 py-0.5 shadow-2xs"
+                />
+                <span className="font-editorial text-[11px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]" style={{ color: '#0A2B6D' }}>
+                  Compliance
+                  <span className="font-editorial-italic text-[#5A00D6]">HR</span>{' '}
+                  <span className="bg-gradient-to-r from-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+                    Infinity
+                  </span>
                 </span>
-              </span>
-              <span className="mt-0.5 text-[7.5px] font-extrabold leading-tight">
+              </div>
+              <span className="text-[8px] font-extrabold leading-tight">
                 <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
                 <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
                 <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
               </span>
             </div>
 
-            <div className="grid auto-rows-fr grid-cols-2 gap-2.5 p-3 sm:grid-cols-3 md:grid-cols-6 items-stretch">
-              {EXECUTIVE_RESOURCE_SUITES.map((suite) => {
+            <div className="grid auto-rows-fr grid-cols-2 gap-1.5 p-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 items-stretch">
+              {EXECUTIVE_RESOURCE_SUITES.map((suite, idx) => {
                 const Icon = suite.icon;
                 const active = activeSuite === suite.id;
+                const ringColor = active ? '#00C6FF' : idx % 2 === 0 ? '#00C6FF' : '#FF6EDB';
                 return (
                   <button
                     key={suite.id}
                     type="button"
                     onClick={() => setActiveSuite(suite.id)}
                     aria-pressed={active}
-                    className={`group flex h-full min-h-[84px] flex-col rounded-2xl p-[2px] text-left transition-all duration-200 focus-visible:outline-none ${
+                    className={`group flex h-full min-h-[50px] items-center gap-2 rounded-3xl border px-2.5 py-1.5 text-left backdrop-blur-md transition-all duration-200 focus-visible:outline-none ${
                       active
-                        ? 'shadow-[0_0_20px_rgba(0,198,255,0.75)] scale-[1.01]'
-                        : 'hover:-translate-y-0.5 hover:shadow-[0_0_14px_rgba(161,0,255,0.5)]'
+                        ? 'border-[#00C6FF] shadow-[0_0_18px_rgba(0,198,255,0.75)] scale-[1.01]'
+                        : 'border-white/25 hover:-translate-y-0.5 hover:border-[#00C6FF] hover:shadow-[0_0_12px_rgba(161,0,255,0.5)]'
                     }`}
-                    style={{ background: 'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)' }}
+                    style={{
+                      background:
+                        'radial-gradient(circle at 30% 25%, rgba(255,255,255,0.22) 0%, rgba(10, 43, 109, 0.92) 72%, #061539 100%)',
+                    }}
                   >
-                    <div className="flex w-full flex-1 flex-col justify-between overflow-hidden rounded-[14px] bg-[#0A2B6D]/90 backdrop-blur-md">
-                      {/* White Title Background */}
-                      <div className="flex min-h-[34px] w-full items-center justify-between gap-1.5 bg-white px-2 py-1">
-                        <div className="flex min-w-0 items-center gap-1.5">
-                          <span
-                            className="flex h-5 w-5 shrink-0 items-center justify-center rounded-lg text-white"
-                            style={{ background: 'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)' }}
-                          >
-                            <Icon className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                    {/* Glowing Circular Ring Orb */}
+                    <span className="relative flex h-7 w-7 shrink-0 items-center justify-center">
+                      <svg className="pointer-events-none absolute inset-0 h-full w-full -rotate-90" viewBox="0 0 28 28">
+                        <circle cx="14" cy="14" r="12" fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="2.5" />
+                        <circle
+                          cx="14"
+                          cy="14"
+                          r="12"
+                          fill="none"
+                          stroke={ringColor}
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeDasharray="75"
+                          strokeDashoffset={active ? '6' : '14'}
+                        />
+                      </svg>
+                      <span
+                        className="relative z-10 flex h-5 w-5 items-center justify-center rounded-full text-white"
+                        style={{ background: 'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)' }}
+                      >
+                        <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                      </span>
+                    </span>
+
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center justify-between gap-1">
+                        <span className="inline-flex max-w-full items-center gap-0.5 rounded-full bg-white px-2 py-0.2 shadow-2xs">
+                          <span className="text-[8px] leading-none" style={{ color: ringColor }}>
+                            ◉
                           </span>
                           <span
-                            className="min-w-0 text-[9.5px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]"
+                            className="text-[9px] font-extrabold leading-tight text-[#0A2B6D]"
                             style={{ color: '#0A2B6D' }}
                           >
                             {suite.shortLabel}
                           </span>
-                        </div>
+                        </span>
                         <span
-                          className={`inline-flex shrink-0 items-center gap-1 rounded-full px-1.5 py-0 text-[7px] font-black uppercase ${
-                            active ? 'bg-[#0A2B6D] text-[#00C6FF]' : 'bg-[#F5F0FF] text-[#5A00D6]'
+                          className={`rounded-full px-1 py-0 text-[6.5px] font-black uppercase ${
+                            active ? 'bg-[#00C6FF] text-[#0A2B6D]' : 'bg-white/15 text-white'
                           }`}
                         >
-                          <span
-                            className="h-1.5 w-1.5 rounded-full"
-                            style={{
-                              backgroundColor: active ? '#00C6FF' : '#FF2E9A',
-                              boxShadow: active ? '0 0 6px 1px #00C6FF' : 'none',
-                            }}
-                          />
                           {active ? 'ON' : 'LIVE'}
                         </span>
                       </div>
 
-                      {/* Dark Navy Glassmorphic Body */}
-                      <div className="flex min-h-[34px] w-full flex-1 items-center justify-between gap-1 px-2 py-1">
+                      <div className="mt-0.5 flex items-center justify-between gap-1">
                         <span
-                          className="line-clamp-2 min-w-0 flex-1 break-words text-[9px] font-bold leading-snug text-white/95"
-                          style={{ color: '#FFFFFF' }}
+                          className="min-w-0 flex-1 break-words text-[8px] font-bold leading-tight text-white/90"
+                          style={{ color: '#E2E8F0' }}
                         >
                           {suite.badge} · {suite.subject}
                         </span>
-                        <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#00C6FF] transition group-hover:translate-x-0.5" />
-                      </div>
-
-                      <div className="flex h-[5px] w-full items-center justify-center pb-0.5">
-                        <span
-                          className={`h-[2.5px] rounded-full transition-all ${
-                            active ? 'w-9 bg-[#00C6FF] shadow-[0_0_8px_#00C6FF]' : 'w-6 bg-white/40 group-hover:bg-white/80'
-                          }`}
-                        />
+                        <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#00C6FF]" />
                       </div>
                     </div>
                   </button>

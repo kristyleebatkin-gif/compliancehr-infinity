@@ -181,39 +181,67 @@ export default function MyWorkArea9Panel({ compact = false }) {
         </div>
       </div>
 
-      {/* 11 STREAM TILES */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-11 gap-2">
-        {MY_WORK_11_STREAMS.map((stream) => {
+      {/* 11 CIRCULAR CONTROL-POD STREAM TILES */}
+      <div
+        className="preserve-island-theme grid grid-cols-2 gap-1.5 rounded-2xl border-2 border-[#0A2B6D] p-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
+        style={{
+          background:
+            'radial-gradient(circle at 50% 40%, rgba(0, 198, 255, 0.20) 0%, rgba(90, 0, 214, 0.34) 40%, rgba(10, 43, 109, 0.96) 80%, #061539 100%)',
+        }}
+      >
+        {MY_WORK_11_STREAMS.map((stream, idx) => {
           const Icon = stream.icon;
           const active = activeStream === stream.id;
+          const ringColor = active ? '#00C6FF' : idx % 2 === 0 ? '#00C6FF' : '#FF6EDB';
           return (
             <button
               key={stream.id}
               type="button"
               onClick={() => setActiveStream(stream.id)}
-              className={`flex flex-col items-start justify-between rounded-xl border-2 p-2.5 text-left transition ${
+              className={`group flex min-h-[42px] items-center gap-1.5 rounded-full border px-2 py-1 text-left backdrop-blur-md transition-all duration-200 ${
                 active
-                  ? 'border-[#0072FF] bg-[#0F172A] text-white shadow-sm'
-                  : 'border-slate-200 bg-white text-[#0A2B6D] hover:border-[#0072FF]'
+                  ? 'border-[#00C6FF] bg-white text-[#0A2B6D] shadow-[0_0_16px_rgba(0,198,255,0.75)] scale-[1.01]'
+                  : 'border-white/25 bg-white/10 text-white hover:border-[#00C6FF] hover:bg-white/20'
               }`}
             >
-              <div className="flex w-full items-center justify-between gap-1">
-                <Icon className={`h-3.5 w-3.5 ${active ? 'text-[#00C6FF]' : 'text-[#5A00D6]'}`} />
+              <span className="relative flex h-6 w-6 shrink-0 items-center justify-center">
+                <svg className="pointer-events-none absolute inset-0 h-full w-full -rotate-90" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="2" />
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    fill="none"
+                    stroke={ringColor}
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeDasharray="63"
+                    strokeDashoffset="8"
+                  />
+                </svg>
                 <span
-                  className={`rounded-full px-1.5 py-0.5 text-[10px] font-extrabold ${
-                    active ? 'bg-[#00C6FF] text-[#0A2B6D]' : 'bg-slate-100 text-[#0A2B6D]'
+                  className="relative z-10 flex h-4.5 w-4.5 items-center justify-center rounded-full text-white"
+                  style={{ background: 'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)' }}
+                >
+                  <Icon className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                </span>
+              </span>
+
+              <div className="min-w-0 flex-1 flex items-center justify-between gap-1">
+                <span
+                  className="text-[9px] font-extrabold leading-tight"
+                  style={{ color: active ? '#0A2B6D' : '#FFFFFF' }}
+                >
+                  ◉ {stream.label}
+                </span>
+                <span
+                  className={`shrink-0 rounded-full px-1.5 py-0 text-[8.5px] font-black ${
+                    active ? 'bg-[#0A2B6D] text-[#00C6FF]' : 'bg-[#00C6FF] text-[#0A2B6D]'
                   }`}
                 >
                   {counts[stream.id] ?? 0}
                 </span>
               </div>
-              <span
-                className={`mt-1.5 text-[10.5px] font-extrabold leading-tight ${
-                  active ? 'text-white' : 'text-[#0A2B6D]'
-                }`}
-              >
-                {stream.label}
-              </span>
             </button>
           );
         })}
