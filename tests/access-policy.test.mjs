@@ -2,25 +2,37 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import * as frontend from '../src/lib/roles.js';
+import * as frontendMatrix from '../src/lib/roleMatrix.js';
 
-// This helper currently contains plain JavaScript in a .ts file. Import its
-// exact source without loading any Base44 client or contacting production.
-const backendSource = await readFile(new URL('../base44/shared/appAccess.ts', import.meta.url), 'utf8');
-const backend = await import(`data:text/javascript;base64,${Buffer.from(backendSource).toString('base64')}`);
+const backendMatrixSource = await readFile(new URL('../base44/shared/roleMatrix.ts', import.meta.url), 'utf8');
+const frontendMatrixSource = await readFile(new URL('../src/lib/roleMatrix.js', import.meta.url), 'utf8');
+const backend = await import(`data:text/javascript;base64,${Buffer.from(backendMatrixSource).toString('base64')}`);
+
+test('frontend and backend roleMatrix.ts are identical single sources of truth', () => {
+  assert.equal(backendMatrixSource, frontendMatrixSource);
+  assert.equal(frontend.hasApprovedAccess, frontendMatrix.hasApprovedAccess);
+});
 
 test('frontend and backend never enable an access bypass', () => {
   assert.equal(frontend.isOpenAccessWindowActive(), false);
   assert.equal(backend.isOpenAccessWindowActive(), false);
 });
 
-test('unapproved and inactive users are refused consistently', () => {
-  const users = [null, undefined, {},
+test('unapproved and inactive users are refused consistently across all roles including admin', () => {
+  const users = [
+    null,
+    undefined,
+    {},
     { role: 'Employee', account_status: 'Pending', access_approved: false },
     { role: 'Employee', account_status: 'Active', access_approved: false },
+    { role: 'admin', account_status: 'Pending Approval', access_approved: false },
+    { role: 'admin', account_status: 'Active', access_approved: false },
+    { role: 'Provider Administrator', account_status: 'Pending Approval', access_approved: true },
+    { role: 'Provider Administrator', account_status: 'Active', access_approved: false },
     { role: 'Unknown', account_status: 'Active', access_approved: true },
   ];
   for (const role of ['admin', 'Provider Administrator', 'Management', 'Employee', 'Participant']) {
-    for (const account_status of ['Suspended', 'Rejected', 'Archived']) {
+    for (const account_status of ['Suspended', 'Rejected', 'Archived', 'Disabled', 'Pending Approval']) {
       users.push({ role, account_status, access_approved: true });
     }
   }
