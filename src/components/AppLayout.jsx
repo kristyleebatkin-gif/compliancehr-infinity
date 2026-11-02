@@ -247,8 +247,8 @@ export default function AppLayout() {
                 'linear-gradient(120deg, #00C6FF 0%, #0072FF 25%, #5A00D6 55%, #FF2E9A 100%)',
             }}
           />
-          {/* Top Section of White Area — exact same 176px height as the white section of the remote */}
-          <div className="flex h-[176px] items-center justify-center bg-white px-3 py-2 sm:px-6 lg:px-8">
+          {/* Top Section of White Area — exact same 190px height as the white section of the remote */}
+          <div className="flex h-[190px] items-center justify-center bg-white px-3 py-1.5 sm:px-6 lg:px-8">
             <div className="mx-auto flex max-w-[1440px] justify-center">
               <Link
                 to="/dashboard"

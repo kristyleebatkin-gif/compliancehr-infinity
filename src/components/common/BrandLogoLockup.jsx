@@ -33,11 +33,11 @@ export default function BrandLogoLockup({
 }) {
   const isCustomName = companyName && companyName !== 'ComplianceHR Infinity';
 
-  // Only slightly bigger logo with balanced proportions (compact option for sidebar remote)
+  // Larger logo image (approx. 3cm on main header, scaled proportionally in sidebar remote)
   const logoSizeClass =
     size === 'xs'
-      ? 'h-14 w-36 sm:h-16 sm:w-40'
-      : 'h-16 w-44 sm:h-20 sm:w-52';
+      ? 'h-[4.75rem] w-44 sm:h-[5.25rem] sm:w-48'
+      : 'h-24 w-56 sm:h-28 sm:w-64';
 
   // Line 2: Similar-sized structured heading on ONE single line
   const nameSizeClass =
@@ -63,8 +63,8 @@ export default function BrandLogoLockup({
       }}
     >
       {/* SINGLE UNIFIED WHITE CONTAINER WITH ONE APP-DESIGN GRADIENT BORDER FOR LOGO, NAME & SLOGAN */}
-      <div className="flex w-full flex-col items-center justify-center rounded-[13px] bg-white px-5 py-3">
-        {/* LINE 1: LOGO ONLY SLIGHTLY BIGGER */}
+      <div className="flex w-full flex-col items-center justify-center rounded-[13px] bg-white px-5 py-2">
+        {/* LINE 1: LARGER LOGO */}
         <Image
           src={logoUrl || DEFAULT_BRAND_LOGO}
           alt={companyName || 'ComplianceHR Infinity'}
@@ -72,9 +72,9 @@ export default function BrandLogoLockup({
           className={`${logoSizeClass} shrink-0 object-contain`}
         />
 
-        {/* LINE 2: SUITABLE SPACE BEFORE "ComplianceHR Infinity" ON ONE LINE */}
+        {/* LINE 2: LESS SPACE ABOVE "ComplianceHR Infinity" ON ONE LINE */}
         <div
-          className={`mt-2.5 font-editorial ${nameSizeClass} font-extrabold leading-tight tracking-tight whitespace-nowrap`}
+          className={`mt-0.5 font-editorial ${nameSizeClass} font-extrabold leading-tight tracking-tight whitespace-nowrap`}
         >
           {isCustomName ? (
             <span
