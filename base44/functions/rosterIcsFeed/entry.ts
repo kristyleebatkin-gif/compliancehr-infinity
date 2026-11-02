@@ -1,3 +1,4 @@
+import { hasApprovedAccess } from '../../shared/appAccess.ts';
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 
 // Read-only ICS feed of the rostering schedule for external calendar apps
@@ -76,6 +77,13 @@ export default async function(req) {
       || !feed.created_date
       || (Date.now() - new Date(feed.created_date).getTime()) > FEED_MAX_AGE_MS) {
       return new Response('Feed token expired — regenerate the link in the app', { status: 403 });
+    }
+
+    const owner = await base44.asServiceRole.entities.User.get(feed.owner_user_id);
+    if (!hasApprovedAccess(owner) || !owner.email) return new Response('Feed owner access is inactive', { status: 403 });
+    const matches = await base44.asServiceRole.entities.StaffProfile.filter({ full_name: feed.owner_name }, { limit: 2 });
+    if ((matches.items || []).length !== 1 || String(matches.items[0].email || '').trim().toLowerCase() !== String(owner.email).trim().toLowerCase()) {
+      return new Response('Roster identity is ambiguous. Contact an administrator.', { status: 403 });
     }
 
     // Scope to the subscriber: only shifts assigned to the token owner.

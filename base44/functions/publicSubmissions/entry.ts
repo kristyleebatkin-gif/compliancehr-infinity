@@ -24,6 +24,15 @@ export default async function(req) {
     }
     const base44 = createClientFromRequest(req);
     const now = new Date();
+    // Persisted counts apply across warm/cold function instances. This is a
+    // basic flood brake; simultaneous requests still require an atomic gateway limiter.
+    const recent = new Date(now.getTime() - 60000).toISOString();
+    const [complaints, volunteers] = await Promise.all([
+      base44.asServiceRole.entities.Complaint.count({ source_entity_type: 'Public Form', created_date: { $gte: recent } }),
+      base44.asServiceRole.entities.VolunteerInterest.count({ created_date: { $gte: recent } }),
+    ]);
+    if (complaints + volunteers >= 30) return Response.json({ error: 'Too many submissions. Please try again shortly.' }, { status: 429, headers: { 'Retry-After': '60' } });
+
     const date = now.toISOString().slice(0, 10);
     const time = now.toLocaleTimeString('en-AU', { timeZone: 'Australia/Brisbane', hour12: false }).slice(0, 5);
 

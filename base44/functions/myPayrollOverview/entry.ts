@@ -11,7 +11,8 @@ export default async function(req) {
     if (!me) return Response.json({ error: 'Sign in required.' }, { status: 401 });
     const service = base44.asServiceRole;
 
-    const profilePage = await service.entities.StaffProfile.filter({ email: me.email }, { limit: 1 });
+    const profilePage = await service.entities.StaffProfile.filter({ email: me.email }, { limit: 2 });
+    if (!me.email || (profilePage.items || []).length > 1) return Response.json({ error: 'A unique staff profile is required.' }, { status: 409 });
     const profile = (profilePage.items || [])[0] || null;
 
     const [detailPage, payslipPage, logPage] = await Promise.all([
@@ -22,6 +23,8 @@ export default async function(req) {
 
     let shifts = [];
     if (profile && profile.full_name) {
+      const matches = await service.entities.StaffProfile.count({ full_name: profile.full_name });
+      if (matches !== 1) return Response.json({ error: 'Roster name is ambiguous. Ask an administrator to resolve duplicate staff profiles.' }, { status: 409 });
       const shiftPage = await service.entities.Shift.filter(
         { employee_name: profile.full_name },
         { sort: '-date', limit: 200, fields: ['date', 'start_time', 'end_time', 'status', 'approval_status', 'break_minutes', 'travel_km', 'participant_name', 'service_type'] },

@@ -36,10 +36,9 @@ export default async function(req) {
     ]);
 
     const staffByEmail = new Map();
-    const staffByName = new Map();
     for (const p of staffPage.items || []) {
-      if (p.email) staffByEmail.set(String(p.email).trim().toLowerCase(), p);
-      staffByName.set(String(p.full_name || '').trim().toLowerCase(), p);
+      const email = String(p.email || '').trim().toLowerCase();
+      if (email) staffByEmail.set(email, staffByEmail.has(email) ? null : p);
     }
     const userByEmail = new Map();
     for (const u of users || []) userByEmail.set(String(u.email || '').trim().toLowerCase(), u);
@@ -52,7 +51,7 @@ export default async function(req) {
 
     for (const c of intakePage.items || []) {
       const key = String(c.email || '').trim().toLowerCase();
-      const profile = staffByEmail.get(key) || staffByName.get(String(c.applicant_name || '').trim().toLowerCase());
+      const profile = staffByEmail.get(key);
       if (!profile) continue;
 
       const bank = parseBanking(c.banking_details);

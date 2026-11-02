@@ -1,3 +1,4 @@
+import { hasApprovedAccess } from '../../shared/appAccess.ts';
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
 import { CONSENT_ROLES, hasAnyRole } from '../../shared/systemAuth.ts';
 import { auDate, auTime } from '../../shared/reminders.ts';
@@ -12,6 +13,7 @@ export default async function(req) {
     const base44 = createClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    if (!hasApprovedAccess(user)) return Response.json({ error: 'Approved account access required.' }, { status: 403 });
 
     const body = await req.json();
     const kind = body.entity_type === 'staff' ? 'staff' : 'participant';

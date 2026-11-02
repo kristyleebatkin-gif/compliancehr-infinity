@@ -1,3 +1,4 @@
+import { hasApprovedAccess } from '../../shared/appAccess.ts';
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 import { REGISTRY } from '../../shared/registerRegistry.ts';
 
@@ -15,6 +16,7 @@ export default async function (req) {
       throw error;
     }
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    if (!hasApprovedAccess(user)) return Response.json({ error: 'Approved account access required.' }, { status: 403 });
 
     const { module: moduleKey } = await req.json();
     const cfg = REGISTRY[moduleKey];

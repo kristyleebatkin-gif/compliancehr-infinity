@@ -1,3 +1,4 @@
+import { hasApprovedAccess } from '../../shared/appAccess.ts';
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 import { gatherRegisterStats, statsToPromptLines } from '../../shared/registerStats.ts';
 
@@ -11,6 +12,7 @@ export default async function (req) {
     const base44 = createClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    if (!hasApprovedAccess(user)) return Response.json({ error: 'Approved account access required.' }, { status: 403 });
     if (!ALLOWED_ROLES.includes(user.role)) return Response.json({ error: 'Forbidden' }, { status: 403 });
 
     const stats = await gatherRegisterStats(base44);
