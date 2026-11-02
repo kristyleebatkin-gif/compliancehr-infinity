@@ -22,7 +22,7 @@ import QuickAppBar from '@/components/QuickAppBar';
 import ObsidianSidebarRemote from '@/components/ObsidianSidebarRemote';
 import EnterpriseWorkspaceBar from '@/components/enterprise/EnterpriseWorkspaceBar';
 import VisualDesignModuleCommandStandard from '@/components/enterprise/VisualDesignModuleCommandStandard';
-import { Image } from '@/components/ui/image';
+import BrandLogoLockup from '@/components/common/BrandLogoLockup';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import PendingApprovalNotice from '@/components/users/PendingApprovalNotice';
 
@@ -231,216 +231,172 @@ export default function AppLayout() {
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
         <header className="sticky top-0 z-40 shrink-0 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-md">
           <div
-            className="h-1 w-full"
+            className="h-0.5 w-full"
             style={{
               background:
                 'linear-gradient(120deg, #0072FF 0%, #0A2B6D 18%, #5A00D6 42%, #A100FF 68%, #FF2E9A 100%)',
             }}
           />
-          <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-2.5 px-3 py-2 sm:px-6 lg:px-8">
-            <div className="flex min-w-0 items-center gap-2.5">
-              <button
-                onClick={() => setMobileOpen(true)}
-                aria-label="Open menu"
-                className="shrink-0 rounded-lg border border-slate-200 bg-white p-1.5 text-[#0A2B6D] shadow-2xs transition hover:border-[#0072FF]/50 md:hidden"
-              >
-                <Menu className="h-4 w-4" />
-              </button>
+          <div className="mx-auto flex max-w-[1440px] flex-col items-center gap-1 px-3 py-1 sm:px-6 lg:px-8">
+            {/* Top Centred Brand Lockup: From bottom to top -> Slogan, then Name, then Logo */}
+            <Link
+              to="/dashboard"
+              className="inline-flex flex-col items-center justify-center rounded-xl border border-slate-200/80 bg-[#F5F0FF]/40 px-3 py-0.5 text-center shadow-2xs transition hover:border-[#0072FF]/50"
+            >
+              <BrandLogoLockup size="xs" theme="light" />
+            </Link>
 
-              <Link
-                to="/dashboard"
-                className="flex shrink-0 flex-col items-center rounded-xl border border-slate-200/90 bg-[#F5F0FF]/50 px-3 py-1 text-center shadow-2xs transition hover:border-[#0072FF]/50"
-              >
-                <span className="font-editorial text-[13px] font-extrabold leading-none tracking-tight text-[#0A2B6D] sm:text-[15px] whitespace-nowrap">
-                  Compliance
-                  <span className="font-editorial-italic text-[#5A00D6]">HR</span>{' '}
-                  <span className="bg-gradient-to-r from-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                    Infinity
-                  </span>
+            {/* Single-Line Compact Command Row (50% Reduced Size): Dashboard Title on the Same Line as Search Bar & Items */}
+            <div className="flex w-full flex-wrap items-center justify-between gap-1.5 border-t border-slate-100 pt-1">
+              <div className="flex min-w-0 items-center gap-1.5">
+                <button
+                  onClick={() => setMobileOpen(true)}
+                  aria-label="Open menu"
+                  className="shrink-0 rounded-md border border-slate-200 bg-white p-1 text-[#0A2B6D] shadow-2xs transition hover:border-[#0072FF]/50 md:hidden"
+                >
+                  <Menu className="h-3 w-3" />
+                </button>
+
+                <span
+                  className="inline-flex min-h-[20px] items-center gap-1 rounded-full border border-[#0A2B6D] px-2.5 py-0.5 text-[9.5px] font-extrabold text-white shadow-2xs"
+                  style={{ background: getHeaderView(1) }}
+                >
+                  <Sparkles className="h-2.5 w-2.5 shrink-0" style={{ color: '#00C6FF' }} />
+                  <span className="whitespace-nowrap">{currentLabel}</span>
                 </span>
-                <Image
-                  src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
-                  alt="ComplianceHR Infinity"
-                  fittingType="fit"
-                  className="mt-1 h-5 w-14 shrink-0 rounded-md border border-slate-200 bg-white px-1 py-0.5 shadow-2xs"
-                />
-                <span className="mt-1 text-[8.5px] font-extrabold leading-none whitespace-nowrap">
-                  <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
-                  <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
-                  <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
-                </span>
-              </Link>
+              </div>
 
-              <span
-                className="hidden min-h-[28px] items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-3 py-1 text-[10.5px] font-extrabold text-white shadow-2xs md:inline-flex"
-                style={{ background: getHeaderView(1) }}
-              >
-                <Sparkles className="h-3 w-3 shrink-0" style={{ color: '#00C6FF' }} />
-                <span className="whitespace-nowrap">{currentLabel}</span>
-              </span>
-            </div>
-
-            <div className="ml-auto flex shrink-0 items-center gap-1.5 sm:gap-2">
-              <div className="block">
+              <div className="flex flex-1 items-center justify-center min-w-[160px] max-w-md">
                 <GlobalSearch />
               </div>
 
-              {/* Workspace view selector */}
-              <div className="hidden items-center gap-1 rounded-xl border border-slate-200 bg-white p-1 shadow-2xs md:flex">
-                {WORKSPACE_VIEWS.map(({ id, label, Icon }) => {
-                  const selected = workspaceView === id;
-                  return (
-                    <button
-                      key={id}
-                      type="button"
-                      onClick={() => switchWorkspaceView(id)}
-                      aria-pressed={selected}
-                      title={label}
-                      className={`inline-flex min-h-[26px] items-center gap-1 rounded-lg px-2 py-1 text-[10.5px] font-extrabold transition-all ${
-                        selected ? 'bg-[#0A2B6D] text-white shadow-sm' : 'text-[#0A2B6D] hover:text-[#0072FF]'
-                      }`}
-                    >
-                      <Icon className={`h-3.5 w-3.5 shrink-0 ${selected ? 'text-white' : 'text-[#5A00D6]'}`} />
-                      <span className="hidden whitespace-nowrap lg:inline">{label}</span>
-                    </button>
-                  );
-                })}
-              </div>
+              <div className="flex shrink-0 items-center gap-1">
+                {/* Workspace view selector (50% reduced) */}
+                <div className="hidden items-center gap-0.5 rounded-lg border border-slate-200 bg-white p-0.5 shadow-2xs sm:flex">
+                  {WORKSPACE_VIEWS.map(({ id, label, Icon }) => {
+                    const selected = workspaceView === id;
+                    return (
+                      <button
+                        key={id}
+                        type="button"
+                        onClick={() => switchWorkspaceView(id)}
+                        aria-pressed={selected}
+                        title={label}
+                        className={`inline-flex min-h-[18px] items-center gap-1 rounded px-1.5 py-0.5 text-[8.5px] font-extrabold transition-all ${
+                          selected ? 'bg-[#0A2B6D] text-white shadow-2xs' : 'text-[#0A2B6D] hover:text-[#0072FF]'
+                        }`}
+                      >
+                        <Icon className={`h-2.5 w-2.5 shrink-0 ${selected ? 'text-white' : 'text-[#5A00D6]'}`} />
+                        <span className="hidden whitespace-nowrap lg:inline">{label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
 
-              {/* Notifications Bell */}
-              <div className="relative">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setNotifOpen((v) => !v);
-                    setUserMenuOpen(false);
-                  }}
-                  aria-label="Notifications"
-                  className="relative flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-white text-[#0A2B6D] shadow-2xs transition hover:border-[#0072FF]/50 hover:text-[#0072FF]"
-                >
-                  <Bell className="h-4 w-4" />
-                  {unread > 0 && (
-                    <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#FF2E9A] px-1 text-[10px] font-black text-white">
-                      {unread}
-                    </span>
-                  )}
-                </button>
-                {notifOpen && (
-                  <div className="absolute right-0 top-10 z-50 w-80 rounded-2xl border border-slate-200 bg-white p-3 shadow-xl">
-                    <div className="mb-2 flex items-center justify-between border-b border-slate-100 pb-2">
-                      <span className="text-xs font-extrabold text-[#0A2B6D]">Notifications</span>
-                      {unread > 0 && (
-                        <button
-                          type="button"
-                          onClick={markAllRead}
-                          className="text-xs font-bold text-[#FF2E9A] hover:underline"
-                        >
-                          Mark all read
-                        </button>
-                      )}
-                    </div>
-                    <div className="max-h-64 space-y-1.5 overflow-y-auto">
-                      {notifications.length === 0 ? (
-                        <p className="py-4 text-center text-xs text-muted-foreground">All caught up — no notifications.</p>
-                      ) : (
-                        notifications.map((n) => (
-                          <div
-                            key={n.id}
-                            className={`rounded-xl border p-2.5 text-xs ${
-                              n.read ? 'border-slate-100 bg-white' : 'border-[#FF2E9A]/30 bg-[#FF2E9A]/5 font-semibold'
-                            }`}
-                          >
-                            <div className="font-bold text-[#0A2B6D]">{n.title || 'Update'}</div>
-                            {n.message && <div className="mt-0.5 text-muted-foreground">{n.message}</div>}
-                          </div>
-                        ))
-                      )}
-                    </div>
-                    <Link
-                      to="/notifications"
-                      className="mt-2 block rounded-lg bg-[#F5F0FF] py-1.5 text-center text-xs font-bold text-[#5A00D6] hover:bg-[#5A00D6]/10"
-                    >
-                      View all notifications
-                    </Link>
-                  </div>
-                )}
-              </div>
-
-              {/* User Avatar & Quick Menu */}
-              <div className="relative">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setUserMenuOpen((v) => !v);
-                    setNotifOpen(false);
-                  }}
-                  aria-label="User menu"
-                  className="flex h-8 items-center gap-1.5 rounded-lg gradient-brand px-1.5 text-xs font-black text-white shadow-sm sm:px-2"
-                >
-                  <span className="flex h-5 w-5 items-center justify-center rounded-md bg-white/20">{initials}</span>
-                  <span className="hidden max-w-[130px] truncate text-[10.5px] font-extrabold xl:inline">
-                    {user?.full_name || 'My account'}
-                  </span>
-                  <ChevronDown className="hidden h-3 w-3 shrink-0 xl:block" />
-                </button>
-                {userMenuOpen && (
-                  <div className="absolute right-0 top-10 z-50 w-56 rounded-2xl border border-slate-200 bg-white p-3 shadow-xl space-y-2">
-                    <div className="border-b border-slate-100 pb-2">
-                      <div className="truncate text-xs font-extrabold text-[#0A2B6D]">{user?.full_name || 'ComplianceHR User'}</div>
-                      <div className="truncate text-[11px] text-muted-foreground">{user?.email || role}</div>
-                      <span className="mt-1 inline-block rounded-full bg-[#F5F0FF] px-2 py-0.5 text-[10px] font-bold text-[#5A00D6]">
-                        {role}
-                      </span>
-                    </div>
-                    <Link
-                      to="/my-profile"
-                      className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-bold text-[#0A2B6D] hover:bg-[#F5F0FF]"
-                    >
-                      <User className="h-3.5 w-3.5 text-[#5A00D6]" />
-                      My Profile
-                    </Link>
-                    <button
-                      type="button"
-                      onClick={handleLogout}
-                      className="flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-bold text-[#FF2E9A] hover:bg-[#FF2E9A]/5"
-                    >
-                      <LogOut className="h-3.5 w-3.5" />
-                      Sign out
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Mobile band: current module and view switch */}
-          <div className="flex items-center gap-2 border-t border-slate-100 px-3 pb-2 pt-1.5 md:hidden">
-            <span
-              className="inline-flex min-h-[24px] min-w-0 flex-1 items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] px-2.5 py-0.5 text-[10px] font-extrabold text-white"
-              style={{ background: getHeaderView(1) }}
-            >
-              <Sparkles className="h-3 w-3 shrink-0" style={{ color: '#00C6FF' }} />
-              <span className="truncate">{currentLabel}</span>
-            </span>
-            <div className="flex shrink-0 items-center gap-1 rounded-xl border border-slate-200 bg-white p-1">
-              {WORKSPACE_VIEWS.map(({ id, label, Icon }) => {
-                const selected = workspaceView === id;
-                return (
+                {/* Notifications Bell (50% reduced) */}
+                <div className="relative">
                   <button
-                    key={id}
                     type="button"
-                    onClick={() => switchWorkspaceView(id)}
-                    aria-pressed={selected}
-                    aria-label={label}
-                    title={label}
-                    className={`inline-flex h-6 w-6 items-center justify-center rounded-md transition ${
-                      selected ? 'bg-[#0A2B6D] text-white' : 'text-[#0A2B6D]'
-                    }`}
+                    onClick={() => {
+                      setNotifOpen((v) => !v);
+                      setUserMenuOpen(false);
+                    }}
+                    aria-label="Notifications"
+                    className="relative flex h-6 w-6 items-center justify-center rounded-md border border-slate-200 bg-white text-[#0A2B6D] shadow-2xs transition hover:border-[#0072FF]/50 hover:text-[#0072FF]"
                   >
-                    <Icon className={`h-3.5 w-3.5 ${selected ? 'text-white' : 'text-[#5A00D6]'}`} />
+                    <Bell className="h-3 w-3" />
+                    {unread > 0 && (
+                      <span className="absolute -right-1 -top-1 flex h-3.5 min-w-3.5 items-center justify-center rounded-full bg-[#FF2E9A] px-0.5 text-[8px] font-black text-white">
+                        {unread}
+                      </span>
+                    )}
                   </button>
-                );
-              })}
+                  {notifOpen && (
+                    <div className="absolute right-0 top-8 z-50 w-80 rounded-2xl border border-slate-200 bg-white p-3 shadow-xl">
+                      <div className="mb-2 flex items-center justify-between border-b border-slate-100 pb-2">
+                        <span className="text-xs font-extrabold text-[#0A2B6D]">Notifications</span>
+                        {unread > 0 && (
+                          <button
+                            type="button"
+                            onClick={markAllRead}
+                            className="text-xs font-bold text-[#FF2E9A] hover:underline"
+                          >
+                            Mark all read
+                          </button>
+                        )}
+                      </div>
+                      <div className="max-h-64 space-y-1.5 overflow-y-auto">
+                        {notifications.length === 0 ? (
+                          <p className="py-4 text-center text-xs text-muted-foreground">All caught up — no notifications.</p>
+                        ) : (
+                          notifications.map((n) => (
+                            <div
+                              key={n.id}
+                              className={`rounded-xl border p-2.5 text-xs ${
+                                n.read ? 'border-slate-100 bg-white' : 'border-[#FF2E9A]/30 bg-[#FF2E9A]/5 font-semibold'
+                              }`}
+                            >
+                              <div className="font-bold text-[#0A2B6D]">{n.title || 'Update'}</div>
+                              {n.message && <div className="mt-0.5 text-muted-foreground">{n.message}</div>}
+                            </div>
+                          ))
+                        )}
+                      </div>
+                      <Link
+                        to="/notifications"
+                        className="mt-2 block rounded-lg bg-[#F5F0FF] py-1.5 text-center text-xs font-bold text-[#5A00D6] hover:bg-[#5A00D6]/10"
+                      >
+                        View all notifications
+                      </Link>
+                    </div>
+                  )}
+                </div>
+
+                {/* User Avatar & Quick Menu (50% reduced) */}
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setUserMenuOpen((v) => !v);
+                      setNotifOpen(false);
+                    }}
+                    aria-label="User menu"
+                    className="flex h-6 items-center gap-1 rounded-md gradient-brand px-1.5 text-[9.5px] font-black text-white shadow-2xs"
+                  >
+                    <span className="flex h-4 w-4 items-center justify-center rounded bg-white/20 text-[8.5px]">{initials}</span>
+                    <span className="hidden max-w-[100px] truncate text-[9px] font-extrabold xl:inline">
+                      {user?.full_name || 'My account'}
+                    </span>
+                    <ChevronDown className="hidden h-2.5 w-2.5 shrink-0 xl:block" />
+                  </button>
+                  {userMenuOpen && (
+                    <div className="absolute right-0 top-8 z-50 w-56 rounded-2xl border border-slate-200 bg-white p-3 shadow-xl space-y-2">
+                      <div className="border-b border-slate-100 pb-2">
+                        <div className="truncate text-xs font-extrabold text-[#0A2B6D]">{user?.full_name || 'ComplianceHR User'}</div>
+                        <div className="truncate text-[11px] text-muted-foreground">{user?.email || role}</div>
+                        <span className="mt-1 inline-block rounded-full bg-[#F5F0FF] px-2 py-0.5 text-[10px] font-bold text-[#5A00D6]">
+                          {role}
+                        </span>
+                      </div>
+                      <Link
+                        to="/my-profile"
+                        className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-bold text-[#0A2B6D] hover:bg-[#F5F0FF]"
+                      >
+                        <User className="h-3.5 w-3.5 text-[#5A00D6]" />
+                        My Profile
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={handleLogout}
+                        className="flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-bold text-[#FF2E9A] hover:bg-[#FF2E9A]/5"
+                      >
+                        <LogOut className="h-3.5 w-3.5" />
+                        Sign out
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </header>

@@ -1,13 +1,13 @@
 import React from 'react';
-import { getHeaderView } from '@/lib/fullColourTiles';
-import { Image } from '@/components/ui/image';
+import { Link } from 'react-router-dom';
+import BrandLogoLockup from '@/components/common/BrandLogoLockup';
 import { ArrowRight, ShieldCheck } from 'lucide-react';
 
 const BRAND_GRADIENT =
-  'linear-gradient(120deg, #0072FF 0%, #0A2B6D 18%, #5A00D6 42%, #A100FF 68%, #FF2E9A 100%)';
+  'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)';
 
-const CHR_LOGO =
-  'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png';
+const DARK_NAVY_CHASSIS =
+  'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)';
 
 const DEFAULT_CHANNEL_SUBTITLES = {
   'auditor-portal': 'Read-only external NDIS auditor view',
@@ -50,10 +50,19 @@ const DEFAULT_CHANNEL_SUBTITLES = {
 };
 
 /**
- * Page Navigation — Small logo at top, platform name below logo, optional category/screen filters,
- * and iPad-style screens underneath visually matching Quick Access.
+ * Remote Control + Command Centre + Glassmorphism iPad Screen Suite:
+ * - White title backgrounds
+ * - Blue -> Purple -> Pink gradients
+ * - Rounded "remote buttons"
+ * - LED active glow
+ * - Glass cards on Dark navy background
+ * - Enterprise spacing, large touch targets, consistent button sizes
+ * - Status indicators on every module
+ * - BrandLogoLockup (Logo top -> Name middle -> Slogan bottom, all centred)
  */
 export default function ObsidianSmartRemote({
+  compact = false,
+  title = '',
   subtitle = 'Interactive workspace screens',
   screenModes = [],
   activeScreenMode,
@@ -65,38 +74,43 @@ export default function ObsidianSmartRemote({
   activeKey,
   onSelectChannel,
   onConfirmChannel,
+  confirmHref,
+  confirmLabel,
   columnsClass = 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6',
 }) {
   return (
-    <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-panel">
-      {/* Top Brand Gradient Strip Matching Quick Access */}
-      <div className="h-1 w-full" style={{ background: BRAND_GRADIENT }} />
+    <section
+      className="preserve-island-theme overflow-hidden rounded-2xl border-2 border-[#0A2B6D] shadow-xl"
+      style={{ background: DARK_NAVY_CHASSIS }}
+    >
+      {/* Top Blue -> Purple -> Pink Gradient Strip */}
+      <div className="h-1.5 w-full" style={{ background: BRAND_GRADIENT }} />
 
-      {/* Platform Name on Top + Smaller-Length Logo Below App Name + Blue/Purple/Pink Slogan */}
-      <div className="flex flex-col items-center px-3.5 pb-1.5 pt-2.5 text-center sm:px-4">
-        <span className="font-editorial text-[13px] font-extrabold leading-tight tracking-tight text-[#0A2B6D] whitespace-nowrap">
-          Compliance
-          <span className="font-editorial-italic text-[#5A00D6]">HR</span>{' '}
-          <span className="bg-gradient-to-r from-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-            Infinity
-          </span>
-        </span>
-        <Image
-          src={CHR_LOGO}
-          alt="ComplianceHR Infinity"
-          fittingType="fit"
-          className="mt-1 h-5 w-14 rounded-md border border-slate-200 bg-white px-1 py-0.5 shadow-2xs"
-        />
-        <span className="mt-1 text-[8.5px] font-extrabold leading-tight">
-          <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
-          <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
-          <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
-        </span>
+      {/* White Title Header Card with Centred Logo -> Name -> Slogan */}
+      <div className="flex flex-col items-center justify-center border-b border-white/15 bg-white px-3 py-2 text-center">
+        <BrandLogoLockup size={compact ? 'xs' : 'sm'} theme="light" />
+        {(title || subtitle) && (
+          <div className="mt-1 flex flex-wrap items-center justify-center gap-1.5">
+            {title && (
+              <span
+                className="rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold uppercase tracking-wider text-white"
+                style={{ background: BRAND_GRADIENT }}
+              >
+                {title}
+              </span>
+            )}
+            {subtitle && (
+              <span className="text-[10px] font-bold text-[#0A2B6D]/85" style={{ color: '#0A2B6D' }}>
+                {subtitle}
+              </span>
+            )}
+          </div>
+        )}
       </div>
 
-      {/* Optional Dual-Screen & Category Filter Bar (Used on Compliance Hub) */}
+      {/* Optional Dual-Screen & Category Filter Bar */}
       {(screenModes.length > 0 || banks.length > 0) && (
-        <div className="flex flex-wrap items-center justify-between gap-2 border-y border-slate-100 bg-slate-50/70 px-3 py-2">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/15 bg-white/10 px-3 py-2 backdrop-blur-md">
           {banks.length > 0 && (
             <div className="flex flex-wrap items-center gap-1.5">
               {banks.map((b) => {
@@ -106,13 +120,13 @@ export default function ObsidianSmartRemote({
                     key={b.id}
                     type="button"
                     onClick={() => onSelectBank && onSelectBank(b.id)}
-                    className={`rounded-lg px-2.5 py-1 text-[11px] font-extrabold leading-tight transition ${
+                    className={`min-h-[30px] rounded-xl px-2.5 py-1 text-[10.5px] font-extrabold leading-tight transition-all ${
                       isBankActive
-                        ? 'bg-[#0A2B6D] text-white shadow-2xs'
-                        : 'border border-slate-200 bg-white text-[#0A2B6D] hover:border-[#0072FF] hover:text-[#0072FF]'
+                        ? 'bg-white text-[#0A2B6D] shadow-[0_0_12px_rgba(0,198,255,0.6)]'
+                        : 'border border-white/25 bg-white/10 text-white hover:bg-white/20'
                     }`}
                   >
-                    {b.label}
+                    <span style={{ color: isBankActive ? '#0A2B6D' : '#FFFFFF' }}>{b.label}</span>
                   </button>
                 );
               })}
@@ -120,7 +134,7 @@ export default function ObsidianSmartRemote({
           )}
 
           {screenModes.length > 0 && (
-            <div className="flex flex-wrap items-center gap-1 ml-auto">
+            <div className="ml-auto flex flex-wrap items-center gap-1">
               {screenModes.map((m) => {
                 const isModeActive = m.key === activeScreenMode;
                 return (
@@ -128,13 +142,13 @@ export default function ObsidianSmartRemote({
                     key={m.key}
                     type="button"
                     onClick={() => onSelectScreenMode && onSelectScreenMode(m.key)}
-                    className={`rounded-lg px-2.5 py-1 text-[10.5px] font-extrabold leading-tight transition ${
+                    className={`min-h-[28px] rounded-xl px-2.5 py-1 text-[10px] font-extrabold leading-tight transition-all ${
                       isModeActive
-                        ? 'bg-[#5A00D6] text-white shadow-2xs'
-                        : 'border border-slate-200 bg-white text-[#0A2B6D] hover:border-[#5A00D6]'
+                        ? 'bg-white text-[#5A00D6] shadow-[0_0_12px_rgba(255,46,154,0.6)]'
+                        : 'border border-white/25 bg-white/10 text-white hover:bg-white/20'
                     }`}
                   >
-                    {m.label}
+                    <span style={{ color: isModeActive ? '#5A00D6' : '#FFFFFF' }}>{m.label}</span>
                   </button>
                 );
               })}
@@ -143,12 +157,11 @@ export default function ObsidianSmartRemote({
         </div>
       )}
 
-      {/* Screens / Modules Underneath — Visually Matching Quick Access */}
-      <div className={`grid auto-rows-fr gap-2.5 p-3 pt-2.5 items-stretch ${columnsClass}`}>
-        {channels.map((ch, idx) => {
+      {/* Glassmorphic Remote Control Buttons on Dark Navy Chassis */}
+      <div className={`grid auto-rows-fr gap-2.5 p-3 items-stretch ${columnsClass}`}>
+        {channels.map((ch) => {
           const Icon = ch.icon || ShieldCheck;
           const active = ch.key === activeKey;
-          const headerBg = getHeaderView(idx);
           const resolvedSub =
             ch.sub || DEFAULT_CHANNEL_SUBTITLES[ch.key] || `${ch.label} workspace`;
 
@@ -162,56 +175,89 @@ export default function ObsidianSmartRemote({
               }}
               aria-pressed={active}
               title={`${ch.label} — ${resolvedSub}`}
-              className={`group flex h-full min-h-[100px] flex-col gap-[3px] rounded-xl border-2 bg-[#0A2B6D] p-[3px] text-left transition-all duration-200 focus-visible:outline-none ${
+              className={`group flex h-full min-h-[84px] flex-col rounded-2xl p-[2px] text-left transition-all duration-200 focus-visible:outline-none ${
                 active
-                  ? 'border-[#5A00D6] shadow-md ring-2 ring-[#5A00D6]/25 ring-offset-1'
-                  : 'border-[#0A2B6D] hover:-translate-y-0.5 hover:border-[#0072FF] hover:shadow-md'
+                  ? 'shadow-[0_0_20px_rgba(0,198,255,0.75)] scale-[1.01]'
+                  : 'hover:-translate-y-0.5 hover:shadow-[0_0_14px_rgba(161,0,255,0.5)]'
               }`}
+              style={{ background: BRAND_GRADIENT }}
             >
-              {/* Screen */}
-              <div className="flex w-full flex-1 flex-col overflow-hidden rounded-[8px] bg-white">
-                {/* Coloured Header Inside Screen */}
-                <div
-                  className="flex min-h-[40px] w-full items-center justify-between gap-1.5 px-2 py-1.5 text-white"
-                  style={{ background: headerBg }}
-                >
+              {/* Glass Card Body */}
+              <div className="flex w-full flex-1 flex-col justify-between overflow-hidden rounded-[14px] bg-[#0A2B6D]/90 backdrop-blur-md">
+                {/* White Title Background */}
+                <div className="flex min-h-[36px] w-full items-center justify-between gap-1.5 bg-white px-2.5 py-1.5">
                   <div className="flex min-w-0 items-center gap-1.5">
-                    <Icon className="h-3.5 w-3.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
                     <span
-                      className="min-w-0 text-[10px] font-extrabold leading-[12px] tracking-tight text-white"
-                      style={{ color: '#FFFFFF', wordBreak: 'normal', overflowWrap: 'normal' }}
+                      className="flex h-5 w-5 shrink-0 items-center justify-center rounded-lg text-white shadow-2xs"
+                      style={{ background: BRAND_GRADIENT }}
+                    >
+                      <Icon className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                    </span>
+                    <span
+                      className="min-w-0 text-[10px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]"
+                      style={{ color: '#0A2B6D' }}
                     >
                       {ch.label}
                     </span>
                   </div>
+
+                  {/* Status Indicator + LED Active Glow */}
                   <span
-                    className={`h-1.5 w-1.5 shrink-0 rounded-full ${
-                      active ? 'bg-[#00C6FF]' : 'bg-white/75'
+                    className={`inline-flex shrink-0 items-center gap-1 rounded-full px-1.5 py-0.5 text-[7.5px] font-black uppercase tracking-wider ${
+                      active
+                        ? 'bg-[#0A2B6D] text-[#00C6FF]'
+                        : 'bg-[#F5F0FF] text-[#5A00D6]'
+                    }`}
+                  >
+                    <span
+                      className="h-1.5 w-1.5 rounded-full"
+                      style={{
+                        backgroundColor: active ? '#00C6FF' : '#FF2E9A',
+                        boxShadow: active
+                          ? '0 0 8px 2px #00C6FF'
+                          : '0 0 5px 1px #FF2E9A',
+                      }}
+                    />
+                    {active ? 'ACTIVE' : 'LIVE'}
+                  </span>
+                </div>
+
+                {/* Dark Navy Glassmorphic Detail Area */}
+                <div className="flex min-h-[36px] w-full flex-1 items-center justify-between gap-1.5 px-2.5 py-1.5">
+                  <span
+                    className="min-w-0 flex-1 break-words text-[9.5px] font-bold leading-snug text-white/95"
+                    style={{ color: '#FFFFFF' }}
+                  >
+                    {resolvedSub}
+                  </span>
+                  <ArrowRight className="h-3 w-3 shrink-0 text-[#00C6FF] transition group-hover:translate-x-0.5" />
+                </div>
+
+                {/* iPad LED Home Bar */}
+                <div className="flex h-[5px] w-full items-center justify-center pb-0.5">
+                  <span
+                    className={`h-[2.5px] rounded-full transition-all ${
+                      active ? 'w-9 bg-[#00C6FF] shadow-[0_0_8px_#00C6FF]' : 'w-6 bg-white/40 group-hover:bg-white/80'
                     }`}
                   />
                 </div>
-
-                {/* White Writing Area With Supporting Detail */}
-                <div className="flex min-h-[42px] w-full flex-1 items-center justify-between gap-1.5 border-t border-[#0A2B6D]/10 bg-white px-2 py-1.5">
-                  <span className="min-w-0 flex-1 break-words text-[10px] font-bold leading-[12.5px] text-[#0A2B6D]/85">
-                    {resolvedSub}
-                  </span>
-                  <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#0072FF] transition group-hover:translate-x-0.5 group-hover:text-[#FF2E9A]" />
-                </div>
-              </div>
-
-              {/* iPad Home Indicator Bar */}
-              <div className="flex h-[5px] w-full items-center justify-center">
-                <span
-                  className={`h-[2.5px] w-6 rounded-full transition-all ${
-                    active ? 'w-8 bg-[#00C6FF]' : 'bg-white/45 group-hover:bg-white/80'
-                  }`}
-                />
               </div>
             </button>
           );
         })}
       </div>
+
+      {confirmHref && (
+        <div className="flex items-center justify-end border-t border-white/15 bg-white/10 px-3 py-1.5 backdrop-blur-md">
+          <Link
+            to={confirmHref}
+            className="inline-flex items-center gap-1.5 rounded-xl bg-white px-3 py-1 text-[10px] font-extrabold text-[#0A2B6D] shadow-sm transition hover:bg-[#F5F0FF]"
+          >
+            <span style={{ color: '#0A2B6D' }}>{confirmLabel || 'Open Selected Screen'}</span>
+            <ArrowRight className="h-3 w-3 text-[#5A00D6]" />
+          </Link>
+        </div>
+      )}
     </section>
   );
 }

@@ -147,14 +147,13 @@ export default function GlobalSearch() {
       <button
         onClick={() => setOpen(true)}
         title="Search everything (Ctrl+K)"
-        className="hidden items-center gap-2 rounded-full border border-border/70 bg-card/90 py-1.5 pl-3 pr-2.5 text-xs font-medium text-foreground/45 shadow-sm transition-all hover:border-brand/40 hover:bg-brand/5 hover:text-brand sm:flex"
+        className="flex w-full items-center justify-between gap-1.5 rounded-full border border-slate-300 bg-white px-2.5 py-0.5 text-[9.5px] font-bold text-[#0A2B6D] shadow-2xs transition-all hover:border-[#0072FF] hover:bg-[#F5F0FF] hover:text-[#0072FF]"
       >
-        <Search className="h-3.5 w-3.5" />
-        Search the workspace
-        <kbd className="rounded-md border border-border/70 bg-muted/60 px-1.5 py-0.5 text-[10px] font-semibold text-foreground/50">Ctrl K</kbd>
-      </button>
-      <button onClick={() => setOpen(true)} aria-label="Search everything" title="Search everything" className="rounded-lg p-2 hover:bg-brand/5 sm:hidden">
-        <Search className="h-5 w-5 text-foreground/60" />
+        <span className="inline-flex items-center gap-1 truncate">
+          <Search className="h-2.5 w-2.5 shrink-0 text-[#5A00D6]" />
+          <span className="truncate">Search workspace…</span>
+        </span>
+        <kbd className="shrink-0 rounded border border-slate-200 bg-slate-50 px-1 py-0 text-[8px] font-extrabold text-[#5A00D6]">Ctrl K</kbd>
       </button>
       {open && createPortal(
         <div className="fixed inset-0 z-[60] flex items-start justify-center p-4 pt-16 sm:pt-24">
