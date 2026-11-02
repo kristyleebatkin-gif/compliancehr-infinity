@@ -35,10 +35,10 @@ export default function ModuleShell({
 
       {actions && (
         <div
-          className="rounded-3xl p-[10px] shadow-md"
+          className="rounded-2xl p-[3px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div role="group" aria-label={`${title || 'Module'} actions`} className="module-shell-actions module-action-bar flex flex-wrap items-center justify-center rounded-[14px] bg-white p-3 [&_button]:rounded-full [&_button]:border-2 [&_button]:border-[#0A2B6D]">
+          <div role="group" aria-label={`${title || 'Module'} actions`} className="module-shell-actions module-action-bar flex flex-wrap items-center justify-center rounded-[13px] bg-white p-2 [&_button]:rounded-full [&_button]:border-2 [&_button]:border-[#0A2B6D]">
             {actions}
           </div>
         </div>
@@ -48,24 +48,24 @@ export default function ModuleShell({
 
       {search && (
         <div
-          className="rounded-3xl p-[10px] shadow-md"
+          className="rounded-2xl p-[3px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div role="search" aria-label={`${title || 'Module'} search and filters`} className="module-shell-search min-w-0 rounded-[14px] bg-white p-3">{search}</div>
+          <div role="search" aria-label={`${title || 'Module'} search and filters`} className="module-shell-search min-w-0 rounded-[13px] bg-white p-2.5">{search}</div>
         </div>
       )}
 
       {small && (
         <div
-          className="rounded-3xl p-[10px] shadow-md"
+          className="rounded-2xl p-[3px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
           <div
-            className={`module-shell-tiles grid gap-2.5 rounded-[14px] bg-white p-3 sm:grid-cols-2 ${
+            className={`module-shell-tiles grid gap-2 rounded-[13px] bg-white p-2.5 sm:grid-cols-2 ${
               React.Children.count(small) === 5
                 ? 'md:grid-cols-3 lg:grid-cols-5'
                 : ' lg:grid-cols-4'
-            } [&>*]:rounded-2xl [&>*]:border-2 [&>*]:border-[#0A2B6D] [&>*]:bg-white [&>*]:p-3.5`}
+            } [&>*]:rounded-3xl [&>*]:border-2 [&>*]:border-[#0A2B6D] [&>*]:bg-white [&>*]:p-3`}
           >
             {small}
           </div>
@@ -74,10 +74,10 @@ export default function ModuleShell({
 
       {medium && (
         <div
-          className="rounded-3xl p-[10px] shadow-md"
+          className="rounded-2xl p-[3px] shadow-sm"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="module-shell-tiles grid gap-3 rounded-[14px] bg-white p-3.5 md:grid-cols-2 [&>*]:rounded-2xl [&>*]:border-2 [&>*]:border-[#0A2B6D] [&>*]:bg-white [&>*]:p-4">
+          <div className="module-shell-tiles grid gap-2.5 rounded-[13px] bg-white p-2.5 md:grid-cols-2 [&>*]:rounded-3xl [&>*]:border-2 [&>*]:border-[#0A2B6D] [&>*]:bg-white [&>*]:p-3">
             {medium}
           </div>
         </div>

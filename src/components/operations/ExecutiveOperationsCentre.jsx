@@ -7,7 +7,6 @@ import {
 import { Image } from '@/components/ui/image';
 import { base44 } from '@/api/base44Client';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
-import { getHeaderView } from '@/lib/fullColourTiles';
 import Rostering from '@/pages/Rostering';
 import RosterMiniOverview from '@/components/communications/RosterMiniOverview';
 import InfinityOneClickOperations from '@/components/operations/InfinityOneClickOperations';
@@ -552,42 +551,70 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
             </div>
           </div>
 
-          <div className="grid auto-rows-fr grid-cols-2 gap-2 p-3 sm:grid-cols-3 md:grid-cols-6 items-stretch bg-white">
+          <div
+            className="preserve-island-theme grid auto-rows-fr grid-cols-2 gap-1.5 p-2.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 items-stretch"
+            style={{ background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)' }}
+          >
             {MODULE_DIRECTORY.map((mod, idx) => {
               const Icon = mod.icon;
-              const headerBg = getHeaderView(idx);
+              const ringColor = idx % 2 === 0 ? '#00C6FF' : '#FF6EDB';
               return (
                 <Link
                   key={mod.key}
                   to={mod.path}
                   title={`${mod.label} — ${mod.blurb}`}
-                  className="group flex h-full min-h-[98px] flex-col gap-[3px] rounded-xl border-2 border-[#0A2B6D] bg-[#0A2B6D] p-[3px] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#0072FF] hover:shadow-md focus-visible:outline-none"
+                  className="group flex h-full min-h-[52px] items-center gap-2 rounded-3xl border border-white/25 px-2.5 py-1.5 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#00C6FF] hover:shadow-[0_0_16px_rgba(0,198,255,0.65)] focus-visible:outline-none"
+                  style={{
+                    background:
+                      'radial-gradient(circle at 30% 25%, rgba(255,255,255,0.22) 0%, rgba(10, 43, 109, 0.92) 72%, #061539 100%)',
+                  }}
                 >
-                  <div className="flex flex-1 flex-col overflow-hidden rounded-[8px] bg-white">
-                    <div
-                      className="flex min-h-[38px] items-center justify-between gap-1 px-1.5 py-1 text-white"
-                      style={{ background: headerBg }}
+                  <span className="relative flex h-7 w-7 shrink-0 items-center justify-center">
+                    <svg className="pointer-events-none absolute inset-0 h-full w-full -rotate-90" viewBox="0 0 28 28">
+                      <circle cx="14" cy="14" r="12" fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="2.5" />
+                      <circle
+                        cx="14"
+                        cy="14"
+                        r="12"
+                        fill="none"
+                        stroke={ringColor}
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeDasharray="75"
+                        strokeDashoffset="10"
+                      />
+                    </svg>
+                    <span
+                      className="relative z-10 flex h-5 w-5 items-center justify-center rounded-full text-white"
+                      style={{ background: 'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)' }}
                     >
-                      <div className="flex min-w-0 items-center gap-1">
-                        <Icon className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                      <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                    </span>
+                  </span>
+
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center justify-between gap-1">
+                      <span className="inline-flex max-w-full items-center gap-0.5 rounded-full bg-white px-2 py-0.2 shadow-2xs">
+                        <span className="text-[8px] leading-none" style={{ color: ringColor }}>
+                          ◉
+                        </span>
                         <span
-                          className="min-w-0 text-[9.5px] font-extrabold leading-[11px] tracking-tight text-white"
-                          style={{ color: '#FFFFFF', wordBreak: 'normal', overflowWrap: 'normal' }}
+                          className="text-[9px] font-extrabold leading-tight text-[#0A2B6D]"
+                          style={{ color: '#0A2B6D' }}
                         >
                           {mod.label}
                         </span>
-                      </div>
-                      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-white/75" />
+                      </span>
                     </div>
-                    <div className="flex min-h-[40px] flex-1 items-center justify-between gap-1 border-t border-[#0A2B6D]/10 bg-white px-1.5 py-1">
-                      <span className="line-clamp-2 min-w-0 flex-1 break-words text-[10.5px] font-bold leading-[13px] text-[#0A2B6D]/85">
+                    <div className="mt-0.5 flex items-center justify-between gap-1">
+                      <span
+                        className="min-w-0 flex-1 break-words text-[8px] font-bold leading-tight text-white/90"
+                        style={{ color: '#E2E8F0' }}
+                      >
                         {mod.blurb}
                       </span>
-                      <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#0072FF] transition group-hover:translate-x-0.5 group-hover:text-[#FF2E9A]" />
+                      <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#00C6FF] transition group-hover:translate-x-0.5" />
                     </div>
-                  </div>
-                  <div className="flex h-[5px] items-center justify-center">
-                    <span className="h-[2.5px] w-6 rounded-full bg-white/45 transition-all group-hover:bg-white/80" />
                   </div>
                 </Link>
               );

@@ -49,12 +49,14 @@
   box-shadow: 0 8px 20px -8px rgba(90, 0, 214, 0.25);
 }
 
-/* Shared body controls: headers retain their standing presentation rules. */
+/* Shared body controls: compact pill pods that fit labels cleanly across viewports. */
 .module-shell-actions :is(button, a):not([role="tab"]) {
-  min-height: 44px;
+  min-height: 32px;
   max-width: 100%;
+  padding: 0.25rem 0.7rem !important;
+  font-size: 0.75rem !important;
   white-space: normal;
-  line-height: 1.4;
+  line-height: 1.25;
   overflow-wrap: anywhere;
 }
 .module-shell-actions :is(button, a):focus-visible,
