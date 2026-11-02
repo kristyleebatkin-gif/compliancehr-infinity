@@ -93,16 +93,11 @@ export function ComplianceHrPhotoFrame() {
           </span>
         </div>
 
-        {/* 3. BOTTOM: SLOGAN (Centred) */}
-        <div
-          className="w-full rounded-full p-[1.5px]"
-          style={{ background: TOP_BORDER_GRADIENT }}
-        >
-          <div className="rounded-full bg-white px-2 py-0.5 text-[7.5px] font-extrabold">
-            <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
-            <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
-            <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
-          </div>
+        {/* 3. BOTTOM: SLOGAN (Centred, inside the same single border) */}
+        <div className="px-2 py-0.5 text-[7.5px] font-extrabold">
+          <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
+          <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
+          <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
         </div>
       </div>
     </WallHangingPictureFrame>

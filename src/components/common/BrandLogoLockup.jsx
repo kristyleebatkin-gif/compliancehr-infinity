@@ -62,39 +62,30 @@ export default function BrandLogoLockup({
 
   return (
     <div
-      className={`flex max-w-full flex-col items-center justify-center text-center select-none ${className}`}
+      className={`inline-flex max-w-full flex-col items-center justify-center rounded-2xl p-[2.5px] text-center select-none transition-transform duration-200 hover:scale-[1.01] ${className}`}
+      style={{
+        background: APP_BORDER_GRADIENT,
+        boxShadow: '0 4px 16px -2px rgba(0, 198, 255, 0.45), 0 2px 8px rgba(90, 0, 214, 0.3)',
+      }}
     >
-      {/* 1. TOP: LARGER, ATTRACTIVE JEWEL-FRAMED LOGO ON WHITE WITH APP DESIGN COLOUR BORDER */}
+      {/* SINGLE UNIFIED WHITE CONTAINER WITH ONE BORDER FOR LOGO, NAME & SLOGAN */}
       <div
-        className="rounded-2xl p-[2.5px] transition-transform duration-200 hover:scale-[1.02]"
+        className="flex w-full flex-col items-center justify-center rounded-[13.5px] bg-white px-3.5 py-2"
         style={{
-          background: APP_BORDER_GRADIENT,
-          boxShadow: '0 4px 16px -2px rgba(0, 198, 255, 0.45), 0 2px 8px rgba(90, 0, 214, 0.3)',
+          background: 'radial-gradient(circle at 50% 50%, #FFFFFF 70%, #F5F0FF 100%)',
         }}
       >
-        <div
-          className="flex items-center justify-center rounded-[13.5px] bg-white px-3 py-1.5"
-          style={{
-            background:
-              'radial-gradient(circle at 50% 50%, #FFFFFF 65%, #F5F0FF 100%)',
-          }}
-        >
-          <Image
-            src={logoUrl || DEFAULT_BRAND_LOGO}
-            alt={companyName || 'ComplianceHR Infinity'}
-            fittingType="fit"
-            className={`${logoSizeClass} shrink-0 object-contain drop-shadow-2xs`}
-          />
-        </div>
-      </div>
+        {/* 1. TOP: LOGO */}
+        <Image
+          src={logoUrl || DEFAULT_BRAND_LOGO}
+          alt={companyName || 'ComplianceHR Infinity'}
+          fittingType="fit"
+          className={`${logoSizeClass} shrink-0 object-contain drop-shadow-2xs`}
+        />
 
-      {/* 2. MIDDLE: NAME ON WHITE BACKGROUND WITH APP DESIGN COLOUR BORDER */}
-      <div
-        className="mt-1 max-w-full rounded-full p-[1.5px] shadow-2xs"
-        style={{ background: APP_BORDER_GRADIENT }}
-      >
+        {/* 2. MIDDLE: NAME */}
         <div
-          className={`rounded-full bg-white px-3 py-0.5 font-editorial ${nameSizeClass} font-extrabold leading-tight tracking-tight text-[#0A2B6D]`}
+          className={`mt-1 font-editorial ${nameSizeClass} font-extrabold leading-tight tracking-tight text-[#0A2B6D]`}
         >
           {isCustomName ? (
             <span style={{ color: '#0A2B6D' }}>{companyName}</span>
@@ -115,16 +106,11 @@ export default function BrandLogoLockup({
             </>
           )}
         </div>
-      </div>
 
-      {/* 3. BOTTOM: SLOGAN ON WHITE BACKGROUND WITH APP DESIGN COLOUR BORDER (FITS SMALL SCREENS & REMOTES) */}
-      {showSlogan && (
-        <div
-          className="mt-1 max-w-full rounded-2xl p-[1.5px] shadow-2xs"
-          style={{ background: APP_BORDER_GRADIENT }}
-        >
+        {/* 3. BOTTOM: SLOGAN */}
+        {showSlogan && (
           <div
-            className={`flex flex-wrap items-center justify-center gap-x-1 gap-y-0 rounded-[14px] bg-white px-2.5 py-0.5 text-center ${sloganSizeClass} font-extrabold leading-snug`}
+            className={`mt-0.5 flex flex-wrap items-center justify-center gap-x-1 gap-y-0 text-center ${sloganSizeClass} font-extrabold leading-snug`}
           >
             <span style={{ color: '#0072FF' }}>
               Complete Control.
@@ -136,8 +122,8 @@ export default function BrandLogoLockup({
               Brighter Success.
             </span>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

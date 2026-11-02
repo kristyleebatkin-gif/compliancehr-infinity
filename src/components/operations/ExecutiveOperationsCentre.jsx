@@ -308,33 +308,28 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
               }}
             >
               <div
-                className="inline-flex items-center gap-2 rounded-full p-[2px] shadow-sm"
+                className="inline-flex flex-col items-center justify-center rounded-2xl p-[2.5px] shadow-sm"
                 style={{ background: SQUISHED_GRADIENT }}
               >
-                <div className="flex items-center gap-2 rounded-full bg-white px-3 py-1">
+                <div className="flex flex-col items-center justify-center rounded-[13.5px] bg-white px-3.5 py-2 text-center">
                   <Image
                     src={CHR_LOGO}
                     alt="ComplianceHR Infinity"
                     fittingType="fit"
-                    className="h-8 w-20 rounded border border-slate-200 bg-white px-1 py-0.5 object-contain"
+                    className="h-12 w-36 sm:h-14 sm:w-44 shrink-0 object-contain"
                   />
-                  <span className="font-editorial text-xs sm:text-sm font-extrabold leading-tight tracking-tight text-[#0A2B6D]" style={{ color: '#0A2B6D' }}>
+                  <span className="mt-1 font-editorial text-sm sm:text-base font-extrabold leading-tight tracking-tight text-[#0A2B6D]" style={{ color: '#0A2B6D' }}>
                     Compliance
                     <span className="font-editorial-italic text-[#5A00D6]">HR</span>{' '}
                     <span className="bg-gradient-to-r from-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                       Infinity
                     </span>
                   </span>
-                </div>
-              </div>
-              <div
-                className="rounded-full p-[1.5px] shadow-2xs"
-                style={{ background: SQUISHED_GRADIENT }}
-              >
-                <div className="rounded-full bg-white px-3 py-0.5 text-[9.5px] font-extrabold leading-tight">
-                  <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
-                  <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
-                  <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
+                  <div className="mt-0.5 text-[9.5px] sm:text-[10.5px] font-extrabold leading-snug">
+                    <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
+                    <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
+                    <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
+                  </div>
                 </div>
               </div>
             </div>

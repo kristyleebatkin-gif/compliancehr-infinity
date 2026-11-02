@@ -248,7 +248,7 @@ export default function AppLayout() {
             <div className="mx-auto flex max-w-[1440px] justify-center">
               <Link
                 to="/dashboard"
-                className="inline-flex flex-col items-center justify-center rounded-2xl border border-white/35 bg-white/15 px-4 py-1 text-center shadow-sm backdrop-blur-md transition hover:bg-white/25"
+                className="inline-flex flex-col items-center justify-center text-center transition"
               >
                 <BrandLogoLockup size="sm" theme="light" showSlogan={true} />
               </Link>

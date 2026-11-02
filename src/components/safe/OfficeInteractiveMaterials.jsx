@@ -126,8 +126,8 @@ export function CompanySafeMaterialPanel({ companyName = 'ComplianceHR Infinity'
             Open Safe
           </Link>
         </div>
-        <div className="flex flex-col items-center justify-center text-center mb-2">
-          <div className="h-10 w-16 shrink-0 overflow-hidden rounded-lg border border-blue-200 bg-white p-1 shadow-2xs">
+        <div className="mb-2 flex flex-col items-center justify-center rounded-xl border border-blue-200 bg-white p-2 text-center shadow-2xs">
+          <div className="h-10 w-24 shrink-0 overflow-hidden bg-white">
             <Image src={logoUrl || DEFAULT_LOGO} alt="Logo" fittingType="fit" className="h-full w-full object-contain" />
           </div>
           <div className="mt-1 truncate text-xs font-extrabold text-blue-950">ComplianceHR Infinity</div>
