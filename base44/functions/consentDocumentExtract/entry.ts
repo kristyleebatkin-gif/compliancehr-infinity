@@ -94,8 +94,13 @@ Leave fields blank when the document does not show them. Do not guess or invent 
       await service.entities.AuditLog.create({ action: 'Details Extracted From Document', entity_type: kind === 'staff' ? 'StaffProfile' : 'ParticipantProfile', record_id: profileId, record_title: profile.full_name || '', performed_by: recordedBy, performed_by_user_id: user.id, performed_by_email: user.email, performed_by_role: user.role, profile_type: kind, details: fieldUpdates.change_log, timestamp: now.toISOString() });
     }
 
-    const consentTypes = extraction?.is_consent_document ? (extraction.consent_types || []).filter((t) => ['audit', 'sharing', 'advocacy', 'medication'].includes(t)) : [];
-    const status = ['Consent received', 'Declined', 'Withdrawn'].includes(extraction?.consent_status) ? extraction.consent_status : 'Consent received';
+    const detectedConsentTypes = extraction?.is_consent_document ? (extraction.consent_types || []).filter((t) => ['audit', 'sharing', 'advocacy', 'medication'].includes(t)) : [];
+    // Never assume consent. If the AI could not read a clear decision, record nothing
+    // and flag the document for a person to check and record consent manually.
+    const statusIsClear = ['Consent received', 'Declined', 'Withdrawn'].includes(extraction?.consent_status);
+    const needsReview = detectedConsentTypes.length > 0 && !statusIsClear;
+    const consentTypes = statusIsClear ? detectedConsentTypes : [];
+    const status = statusIsClear ? extraction.consent_status : '';
     let current = await Entity.get(profileId);
 
     for (const consentType of consentTypes) {
@@ -125,12 +130,21 @@ Leave fields blank when the document does not show them. Do not guess or invent 
     if (documentId) {
       const doc = await service.entities[documentEntity].get(documentId).catch(() => null);
       if (doc) {
-        const summary = `Extracted into profile: ${consentTypes.length ? consentTypes.map((t) => TITLE[t]).join(', ') + ` (${status})` : 'no consent decision found'}${filled.length ? `; details filled: ${filled.join(', ')}` : ''}.`;
+        const consentSummary = consentTypes.length
+          ? consentTypes.map((t) => TITLE[t]).join(', ') + ` (${status})`
+          : needsReview
+            ? `NEEDS MANUAL CONSENT REVIEW: possible ${detectedConsentTypes.map((t) => TITLE[t]).join(', ')} found but the decision was unclear, so no consent was recorded`
+            : 'no consent decision found';
+        const summary = `Extracted into profile: ${consentSummary}${filled.length ? `; details filled: ${filled.join(', ')}` : ''}.`;
         await service.entities[documentEntity].update(documentId, { notes: [summary, doc.notes].filter(Boolean).join(' | ') });
       }
     }
 
-    return Response.json({ ok: true, is_consent: consentTypes.length > 0, consent_types: consentTypes, filled_fields: filled });
+    if (needsReview) {
+      await service.entities.AuditLog.create({ action: 'Consent Needs Manual Review', entity_type: kind === 'staff' ? 'StaffProfile' : 'ParticipantProfile', record_id: profileId, record_title: profile.full_name || '', performed_by: recordedBy, performed_by_user_id: user.id, performed_by_email: user.email, performed_by_role: user.role, profile_type: kind, details: `${recordedDate} ${recordedTime} | Possible ${detectedConsentTypes.map((t) => TITLE[t]).join(', ')} in ${sourceNote}, but the decision could not be read clearly. No consent was recorded.`, timestamp: now.toISOString() });
+    }
+
+    return Response.json({ ok: true, is_consent: consentTypes.length > 0, consent_types: consentTypes, filled_fields: filled, needs_review: needsReview, unconfirmed_consent_types: needsReview ? detectedConsentTypes : [] });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }

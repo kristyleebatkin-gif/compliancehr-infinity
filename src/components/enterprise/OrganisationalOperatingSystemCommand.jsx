@@ -441,7 +441,7 @@ export default function OrganisationalOperatingSystemCommand() {
                         to={t.path}
                         className="rounded-lg border border-slate-200 bg-white p-2 text-center hover:border-[#0072FF]"
                       >
-                        <div className="text-xs font-extrabold text-[#0A2B6D]">{t.val}</div>
+                        <div className="text-xs font-extrabold text-[#0A2B6D]">{formatCount(t.val)}</div>
                         <div className="text-[9.5px] font-bold text-[#5A00D6]">{t.label}</div>
                       </Link>
                     ))}
