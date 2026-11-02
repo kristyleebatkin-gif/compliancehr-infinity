@@ -594,9 +594,9 @@
   }
 }
 
-/* ===== CONSISTENT APP HEADER & SECTION HEADER STANDARD =====
-   White Header Background with App Design Coloured Gradient Borders,
-   Dark Blue (#0A2B6D) writing, and App Design Coloured Symbols. */
+/* ===== CONSISTENT APP HEADER, SECTION, HEADING/TITLE & SINGLE WORD BORDER STANDARD =====
+   Every section, heading/title, label, badge, and item in white sections uses ONLY the
+   App Design Coloured Gradient Border on White with Dark Blue (#0A2B6D) writing. */
 @layer utilities {
   .app-readable :is(.dashboard-panel-header, .app-section-card-header) {
     box-sizing: border-box;
@@ -609,5 +609,28 @@
       linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box !important;
     color: #0A2B6D !important;
     font-family: var(--font-body) !important;
+  }
+
+  :root:not(.dark) .app-dashboard-canvas :is(section, details):not(.preserve-island-theme):not(.preserve-island-theme *) {
+    border: 2px solid transparent !important;
+    background:
+      linear-gradient(#ffffff, #ffffff) padding-box,
+      linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box !important;
+    color: #0A2B6D !important;
+  }
+
+  :root:not(.dark) .app-dashboard-canvas :is(h1, h2, h3, h4, label, summary, th):not(.preserve-island-theme):not(.preserve-island-theme *) {
+    border: 2px solid transparent !important;
+    border-radius: 9999px !important;
+    background:
+      linear-gradient(#ffffff, #ffffff) padding-box,
+      linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box !important;
+    color: #0A2B6D !important;
+    padding: 0.15rem 0.65rem !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    width: fit-content;
+    max-width: 100%;
   }
 }
