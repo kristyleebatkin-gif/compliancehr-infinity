@@ -258,7 +258,11 @@ export const VALID_APPROVAL_TRANSITIONS = {
   Archived: [],
 };
 
-export function validateApprovalTransition(currentStatus = 'Draft', nextStatus, context = {}) {
+export function validateApprovalTransition(
+  currentStatus = 'Draft',
+  nextStatus = 'Submitted',
+  context = { user: null, reason: '', evidence_uri: '', evidence_url: '', evidence_id: '' }
+) {
   const from = APPROVAL_STATES.includes(currentStatus) ? currentStatus : 'Draft';
   if (!APPROVAL_STATES.includes(nextStatus)) {
     throw new Error(`Invalid approval status "${nextStatus}".`);
@@ -349,7 +353,7 @@ export function scopeQueryToTenant(query = {}, tenantId = null) {
   };
 }
 
-export function stampTenantWritePayload(payload = { tenant_id: undefined }, user = null, explicitTenantId = null) {
+export function stampTenantWritePayload(payload = {}, user = null, explicitTenantId = null) {
   if (!hasApprovedAccess(user)) {
     throw new Error('Active approved user is required to write records.');
   }
@@ -431,4 +435,183 @@ export function repairOrphanParticipantDocuments(records = [], participants = []
     }
   }
   return { repaired, unresolved };
+}
+
+export const SYSTEM_GLOBAL_ENTITIES = Object.freeze(['User', 'Tenant']);
+
+export function createTenantScopedEntitiesProxy(rawEntities, contextResolver) {
+  const resolveCtx = () => {
+    const resolved = typeof contextResolver === 'function' ? contextResolver() : contextResolver;
+    if (typeof resolved === 'string') {
+      return {
+        tenantId: resolved,
+        user: {
+          id: 'tenant_scoped_actor',
+          role: 'Provider Administrator',
+          account_status: 'Active',
+          access_approved: true,
+          tenant_id: resolved,
+        },
+      };
+    }
+    const user = resolved?.user || null;
+    const tenantId = resolved?.tenantId || user?.tenant_id || user?.data?.tenant_id || null;
+    return { user, tenantId };
+  };
+
+  const filterRecordByTenant = (record, tenantId) => {
+    if (!record || !tenantId) return true;
+    const recTenant = record.tenant_id || record.data?.tenant_id || null;
+    return !recTenant || recTenant === tenantId;
+  };
+
+  const assertRecordMatchesTenant = (record, user, tenantId) => {
+    if (!record) return record;
+    if (!tenantId) return record;
+    const recTenant = record.tenant_id || record.data?.tenant_id || null;
+    if (recTenant && recTenant !== tenantId) {
+      throw new Error('Cross-tenant access denied: record belongs to a different tenant.');
+    }
+    if (user) {
+      assertTenantRecordAccess({ ...user, tenant_id: tenantId }, record, tenantId);
+    }
+    return record;
+  };
+
+  return new Proxy(rawEntities || {}, {
+    get(target, entityName) {
+      const dao = target[entityName];
+      if (!dao || typeof dao !== 'object' || SYSTEM_GLOBAL_ENTITIES.includes(String(entityName))) {
+        return dao;
+      }
+      return new Proxy(dao, {
+        get(daoTarget, prop) {
+          const orig = daoTarget[prop];
+          if (typeof orig !== 'function') return orig;
+
+          if (prop === 'get') {
+            return async (id, ...rest) => {
+              const { user, tenantId } = resolveCtx();
+              const record = await orig.call(daoTarget, id, ...rest);
+              return assertRecordMatchesTenant(record, user, tenantId);
+            };
+          }
+
+          if (prop === 'filter') {
+            return async (query = {}, options = undefined) => {
+              const { tenantId } = resolveCtx();
+              const scopedQuery = tenantId ? scopeQueryToTenant(query, tenantId) : query;
+              const res = options !== undefined
+                ? await orig.call(daoTarget, scopedQuery, options)
+                : await orig.call(daoTarget, scopedQuery);
+              if (!tenantId) return res;
+              if (Array.isArray(res)) {
+                return res.filter((r) => filterRecordByTenant(r, tenantId));
+              }
+              if (res && Array.isArray(res.items)) {
+                return { ...res, items: res.items.filter((r) => filterRecordByTenant(r, tenantId)) };
+              }
+              return res;
+            };
+          }
+
+          if (prop === 'list') {
+            return async (...args) => {
+              const { tenantId } = resolveCtx();
+              const res = await orig.apply(daoTarget, args);
+              if (!tenantId) return res;
+              if (Array.isArray(res)) {
+                return res.filter((r) => filterRecordByTenant(r, tenantId));
+              }
+              if (res && Array.isArray(res.items)) {
+                return { ...res, items: res.items.filter((r) => filterRecordByTenant(r, tenantId)) };
+              }
+              return res;
+            };
+          }
+
+          if (prop === 'count') {
+            return async (query = {}) => {
+              const { tenantId } = resolveCtx();
+              const scopedQuery = tenantId ? scopeQueryToTenant(query, tenantId) : query;
+              return orig.call(daoTarget, scopedQuery);
+            };
+          }
+
+          if (prop === 'aggregate') {
+            return async (params = { query: undefined }) => {
+              const { tenantId } = resolveCtx();
+              const baseQuery = params && typeof params === 'object' && 'query' in params ? params.query || {} : {};
+              const scopedParams = tenantId
+                ? { ...params, query: scopeQueryToTenant(baseQuery, tenantId) }
+                : params;
+              return orig.call(daoTarget, scopedParams);
+            };
+          }
+
+          if (prop === 'create') {
+            return async (payload = {}) => {
+              const { user, tenantId } = resolveCtx();
+              const effectiveUser = user || (tenantId ? { id: 'tenant_actor', role: 'Provider Administrator', account_status: 'Active', access_approved: true, tenant_id: tenantId } : null);
+              const stamped = effectiveUser ? stampTenantWritePayload(payload, effectiveUser, tenantId) : payload;
+              return orig.call(daoTarget, stamped);
+            };
+          }
+
+          if (prop === 'bulkCreate') {
+            return async (items = []) => {
+              const { user, tenantId } = resolveCtx();
+              const effectiveUser = user || (tenantId ? { id: 'tenant_actor', role: 'Provider Administrator', account_status: 'Active', access_approved: true, tenant_id: tenantId } : null);
+              const stamped = effectiveUser
+                ? items.map((item) => stampTenantWritePayload(item, effectiveUser, tenantId))
+                : items;
+              return orig.call(daoTarget, stamped);
+            };
+          }
+
+          if (prop === 'update') {
+            return async (id, payload = {}) => {
+              const { user, tenantId } = resolveCtx();
+              if (tenantId && typeof daoTarget.get === 'function') {
+                const existing = await daoTarget.get(id);
+                assertRecordMatchesTenant(existing, user, tenantId);
+              }
+              const effectiveUser = user || (tenantId ? { id: 'tenant_actor', role: 'Provider Administrator', account_status: 'Active', access_approved: true, tenant_id: tenantId } : null);
+              const stamped = effectiveUser ? stampTenantWritePayload(payload, effectiveUser, tenantId) : payload;
+              return orig.call(daoTarget, id, stamped);
+            };
+          }
+
+          if (prop === 'delete') {
+            return async (id) => {
+              const { user, tenantId } = resolveCtx();
+              if (tenantId && typeof daoTarget.get === 'function') {
+                const existing = await daoTarget.get(id);
+                assertRecordMatchesTenant(existing, user, tenantId);
+              }
+              return orig.call(daoTarget, id);
+            };
+          }
+
+          if (prop === 'updateMany') {
+            return async (query = {}, updateOp = {}) => {
+              const { tenantId } = resolveCtx();
+              const scopedQuery = tenantId ? scopeQueryToTenant(query, tenantId) : query;
+              return orig.call(daoTarget, scopedQuery, updateOp);
+            };
+          }
+
+          if (prop === 'deleteMany') {
+            return async (query = {}) => {
+              const { tenantId } = resolveCtx();
+              const scopedQuery = tenantId ? scopeQueryToTenant(query, tenantId) : query;
+              return orig.call(daoTarget, scopedQuery);
+            };
+          }
+
+          return orig.bind(daoTarget);
+        },
+      });
+    },
+  });
 }
