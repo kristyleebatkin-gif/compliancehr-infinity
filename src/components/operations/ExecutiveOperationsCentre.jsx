@@ -334,7 +334,13 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
               </div>
             </div>
 
-            <div className="grid auto-rows-fr grid-cols-2 gap-1.5 p-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 items-stretch">
+            <div
+              className="grid auto-rows-fr grid-cols-1 gap-2 p-2.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 items-stretch"
+              style={{
+                background:
+                  'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+              }}
+            >
               {EXECUTIVE_RESOURCE_SUITES.map((suite) => {
                 const Icon = suite.icon;
                 const active = activeSuite === suite.id;
@@ -345,53 +351,64 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
                     type="button"
                     onClick={() => setActiveSuite(suite.id)}
                     aria-pressed={active}
-                    className={`group flex h-full min-h-[48px] rounded-3xl p-[2px] text-left transition-all duration-200 focus-visible:outline-none ${
+                    className={`group flex h-full min-h-[68px] flex-col rounded-2xl p-[2px] text-left transition-all duration-200 focus-visible:outline-none ${
                       active
-                        ? 'shadow-[0_0_18px_rgba(0,198,255,0.85)] scale-[1.01]'
-                        : 'hover:-translate-y-0.5 hover:shadow-[0_0_12px_rgba(0,198,255,0.5)]'
+                        ? 'shadow-[0_0_20px_rgba(0,198,255,0.85)] scale-[1.01]'
+                        : 'shadow-[0_0_12px_rgba(90,0,214,0.35)] hover:-translate-y-0.5 hover:shadow-[0_0_18px_rgba(0,198,255,0.75)]'
                     }`}
                     style={{
                       background:
-                        'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+                        'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)',
                     }}
                   >
-                    <div className="flex w-full items-center gap-2 rounded-[22px] bg-white px-2.5 py-1.5">
-                      <span
-                        className="relative flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#F5F0FF]"
-                        style={{ border: `2px solid ${iconColor}` }}
-                      >
-                        <Icon className="h-3.5 w-3.5 shrink-0" style={{ color: iconColor }} />
-                      </span>
-
-                      <div className="min-w-0 flex-1">
-                        <div className="flex items-center justify-between gap-1">
+                    <div
+                      className="flex w-full flex-1 flex-col justify-between overflow-hidden rounded-[14px]"
+                      style={{
+                        background:
+                          'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+                      }}
+                    >
+                      {/* Top 1/4 White Bar with App Design Colour Symbol */}
+                      <div className="flex min-h-[30px] items-center justify-between gap-1 bg-white px-2.5 py-0.5">
+                        <div className="flex min-w-0 items-center gap-1.5">
                           <span
-                            className="text-[9.5px] font-extrabold leading-tight text-[#0A2B6D]"
+                            className="flex h-5 w-5 shrink-0 items-center justify-center rounded-lg bg-[#F5F0FF]"
+                            style={{ border: `1.5px solid ${iconColor}` }}
+                          >
+                            <Icon className="h-3 w-3 shrink-0" style={{ color: iconColor }} />
+                          </span>
+                          <span
+                            className="min-w-0 text-[9.5px] font-extrabold leading-tight text-[#0A2B6D]"
                             style={{ color: '#0A2B6D' }}
                           >
                             <span style={{ color: iconColor }}>◉</span> {suite.shortLabel}
                           </span>
+                        </div>
+                        <span
+                          className={`inline-flex shrink-0 items-center gap-1 rounded-full px-1.5 py-0 text-[7px] font-black uppercase ${
+                            active ? 'bg-[#0A2B6D] text-[#00C6FF]' : 'bg-[#F5F0FF] text-[#5A00D6]'
+                          }`}
+                        >
                           <span
-                            className="rounded-full border px-1 py-0 text-[6.5px] font-black uppercase"
+                            className="h-1.5 w-1.5 rounded-full"
                             style={{
-                              borderColor: iconColor,
-                              color: active ? '#FF2E9A' : '#5A00D6',
-                              backgroundColor: '#F5F0FF',
+                              backgroundColor: active ? '#00C6FF' : iconColor,
+                              boxShadow: active ? '0 0 8px 2px #00C6FF' : `0 0 5px 1px ${iconColor}`,
                             }}
-                          >
-                            {active ? 'ON' : 'LIVE'}
-                          </span>
-                        </div>
+                          />
+                          {active ? 'ON' : 'LIVE'}
+                        </span>
+                      </div>
 
-                        <div className="mt-0.5 flex items-center justify-between gap-1">
-                          <span
-                            className="min-w-0 flex-1 break-words text-[8px] font-bold leading-tight text-[#5A00D6]"
-                            style={{ color: '#5A00D6' }}
-                          >
-                            {suite.badge} · {suite.subject}
-                          </span>
-                          <ArrowRight className="h-2.5 w-2.5 shrink-0" style={{ color: iconColor }} />
-                        </div>
+                      {/* Bottom 3/4 Dark Blue Body */}
+                      <div className="flex flex-1 items-center justify-between gap-1 px-2.5 py-1.5">
+                        <span
+                          className="min-w-0 flex-1 break-words text-[8.5px] font-bold leading-snug text-white"
+                          style={{ color: '#FFFFFF' }}
+                        >
+                          {suite.badge} · {suite.subject}
+                        </span>
+                        <ArrowRight className="h-2.5 w-2.5 shrink-0" style={{ color: iconColor }} />
                       </div>
                     </div>
                   </button>

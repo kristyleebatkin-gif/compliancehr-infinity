@@ -95,9 +95,9 @@ export default function CompleteProfile13SectionNavigator({ kind = 'staff', prof
         </div>
       </div>
 
-      {/* 9 Mandatory Ordered Profile Layout All-White Circular Control Pods on Dark Blue Chassis */}
+      {/* 9 Mandatory Ordered Profile Layout Illuminated Modular Tiles (Top 1/4 White + Bottom 3/4 Dark Blue) */}
       <div
-        className="preserve-island-theme grid grid-cols-1 gap-1.5 rounded-2xl border-2 border-[#0A2B6D] p-2 sm:grid-cols-2 md:grid-cols-3"
+        className="preserve-island-theme grid grid-cols-1 gap-2 rounded-2xl border-2 border-[#0A2B6D] p-2.5 sm:grid-cols-2 md:grid-cols-3 items-stretch"
         style={{
           background:
             'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
@@ -106,36 +106,72 @@ export default function CompleteProfile13SectionNavigator({ kind = 'staff', prof
         {sections.map((sec, idx) => {
           const isInternal = sec.to.startsWith('#');
           const active = selectedSection === sec.id;
-          const iconColors = ['#0072FF', '#5A00D6', '#FF2E9A', '#A100FF'];
+          const iconColors = ['#0072FF', '#5A00D6', '#FF2E9A', '#A100FF', '#00C6FF'];
           const iconColor = iconColors[idx % iconColors.length];
+          const innerContent = (
+            <span
+              className="flex w-full flex-1 flex-col justify-between overflow-hidden rounded-[14px]"
+              style={{
+                background:
+                  'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+              }}
+            >
+              {/* Top 1/4 White Bar with App Design Colour Symbol */}
+              <span className="flex min-h-[28px] w-full items-center justify-between gap-1.5 bg-white px-2.5 py-0.5">
+                <span className="flex items-center gap-1.5 min-w-0">
+                  <span
+                    className="flex h-5 w-5 shrink-0 items-center justify-center rounded-lg bg-[#F5F0FF]"
+                    style={{ border: `1.5px solid ${iconColor}` }}
+                  >
+                    <CheckCircle2 className="h-3 w-3 shrink-0" style={{ color: iconColor }} />
+                  </span>
+                  <span className="text-[9.5px] font-extrabold leading-tight" style={{ color: '#0A2B6D' }}>
+                    <span style={{ color: iconColor }}>◉</span> {sec.label}
+                  </span>
+                </span>
+                <span
+                  className={`inline-flex shrink-0 items-center gap-1 rounded-full px-1.5 py-0 text-[7px] font-black uppercase ${
+                    active ? 'bg-[#0A2B6D] text-[#00C6FF]' : 'bg-[#F5F0FF] text-[#5A00D6]'
+                  }`}
+                >
+                  <span
+                    className="h-1.5 w-1.5 rounded-full"
+                    style={{
+                      backgroundColor: active ? '#00C6FF' : iconColor,
+                      boxShadow: active ? '0 0 8px 2px #00C6FF' : `0 0 5px 1px ${iconColor}`,
+                    }}
+                  />
+                  {active ? 'ACTIVE' : 'LIVE'}
+                </span>
+              </span>
+
+              {/* Bottom 3/4 Dark Blue Body */}
+              <span className="flex flex-1 items-center justify-between gap-1 px-2.5 py-1">
+                <span className="text-[8.5px] font-bold leading-snug text-white" style={{ color: '#FFFFFF' }}>
+                  Open {sec.label.replace(/^Section \d+:\s*/, '')} workspace
+                </span>
+                <ArrowUpRight className="h-2.5 w-2.5 shrink-0" style={{ color: iconColor }} />
+              </span>
+            </span>
+          );
+
           if (isInternal) {
             return (
               <button
                 key={sec.id}
                 type="button"
                 onClick={() => setSelectedSection(sec.id)}
-                className={`flex min-h-[40px] rounded-full p-[2px] text-left transition-all ${
-                  active ? 'shadow-[0_0_16px_rgba(0,198,255,0.85)]' : ''
+                className={`group flex min-h-[58px] flex-col rounded-2xl p-[2px] text-left transition-all duration-200 ${
+                  active
+                    ? 'shadow-[0_0_20px_rgba(0,198,255,0.85)] scale-[1.01]'
+                    : 'shadow-[0_0_12px_rgba(90,0,214,0.35)] hover:-translate-y-0.5 hover:shadow-[0_0_18px_rgba(0,198,255,0.75)]'
                 }`}
                 style={{
                   background:
-                    'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+                    'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)',
                 }}
               >
-                <span className="flex w-full items-center justify-between gap-2 rounded-full bg-white px-3 py-1">
-                  <span className="flex items-center gap-1.5 min-w-0">
-                    <CheckCircle2 className="h-3.5 w-3.5 shrink-0" style={{ color: iconColor }} />
-                    <span className="text-[9.5px] font-extrabold leading-tight" style={{ color: '#0A2B6D' }}>
-                      <span style={{ color: iconColor }}>◉</span> {sec.label}
-                    </span>
-                  </span>
-                  <span
-                    className="rounded-full border px-1.5 py-0 text-[7px] font-black"
-                    style={{ borderColor: iconColor, color: '#5A00D6', backgroundColor: '#F5F0FF' }}
-                  >
-                    ACTIVE
-                  </span>
-                </span>
+                {innerContent}
               </button>
             );
           }
@@ -143,23 +179,13 @@ export default function CompleteProfile13SectionNavigator({ kind = 'staff', prof
             <Link
               key={sec.id}
               to={sec.to}
-              className="flex min-h-[40px] rounded-full p-[2px] text-left transition-all hover:-translate-y-0.5 hover:shadow-[0_0_12px_rgba(0,198,255,0.65)]"
+              className="group flex min-h-[58px] flex-col rounded-2xl p-[2px] text-left shadow-[0_0_12px_rgba(90,0,214,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_0_18px_rgba(0,198,255,0.75)]"
               style={{
                 background:
-                  'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+                  'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)',
               }}
             >
-              <span className="flex w-full items-center justify-between gap-2 rounded-full bg-white px-3 py-1">
-                <span className="flex items-center gap-1.5 min-w-0">
-                  <span className="text-[9px] leading-none shrink-0" style={{ color: iconColor }}>
-                    ◉
-                  </span>
-                  <span className="text-[9.5px] font-extrabold leading-tight" style={{ color: '#0A2B6D' }}>
-                    {sec.label}
-                  </span>
-                </span>
-                <ArrowUpRight className="h-3 w-3 shrink-0" style={{ color: iconColor }} />
-              </span>
+              {innerContent}
             </Link>
           );
         })}

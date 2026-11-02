@@ -181,9 +181,9 @@ export default function MyWorkArea9Panel({ compact = false }) {
         </div>
       </div>
 
-      {/* 11 ALL-WHITE CIRCULAR CONTROL-POD STREAM TILES ON DARK BLUE CHASSIS */}
+      {/* 11 ILLUMINATED MODULAR STREAM TILES (TOP 1/4 WHITE + BOTTOM 3/4 DARK BLUE) ON DARK BLUE CHASSIS */}
       <div
-        className="preserve-island-theme grid grid-cols-2 gap-1.5 rounded-2xl border-2 border-[#0A2B6D] p-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
+        className="preserve-island-theme grid grid-cols-1 gap-2 rounded-2xl border-2 border-[#0A2B6D] p-2.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 items-stretch"
         style={{
           background:
             'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
@@ -192,48 +192,71 @@ export default function MyWorkArea9Panel({ compact = false }) {
         {MY_WORK_11_STREAMS.map((stream, idx) => {
           const Icon = stream.icon;
           const active = activeStream === stream.id;
-          const iconColors = ['#0072FF', '#5A00D6', '#FF2E9A', '#A100FF'];
+          const iconColors = ['#0072FF', '#5A00D6', '#FF2E9A', '#A100FF', '#00C6FF'];
           const iconColor = iconColors[idx % iconColors.length];
           return (
             <button
               key={stream.id}
               type="button"
               onClick={() => setActiveStream(stream.id)}
-              className={`group flex min-h-[42px] rounded-full p-[2px] text-left transition-all duration-200 ${
+              className={`group flex min-h-[60px] flex-col rounded-2xl p-[2px] text-left transition-all duration-200 ${
                 active
-                  ? 'shadow-[0_0_16px_rgba(0,198,255,0.85)] scale-[1.01]'
-                  : 'hover:-translate-y-0.5 hover:shadow-[0_0_10px_rgba(0,198,255,0.5)]'
+                  ? 'shadow-[0_0_20px_rgba(0,198,255,0.85)] scale-[1.01]'
+                  : 'shadow-[0_0_12px_rgba(90,0,214,0.35)] hover:-translate-y-0.5 hover:shadow-[0_0_18px_rgba(0,198,255,0.75)]'
               }`}
               style={{
                 background:
-                  'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+                  'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)',
               }}
             >
-              <span className="flex w-full items-center gap-1.5 rounded-full bg-white px-2.5 py-1">
-                <span
-                  className="relative flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#F5F0FF]"
-                  style={{ border: `1.5px solid ${iconColor}` }}
-                >
-                  <Icon className="h-3 w-3 shrink-0" style={{ color: iconColor }} />
-                </span>
-
-                <span className="min-w-0 flex-1 flex items-center justify-between gap-1">
-                  <span
-                    className="text-[9.5px] font-extrabold leading-tight"
-                    style={{ color: '#0A2B6D' }}
-                  >
-                    <span style={{ color: iconColor }}>◉</span> {stream.label}
+              <span
+                className="flex w-full flex-1 flex-col justify-between overflow-hidden rounded-[14px]"
+                style={{
+                  background:
+                    'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+                }}
+              >
+                {/* Top 1/4 White Title Bar with App Design Colour Symbol */}
+                <span className="flex min-h-[28px] w-full items-center justify-between gap-1 bg-white px-2.5 py-0.5">
+                  <span className="flex min-w-0 items-center gap-1.5">
+                    <span
+                      className="flex h-5 w-5 shrink-0 items-center justify-center rounded-lg bg-[#F5F0FF]"
+                      style={{ border: `1.5px solid ${iconColor}` }}
+                    >
+                      <Icon className="h-3 w-3 shrink-0" style={{ color: iconColor }} />
+                    </span>
+                    <span
+                      className="min-w-0 text-[9.5px] font-extrabold leading-tight text-[#0A2B6D]"
+                      style={{ color: '#0A2B6D' }}
+                    >
+                      <span style={{ color: iconColor }}>◉</span> {stream.label}
+                    </span>
                   </span>
                   <span
-                    className="shrink-0 rounded-full border px-1.5 py-0 text-[8.5px] font-black"
-                    style={{
-                      borderColor: iconColor,
-                      color: active ? '#FF2E9A' : '#5A00D6',
-                      backgroundColor: '#F5F0FF',
-                    }}
+                    className={`inline-flex shrink-0 items-center gap-1 rounded-full px-1.5 py-0 text-[7px] font-black uppercase ${
+                      active ? 'bg-[#0A2B6D] text-[#00C6FF]' : 'bg-[#F5F0FF] text-[#5A00D6]'
+                    }`}
                   >
+                    <span
+                      className="h-1.5 w-1.5 rounded-full"
+                      style={{
+                        backgroundColor: active ? '#00C6FF' : iconColor,
+                        boxShadow: active ? '0 0 8px 2px #00C6FF' : `0 0 5px 1px ${iconColor}`,
+                      }}
+                    />
                     {counts[stream.id] ?? 0}
                   </span>
+                </span>
+
+                {/* Bottom 3/4 Dark Blue Body */}
+                <span className="flex flex-1 items-center justify-between gap-1 px-2.5 py-1">
+                  <span
+                    className="min-w-0 flex-1 text-[8.5px] font-bold leading-snug text-white"
+                    style={{ color: '#FFFFFF' }}
+                  >
+                    {counts[stream.id] ?? 0} active items · 1-click view
+                  </span>
+                  <ArrowUpRight className="h-2.5 w-2.5 shrink-0" style={{ color: iconColor }} />
                 </span>
               </span>
             </button>
