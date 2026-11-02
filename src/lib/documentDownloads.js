@@ -55,6 +55,14 @@ async function writeWithSavePicker(blob, filename, fileHandle = null) {
   await writable.close();
 }
 
+const isTopLevelWindow = () => {
+  try {
+    return window.self === window.top;
+  } catch {
+    return false;
+  }
+};
+
 export async function downloadOriginalDocument(url, label) {
   const filename = safeFilename(label, extensionFromUrl(url));
   // Fetch the file first (CORS is allowed on the app's media files); if the
@@ -67,7 +75,7 @@ export async function downloadOriginalDocument(url, label) {
       if (candidate.size) blob = candidate;
     }
   } catch { blob = null; }
-  if (blob && typeof window.showSaveFilePicker === 'function') {
+  if (blob && isTopLevelWindow() && typeof window.showSaveFilePicker === 'function') {
     try {
       const fileHandle = await window.showSaveFilePicker({
         suggestedName: filename,
@@ -78,9 +86,7 @@ export async function downloadOriginalDocument(url, label) {
       await writable.close();
       return filename;
     } catch (error) {
-      if (error?.name === 'AbortError') return filename; // user closed the save dialog
-      // Save picker unavailable (e.g. embedded iframe): fall through to the
-      // standard browser download below.
+      if (error?.name === 'AbortError') return filename;
     }
   }
   if (blob) {
@@ -95,7 +101,7 @@ export async function downloadOriginalDocument(url, label) {
 
 export function downloadPdfDocument(doc, filename) {
   const safePdfFilename = safeFilename(filename.replace(/\.pdf$/i, ''), '.pdf');
-  if (typeof window.showSaveFilePicker === 'function') {
+  if (isTopLevelWindow() && typeof window.showSaveFilePicker === 'function') {
     const blob = doc.output('blob');
     return writeWithSavePicker(blob, safePdfFilename).catch((error) => {
       if (error?.name !== 'AbortError') {
