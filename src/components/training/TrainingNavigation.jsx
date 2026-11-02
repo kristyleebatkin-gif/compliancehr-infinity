@@ -30,16 +30,24 @@ export default function TrainingNavigation({ view, onChange, personalOnly = fals
     >
       <div className="h-1.5 w-full" style={{ background: BRAND_GRADIENT }} />
 
-      {/* Compact Training Command Strip (No Duplicate Logo Inside Page) */}
+      {/* Compact Training Command Strip (Words Framed with App Design Coloured Border on White) */}
       <div className="flex items-center justify-between bg-white px-3 py-1.5">
         <span
-          className="bg-clip-text text-[10.5px] font-extrabold tracking-tight text-transparent"
-          style={{
-            backgroundImage:
-              'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
-          }}
+          className="inline-flex rounded-full p-[1.5px]"
+          style={{ background: BRAND_GRADIENT }}
         >
-          ◉ Training &amp; Competency Command Remote
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-0.5">
+            <span style={{ color: '#0072FF' }}>◉</span>
+            <span
+              className="bg-clip-text text-[10.5px] font-extrabold tracking-tight text-transparent"
+              style={{
+                backgroundImage:
+                  'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
+              }}
+            >
+              Training &amp; Competency Command Remote
+            </span>
+          </span>
         </span>
       </div>
 

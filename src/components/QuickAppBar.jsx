@@ -232,7 +232,7 @@ export default function QuickAppBar() {
               >
                 <div className="mb-1.5 flex items-center justify-between gap-2">
                   <span
-                    className="inline-flex items-center gap-1.5 rounded-full bg-white px-2.5 py-0.5 text-[9.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D] shadow-2xs"
+                    className="inline-flex items-center gap-1.5 rounded-full border-2 border-[#0072FF] bg-white px-2.5 py-0.5 text-[9.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D] shadow-2xs"
                     style={{ color: '#0A2B6D' }}
                   >
                     <span style={{ color: '#0072FF' }}>◉</span> {expandedGroup.label} — Direct Page Modular Tiles ({expandedGroup.modules.length} Pages)

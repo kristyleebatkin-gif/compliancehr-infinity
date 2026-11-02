@@ -28,19 +28,27 @@ export default function AllModulesHub() {
     >
       <div className="h-1.5 w-full" style={{ background: BRAND_GRADIENT }} />
 
-      {/* Compact Module Hub Title Bar (No Duplicate Middle Logo) */}
+      {/* Compact Module Hub Title Bar (Words Framed with App Design Coloured Border on White) */}
       <div
         id="all-modules-hub"
         className="flex items-center justify-between bg-white px-3 py-1.5"
       >
         <span
-          className="bg-clip-text text-xs font-extrabold tracking-tight text-transparent"
-          style={{
-            backgroundImage:
-              'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
-          }}
+          className="inline-flex rounded-full p-[1.5px]"
+          style={{ background: BRAND_GRADIENT }}
         >
-          ◉ All Connected Platform Modules — Remote Command Directory ({modules.length} Modules)
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-0.5">
+            <span style={{ color: '#0072FF' }}>◉</span>
+            <span
+              className="bg-clip-text text-xs font-extrabold tracking-tight text-transparent"
+              style={{
+                backgroundImage:
+                  'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
+              }}
+            >
+              All Connected Platform Modules — Remote Command Directory ({modules.length} Modules)
+            </span>
+          </span>
         </span>
       </div>
 

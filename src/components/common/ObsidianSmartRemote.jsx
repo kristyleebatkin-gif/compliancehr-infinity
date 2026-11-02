@@ -79,20 +79,35 @@ export default function ObsidianSmartRemote({
       {/* Top Blue -> Purple -> Pink Gradient Strip */}
       <div className="h-1.5 w-full" style={{ background: BRAND_GRADIENT }} />
 
-      {/* Optional Title & Subtitle Strip (No Duplicate Logo Inside Page Modules) */}
+      {/* Optional Title & Subtitle Strip (Every Word Pill Framed with App Design Coloured Border on White) */}
       {(title || subtitle) && (
         <div className="flex flex-wrap items-center justify-center gap-2 bg-white px-3 py-1.5 text-center">
           {title && (
             <span
-              className="rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold uppercase tracking-wider text-white"
+              className="inline-flex rounded-full p-[1.5px]"
               style={{ background: BRAND_GRADIENT }}
             >
-              {title}
+              <span className="inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-0.5 text-[10px] font-extrabold">
+                <span style={{ color: '#0072FF' }}>◉</span>
+                <span
+                  className="bg-clip-text text-transparent"
+                  style={{
+                    backgroundImage:
+                      'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
+                  }}
+                >
+                  {title}
+                </span>
+              </span>
             </span>
           )}
           {subtitle && (
-            <span className="text-[10px] font-bold text-[#0A2B6D]" style={{ color: '#0A2B6D' }}>
-              {subtitle}
+            <span
+              className="inline-flex items-center gap-1 rounded-full border-2 border-[#5A00D6] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]"
+              style={{ color: '#0A2B6D' }}
+            >
+              <span style={{ color: '#5A00D6' }}>◉</span>
+              <span>{subtitle}</span>
             </span>
           )}
         </div>

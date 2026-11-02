@@ -128,7 +128,7 @@ const TabsList = React.forwardRef(
         <TabsPrimitive.List
           ref={ref}
           className={cn(
-            "flex w-full flex-wrap items-center gap-2 rounded-2xl border-2 border-[#0A2B6D] bg-white p-2 text-[#0A2B6D] shadow-sm",
+            "flex w-full flex-wrap items-center gap-2 rounded-2xl border-2 border-[#5A00D6] bg-white p-2 text-[#0A2B6D] shadow-sm",
             className
           )}
           {...props}
@@ -183,7 +183,7 @@ const TabsTrigger = React.forwardRef(
         data-dashboard-tone={dashboardTabTone(props.value)}
         ref={ref}
         className={cn(
-          "inline-flex min-h-[32px] items-center justify-center gap-1.5 whitespace-nowrap rounded-full border-2 border-[#0A2B6D] bg-white px-3 py-1 text-xs font-extrabold text-[#0A2B6D] [&_svg]:mr-0 [&_svg]:size-3.5 [&_svg]:shrink-0 ring-offset-background transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-white data-[state=active]:shadow-sm",
+          "inline-flex min-h-[32px] items-center justify-center gap-1.5 whitespace-nowrap rounded-full border-2 border-[#0072FF] bg-white px-3 py-1 text-xs font-extrabold text-[#0A2B6D] [&_svg]:mr-0 [&_svg]:size-3.5 [&_svg]:shrink-0 ring-offset-background transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-[#5A00D6] data-[state=active]:border-[#5A00D6] data-[state=active]:text-white data-[state=active]:shadow-sm",
           className
         )}
         {...props}
