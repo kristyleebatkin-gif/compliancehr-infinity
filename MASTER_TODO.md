@@ -1,5 +1,40 @@
 # ComplianceHR Portal — Master To-Do Plan
 
+## Audit repair progress — 2 November 2026
+
+Treat completion claims below as historical. Current full typecheck fails with 795 errors. Source checkpoints do not prove production-data recovery, deployed permissions or publication.
+
+| Finding | Status | Evidence / next step |
+|---|---|---|
+| TYPE-01 Shared UI prop contracts | In progress | 64 controls typed; diagnostic count reduced from 6545 to 1086. |
+| TYPE-02 Optional styling props | Verified for covered scope | 195 className/recordsClassName parameters made optional in 55 files. Emitted logic compared apart from undefined defaults. Full typecheck now 795 errors, exit 2; remaining errors stay open. |
+| PDF-01 Compliance issues report crash | Verified in local regression | Old ReferenceError reproduced. Fixed list initialization; empty, 1-record and 80-record PDFs generated with real jsPDF and mocked branding/download; inputs unchanged. Browser download/layout unverified. |
+| SEC-01 Suspended-account data access | Implemented, unverified live | Suspension archives role. Existing suspended accounts and self-access RLS require review; role change alone does not prove all access is revoked. |
+| SEC-02 Payroll direct update bypass | Implemented, unverified live | Self-update branch removed; self-read retained. Schema assertion passed. Verify deployed RLS and approved controlled updates. |
+| SEC-03 HTML injection in exports | Verified in DOM test only | Hostile title/header/value remain literal text, no script/img nodes. Deployed browser flow pending. |
+| SEC-04 Automation authorization | Implemented, unverified live | Authorization and email escaping added. Mocked denial checks passed; scheduled and live approved callers pending. |
+| SEC-05 Intake decisions/consents | Implemented, unverified live | Write locks added and schema assertions passed. Live applicant/reviewer tests pending. |
+| SEC-06 Payroll approval guards | Implemented, unverified live | Approval checks added; mocked denial passed. Approved/live cases pending. |
+| SEC-07 Ambiguous staff matching | Implemented, unverified | Removed import name fallback; payroll/ICS reject ambiguous names. Duplicate emails/names, pagination and ownership tests pending. |
+| SEC-08 Pending-user AI access | Implemented, unverified live | Approval checks added; mocked denial passed. Approved/live cases and role restrictions pending. |
+| SEC-09 Public-form spam | In progress | Basic persisted count flood brake; races remain. Atomic rate limiter or verified CAPTCHA and concurrency tests pending. |
+
+Latest batch: npm run build exit 0 (Browserslist warning), npm run lint exit 0, npm run typecheck exit 2 with 795 errors. No production records changed by regression tests. No publication performed.
+
+| Checkpoint | Confirmed ID | Scope |
+|---|---|---|
+| Before security remediation | 6ae882ed6de06d8c61aaeb48 | Source restore point |
+| Security fixes: build/lint and 81 targeted checks | 6ae8853d4d29fb87a3f10b27 | Mocked/static/DOM checks; live security pending |
+| Before shared component type repairs | 6ae8864955f665edb36d2af7 | Source restore point |
+| Type repair 1: 6545 to 1086 | 6ae887063bc33f63198f8dbd | Full typecheck fails |
+| Audit repair 02: PDF fixed; build/lint pass; 795 errors open | 6ae88a050f60f3647078cdb2 | Code batch; live checks and full typecheck open |
+
+Checkpoint 6ae88a45eb4b097dcffd922e has the same source version as the preceding checkpoint: its attempted progress-register write was blocked. This section was added afterwards; use the subsequent successful checkpoint for this register.
+
+Next: investigate SDK data contracts, remaining optional component props, arithmetic types and browser API types. Keep code verification, deployed authorization and publication separate.
+
+---
+
 Organised working plan (from builder session, 2026-10-20). Items are numbered for tracking.
 Grouped by module, roughly in build order: branding/landing first, then profiles, then module-by-module fixes.
 
