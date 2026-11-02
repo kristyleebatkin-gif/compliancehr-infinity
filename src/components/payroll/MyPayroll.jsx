@@ -23,10 +23,25 @@ export default function MyPayroll() {
   const [saving, setSaving] = useState(false);
 
   const load = async () => {
-    const res = await base44.functions.invoke('myPayrollOverview', {});
-    if (res.data?.error) { toast({ title: 'Could not load payroll', description: res.data.error, variant: 'destructive' }); return; }
-    setData(res.data);
-    const d = res.data.payroll_detail || {};
+    let res;
+    try {
+      res = await base44.functions.invoke('myPayrollOverview', {});
+    } catch (err) {
+      const message = err?.response?.data?.error || err?.message || 'Please try again.';
+      toast({ title: 'Could not load payroll', description: message, variant: 'destructive' });
+      setData({ profile: null, payroll_detail: null, payslips: [], timesheets: [], change_log: [] });
+      setForm(Object.fromEntries(EMPLOYEE_FIELDS.map((f) => [f, ''])));
+      return;
+    }
+    if (res?.data?.error) { toast({ title: 'Could not load payroll', description: res.data.error, variant: 'destructive' }); return; }
+    const payload = res?.data || {};
+    setData({
+      ...payload,
+      payslips: Array.isArray(payload.payslips) ? payload.payslips : [],
+      timesheets: Array.isArray(payload.timesheets) ? payload.timesheets : [],
+      change_log: Array.isArray(payload.change_log) ? payload.change_log : [],
+    });
+    const d = payload.payroll_detail || {};
     setForm(Object.fromEntries(EMPLOYEE_FIELDS.map((f) => [f, d[f] ?? ''])));
   };
 
