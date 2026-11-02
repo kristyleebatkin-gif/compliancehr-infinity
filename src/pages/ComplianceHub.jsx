@@ -13,7 +13,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
-import { Plus, Trash2, ShieldCheck, Scale, FileText, ExternalLink, Download, FilePlus, History, Award } from 'lucide-react';
+import { Plus, Trash2, ShieldCheck, Scale, FileText, ExternalLink, Download, FilePlus, History, Award, Eye } from 'lucide-react';
+import { openDocumentInViewer } from '@/lib/openDocument';
 import { NewVersionDialog, PolicyHistoryDialog } from '@/components/compliance/PolicyVersions';
 import ReviewFormTemplates from '@/components/compliance/ReviewFormTemplates';
 import BulkEditBar from '@/components/documents/BulkEditBar';
@@ -543,7 +544,13 @@ export default function ComplianceHub() {
                         />
                         <div className="rounded-lg bg-muted p-2"><FileText className="h-5 w-5 text-muted-foreground" /></div>
                         <div>
-                          <p className="font-semibold">{p.document_name}</p>
+                          <button
+                            type="button"
+                            onClick={() => openDocumentInViewer(p)}
+                            className="text-left font-semibold text-[#0A2B6D] hover:text-[#0072FF] hover:underline"
+                          >
+                            {p.document_name}
+                          </button>
                           <p className="text-sm text-muted-foreground">{p.category}{p.version ? ` · v${p.version}` : ''}</p>
                         </div>
                       </div>
@@ -554,9 +561,12 @@ export default function ComplianceHub() {
                         )}
                       </div>
                     </div>
-                    <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
+                    <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
                       <span>{p.review_date ? `Review due ${format(new Date(p.review_date), 'd MMM yyyy')}` : 'No review date set'}</span>
-                      <span className="flex items-center gap-1">
+                      <span className="flex flex-wrap items-center gap-1">
+                        <Button variant="outline" size="sm" className="h-7 px-2 text-xs" onClick={() => openDocumentInViewer(p)}>
+                          <Eye className="mr-1 h-3.5 w-3.5" /> Open
+                        </Button>
                         <Button variant="ghost" size="sm" className="h-7 px-2 text-xs" onClick={() => setNewVersionPolicy(p)}><FilePlus className="mr-1 h-3.5 w-3.5" /> New version</Button>
                         <Button variant="ghost" size="sm" className="h-7 px-2 text-xs" onClick={() => setHistoryPolicy(p)}><History className="mr-1 h-3.5 w-3.5" /> History &amp; diff</Button>
                         <Button variant="ghost" size="icon" onClick={() => remove(base44.entities.Policy, p.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
@@ -615,7 +625,13 @@ export default function ComplianceHub() {
                       <div className="flex items-start gap-3">
                         <div className="rounded-lg bg-muted p-2"><Scale className="h-5 w-5 text-muted-foreground" /></div>
                         <div>
-                          <p className="font-semibold">{r.title}</p>
+                          <button
+                            type="button"
+                            onClick={() => openDocumentInViewer(r)}
+                            className="text-left font-semibold text-[#0A2B6D] hover:text-[#0072FF] hover:underline"
+                          >
+                            {r.title}
+                          </button>
                           <p className="text-sm text-muted-foreground">{[r.category, r.jurisdiction, r.authority].filter(Boolean).join(' · ')}</p>
                         </div>
                       </div>
@@ -625,6 +641,9 @@ export default function ComplianceHub() {
                     <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
                       <span>{r.next_review ? `Next review ${format(new Date(r.next_review), 'd MMM yyyy')}` : ''}</span>
                       <span className="flex items-center gap-1">
+                        <Button variant="outline" size="sm" className="h-7 px-2 text-xs" onClick={() => openDocumentInViewer(r)}>
+                          <Eye className="mr-1 h-3.5 w-3.5" /> Open
+                        </Button>
                         {safeUrl(r.official_url) && <a href={safeUrl(r.official_url)} target="_blank" rel="noreferrer" className="inline-flex"><ExternalLink className="h-4 w-4" /></a>}
                         <Button variant="ghost" size="icon" onClick={() => remove(base44.entities.LegalRequirement, r.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
                       </span>

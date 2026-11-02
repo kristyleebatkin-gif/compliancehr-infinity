@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
-import { safeUrl } from '@/lib/safeUrl';
+import { openDocumentInViewer } from '@/lib/openDocument';
 import { useToast } from '@/components/ui/use-toast';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -49,12 +49,7 @@ export default function VaultUploads() {
 
   const view = async (doc) => {
     try {
-      if (doc.file_uri) {
-        const { signed_url } = await base44.integrations.Core.CreateFileSignedUrl({ file_uri: doc.file_uri });
-        window.open(signed_url, '_blank');
-      } else if (safeUrl(doc.file_url)) {
-        window.open(safeUrl(doc.file_url), '_blank', 'noopener,noreferrer');
-      }
+      await openDocumentInViewer(doc);
     } catch (error) {
       toast({ title: 'Unable to open document', description: error.message, variant: 'destructive' });
     }
@@ -110,14 +105,20 @@ export default function VaultUploads() {
               <div className="flex min-w-0 items-center gap-2">
                 <Badge variant="outline" className="shrink-0 text-[10px]">{d.library}</Badge>
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-medium">{d.title}</p>
+                  <button
+                    type="button"
+                    onClick={() => view(d)}
+                    className="truncate text-left text-sm font-semibold text-[#0A2B6D] hover:text-[#0072FF] hover:underline"
+                  >
+                    {d.title}
+                  </button>
                   <p className="text-[11px] text-muted-foreground">{d.document_type}{d.uploaded_date ? ` · ${d.uploaded_date}` : ''}{d.uploaded_by ? ` · ${d.uploaded_by}` : ''}</p>
                 </div>
               </div>
               <div className="flex items-center gap-1">
-                {(d.file_uri || d.file_url) && (
-                  <Button variant="ghost" size="icon" onClick={() => view(d)}><Eye className="h-4 w-4 text-foreground/60" /></Button>
-                )}
+                <Button variant="outline" size="sm" className="h-7 px-2 text-xs" onClick={() => view(d)}>
+                  <Eye className="mr-1 h-3.5 w-3.5" /> Open
+                </Button>
                 {isVaultProvider(user?.role) && <Button variant="ghost" size="icon" onClick={async () => { await base44.entities.FormsLibraryDocument.delete(d.id); await load(); }}>
                   <Trash2 className="h-4 w-4 text-destructive" />
                 </Button>}

@@ -4,7 +4,8 @@ import { format } from 'date-fns';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/components/ui/use-toast';
-import { FileCheck2, Loader2, CheckCircle2 } from 'lucide-react';
+import { Eye, FileCheck2, Loader2, CheckCircle2 } from 'lucide-react';
+import { openDocumentInViewer } from '@/lib/openDocument';
 import SectionCard from '@/components/SectionCard';
 import EmptyState from '@/components/EmptyState';
 import { useRole } from '@/lib/useRole';
@@ -91,12 +92,23 @@ export default function PolicyAcknowledgements({ policies }) {
             {pending.map((p) => (
               <div key={p.id} className="flex items-center justify-between gap-2 rounded-lg border border-border/60 p-3">
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-semibold">{p.document_name}</p>
+                  <button
+                    type="button"
+                    onClick={() => openDocumentInViewer(p)}
+                    className="truncate text-left text-sm font-semibold text-[#0A2B6D] hover:text-[#0072FF] hover:underline"
+                  >
+                    {p.document_name}
+                  </button>
                   <p className="text-xs text-foreground/50">{p.category}{p.version ? ` · v${p.version}` : ''}</p>
                 </div>
-                <Button size="sm" className="shrink-0" onClick={() => acknowledge(p)} disabled={savingId === p.id || !me}>
-                  {savingId === p.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileCheck2 className="h-4 w-4" />} I acknowledge
-                </Button>
+                <div className="flex shrink-0 items-center gap-1.5">
+                  <Button size="sm" variant="outline" onClick={() => openDocumentInViewer(p)}>
+                    <Eye className="h-3.5 w-3.5" /> Open
+                  </Button>
+                  <Button size="sm" className="shrink-0" onClick={() => acknowledge(p)} disabled={savingId === p.id || !me}>
+                    {savingId === p.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileCheck2 className="h-4 w-4" />} I acknowledge
+                  </Button>
+                </div>
               </div>
             ))}
           </div>

@@ -232,20 +232,23 @@ export default function ExpiryCalendar({ docs, pdocs = [], certs, viewDoc, edita
             <div className="space-y-2">
               {dayItems.map((it) => {
                 const t = tone(it);
-                const canOpen = it.kind === 'Document'
-                  ? Boolean(it.raw.file_uri || it.raw.file_url)
-                  : Boolean(it.raw.file_url);
                 return (
                   <div key={it.id} className="flex items-center gap-3 rounded-xl border border-border/60 bg-muted/30 px-3 py-2.5">
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-semibold">{it.title}</p>
+                      <button
+                        type="button"
+                        onClick={() => viewDoc?.(it.raw)}
+                        className="truncate text-left text-sm font-semibold text-[#0A2B6D] hover:text-[#0072FF] hover:underline"
+                      >
+                        {it.title}
+                      </button>
                       <p className="truncate text-xs text-muted-foreground">{it.person} · {it.type}</p>
                     </div>
                     <Badge variant="outline" className="shrink-0">{it.kind}</Badge>
                     <Badge className={`shrink-0 ${t.cls}`}>{t.label}</Badge>
-                    {canOpen && (
-                      <Button variant="ghost" size="icon" title="View document" onClick={() => viewDoc(it.raw)}><Eye className="h-4 w-4 text-foreground/60" /></Button>
-                    )}
+                    <Button variant="outline" size="sm" className="h-7 px-2 text-xs" title="Open document" onClick={() => viewDoc?.(it.raw)}>
+                      <Eye className="mr-1 h-3.5 w-3.5" /> Open
+                    </Button>
                   </div>
                 );
               })}

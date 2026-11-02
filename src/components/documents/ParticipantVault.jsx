@@ -8,27 +8,33 @@ import EmptyState from '@/components/EmptyState';
 import ParticipantDocumentDialog from '@/components/documents/ParticipantDocumentDialog';
 import DocumentAcknowledgements from '@/components/documents/DocumentAcknowledgements';
 import { format } from 'date-fns';
-import { safeUrl } from '@/lib/safeUrl';
+import { openDocumentInViewer, exportDocumentRecord, resolveDocumentUrl } from '@/lib/openDocument';
 import { logUserAction } from '@/lib/actionLog';
 
 export default function ParticipantVault({ docs, loading, viewDoc, me, profile, onDone }) {
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState(null);
 
+  const handleOpen = async (doc) => {
+    if (viewDoc) return viewDoc(doc);
+    return openDocumentInViewer(doc);
+  };
+
   const downloadDoc = async (doc) => {
     try {
-      let href = null;
-      if (doc.file_uri) href = (await base44.integrations.Core.CreateFileSignedUrl({ file_uri: doc.file_uri })).signed_url;
-      else href = safeUrl(doc.file_url);
-      if (!href) return;
-      const a = document.createElement('a');
-      a.href = href;
-      a.download = doc.title || doc.document_type || 'document';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-    } catch (e) {
-      console.error(e);
+      const href = await resolveDocumentUrl(doc);
+      if (href) {
+        const a = document.createElement('a');
+        a.href = href;
+        a.download = doc.title || doc.document_type || 'document';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        return;
+      }
+      exportDocumentRecord(doc, 'pdf');
+    } catch {
+      exportDocumentRecord(doc, 'pdf');
     }
   };
 
@@ -58,7 +64,13 @@ export default function ParticipantVault({ docs, loading, viewDoc, me, profile, 
               <CardContent className="p-4">
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
-                    <p className="truncate font-semibold">{d.title || d.document_type}</p>
+                    <button
+                      type="button"
+                      onClick={() => handleOpen(d)}
+                      className="truncate text-left font-semibold text-[#0A2B6D] hover:text-[#0072FF] hover:underline"
+                    >
+                      {d.title || d.document_type}
+                    </button>
                     <p className="text-sm text-muted-foreground">{d.document_type}</p>
                   </div>
                   <Badge variant="outline">{d.review_outcome || d.status || 'Received'}</Badge>
@@ -66,12 +78,10 @@ export default function ParticipantVault({ docs, loading, viewDoc, me, profile, 
                 <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
                   <span>{d.uploaded_date ? `Added ${format(new Date(d.uploaded_date), 'd MMM yyyy')}` : ''}</span>
                   <div className="flex items-center gap-1">
-                    {d.file_uri && (
-                      <Button variant="ghost" size="icon" title="View document" onClick={() => viewDoc(d)}><Eye className="h-4 w-4 text-foreground/60" /></Button>
-                    )}
-                    {(d.file_uri || d.file_url) && (
-                      <Button variant="ghost" size="icon" title="Download" onClick={() => downloadDoc(d)}><Download className="h-4 w-4 text-foreground/60" /></Button>
-                    )}
+                    <Button variant="outline" size="sm" className="h-7 px-2 text-xs" title="Open document" onClick={() => handleOpen(d)}>
+                      <Eye className="mr-1 h-3.5 w-3.5" /> Open
+                    </Button>
+                    <Button variant="ghost" size="icon" title="Download PDF" onClick={() => downloadDoc(d)}><Download className="h-4 w-4 text-foreground/60" /></Button>
                     <Button variant="ghost" size="icon" title="Edit document" onClick={() => { setEditing(d); setOpen(true); }}><Pencil className="h-4 w-4 text-foreground/60" /></Button>
                     <Button variant="ghost" size="icon" title="Delete document" onClick={() => removeDoc(d)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
                   </div>

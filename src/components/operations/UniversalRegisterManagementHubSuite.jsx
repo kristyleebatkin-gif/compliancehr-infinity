@@ -17,7 +17,9 @@ import {
   Download,
   Sparkles,
   ArrowRight,
+  Eye,
 } from 'lucide-react';
+import { openDocumentInViewer } from '@/lib/openDocument';
 
 export const UNIVERSAL_28_REGISTER_SOURCES = [
   'Form',
@@ -789,7 +791,24 @@ export default function UniversalRegisterManagementHubSuite() {
                   <div className="mt-1 text-xs font-black text-[#0072FF]">{sec.count}</div>
                   <p className="mt-0.5 text-[10.5px] font-medium text-[#0A2B6D]">{sec.desc}</p>
                 </div>
-                <div className="mt-2.5 pt-1.5 border-t border-slate-200 flex items-center justify-between">
+                <div className="mt-2.5 pt-1.5 border-t border-slate-200 flex flex-wrap items-center justify-between gap-1.5">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => {
+                      setHubSectionFilter(sec.key);
+                      openDocumentInViewer({
+                        title: `Document Hub — ${sec.key}`,
+                        category: sec.badge,
+                        module: 'Universal Register & Document Hub',
+                        description: `${sec.count} · ${sec.desc}`,
+                        status: 'Active Register Pack',
+                      });
+                    }}
+                    className="h-7 border-[#0072FF] text-[10px] font-extrabold text-[#0072FF]"
+                  >
+                    <Eye className="mr-1 h-3 w-3" /> Open {sec.key}
+                  </Button>
                   <Button
                     size="sm"
                     variant="outline"
@@ -799,7 +818,7 @@ export default function UniversalRegisterManagementHubSuite() {
                     }}
                     className="h-7 border-[#0A2B6D] text-[10px] font-extrabold text-[#0A2B6D]"
                   >
-                    Download {sec.key} (PDF)
+                    Download PDF
                   </Button>
                   <Button
                     size="sm"

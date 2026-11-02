@@ -28,7 +28,9 @@ import {
   FileText,
   Printer,
   RefreshCw,
+  Eye,
 } from 'lucide-react';
+import { openDocumentInViewer } from '@/lib/openDocument';
 
 export default function UniversalDataStorageRetentionExportSuite() {
   const { user } = useAuth();
@@ -742,7 +744,13 @@ export default function UniversalDataStorageRetentionExportSuite() {
                       <div>{r.docNumber}</div>
                     </td>
                     <td className="p-2">
-                      <div className="font-extrabold text-[#0A2B6D]">{r.title}</div>
+                      <button
+                        type="button"
+                        onClick={() => openDocumentInViewer(r)}
+                        className="text-left font-extrabold text-[#0A2B6D] hover:text-[#0072FF] hover:underline"
+                      >
+                        {r.title}
+                      </button>
                       <div className="text-[10px] font-semibold text-muted-foreground">
                         {r.itemType} · {r.standard} · {r.date}
                       </div>
@@ -759,29 +767,39 @@ export default function UniversalDataStorageRetentionExportSuite() {
                       <div className="text-muted-foreground">{r.linkedSummary}</div>
                     </td>
                     <td className="p-2">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() =>
-                          exportUniversalData(
-                            'pdf',
-                            `single-record-${r.docNumber}`,
-                            [
-                              { key: 'recordId', label: 'Record ID' },
-                              { key: 'docNumber', label: 'Doc Number' },
-                              { key: 'title', label: 'Title' },
-                              { key: 'personName', label: 'Related Person' },
-                              { key: 'destinations', label: 'Saved Destinations' },
-                              { key: 'linkedSummary', label: 'Linked Records' },
-                            ],
-                            [r],
-                            `Single Record Evidence Certificate — ${r.docNumber}`
-                          )
-                        }
-                        className="h-6 px-2 text-[10px] font-extrabold border-[#0A2B6D]"
-                      >
-                        Export
-                      </Button>
+                      <div className="flex items-center gap-1">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => openDocumentInViewer(r)}
+                          className="h-6 px-2 text-[10px] font-extrabold border-[#0072FF]"
+                        >
+                          <Eye className="mr-1 h-3 w-3" /> Open
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() =>
+                            exportUniversalData(
+                              'pdf',
+                              `single-record-${r.docNumber}`,
+                              [
+                                { key: 'recordId', label: 'Record ID' },
+                                { key: 'docNumber', label: 'Doc Number' },
+                                { key: 'title', label: 'Title' },
+                                { key: 'personName', label: 'Related Person' },
+                                { key: 'destinations', label: 'Saved Destinations' },
+                                { key: 'linkedSummary', label: 'Linked Records' },
+                              ],
+                              [r],
+                              `Single Record Evidence Certificate — ${r.docNumber}`
+                            )
+                          }
+                          className="h-6 px-2 text-[10px] font-extrabold border-[#0A2B6D]"
+                        >
+                          Export
+                        </Button>
+                      </div>
                     </td>
                   </tr>
                 ))}

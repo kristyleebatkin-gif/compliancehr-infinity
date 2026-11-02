@@ -25,6 +25,7 @@ import VisualDesignModuleCommandStandard from '@/components/enterprise/VisualDes
 import BrandLogoLockup from '@/components/common/BrandLogoLockup';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import PendingApprovalNotice from '@/components/users/PendingApprovalNotice';
+import UniversalDocumentViewerModal from '@/components/documents/UniversalDocumentViewerModal';
 
 const BOTTOM_NAV = [
   { label: 'Home', path: '/dashboard', key: 'dashboard', icon: LayoutDashboard },
@@ -487,6 +488,7 @@ export default function AppLayout() {
             </ErrorBoundary>
           </div>
           {location.pathname !== '/our-employees' && <ModuleDocsFooter />}
+          <UniversalDocumentViewerModal />
         </main>
 
         {/* Bottom nav (mobile) */}

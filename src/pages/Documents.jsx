@@ -3,7 +3,7 @@ import DocumentVaultEntry from '@/components/documents/DocumentVaultEntry';
 export default function DocumentsPage(props) { return <DocumentVaultEntry Vault={Documents} {...props} />; }
 import { useLocation } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
-import { safeUrl } from '@/lib/safeUrl';
+import { openDocumentInViewer } from '@/lib/openDocument';
 import { logUserAction } from '@/lib/actionLog';
 import ModuleShell from '@/components/module/ModuleShell';
 import RegisterInsights from '@/components/RegisterInsights';
@@ -178,16 +178,7 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
   };
 
   const viewDoc = async (doc) => {
-    try {
-      if (doc.file_uri) {
-        const { signed_url } = await base44.integrations.Core.CreateFileSignedUrl({ file_uri: doc.file_uri });
-        window.open(signed_url, '_blank');
-      } else if (safeUrl(doc.file_url)) {
-        window.open(safeUrl(doc.file_url), '_blank', 'noopener,noreferrer');
-      }
-    } catch (e) {
-      console.error(e);
-    }
+    await openDocumentInViewer(doc);
   };
 
   const exportAll = async () => {
@@ -277,7 +268,9 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
           {!profile && <UniversalRegisterManagementHubSuite />}
           {!profile && <UniversalDataStorageRetentionExportSuite />}
           {!profile && <DocumentsDashboard role={me?.role} focus={focus} />}
-      <StaffDocumentToolbar profile={profile} staff={staff} scanning={scanning} scanMsg={scanMsg} onScan={runScan} onExport={exportAll} onAdd={() => { setEditing(null); setOpen(true); }} onDone={load} />
+      <div id="staff-docs" className="scroll-mt-24">
+        <StaffDocumentToolbar profile={profile} staff={staff} scanning={scanning} scanMsg={scanMsg} onScan={runScan} onExport={exportAll} onAdd={() => { setEditing(null); setOpen(true); }} onDone={load} />
+      </div>
         <EmployeeDocumentDialog
           open={open}
           onOpenChange={(o) => { setOpen(o); if (!o) setEditing(null); }}
@@ -337,7 +330,13 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
                       />
                     )}
                     <div className="min-w-0">
-                      <p className="truncate font-semibold">{d.title}</p>
+                      <button
+                        type="button"
+                        onClick={() => viewDoc(d)}
+                        className="truncate text-left font-semibold text-[#0A2B6D] hover:text-[#0072FF] hover:underline"
+                      >
+                        {d.title}
+                      </button>
                       <p className="text-sm text-muted-foreground">{d.employee_name || 'Unassigned'} · {d.document_type}</p>
                     </div>
                   </div>
@@ -346,11 +345,11 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
                 <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
                   <span className={expired ? 'font-semibold text-destructive' : ''}>{d.expiry_date ? `Expires ${format(new Date(d.expiry_date), 'd MMM yyyy')}` : 'No expiry'}</span>
                   <div className="flex items-center gap-1">
+                    <Button variant="outline" size="sm" className="h-7 px-2 text-xs" title="Open document" onClick={() => viewDoc(d)}>
+                      <Eye className="mr-1 h-3.5 w-3.5" /> Open
+                    </Button>
                     {canEditDoc(d) && (
                       <Button variant="ghost" size="icon" title="Edit document" onClick={() => { setEditing(d); setOpen(true); }}><Pencil className="h-4 w-4 text-foreground/60" /></Button>
-                    )}
-                    {(d.file_uri || d.file_url) && (
-                      <Button variant="ghost" size="icon" title="View document" onClick={() => viewDoc(d)}><Eye className="h-4 w-4 text-foreground/60" /></Button>
                     )}
                     {canEditDoc(d) && <Button variant="ghost" size="icon" onClick={() => remove(d)}><Trash2 className="h-4 w-4 text-destructive" /></Button>}
                   </div>
