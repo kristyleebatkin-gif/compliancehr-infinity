@@ -27,7 +27,12 @@ export default function LandingNav({ onBookDemo }) {
           className="flex shrink-0 flex-col items-center rounded-xl border border-slate-200/90 bg-[#F5F0FF]/50 px-3 py-1 text-center shadow-2xs transition hover:border-[#0072FF]/50"
           aria-label="ComplianceHR Infinity home"
         >
-          <div className="font-editorial text-sm sm:text-base font-extrabold tracking-tight text-[#0A2B6D] leading-none whitespace-nowrap">
+          <img
+            src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/6bf497716_generated_image.png"
+            alt="ComplianceHR Infinity"
+            className="h-5 w-14 shrink-0 rounded-md border border-slate-200 bg-white px-1 py-0.5 object-contain shadow-2xs"
+          />
+          <div className="mt-1 font-editorial text-sm sm:text-base font-extrabold tracking-tight text-[#0A2B6D] leading-none whitespace-nowrap">
             Compliance
             <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
               HR
@@ -36,11 +41,6 @@ export default function LandingNav({ onBookDemo }) {
               Infinity
             </span>
           </div>
-          <img
-            src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/6bf497716_generated_image.png"
-            alt="ComplianceHR Infinity"
-            className="mt-1 h-5 w-14 shrink-0 rounded-md border border-slate-200 bg-white px-1 py-0.5 object-contain shadow-2xs"
-          />
           <div className="mt-1 text-[8.5px] font-bold text-slate-600 leading-none whitespace-nowrap">
             Complete Control. Greater Confidence. Brighter Success.
           </div>

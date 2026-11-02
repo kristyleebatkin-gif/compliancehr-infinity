@@ -31,8 +31,8 @@ export default function AuthLayout({ icon: Icon, title, subtitle, footer, childr
             background: "linear-gradient(120deg, #0072FF 0%, #0A2B6D 13%, #5A00D6 26%, #A100FF 39%, #FF2E9A 50%, #A100FF 61%, #5A00D6 74%, #0A2B6D 87%, #0072FF 100%)",
           }}
         >
-          <div className="relative z-10 flex items-start gap-4">
-            <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white p-1.5 shadow-lg ring-2 ring-white/50">
+          <div className="relative z-10 flex flex-col items-center justify-center text-center space-y-1.5">
+            <div className="flex h-12 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white p-1 shadow-lg ring-2 ring-white/50">
               <Image
                 src={DEFAULT_LOGO}
                 alt="ComplianceHR Infinity"
@@ -40,29 +40,11 @@ export default function AuthLayout({ icon: Icon, title, subtitle, footer, childr
                 className="h-full w-full object-contain"
               />
             </div>
-            <div className="min-w-0 space-y-2">
-              <div className="text-xs font-extrabold uppercase tracking-wider text-white">
-                Software: {SOFTWARE_INFO.name}
-              </div>
-
-              <div className="space-y-0.5 text-sm font-extrabold leading-snug text-white">
-                <div>{SOFTWARE_INFO.taglineLine1}</div>
-                <div>{SOFTWARE_INFO.taglineLine2}</div>
-              </div>
-
-              <div className="space-y-0.5 rounded-lg bg-white/15 px-3 py-2 text-xs font-extrabold text-white ring-1 ring-white/25">
-                <div>{SOFTWARE_INFO.sloganLine1}</div>
-                <div>{SOFTWARE_INFO.sloganLine2}</div>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-2 pt-1 text-xs font-extrabold text-white/95">
-                <span className="whitespace-nowrap rounded-md bg-white/15 px-2 py-0.5">
-                  Developer: {SOFTWARE_INFO.developer.name}
-                </span>
-                <span className="whitespace-nowrap rounded-md bg-white/15 px-2 py-0.5">
-                  {SOFTWARE_INFO.developer.email}
-                </span>
-              </div>
+            <div className="text-base font-extrabold tracking-tight text-white">
+              {SOFTWARE_INFO.name}
+            </div>
+            <div className="rounded-full bg-white/15 px-3 py-1 text-xs font-extrabold text-white ring-1 ring-white/25">
+              {SOFTWARE_INFO.sloganLine1} {SOFTWARE_INFO.sloganLine2}
             </div>
           </div>
 

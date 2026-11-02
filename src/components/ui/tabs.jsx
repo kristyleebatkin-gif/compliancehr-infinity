@@ -4,15 +4,14 @@ import { ArrowRight } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import dashboardTabTone from '@/lib/dashboardTabTone';
-import { getHeaderView } from '@/lib/fullColourTiles';
-import { Image } from '@/components/ui/image';
+import BrandLogoLockup from '@/components/common/BrandLogoLockup';
 import '@/components/dashboard/dashboardNavigation.css';
 
 const BRAND_GRADIENT =
-  'linear-gradient(120deg, #0072FF 0%, #0A2B6D 18%, #5A00D6 42%, #A100FF 68%, #FF2E9A 100%)';
+  'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)';
 
-const CHR_LOGO =
-  'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png';
+const DARK_NAVY_CHASSIS =
+  'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)';
 
 const TAB_SUBTITLES = {
   details: 'Profile & Personal Details',
@@ -151,37 +150,21 @@ const TabsList = React.forwardRef(
         data-dashboard-tabs=""
         ref={ref}
         className={cn(
-          "overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-panel",
+          "preserve-island-theme overflow-hidden rounded-2xl border-2 border-[#0A2B6D] shadow-xl",
           className
         )}
+        style={{ background: DARK_NAVY_CHASSIS }}
         {...props}
       >
-        {/* Platform Name on Top + Smaller-Length Logo Below App Name + Blue/Purple/Pink Slogan */}
-        <div className="col-span-full -mx-3 -mt-3 mb-0.5">
-          <div className="h-1 w-full" style={{ background: BRAND_GRADIENT }} />
-          <div className="flex flex-col items-center px-3.5 pb-1.5 pt-2.5 text-center sm:px-4">
-            <span className="font-editorial text-[13px] font-extrabold leading-tight tracking-tight text-[#0A2B6D] whitespace-nowrap">
-              Compliance
-              <span className="font-editorial-italic text-[#5A00D6]">HR</span>{' '}
-              <span className="bg-gradient-to-r from-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                Infinity
-              </span>
-            </span>
-            <Image
-              src={CHR_LOGO}
-              alt="ComplianceHR Infinity"
-              fittingType="fit"
-              className="mt-1 h-5 w-14 rounded-md border border-slate-200 bg-white px-1 py-0.5 shadow-2xs"
-            />
-            <span className="mt-1 text-[8.5px] font-extrabold leading-tight">
-              <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
-              <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
-              <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
-            </span>
+        {/* Centred Brand Lockup: Logo Top -> Name Middle -> Slogan Bottom on White Header */}
+        <div className="col-span-full -mx-3 -mt-3 mb-1 border-b border-white/15 bg-white">
+          <div className="h-1.5 w-full" style={{ background: BRAND_GRADIENT }} />
+          <div className="flex flex-col items-center px-3 py-1.5 text-center">
+            <BrandLogoLockup size="xs" theme="light" />
           </div>
         </div>
 
-        {/* Screens / Modules Only Underneath */}
+        {/* Remote Control + Command Centre + Glassmorphism Buttons */}
         {indexedChildren}
       </TabsPrimitive.List>
     </DashboardTabsContext.Provider>
@@ -211,9 +194,6 @@ const TabsTrigger = React.forwardRef(
     );
   }
 
-  const tileIdx =
-    props['data-tile-index'] ?? props['data-module-index'] ?? 0;
-  const headerBg = getHeaderView(tileIdx);
   const { iconNode, labelText, inferredHint } = extractTriggerParts(children);
   const subtitle = resolveTabSubtitle(
     props.value,
@@ -227,45 +207,52 @@ const TabsTrigger = React.forwardRef(
       data-dashboard-tone={dashboardTabTone(props.value)}
       ref={ref}
       className={cn(
-        "group flex h-full min-h-[98px] w-full flex-col gap-[3px] rounded-xl border-2 border-[#0A2B6D] bg-[#0A2B6D] p-[3px] text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-[#0072FF] hover:shadow-md focus-visible:outline-none data-[state=active]:border-[#5A00D6] data-[state=active]:shadow-md data-[state=active]:ring-2 data-[state=active]:ring-[#5A00D6]/25 data-[state=active]:ring-offset-1 disabled:pointer-events-none disabled:opacity-50",
+        "group flex h-full min-h-[82px] w-full flex-col rounded-2xl p-[2px] text-left transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_0_14px_rgba(161,0,255,0.5)] focus-visible:outline-none data-[state=active]:shadow-[0_0_20px_rgba(0,198,255,0.75)] data-[state=active]:scale-[1.01] disabled:pointer-events-none disabled:opacity-50",
         className
       )}
+      style={{ background: BRAND_GRADIENT }}
       {...props}
     >
-      {/* iPad-Style Screen Matching Quick Access */}
-      <span className="flex w-full flex-1 flex-col overflow-hidden rounded-[8px] bg-white">
-        {/* Coloured Header Inside Screen */}
-        <span
-          className="qa-tab-header flex min-h-[38px] w-full items-center justify-between gap-1 px-1.5 py-1 text-white"
-          style={{ background: headerBg }}
-        >
-          <span className="flex min-w-0 items-center gap-1">
-            {iconNode}
+      {/* Glassmorphic Remote Button on Dark Navy */}
+      <span className="flex w-full flex-1 flex-col justify-between overflow-hidden rounded-[14px] bg-[#0A2B6D]/90 backdrop-blur-md">
+        {/* White Title Background */}
+        <span className="qa-tab-header flex min-h-[34px] w-full items-center justify-between gap-1.5 bg-white px-2 py-1">
+          <span className="flex min-w-0 items-center gap-1.5">
             <span
-              className="min-w-0 text-[9.5px] font-extrabold leading-[11px] tracking-tight text-white"
-              style={{ color: '#FFFFFF', wordBreak: 'normal', overflowWrap: 'normal' }}
+              className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-md p-0.5 text-white"
+              style={{ background: BRAND_GRADIENT }}
+            >
+              {iconNode}
+            </span>
+            <span
+              className="min-w-0 text-[9.5px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]"
+              style={{ color: '#0A2B6D', wordBreak: 'normal', overflowWrap: 'normal' }}
             >
               {labelText}
             </span>
           </span>
-          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-white/75 group-data-[state=active]:bg-[#00C6FF]" />
+          {/* Status Indicator + LED Active Glow */}
+          <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-[#F5F0FF] px-1.5 py-0 text-[7px] font-black uppercase text-[#5A00D6] group-data-[state=active]:bg-[#0A2B6D] group-data-[state=active]:text-[#00C6FF]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#FF2E9A] group-data-[state=active]:bg-[#00C6FF] group-data-[state=active]:shadow-[0_0_6px_1px_#00C6FF]" />
+            <span>LIVE</span>
+          </span>
         </span>
 
-        {/* White Writing Area Inside Screen */}
-        <span className="qa-tab-body flex min-h-[40px] w-full flex-1 items-center justify-between gap-1 border-t border-[#0A2B6D]/10 bg-white px-1.5 py-1">
+        {/* Dark Navy Glassmorphic Body */}
+        <span className="qa-tab-body flex min-h-[34px] w-full flex-1 items-center justify-between gap-1 px-2 py-1">
           <span
-            className="min-w-0 flex-1 break-words text-[10px] font-bold leading-[12.5px] text-[#0A2B6D]/85"
-            style={{ color: '#0A2B6D' }}
+            className="min-w-0 flex-1 break-words text-[9px] font-bold leading-snug text-white/95"
+            style={{ color: '#FFFFFF' }}
           >
             {subtitle}
           </span>
-          <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#0072FF] transition group-hover:translate-x-0.5 group-hover:text-[#FF2E9A]" />
+          <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#00C6FF] transition group-hover:translate-x-0.5" />
         </span>
-      </span>
 
-      {/* iPad Home Indicator Bar */}
-      <span className="flex h-[5px] w-full items-center justify-center">
-        <span className="h-[2.5px] w-6 rounded-full bg-white/45 transition-all group-hover:bg-white/80 group-data-[state=active]:w-8 group-data-[state=active]:bg-[#00C6FF]" />
+        {/* iPad LED Home Indicator Bar */}
+        <span className="flex h-[5px] w-full items-center justify-center pb-0.5">
+          <span className="h-[2.5px] w-6 rounded-full bg-white/40 transition-all group-hover:bg-white/80 group-data-[state=active]:w-9 group-data-[state=active]:bg-[#00C6FF] group-data-[state=active]:shadow-[0_0_8px_#00C6FF]" />
+        </span>
       </span>
     </TabsPrimitive.Trigger>
   );

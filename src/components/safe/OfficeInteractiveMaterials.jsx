@@ -126,17 +126,15 @@ export function CompanySafeMaterialPanel({ companyName = 'ComplianceHR Infinity'
             Open Safe
           </Link>
         </div>
-        <div className="flex items-center gap-2.5 mb-2">
-          <div className="h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-blue-200 bg-white p-1 shadow-sm">
+        <div className="flex flex-col items-center justify-center text-center mb-2">
+          <div className="h-10 w-16 shrink-0 overflow-hidden rounded-lg border border-blue-200 bg-white p-1 shadow-2xs">
             <Image src={logoUrl || DEFAULT_LOGO} alt="Logo" fittingType="fit" className="h-full w-full object-contain" />
           </div>
-          <div className="min-w-0">
-            <div className="truncate text-xs font-extrabold text-blue-950">ComplianceHR Infinity</div>
-            <div className="text-[9px] font-extrabold">
-              <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
-              <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
-              <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
-            </div>
+          <div className="mt-1 truncate text-xs font-extrabold text-blue-950">ComplianceHR Infinity</div>
+          <div className="text-[9px] font-extrabold">
+            <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
+            <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
+            <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-[9.5px]">

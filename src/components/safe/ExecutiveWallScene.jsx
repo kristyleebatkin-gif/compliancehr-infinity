@@ -52,18 +52,9 @@ function WallHangingPictureFrame({ title, children, className = '', frameAccent 
  */
 export function ComplianceHrPhotoFrame() {
   return (
-    <WallHangingPictureFrame title="1. App Name, Logo & Brand Slogan">
+    <WallHangingPictureFrame title="1. Logo, App Name & Brand Slogan">
       <div className="flex h-full flex-col items-center justify-center rounded-xl bg-white p-1.5 text-center space-y-1.5">
-        <div className="font-editorial text-sm sm:text-base font-extrabold tracking-tight text-[#0A2B6D] leading-tight whitespace-nowrap">
-          Compliance
-          <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-            HR
-          </span>{' '}
-          <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
-            Infinity
-          </span>
-        </div>
-
+        {/* 1. TOP: LOGO (Centred) */}
         <div
           className="mx-auto relative overflow-hidden w-[5rem] sm:w-[5.75rem] rounded-md border border-slate-200 bg-white shadow-2xs"
           style={{ aspectRatio: '100 / 46' }}
@@ -91,6 +82,18 @@ export function ComplianceHrPhotoFrame() {
           />
         </div>
 
+        {/* 2. MIDDLE: NAME (Centred) */}
+        <div className="font-editorial text-sm sm:text-base font-extrabold tracking-tight text-[#0A2B6D] leading-tight whitespace-nowrap">
+          Compliance
+          <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
+            HR
+          </span>{' '}
+          <span className="bg-gradient-to-r from-[#5A00D6] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent">
+            Infinity
+          </span>
+        </div>
+
+        {/* 3. BOTTOM: SLOGAN (Centred) */}
         <div
           className="w-full rounded-full p-[1.5px]"
           style={{ background: TOP_BORDER_GRADIENT }}
