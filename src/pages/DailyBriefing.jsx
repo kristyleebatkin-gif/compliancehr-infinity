@@ -116,7 +116,7 @@ export default function DailyBriefing() {
       ].sort((a, b) => a.primary.localeCompare(b.primary));
 
       const toExpiring = (records, kind, label, personField) =>
-        records.items.map((r) => ({
+        (records?.items || []).filter((r) => r && r.expiry_date).map((r) => ({
           kind, label,
           person: r[personField],
           name: kind === 'Document' ? (r.document_type || label) : kind === 'Certificate' ? r.module_title : r.insurer,
