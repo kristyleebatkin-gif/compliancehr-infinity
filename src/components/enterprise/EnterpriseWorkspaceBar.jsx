@@ -305,16 +305,20 @@ export default function EnterpriseWorkspaceBar({
               'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
           }}
         >
-          <div className="flex flex-wrap items-center justify-between gap-1.5 rounded-[13.5px] bg-white px-2.5 py-1.5">
-          {/* Left: Interactive Enterprise Breadcrumbs + Save View Bookmark (Every Word in White Section Has an App Design Coloured Border) */}
+          <div className="space-y-1.5 rounded-[13.5px] bg-white px-2.5 py-1.5">
+          {/* Line 1: Interactive Enterprise Breadcrumbs + Save View Bookmark with App Design Coloured Gradient Borders */}
           <nav
             aria-label="Breadcrumb"
             className="flex min-w-0 flex-wrap items-center gap-1 text-[11px] font-extrabold text-[#0A2B6D]"
           >
             <Link
               to="/"
-              className="inline-flex items-center gap-1 rounded-full border-2 border-[#0072FF] bg-white px-2.5 py-0.5 text-[#0A2B6D] transition hover:bg-[#F5F0FF]"
-              style={{ color: '#0A2B6D' }}
+              className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[#0A2B6D] transition hover:opacity-90"
+              style={{
+                border: '2px solid transparent',
+                background: 'linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box',
+                color: '#0A2B6D',
+              }}
             >
               <span style={{ color: '#0072FF' }}>◉</span>
               <span>Landing</span>
@@ -322,8 +326,12 @@ export default function EnterpriseWorkspaceBar({
             <ChevronRight className="h-3 w-3 shrink-0 text-[#5A00D6]" />
             <Link
               to="/dashboard"
-              className="inline-flex items-center gap-1 rounded-full border-2 border-[#5A00D6] bg-white px-2.5 py-0.5 text-[#0A2B6D] transition hover:bg-[#F5F0FF]"
-              style={{ color: '#0A2B6D' }}
+              className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[#0A2B6D] transition hover:opacity-90"
+              style={{
+                border: '2px solid transparent',
+                background: 'linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box',
+                color: '#0A2B6D',
+              }}
             >
               <Home className="h-3 w-3 shrink-0 text-[#0072FF]" />
               <span>Workspace</span>
@@ -333,8 +341,12 @@ export default function EnterpriseWorkspaceBar({
               <>
                 <ChevronRight className="h-3 w-3 shrink-0 text-[#5A00D6]" />
                 <span
-                  className="inline-flex items-center gap-1 rounded-full border-2 border-[#A100FF] bg-white px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#0A2B6D]"
-                  style={{ color: '#0A2B6D' }}
+                  className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#0A2B6D]"
+                  style={{
+                    border: '2px solid transparent',
+                    background: 'linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box',
+                    color: '#0A2B6D',
+                  }}
                 >
                   <span style={{ color: '#A100FF' }}>◉</span>
                   <span>{matchedGroup.label}</span>
@@ -344,9 +356,13 @@ export default function EnterpriseWorkspaceBar({
 
             <ChevronRight className="h-3 w-3 shrink-0 text-[#5A00D6]" />
             <span
-              className="inline-flex items-center gap-1 rounded-full border-2 border-[#FF2E9A] bg-white px-2.5 py-0.5 font-extrabold text-[#0A2B6D]"
+              className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 font-extrabold text-[#0A2B6D]"
               aria-current="page"
-              style={{ color: '#0A2B6D' }}
+              style={{
+                border: '2px solid transparent',
+                background: 'linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box',
+                color: '#0A2B6D',
+              }}
             >
               <span style={{ color: '#FF2E9A' }}>◉</span>
               <span>{currentLabel || matchedModule?.label || 'Dashboard'}</span>
@@ -356,8 +372,12 @@ export default function EnterpriseWorkspaceBar({
               <>
                 <ChevronRight className="h-3 w-3 shrink-0 text-[#5A00D6]" />
                 <span
-                  className="rounded-full border-2 border-[#0072FF] bg-white px-2.5 py-0.5 text-[10px] font-extrabold capitalize text-[#0A2B6D]"
-                  style={{ color: '#0A2B6D' }}
+                  className="rounded-full px-2.5 py-0.5 text-[10px] font-extrabold capitalize text-[#0A2B6D]"
+                  style={{
+                    border: '2px solid transparent',
+                    background: 'linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box',
+                    color: '#0A2B6D',
+                  }}
                 >
                   {activeTabParam.replace(/[-_]/g, ' ')}
                 </span>
@@ -369,12 +389,12 @@ export default function EnterpriseWorkspaceBar({
               type="button"
               onClick={toggleSaveCurrentView}
               title={isCurrentSaved ? 'Remove from Saved Views' : 'Pin to Saved Views'}
-              className={`ml-1 inline-flex items-center gap-1 rounded-full border-2 px-2.5 py-0.5 text-[10px] font-extrabold transition ${
-                isCurrentSaved
-                  ? 'border-[#5A00D6] bg-[#F5F0FF] text-[#0A2B6D]'
-                  : 'border-[#5A00D6] bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
-              }`}
-              style={{ color: '#0A2B6D' }}
+              className="ml-1 inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D] transition hover:opacity-90"
+              style={{
+                border: '2px solid transparent',
+                background: 'linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box',
+                color: '#0A2B6D',
+              }}
             >
               <Bookmark
                 className="h-2.5 w-2.5 text-[#5A00D6]"
@@ -384,17 +404,17 @@ export default function EnterpriseWorkspaceBar({
             </button>
           </nav>
 
-          {/* Right: Enterprise Action Strip */}
+          {/* Line 2: Enterprise Action Small Tiles with App Design Coloured Gradient Borders */}
           <div className="flex flex-wrap items-center gap-1.5">
             {/* Network / Sync Status Badge */}
             <span
               title={isOnline ? 'Workspace connected & synced' : 'Offline mode — changes queued'}
-              className={`hidden xl:inline-flex items-center gap-1 rounded-full border-2 px-2.5 py-0.5 text-[10px] font-extrabold ${
-                isOnline
-                  ? 'border-[#0072FF] bg-white text-[#0A2B6D]'
-                  : 'border-[#FF2E9A] bg-white text-[#0A2B6D]'
-              }`}
-              style={{ color: '#0A2B6D' }}
+              className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]"
+              style={{
+                border: '2px solid transparent',
+                background: 'linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box',
+                color: '#0A2B6D',
+              }}
             >
               {isOnline ? (
                 <Wifi className="h-2.5 w-2.5 text-[#0072FF]" />
@@ -413,13 +433,17 @@ export default function EnterpriseWorkspaceBar({
                   setRecentDropdownOpen(false);
                 }}
                 title="Saved Views"
-                className="inline-flex items-center gap-1 rounded-full border-2 border-[#5A00D6] bg-white px-2.5 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D] shadow-2xs transition hover:bg-[#F5F0FF]"
-                style={{ color: '#0A2B6D' }}
+                className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D] shadow-2xs transition hover:opacity-90"
+                style={{
+                  border: '2px solid transparent',
+                  background: 'linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box',
+                  color: '#0A2B6D',
+                }}
               >
                 <Bookmark className="h-3 w-3 text-[#5A00D6]" />
                 <span className="hidden sm:inline">Saved</span>
                 {savedViews.length > 0 && (
-                  <span className="rounded-full border border-[#5A00D6] bg-[#F5F0FF] px-1.5 text-[9.5px] font-black text-[#5A00D6]">
+                  <span className="rounded-full bg-[#F5F0FF] px-1.5 text-[9.5px] font-black text-[#0A2B6D]">
                     {savedViews.length}
                   </span>
                 )}
@@ -487,8 +511,12 @@ export default function EnterpriseWorkspaceBar({
                   setSavedDropdownOpen(false);
                 }}
                 title="Recently Visited Pages"
-                className="inline-flex items-center gap-1 rounded-full border-2 border-[#0072FF] bg-white px-2.5 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D] shadow-2xs transition hover:bg-[#F5F0FF]"
-                style={{ color: '#0A2B6D' }}
+                className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D] shadow-2xs transition hover:opacity-90"
+                style={{
+                  border: '2px solid transparent',
+                  background: 'linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box',
+                  color: '#0A2B6D',
+                }}
               >
                 <History className="h-3 w-3 text-[#0072FF]" />
                 <span className="hidden md:inline">Recent</span>
@@ -531,12 +559,16 @@ export default function EnterpriseWorkspaceBar({
                 window.dispatchEvent(new CustomEvent('chr-open-command-palette'))
               }
               title="Open Command Palette (Ctrl+K)"
-              className="inline-flex items-center gap-1.5 rounded-full border-2 border-[#A100FF] bg-white px-2.5 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D] shadow-2xs transition hover:bg-[#F5F0FF]"
-              style={{ color: '#0A2B6D' }}
+              className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D] shadow-2xs transition hover:opacity-90"
+              style={{
+                border: '2px solid transparent',
+                background: 'linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box',
+                color: '#0A2B6D',
+              }}
             >
               <Command className="h-3 w-3 text-[#A100FF]" />
               <span className="hidden sm:inline">Command</span>
-              <kbd className="rounded border border-[#A100FF] bg-white px-1 py-0 text-[9px] font-extrabold text-[#5A00D6]">
+              <kbd className="rounded bg-[#F5F0FF] px-1 py-0 text-[9px] font-extrabold text-[#0A2B6D]">
                 ⌘K
               </kbd>
             </button>
@@ -550,15 +582,16 @@ export default function EnterpriseWorkspaceBar({
                 )
               }
               title="Guided Onboarding & Tour"
-              className={`inline-flex items-center gap-1 rounded-full border-2 border-[#FF2E9A] px-2.5 py-0.5 text-[10.5px] font-extrabold shadow-2xs transition ${
-                drawerMode === 'onboarding'
-                  ? 'bg-[#FF2E9A] text-white'
-                  : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
-              }`}
+              className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D] shadow-2xs transition hover:opacity-90"
+              style={{
+                border: '2px solid transparent',
+                background: 'linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box',
+                color: '#0A2B6D',
+              }}
             >
-              <Compass className={`h-3 w-3 ${drawerMode === 'onboarding' ? 'text-white' : 'text-[#FF2E9A]'}`} />
+              <Compass className="h-3 w-3 text-[#FF2E9A]" />
               <span className="hidden lg:inline">Guide</span>
-              <span className="rounded-full border border-[#5A00D6] bg-[#F5F0FF] px-1.5 text-[9px] font-black text-[#5A00D6]">
+              <span className="rounded-full bg-[#F5F0FF] px-1.5 text-[9px] font-black text-[#0A2B6D]">
                 {completedOnboarding.length}/{ONBOARDING_STEPS.length}
               </span>
             </button>
@@ -570,17 +603,14 @@ export default function EnterpriseWorkspaceBar({
                 setDrawerMode((prev) => (prev === 'activity' ? null : 'activity'))
               }
               title="Live Activity Feed & Audit Logging"
-              className={`inline-flex items-center gap-1.5 rounded-full border-2 border-[#5A00D6] px-2.5 py-0.5 text-[10.5px] font-extrabold shadow-2xs transition ${
-                drawerMode === 'activity'
-                  ? 'bg-[#5A00D6] text-white'
-                  : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
-              }`}
+              className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D] shadow-2xs transition hover:opacity-90"
+              style={{
+                border: '2px solid transparent',
+                background: 'linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box',
+                color: '#0A2B6D',
+              }}
             >
-              <Activity
-                className={`h-3 w-3 ${
-                  drawerMode === 'activity' ? 'text-white' : 'text-[#5A00D6]'
-                }`}
-              />
+              <Activity className="h-3 w-3 text-[#5A00D6]" />
               <span>Activity &amp; Audit</span>
             </button>
 

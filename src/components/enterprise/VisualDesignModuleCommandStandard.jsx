@@ -242,43 +242,46 @@ export default function VisualDesignModuleCommandStandard() {
         style={{ background: TOP_BORDER_GRADIENT }}
       >
         <div className="rounded-[13.5px] bg-white px-2.5 py-1.5 space-y-1.5">
-          {/* Top Row: Subject Title + Inline Search Bar + 4 Status Indicators (Every Word Pill in White Section Has an App Design Coloured Border) */}
-          <div className="flex flex-wrap items-center justify-between gap-1.5">
-            <div className="flex flex-wrap items-center gap-1.5 min-w-0">
-              {/* Main Subject Tile with App Design Coloured Border, White Background & Dark Blue -> App Colour Writing */}
-              <span
-                className="inline-flex rounded-full p-[1.5px] shadow-2xs"
-                style={{ background: TOP_BORDER_GRADIENT }}
-              >
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-2.5 py-0.5 text-[10px] font-extrabold">
-                  <Sparkles className="h-3 w-3 shrink-0 text-[#0072FF]" />
-                  <span
-                    className="bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage:
-                        'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
-                    }}
-                  >
-                    {ctx.subject}
+          {/* 2 Clean Lines of Small Tiles with App Design Coloured Gradient Borders & Dark Blue Writing */}
+          <div className="space-y-1.5">
+            {/* Line 1: Main Subject Tile + Inline Search + Summary/Detail/Evidence/Action Flow */}
+            <div className="flex flex-wrap items-center justify-between gap-1.5 min-w-0">
+              <div className="flex flex-wrap items-center gap-1.5 min-w-0">
+                <span
+                  className="inline-flex rounded-full p-[1.5px] shadow-2xs"
+                  style={{ background: TOP_BORDER_GRADIENT }}
+                >
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
+                    <Sparkles className="h-3 w-3 shrink-0 text-[#0072FF]" />
+                    <span className="text-[#0A2B6D]">{ctx.subject}</span>
                   </span>
                 </span>
-              </span>
 
-              <form onSubmit={handleUniversalSearch} className="flex items-center gap-1">
-                <div className="relative">
-                  <Search className="pointer-events-none absolute left-2 top-1/2 h-2.5 w-2.5 -translate-y-1/2 text-[#5A00D6]" />
-                  <input
-                    type="search"
-                    value={searchText}
-                    onChange={(e) => setSearchText(e.target.value)}
-                    placeholder="Page search…"
-                    className="h-6 w-36 sm:w-48 rounded-full border-2 border-[#0072FF] bg-white pl-6 pr-2 text-[9.5px] font-bold text-[#0A2B6D] focus:border-[#5A00D6] focus:outline-none"
-                  />
-                </div>
-              </form>
+                <form onSubmit={handleUniversalSearch} className="flex items-center gap-1">
+                  <div className="relative">
+                    <Search className="pointer-events-none absolute left-2 top-1/2 h-2.5 w-2.5 -translate-y-1/2 text-[#5A00D6]" />
+                    <input
+                      type="search"
+                      value={searchText}
+                      onChange={(e) => setSearchText(e.target.value)}
+                      placeholder="Page search…"
+                      className="h-6 w-36 sm:w-48 rounded-full pl-6 pr-2 text-[9.5px] font-bold text-[#0A2B6D] focus:outline-none"
+                      style={{
+                        border: '2px solid transparent',
+                        background: `linear-gradient(#ffffff, #ffffff) padding-box, ${TOP_BORDER_GRADIENT} border-box`,
+                      }}
+                    />
+                  </div>
+                </form>
+              </div>
 
-              {/* Summary ↓ Detail ↓ Evidence ↓ Action flow with App Design Coloured Border */}
-              <div className="hidden xl:inline-flex items-center gap-1 rounded-full border-2 border-[#5A00D6] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
+              <div
+                className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]"
+                style={{
+                  border: '2px solid transparent',
+                  background: `linear-gradient(#ffffff, #ffffff) padding-box, ${TOP_BORDER_GRADIENT} border-box`,
+                }}
+              >
                 <span style={{ color: '#0A2B6D' }}>1. Summary</span>
                 <ArrowRight className="h-2.5 w-2.5 text-[#0072FF]" />
                 <span style={{ color: '#0A2B6D' }}>2. Detail</span>
@@ -286,19 +289,23 @@ export default function VisualDesignModuleCommandStandard() {
                 <span style={{ color: '#0A2B6D' }}>3. Evidence</span>
                 <ArrowRight className="h-2.5 w-2.5 text-[#FF2E9A]" />
                 <span style={{ color: '#0A2B6D' }}>4. Action</span>
-                <span className="ml-1 rounded-full border border-[#5A00D6] bg-[#F5F0FF] px-1.5 py-0 text-[9px] font-extrabold text-[#5A00D6]">
+                <span className="ml-1 rounded-full bg-[#F5F0FF] px-1.5 py-0 text-[9px] font-extrabold text-[#0A2B6D]">
                   3-Sec &amp; ≤3-Click Standard
                 </span>
               </div>
             </div>
 
-            {/* 4 Consistent Visual Status Indicators on White with App Design Coloured Borders & Dark Blue Writing */}
+            {/* Line 2: 4 Consistent Visual Status Small Tiles + Command Dock Trigger */}
             <div className="flex flex-wrap items-center gap-1.5">
               <Link
                 to="/registers"
-                className="inline-flex items-center gap-1 rounded-full border-2 border-[#0072FF] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]"
+                className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]"
                 title="Green: Current · Compliant · Complete"
-                style={{ color: '#0A2B6D' }}
+                style={{
+                  border: '2px solid transparent',
+                  background: `linear-gradient(#ffffff, #ffffff) padding-box, ${TOP_BORDER_GRADIENT} border-box`,
+                  color: '#0A2B6D',
+                }}
               >
                 <span className="h-2 w-2 rounded-full bg-emerald-500" />
                 <CheckCircle2 className="h-3 w-3 text-[#0072FF]" />
@@ -307,9 +314,13 @@ export default function VisualDesignModuleCommandStandard() {
 
               <Link
                 to="/review-due"
-                className="inline-flex items-center gap-1 rounded-full border-2 border-[#A100FF] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]"
+                className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]"
                 title="Amber: Due Soon · Requires Review"
-                style={{ color: '#0A2B6D' }}
+                style={{
+                  border: '2px solid transparent',
+                  background: `linear-gradient(#ffffff, #ffffff) padding-box, ${TOP_BORDER_GRADIENT} border-box`,
+                  color: '#0A2B6D',
+                }}
               >
                 <span className="h-2 w-2 rounded-full bg-amber-500" />
                 <AlertTriangle className="h-3 w-3 text-[#A100FF]" />
@@ -318,9 +329,13 @@ export default function VisualDesignModuleCommandStandard() {
 
               <Link
                 to="/incidents"
-                className="inline-flex items-center gap-1 rounded-full border-2 border-[#FF2E9A] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]"
+                className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]"
                 title="Red: Overdue · Action Required · High Risk"
-                style={{ color: '#0A2B6D' }}
+                style={{
+                  border: '2px solid transparent',
+                  background: `linear-gradient(#ffffff, #ffffff) padding-box, ${TOP_BORDER_GRADIENT} border-box`,
+                  color: '#0A2B6D',
+                }}
               >
                 <span className="h-2 w-2 rounded-full bg-[#FF2E9A]" />
                 <Siren className="h-3 w-3 text-[#FF2E9A]" />
@@ -329,9 +344,13 @@ export default function VisualDesignModuleCommandStandard() {
 
               <Link
                 to="/tasks"
-                className="inline-flex items-center gap-1 rounded-full border-2 border-[#5A00D6] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]"
+                className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]"
                 title="Blue: Information · In Progress"
-                style={{ color: '#0A2B6D' }}
+                style={{
+                  border: '2px solid transparent',
+                  background: `linear-gradient(#ffffff, #ffffff) padding-box, ${TOP_BORDER_GRADIENT} border-box`,
+                  color: '#0A2B6D',
+                }}
               >
                 <span className="h-2 w-2 rounded-full bg-[#0072FF]" />
                 <Info className="h-3 w-3 text-[#5A00D6]" />
@@ -341,8 +360,12 @@ export default function VisualDesignModuleCommandStandard() {
               <button
                 type="button"
                 onClick={() => setExpanded((v) => !v)}
-                className="inline-flex items-center gap-1 rounded-full border-2 border-[#0072FF] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D] transition hover:bg-[#F5F0FF]"
-                style={{ color: '#0A2B6D' }}
+                className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D] transition hover:opacity-90"
+                style={{
+                  border: '2px solid transparent',
+                  background: `linear-gradient(#ffffff, #ffffff) padding-box, ${TOP_BORDER_GRADIENT} border-box`,
+                  color: '#0A2B6D',
+                }}
               >
                 <Wrench className="h-3 w-3 text-[#5A00D6]" />
                 <span>{expanded ? 'Hide Command Dock' : 'All Tools, 10 Resources & 16 Domains'}</span>

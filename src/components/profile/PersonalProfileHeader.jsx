@@ -197,8 +197,8 @@ export default function PersonalProfileHeader({
                 </div>
               </div>
 
-              {/* App Design Coloured Gradient Borders Around Every Profile Item Tile on White */}
-              <div className="grid grid-cols-1 gap-2 p-3 sm:grid-cols-2 lg:grid-cols-4">
+              {/* All 8 Small Tiles on 2 Lines (4 per line) at the Bottom of the Section with App Design Coloured Gradient Borders */}
+              <div className="grid grid-cols-2 gap-2 bg-white p-3 sm:grid-cols-4">
                 {summaryItems.map((item, idx) => {
                   const symColor = APP_COLOURS[idx % APP_COLOURS.length];
                   return (

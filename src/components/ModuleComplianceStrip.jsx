@@ -4,6 +4,13 @@ import { MODULE_TRACKERS, loadTrackerCounts } from '@/lib/moduleTrackers';
 
 const APP_COLOURS = ['#0072FF', '#5A00D6', '#FF2E9A', '#A100FF', '#00C6FF'];
 
+const GRADIENT_BORDER_STYLE = {
+  border: '2px solid transparent',
+  background:
+    'linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box',
+  color: '#0A2B6D',
+};
+
 export default function ModuleComplianceStrip({ path: requested }) {
   const path = MODULE_TRACKERS[requested] ? requested : '/compliance';
   const items = MODULE_TRACKERS[path];
@@ -32,8 +39,8 @@ export default function ModuleComplianceStrip({ path: requested }) {
   if (loadError) {
     return (
       <span
-        className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-[11px] font-extrabold text-[#0A2B6D] shadow-2xs"
-        style={{ border: '2px solid #FF2E9A', color: '#0A2B6D' }}
+        className="inline-flex items-center gap-1.5 rounded-full px-3 py-0.5 text-[11px] font-extrabold text-[#0A2B6D] shadow-2xs"
+        style={GRADIENT_BORDER_STYLE}
       >
         <AlertTriangle className="h-3.5 w-3.5 shrink-0" style={{ color: '#FF2E9A' }} />
         <span style={{ color: '#0A2B6D' }}>Compliance counts unavailable</span>
@@ -43,8 +50,8 @@ export default function ModuleComplianceStrip({ path: requested }) {
   if (!counts) {
     return (
       <span
-        className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-[11px] font-extrabold text-[#0A2B6D] shadow-2xs"
-        style={{ border: '2px solid #0072FF', color: '#0A2B6D' }}
+        className="inline-flex items-center gap-1.5 rounded-full px-3 py-0.5 text-[11px] font-extrabold text-[#0A2B6D] shadow-2xs"
+        style={GRADIENT_BORDER_STYLE}
       >
         <ShieldCheck className="h-3.5 w-3.5 shrink-0 animate-pulse" style={{ color: '#0072FF' }} />
         <span style={{ color: '#0A2B6D' }}>Checking tracker…</span>
@@ -56,11 +63,10 @@ export default function ModuleComplianceStrip({ path: requested }) {
   const totalOpen = alerts.reduce((sum, a) => sum + (Number(a.value) || 0), 0);
 
   return (
-    <div className="flex flex-wrap items-center gap-2">
-      {/* Small Header Tile 1: App Design Coloured Border + White Background + Dark Blue Writing + App Design Coloured Symbol */}
+    <div className="flex flex-wrap items-center gap-1.5">
       <span
-        className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-[11px] font-extrabold text-[#0A2B6D] shadow-2xs"
-        style={{ border: '2px solid #0072FF', color: '#0A2B6D' }}
+        className="inline-flex items-center gap-1.5 rounded-full px-3 py-0.5 text-[11px] font-extrabold text-[#0A2B6D] shadow-2xs"
+        style={GRADIENT_BORDER_STYLE}
       >
         <ShieldCheck className="h-3.5 w-3.5 shrink-0" style={{ color: '#0072FF' }} />
         <span style={{ color: '#0A2B6D' }}>
@@ -68,10 +74,9 @@ export default function ModuleComplianceStrip({ path: requested }) {
         </span>
       </span>
 
-      {/* Small Header Tile 2: App Design Coloured Border + White Background + Dark Blue Writing + App Design Coloured Symbol */}
       <span
-        className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-[11px] font-extrabold text-[#0A2B6D] shadow-2xs"
-        style={{ border: '2px solid #5A00D6', color: '#0A2B6D' }}
+        className="inline-flex items-center gap-1.5 rounded-full px-3 py-0.5 text-[11px] font-extrabold text-[#0A2B6D] shadow-2xs"
+        style={GRADIENT_BORDER_STYLE}
       >
         <CheckCircle2 className="h-3.5 w-3.5 shrink-0" style={{ color: '#5A00D6' }} />
         <span style={{ color: '#0A2B6D' }}>
@@ -79,20 +84,19 @@ export default function ModuleComplianceStrip({ path: requested }) {
         </span>
       </span>
 
-      {/* Individual Tracker Alert Small Tiles */}
       {alerts.map((a, idx) => {
-        const borderCol = APP_COLOURS[(idx + 2) % APP_COLOURS.length];
+        const symCol = APP_COLOURS[(idx + 2) % APP_COLOURS.length];
         return (
           <span
             key={a.label}
             title={a.label}
-            className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-[11px] font-extrabold text-[#0A2B6D] shadow-2xs"
-            style={{ border: `2px solid ${borderCol}`, color: '#0A2B6D' }}
+            className="inline-flex items-center gap-1.5 rounded-full px-3 py-0.5 text-[11px] font-extrabold text-[#0A2B6D] shadow-2xs"
+            style={GRADIENT_BORDER_STYLE}
           >
             {a.mode === 'soon' ? (
-              <Clock3 className="h-3.5 w-3.5 shrink-0" style={{ color: borderCol }} />
+              <Clock3 className="h-3.5 w-3.5 shrink-0" style={{ color: symCol }} />
             ) : (
-              <AlertTriangle className="h-3.5 w-3.5 shrink-0" style={{ color: borderCol }} />
+              <AlertTriangle className="h-3.5 w-3.5 shrink-0" style={{ color: symCol }} />
             )}
             <span style={{ color: '#0A2B6D' }}>
               {a.value} {a.label}

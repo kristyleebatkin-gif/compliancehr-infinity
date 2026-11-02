@@ -273,25 +273,20 @@ export default function CompleteProfile13SectionNavigator({ kind = 'staff', prof
         </div>
       )}
 
-      {/* Tool Visibility Rule: 6 Instant Profile Actions (Every Word Pill Has an App Design Coloured Gradient Border on White) */}
-      <div
-        className="flex flex-wrap items-center justify-between gap-2 rounded-xl px-3 py-2"
-        style={{
-          border: '2px solid transparent',
-          background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
-        }}
-      >
-        <span
-          className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-extrabold text-[#0A2B6D]"
-          style={{
-            border: '2px solid transparent',
-            background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
-          }}
-        >
-          <Wrench className="h-3.5 w-3.5 text-[#5A00D6]" />
-          <span style={{ color: '#0A2B6D' }}>Available Profile Actions &amp; Tools</span>
-        </span>
-        <div className="flex flex-wrap gap-1.5">
+      {/* Bottom of Section: All Small Tiles on 2 Clean Lines with App Design Coloured Gradient Borders on White */}
+      <div className="space-y-1.5 bg-white pt-0.5">
+        {/* Line 1: Available Profile Actions & Tools Small Tiles */}
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span
+            className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D]"
+            style={{
+              border: '2px solid transparent',
+              background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+            }}
+          >
+            <Wrench className="h-3 w-3 text-[#5A00D6]" />
+            <span style={{ color: '#0A2B6D' }}>Profile Actions &amp; Tools:</span>
+          </span>
           {tools.map((tool, tIdx) => {
             const bCols = ['#0072FF', '#5A00D6', '#FF2E9A', '#A100FF'];
             const bCol = bCols[tIdx % bCols.length];
@@ -313,27 +308,19 @@ export default function CompleteProfile13SectionNavigator({ kind = 'staff', prof
             );
           })}
         </div>
-      </div>
 
-      {/* Related Resources & Single-Source Access Paths (Every Word Pill Has an App Design Coloured Gradient Border on White) */}
-      <div
-        className="flex flex-wrap items-center justify-between gap-2 rounded-xl px-3 py-2 text-[11px] font-extrabold text-[#0A2B6D]"
-        style={{
-          border: '2px solid transparent',
-          background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
-        }}
-      >
-        <span
-          className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[#0A2B6D]"
-          style={{
-            border: '2px solid transparent',
-            background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
-          }}
-        >
-          <Layers className="h-3.5 w-3.5 text-[#0072FF]" />
-          <span style={{ color: '#0A2B6D' }}>Related Resources, Evidence &amp; Registers</span>
-        </span>
-        <div className="flex flex-wrap gap-1.5">
+        {/* Line 2: Related Resources, Evidence & Registers Small Tiles */}
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span
+            className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D]"
+            style={{
+              border: '2px solid transparent',
+              background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+            }}
+          >
+            <Layers className="h-3 w-3 text-[#0072FF]" />
+            <span style={{ color: '#0A2B6D' }}>Related Resources &amp; Registers:</span>
+          </span>
           {[
             { label: 'Consent Register', to: '/compliance', color: '#0072FF' },
             { label: '45 Master Registers', to: '/registers', color: '#5A00D6' },
@@ -344,7 +331,7 @@ export default function CompleteProfile13SectionNavigator({ kind = 'staff', prof
             <Link
               key={res.label}
               to={res.to}
-              className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D] transition hover:opacity-90"
+              className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D] transition hover:opacity-90"
               style={{
                 border: '2px solid transparent',
                 background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,

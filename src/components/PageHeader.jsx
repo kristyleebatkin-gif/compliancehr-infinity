@@ -98,36 +98,42 @@ export default function PageHeader({
             </div>
           </div>
 
-          {/* Small Header Tiles in 1–2 Rows Directly on the White Header Background (White Outside the Tiles) */}
-          <div
-            className={cn(
-              'flex flex-wrap items-center bg-white',
-              compactActions ? 'module-action-bar gap-2' : 'gap-2.5'
-            )}
-          >
-            <ModuleComplianceStrip path={seg} />
-            {beforeAudit}
+          {/* Small Header Tiles on 2 Lines at the Bottom of the Section on White */}
+          <div className="space-y-1.5 bg-white">
+            {/* Line 1 of Bottom Small Tiles: Compliance Tracker Small Tiles */}
+            <div className="flex flex-wrap items-center gap-1.5 bg-white">
+              <ModuleComplianceStrip path={seg} />
+            </div>
+            {/* Line 2 of Bottom Small Tiles: Audit & Module Action Small Tiles */}
             <div
               className={cn(
-                'flex shrink-0 flex-wrap items-center gap-2',
-                auditClassName
+                'flex flex-wrap items-center bg-white',
+                compactActions ? 'module-action-bar gap-1.5' : 'gap-2'
               )}
             >
-              <ModuleAuditChecklistButton />
-              <ModuleAuditButton />
-            </div>
-            {afterAudit}
-            {resolvedActions && (
+              {beforeAudit}
               <div
                 className={cn(
-                  'flex flex-wrap items-center',
-                  compactActions ? 'gap-2' : 'gap-2.5',
-                  actionClassName
+                  'flex shrink-0 flex-wrap items-center gap-1.5',
+                  auditClassName
                 )}
               >
-                {resolvedActions}
+                <ModuleAuditChecklistButton />
+                <ModuleAuditButton />
               </div>
-            )}
+              {afterAudit}
+              {resolvedActions && (
+                <div
+                  className={cn(
+                    'flex flex-wrap items-center',
+                    compactActions ? 'gap-1.5' : 'gap-2',
+                    actionClassName
+                  )}
+                >
+                  {resolvedActions}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
