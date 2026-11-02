@@ -33,7 +33,12 @@ export default function MyPayroll() {
       setForm(Object.fromEntries(EMPLOYEE_FIELDS.map((f) => [f, ''])));
       return;
     }
-    if (res?.data?.error) { toast({ title: 'Could not load payroll', description: res.data.error, variant: 'destructive' }); return; }
+    if (res?.data?.error) {
+      toast({ title: 'Could not load payroll', description: res.data.error, variant: 'destructive' });
+      setData({ profile: null, payroll_detail: null, payslips: [], timesheets: [], change_log: [] });
+      setForm(Object.fromEntries(EMPLOYEE_FIELDS.map((f) => [f, ''])));
+      return;
+    }
     const payload = res?.data || {};
     setData({
       ...payload,
