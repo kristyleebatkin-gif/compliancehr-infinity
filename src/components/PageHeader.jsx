@@ -56,9 +56,14 @@ export default function PageHeader({
         )}
         style={{ background: APP_BORDER_GRADIENT }}
       >
-        {/* White Background Outside the Tiles Inside the Header/Topic Section Only */}
-        <div className="rounded-[13px] bg-white p-2.5 sm:p-3.5 space-y-2.5">
-          {/* Main Header Inside Page Header: App Design Coloured Border + White Background + App Design Coloured Symbol + Dark Blue -> App Colour Writing */}
+        {/* Same Dark Blue Surround Between White Section Borders and Side Borders */}
+        <div
+          className="rounded-[13px] p-3 space-y-2.5"
+          style={{
+            background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+          }}
+        >
+          {/* Main Header White Section */}
           <div
             className="rounded-2xl p-[2px] shadow-2xs"
             style={{ background: APP_BORDER_GRADIENT }}
@@ -98,41 +103,46 @@ export default function PageHeader({
             </div>
           </div>
 
-          {/* Small Header Tiles on 2 Lines at the Bottom of the Section on White */}
-          <div className="space-y-1.5 bg-white">
-            {/* Line 1 of Bottom Small Tiles: Compliance Tracker Small Tiles */}
-            <div className="flex flex-wrap items-center gap-1.5 bg-white">
-              <ModuleComplianceStrip path={seg} />
-            </div>
-            {/* Line 2 of Bottom Small Tiles: Audit & Module Action Small Tiles */}
-            <div
-              className={cn(
-                'flex flex-wrap items-center bg-white',
-                compactActions ? 'module-action-bar gap-1.5' : 'gap-2'
-              )}
-            >
-              {beforeAudit}
+          {/* Small Header Tiles on 2 Lines Inside White Section with App Design Border */}
+          <div
+            className="rounded-2xl p-[2px] shadow-2xs"
+            style={{ background: APP_BORDER_GRADIENT }}
+          >
+            <div className="space-y-1.5 rounded-[14px] bg-white p-2.5">
+              {/* Line 1 of Bottom Small Tiles: Compliance Tracker Small Tiles */}
+              <div className="flex flex-wrap items-center gap-1.5 bg-white">
+                <ModuleComplianceStrip path={seg} />
+              </div>
+              {/* Line 2 of Bottom Small Tiles: Audit & Module Action Small Tiles */}
               <div
                 className={cn(
-                  'flex shrink-0 flex-wrap items-center gap-1.5',
-                  auditClassName
+                  'flex flex-wrap items-center bg-white',
+                  compactActions ? 'module-action-bar gap-1.5' : 'gap-2'
                 )}
               >
-                <ModuleAuditChecklistButton />
-                <ModuleAuditButton />
-              </div>
-              {afterAudit}
-              {resolvedActions && (
+                {beforeAudit}
                 <div
                   className={cn(
-                    'flex flex-wrap items-center',
-                    compactActions ? 'gap-1.5' : 'gap-2',
-                    actionClassName
+                    'flex shrink-0 flex-wrap items-center gap-1.5',
+                    auditClassName
                   )}
                 >
-                  {resolvedActions}
+                  <ModuleAuditChecklistButton />
+                  <ModuleAuditButton />
                 </div>
-              )}
+                {afterAudit}
+                {resolvedActions && (
+                  <div
+                    className={cn(
+                      'flex flex-wrap items-center',
+                      compactActions ? 'gap-1.5' : 'gap-2',
+                      actionClassName
+                    )}
+                  >
+                    {resolvedActions}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

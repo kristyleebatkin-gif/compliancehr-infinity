@@ -235,13 +235,23 @@ export default function VisualDesignModuleCommandStandard() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-[1440px] px-3 pt-1 sm:px-5 lg:px-6">
+    <div className="mx-auto w-full max-w-[1440px] px-3 pt-2">
       <section
         aria-label="Visual Design, Information Architecture & Module Experience Command Standard"
-        className="preserve-island-theme rounded-2xl p-[2.5px] shadow-md"
+        className="preserve-island-theme rounded-2xl p-[3px] shadow-md"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
-        <div className="rounded-[13.5px] bg-white px-2.5 py-1.5 space-y-1.5">
+        <div
+          className="rounded-[13px] p-3"
+          style={{
+            background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+          }}
+        >
+        <div
+          className="rounded-2xl p-[2px]"
+          style={{ background: TOP_BORDER_GRADIENT }}
+        >
+        <div className="rounded-[14px] bg-white px-3 py-2 space-y-1.5">
           {/* 2 Clean Lines of Small Tiles with App Design Coloured Gradient Borders & Dark Blue Writing */}
           <div className="space-y-1.5">
             {/* Line 1: Main Subject Tile + Inline Search + Summary/Detail/Evidence/Action Flow */}
@@ -614,6 +624,8 @@ export default function VisualDesignModuleCommandStandard() {
             </div>
           </>
           )}
+        </div>
+        </div>
         </div>
       </section>
     </div>

@@ -476,12 +476,12 @@ export default function AppLayout() {
           />
           <QuickAppBar />
           <VisualDesignModuleCommandStandard />
-          <div className={location.pathname === '/staff' || location.pathname.startsWith('/staff/') ? 'mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8' : 'mx-auto max-w-[1440px] px-4 pt-3 sm:px-6 lg:px-8 md:pt-4'}>
+          <div className={location.pathname === '/staff' || location.pathname.startsWith('/staff/') ? 'mx-auto max-w-[1440px] px-3' : 'mx-auto max-w-[1440px] px-3 pt-2'}>
             <PendingApprovalNotice />
             <ModuleGuide />
           </div>
           <AutoRegisterInsights />
-          <div className="app-dashboard-canvas mx-auto w-full max-w-[1440px] min-w-0 px-4 py-3 sm:px-6 lg:px-8" style={{ '--module-colour': currentModuleColour }}>
+          <div className="app-dashboard-canvas mx-auto w-full max-w-[1440px] min-w-0 px-3 py-3" style={{ '--module-colour': currentModuleColour }}>
             <ErrorBoundary>
               <Outlet />
             </ErrorBoundary>

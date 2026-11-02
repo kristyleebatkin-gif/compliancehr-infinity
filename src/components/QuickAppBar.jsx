@@ -40,7 +40,7 @@ export default function QuickAppBar() {
       : location.pathname === path || location.pathname.startsWith(`${path}/`);
 
   return (
-    <div className="mx-auto w-full max-w-[1440px] px-3 pt-1.5 sm:px-5 lg:px-6">
+    <div className="mx-auto w-full max-w-[1440px] px-3 pt-2">
       <section
         aria-label="Quick App Bar — Remote Command Centre"
         className="preserve-island-theme overflow-hidden rounded-2xl p-[2px] shadow-lg"

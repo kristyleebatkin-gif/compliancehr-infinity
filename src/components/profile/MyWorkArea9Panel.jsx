@@ -148,68 +148,82 @@ export default function MyWorkArea9Panel({ compact = false }) {
       className="preserve-island-theme rounded-2xl p-[3px] shadow-md"
       style={{ background: APP_BORDER_GRADIENT }}
     >
-      <div className="rounded-[13px] bg-white p-3.5 space-y-3">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          {/* Main Header Inside White Section: App Design Coloured Border + White Background + Dark Blue -> App Colour Writing */}
-          <div
-            className="rounded-2xl p-[2px] shadow-2xs"
-            style={{ background: APP_BORDER_GRADIENT }}
-          >
-            <div className="rounded-[14px] bg-white px-3.5 py-2">
-              <div className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
-                <CheckSquare className="h-3.5 w-3.5 text-[#0072FF]" />
-                <span>
-                  My Workspace &amp; My Compliance Standard · {MY_WORK_11_STREAMS.length} Personalised Streams · 1-Click Completion
-                </span>
+      <div
+        className="rounded-[13px] p-3 space-y-3"
+        style={{
+          background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+        }}
+      >
+        {/* Top White Section Inside Dark Blue Surround */}
+        <div
+          className="rounded-2xl p-[2px] shadow-2xs"
+          style={{ background: APP_BORDER_GRADIENT }}
+        >
+          <div className="flex flex-wrap items-center justify-between gap-2 rounded-[14px] bg-white p-2.5">
+            <div
+              className="rounded-2xl p-[2px] shadow-2xs"
+              style={{ background: APP_BORDER_GRADIENT }}
+            >
+              <div className="rounded-[14px] bg-white px-3.5 py-2">
+                <div className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                  <CheckSquare className="h-3.5 w-3.5 text-[#0072FF]" />
+                  <span>
+                    My Workspace &amp; My Compliance Standard · {MY_WORK_11_STREAMS.length} Personalised Streams · 1-Click Completion
+                  </span>
+                </div>
+                <h3
+                  className="mt-0.5 text-sm sm:text-base font-extrabold text-[#0A2B6D]"
+                  style={{ color: '#0A2B6D' }}
+                >
+                  <span style={{ color: '#0072FF' }}>◉</span> My Tasks · Actions · Reviews · Approvals · Communications · Skills · Certifications · Consents · Documents · Schedule · Compliance
+                </h3>
               </div>
-              <h3
-                className="mt-0.5 text-sm sm:text-base font-extrabold text-[#0A2B6D]"
-                style={{ color: '#0A2B6D' }}
-              >
-                <span style={{ color: '#0072FF' }}>◉</span> My Tasks · Actions · Reviews · Approvals · Communications · Skills · Certifications · Consents · Documents · Schedule · Compliance
-              </h3>
             </div>
-          </div>
 
-          {/* Small Header Tiles with App Design Coloured Gradient Borders on White */}
-          <div className="flex flex-wrap items-center gap-1.5">
-            {user?.email && (
-              <span
-                className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-extrabold text-[#0A2B6D]"
+            {/* Small Header Tiles with App Design Coloured Gradient Borders on White */}
+            <div className="flex flex-wrap items-center gap-1.5">
+              {user?.email && (
+                <span
+                  className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-extrabold text-[#0A2B6D]"
+                  style={{
+                    border: '2px solid transparent',
+                    background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+                  }}
+                >
+                  <span style={{ color: '#5A00D6' }}>◉</span>
+                  <span style={{ color: '#0A2B6D' }}>{user.full_name || user.email}</span>
+                </span>
+              )}
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={loadWorkArea}
+                disabled={loading}
+                className="h-7 rounded-full px-3 text-[11px] font-extrabold text-[#0A2B6D] hover:opacity-90"
                 style={{
                   border: '2px solid transparent',
                   background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+                  color: '#0A2B6D',
                 }}
               >
-                <span style={{ color: '#5A00D6' }}>◉</span>
-                <span style={{ color: '#0A2B6D' }}>{user.full_name || user.email}</span>
-              </span>
-            )}
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={loadWorkArea}
-              disabled={loading}
-              className="h-7 rounded-full px-3 text-[11px] font-extrabold text-[#0A2B6D] hover:opacity-90"
-              style={{
-                border: '2px solid transparent',
-                background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
-                color: '#0A2B6D',
-              }}
-            >
-              <RefreshCw className={`mr-1 h-3 w-3 text-[#0072FF] ${loading ? 'animate-spin' : ''}`} />
-              <span style={{ color: '#0A2B6D' }}>Sync</span>
-            </Button>
-            <Button
-              size="sm"
-              asChild
-              className="h-7 rounded-full px-3 text-[11px] font-extrabold text-white"
-              style={{ background: APP_BORDER_GRADIENT }}
-            >
-              <Link to={currentMeta.href}>
-                Open {currentMeta.label.replace('My ', '')} <ArrowUpRight className="ml-1 h-3 w-3" />
-              </Link>
-            </Button>
+                <RefreshCw className={`mr-1 h-3 w-3 text-[#0072FF] ${loading ? 'animate-spin' : ''}`} />
+                <span style={{ color: '#0A2B6D' }}>Sync</span>
+              </Button>
+              <Button
+                size="sm"
+                asChild
+                className="h-7 rounded-full px-3 text-[11px] font-extrabold text-[#0A2B6D]"
+                style={{
+                  border: '2px solid transparent',
+                  background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+                  color: '#0A2B6D',
+                }}
+              >
+                <Link to={currentMeta.href}>
+                  <span style={{ color: '#FF2E9A' }}>◉</span> Open {currentMeta.label.replace('My ', '')} <ArrowUpRight className="ml-1 h-3 w-3 text-[#0072FF]" />
+                </Link>
+              </Button>
+            </div>
           </div>
         </div>
 

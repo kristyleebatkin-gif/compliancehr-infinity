@@ -22,7 +22,7 @@ import StaffAuthorisationCard from '@/components/profile/StaffAuthorisationCard'
    sections, About Me, Journey and Communication Logs. */
 export default function ProfileSummaryPanels({ profile, kind, branding, onUpdated, staffQuestions = kind === 'staff', personal = false }) {
   if (kind === 'participant') return <ParticipantSummaryPanels profile={profile} onUpdated={onUpdated} personal={personal} />;
-  if (staffQuestions) return <div className="grid items-stretch gap-3 p-3 md:grid-cols-2">
+  if (staffQuestions) return <div className="grid items-stretch gap-3 md:grid-cols-2">
     <div className="flex min-w-0 flex-col gap-3">
       <EmployeeProfileSection title="Intake Readiness" tone="green" uniform>
         <IntakeCaseWorkflow intakeType="Employee" profile={profile} profileView="readiness" />
@@ -47,7 +47,7 @@ export default function ProfileSummaryPanels({ profile, kind, branding, onUpdate
     <div className="min-w-0 md:col-span-2"><ComplianceSchedulesDashboard /></div>
     <div className="min-w-0 md:col-span-2"><EmployeeRecordNotice /></div>
   </div>;
-  return <div className="grid items-start gap-3 p-3 md:grid-cols-2">
+  return <div className="grid items-start gap-3 md:grid-cols-2">
     <div className="min-w-0 space-y-3"><ProfileAboutMeEditor profile={profile} kind={kind} onUpdated={onUpdated} /><ProfileAuditConsentCard profile={profile} kind={kind} onUpdated={onUpdated} /></div>
     <div className="min-w-0 space-y-2">
       {kind === 'staff' && <StaffBadgePreview branding={branding} staff={profile} compact />}

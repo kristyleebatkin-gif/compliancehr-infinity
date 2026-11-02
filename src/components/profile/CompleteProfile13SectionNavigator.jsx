@@ -79,53 +79,63 @@ export default function CompleteProfile13SectionNavigator({ kind = 'staff', prof
       className="preserve-island-theme rounded-2xl p-[3px] shadow-md"
       style={{ background: APP_BORDER_GRADIENT }}
     >
-      <div className="rounded-[13px] bg-white p-3.5 space-y-2.5">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          {/* Main Header Inside White Section: App Design Coloured Border + White Background + Dark Blue -> App Colour Writing */}
-          <div
-            className="rounded-2xl p-[2px] shadow-2xs"
-            style={{ background: APP_BORDER_GRADIENT }}
-          >
-            <div className="rounded-[14px] bg-white px-3.5 py-2">
-              <div className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
-                <ShieldCheck className="h-3.5 w-3.5 text-[#0072FF]" />
-                <span>
-                  9-Section {isParticipant ? 'Participant' : 'Employee'} Profile Information Layout · 3-Second &amp; ≤3-Click Standard
-                </span>
+      <div
+        className="rounded-[13px] p-3 space-y-3"
+        style={{
+          background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+        }}
+      >
+        <div
+          className="rounded-2xl p-[2px] shadow-2xs"
+          style={{ background: APP_BORDER_GRADIENT }}
+        >
+          <div className="flex flex-wrap items-center justify-between gap-2 rounded-[14px] bg-white p-2.5">
+            {/* Main Header Inside White Section: App Design Coloured Border + White Background + Dark Blue Writing */}
+            <div
+              className="rounded-2xl p-[2px] shadow-2xs"
+              style={{ background: APP_BORDER_GRADIENT }}
+            >
+              <div className="rounded-[14px] bg-white px-3.5 py-2">
+                <div className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                  <ShieldCheck className="h-3.5 w-3.5 text-[#0072FF]" />
+                  <span>
+                    9-Section {isParticipant ? 'Participant' : 'Employee'} Profile Information Layout · 3-Second &amp; ≤3-Click Standard
+                  </span>
+                </div>
+                <h3
+                  className="mt-0.5 text-xs sm:text-sm font-extrabold text-[#0A2B6D]"
+                  style={{ color: '#0A2B6D' }}
+                >
+                  <span style={{ color: '#0072FF' }}>◉</span> {profile?.full_name || (isParticipant ? 'Participant Profile' : 'Employee Profile')} — Complete Subject Command Centre
+                </h3>
               </div>
-              <h3
-                className="mt-0.5 text-xs sm:text-sm font-extrabold text-[#0A2B6D]"
-                style={{ color: '#0A2B6D' }}
-              >
-                <span style={{ color: '#0072FF' }}>◉</span> {profile?.full_name || (isParticipant ? 'Participant Profile' : 'Employee Profile')} — Complete Subject Command Centre
-              </h3>
             </div>
-          </div>
 
-          {/* Small Header Tiles with App Design Coloured Gradient Borders on White */}
-          <div className="flex flex-wrap items-center gap-1.5">
-            <span
-              className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-extrabold text-[#0A2B6D]"
-              style={{
-                border: '2px solid transparent',
-                background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
-              }}
-            >
-              <span style={{ color: '#0072FF' }}>◉</span>
-              <span style={{ color: '#0A2B6D' }}>Green · Compliant &amp; Active</span>
-            </span>
-            <span
-              className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-extrabold text-[#0A2B6D]"
-              style={{
-                border: '2px solid transparent',
-                background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
-              }}
-            >
-              <span style={{ color: '#5A00D6' }}>◉</span>
-              <span style={{ color: '#0A2B6D' }}>
-                {isParticipant ? '9 Sections · 16 Domains' : '9 Sections · 13 Domains'}
+            {/* Small Header Tiles with App Design Coloured Gradient Borders on White */}
+            <div className="flex flex-wrap items-center gap-1.5">
+              <span
+                className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-extrabold text-[#0A2B6D]"
+                style={{
+                  border: '2px solid transparent',
+                  background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+                }}
+              >
+                <span style={{ color: '#0072FF' }}>◉</span>
+                <span style={{ color: '#0A2B6D' }}>Green · Compliant &amp; Active</span>
               </span>
-            </span>
+              <span
+                className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-extrabold text-[#0A2B6D]"
+                style={{
+                  border: '2px solid transparent',
+                  background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+                }}
+              >
+                <span style={{ color: '#5A00D6' }}>◉</span>
+                <span style={{ color: '#0A2B6D' }}>
+                  {isParticipant ? '9 Sections · 16 Domains' : '9 Sections · 13 Domains'}
+                </span>
+              </span>
+            </div>
           </div>
         </div>
 
@@ -273,8 +283,12 @@ export default function CompleteProfile13SectionNavigator({ kind = 'staff', prof
         </div>
       )}
 
-      {/* Bottom of Section: All Small Tiles on 2 Clean Lines with App Design Coloured Gradient Borders on White */}
-      <div className="space-y-1.5 bg-white pt-0.5">
+      {/* Bottom of Section: All Small Tiles on 2 Clean Lines Inside White Section with App Design Coloured Gradient Border */}
+      <div
+        className="rounded-2xl p-[2px] shadow-2xs"
+        style={{ background: APP_BORDER_GRADIENT }}
+      >
+      <div className="space-y-1.5 rounded-[14px] bg-white p-2.5">
         {/* Line 1: Available Profile Actions & Tools Small Tiles */}
         <div className="flex flex-wrap items-center gap-1.5">
           <span
@@ -343,6 +357,7 @@ export default function CompleteProfile13SectionNavigator({ kind = 'staff', prof
             </Link>
           ))}
         </div>
+      </div>
       </div>
       </div>
     </section>

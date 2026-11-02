@@ -39,10 +39,25 @@ export default function OurProfileWorkspace({ profile, kind, header, onUpdated, 
           return <TabsTrigger key={module.key} value={module.key} data-module-index={index}><Icon className="h-3.5 w-3.5" />{module.label}</TabsTrigger>;
         })}
       </TabsList>
-      <TabsContent key={`${profile.id}-${selected.key}`} value={selected.key} className="min-w-0 [&>div]:p-0">
-        <Suspense fallback={<div role="status" className="flex items-center justify-center gap-2 py-12 text-muted-foreground"><Loader2 className="h-5 w-5 animate-spin" />Loading {selected.label}...</div>}>
-          {selected.content}
-        </Suspense>
+      <TabsContent key={`${profile.id}-${selected.key}`} value={selected.key} className="min-w-0">
+        <div
+          className="overflow-hidden rounded-2xl p-[3px] shadow-md"
+          style={{
+            background:
+              'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+          }}
+        >
+          <div
+            className="rounded-[13px] p-3"
+            style={{
+              background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+            }}
+          >
+            <Suspense fallback={<div role="status" className="flex items-center justify-center gap-2 py-12 text-white"><Loader2 className="h-5 w-5 animate-spin" />Loading {selected.label}...</div>}>
+              {selected.content}
+            </Suspense>
+          </div>
+        </div>
       </TabsContent>
       </Tabs>
     </>

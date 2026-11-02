@@ -156,7 +156,7 @@ export default function MyProfile() {
   }
 
   return (
-    <div ref={pageRef} className="my-profile-pastels mx-auto w-full max-w-[1440px] px-4 py-5 sm:px-6 lg:px-8 space-y-5">
+    <div ref={pageRef} className="my-profile-pastels mx-auto w-full max-w-[1440px] space-y-3">
       <PageHeader
         className="my-profile-heading"
         icon={UserRound}

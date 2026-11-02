@@ -117,88 +117,87 @@ export default function PersonalProfileHeader({
       className="overflow-hidden rounded-2xl p-[3px] shadow-md"
       style={{ background: APP_BORDER_GRADIENT }}
     >
-      <div className="rounded-[13px] bg-white p-3 space-y-3">
-        {/* MY PROFILE AT THE VERY TOP OF MY PROFILE — CONSISTENT HEADER & REMOTE STYLE */}
+      {/* Same Dark Blue Surround Between White Sections' Borders and Side Borders */}
+      <div
+        className="rounded-[13px] p-3 space-y-3"
+        style={{
+          background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+        }}
+      >
+        {/* MY PROFILE AT THE VERY TOP OF MY PROFILE — WHITE SECTION INSIDE DARK BLUE SURROUND */}
         {showIdentity !== false && (
           <div
-            className="preserve-island-theme overflow-hidden rounded-2xl p-[2.5px] shadow-md"
+            className="preserve-island-theme overflow-hidden rounded-2xl p-[2px] shadow-md"
             style={{ background: APP_BORDER_GRADIENT }}
           >
-            <div
-              className="overflow-hidden rounded-[13.5px]"
-              style={{
-                background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #131B4D 100%)',
-              }}
-            >
-              {/* Top White Identity Section: Every Word Group Framed with an App Design Coloured Border */}
-              <div className="bg-white p-3">
-                <div className="flex w-full min-w-0 flex-wrap items-center justify-between gap-3">
-                  <div className="flex min-w-0 flex-wrap items-center gap-3">
-                    <ProfilePhotoControl profile={profile} kind={kind} onUpdated={onUpdated} />
-                    <div className="min-w-0 flex-1 space-y-1.5">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span
-                          className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#0A2B6D]"
-                          style={{
-                            border: '2px solid transparent',
-                            background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
-                          }}
-                        >
-                          <span style={{ color: '#5A00D6' }}>◉</span>
-                          <span style={{ color: '#0A2B6D' }}>
-                            {staff ? 'MY EMPLOYEE PROFILE & PROFESSION' : 'MY PARTICIPANT PROFILE & NDIS PLAN'}
-                          </span>
+            <div className="rounded-[14px] bg-white p-3 space-y-3">
+              {/* Top White Identity Header */}
+              <div className="flex w-full min-w-0 flex-wrap items-center justify-between gap-3">
+                <div className="flex min-w-0 flex-wrap items-center gap-3">
+                  <ProfilePhotoControl profile={profile} kind={kind} onUpdated={onUpdated} />
+                  <div className="min-w-0 flex-1 space-y-1.5">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span
+                        className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#0A2B6D]"
+                        style={{
+                          border: '2px solid transparent',
+                          background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+                        }}
+                      >
+                        <span style={{ color: '#5A00D6' }}>◉</span>
+                        <span style={{ color: '#0A2B6D' }}>
+                          {staff ? 'MY EMPLOYEE PROFILE & PROFESSION' : 'MY PARTICIPANT PROFILE & NDIS PLAN'}
                         </span>
-                        <Badge
-                          className="rounded-full px-2.5 py-0.5 font-extrabold text-[#0A2B6D]"
-                          style={{
-                            border: '2px solid transparent',
-                            background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
-                            color: '#0A2B6D',
-                          }}
+                      </span>
+                      <Badge
+                        className="rounded-full px-2.5 py-0.5 font-extrabold text-[#0A2B6D]"
+                        style={{
+                          border: '2px solid transparent',
+                          background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+                          color: '#0A2B6D',
+                        }}
+                      >
+                        <span className="mr-1" style={{ color: '#0072FF' }}>◉</span>
+                        {profile.status || 'Active'}
+                      </Badge>
+                    </div>
+
+                    {/* Main Name Header with App Design Coloured Gradient Border & Dark Blue Writing */}
+                    <div className="flex flex-wrap items-center gap-2">
+                      <div
+                        className="inline-flex rounded-xl p-[2px]"
+                        style={{ background: APP_BORDER_GRADIENT }}
+                      >
+                        <h2
+                          className="rounded-[10px] bg-white px-3 py-1 text-base sm:text-xl font-extrabold text-[#0A2B6D]"
+                          style={{ color: '#0A2B6D' }}
                         >
-                          <span className="mr-1" style={{ color: '#0072FF' }}>◉</span>
-                          {profile.status || 'Active'}
-                        </Badge>
+                          <span style={{ color: '#0072FF' }}>◉</span> {profile.full_name}
+                        </h2>
                       </div>
 
-                      {/* Main Name Header with App Design Coloured Gradient Border & Dark Blue Writing */}
-                      <div className="flex flex-wrap items-center gap-2">
-                        <div
-                          className="inline-flex rounded-xl p-[2px]"
-                          style={{ background: APP_BORDER_GRADIENT }}
-                        >
-                          <h2
-                            className="rounded-[10px] bg-white px-3 py-1 text-base sm:text-xl font-extrabold text-[#0A2B6D]"
-                            style={{ color: '#0A2B6D' }}
-                          >
-                            <span style={{ color: '#0072FF' }}>◉</span> {profile.full_name}
-                          </h2>
-                        </div>
-
-                        <span
-                          className="inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-extrabold text-[#0A2B6D]"
-                          style={{
-                            border: '2px solid transparent',
-                            background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
-                            color: '#0A2B6D',
-                          }}
-                        >
-                          <span style={{ color: '#FF2E9A' }}>◉</span>
-                          <span>
-                            {staff
-                              ? `Profession / Role: ${professionLabel}`
-                              : `Participant Support Profile: ${professionLabel}`}
-                          </span>
+                      <span
+                        className="inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-extrabold text-[#0A2B6D]"
+                        style={{
+                          border: '2px solid transparent',
+                          background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+                          color: '#0A2B6D',
+                        }}
+                      >
+                        <span style={{ color: '#FF2E9A' }}>◉</span>
+                        <span>
+                          {staff
+                            ? `Profession / Role: ${professionLabel}`
+                            : `Participant Support Profile: ${professionLabel}`}
                         </span>
-                      </div>
+                      </span>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* All 8 Small Tiles on 2 Lines (4 per line) at the Bottom of the Section with App Design Coloured Gradient Borders */}
-              <div className="grid grid-cols-2 gap-2 bg-white p-3 sm:grid-cols-4">
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                 {summaryItems.map((item, idx) => {
                   const symColor = APP_COLOURS[idx % APP_COLOURS.length];
                   return (
@@ -230,15 +229,8 @@ export default function PersonalProfileHeader({
           </div>
         )}
 
-        {/* Editable Sectioned Profile Fields directly under the top Profile Summary */}
-        {topFormSection && (
-          <div
-            className="rounded-2xl p-[2px] shadow-sm"
-            style={{ background: APP_BORDER_GRADIENT }}
-          >
-            <div className="rounded-[14px] bg-white p-3">{topFormSection}</div>
-          </div>
-        )}
+        {/* Editable Sectioned Profile Fields directly inside Dark Blue Surround */}
+        {topFormSection && <div>{topFormSection}</div>}
 
         <ProfileSummaryPanels
           profile={profile}

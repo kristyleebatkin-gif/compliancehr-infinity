@@ -17,7 +17,7 @@ import IntakeCaseWorkflow from '@/components/intake/IntakeCaseWorkflow';
    all forms; the right column holds the quick squares, logged sections,
    About Me, Participant Journey and communication logs. */
 export default function ParticipantSummaryPanels({ profile, onUpdated, personal = false }) {
-  return <div className="grid items-stretch gap-3 p-3 md:grid-cols-2">
+  return <div className="grid items-stretch gap-3 md:grid-cols-2">
     <div className="flex min-w-0 flex-col gap-3">
       <EmployeeProfileSection title="Intake Readiness" tone="green" uniform>
         <IntakeCaseWorkflow intakeType="Participant" profile={profile} profileView="readiness" />

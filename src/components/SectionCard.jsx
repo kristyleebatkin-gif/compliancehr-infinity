@@ -87,84 +87,97 @@ export default function SectionCard({
       style={{ background: TOP_BORDER_GRADIENT }}
       {...props}
     >
-      <div className="overflow-hidden rounded-[13px] bg-white">
+      <div
+        className="overflow-hidden rounded-[13px] p-3 space-y-2.5"
+        style={{
+          background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+        }}
+      >
         {(title || action) && (
-          <div className="flex flex-wrap items-center justify-between gap-2.5 border-b-2 border-[#5A00D6]/25 bg-white px-3.5 py-2.5 sm:px-4">
-            <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
-              {/* Small Subject Tile: App Design Coloured Gradient Border + White Background + Dark Blue Writing + App Design Coloured Symbol */}
-              <span
-                className="inline-flex min-h-[30px] items-center gap-1.5 rounded-full px-3 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D] shadow-2xs"
-                style={{
-                  border: '2px solid transparent',
-                  background: `linear-gradient(#ffffff, #ffffff) padding-box, ${TOP_BORDER_GRADIENT} border-box`,
-                  color: '#0A2B6D',
-                }}
-              >
-                <SubjectIcon className="h-3.5 w-3.5 shrink-0" style={{ color: symColor }} />
-                <span style={{ color: '#0A2B6D' }}>{resolvedSubject}</span>
-              </span>
-
-              {/* Main Section Header Tile: App Design Coloured Gradient Border + White Background + Dark Blue Writing */}
-              {title && (
-                <div
-                  className="rounded-xl p-[1.5px] shadow-2xs"
-                  style={{ background: TOP_BORDER_GRADIENT }}
-                >
-                  <div className="flex flex-wrap items-center gap-2 rounded-[10.5px] bg-white px-3 py-1">
-                    {collapsible ? (
-                      <button
-                        type="button"
-                        aria-expanded={expanded}
-                        aria-controls={contentId}
-                        onClick={() => setExpanded((value) => !value)}
-                        className="flex items-center gap-1.5 text-left font-editorial text-sm sm:text-base font-extrabold text-[#0A2B6D]"
-                      >
-                        <ChevronDown
-                          className={`h-4 w-4 shrink-0 text-[#5A00D6] transition-transform ${
-                            expanded ? '' : '-rotate-90'
-                          }`}
-                        />
-                        <span data-panel-title className="text-[#0A2B6D]">
-                          {title}
-                        </span>
-                      </button>
-                    ) : (
-                      <div
-                        data-panel-title
-                        className="break-words font-editorial text-sm sm:text-base font-extrabold tracking-tight text-[#0A2B6D]"
-                        style={{ color: '#0A2B6D' }}
-                      >
-                        <span style={{ color: symColor }}>◉</span> {title}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              {/* Description Pill: App Design Coloured Gradient Border + White Background + Dark Blue Writing */}
-              {description && (
+          <div
+            className="rounded-2xl p-[2px] shadow-2xs"
+            style={{ background: TOP_BORDER_GRADIENT }}
+          >
+            <div className="flex flex-wrap items-center justify-between gap-2.5 rounded-[14px] bg-white px-3.5 py-2.5 sm:px-4">
+              <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
+                {/* Small Subject Tile: App Design Coloured Gradient Border + White Background + Dark Blue Writing + App Design Coloured Symbol */}
                 <span
-                  className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-bold text-[#0A2B6D]"
+                  className="inline-flex min-h-[30px] items-center gap-1.5 rounded-full px-3 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D] shadow-2xs"
                   style={{
-                    border: '1.5px solid transparent',
+                    border: '2px solid transparent',
                     background: `linear-gradient(#ffffff, #ffffff) padding-box, ${TOP_BORDER_GRADIENT} border-box`,
                     color: '#0A2B6D',
                   }}
                 >
-                  <span style={{ color: '#0072FF' }}>◉</span>
-                  <span style={{ color: '#0A2B6D' }}>{description}</span>
+                  <SubjectIcon className="h-3.5 w-3.5 shrink-0" style={{ color: symColor }} />
+                  <span style={{ color: '#0A2B6D' }}>{resolvedSubject}</span>
                 </span>
-              )}
+
+                {/* Main Section Header Tile: App Design Coloured Gradient Border + White Background + Dark Blue Writing */}
+                {title && (
+                  <div
+                    className="rounded-xl p-[1.5px] shadow-2xs"
+                    style={{ background: TOP_BORDER_GRADIENT }}
+                  >
+                    <div className="flex flex-wrap items-center gap-2 rounded-[10.5px] bg-white px-3 py-1">
+                      {collapsible ? (
+                        <button
+                          type="button"
+                          aria-expanded={expanded}
+                          aria-controls={contentId}
+                          onClick={() => setExpanded((value) => !value)}
+                          className="flex items-center gap-1.5 text-left font-editorial text-sm sm:text-base font-extrabold text-[#0A2B6D]"
+                        >
+                          <ChevronDown
+                            className={`h-4 w-4 shrink-0 text-[#5A00D6] transition-transform ${
+                              expanded ? '' : '-rotate-90'
+                            }`}
+                          />
+                          <span data-panel-title className="text-[#0A2B6D]">
+                            {title}
+                          </span>
+                        </button>
+                      ) : (
+                        <div
+                          data-panel-title
+                          className="break-words font-editorial text-sm sm:text-base font-extrabold tracking-tight text-[#0A2B6D]"
+                          style={{ color: '#0A2B6D' }}
+                        >
+                          <span style={{ color: symColor }}>◉</span> {title}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Description Pill: App Design Coloured Gradient Border + White Background + Dark Blue Writing */}
+                {description && (
+                  <span
+                    className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-bold text-[#0A2B6D]"
+                    style={{
+                      border: '1.5px solid transparent',
+                      background: `linear-gradient(#ffffff, #ffffff) padding-box, ${TOP_BORDER_GRADIENT} border-box`,
+                      color: '#0A2B6D',
+                    }}
+                  >
+                    <span style={{ color: '#0072FF' }}>◉</span>
+                    <span style={{ color: '#0A2B6D' }}>{description}</span>
+                  </span>
+                )}
+              </div>
+              {action && <div className="flex flex-wrap items-center gap-1.5">{action}</div>}
             </div>
-            {action && <div className="flex flex-wrap items-center gap-1.5">{action}</div>}
           </div>
         )}
         <div
           id={contentId}
           hidden={collapsible && !expanded}
-          className="dashboard-panel-body bg-white p-4 text-xs text-[#0A2B6D]"
+          className="rounded-2xl p-[2px] shadow-2xs"
+          style={{ background: TOP_BORDER_GRADIENT }}
         >
-          {children}
+          <div className="dashboard-panel-body rounded-[14px] bg-white p-4 text-xs text-[#0A2B6D]">
+            {children}
+          </div>
         </div>
       </div>
     </div>
