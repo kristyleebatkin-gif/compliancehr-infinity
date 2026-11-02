@@ -198,7 +198,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
   return (
     <section
       id="business-health-intelligence"
-      className="preserve-island-theme scroll-mt-14 overflow-hidden rounded-2xl p-[3px] shadow-md text-center"
+      className="scroll-mt-14 overflow-hidden rounded-2xl p-[3px] shadow-md text-center"
       style={{ background: TOP_BORDER_GRADIENT }}
     >
       <div

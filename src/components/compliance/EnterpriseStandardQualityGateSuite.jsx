@@ -329,7 +329,7 @@ export default function EnterpriseStandardQualityGateSuite() {
 
   return (
     <section
-      className="preserve-island-theme overflow-hidden rounded-2xl p-[3px] shadow-md"
+      className="overflow-hidden rounded-2xl p-[3px] shadow-md"
       style={{ background: BRAND_GRADIENT }}
     >
       <div

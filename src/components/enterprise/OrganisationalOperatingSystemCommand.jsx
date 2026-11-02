@@ -359,7 +359,7 @@ export default function OrganisationalOperatingSystemCommand() {
 
         {/* Glowing Circular Pod Mode Switcher Bar: 5 Mission Control Command Modes */}
         <div
-          className="flex flex-wrap items-center gap-1.5 rounded-2xl p-2"
+          className="preserve-island-theme flex flex-wrap items-center gap-1.5 rounded-2xl p-2"
           style={{
             background:
               'radial-gradient(circle at 50% 50%, rgba(0, 198, 255, 0.16) 0%, rgba(90, 0, 214, 0.28) 45%, #0A2B6D 100%)',

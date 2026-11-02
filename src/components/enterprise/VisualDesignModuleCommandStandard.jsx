@@ -251,7 +251,12 @@ export default function VisualDesignModuleCommandStandard() {
           className="rounded-2xl p-[2px]"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
-        <div className="rounded-[14px] bg-white px-3 py-2 space-y-1.5">
+        <div
+          className="rounded-[14px] px-3 py-2.5 space-y-2"
+          style={{
+            background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+          }}
+        >
           {/* 2 Clean Lines of Small Tiles with App Design Coloured Gradient Borders & Dark Blue Writing */}
           <div className="space-y-1.5">
             {/* Line 1: Main Subject Tile + Inline Search + Summary/Detail/Evidence/Action Flow */}

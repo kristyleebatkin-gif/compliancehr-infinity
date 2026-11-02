@@ -502,7 +502,7 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
 
   return (
     <section
-      className="preserve-island-theme overflow-hidden rounded-2xl p-[3px] shadow-md"
+      className="overflow-hidden rounded-2xl p-[3px] shadow-md"
       style={{
         background:
           'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
