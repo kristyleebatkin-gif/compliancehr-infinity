@@ -1,3 +1,4 @@
+import { esc } from '@/lib/visualPrint';
 import { base44 } from '@/api/base44Client';
 import { downloadCsv } from '@/lib/csvExport';
 
@@ -115,14 +116,14 @@ export function exportUniversalData(formatType, filenameBase, columns, rows, tit
     return;
   }
 
-  const tableHeaders = columns.map((c) => `<th style="border:1px solid #0A2B6D;padding:6px 8px;background:#0A2B6D;color:#ffffff;font-size:11px;text-align:left;">${c.label}</th>`).join('');
+  const tableHeaders = columns.map((c) => `<th style="border:1px solid #0A2B6D;padding:6px 8px;background:#0A2B6D;color:#ffffff;font-size:11px;text-align:left;">${esc(c.label)}</th>`).join('');
   const tableRows = rows
     .map(
       (r) =>
         `<tr>${columns
           .map(
             (c) =>
-              `<td style="border:1px solid #cbd5e1;padding:6px 8px;font-size:11px;color:#0A2B6D;">${String(
+              `<td style="border:1px solid #cbd5e1;padding:6px 8px;font-size:11px;color:#0A2B6D;">${esc(
                 r[c.key] ?? ''
               )}</td>`
           )
@@ -134,10 +135,10 @@ export function exportUniversalData(formatType, filenameBase, columns, rows, tit
 <html>
 <head>
 <meta charset="utf-8" />
-<title>${title}</title>
+<title>${esc(title)}</title>
 </head>
 <body style="font-family:Arial,sans-serif;padding:20px;color:#0A2B6D;">
-  <h2 style="margin:0 0 4px 0;color:#0A2B6D;">${title}</h2>
+  <h2 style="margin:0 0 4px 0;color:#0A2B6D;">${esc(title)}</h2>
   <p style="margin:0 0 12px 0;font-size:11px;color:#5A00D6;">
     Generated: ${new Date().toLocaleString('en-AU')} · Universal Data Storage, Retention, Traceability &amp; Export Standard
   </p>

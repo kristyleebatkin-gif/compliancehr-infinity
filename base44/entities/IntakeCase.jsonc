@@ -543,12 +543,44 @@
     },
     "reviewer": {
       "type": "string",
-      "title": "Reviewer"
+      "title": "Reviewer",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            }
+          ]
+        }
+      }
     },
     "reviewed_date": {
       "type": "string",
       "title": "Reviewed Date",
-      "format": "date"
+      "format": "date",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            }
+          ]
+        }
+      }
     },
     "status": {
       "type": "string",
@@ -562,7 +594,23 @@
         "Declined",
         "Withdrawn"
       ],
-      "default": "Draft"
+      "default": "Draft",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            }
+          ]
+        }
+      }
     },
     "service_fit": {
       "type": "string",
@@ -626,23 +674,103 @@
         "Audit consent received",
         "Audit declined"
       ],
-      "default": "Audit declined"
+      "default": "Audit declined",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            }
+          ]
+        }
+      }
     },
     "audit_consent_by": {
       "type": "string",
-      "title": "Audit Consent Given By (person)"
+      "title": "Audit Consent Given By (person)",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            }
+          ]
+        }
+      }
     },
     "audit_consent_date": {
       "type": "string",
-      "title": "Audit Consent Date"
+      "title": "Audit Consent Date",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            }
+          ]
+        }
+      }
     },
     "audit_consent_time": {
       "type": "string",
-      "title": "Audit Consent Time"
+      "title": "Audit Consent Time",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            }
+          ]
+        }
+      }
     },
     "audit_consent_note": {
       "type": "string",
-      "title": "Audit Consent Note (who consented / declined)"
+      "title": "Audit Consent Note (who consented / declined)",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            }
+          ]
+        }
+      }
     },
     "acknowledgement_log": {
       "type": "string",
@@ -666,16 +794,64 @@
     },
     "decision_reason": {
       "type": "string",
-      "title": "Decision Reason"
+      "title": "Decision Reason",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            }
+          ]
+        }
+      }
     },
     "related_profile_id": {
       "type": "string",
-      "title": "Related Profile ID"
+      "title": "Related Profile ID",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            }
+          ]
+        }
+      }
     },
     "converted_date": {
       "type": "string",
       "title": "Converted Date",
-      "format": "date"
+      "format": "date",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            }
+          ]
+        }
+      }
     },
     "notes": {
       "type": "string",

@@ -1,3 +1,4 @@
+import { authorizeSystemCall } from '../../shared/systemAuth.ts';
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
 import { computeStaffCompliance, isFlagged, FLAG_THRESHOLD } from '../../shared/staffCompliance.ts';
 
@@ -11,6 +12,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
+    if (!await authorizeSystemCall(base44)) return Response.json({ error: 'Approved management access required.' }, { status: 403 });
     const service = base44.asServiceRole;
 
     const rows = (await computeStaffCompliance(service)).filter(isFlagged);

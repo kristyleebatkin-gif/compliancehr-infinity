@@ -193,9 +193,6 @@
           "user_condition": {
             "role": "Human Resources Manager"
           }
-        },
-        {
-          "data.employee_user_id": "{{user.id}}"
         }
       ]
     },

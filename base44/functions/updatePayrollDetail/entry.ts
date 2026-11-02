@@ -1,3 +1,4 @@
+import { hasApprovedAccess } from '../../shared/appAccess.ts';
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
 
 // Updates a staff payroll detail record with a full audit trail: every changed
@@ -12,6 +13,7 @@ export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
     const me = await base44.auth.me().catch(() => null);
+    if (!hasApprovedAccess(me)) return Response.json({ error: 'Approved account access required.' }, { status: 403 });
     if (!me) return Response.json({ error: 'Sign in required.' }, { status: 401 });
 
     const body = await req.json().catch(() => ({}));

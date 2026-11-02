@@ -1,3 +1,5 @@
+const esc = (v) => String(v ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+import { authorizeSystemCall } from '../../shared/systemAuth.ts';
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
 
 // Review & audit aging engine. Runs daily from the "Review Aging Alerts" workflow.
@@ -34,6 +36,7 @@ const titleOf = (r) =>
 export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
+    if (!await authorizeSystemCall(base44)) return Response.json({ error: 'Approved management access required.' }, { status: 403 });
     const service = base44.asServiceRole;
     const now = Date.now();
     const day = 24 * 60 * 60 * 1000;
@@ -98,13 +101,13 @@ export default async function(req) {
             type: 'Review Reminder',
             recipient: m.email,
             recipient_id: m.id,
-            message: `Last emergency drill was ${daysSinceDrill} days ago (${drillDates[drillDates.length - 1]}). Drills are due every 3 months - schedule the next drill now.`,
+            message: `Last emergency drill was ${daysSinceDrill} days ago (${esc(drillDates[drillDates.length - 1])}). Drills are due every 3 months - schedule the next drill now.`,
             action_url: '/emergency-response',
           }),
           service.integrations.Core.SendEmail({
             to: m.email,
             subject: 'Emergency drill due - schedule the next drill',
-            html: `<p>Hi ${m.full_name || 'there'},</p><p>The last emergency drill was recorded on <b>${drillDates[drillDates.length - 1]}</b> (${daysSinceDrill} days ago). Drills are due every 3 months, so please schedule and record the next drill in Emergency Response.</p>`,
+            html: `<p>Hi ${esc(m.full_name || 'there')},</p><p>The last emergency drill was recorded on <b>${esc(drillDates[drillDates.length - 1])}</b> (${daysSinceDrill} days ago). Drills are due every 3 months, so please schedule and record the next drill in Emergency Response.</p>`,
           }),
         ])));
         await service.entities.EmergencyDrill.update(latest.id, {
@@ -157,10 +160,10 @@ export default async function(req) {
       const users1 = await service.entities.User.list();
       const mgrs1 = (users1 || []).filter((u) => MANAGER_ROLES.includes(u.role) && u.email);
       const listHtml1 = reviewAlertsList.slice(0, 25).map((r) =>
-        `<tr><td style="padding:6px 10px;border-bottom:1px solid #e5e7eb;">${r.participant}</td>` +
-        `<td style="padding:6px 10px;border-bottom:1px solid #e5e7eb;">${r.type}</td>` +
-        `<td style="padding:6px 10px;border-bottom:1px solid #e5e7eb;">${r.due}</td>` +
-        `<td style="padding:6px 10px;border-bottom:1px solid #e5e7eb;">${r.state}</td></tr>`
+        `<tr><td style="padding:6px 10px;border-bottom:1px solid #e5e7eb;">${esc(r.participant)}</td>` +
+        `<td style="padding:6px 10px;border-bottom:1px solid #e5e7eb;">${esc(r.type)}</td>` +
+        `<td style="padding:6px 10px;border-bottom:1px solid #e5e7eb;">${esc(r.due)}</td>` +
+        `<td style="padding:6px 10px;border-bottom:1px solid #e5e7eb;">${esc(r.state)}</td></tr>`
       ).join('');
       await Promise.allSettled(mgrs1.map((m) => Promise.all([
         service.entities.Notification.create({
@@ -173,7 +176,7 @@ export default async function(req) {
         service.integrations.Core.SendEmail({
           to: m.email,
           subject: `Participant reviews due: ${reviewAlertsList.length} review(s) within 10 weeks`,
-          html: `<p>Hi ${m.full_name || 'there'},</p><p>The following participant reviews are due within 10 weeks or overdue (reviews recur every 10 weeks):</p>` +
+          html: `<p>Hi ${esc(m.full_name || 'there')},</p><p>The following participant reviews are due within 10 weeks or overdue (reviews recur every 10 weeks):</p>` +
             `<table style="border-collapse:collapse;width:100%;font-size:13px;">` +
             `<tr><th align="left" style="padding:6px 10px;border-bottom:2px solid #7c3bed;">Participant</th>` +
             `<th align="left" style="padding:6px 10px;border-bottom:2px solid #7c3bed;">Review type</th>` +
@@ -187,7 +190,7 @@ export default async function(req) {
         entity_type: 'ParticipantReview',
         record_title: `${reviewAlertsList.length} review(s) due within 10 weeks or overdue`,
         performed_by: 'Review Aging Alerts (automated)',
-        details: reviewAlertsList.map((r) => `${r.participant} (${r.type}, ${r.due}, ${r.state})`).join('; '),
+        details: reviewAlertsList.map((r) => `${esc(r.participant)} (${esc(r.type)}, ${esc(r.due)}, ${esc(r.state)})`).join('; '),
         timestamp: new Date().toISOString(),
       });
       participantReviewAlerts = reviewAlertsList.length;
@@ -200,10 +203,10 @@ export default async function(req) {
       const managers = (users || []).filter((u) => MANAGER_ROLES.includes(u.role) && u.email);
 
       const listHtml = dueItems.slice(0, 25).map((d) =>
-        `<tr><td style="padding:6px 10px;border-bottom:1px solid #e5e7eb;">${d.label}</td>` +
-        `<td style="padding:6px 10px;border-bottom:1px solid #e5e7eb;">${d.title}</td>` +
-        `<td style="padding:6px 10px;border-bottom:1px solid #e5e7eb;">${d.entered}</td>` +
-        `<td style="padding:6px 10px;border-bottom:1px solid #e5e7eb;">${d.thresholds}</td></tr>`
+        `<tr><td style="padding:6px 10px;border-bottom:1px solid #e5e7eb;">${esc(d.label)}</td>` +
+        `<td style="padding:6px 10px;border-bottom:1px solid #e5e7eb;">${esc(d.title)}</td>` +
+        `<td style="padding:6px 10px;border-bottom:1px solid #e5e7eb;">${esc(d.entered)}</td>` +
+        `<td style="padding:6px 10px;border-bottom:1px solid #e5e7eb;">${esc(d.thresholds)}</td></tr>`
       ).join('');
 
       const results = await Promise.allSettled(managers.map((m) => {
@@ -221,7 +224,7 @@ export default async function(req) {
           service.integrations.Core.SendEmail({
             to: m.email,
             subject: `Review & audit due: ${dueItems.length} item(s) need action`,
-            html: `<p>Hi ${m.full_name || 'there'},</p>` +
+            html: `<p>Hi ${esc(m.full_name || 'there')},</p>` +
               `<p>The following items have passed their review thresholds (yellow at 2 months, red at 10 weeks, audit due the day before 3 months since entry or last review):</p>` +
               `<table style="border-collapse:collapse;width:100%;font-size:13px;">` +
               `<tr><th align="left" style="padding:6px 10px;border-bottom:2px solid #7c3bed;">Type</th>` +
@@ -239,7 +242,7 @@ export default async function(req) {
         entity_type: 'ReviewAging',
         record_title: `${dueItems.length} item(s) due for review/audit`,
         performed_by: 'Review Aging Alerts (automated)',
-        details: JSON.stringify({ counts: perEntityCounts, due: dueItems.map((d) => `${d.label}: ${d.title} (${d.thresholds})`).slice(0, 40) }),
+        details: JSON.stringify({ counts: perEntityCounts, due: dueItems.map((d) => `${esc(d.label)}: ${esc(d.title)} (${esc(d.thresholds)})`).slice(0, 40) }),
         timestamp: new Date().toISOString(),
       });
     }

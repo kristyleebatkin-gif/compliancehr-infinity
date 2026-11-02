@@ -1,7 +1,7 @@
 // Print helpers for Visual Boards: open a clean print window with the board content.
 
 // HTML-entity escape for any record-sourced value interpolated into the print markup.
-const esc = (v) => String(v ?? '')
+export const esc = (v) => String(v ?? '')
   .replace(/&/g, '&amp;')
   .replace(/</g, '&lt;')
   .replace(/>/g, '&gt;')

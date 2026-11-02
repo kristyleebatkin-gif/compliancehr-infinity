@@ -1,3 +1,4 @@
+import { hasApprovedAccess } from '../../shared/appAccess.ts';
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
 
 // Employee self-service payroll data: their own payroll details, timesheet
@@ -6,6 +7,7 @@ export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
     const me = await base44.auth.me().catch(() => null);
+    if (!hasApprovedAccess(me)) return Response.json({ error: 'Approved account access required.' }, { status: 403 });
     if (!me) return Response.json({ error: 'Sign in required.' }, { status: 401 });
     const service = base44.asServiceRole;
 

@@ -1,3 +1,4 @@
+import { hasApprovedAccess } from '../../shared/appAccess.ts';
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
 
 // AI line-item generation for the Invoicing and Quote builders.
@@ -13,6 +14,7 @@ export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
     const user = await base44.auth.me().catch(() => null);
+    if (!hasApprovedAccess(user)) return Response.json({ error: 'Approved account access required.' }, { status: 403 });
     if (!user || !ALLOWED_ROLES.includes(user.role)) {
       return Response.json({ error: 'Not authorised to generate billing items.' }, { status: 403 });
     }
