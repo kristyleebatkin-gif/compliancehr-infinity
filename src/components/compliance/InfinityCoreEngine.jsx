@@ -360,8 +360,15 @@ export default function InfinityCoreEngine({ compact = false }) {
   return (
     <section
       id="infinity-core-engine"
-      className="scroll-mt-14 overflow-hidden rounded-2xl bg-white p-2 sm:p-3 space-y-3.5 text-center"
+      className="preserve-island-theme scroll-mt-14 overflow-hidden rounded-2xl p-[3px] shadow-md text-center"
+      style={{ background: TOP_BORDER_GRADIENT }}
     >
+      <div
+        className="rounded-[13px] p-3 space-y-3"
+        style={{
+          background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+        }}
+      >
       {/* Fixed Core Engine Header — 2 Balanced Title Lines + Minimised Badges & Action Buttons */}
       <div
         className="w-full rounded-2xl p-[2.5px] shadow-2xs"
@@ -758,6 +765,7 @@ export default function InfinityCoreEngine({ compact = false }) {
             </div>
           </div>
         )}
+      </div>
       </div>
     </section>
   );

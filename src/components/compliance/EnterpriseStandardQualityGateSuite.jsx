@@ -328,7 +328,21 @@ export default function EnterpriseStandardQualityGateSuite() {
   const currentPreviewConfig = PREVIEW_MODES.find((p) => p.id === previewMode) || PREVIEW_MODES[0];
 
   return (
-    <section className="space-y-3 rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 sm:p-4 shadow-md">
+    <section
+      className="preserve-island-theme overflow-hidden rounded-2xl p-[3px] shadow-md"
+      style={{ background: BRAND_GRADIENT }}
+    >
+      <div
+        className="rounded-[13px] p-3 space-y-3"
+        style={{
+          background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+        }}
+      >
+        <div
+          className="rounded-2xl p-[2px]"
+          style={{ background: BRAND_GRADIENT }}
+        >
+          <div className="space-y-3 rounded-[14px] bg-white p-3 sm:p-4">
       {/* Top Wave Header Banner */}
       <div
         className="app-page-header rounded-2xl p-4 text-white shadow-lg"
@@ -1333,6 +1347,9 @@ export default function EnterpriseStandardQualityGateSuite() {
           </div>
         </div>
       )}
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

@@ -33,60 +33,85 @@ export default function DashboardQuickStart() {
   return (
     <section
       aria-labelledby="dashboard-quick-start"
-      className="rounded-3xl p-[12px] shadow-lg"
+      className="preserve-island-theme overflow-hidden rounded-2xl p-[3px] shadow-md"
       style={{ background: TOP_BORDER_GRADIENT }}
     >
-      <div className="rounded-[16px] bg-white p-4 sm:p-5 text-center space-y-4">
-        <div className="flex flex-wrap items-center justify-center gap-2.5">
-          <span
-            id="dashboard-quick-start"
-            className="inline-flex min-h-[40px] items-center justify-center gap-2.5 rounded-full border-2 border-[#0A2B6D] px-6 py-1.5 text-xs sm:text-sm font-extrabold tracking-wide text-white shadow-sm"
-            style={{ background: getHeaderView(0) }}
-          >
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white/20 text-white">
-              <BookOpen className="h-3.5 w-3.5 text-white" />
-            </span>
-            <span>Quick Start Guide — Finding Your Way Around ComplianceHR Infinity</span>
-          </span>
-
-          <Link
-            to="/user-guides"
-            className="inline-flex min-h-[38px] items-center justify-center gap-2 rounded-full border-2 border-[#0A2B6D] px-4 py-1.5 text-xs font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5"
-            style={{ background: getHeaderView(2) }}
-          >
-            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white bg-white/20 text-white">
-              <BookOpen className="h-3 w-3 text-white" />
-            </span>
-            <span>View Full User Manual</span>
-          </Link>
-        </div>
-
-        <ol className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 text-left">
-          {STEPS.map((step, index) => {
-            const Icon = step.icon;
-            const tile = getTilePalette(index + 1);
-            const sym = getSymbolView(index + 1);
-            return (
-              <li
-                key={step.title}
-                className="flex gap-3 rounded-2xl border-2 border-[#0A2B6D] p-3.5 shadow-sm transition-all hover:-translate-y-0.5"
-                style={{ backgroundColor: tile.bg, color: tile.text }}
+      <div
+        className="rounded-[13px] p-3"
+        style={{
+          background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+        }}
+      >
+        <div
+          className="rounded-2xl p-[2px]"
+          style={{ background: TOP_BORDER_GRADIENT }}
+        >
+          <div className="rounded-[14px] bg-white p-3.5 text-center space-y-3">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <span
+                id="dashboard-quick-start"
+                className="inline-flex min-h-[34px] items-center justify-center gap-2 rounded-full px-4 py-1 text-xs sm:text-sm font-extrabold tracking-wide text-[#0A2B6D] shadow-2xs"
+                style={{
+                  border: '2px solid transparent',
+                  background: `linear-gradient(#ffffff, #ffffff) padding-box, ${TOP_BORDER_GRADIENT} border-box`,
+                  color: '#0A2B6D',
+                }}
               >
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-[#0A2B6D] bg-white shadow-2xs">
-                  <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
-                </div>
-                <div>
-                  <div className="text-sm font-extrabold" style={{ color: tile.text }}>
-                    {index + 1}. {step.title}
-                  </div>
-                  <p className="mt-0.5 text-xs font-bold leading-relaxed" style={{ color: tile.subtext }}>
-                    {step.text}
-                  </p>
-                </div>
-              </li>
-            );
-          })}
-        </ol>
+                <BookOpen className="h-4 w-4 text-[#0072FF]" />
+                <span>◉ Quick Start Guide — Finding Your Way Around ComplianceHR Infinity</span>
+              </span>
+
+              <Link
+                to="/user-guides"
+                className="inline-flex min-h-[32px] items-center justify-center gap-1.5 rounded-full px-3.5 py-1 text-xs font-extrabold text-[#0A2B6D] shadow-2xs transition-all hover:opacity-90"
+                style={{
+                  border: '2px solid transparent',
+                  background: `linear-gradient(#ffffff, #ffffff) padding-box, ${TOP_BORDER_GRADIENT} border-box`,
+                  color: '#0A2B6D',
+                }}
+              >
+                <BookOpen className="h-3.5 w-3.5 text-[#5A00D6]" />
+                <span>◉ View Full User Manual</span>
+              </Link>
+            </div>
+
+            <ol className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-4 text-left">
+              {STEPS.map((step, index) => {
+                const Icon = step.icon;
+                const sym = getSymbolView(index + 1);
+                return (
+                  <li
+                    key={step.title}
+                    className="flex gap-2.5 rounded-xl p-3 shadow-2xs"
+                    style={{
+                      border: '2px solid transparent',
+                      background: `linear-gradient(#ffffff, #ffffff) padding-box, ${TOP_BORDER_GRADIENT} border-box`,
+                      color: '#0A2B6D',
+                    }}
+                  >
+                    <div
+                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white shadow-2xs"
+                      style={{
+                        border: '2px solid transparent',
+                        background: `linear-gradient(#ffffff, #ffffff) padding-box, ${TOP_BORDER_GRADIENT} border-box`,
+                      }}
+                    >
+                      <Icon className="h-4 w-4" style={{ color: sym.iconColor }} />
+                    </div>
+                    <div>
+                      <div className="text-xs font-extrabold text-[#0A2B6D]" style={{ color: '#0A2B6D' }}>
+                        <span style={{ color: sym.iconColor }}>◉</span> {index + 1}. {step.title}
+                      </div>
+                      <p className="mt-0.5 text-[11px] font-bold leading-relaxed text-[#0A2B6D]" style={{ color: '#0A2B6D' }}>
+                        {step.text}
+                      </p>
+                    </div>
+                  </li>
+                );
+              })}
+            </ol>
+          </div>
+        </div>
       </div>
     </section>
   );

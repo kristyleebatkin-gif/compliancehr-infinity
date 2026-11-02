@@ -442,56 +442,91 @@ export default function Universal360ProfileFramework({
     }
   };
 
+  const APP_BORDER_GRADIENT =
+    'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)';
+
   return (
-    <section className="overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white shadow-md">
-      {/* Top Banner */}
+    <section
+      className="preserve-island-theme overflow-hidden rounded-2xl p-[3px] shadow-md"
+      style={{ background: APP_BORDER_GRADIENT }}
+    >
       <div
-        className="app-section-card-header flex flex-wrap items-center justify-between gap-3 px-4 py-3 text-white"
-        style={{ background: HEADER_GRADIENT }}
+        className="rounded-[13px] p-3 space-y-3"
+        style={{
+          background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+        }}
       >
-        <div className="min-w-0">
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white">
-            <Layers className="h-3 w-3 text-[#00C6FF]" />
-            <span>Universal 360° Profile, 12-Step Master Workflow &amp; 14-Point Automation Framework</span>
+        {/* Top Banner White Section Inside Dark Blue Surround */}
+        <div
+          className="rounded-2xl p-[2px] shadow-2xs"
+          style={{ background: APP_BORDER_GRADIENT }}
+        >
+          <div className="flex flex-wrap items-center justify-between gap-3 rounded-[14px] bg-white px-4 py-3 text-[#0A2B6D]">
+            <div className="min-w-0">
+              <div
+                className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#0A2B6D]"
+                style={{
+                  border: '2px solid transparent',
+                  background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+                }}
+              >
+                <Layers className="h-3 w-3 text-[#0072FF]" />
+                <span style={{ color: '#0A2B6D' }}>Universal 360° Profile, 12-Step Master Workflow &amp; 14-Point Automation Framework</span>
+              </div>
+              <h3 className="mt-1 font-editorial text-base sm:text-lg font-extrabold text-[#0A2B6D]" style={{ color: '#0A2B6D' }}>
+                <span style={{ color: '#5A00D6' }}>◉</span> Zero-Hop 360° Operational Profiles — Every Person, Risk, Incident, Standard, Audit, Document &amp; Supplier in One Place
+              </h3>
+              <p className="text-[11px] font-semibold text-[#0A2B6D]" style={{ color: '#0A2B6D' }}>
+                Never jump between modules: inspect all 19 Universal 360° layers, domain attributes, linked evidence, compliance standards, and trigger 1-click Master Automation.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-1.5 shrink-0">
+              <Button
+                size="sm"
+                type="button"
+                disabled={runningAutomation}
+                onClick={triggerMasterAutomation}
+                className="rounded-full bg-white text-[#0A2B6D] font-extrabold text-xs"
+                style={{
+                  border: '2px solid transparent',
+                  background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+                  color: '#0A2B6D',
+                }}
+              >
+                <Zap className="mr-1 h-3.5 w-3.5 text-[#FF2E9A]" />
+                <span style={{ color: '#0A2B6D' }}>
+                  {runningAutomation ? 'Creating review task…' : 'Create review task'}
+                </span>
+              </Button>
+              {!focusRecord && (
+                <Button
+                  size="sm"
+                  type="button"
+                  variant="outline"
+                  onClick={load360Data}
+                  disabled={loading}
+                  className="rounded-full text-[#0A2B6D] text-xs font-extrabold"
+                  style={{
+                    border: '2px solid transparent',
+                    background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+                    color: '#0A2B6D',
+                  }}
+                >
+                  <RefreshCw className={`mr-1 h-3.5 w-3.5 text-[#0072FF] ${loading ? 'animate-spin' : ''}`} />
+                  <span style={{ color: '#0A2B6D' }}>Sync 360° Graph</span>
+                </Button>
+              )}
+            </div>
           </div>
-          <h3 className="mt-1 font-editorial text-base sm:text-lg font-extrabold text-white">
-            Zero-Hop 360° Operational Profiles — Every Person, Risk, Incident, Standard, Audit, Document &amp; Supplier in One Place
-          </h3>
-          <p className="text-[11px] font-semibold text-white/95">
-            Never jump between modules: inspect all 19 Universal 360° layers, domain attributes, linked evidence, compliance standards, and trigger 1-click Master Automation.
-          </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-1.5 shrink-0">
-          <Button
-            size="sm"
-            type="button"
-            disabled={runningAutomation}
-            onClick={triggerMasterAutomation}
-            className="bg-white text-[#0A2B6D] hover:bg-slate-100 font-extrabold text-xs border border-white"
-          >
-            <Zap className="mr-1 h-3.5 w-3.5 text-[#FF2E9A]" />
-            <span style={{ color: '#0A2B6D' }}>
-              {runningAutomation ? 'Creating review task…' : 'Create review task'}
-            </span>
-          </Button>
-          {!focusRecord && (
-            <Button
-              size="sm"
-              type="button"
-              variant="outline"
-              onClick={load360Data}
-              disabled={loading}
-              className="border-white/50 bg-white/15 text-white hover:bg-white/25 text-xs font-extrabold"
-            >
-              <RefreshCw className={`mr-1 h-3.5 w-3.5 ${loading ? 'animate-spin' : ''}`} />
-              Sync 360° Graph
-            </Button>
-          )}
-        </div>
-      </div>
-
-      <div className="p-4 sm:p-6 space-y-5">
+        {/* Body White Section Inside Dark Blue Surround */}
+        <div
+          className="rounded-2xl p-[2px] shadow-2xs"
+          style={{ background: APP_BORDER_GRADIENT }}
+        >
+          <div className="rounded-[14px] bg-white p-4 sm:p-5 space-y-5">
         <div role="status" aria-live="polite" className="rounded-xl border border-[#C084FC] bg-[#F6F0FF] p-3 text-xs font-semibold text-[#0A2B6D]">
           {actionResult || 'The automation button currently creates one review task and an audit entry. The 14 outputs, workflow steps and related sections below describe the framework; their execution and evidence are not verified here.'}
         </div>
@@ -773,6 +808,8 @@ export default function Universal360ProfileFramework({
                 </span>
               ))}
             </div>
+          </div>
+        </div>
           </div>
         </div>
       </div>

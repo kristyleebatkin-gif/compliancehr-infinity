@@ -129,70 +129,112 @@ export default function OrganisationHealthScoreFramework({ onScoresLoaded }) {
       }))
     : [];
 
+  const APP_BORDER_GRADIENT =
+    'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)';
+
   return (
-    <section className="overflow-hidden rounded-xl border-2 border-[#0A2B6D] bg-white shadow-sm">
-      {/* Header Banner — 50% Compact */}
+    <section
+      className="preserve-island-theme overflow-hidden rounded-2xl p-[3px] shadow-md"
+      style={{ background: APP_BORDER_GRADIENT }}
+    >
       <div
-        className="flex flex-wrap items-center justify-between gap-2 px-3 py-1.5 text-white"
+        className="rounded-[13px] p-3 space-y-3"
         style={{
-          background:
-            'linear-gradient(120deg, #0072FF 0%, #0A2B6D 18%, #5A00D6 45%, #A100FF 72%, #FF2E9A 100%)',
+          background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
         }}
       >
-        <div className="min-w-0">
-          <div className="inline-flex items-center gap-1 rounded-full bg-white/20 px-2 py-0 text-[8.5px] font-extrabold uppercase tracking-wider text-white">
-            <Activity className="h-2.5 w-2.5 text-[#00C6FF]" />
-            <span>Organisation Health &amp; 5-Score Executive Framework</span>
+        {/* Header White Section Inside Dark Blue Surround */}
+        <div
+          className="rounded-2xl p-[2px] shadow-2xs"
+          style={{ background: APP_BORDER_GRADIENT }}
+        >
+          <div className="flex flex-wrap items-center justify-between gap-2 rounded-[14px] bg-white px-3.5 py-2.5 text-[#0A2B6D]">
+            <div className="min-w-0">
+              <div
+                className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]"
+                style={{
+                  border: '2px solid transparent',
+                  background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+                }}
+              >
+                <Activity className="h-3 w-3 text-[#0072FF]" />
+                <span style={{ color: '#0A2B6D' }}>Organisation Health &amp; 5-Score Executive Framework</span>
+              </div>
+              <h2 className="mt-1 font-editorial text-xs sm:text-sm font-extrabold text-[#0A2B6D] leading-tight" style={{ color: '#0A2B6D' }}>
+                <span style={{ color: '#5A00D6' }}>◉</span> Executive Health Scorecards — Click Any Score to Inspect Formula, Weightings &amp; Trends
+              </h2>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-1.5">
+              <Button
+                size="sm"
+                type="button"
+                onClick={handleRecordSnapshot}
+                disabled={recordingSnapshot || loading}
+                className="min-h-7 h-7 rounded-full px-2.5 py-0.5 text-[#0A2B6D] font-extrabold text-[10px]"
+                style={{
+                  border: '2px solid transparent',
+                  background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+                  color: '#0A2B6D',
+                }}
+              >
+                <Camera className="mr-1 h-3 w-3 text-[#0072FF]" />
+                <span style={{ color: '#0A2B6D' }}>{recordingSnapshot ? 'Recording…' : 'Snapshot'}</span>
+              </Button>
+              <Button
+                size="sm"
+                type="button"
+                onClick={handleExportCsv}
+                disabled={loading || !data}
+                className="min-h-7 h-7 rounded-full px-2.5 py-0.5 text-[#0A2B6D] font-extrabold text-[10px]"
+                style={{
+                  border: '2px solid transparent',
+                  background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+                  color: '#0A2B6D',
+                }}
+              >
+                <Download className="mr-1 h-3 w-3 text-[#5A00D6]" />
+                <span style={{ color: '#0A2B6D' }}>CSV</span>
+              </Button>
+              <Button
+                size="sm"
+                type="button"
+                onClick={() => setShowBlueprint((v) => !v)}
+                className="min-h-7 h-7 rounded-full px-2.5 py-0.5 text-[#0A2B6D] font-extrabold text-[10px]"
+                style={{
+                  border: '2px solid transparent',
+                  background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+                  color: '#0A2B6D',
+                }}
+              >
+                <Layers className="mr-1 h-3 w-3 text-[#FF2E9A]" />
+                <span style={{ color: '#0A2B6D' }}>{showBlueprint ? 'Hide Blueprint' : 'Blueprint'}</span>
+              </Button>
+              <Button
+                size="sm"
+                type="button"
+                onClick={refreshScores}
+                disabled={loading}
+                className="min-h-7 h-7 rounded-full px-2.5 py-0.5 text-[#0A2B6D] font-extrabold text-[10px]"
+                style={{
+                  border: '2px solid transparent',
+                  background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+                  color: '#0A2B6D',
+                }}
+              >
+                <RefreshCw className={`mr-1 h-3 w-3 text-[#0072FF] ${loading ? 'animate-spin' : ''}`} />
+                <span style={{ color: '#0A2B6D' }}>Refresh</span>
+              </Button>
+            </div>
           </div>
-          <h2 className="mt-0.5 font-editorial text-xs sm:text-sm font-extrabold text-white leading-tight">
-            Executive Health Scorecards — Click Any Score to Inspect Formula, Weightings &amp; Trends
-          </h2>
         </div>
 
-        <div className="flex flex-wrap items-center gap-1">
-          <Button
-            size="sm"
-            type="button"
-            onClick={handleRecordSnapshot}
-            disabled={recordingSnapshot || loading}
-            className="min-h-6 h-6 border border-white/35 bg-white/15 px-2 py-0.5 text-white hover:bg-white/25 font-extrabold text-[9.5px]"
-          >
-            <Camera className="mr-1 h-2.5 w-2.5 text-white" />
-            <span>{recordingSnapshot ? 'Recording…' : 'Snapshot'}</span>
-          </Button>
-          <Button
-            size="sm"
-            type="button"
-            onClick={handleExportCsv}
-            disabled={loading || !data}
-            className="min-h-6 h-6 border border-white/35 bg-white/15 px-2 py-0.5 text-white hover:bg-white/25 font-extrabold text-[9.5px]"
-          >
-            <Download className="mr-1 h-2.5 w-2.5 text-white" />
-            <span>CSV</span>
-          </Button>
-          <Button
-            size="sm"
-            type="button"
-            onClick={() => setShowBlueprint((v) => !v)}
-            className="min-h-6 h-6 border border-white/35 bg-white/15 px-2 py-0.5 text-white hover:bg-white/25 font-extrabold text-[9.5px]"
-          >
-            <Layers className="mr-1 h-2.5 w-2.5 text-white" />
-            <span>{showBlueprint ? 'Hide Blueprint' : 'Blueprint'}</span>
-          </Button>
-          <Button
-            size="sm"
-            type="button"
-            onClick={refreshScores}
-            disabled={loading}
-            className="min-h-6 h-6 border border-white/35 bg-white/15 px-2 py-0.5 text-white hover:bg-white/25 font-extrabold text-[9.5px]"
-          >
-            <RefreshCw className={`mr-1 h-2.5 w-2.5 text-white ${loading ? 'animate-spin' : ''}`} />
-            <span>Refresh</span>
-          </Button>
-        </div>
-      </div>
-
-      <div className="p-2 space-y-2">
+        {/* Body White Section Inside Dark Blue Surround */}
+        <div
+          className="rounded-2xl p-[2px] shadow-2xs"
+          style={{ background: APP_BORDER_GRADIENT }}
+        >
+          <div className="rounded-[14px] bg-white p-3 space-y-2.5">
         {/* 5 Interactive Executive Score Cards (50% Compact) */}
         <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 lg:grid-cols-5">
           {SCORE_ORDER.map(({ key, icon: Icon }) => {
@@ -325,6 +367,8 @@ export default function OrganisationHealthScoreFramework({ onScoresLoaded }) {
 
         {/* Collapsible 8-Prompt Blueprint & Master Audit */}
         {showBlueprint && <EnterpriseArchitectureMasterBlueprint />}
+          </div>
+        </div>
       </div>
 
       {/* Drill-Down Modal */}

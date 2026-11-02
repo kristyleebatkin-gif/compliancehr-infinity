@@ -95,7 +95,7 @@ export default function Dashboard() {
     : activeSuite === suiteId || activeSuite === 'all';
 
   return (
-    <div className="bright-dashboard mx-auto w-full max-w-[1440px] px-3 py-2 sm:px-5 lg:px-6 space-y-3">
+    <div className="bright-dashboard mx-auto w-full max-w-[1440px] space-y-3">
       {/* Main Screen Hybrid: Premium Remote + Mission Control + Enterprise Dashboard (AI CORE + 8 Glowing Circular Control Pods) */}
       <MissionControlAiCoreHub
         activeSuite={activeSuite}
@@ -190,13 +190,32 @@ export default function Dashboard() {
         <ExecutiveWallScene showAllModulesMinimised={true} />
       )}
 
-      {/* Dashboard Footer Logo Area — Matching Top Header Logo Area (White Background Outside Border to Side of Page) */}
+      {/* Dashboard Footer Logo Area — White Section Inside Dark Blue Surround Between Borders and Side Borders */}
       <footer
         aria-label="Dashboard brand footer"
-        className="rounded-2xl bg-white px-4 py-3 text-center shadow-md"
+        className="preserve-island-theme overflow-hidden rounded-2xl p-[3px] shadow-md"
+        style={{
+          background:
+            'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+        }}
       >
-        <div className="mx-auto flex max-w-[1440px] justify-center">
-          <BrandLogoLockup size="md" theme="light" showSlogan={true} />
+        <div
+          className="rounded-[13px] p-3"
+          style={{
+            background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+          }}
+        >
+          <div
+            className="rounded-2xl p-[2px]"
+            style={{
+              background:
+                'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+            }}
+          >
+            <div className="mx-auto flex max-w-[1440px] justify-center rounded-[14px] bg-white px-4 py-3 text-center">
+              <BrandLogoLockup size="md" theme="light" showSlogan={true} />
+            </div>
+          </div>
         </div>
       </footer>
     </div>

@@ -501,7 +501,19 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
   ).length;
 
   return (
-    <section className="overflow-hidden rounded-2xl bg-white p-2 sm:p-3 space-y-3">
+    <section
+      className="preserve-island-theme overflow-hidden rounded-2xl p-[3px] shadow-md"
+      style={{
+        background:
+          'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
+      }}
+    >
+      <div
+        className="rounded-[13px] p-3 space-y-3"
+        style={{
+          background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+        }}
+      >
       {/* ==================== MASTER HEADER BANNER — ENLARGED HEADER, BLACK SUBTITLE, MATCHED-LENGTH REFRESH/EXPORT & 1-LINE 17 CATEGORIES ==================== */}
       <div
         className="w-full rounded-2xl p-[4px] shadow-sm"
@@ -917,6 +929,7 @@ export default function InfinityControlCentreMasterSuite({ initialTab = 'control
           handleRecordManagementAcceptance={handleRecordManagementAcceptance}
         />
       )}
+      </div>
     </section>
   );
 }

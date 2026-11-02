@@ -573,8 +573,15 @@ export default function InfinityOneClickOperations({ compact = false }) {
   return (
     <section
       id="infinity-one-click-operations"
-      className="scroll-mt-14 overflow-hidden rounded-xl bg-white p-1.5 sm:p-2 space-y-2 text-center"
+      className="preserve-island-theme scroll-mt-14 overflow-hidden rounded-2xl p-[3px] shadow-md text-center"
+      style={{ background: TOP_BORDER_GRADIENT }}
     >
+      <div
+        className="rounded-[13px] p-3 space-y-3"
+        style={{
+          background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+        }}
+      >
       {/* 1. 50% Smaller Top Header: "Infinity One-Click Operations" + Glowing White Lights */}
       <div
         className="w-full rounded-xl p-[2.5px] shadow-2xs"
@@ -875,6 +882,7 @@ export default function InfinityOneClickOperations({ compact = false }) {
             ))}
           </div>
         </div>
+      </div>
       </div>
     </section>
   );
