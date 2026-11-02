@@ -299,35 +299,31 @@ export default function EnterpriseWorkspaceBar({
     <>
       <div className="mx-auto w-full max-w-[1440px] px-3 pt-1 sm:px-5 lg:px-6">
         <div
-          className="preserve-island-theme overflow-hidden rounded-2xl border-2 border-[#0A2B6D] p-1 shadow-md"
+          className="preserve-island-theme overflow-hidden rounded-2xl p-[2.5px] shadow-md"
           style={{
             background:
-              'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+              'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
           }}
         >
-          <div
-            className="h-0.5 w-full rounded-t-xl"
-            style={{
-              background:
-                'linear-gradient(120deg, #0072FF 0%, #0A2B6D 18%, #5A00D6 42%, #A100FF 68%, #FF2E9A 100%)',
-            }}
-          />
-          <div className="flex flex-wrap items-center justify-between gap-1 rounded-xl border-2 border-[#5A00D6] bg-white px-2.5 py-1">
-          {/* Left: Interactive Enterprise Breadcrumbs + Save View Bookmark */}
+          <div className="flex flex-wrap items-center justify-between gap-1.5 rounded-[13.5px] bg-white px-2.5 py-1.5">
+          {/* Left: Interactive Enterprise Breadcrumbs + Save View Bookmark (Every Word in White Section Has an App Design Coloured Border) */}
           <nav
             aria-label="Breadcrumb"
-            className="flex min-w-0 flex-wrap items-center gap-1 text-[11px] font-bold text-[#0A2B6D]"
+            className="flex min-w-0 flex-wrap items-center gap-1 text-[11px] font-extrabold text-[#0A2B6D]"
           >
             <Link
               to="/"
-              className="inline-flex items-center gap-1 rounded-md border border-slate-200 bg-slate-50 px-1.5 py-0.5 text-[#0A2B6D] transition hover:bg-[#F5F0FF] hover:text-[#0072FF]"
+              className="inline-flex items-center gap-1 rounded-full border-2 border-[#0072FF] bg-white px-2.5 py-0.5 text-[#0A2B6D] transition hover:bg-[#F5F0FF]"
+              style={{ color: '#0A2B6D' }}
             >
+              <span style={{ color: '#0072FF' }}>◉</span>
               <span>Landing</span>
             </Link>
-            <ChevronRight className="h-3 w-3 shrink-0 text-slate-400" />
+            <ChevronRight className="h-3 w-3 shrink-0 text-[#5A00D6]" />
             <Link
               to="/dashboard"
-              className="inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[#0A2B6D] transition hover:bg-[#F5F0FF] hover:text-[#0072FF]"
+              className="inline-flex items-center gap-1 rounded-full border-2 border-[#5A00D6] bg-white px-2.5 py-0.5 text-[#0A2B6D] transition hover:bg-[#F5F0FF]"
+              style={{ color: '#0A2B6D' }}
             >
               <Home className="h-3 w-3 shrink-0 text-[#0072FF]" />
               <span>Workspace</span>
@@ -335,25 +331,34 @@ export default function EnterpriseWorkspaceBar({
 
             {matchedGroup && (
               <>
-                <ChevronRight className="h-3 w-3 shrink-0 text-slate-400" />
-                <span className="rounded-md bg-[#F5F0FF] px-1.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
-                  {matchedGroup.label}
+                <ChevronRight className="h-3 w-3 shrink-0 text-[#5A00D6]" />
+                <span
+                  className="inline-flex items-center gap-1 rounded-full border-2 border-[#A100FF] bg-white px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#0A2B6D]"
+                  style={{ color: '#0A2B6D' }}
+                >
+                  <span style={{ color: '#A100FF' }}>◉</span>
+                  <span>{matchedGroup.label}</span>
                 </span>
               </>
             )}
 
-            <ChevronRight className="h-3 w-3 shrink-0 text-slate-400" />
+            <ChevronRight className="h-3 w-3 shrink-0 text-[#5A00D6]" />
             <span
-              className="truncate font-extrabold text-[#0A2B6D]"
+              className="inline-flex items-center gap-1 rounded-full border-2 border-[#FF2E9A] bg-white px-2.5 py-0.5 font-extrabold text-[#0A2B6D]"
               aria-current="page"
+              style={{ color: '#0A2B6D' }}
             >
-              {currentLabel || matchedModule?.label || 'Dashboard'}
+              <span style={{ color: '#FF2E9A' }}>◉</span>
+              <span>{currentLabel || matchedModule?.label || 'Dashboard'}</span>
             </span>
 
             {activeTabParam && (
               <>
-                <ChevronRight className="h-3 w-3 shrink-0 text-slate-400" />
-                <span className="rounded-full border border-[#C084FC]/60 bg-white px-2 py-0.5 text-[10px] font-extrabold capitalize text-[#5A00D6]">
+                <ChevronRight className="h-3 w-3 shrink-0 text-[#5A00D6]" />
+                <span
+                  className="rounded-full border-2 border-[#0072FF] bg-white px-2.5 py-0.5 text-[10px] font-extrabold capitalize text-[#0A2B6D]"
+                  style={{ color: '#0A2B6D' }}
+                >
                   {activeTabParam.replace(/[-_]/g, ' ')}
                 </span>
               </>
@@ -364,14 +369,15 @@ export default function EnterpriseWorkspaceBar({
               type="button"
               onClick={toggleSaveCurrentView}
               title={isCurrentSaved ? 'Remove from Saved Views' : 'Pin to Saved Views'}
-              className={`ml-1 inline-flex items-center gap-1 rounded-md border px-1.5 py-0.5 text-[10px] font-extrabold transition ${
+              className={`ml-1 inline-flex items-center gap-1 rounded-full border-2 px-2.5 py-0.5 text-[10px] font-extrabold transition ${
                 isCurrentSaved
-                  ? 'border-[#5A00D6] bg-[#F5F0FF] text-[#5A00D6]'
-                  : 'border-slate-200 bg-white text-slate-600 hover:border-[#0072FF] hover:text-[#0072FF]'
+                  ? 'border-[#5A00D6] bg-[#F5F0FF] text-[#0A2B6D]'
+                  : 'border-[#5A00D6] bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
               }`}
+              style={{ color: '#0A2B6D' }}
             >
               <Bookmark
-                className="h-2.5 w-2.5"
+                className="h-2.5 w-2.5 text-[#5A00D6]"
                 style={{ fill: isCurrentSaved ? '#5A00D6' : 'none' }}
               />
               <span className="hidden md:inline">{isCurrentSaved ? 'Saved' : 'Save View'}</span>
@@ -383,11 +389,12 @@ export default function EnterpriseWorkspaceBar({
             {/* Network / Sync Status Badge */}
             <span
               title={isOnline ? 'Workspace connected & synced' : 'Offline mode — changes queued'}
-              className={`hidden xl:inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-extrabold ${
+              className={`hidden xl:inline-flex items-center gap-1 rounded-full border-2 px-2.5 py-0.5 text-[10px] font-extrabold ${
                 isOnline
-                  ? 'border-slate-200 bg-white text-[#0A2B6D]'
-                  : 'border-[#FF2E9A] bg-[#FF2E9A]/10 text-[#FF2E9A]'
+                  ? 'border-[#0072FF] bg-white text-[#0A2B6D]'
+                  : 'border-[#FF2E9A] bg-white text-[#0A2B6D]'
               }`}
+              style={{ color: '#0A2B6D' }}
             >
               {isOnline ? (
                 <Wifi className="h-2.5 w-2.5 text-[#0072FF]" />
@@ -406,12 +413,13 @@ export default function EnterpriseWorkspaceBar({
                   setRecentDropdownOpen(false);
                 }}
                 title="Saved Views"
-                className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2 py-1 text-[11px] font-extrabold text-[#0A2B6D] shadow-2xs transition hover:border-[#5A00D6] hover:text-[#5A00D6]"
+                className="inline-flex items-center gap-1 rounded-full border-2 border-[#5A00D6] bg-white px-2.5 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D] shadow-2xs transition hover:bg-[#F5F0FF]"
+                style={{ color: '#0A2B6D' }}
               >
                 <Bookmark className="h-3 w-3 text-[#5A00D6]" />
                 <span className="hidden sm:inline">Saved</span>
                 {savedViews.length > 0 && (
-                  <span className="rounded-full bg-[#F5F0FF] px-1.5 text-[9.5px] font-black text-[#5A00D6]">
+                  <span className="rounded-full border border-[#5A00D6] bg-[#F5F0FF] px-1.5 text-[9.5px] font-black text-[#5A00D6]">
                     {savedViews.length}
                   </span>
                 )}
@@ -479,7 +487,8 @@ export default function EnterpriseWorkspaceBar({
                   setSavedDropdownOpen(false);
                 }}
                 title="Recently Visited Pages"
-                className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2 py-1 text-[11px] font-extrabold text-[#0A2B6D] shadow-2xs transition hover:border-[#0072FF] hover:text-[#0072FF]"
+                className="inline-flex items-center gap-1 rounded-full border-2 border-[#0072FF] bg-white px-2.5 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D] shadow-2xs transition hover:bg-[#F5F0FF]"
+                style={{ color: '#0A2B6D' }}
               >
                 <History className="h-3 w-3 text-[#0072FF]" />
                 <span className="hidden md:inline">Recent</span>
@@ -522,11 +531,12 @@ export default function EnterpriseWorkspaceBar({
                 window.dispatchEvent(new CustomEvent('chr-open-command-palette'))
               }
               title="Open Command Palette (Ctrl+K)"
-              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-extrabold text-[#0A2B6D] shadow-2xs transition hover:border-[#0072FF] hover:text-[#0072FF]"
+              className="inline-flex items-center gap-1.5 rounded-full border-2 border-[#A100FF] bg-white px-2.5 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D] shadow-2xs transition hover:bg-[#F5F0FF]"
+              style={{ color: '#0A2B6D' }}
             >
-              <Command className="h-3 w-3 text-[#0072FF]" />
+              <Command className="h-3 w-3 text-[#A100FF]" />
               <span className="hidden sm:inline">Command</span>
-              <kbd className="rounded border border-slate-200 bg-slate-50 px-1 py-0.2 text-[9.5px] font-extrabold text-[#5A00D6]">
+              <kbd className="rounded border border-[#A100FF] bg-white px-1 py-0 text-[9px] font-extrabold text-[#5A00D6]">
                 ⌘K
               </kbd>
             </button>
@@ -540,15 +550,15 @@ export default function EnterpriseWorkspaceBar({
                 )
               }
               title="Guided Onboarding & Tour"
-              className={`inline-flex items-center gap-1 rounded-lg border px-2 py-1 text-[11px] font-extrabold shadow-2xs transition ${
+              className={`inline-flex items-center gap-1 rounded-full border-2 border-[#FF2E9A] px-2.5 py-0.5 text-[10.5px] font-extrabold shadow-2xs transition ${
                 drawerMode === 'onboarding'
-                  ? 'border-[#0A2B6D] bg-[#0A2B6D] text-white'
-                  : 'border-slate-200 bg-white text-[#0A2B6D] hover:border-[#0072FF]'
+                  ? 'bg-[#FF2E9A] text-white'
+                  : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
               }`}
             >
-              <Compass className="h-3 w-3 text-[#FF2E9A]" />
+              <Compass className={`h-3 w-3 ${drawerMode === 'onboarding' ? 'text-white' : 'text-[#FF2E9A]'}`} />
               <span className="hidden lg:inline">Guide</span>
-              <span className="rounded-full bg-[#F5F0FF] px-1.5 text-[9.5px] font-black text-[#5A00D6]">
+              <span className="rounded-full border border-[#5A00D6] bg-[#F5F0FF] px-1.5 text-[9px] font-black text-[#5A00D6]">
                 {completedOnboarding.length}/{ONBOARDING_STEPS.length}
               </span>
             </button>
@@ -560,15 +570,15 @@ export default function EnterpriseWorkspaceBar({
                 setDrawerMode((prev) => (prev === 'activity' ? null : 'activity'))
               }
               title="Live Activity Feed & Audit Logging"
-              className={`inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-[11px] font-extrabold shadow-2xs transition ${
+              className={`inline-flex items-center gap-1.5 rounded-full border-2 border-[#5A00D6] px-2.5 py-0.5 text-[10.5px] font-extrabold shadow-2xs transition ${
                 drawerMode === 'activity'
-                  ? 'border-[#0A2B6D] bg-[#0A2B6D] text-white'
-                  : 'border-slate-200 bg-white text-[#0A2B6D] hover:border-[#5A00D6] hover:text-[#5A00D6]'
+                  ? 'bg-[#5A00D6] text-white'
+                  : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
               }`}
             >
               <Activity
                 className={`h-3 w-3 ${
-                  drawerMode === 'activity' ? 'text-[#00C6FF]' : 'text-[#5A00D6]'
+                  drawerMode === 'activity' ? 'text-white' : 'text-[#5A00D6]'
                 }`}
               />
               <span>Activity &amp; Audit</span>

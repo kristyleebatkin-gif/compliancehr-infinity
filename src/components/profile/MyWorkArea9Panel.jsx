@@ -139,47 +139,72 @@ export default function MyWorkArea9Panel({ compact = false }) {
   const currentMeta = MY_WORK_11_STREAMS.find((s) => s.id === activeStream) || MY_WORK_11_STREAMS[0];
   const items = streamMap[activeStream] || [];
 
+  const APP_BORDER_GRADIENT =
+    'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)';
+
   return (
     <section
       aria-label={`My Workspace — ${MY_WORK_11_STREAMS.length} Personalised Operational & Compliance Streams`}
-      className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-4 shadow-sm space-y-3"
+      className="preserve-island-theme rounded-2xl p-[3px] shadow-md"
+      style={{ background: APP_BORDER_GRADIENT }}
     >
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-2.5">
-        <div>
-          <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
-            My Workspace &amp; My Compliance Standard · {MY_WORK_11_STREAMS.length} Personalised Streams · 1-Click Completion
-          </span>
-          <h3 className="text-sm sm:text-base font-extrabold text-[#0A2B6D]">
-            My Tasks · Actions · Reviews · Approvals · Communications · Skills Assessments · Certifications · Consents · Documents · Schedule · Compliance
-          </h3>
-        </div>
-        <div className="flex items-center gap-1.5">
-          {user?.email && (
-            <span className="rounded-full bg-[#F5F0FF] px-2.5 py-1 text-[10px] font-extrabold text-[#5A00D6]">
-              {user.full_name || user.email}
-            </span>
-          )}
-          <Button
-            size="sm"
-            variant="outline"
-            onClick={loadWorkArea}
-            disabled={loading}
-            className="h-7 px-2.5 text-[11px] font-extrabold border-[#0A2B6D]"
+      <div className="rounded-[13px] bg-white p-3.5 space-y-3">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          {/* Main Header Inside White Section: App Design Coloured Border + White Background + Dark Blue -> App Colour Writing */}
+          <div
+            className="rounded-2xl p-[2px] shadow-2xs"
+            style={{ background: APP_BORDER_GRADIENT }}
           >
-            <RefreshCw className={`mr-1 h-3 w-3 ${loading ? 'animate-spin' : ''}`} />
-            Sync
-          </Button>
-          <Button
-            size="sm"
-            asChild
-            className="h-7 px-2.5 text-[11px] font-extrabold bg-[#0A2B6D] text-white"
-          >
-            <Link to={currentMeta.href}>
-              Open {currentMeta.label.replace('My ', '')} <ArrowUpRight className="ml-1 h-3 w-3" />
-            </Link>
-          </Button>
+            <div className="rounded-[14px] bg-white px-3.5 py-2">
+              <div className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                <CheckSquare className="h-3.5 w-3.5 text-[#0072FF]" />
+                <span>
+                  My Workspace &amp; My Compliance Standard · {MY_WORK_11_STREAMS.length} Personalised Streams · 1-Click Completion
+                </span>
+              </div>
+              <h3
+                className="mt-0.5 text-sm sm:text-base font-extrabold bg-clip-text text-transparent"
+                style={{
+                  backgroundImage:
+                    'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
+                }}
+              >
+                ◉ My Tasks · Actions · Reviews · Approvals · Communications · Skills · Certifications · Consents · Documents · Schedule · Compliance
+              </h3>
+            </div>
+          </div>
+
+          {/* Small Header Tiles with App Design Coloured Borders on White */}
+          <div className="flex flex-wrap items-center gap-1.5">
+            {user?.email && (
+              <span className="inline-flex items-center gap-1 rounded-full border-2 border-[#5A00D6] bg-white px-2.5 py-1 text-[10px] font-extrabold text-[#0A2B6D]">
+                <span style={{ color: '#5A00D6' }}>◉</span>
+                <span style={{ color: '#0A2B6D' }}>{user.full_name || user.email}</span>
+              </span>
+            )}
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={loadWorkArea}
+              disabled={loading}
+              className="h-7 rounded-full border-2 border-[#0072FF] bg-white px-3 text-[11px] font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
+              style={{ borderColor: '#0072FF', color: '#0A2B6D' }}
+            >
+              <RefreshCw className={`mr-1 h-3 w-3 text-[#0072FF] ${loading ? 'animate-spin' : ''}`} />
+              <span style={{ color: '#0A2B6D' }}>Sync</span>
+            </Button>
+            <Button
+              size="sm"
+              asChild
+              className="h-7 rounded-full px-3 text-[11px] font-extrabold text-white"
+              style={{ background: APP_BORDER_GRADIENT }}
+            >
+              <Link to={currentMeta.href}>
+                Open {currentMeta.label.replace('My ', '')} <ArrowUpRight className="ml-1 h-3 w-3" />
+              </Link>
+            </Button>
+          </div>
         </div>
-      </div>
 
       {/* 11 ILLUMINATED MODULAR STREAM TILES (TOP 1/4 WHITE + BOTTOM 3/4 DARK BLUE) ON DARK BLUE CHASSIS */}
       <div
@@ -226,8 +251,11 @@ export default function MyWorkArea9Panel({ compact = false }) {
                       <Icon className="h-3 w-3 shrink-0" style={{ color: iconColor }} />
                     </span>
                     <span
-                      className="min-w-0 text-[9.5px] font-extrabold leading-tight text-[#0A2B6D]"
-                      style={{ color: '#0A2B6D' }}
+                      className="min-w-0 bg-clip-text text-[10px] font-extrabold leading-tight text-transparent"
+                      style={{
+                        backgroundImage:
+                          'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
+                      }}
                     >
                       <span style={{ color: iconColor }}>◉</span> {stream.label}
                     </span>
@@ -264,70 +292,88 @@ export default function MyWorkArea9Panel({ compact = false }) {
         })}
       </div>
 
-      {/* ACTIVE STREAM ITEMS */}
+      {/* ACTIVE STREAM ITEMS (Every Word Box in White Section Has an App Design Coloured Border) */}
       {!compact && (
-        <div className="rounded-xl border border-slate-200 bg-slate-50/60 p-3">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-extrabold text-[#0A2B6D]">
-              {currentMeta.label} ({items.length} active records)
-            </span>
-            <Link
-              to={currentMeta.href}
-              className="text-[11px] font-extrabold text-[#0072FF] hover:underline"
-            >
-              View full register →
-            </Link>
-          </div>
-          {items.length === 0 ? (
-            <p className="text-xs font-semibold text-slate-600 py-2">
-              No pending items in {currentMeta.label}. Everything is up to date.
-            </p>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-              {items.slice(0, 6).map((item) => (
-                <div
-                  key={item.id}
-                  className="rounded-lg border border-slate-200 bg-white p-2.5 flex items-center justify-between gap-2"
-                >
-                  <div className="min-w-0">
-                    <div className="text-xs font-extrabold text-[#0A2B6D]">
-                      {item.title ||
-                        item.module_title ||
-                        item.form_title ||
-                        item.subject ||
-                        item.consent_type ||
-                        item.participant_name ||
-                        item.staff_name ||
-                        'Operational Record'}
-                    </div>
-                    <div className="text-[10px] font-semibold text-slate-500">
-                      {item.status || item.review_outcome || item.entry_kind || 'Active'} ·{' '}
-                      {(item.due_date || item.expiry_date || item.date || item.created_date || '').slice(0, 10)}
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-1 shrink-0">
-                    {(activeStream === 'tasks' || activeStream === 'actions') && (
-                      <button
-                        type="button"
-                        onClick={() => handleQuickComplete(item)}
-                        className="inline-flex items-center gap-1 rounded-md bg-[#0A2B6D] px-2 py-1 text-[10px] font-extrabold text-white"
-                      >
-                        <CheckCircle2 className="h-3 w-3" /> Done
-                      </button>
-                    )}
-                    <Link
-                      to={currentMeta.href}
-                      className="rounded-md bg-[#F5F0FF] px-2 py-1 text-[10px] font-extrabold text-[#5A00D6] hover:bg-[#EDE9FE]"
-                    >
-                      Open
-                    </Link>
-                  </div>
-                </div>
-              ))}
+        <div
+          className="rounded-2xl p-[2px]"
+          style={{ background: APP_BORDER_GRADIENT }}
+        >
+          <div className="rounded-[14px] bg-white p-3 space-y-2">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <span className="inline-flex items-center gap-1.5 rounded-full border-2 border-[#0072FF] bg-white px-3 py-0.5 text-xs font-extrabold text-[#0A2B6D]">
+                <span style={{ color: '#0072FF' }}>◉</span>
+                <span style={{ color: '#0A2B6D' }}>
+                  {currentMeta.label} ({items.length} active records)
+                </span>
+              </span>
+              <Link
+                to={currentMeta.href}
+                className="inline-flex items-center gap-1 rounded-full border-2 border-[#5A00D6] bg-white px-3 py-0.5 text-[11px] font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
+                style={{ color: '#0A2B6D' }}
+              >
+                <span style={{ color: '#5A00D6' }}>◉</span>
+                <span>View full register →</span>
+              </Link>
             </div>
-          )}
+            {items.length === 0 ? (
+              <div className="rounded-xl border-2 border-[#0072FF] bg-white px-3 py-2 text-xs font-bold text-[#0A2B6D]">
+                <span style={{ color: '#0072FF' }}>◉</span> No pending items in {currentMeta.label}. Everything is up to date.
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                {items.slice(0, 6).map((item, rIdx) => {
+                  const bCols = ['#0072FF', '#5A00D6', '#FF2E9A', '#A100FF'];
+                  const bCol = bCols[rIdx % bCols.length];
+                  return (
+                    <div
+                      key={item.id}
+                      className="rounded-xl bg-white p-2.5 flex items-center justify-between gap-2 shadow-2xs"
+                      style={{ border: `2px solid ${bCol}` }}
+                    >
+                      <div className="min-w-0">
+                        <div className="text-xs font-extrabold text-[#0A2B6D]" style={{ color: '#0A2B6D' }}>
+                          <span style={{ color: bCol }}>◉</span>{' '}
+                          {item.title ||
+                            item.module_title ||
+                            item.form_title ||
+                            item.subject ||
+                            item.consent_type ||
+                            item.participant_name ||
+                            item.staff_name ||
+                            'Operational Record'}
+                        </div>
+                        <div className="text-[10px] font-bold text-[#5A00D6]">
+                          {item.status || item.review_outcome || item.entry_kind || 'Active'} ·{' '}
+                          {(item.due_date || item.expiry_date || item.date || item.created_date || '').slice(0, 10)}
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1 shrink-0">
+                        {(activeStream === 'tasks' || activeStream === 'actions') && (
+                          <button
+                            type="button"
+                            onClick={() => handleQuickComplete(item)}
+                            className="inline-flex items-center gap-1 rounded-full border-2 border-[#0072FF] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]"
+                          >
+                            <CheckCircle2 className="h-3 w-3 text-[#0072FF]" /> Done
+                          </button>
+                        )}
+                        <Link
+                          to={currentMeta.href}
+                          className="rounded-full border-2 border-[#5A00D6] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
+                          style={{ color: '#0A2B6D' }}
+                        >
+                          Open
+                        </Link>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
         </div>
       )}
+      </div>
     </section>
   );
 }

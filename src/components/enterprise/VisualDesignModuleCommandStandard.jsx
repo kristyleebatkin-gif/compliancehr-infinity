@@ -238,25 +238,30 @@ export default function VisualDesignModuleCommandStandard() {
     <div className="mx-auto w-full max-w-[1440px] px-3 pt-1 sm:px-5 lg:px-6">
       <section
         aria-label="Visual Design, Information Architecture & Module Experience Command Standard"
-        className="preserve-island-theme rounded-2xl border-2 border-[#0A2B6D] p-1 shadow-md"
-        style={{
-          background:
-            'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
-        }}
+        className="preserve-island-theme rounded-2xl p-[2.5px] shadow-md"
+        style={{ background: TOP_BORDER_GRADIENT }}
       >
-        <div className="rounded-xl p-[1.5px]" style={{ background: TOP_BORDER_GRADIENT }}>
-        <div className="rounded-[10.5px] bg-white px-2.5 py-1.5 space-y-1.5">
-          {/* Top Row (50% Reduced): Subject Title + Inline Search Bar + 4 Status Indicators on the Same Line */}
+        <div className="rounded-[13.5px] bg-white px-2.5 py-1.5 space-y-1.5">
+          {/* Top Row: Subject Title + Inline Search Bar + 4 Status Indicators (Every Word Pill in White Section Has an App Design Coloured Border) */}
           <div className="flex flex-wrap items-center justify-between gap-1.5">
             <div className="flex flex-wrap items-center gap-1.5 min-w-0">
+              {/* Main Subject Tile with App Design Coloured Border, White Background & Dark Blue -> App Colour Writing */}
               <span
-                className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-white shadow-2xs"
-                style={{
-                  background: 'linear-gradient(120deg, #0072FF 0%, #5A00D6 52%, #FF2E9A 100%)',
-                }}
+                className="inline-flex rounded-full p-[1.5px] shadow-2xs"
+                style={{ background: TOP_BORDER_GRADIENT }}
               >
-                <Sparkles className="h-2.5 w-2.5 shrink-0 text-[#00C6FF]" />
-                <span>{ctx.subject}</span>
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-2.5 py-0.5 text-[10px] font-extrabold">
+                  <Sparkles className="h-3 w-3 shrink-0 text-[#0072FF]" />
+                  <span
+                    className="bg-clip-text text-transparent"
+                    style={{
+                      backgroundImage:
+                        'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
+                    }}
+                  >
+                    {ctx.subject}
+                  </span>
+                </span>
               </span>
 
               <form onSubmit={handleUniversalSearch} className="flex items-center gap-1">
@@ -267,76 +272,81 @@ export default function VisualDesignModuleCommandStandard() {
                     value={searchText}
                     onChange={(e) => setSearchText(e.target.value)}
                     placeholder="Page search…"
-                    className="h-6 w-36 sm:w-48 rounded-full border border-slate-300 bg-white pl-6 pr-2 text-[9.5px] font-bold text-[#0A2B6D] focus:border-[#0072FF] focus:outline-none"
+                    className="h-6 w-36 sm:w-48 rounded-full border-2 border-[#0072FF] bg-white pl-6 pr-2 text-[9.5px] font-bold text-[#0A2B6D] focus:border-[#5A00D6] focus:outline-none"
                   />
                 </div>
               </form>
 
-              {/* Summary ↓ Detail ↓ Evidence ↓ Action flow */}
-              <div className="hidden xl:inline-flex items-center gap-1 rounded-full border border-slate-200 bg-[#F5F0FF]/70 px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
-                <span>1. Summary</span>
+              {/* Summary ↓ Detail ↓ Evidence ↓ Action flow with App Design Coloured Border */}
+              <div className="hidden xl:inline-flex items-center gap-1 rounded-full border-2 border-[#5A00D6] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
+                <span style={{ color: '#0A2B6D' }}>1. Summary</span>
                 <ArrowRight className="h-2.5 w-2.5 text-[#0072FF]" />
-                <span>2. Detail</span>
+                <span style={{ color: '#0A2B6D' }}>2. Detail</span>
                 <ArrowRight className="h-2.5 w-2.5 text-[#5A00D6]" />
-                <span>3. Evidence</span>
+                <span style={{ color: '#0A2B6D' }}>3. Evidence</span>
                 <ArrowRight className="h-2.5 w-2.5 text-[#FF2E9A]" />
-                <span>4. Action</span>
-                <span className="ml-1 rounded-full bg-[#0A2B6D] px-1.5 py-0 text-[9px] text-white">
+                <span style={{ color: '#0A2B6D' }}>4. Action</span>
+                <span className="ml-1 rounded-full border border-[#5A00D6] bg-[#F5F0FF] px-1.5 py-0 text-[9px] font-extrabold text-[#5A00D6]">
                   3-Sec &amp; ≤3-Click Standard
                 </span>
               </div>
             </div>
 
-            {/* 4 Consistent Visual Status Indicators: Green / Amber / Red / Blue */}
+            {/* 4 Consistent Visual Status Indicators on White with App Design Coloured Borders & Dark Blue Writing */}
             <div className="flex flex-wrap items-center gap-1.5">
               <Link
                 to="/registers"
-                className="inline-flex items-center gap-1 rounded-full border border-emerald-300 bg-emerald-50 px-2.5 py-0.5 text-[10px] font-extrabold text-emerald-900"
+                className="inline-flex items-center gap-1 rounded-full border-2 border-[#0072FF] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]"
                 title="Green: Current · Compliant · Complete"
+                style={{ color: '#0A2B6D' }}
               >
                 <span className="h-2 w-2 rounded-full bg-emerald-500" />
-                <CheckCircle2 className="h-3 w-3 text-emerald-600" />
+                <CheckCircle2 className="h-3 w-3 text-[#0072FF]" />
                 <span>Green · Compliant ({counts.compliant})</span>
               </Link>
 
               <Link
                 to="/review-due"
-                className="inline-flex items-center gap-1 rounded-full border border-amber-300 bg-amber-50 px-2.5 py-0.5 text-[10px] font-extrabold text-amber-900"
+                className="inline-flex items-center gap-1 rounded-full border-2 border-[#A100FF] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]"
                 title="Amber: Due Soon · Requires Review"
+                style={{ color: '#0A2B6D' }}
               >
                 <span className="h-2 w-2 rounded-full bg-amber-500" />
-                <AlertTriangle className="h-3 w-3 text-amber-600" />
+                <AlertTriangle className="h-3 w-3 text-[#A100FF]" />
                 <span>Amber · Due Soon ({counts.dueSoon})</span>
               </Link>
 
               <Link
                 to="/incidents"
-                className="inline-flex items-center gap-1 rounded-full border border-rose-300 bg-rose-50 px-2.5 py-0.5 text-[10px] font-extrabold text-rose-900"
+                className="inline-flex items-center gap-1 rounded-full border-2 border-[#FF2E9A] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]"
                 title="Red: Overdue · Action Required · High Risk"
+                style={{ color: '#0A2B6D' }}
               >
-                <span className="h-2 w-2 rounded-full bg-rose-600" />
-                <Siren className="h-3 w-3 text-rose-600" />
+                <span className="h-2 w-2 rounded-full bg-[#FF2E9A]" />
+                <Siren className="h-3 w-3 text-[#FF2E9A]" />
                 <span>Red · Action Required ({counts.actionRequired})</span>
               </Link>
 
               <Link
                 to="/tasks"
-                className="inline-flex items-center gap-1 rounded-full border border-sky-300 bg-sky-50 px-2.5 py-0.5 text-[10px] font-extrabold text-sky-900"
+                className="inline-flex items-center gap-1 rounded-full border-2 border-[#5A00D6] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]"
                 title="Blue: Information · In Progress"
+                style={{ color: '#0A2B6D' }}
               >
-                <span className="h-2 w-2 rounded-full bg-sky-500" />
-                <Info className="h-3 w-3 text-sky-600" />
+                <span className="h-2 w-2 rounded-full bg-[#0072FF]" />
+                <Info className="h-3 w-3 text-[#5A00D6]" />
                 <span>Blue · In Progress ({counts.inProgress})</span>
               </Link>
 
               <button
                 type="button"
                 onClick={() => setExpanded((v) => !v)}
-                className="inline-flex items-center gap-1 rounded-full border-2 border-[#0A2B6D] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D] transition hover:bg-[#F5F0FF]"
+                className="inline-flex items-center gap-1 rounded-full border-2 border-[#0072FF] bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D] transition hover:bg-[#F5F0FF]"
+                style={{ color: '#0A2B6D' }}
               >
                 <Wrench className="h-3 w-3 text-[#5A00D6]" />
                 <span>{expanded ? 'Hide Command Dock' : 'All Tools, 10 Resources & 16 Domains'}</span>
-                {expanded ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
+                {expanded ? <ChevronUp className="h-3 w-3 text-[#0072FF]" /> : <ChevronDown className="h-3 w-3 text-[#0072FF]" />}
               </button>
             </div>
           </div>
@@ -581,7 +591,6 @@ export default function VisualDesignModuleCommandStandard() {
             </div>
           </>
           )}
-        </div>
         </div>
       </section>
     </div>
