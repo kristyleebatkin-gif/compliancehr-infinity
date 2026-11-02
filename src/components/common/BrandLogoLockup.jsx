@@ -10,7 +10,7 @@ export const BRAND_SLOGAN_TEXT =
 /**
  * Canonical ComplianceHR Infinity Brand Lockup (All Centred):
  * From bottom to top: Slogan -> Name -> Logo
- * (Top: Logo, Middle: Name, Bottom: Slogan)
+ * (Top: Larger Readable Logo, Middle: Name, Bottom: Slogan in signature Blue / Purple / Pink colours)
  *
  * @param {{
  *   logoUrl?: string,
@@ -31,30 +31,31 @@ export default function BrandLogoLockup({
 }) {
   const isCustomName = companyName && companyName !== 'ComplianceHR Infinity';
 
+  // Increased logo size across all tiers so the infinity mark is crisp, prominent, and readable
   const logoSizeClass =
     size === 'xs'
-      ? 'h-4 w-11'
+      ? 'h-8 w-24 sm:h-9 sm:w-28'
       : size === 'sm'
-        ? 'h-5 w-14'
+        ? 'h-10 w-28 sm:h-11 sm:w-32'
         : size === 'lg'
-          ? 'h-8 w-20'
-          : 'h-6 w-16';
+          ? 'h-14 w-40 sm:h-16 sm:w-44'
+          : 'h-12 w-32 sm:h-14 sm:w-36';
 
   const nameSizeClass =
     size === 'xs'
-      ? 'text-[10.5px]'
+      ? 'text-xs sm:text-sm'
       : size === 'sm'
-        ? 'text-[12px] sm:text-[13px]'
+        ? 'text-sm sm:text-base'
         : size === 'lg'
-          ? 'text-base sm:text-lg'
-          : 'text-[13px] sm:text-sm';
+          ? 'text-lg sm:text-xl'
+          : 'text-base sm:text-lg';
 
   const sloganSizeClass =
     size === 'xs'
-      ? 'text-[7px]'
+      ? 'text-[9px] sm:text-[10px]'
       : size === 'sm'
-        ? 'text-[8px]'
-        : 'text-[9px]';
+        ? 'text-[10px] sm:text-[11px]'
+        : 'text-[11px] sm:text-xs';
 
   const isDark = theme === 'dark';
 
@@ -62,8 +63,8 @@ export default function BrandLogoLockup({
     <div
       className={`flex flex-col items-center justify-center text-center select-none ${className}`}
     >
-      {/* 1. TOP: LOGO (Centred) */}
-      <div className="flex items-center justify-center rounded-md border border-slate-200/90 bg-white px-1 py-0.5 shadow-2xs">
+      {/* 1. TOP: LARGER READABLE LOGO (Centred) */}
+      <div className="flex items-center justify-center rounded-xl border border-slate-200/90 bg-white px-2 py-1 shadow-sm">
         <Image
           src={logoUrl || DEFAULT_BRAND_LOGO}
           alt={companyName || 'ComplianceHR Infinity'}
@@ -74,7 +75,7 @@ export default function BrandLogoLockup({
 
       {/* 2. MIDDLE: NAME (Centred) */}
       <div
-        className={`mt-0.5 font-editorial ${nameSizeClass} font-extrabold leading-tight tracking-tight whitespace-nowrap ${
+        className={`mt-1 font-editorial ${nameSizeClass} font-extrabold leading-tight tracking-tight whitespace-nowrap ${
           isDark ? 'text-white' : 'text-[#0A2B6D]'
         }`}
       >
@@ -99,7 +100,7 @@ export default function BrandLogoLockup({
         )}
       </div>
 
-      {/* 3. BOTTOM: SLOGAN (Centred) */}
+      {/* 3. BOTTOM: SLOGAN IN PREVIOUS SIGNATURE COLOURS (Blue / Purple / Pink, Centred) */}
       {showSlogan && (
         <div
           className={`mt-0.5 ${sloganSizeClass} font-extrabold leading-tight whitespace-nowrap`}

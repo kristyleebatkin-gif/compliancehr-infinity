@@ -227,36 +227,36 @@ export default function ObsidianSidebarRemote({
         {/* Top Blue -> Purple -> Pink Gradient Strip */}
         <div className="h-1.5 w-full shrink-0" style={{ background: BRAND_GRADIENT }} />
 
-        {/* Small Screen Brand Lockup: Logo Top -> Name Middle -> Slogan Bottom (All Centred) */}
+        {/* Brand Lockup: Larger Readable Logo Top -> Name Middle -> Colourful Slogan Bottom */}
         <div className="flex shrink-0 flex-col items-center border-b border-white/15 bg-white/95 px-2.5 py-2 text-center shadow-sm">
-          <BrandLogoLockup size="xs" theme="light" />
+          <BrandLogoLockup size="sm" theme="light" />
 
-          {/* Remote Control Mode Switcher */}
+          {/* Circular Control Pod Mode Switcher */}
           <div
-            className="mt-1.5 grid w-full grid-cols-2 gap-1 rounded-xl p-[2px]"
+            className="mt-2 grid w-full grid-cols-2 gap-1.5 rounded-full p-[2px]"
             style={{ background: BRAND_GRADIENT }}
           >
             <button
               type="button"
               onClick={() => setNavMode('os11')}
-              className={`min-h-[28px] rounded-[10px] py-1 text-[9.5px] font-extrabold transition-all ${
+              className={`min-h-[30px] rounded-full py-1 text-[9.5px] font-extrabold transition-all ${
                 navMode === 'os11'
-                  ? 'bg-[#0A2B6D] text-white shadow-[0_0_12px_rgba(0,198,255,0.5)]'
+                  ? 'bg-[#0A2B6D] text-white shadow-[0_0_14px_rgba(0,198,255,0.65)]'
                   : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
               }`}
             >
-              13 Command Channels
+              ◉ 13 Command Pods
             </button>
             <button
               type="button"
               onClick={() => setNavMode('all')}
-              className={`min-h-[28px] rounded-[10px] py-1 text-[9.5px] font-extrabold transition-all ${
+              className={`min-h-[30px] rounded-full py-1 text-[9.5px] font-extrabold transition-all ${
                 navMode === 'all'
-                  ? 'bg-[#0A2B6D] text-white shadow-[0_0_12px_rgba(255,46,154,0.5)]'
+                  ? 'bg-[#0A2B6D] text-white shadow-[0_0_14px_rgba(255,46,154,0.65)]'
                   : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
               }`}
             >
-              All 46 Modules
+              ◉ All 46 Pods
             </button>
           </div>
         </div>

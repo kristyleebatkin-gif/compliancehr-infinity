@@ -462,35 +462,60 @@ export default function BlueprintPreviewSection() {
               </span>
             </div>
 
-            {/* 7 Connected Core Nodes — Fitted Cleanly Without Awkward Wrapping */}
+            {/* 7 Glowing Circular Control Pods + Central AI Core Pod */}
             <div className="relative mt-4">
               <div
                 aria-hidden="true"
                 className="pointer-events-none hidden lg:block absolute inset-x-8 top-1/2 -translate-y-1/2 h-0.5 bg-gradient-to-r from-[#00C6FF] via-white/60 to-[#FF6EDB]"
               />
-              <div className="relative z-10 grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-7 items-stretch">
+              <div className="relative z-10 grid grid-cols-2 gap-3 sm:grid-cols-4 xl:grid-cols-8 items-center justify-items-center">
+                {/* Central AI Core Pod */}
+                <Link
+                  to="/assistant"
+                  className="group relative flex h-28 w-28 sm:h-32 sm:w-32 flex-col items-center justify-center rounded-full p-1.5 text-center transition-all duration-300 hover:-translate-y-1 hover:scale-105"
+                  style={{
+                    background: 'linear-gradient(135deg, #00C6FF 0%, #0072FF 30%, #5A00D6 65%, #FF2E9A 100%)',
+                    boxShadow: '0 0 28px rgba(0,198,255,0.75), inset 0 2px 6px rgba(255,255,255,0.6)',
+                  }}
+                >
+                  <div className="flex h-full w-full flex-col items-center justify-center rounded-full border border-white/40 bg-[#0A2B6D]/90 px-2 py-1 backdrop-blur-xl">
+                    <span className="rounded-full bg-white px-2 py-0.5 text-[8px] font-black text-[#0A2B6D]">
+                      ◉ AI CORE
+                    </span>
+                    <span className="mt-1 text-[10px] font-extrabold text-[#00C6FF]">
+                      14 recommendations
+                    </span>
+                    <span className="mt-0.5 text-[8px] font-bold text-white/85">
+                      Central Hub
+                    </span>
+                  </div>
+                </Link>
+
                 {ECOSYSTEM_NODES.map((node, idx) => {
                   const Icon = node.icon;
                   return (
                     <Link
                       key={node.id}
                       to={node.route}
-                      className="flex h-full w-full flex-col justify-between rounded-xl border border-white/30 bg-[#0A2B6D]/85 p-3 text-left backdrop-blur-md shadow-md transition hover:-translate-y-0.5 hover:bg-[#0A2B6D]"
+                      className="group relative flex h-28 w-28 sm:h-32 sm:w-32 flex-col items-center justify-center rounded-full border border-white/35 bg-white/10 p-2 text-center backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:scale-105"
+                      style={{
+                        boxShadow:
+                          '0 12px 24px -6px rgba(0,0,0,0.45), 0 0 18px rgba(0,198,255,0.45), inset 0 2px 4px rgba(255,255,255,0.35)',
+                      }}
                     >
-                      <div className="flex items-center justify-between gap-1.5">
-                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white text-[#0A2B6D] shadow-xs">
-                          <Icon className="h-3.5 w-3.5" style={{ color: node.color }} />
-                        </span>
-                        <span className="rounded-full bg-white/15 px-2 py-0.5 text-[10px] font-extrabold text-[#00C6FF]">
-                          0{idx + 1}
-                        </span>
+                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white text-[#0A2B6D] shadow-sm">
+                        <Icon className="h-3.5 w-3.5" style={{ color: node.color }} />
+                      </span>
+                      <div className="mt-1 inline-flex items-center gap-0.5 rounded-full bg-white px-2 py-0.5 text-[9px] font-extrabold text-[#0A2B6D]">
+                        <span style={{ color: node.color }}>◉</span>
+                        <span className="truncate">{node.title}</span>
                       </div>
-                      <div className="mt-2 text-[11px] font-extrabold text-white leading-snug">
-                        {node.title}
-                      </div>
-                      <div className="mt-0.5 text-[10px] font-medium text-white/85 leading-tight">
+                      <div className="mt-0.5 text-[8.5px] font-bold text-[#00C6FF] leading-tight">
                         {node.sub}
                       </div>
+                      <span className="mt-0.5 text-[7.5px] font-extrabold text-white/80">
+                        Pod 0{idx + 1}
+                      </span>
                     </Link>
                   );
                 })}

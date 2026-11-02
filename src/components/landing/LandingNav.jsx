@@ -24,13 +24,13 @@ export default function LandingNav({ onBookDemo }) {
       <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-2 px-3 py-2 sm:flex-nowrap sm:px-5">
         <Link
           to="/"
-          className="flex shrink-0 flex-col items-center rounded-xl border border-slate-200/90 bg-[#F5F0FF]/50 px-3 py-1 text-center shadow-2xs transition hover:border-[#0072FF]/50"
+          className="flex shrink-0 flex-col items-center rounded-xl border border-slate-200/90 bg-[#F5F0FF]/50 px-3.5 py-1.5 text-center shadow-sm transition hover:border-[#0072FF]/50"
           aria-label="ComplianceHR Infinity home"
         >
           <img
-            src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/6bf497716_generated_image.png"
+            src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
             alt="ComplianceHR Infinity"
-            className="h-5 w-14 shrink-0 rounded-md border border-slate-200 bg-white px-1 py-0.5 object-contain shadow-2xs"
+            className="h-10 w-28 sm:h-11 sm:w-32 shrink-0 rounded-lg border border-slate-200 bg-white px-1.5 py-0.5 object-contain shadow-xs"
           />
           <div className="mt-1 font-editorial text-sm sm:text-base font-extrabold tracking-tight text-[#0A2B6D] leading-none whitespace-nowrap">
             Compliance
@@ -41,8 +41,10 @@ export default function LandingNav({ onBookDemo }) {
               Infinity
             </span>
           </div>
-          <div className="mt-1 text-[8.5px] font-bold text-slate-600 leading-none whitespace-nowrap">
-            Complete Control. Greater Confidence. Brighter Success.
+          <div className="mt-1 text-[9.5px] sm:text-[10.5px] font-extrabold leading-none whitespace-nowrap">
+            <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
+            <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
+            <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
           </div>
         </Link>
 

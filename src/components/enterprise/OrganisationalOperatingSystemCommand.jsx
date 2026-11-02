@@ -321,14 +321,20 @@ export default function OrganisationalOperatingSystemCommand() {
           </div>
         </details>
 
-        {/* Mode Switcher Bar: 5 Clean Command Modes (50% Reduced) */}
-        <div className="flex flex-wrap items-center gap-1 border-b border-slate-200 pb-1.5">
+        {/* Glowing Circular Pod Mode Switcher Bar: 5 Mission Control Command Modes */}
+        <div
+          className="flex flex-wrap items-center gap-1.5 rounded-2xl p-2"
+          style={{
+            background:
+              'radial-gradient(circle at 50% 50%, rgba(0, 198, 255, 0.16) 0%, rgba(90, 0, 214, 0.28) 45%, #0A2B6D 100%)',
+          }}
+        >
           {[
-            { id: 'command', label: '1. Command & Health Snapshot', icon: ShieldCheck },
-            { id: 'twin', label: '2. Organisational Digital Twin — Record View', icon: Cpu },
-            { id: 'manager', label: '3. Manager Command Centre', icon: Users },
-            { id: 'executive', label: '4. Executive & Board Centre', icon: Award },
-            { id: 'engines', label: '5. Platform Workspaces, Assistant & Data Quality', icon: Sparkles },
+            { id: 'command', label: '◉ Command & Health', sub: '14 Live Metrics', icon: ShieldCheck },
+            { id: 'twin', label: '◉ Digital Twin', sub: 'Record Graph', icon: Cpu },
+            { id: 'manager', label: '◉ Manager Pod', sub: '7 Reviews Due', icon: Users },
+            { id: 'executive', label: '◉ Board Pod', sub: 'Audit Packs', icon: Award },
+            { id: 'engines', label: '◉ AI Core & Quality', sub: '14 Recommendations', icon: Sparkles },
           ].map((tab) => {
             const Icon = tab.icon;
             const active = activeMode === tab.id;
@@ -337,14 +343,34 @@ export default function OrganisationalOperatingSystemCommand() {
                 key={tab.id}
                 type="button"
                 onClick={() => setActiveMode(tab.id)}
-                className={`inline-flex items-center gap-1 rounded-lg px-2 py-0.5 text-[9.5px] font-extrabold transition ${
+                className={`inline-flex flex-1 min-w-[140px] items-center gap-2 rounded-full border px-3 py-1.5 text-left backdrop-blur-md transition-all duration-200 ${
                   active
-                    ? 'bg-[#0A2B6D] text-white shadow-2xs'
-                    : 'border border-slate-200 bg-white text-[#0A2B6D] hover:border-[#0072FF]'
+                    ? 'border-[#00C6FF] bg-white text-[#0A2B6D] shadow-[0_0_18px_rgba(0,198,255,0.75)] scale-[1.01]'
+                    : 'border-white/25 bg-white/10 text-white hover:border-[#00C6FF] hover:bg-white/20'
                 }`}
               >
-                <Icon className={`h-2.5 w-2.5 ${active ? 'text-[#00C6FF]' : 'text-[#5A00D6]'}`} />
-                <span>{tab.label}</span>
+                <span
+                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-white shadow-xs"
+                  style={{
+                    background: 'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)',
+                  }}
+                >
+                  <Icon className="h-3 w-3 text-white" />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span
+                    className="block truncate text-[10px] font-extrabold leading-tight"
+                    style={{ color: active ? '#0A2B6D' : '#FFFFFF' }}
+                  >
+                    {tab.label}
+                  </span>
+                  <span
+                    className="block truncate text-[8.5px] font-bold leading-tight"
+                    style={{ color: active ? '#5A00D6' : '#00C6FF' }}
+                  >
+                    {tab.sub}
+                  </span>
+                </span>
               </button>
             );
           })}

@@ -184,9 +184,15 @@ export default function LandingProductShowcase() {
               </div>
             </div>
 
-            {/* Uniform 7-Tab Telemetry Switcher Grid (Every Word Fitted Cleanly Across All Viewports) */}
-            <div className="border-b border-slate-200 bg-slate-50/80 px-5 py-3 sm:px-7">
-              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-7">
+            {/* Glowing Circular Control Pod Switcher Bar (Hybrid Premium Remote + Mission Control) */}
+            <div
+              className="border-b border-[#00C6FF]/30 px-5 py-4 sm:px-7"
+              style={{
+                background:
+                  'radial-gradient(circle at 50% 50%, rgba(0, 198, 255, 0.18) 0%, rgba(90, 0, 214, 0.32) 45%, #0A2B6D 100%)',
+              }}
+            >
+              <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 lg:grid-cols-7">
                 {SHOWCASE_PANELS.map((panel) => {
                   const Icon = panel.icon;
                   const isActive = panel.id === selectedId;
@@ -195,14 +201,34 @@ export default function LandingProductShowcase() {
                       key={panel.id}
                       type="button"
                       onClick={() => setSelectedId(panel.id)}
-                      className={`flex min-h-[38px] w-full items-center justify-center gap-1 whitespace-nowrap rounded-xl px-1.5 py-1.5 text-[10.5px] xl:text-[11px] font-extrabold leading-tight transition ${
+                      className={`group flex items-center gap-2 rounded-full border px-3 py-2 text-left backdrop-blur-md transition-all duration-200 ${
                         isActive
-                          ? 'bg-[#0A2B6D] text-white shadow-sm'
-                          : 'border border-slate-200 bg-white text-[#0A2B6D] hover:border-[#0072FF] hover:text-[#0072FF]'
+                          ? 'border-[#00C6FF] bg-white text-[#0A2B6D] shadow-[0_0_20px_rgba(0,198,255,0.75)] scale-[1.02]'
+                          : 'border-white/30 bg-white/10 text-white hover:border-[#00C6FF] hover:bg-white/20'
                       }`}
                     >
-                      <Icon className="h-3.5 w-3.5 shrink-0" />
-                      <span className="text-center leading-tight">{panel.shortLabel}</span>
+                      <span
+                        className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-white shadow-sm"
+                        style={{
+                          background: 'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)',
+                        }}
+                      >
+                        <Icon className="h-3.5 w-3.5 text-white" />
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <div
+                          className="truncate text-[10.5px] font-extrabold leading-tight"
+                          style={{ color: isActive ? '#0A2B6D' : '#FFFFFF' }}
+                        >
+                          ◉ {panel.shortLabel}
+                        </div>
+                        <div
+                          className="truncate text-[9px] font-bold leading-tight"
+                          style={{ color: isActive ? '#5A00D6' : '#00C6FF' }}
+                        >
+                          {panel.metricValue}
+                        </div>
+                      </div>
                     </button>
                   );
                 })}

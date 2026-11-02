@@ -86,9 +86,9 @@ export default function ObsidianSmartRemote({
       {/* Top Blue -> Purple -> Pink Gradient Strip */}
       <div className="h-1.5 w-full" style={{ background: BRAND_GRADIENT }} />
 
-      {/* White Title Header Card with Centred Logo -> Name -> Slogan */}
-      <div className="flex flex-col items-center justify-center border-b border-white/15 bg-white px-3 py-2 text-center">
-        <BrandLogoLockup size={compact ? 'xs' : 'sm'} theme="light" />
+      {/* White Title Header Card with Larger Readable Centred Logo -> Name -> Slogan */}
+      <div className="flex flex-col items-center justify-center border-b border-white/15 bg-white px-3 py-2.5 text-center">
+        <BrandLogoLockup size={compact ? 'sm' : 'md'} theme="light" />
         {(title || subtitle) && (
           <div className="mt-1 flex flex-wrap items-center justify-center gap-1.5">
             {title && (

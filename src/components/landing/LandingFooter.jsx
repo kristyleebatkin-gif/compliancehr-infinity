@@ -11,9 +11,9 @@ export default function LandingFooter({ onBookDemo }) {
           <div className="lg:col-span-4 flex flex-col items-center lg:items-start text-center lg:text-left space-y-3.5">
             <Link to="/" className="inline-flex flex-col items-center justify-center text-center gap-1.5">
               <img
-                src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/6bf497716_generated_image.png"
+                src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
                 alt="ComplianceHR Infinity logo"
-                className="h-8 w-16 shrink-0 rounded-md border border-slate-200 bg-white px-1 py-0.5 object-contain shadow-2xs"
+                className="h-12 w-36 sm:h-14 sm:w-40 shrink-0 rounded-xl border border-slate-200 bg-white px-2 py-1 object-contain shadow-sm"
               />
               <div className="font-editorial text-xl xl:text-2xl font-extrabold tracking-tight text-[#0A2B6D] leading-none whitespace-nowrap">
                 Compliance
@@ -24,8 +24,10 @@ export default function LandingFooter({ onBookDemo }) {
                   Infinity
                 </span>
               </div>
-              <div className="text-[10px] xl:text-[11px] font-bold text-slate-600 whitespace-nowrap">
-                Complete Control. Greater Confidence. Brighter Success.
+              <div className="text-[10.5px] xl:text-xs font-extrabold whitespace-nowrap">
+                <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
+                <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
+                <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
               </div>
             </Link>
 
