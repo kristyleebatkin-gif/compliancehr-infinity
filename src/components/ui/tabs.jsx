@@ -113,7 +113,9 @@ const DashboardTabsContext = React.createContext({ isDashboard: false });
 
 const Tabs = TabsPrimitive.Root
 
-const TabsList = React.forwardRef(({ className, children, ...props }, ref) => {
+const TabsList = React.forwardRef(
+  /** @param {React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>} props */
+({ className, children, ...props }, ref) => {
   const hasExplicitUndefined =
     Object.prototype.hasOwnProperty.call(props, 'data-dashboard-tabs') &&
     props['data-dashboard-tabs'] === undefined;
@@ -187,7 +189,9 @@ const TabsList = React.forwardRef(({ className, children, ...props }, ref) => {
 })
 TabsList.displayName = TabsPrimitive.List.displayName
 
-const TabsTrigger = React.forwardRef(({ className, children, ...props }, ref) => {
+const TabsTrigger = React.forwardRef(
+  /** @param {React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>} props */
+({ className, children, ...props }, ref) => {
   const { isDashboard } = React.useContext(DashboardTabsContext);
 
   if (!isDashboard) {
@@ -268,7 +272,9 @@ const TabsTrigger = React.forwardRef(({ className, children, ...props }, ref) =>
 })
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName
 
-const TabsContent = React.forwardRef(({ className, ...props }, ref) => (
+const TabsContent = React.forwardRef(
+  /** @param {React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>} props */
+({ className, ...props }, ref) => (
   <TabsPrimitive.Content
     ref={ref}
     className={cn(
