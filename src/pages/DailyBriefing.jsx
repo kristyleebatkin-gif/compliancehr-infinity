@@ -83,7 +83,7 @@ export default function DailyBriefing() {
         base44.entities.LeaveRequest.count({ status: 'Pending' }).catch(() => 0),
       ]);
 
-      const overdueDays = (dateStr) => Math.max(1, differenceInCalendarDays(parseISO(today), parseISO(dateStr)));
+      const overdueDays = (dateStr) => (dateStr ? Math.max(1, differenceInCalendarDays(parseISO(today), parseISO(String(dateStr)))) : 1);
 
       const dueToday = [
         ...tasksDue.items.map((t) => ({
