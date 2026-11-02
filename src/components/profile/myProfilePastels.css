@@ -53,7 +53,7 @@ html body .my-profile-pastels .profile-uniform-box {
   box-sizing: border-box;
 }
 
-html body .my-profile-pastels .app-section-card-header :is(h1, h2, h3, h4, p, span) {
+html body .my-profile-pastels .app-section-card-header :is(h1, h2, h3, h4, p, span:not([style*="color"])) {
   color: #0A2B6D !important;
   font-size: 0.85rem !important;
   font-weight: 800 !important;

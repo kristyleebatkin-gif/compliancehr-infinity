@@ -498,7 +498,7 @@
     line-height: 1.1rem !important;
     color: #0A2B6D !important;
   }
-  .app-readable :is(.dashboard-panel-header, .app-section-card-header) :is(h1, h2, h3, h4, p, [data-panel-title], span) {
+  .app-readable :is(.dashboard-panel-header, .app-section-card-header) :is(h1, h2, h3, h4, p, [data-panel-title], span:not([style*="color"])) {
     color: #0A2B6D !important;
     opacity: 1;
     overflow-wrap: anywhere;
@@ -589,14 +589,14 @@
     .rounded-2xl.border,
     .rounded-lg.border,
     .rounded-2xl.border-2
-  ):not(.preserve-island-theme):not(.preserve-island-theme *) :is(p, span, div, h3, h4):not(.gradient-brand *):not(.app-page-header *):not(.dashboard-panel-header *) {
+  ):not(.preserve-island-theme):not(.preserve-island-theme *) :is(p, span:not([style*="color"]), div, h3, h4):not(.gradient-brand *):not(.app-page-header *):not(.dashboard-panel-header *) {
     color: #0A2B6D;
   }
 }
 
 /* ===== CONSISTENT APP HEADER, SECTION, HEADING/TITLE & SINGLE WORD BORDER STANDARD =====
    Every section, heading/title, label, badge, and item in white sections uses ONLY the
-   App Design Coloured Gradient Border on White with Dark Blue (#0A2B6D) writing. */
+   App Design Coloured Gradient Border on White with Dark Blue (#0A2B6D) writing and App Design Coloured Symbols. */
 @layer utilities {
   .app-readable :is(.dashboard-panel-header, .app-section-card-header) {
     box-sizing: border-box;
@@ -632,5 +632,19 @@
     gap: 0.25rem;
     width: fit-content;
     max-width: 100%;
+  }
+
+  /* App Design Coloured Symbols & Icons inside white sections */
+  :root:not(.dark) .app-dashboard-canvas :is(h1, h2, h3, h4, label, summary, th, button, a, li, p) > svg:not([style*="color"]) {
+    color: #0072FF !important;
+  }
+  :root:not(.dark) .app-dashboard-canvas :is(section, details, div):nth-of-type(4n + 2) :is(h1, h2, h3, h4, label, summary, th, button, a, li, p) > svg:not([style*="color"]) {
+    color: #5A00D6 !important;
+  }
+  :root:not(.dark) .app-dashboard-canvas :is(section, details, div):nth-of-type(4n + 3) :is(h1, h2, h3, h4, label, summary, th, button, a, li, p) > svg:not([style*="color"]) {
+    color: #FF2E9A !important;
+  }
+  :root:not(.dark) .app-dashboard-canvas :is(section, details, div):nth-of-type(4n + 4) :is(h1, h2, h3, h4, label, summary, th, button, a, li, p) > svg:not([style*="color"]) {
+    color: #A100FF !important;
   }
 }
