@@ -158,15 +158,12 @@ const TabsList = React.forwardRef(
         style={{ background: DARK_NAVY_CHASSIS }}
         {...props}
       >
-        {/* TOP 1/4 WHITE: Header with Enlarged Logo, Enlarged Name & Slogan inside ONE Border */}
-        <div className="col-span-full -mx-2 -mt-2 mb-1 bg-white">
+        {/* Top Blue -> Purple -> Pink Gradient Accent Strip */}
+        <div className="col-span-full -mx-2 -mt-2 mb-0.5">
           <div className="h-1.5 w-full" style={{ background: BRAND_GRADIENT }} />
-          <div className="flex flex-col items-center justify-center px-3 py-2 text-center">
-            <BrandLogoLockup size="xs" theme="light" showSlogan={true} />
-          </div>
         </div>
 
-        {/* BOTTOM 3/4 DARK BLUE: Illuminated Remote Control Tab Triggers */}
+        {/* Illuminated Remote Control Tab Triggers */}
         {indexedChildren}
       </TabsPrimitive.List>
     </DashboardTabsContext.Provider>
@@ -218,7 +215,7 @@ const TabsTrigger = React.forwardRef(
       data-dashboard-tone={dashboardTabTone(props.value)}
       ref={ref}
       className={cn(
-        "group relative flex h-full min-h-[68px] w-full flex-col rounded-2xl p-[2px] text-left shadow-[0_0_12px_rgba(90,0,214,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_0_18px_rgba(0,198,255,0.75)] focus-visible:outline-none data-[state=active]:shadow-[0_0_20px_rgba(0,198,255,0.85)] data-[state=active]:scale-[1.01] disabled:pointer-events-none disabled:opacity-50",
+        "group relative flex h-full min-h-[64px] w-full flex-col rounded-2xl p-[2px] text-left shadow-[0_0_12px_rgba(90,0,214,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_0_18px_rgba(0,198,255,0.75)] focus-visible:outline-none data-[state=active]:shadow-[0_0_20px_rgba(0,198,255,0.85)] data-[state=active]:scale-[1.01] disabled:pointer-events-none disabled:opacity-50",
         className
       )}
       style={{ background: BRAND_GRADIENT }}
@@ -228,8 +225,8 @@ const TabsTrigger = React.forwardRef(
         className="flex w-full flex-1 flex-col justify-between overflow-hidden rounded-[14px]"
         style={{ background: DARK_NAVY_CHASSIS }}
       >
-        {/* Top 1/4 White Title Background with App Design Colour Symbol */}
-        <span className="flex min-h-[32px] w-full items-center justify-between gap-1.5 bg-white px-2.5 py-1">
+        {/* Top White Title Bar: Dark Blue Heading Changing to App Design Colours (Slightly Larger than White Writing Below) */}
+        <span className="flex min-h-[30px] w-full items-center justify-between gap-1.5 bg-white px-2.5 py-1">
           <span className="flex min-w-0 items-center gap-1.5">
             <span
               className="flex h-5 w-5 shrink-0 items-center justify-center rounded-lg bg-[#F5F0FF] shadow-2xs"
@@ -238,8 +235,13 @@ const TabsTrigger = React.forwardRef(
               {coloredIcon}
             </span>
             <span
-              className="min-w-0 text-[9.5px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]"
-              style={{ color: '#0A2B6D', wordBreak: 'normal', overflowWrap: 'normal' }}
+              className="min-w-0 bg-clip-text text-[10.5px] font-extrabold leading-tight tracking-tight text-transparent"
+              style={{
+                backgroundImage:
+                  'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
+                wordBreak: 'normal',
+                overflowWrap: 'normal',
+              }}
             >
               <span style={{ color: symColor }}>◉</span> {labelText}
             </span>
@@ -257,10 +259,10 @@ const TabsTrigger = React.forwardRef(
           </span>
         </span>
 
-        {/* Bottom 3/4 Dark Blue Body (No Light Blue Line at Bottom) */}
-        <span className="qa-tab-body flex min-h-[34px] w-full flex-1 items-center justify-between gap-1 px-2.5 py-1.5">
+        {/* Bottom Dark Navy Body: Smaller Crisp White Writing */}
+        <span className="qa-tab-body flex min-h-[32px] w-full flex-1 items-center justify-between gap-1 px-2.5 py-1">
           <span
-            className="min-w-0 flex-1 break-words text-[9px] font-bold leading-snug text-white"
+            className="min-w-0 flex-1 break-words text-[8.5px] font-bold leading-snug text-white"
             style={{ color: '#FFFFFF' }}
           >
             {subtitle}

@@ -200,7 +200,6 @@ export default function MyProfile() {
           extraModules={[{ key: 'work', label: 'My Work', Icon: BriefcaseBusiness, content: <StaffHome embedded /> }]}
         />;
       })()}
-      <SoftwareAndSafeBanner compact />
     </div>
   );
 }

@@ -27,6 +27,7 @@ import Universal360ProfileFramework from '@/components/enterprise/Universal360Pr
 import OrganisationalOperatingSystemCommand from '@/components/enterprise/OrganisationalOperatingSystemCommand';
 import OrganisationHealthScoreFramework from '@/components/enterprise/OrganisationHealthScoreFramework';
 import MissionControlAiCoreHub from '@/components/enterprise/MissionControlAiCoreHub';
+import BrandLogoLockup from '@/components/common/BrandLogoLockup';
 
 import {
   Activity, ShieldCheck, Zap, LayoutGrid, Layers, Building2, Cpu, Users,
@@ -99,7 +100,7 @@ export default function Dashboard() {
       <MissionControlAiCoreHub
         activeSuite={activeSuite}
         onSelectSuite={(id) => setActiveSuite(id)}
-        showHeaderLogo={true}
+        showHeaderLogo={false}
       />
 
       {isSuiteVisible('os-command') && (
@@ -188,6 +189,16 @@ export default function Dashboard() {
       {isSuiteVisible('office-wall') && (
         <ExecutiveWallScene showAllModulesMinimised={true} />
       )}
+
+      {/* Dashboard Footer Logo Area — Matching Top Header Logo Area (White Background Outside Border to Side of Page) */}
+      <footer
+        aria-label="Dashboard brand footer"
+        className="rounded-2xl bg-white px-4 py-3 text-center shadow-md"
+      >
+        <div className="mx-auto flex max-w-[1440px] justify-center">
+          <BrandLogoLockup size="md" theme="light" showSlogan={true} />
+        </div>
+      </footer>
     </div>
   );
 }

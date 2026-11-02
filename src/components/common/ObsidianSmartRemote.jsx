@@ -79,27 +79,24 @@ export default function ObsidianSmartRemote({
       {/* Top Blue -> Purple -> Pink Gradient Strip */}
       <div className="h-1.5 w-full" style={{ background: BRAND_GRADIENT }} />
 
-      {/* TOP 1/4 WHITE: Enlarged Logo, Enlarged Name & Slogan inside ONE Border */}
-      <div className="flex flex-col items-center justify-center bg-white px-3 py-2 text-center">
-        <BrandLogoLockup size={compact ? 'xs' : 'sm'} theme="light" showSlogan={true} />
-        {(title || subtitle) && (
-          <div className="mt-1.5 flex flex-wrap items-center justify-center gap-1.5">
-            {title && (
-              <span
-                className="rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold uppercase tracking-wider text-white"
-                style={{ background: BRAND_GRADIENT }}
-              >
-                {title}
-              </span>
-            )}
-            {subtitle && (
-              <span className="text-[10px] font-bold text-[#0A2B6D]/85" style={{ color: '#0A2B6D' }}>
-                {subtitle}
-              </span>
-            )}
-          </div>
-        )}
-      </div>
+      {/* Optional Title & Subtitle Strip (No Duplicate Logo Inside Page Modules) */}
+      {(title || subtitle) && (
+        <div className="flex flex-wrap items-center justify-center gap-2 bg-white px-3 py-1.5 text-center">
+          {title && (
+            <span
+              className="rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold uppercase tracking-wider text-white"
+              style={{ background: BRAND_GRADIENT }}
+            >
+              {title}
+            </span>
+          )}
+          {subtitle && (
+            <span className="text-[10px] font-bold text-[#0A2B6D]" style={{ color: '#0A2B6D' }}>
+              {subtitle}
+            </span>
+          )}
+        </div>
+      )}
 
       {/* Optional Dual-Screen & Category Filter Bar */}
       {(screenModes.length > 0 || banks.length > 0) && (
@@ -201,8 +198,11 @@ export default function ObsidianSmartRemote({
                       <Icon className="h-3 w-3 shrink-0" style={{ color: symColor }} />
                     </span>
                     <span
-                      className="min-w-0 text-[10px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]"
-                      style={{ color: '#0A2B6D' }}
+                      className="min-w-0 bg-clip-text text-[10.5px] font-extrabold leading-tight tracking-tight text-transparent"
+                      style={{
+                        backgroundImage:
+                          'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
+                      }}
                     >
                       <span style={{ color: symColor }}>◉</span> {ch.label}
                     </span>

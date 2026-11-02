@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, ShieldCheck, ArrowUpRight } from 'lucide-react';
+import BrandLogoLockup from '@/components/common/BrandLogoLockup';
 
 export default function LandingFooter({ onBookDemo }) {
   return (
@@ -9,26 +10,8 @@ export default function LandingFooter({ onBookDemo }) {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 items-start">
           {/* Brand Column — Centred Logo + Centred Slogan + Single-Line 46 Connected Modules Pill */}
           <div className="lg:col-span-4 flex flex-col items-center lg:items-start text-center lg:text-left space-y-3.5">
-            <Link to="/" className="inline-flex flex-col items-center justify-center text-center gap-1.5">
-              <img
-                src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
-                alt="ComplianceHR Infinity logo"
-                className="h-12 w-36 sm:h-14 sm:w-40 shrink-0 rounded-xl border border-slate-200 bg-white px-2 py-1 object-contain shadow-sm"
-              />
-              <div className="font-editorial text-xl xl:text-2xl font-extrabold tracking-tight text-[#0A2B6D] leading-none whitespace-nowrap">
-                Compliance
-                <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                  HR
-                </span>{' '}
-                <span className="bg-gradient-to-r from-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                  Infinity
-                </span>
-              </div>
-              <div className="text-[10.5px] xl:text-xs font-extrabold whitespace-nowrap">
-                <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
-                <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
-                <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
-              </div>
+            <Link to="/" className="inline-flex flex-col items-center justify-center text-center">
+              <BrandLogoLockup size="md" theme="light" showSlogan={true} />
             </Link>
 
             <p className="max-w-md text-xs sm:text-sm leading-relaxed text-[#0A2B6D]/75">

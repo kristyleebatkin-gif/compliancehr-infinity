@@ -234,13 +234,31 @@ export default function ObsidianSidebarRemote({
         {/* Top Blue -> Purple -> Pink Gradient Strip */}
         <div className="h-1.5 w-full shrink-0" style={{ background: BRAND_GRADIENT }} />
 
-        {/* TOP 1/4 WHITE: Enlarged Logo, Enlarged Name & Slogan inside ONE Border */}
+        {/* TOP WHITE COMMAND HEADER: Navigator Router Remote + Mode Switcher (No Duplicate Logo) */}
         <div className="flex shrink-0 flex-col items-center bg-white px-2.5 py-2 text-center shadow-sm">
-          <BrandLogoLockup size="xs" theme="light" showSlogan={true} />
+          <div
+            className="w-full rounded-xl p-[2px]"
+            style={{ background: BRAND_GRADIENT }}
+          >
+            <div className="rounded-[10px] bg-white px-2.5 py-1.5">
+              <div
+                className="bg-clip-text text-xs font-extrabold tracking-tight text-transparent"
+                style={{
+                  backgroundImage:
+                    'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
+                }}
+              >
+                ◉ Navigator Router Remote
+              </div>
+              <div className="text-[8.5px] font-extrabold text-[#5A00D6]">
+                13 Command Channels · 46 Connected Modules
+              </div>
+            </div>
+          </div>
 
           {/* Remote Control Mode Switcher */}
           <div
-            className="mt-2 grid w-full grid-cols-2 gap-1 rounded-xl p-[2px]"
+            className="mt-1.5 grid w-full grid-cols-2 gap-1 rounded-xl p-[2px]"
             style={{ background: BRAND_GRADIENT }}
           >
             <button
@@ -314,8 +332,11 @@ export default function ObsidianSidebarRemote({
                               <Icon className="h-3 w-3 shrink-0" style={{ color: symColor }} />
                             </span>
                             <span
-                              className="min-w-0 text-[10px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]"
-                              style={{ color: '#0A2B6D' }}
+                              className="min-w-0 bg-clip-text text-[10.5px] font-extrabold leading-tight tracking-tight text-transparent"
+                              style={{
+                                backgroundImage:
+                                  'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
+                              }}
                             >
                               <span style={{ color: symColor }}>◉</span> {pillar.label}
                             </span>
@@ -409,8 +430,11 @@ export default function ObsidianSidebarRemote({
                                       <Icon className="h-2.5 w-2.5 shrink-0" style={{ color: childColor }} />
                                     </span>
                                     <span
-                                      className="min-w-0 text-[9.5px] font-extrabold leading-tight text-[#0A2B6D]"
-                                      style={{ color: '#0A2B6D' }}
+                                      className="min-w-0 bg-clip-text text-[10px] font-extrabold leading-tight text-transparent"
+                                      style={{
+                                        backgroundImage:
+                                          'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
+                                      }}
                                     >
                                       <span style={{ color: childColor }}>◉</span> {child.label}
                                     </span>
@@ -485,8 +509,11 @@ export default function ObsidianSidebarRemote({
                             <Icon className="h-3 w-3 shrink-0" style={{ color: symColor }} />
                           </span>
                           <span
-                            className="min-w-0 text-[10px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]"
-                            style={{ color: '#0A2B6D' }}
+                            className="min-w-0 bg-clip-text text-[10.5px] font-extrabold leading-tight tracking-tight text-transparent"
+                            style={{
+                              backgroundImage:
+                                'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
+                            }}
                           >
                             <span style={{ color: symColor }}>◉</span> {label}
                           </span>

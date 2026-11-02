@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, ArrowRight, Calendar } from 'lucide-react';
+import BrandLogoLockup from '@/components/common/BrandLogoLockup';
 
 const NAV_LINKS = [
   ['Dashboard', '#showcase'],
@@ -24,28 +25,10 @@ export default function LandingNav({ onBookDemo }) {
       <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-2 px-3 py-2 sm:flex-nowrap sm:px-5">
         <Link
           to="/"
-          className="flex shrink-0 flex-col items-center rounded-2xl border-2 border-[#0072FF] bg-white px-3.5 py-1.5 text-center shadow-sm transition hover:border-[#5A00D6]"
+          className="inline-flex shrink-0 flex-col items-center justify-center text-center"
           aria-label="ComplianceHR Infinity home"
         >
-          <img
-            src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png"
-            alt="ComplianceHR Infinity"
-            className="h-11 w-32 sm:h-12 sm:w-36 shrink-0 object-contain"
-          />
-          <div className="mt-1 font-editorial text-sm sm:text-base font-extrabold tracking-tight text-[#0A2B6D] leading-none whitespace-nowrap">
-            Compliance
-            <span className="font-editorial-italic bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-              HR
-            </span>{' '}
-            <span className="bg-gradient-to-r from-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-              Infinity
-            </span>
-          </div>
-          <div className="mt-0.5 text-[9.5px] sm:text-[10.5px] font-extrabold leading-none whitespace-nowrap">
-            <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
-            <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
-            <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
-          </div>
+          <BrandLogoLockup size="md" theme="light" showSlogan={true} />
         </Link>
 
         <nav aria-label="Main navigation" className="hidden xl:flex items-center gap-2.5 2xl:gap-3.5">

@@ -28,12 +28,20 @@ export default function AllModulesHub() {
     >
       <div className="h-1.5 w-full" style={{ background: BRAND_GRADIENT }} />
 
-      {/* TOP 1/4 WHITE: Header with Enlarged Logo, Name & Slogan inside ONE Border */}
+      {/* Compact Module Hub Title Bar (No Duplicate Middle Logo) */}
       <div
         id="all-modules-hub"
-        className="flex flex-col items-center justify-center bg-white px-3 py-2 text-center"
+        className="flex items-center justify-between bg-white px-3 py-1.5"
       >
-        <BrandLogoLockup size="xs" theme="light" showSlogan={true} />
+        <span
+          className="bg-clip-text text-xs font-extrabold tracking-tight text-transparent"
+          style={{
+            backgroundImage:
+              'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
+          }}
+        >
+          ◉ All Connected Platform Modules — Remote Command Directory ({modules.length} Modules)
+        </span>
       </div>
 
       {/* BOTTOM 3/4 DARK BLUE: Illuminated Page Modular Tiles with App Design Colour Symbols */}

@@ -8,10 +8,11 @@ export const BRAND_SLOGAN_TEXT =
   'Complete Control. Greater Confidence. Brighter Success.';
 
 /**
- * Canonical ComplianceHR Infinity Brand Lockup (All Centred inside ONE Border):
- * Top: Enlarged Logo
- * Middle: Enlarged Business Name
- * Bottom: Slogan (kept at compact size)
+ * Canonical ComplianceHR Infinity Brand Lockup (All Centred inside ONE App-Design Gradient Border on White):
+ * Line 1 (Top): Logo approx. 3cm in size, centred
+ * Line 2 (Middle): "ComplianceHR Infinity" on ONE single line, dark blue (#0A2B6D) changing into app design colours towards the end
+ * Line 3 (Bottom): Slightly smaller slogan on ONE single line in medium blue (#0072FF), purple (#5A00D6), pink (#FF2E9A),
+ *                  almost lining up on each end with "ComplianceHR Infinity" (just slightly longer)
  *
  * @param {{
  *   logoUrl?: string,
@@ -25,105 +26,90 @@ export const BRAND_SLOGAN_TEXT =
 export default function BrandLogoLockup({
   logoUrl = DEFAULT_BRAND_LOGO,
   companyName = 'ComplianceHR Infinity',
-  size = 'sm',
+  size = 'md',
   theme = 'light',
   className = '',
   showSlogan = true,
 }) {
   const isCustomName = companyName && companyName !== 'ComplianceHR Infinity';
 
-  // Larger, high-impact logo sizing across all headers and remotes
+  // Approx 3cm logo size in the top header & footer areas (compact option only if explicitly 'xs')
   const logoSizeClass =
     size === 'xs'
-      ? 'h-16 w-48 sm:h-20 sm:w-56'
-      : size === 'sm'
-        ? 'h-20 w-56 sm:h-24 sm:w-68'
-        : size === 'lg'
-          ? 'h-28 w-72 sm:h-32 sm:w-80'
-          : 'h-24 w-64 sm:h-28 sm:w-72';
+      ? 'h-[2.2cm] w-[6.2cm] sm:h-[2.5cm] sm:w-[7cm]'
+      : 'h-[2.7cm] w-[7.4cm] sm:h-[3cm] sm:w-[8.4cm]';
 
-  // Increased business name sizing
+  // Line 2: Similar-sized structured heading on ONE single line
   const nameSizeClass =
     size === 'xs'
-      ? 'text-base sm:text-lg'
-      : size === 'sm'
-        ? 'text-lg sm:text-xl'
-        : size === 'lg'
-          ? 'text-2xl sm:text-3xl'
-          : 'text-xl sm:text-2xl';
+      ? 'text-lg sm:text-xl'
+      : 'text-xl sm:text-[26px]';
 
-  // Slogan size kept the same
+  // Line 3: Slightly smaller slogan on ONE single line that aligns with and extends just slightly past the business name
   const sloganSizeClass =
     size === 'xs'
-      ? 'text-[8.5px] sm:text-[9.5px]'
-      : size === 'sm'
-        ? 'text-[9.5px] sm:text-[10.5px]'
-        : 'text-[10.5px] sm:text-xs';
+      ? 'text-[10px] sm:text-[11px] tracking-[0.01em]'
+      : 'text-[11px] sm:text-[13px] tracking-[0.015em]';
 
   const APP_BORDER_GRADIENT =
     'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)';
 
   return (
     <div
-      className={`inline-flex max-w-full flex-col items-center justify-center rounded-2xl p-[2.5px] text-center select-none transition-transform duration-200 hover:scale-[1.01] ${className}`}
+      className={`inline-flex max-w-full flex-col items-center justify-center rounded-2xl p-[3px] text-center select-none transition-transform duration-200 ${className}`}
       style={{
         background: APP_BORDER_GRADIENT,
-        boxShadow: '0 4px 16px -2px rgba(0, 198, 255, 0.45), 0 2px 8px rgba(90, 0, 214, 0.3)',
+        boxShadow: '0 4px 16px -2px rgba(0, 114, 255, 0.25), 0 2px 8px rgba(90, 0, 214, 0.2)',
       }}
     >
-      {/* SINGLE UNIFIED WHITE CONTAINER WITH ONE BORDER FOR LOGO, NAME & SLOGAN */}
-      <div
-        className="flex w-full flex-col items-center justify-center rounded-[13.5px] bg-white px-4 py-2"
-        style={{
-          background: 'radial-gradient(circle at 50% 50%, #FFFFFF 70%, #F5F0FF 100%)',
-        }}
-      >
-        {/* 1. TOP: ENLARGED LOGO */}
+      {/* SINGLE UNIFIED WHITE CONTAINER WITH ONE APP-DESIGN GRADIENT BORDER FOR LOGO, NAME & SLOGAN */}
+      <div className="flex w-full flex-col items-center justify-center rounded-[13px] bg-white px-5 py-2.5">
+        {/* LINE 1: LOGO APPROX 3CM IN SIZE */}
         <Image
           src={logoUrl || DEFAULT_BRAND_LOGO}
           alt={companyName || 'ComplianceHR Infinity'}
           fittingType="fit"
-          className={`${logoSizeClass} shrink-0 object-contain drop-shadow-2xs`}
+          className={`${logoSizeClass} shrink-0 object-contain`}
         />
 
-        {/* 2. MIDDLE: ENLARGED BUSINESS NAME */}
+        {/* LINE 2: "ComplianceHR Infinity" ON ONE LINE — DARK BLUE CHANGING INTO APP DESIGN COLOURS TOWARDS THE END */}
         <div
-          className={`mt-1 font-editorial ${nameSizeClass} font-extrabold leading-tight tracking-tight text-[#0A2B6D]`}
+          className={`mt-1 font-editorial ${nameSizeClass} font-extrabold leading-tight tracking-tight whitespace-nowrap`}
         >
           {isCustomName ? (
-            <span style={{ color: '#0A2B6D' }}>{companyName}</span>
+            <span
+              className="bg-clip-text text-transparent"
+              style={{
+                backgroundImage:
+                  'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 42%, #0072FF 62%, #5A00D6 80%, #FF2E9A 100%)',
+              }}
+            >
+              {companyName}
+            </span>
           ) : (
             <>
               <span style={{ color: '#0A2B6D' }}>Compliance</span>
               <span
-                className="font-editorial-italic"
-                style={{ color: '#5A00D6' }}
+                className="bg-clip-text text-transparent"
+                style={{
+                  backgroundImage:
+                    'linear-gradient(90deg, #0A2B6D 0%, #0072FF 30%, #5A00D6 62%, #A100FF 82%, #FF2E9A 100%)',
+                }}
               >
-                HR
-              </span>{' '}
-              <span
-                className="bg-gradient-to-r from-[#0072FF] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent"
-              >
-                Infinity
+                HR Infinity
               </span>
             </>
           )}
         </div>
 
-        {/* 3. BOTTOM: SLOGAN (SAME SIZE) */}
+        {/* LINE 3: SLOGAN ON ONE LINE — MEDIUM BLUE, PURPLE, PINK — ALMOST LINING UP ON EACH END (JUST SLIGHTLY LONGER) */}
         {showSlogan && (
           <div
-            className={`mt-0.5 flex flex-wrap items-center justify-center gap-x-1 gap-y-0 text-center ${sloganSizeClass} font-extrabold leading-snug`}
+            className={`mt-0.5 flex items-center justify-center gap-x-1.5 text-center ${sloganSizeClass} font-extrabold leading-tight whitespace-nowrap`}
           >
-            <span style={{ color: '#0072FF' }}>
-              Complete Control.
-            </span>
-            <span style={{ color: '#5A00D6' }}>
-              Greater Confidence.
-            </span>
-            <span style={{ color: '#FF2E9A' }}>
-              Brighter Success.
-            </span>
+            <span style={{ color: '#0072FF' }}>Complete Control.</span>
+            <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>
+            <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
           </div>
         )}
       </div>

@@ -237,20 +237,14 @@ export default function AppLayout() {
                 'linear-gradient(120deg, #00C6FF 0%, #0072FF 25%, #5A00D6 55%, #FF2E9A 100%)',
             }}
           />
-          {/* Very Top Section Around Logo ONLY: Landing-Page Dashboard Blue (No Light Blue Line) */}
-          <div
-            className="px-3 py-1.5 sm:px-6 lg:px-8"
-            style={{
-              background:
-                'radial-gradient(circle at 50% 35%, rgba(0, 198, 255, 0.42) 0%, #0072FF 44%, #0A2B6D 86%, #061539 100%)',
-            }}
-          >
+          {/* Very Top Logo Area ONLY: White Background Outside Logo Border to Side of Page */}
+          <div className="bg-white px-3 py-2 sm:px-6 lg:px-8">
             <div className="mx-auto flex max-w-[1440px] justify-center">
               <Link
                 to="/dashboard"
                 className="inline-flex flex-col items-center justify-center text-center transition"
               >
-                <BrandLogoLockup size="sm" theme="light" showSlogan={true} />
+                <BrandLogoLockup size="md" theme="light" showSlogan={true} />
               </Link>
             </div>
           </div>
@@ -448,7 +442,13 @@ export default function AppLayout() {
           </div>
         </header>
 
-        <main id="main-workspace-content" className="relative z-0 flex-1 overflow-y-auto overflow-x-hidden bg-background pb-20 md:pb-0">
+        <main
+          id="main-workspace-content"
+          className="relative z-0 flex-1 overflow-y-auto overflow-x-hidden pb-20 md:pb-0"
+          style={{
+            background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+          }}
+        >
           <EnterpriseWorkspaceBar
             currentLabel={currentLabel}
             role={role}

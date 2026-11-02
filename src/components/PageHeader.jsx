@@ -9,11 +9,14 @@ import AutoRegisterInsights from '@/components/AutoRegisterInsights';
 import { resolveAuditModule } from '@/lib/moduleAuditReport';
 
 /*
- * LOCKED HEADER STANDARD (src/HEADER_RULES.md) — restored 2 Nov 2026 at the owner's request.
- * Exactly 3cm tall, app blue-purple-pink gradient, black outer border, white text with a black outline,
- * standard body font, short professional description, modular icon tile on the LEFT.
- * Directly beneath: live compliance tracker, Audit Checklist export and Audit Report — always shown.
- * Sizing/colour/border/font are enforced in src/index.css (".app-page-header").
+ * CANONICAL COMPLIANCEHR INFINITY HEADER TEMPLATE (src/DESIGN_TEMPLATE_SPEC.md):
+ * - Separated by an App Design Coloured Gradient Border.
+ * - White background inside the header/topic section outside the small tiles up to the header border.
+ * - Dark Navy (#0A2B6D) outside the header border to the side of the page.
+ * - Main Header Title: Dark Blue (#0A2B6D) writing changing into App Design Colours towards the end,
+ *   with an App Design Coloured Symbol and App Design Coloured Border on a White background.
+ * - Small Header Tiles: Fit neatly in 1–2 rows with App Design Coloured Borders, Dark Blue (#0A2B6D) writing,
+ *   and App Design Coloured Symbols on a White background (or App Design Coloured Gradient for primary highlights).
  */
 /** @param {any} props */
 export default function PageHeader({
@@ -38,40 +41,48 @@ export default function PageHeader({
 
   const APP_BORDER_GRADIENT =
     'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)';
-  const DARK_NAVY_CHASSIS =
-    'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #131B4D 100%)';
+
+  const HEADING_TEXT_GRADIENT =
+    'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)';
 
   return (
     <div className="space-y-2">
+      {/* App-Design-Coloured Outer Border Separating Topic/Subject/Header from Dark Navy Page Surround */}
       <div
         className={cn(
-          'preserve-island-theme overflow-hidden rounded-2xl border-2 border-[#0A2B6D] shadow-lg',
+          'preserve-island-theme overflow-hidden rounded-2xl p-[3px] shadow-lg',
           className
         )}
-        style={{ background: DARK_NAVY_CHASSIS }}
+        style={{ background: APP_BORDER_GRADIENT }}
       >
-        <div className="h-1.5 w-full" style={{ background: APP_BORDER_GRADIENT }} />
-        <div className="p-2 sm:p-2.5 space-y-2">
-          {/* Main Header Pod: Full White Surface + App-Design-Colour Border + App-Coloured Icon */}
+        {/* White Background Outside the Tiles Inside the Header/Topic Section */}
+        <div className="rounded-[13px] bg-white p-2.5 sm:p-3 space-y-2">
+          {/* Main Topic Header Tile: App Design Border + White Background + App Symbol + Dark Blue -> App Colour Title */}
           <div
-            className="rounded-2xl p-[2px] shadow-sm"
+            className="rounded-2xl p-[2px] shadow-2xs"
             style={{ background: APP_BORDER_GRADIENT }}
           >
             <div className="flex min-w-0 w-full items-center gap-3 rounded-[14px] bg-white px-3.5 py-2.5">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-[#0072FF] bg-[#F5F0FF] shadow-2xs">
+              <div
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#F5F0FF] shadow-2xs"
+                style={{ border: '2px solid #0072FF' }}
+              >
                 <Icon className="h-5 w-5 shrink-0" style={{ color: '#0072FF' }} />
               </div>
               <div className="min-w-0 flex-1">
-                <h1
-                  className="text-base sm:text-xl font-extrabold leading-tight tracking-tight text-[#0A2B6D]"
-                  style={{ color: '#0A2B6D' }}
-                >
-                  <span style={{ color: '#5A00D6' }}>◉</span> {title}
+                <h1 className="text-base sm:text-xl font-extrabold leading-tight tracking-tight">
+                  <span style={{ color: '#5A00D6' }}>◉</span>{' '}
+                  <span
+                    className="bg-clip-text text-transparent"
+                    style={{ backgroundImage: HEADING_TEXT_GRADIENT }}
+                  >
+                    {title}
+                  </span>
                 </h1>
                 {description && (
                   <p
-                    className="mt-0.5 text-xs sm:text-sm font-bold leading-snug text-[#5A00D6]"
-                    style={{ color: '#5A00D6' }}
+                    className="mt-0.5 text-xs sm:text-sm font-bold leading-snug text-[#0A2B6D]"
+                    style={{ color: '#0A2B6D' }}
                   >
                     {description}
                   </p>
@@ -80,7 +91,7 @@ export default function PageHeader({
             </div>
           </div>
 
-          {/* Action & Compliance Strip Inside Matching White App-Design-Bordered Bar */}
+          {/* Small Header Tiles Row (1–2 Rows): App Design Border + White Background + Dark Blue Writing + Coloured Symbols */}
           <div
             className="rounded-xl p-[1.5px]"
             style={{ background: APP_BORDER_GRADIENT }}
@@ -95,7 +106,7 @@ export default function PageHeader({
               {beforeAudit}
               <div
                 className={cn(
-                  'flex shrink-0 items-center gap-1 [&>button]:h-7 [&>button]:gap-1 [&>button]:px-2 [&>button]:text-[11px] [&>button_svg]:mr-0 [&>button_svg]:size-3',
+                  'flex shrink-0 items-center gap-1.5 [&>button]:h-7 [&>button]:gap-1 [&>button]:px-2.5 [&>button]:text-[11px] [&>button_svg]:mr-0 [&>button_svg]:size-3',
                   auditClassName
                 )}
               >
@@ -107,7 +118,7 @@ export default function PageHeader({
                 <div
                   className={cn(
                     'flex flex-wrap items-center',
-                    compactActions ? 'gap-1' : 'gap-2',
+                    compactActions ? 'gap-1.5' : 'gap-2',
                     actionClassName
                   )}
                 >
@@ -128,5 +139,5 @@ export default function PageHeader({
 
 // Row of controls rendered just below the header card (left-aligned by default).
 export function HeaderUnderRow({ children, className = undefined }) {
-  return <div className={cn('module-action-bar flex flex-wrap items-center gap-1', className)}>{children}</div>;
+  return <div className={cn('module-action-bar flex flex-wrap items-center gap-1.5', className)}>{children}</div>;
 }
