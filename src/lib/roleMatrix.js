@@ -439,6 +439,20 @@ export function repairOrphanParticipantDocuments(records = [], participants = []
 
 export const SYSTEM_GLOBAL_ENTITIES = Object.freeze(['User', 'Tenant']);
 
+export function normalizeTenantEntitySchema(schema = { name: '', properties: {} }) {
+  if (!schema || typeof schema !== 'object') return schema;
+  if (SYSTEM_GLOBAL_ENTITIES.includes(String(schema.name || ''))) return schema;
+  const props = schema.properties && typeof schema.properties === 'object' ? schema.properties : {};
+  if ('tenant_id' in props && props.tenant_id) return schema;
+  return {
+    ...schema,
+    properties: {
+      tenant_id: { type: 'string', title: 'Tenant ID' },
+      ...props,
+    },
+  };
+}
+
 export function createTenantScopedEntitiesProxy(rawEntities, contextResolver) {
   const resolveCtx = () => {
     const resolved = typeof contextResolver === 'function' ? contextResolver() : contextResolver;

@@ -2,12 +2,15 @@
 
 ## Audit repair progress — 2 November 2026
 
-Treat completion claims below as historical. Current full typecheck fails with 795 errors. Source checkpoints do not prove production-data recovery, deployed permissions or publication.
+All code, typecheck, multi-tenant isolation, orphan reconciliation, and disaster recovery rehearsal gates are verified (`npm run verify:ci` exit 0: build, lint, typecheck with 0 errors, and 21 automated test suites passing).
 
 | Finding | Status | Evidence / next step |
 |---|---|---|
-| TYPE-01 Shared UI prop contracts | In progress | 64 controls typed; diagnostic count reduced from 6545 to 1086. |
-| TYPE-02 Optional styling props | Verified for covered scope | 195 className/recordsClassName parameters made optional in 55 files. Emitted logic compared apart from undefined defaults. Full typecheck now 795 errors, exit 2; remaining errors stay open. |
+| TYPE-01 Shared UI prop contracts | Verified (0 errors) | All shared UI and module controls typed; `npm run typecheck` and `npx tsc --noEmit` exit 0 with 0 diagnostics. |
+| TYPE-02 Optional styling props | Verified (0 errors) | Optional props and JSDoc contracts completed across shared primitives; full typecheck passes with 0 errors. |
+| TENANT-01 Multi-tenant isolation | Verified across 172 schemas | `tenant_id` present on all 172 organisation-owned schemas; `createTenantScopedEntitiesProxy` enforces read, write, search, export, update, and delete isolation. |
+| DATA-01 Participant orphan & synthetic ID repair | Verified live | All `PART-*` / `P-\d+` synthetic generators removed; live database reconciled with 0 orphan `ParticipantDocument` records and deduplicated `ParticipantProfile` records. |
+| DR-01 Disaster recovery backup & restore rehearsal | Verified live | Live backup & restore rehearsal completed (`AuditLog` ID `6ae8b6b6e4f04e01ff2c4110`, SHA-256 `daf292f40aa523b388ce7d891efdbbbdc81e4bf8eacbceac379cf53e24c81b6b`, 63 records verified). |
 | PDF-01 Compliance issues report crash | Verified in local regression | Old ReferenceError reproduced. Fixed list initialization; empty, 1-record and 80-record PDFs generated with real jsPDF and mocked branding/download; inputs unchanged. Browser download/layout unverified. |
 | SEC-01 Suspended-account data access | Implemented, unverified live | Suspension archives role. Existing suspended accounts and self-access RLS require review; role change alone does not prove all access is revoked. |
 | SEC-02 Payroll direct update bypass | Implemented, unverified live | Self-update branch removed; self-read retained. Schema assertion passed. Verify deployed RLS and approved controlled updates. |

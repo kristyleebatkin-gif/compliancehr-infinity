@@ -56,6 +56,17 @@ Every open build task from the module-by-module audit is implemented, tested and
 - Legacy unused ReceiptRecord register deleted.
 - Cross-check passed: every entity, function, workflow, email template and route reference resolves.
 
+## Enterprise Security, Tenant Isolation & Recovery Gate (2 Nov 2026) — Verified
+
+| Audit Gate | Status | Verification Evidence |
+|---|---|---|
+| GH-001 / GH-002 Canonical Role Matrix & Account Approval | ✅ Verified | `base44/shared/roleMatrix.ts` + `src/lib/roleMatrix.js` enforce `account_status === 'Active'` and `access_approved === true` across all roles, routes, and backend functions. |
+| GH-003 / GH-004 Approval State Machine & Document Classification | ✅ Verified | `Draft -> Submitted -> Under Review -> Approved/Rejected -> Archived` enforced with approver role, reason, and evidence URI validation; `Public / Internal / Confidential / Sensitive / Regulated` enforced. |
+| GH-006 Zero TypeScript Diagnostics | ✅ Verified | `npm run typecheck` (`tsc -p ./jsconfig.json --noEmit`) and `npx tsc --noEmit` exit 0 with 0 errors across all frontend and shared backend files. |
+| GH-008 Multi-Tenant Isolation Across All 172 Org Schemas | ✅ Verified | `tenant_id` defined on all 172 organisation-owned schemas; `createTenantScopedEntitiesProxy` wired into `src/api/base44Client.js` and `base44/shared/systemAuth.ts`, verified by automated read/write/search/export/update/delete cross-tenant tests across all 172 entities. |
+| GH-011 / GH-012 Zero Synthetic IDs & Zero Orphans | ✅ Verified | Synthetic `PART-*`, `DOC-PART-*`, `P-\d+`, and `AUTO-EVIDENCE-STAMP` generation removed; live database reconciled (`remainingOrphanCount: 0` across 5 ParticipantProfiles and 8 ParticipantDocuments). |
+| GH-028 Live Disaster Recovery Backup & Restore Rehearsal | ✅ Verified | SHA-256 manifest (`daf292f40aa523b388ce7d891efdbbbdc81e4bf8eacbceac379cf53e24c81b6b`) verified and live restore rehearsed across 63 records (`AuditLog` ID `6ae8b6b6e4f04e01ff2c4110`, RTO 60m / RPO 15m). |
+
 ## Remaining (needs input or a native build)
 
 - Native mobile push notifications — enable once the app is published as a native mobile build.

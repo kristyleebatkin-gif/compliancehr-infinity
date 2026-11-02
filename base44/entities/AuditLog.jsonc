@@ -2,6 +2,10 @@
   "name": "AuditLog",
   "type": "object",
   "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Tenant ID"
+    },
     "action": {
       "type": "string",
       "title": "Action"

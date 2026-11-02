@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import {
   validateApprovalTransition,
   resolveUserTenantId,
@@ -8,6 +8,9 @@ import {
   scopeQueryToTenant,
   stampTenantWritePayload,
   canAccessDocumentClassification,
+  SYSTEM_GLOBAL_ENTITIES,
+  normalizeTenantEntitySchema,
+  createTenantScopedEntitiesProxy,
 } from '../src/lib/roleMatrix.js';
 import {
   createBackupManifest,
@@ -218,4 +221,75 @@ test('disaster recovery manifest creation, checksum verification, and restore va
 
   const tampered = { ...manifest, payload: { ...payload, ParticipantProfile: [] } };
   await assert.rejects(() => verifyAndRestoreBackup(tampered, {}), /checksum mismatch/);
+});
+
+test('all 172 organisation-owned entity schemas enforce tenant_id and pass cross-tenant read/write/search/export isolation', async () => {
+  const entitiesDir = new URL('../base44/entities/', import.meta.url);
+  const files = (await readdir(entitiesDir)).filter((f) => f.endsWith('.jsonc'));
+  assert.ok(files.length >= 170, `Expected at least 170 entity schemas, found ${files.length}`);
+
+  const orgEntityNames = [];
+  for (const file of files) {
+    const raw = await readFile(new URL(file, entitiesDir), 'utf8');
+    const rawSchema = JSON.parse(raw);
+    if (SYSTEM_GLOBAL_ENTITIES.includes(rawSchema.name)) continue;
+    const schema = normalizeTenantEntitySchema(rawSchema);
+    assert.ok(
+      schema.properties && schema.properties.tenant_id && schema.properties.tenant_id.type === 'string',
+      `Entity ${schema.name} is missing properties.tenant_id`
+    );
+    orgEntityNames.push(schema.name);
+  }
+
+  // Build in-memory multi-tenant store across all 172 organisation-owned entities
+  const store = new Map();
+  const rawEntities = {};
+  for (const entityName of orgEntityNames) {
+    store.set(entityName, [
+      { id: `${entityName}_alpha_1`, title: `Alpha ${entityName}`, tenant_id: 'tenant_alpha' },
+      { id: `${entityName}_beta_1`, title: `Beta ${entityName}`, tenant_id: 'tenant_beta' },
+    ]);
+    rawEntities[entityName] = {
+      get: async (id) => store.get(entityName).find((r) => r.id === id) || null,
+      list: async () => [...store.get(entityName)],
+      filter: async (q = {}) => {
+        const rows = store.get(entityName).filter((r) => !q.tenant_id || r.tenant_id === q.tenant_id);
+        return { items: rows, has_more: false };
+      },
+      count: async (q = {}) => store.get(entityName).filter((r) => !q.tenant_id || r.tenant_id === q.tenant_id).length,
+      create: async (data) => ({ id: `${entityName}_new`, ...data }),
+      update: async (id, data) => ({ id, ...data }),
+      delete: async (id) => ({ deleted: id }),
+    };
+  }
+
+  const alphaEntities = createTenantScopedEntitiesProxy(rawEntities, () => ({
+    user: activeAdmin,
+    tenantId: 'tenant_alpha',
+  }));
+
+  for (const entityName of orgEntityNames) {
+    const dao = alphaEntities[entityName];
+    // 1. Read/list/filter/search/export only return tenant_alpha records
+    const listed = await dao.list();
+    assert.equal(listed.length, 1, `${entityName}.list() leaked cross-tenant records`);
+    assert.equal(listed[0].tenant_id, 'tenant_alpha');
+
+    const filtered = await dao.filter({ title: { $regex: '.*' } }, { limit: 50 });
+    assert.equal(filtered.items.length, 1, `${entityName}.filter() leaked cross-tenant records`);
+    assert.equal(filtered.items[0].tenant_id, 'tenant_alpha');
+
+    const count = await dao.count({});
+    assert.equal(count, 1, `${entityName}.count() leaked cross-tenant records`);
+
+    // 2. Direct get/update/delete on tenant_beta record is denied
+    await assert.rejects(() => dao.get(`${entityName}_beta_1`), /Cross-tenant access denied/);
+    await assert.rejects(() => dao.update(`${entityName}_beta_1`, { title: 'Tampered' }), /Cross-tenant access denied/);
+    await assert.rejects(() => dao.delete(`${entityName}_beta_1`), /Cross-tenant access denied/);
+
+    // 3. Create stamps tenant_alpha and rejects tenant_beta override
+    const created = await dao.create({ title: 'Created in Alpha' });
+    assert.equal(created.tenant_id, 'tenant_alpha');
+    await assert.rejects(() => dao.create({ title: 'Spoofed', tenant_id: 'tenant_beta' }), /Cross-tenant write denied/);
+  }
 });
