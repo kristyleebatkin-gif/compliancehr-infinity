@@ -229,13 +229,7 @@ export default function AppLayout() {
       )}
 
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
-        <header
-          className="preserve-island-theme sticky top-0 z-40 shrink-0 border-b-2 border-[#0072FF] shadow-md"
-          style={{
-            background:
-              'radial-gradient(circle at 50% 35%, rgba(0, 198, 255, 0.38) 0%, #0072FF 42%, #0A2B6D 85%, #061539 100%)',
-          }}
-        >
+        <header className="preserve-island-theme sticky top-0 z-40 shrink-0 border-b-2 border-[#0A2B6D] shadow-md">
           <div
             className="h-1 w-full"
             style={{
@@ -243,17 +237,32 @@ export default function AppLayout() {
                 'linear-gradient(120deg, #00C6FF 0%, #0072FF 25%, #5A00D6 55%, #FF2E9A 100%)',
             }}
           />
-          <div className="mx-auto flex max-w-[1440px] flex-col items-center gap-1 px-3 py-1.5 sm:px-6 lg:px-8">
-            {/* Top Centred Brand Lockup Framed on Landing Dashboard Blue with White Boxes & App-Design-Colour Borders */}
-            <Link
-              to="/dashboard"
-              className="inline-flex flex-col items-center justify-center rounded-2xl border border-white/35 bg-white/15 px-3 py-1 text-center shadow-sm backdrop-blur-md transition hover:bg-white/25"
-            >
-              <BrandLogoLockup size="xs" theme="light" />
-            </Link>
+          {/* Very Top Section Around Logo ONLY: Landing-Page Dashboard Blue */}
+          <div
+            className="border-b border-white/25 px-3 py-1.5 sm:px-6 lg:px-8"
+            style={{
+              background:
+                'radial-gradient(circle at 50% 35%, rgba(0, 198, 255, 0.42) 0%, #0072FF 44%, #0A2B6D 86%, #061539 100%)',
+            }}
+          >
+            <div className="mx-auto flex max-w-[1440px] justify-center">
+              <Link
+                to="/dashboard"
+                className="inline-flex flex-col items-center justify-center rounded-2xl border border-white/35 bg-white/15 px-4 py-1 text-center shadow-sm backdrop-blur-md transition hover:bg-white/25"
+              >
+                <BrandLogoLockup size="sm" theme="light" showSlogan={true} />
+              </Link>
+            </div>
+          </div>
 
-            {/* Single-Line Compact Command Row: White Background Pills with App-Design-Colour Borders on Blue */}
-            <div className="flex w-full flex-wrap items-center justify-between gap-1.5 border-t border-white/20 pt-1">
+          {/* Dark Blue Command Row Below Top Logo Section */}
+          <div
+            className="px-3 py-1 sm:px-6 lg:px-8"
+            style={{
+              background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #131B4D 100%)',
+            }}
+          >
+            <div className="mx-auto flex max-w-[1440px] w-full flex-wrap items-center justify-between gap-1.5">
               <div className="flex min-w-0 items-center gap-1.5">
                 <button
                   onClick={() => setMobileOpen(true)}

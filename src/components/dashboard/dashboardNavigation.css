@@ -2,12 +2,12 @@
 .app-readable [data-dashboard-tabs][role="tablist"],
 .app-readable nav[data-dashboard-tabs] {
   display: grid !important;
-  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
   grid-auto-rows: 1fr;
   align-items: stretch !important;
   width: 100%;
   height: auto !important;
-  gap: 0.375rem !important;
+  gap: 0.5rem !important;
   padding: 0.5rem !important;
   border-radius: 1rem !important;
   overflow: hidden;
@@ -16,7 +16,7 @@
 .app-readable [data-dashboard-tabs] > [data-dashboard-tab] {
   position: relative;
   min-width: 0;
-  min-height: 48px !important;
+  min-height: 52px !important;
   height: 100% !important;
   text-align: left !important;
   white-space: normal !important;
@@ -31,7 +31,14 @@
   opacity: 0.5;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 480px) {
+  .app-readable [data-dashboard-tabs][role="tablist"],
+  .app-readable nav[data-dashboard-tabs] {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (min-width: 768px) {
   .app-readable [data-dashboard-tabs][role="tablist"],
   .app-readable nav[data-dashboard-tabs] {
     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
@@ -48,6 +55,6 @@
 @media (min-width: 1280px) {
   .app-readable [data-dashboard-tabs][role="tablist"],
   .app-readable nav[data-dashboard-tabs] {
-    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
   }
 }

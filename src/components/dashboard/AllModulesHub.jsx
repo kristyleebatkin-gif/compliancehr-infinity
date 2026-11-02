@@ -9,8 +9,11 @@ import BrandLogoLockup from '@/components/common/BrandLogoLockup';
 const BRAND_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)';
 
+const LANDING_TOP_LOGO_BLUE =
+  'radial-gradient(circle at 50% 35%, rgba(0, 198, 255, 0.42) 0%, #0072FF 44%, #0A2B6D 86%, #061539 100%)';
+
 const DARK_NAVY_CHASSIS =
-  'radial-gradient(circle at 50% 35%, rgba(0, 198, 255, 0.38) 0%, #0072FF 42%, #0A2B6D 85%, #061539 100%)';
+  'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)';
 
 const APP_DESIGN_ICON_COLOURS = ['#0072FF', '#5A00D6', '#FF2E9A', '#A100FF', '#00C6FF'];
 
@@ -28,12 +31,16 @@ export default function AllModulesHub() {
     >
       <div className="h-1 w-full" style={{ background: BRAND_GRADIENT }} />
 
-      {/* Top Header on Landing-Page Dashboard Blue with White Boxes & App-Design-Colour Borders */}
-      <div id="all-modules-hub" className="flex flex-wrap items-center justify-between gap-1.5 border-b border-white/25 px-3 py-1.5">
-        <BrandLogoLockup size="xs" theme="light" showSlogan={false} />
+      {/* Very Top Logo Section ONLY: Landing-Page Dashboard Blue Around Enlarged Logo & Fitted Slogan */}
+      <div
+        id="all-modules-hub"
+        className="flex flex-wrap items-center justify-between gap-2 border-b-2 border-[#0072FF] px-3 py-2"
+        style={{ background: LANDING_TOP_LOGO_BLUE }}
+      >
+        <BrandLogoLockup size="sm" theme="light" showSlogan={true} />
         <span className="rounded-full p-[1.5px]" style={{ background: BRAND_GRADIENT }}>
           <span
-            className="block rounded-full bg-white px-2.5 py-0.5 text-[8px] font-black uppercase tracking-wider"
+            className="block rounded-full bg-white px-3 py-0.5 text-[8.5px] font-black uppercase tracking-wider"
             style={{ color: '#5A00D6' }}
           >
             ◉ All {modules.length} Platform Control Pods

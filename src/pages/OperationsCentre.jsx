@@ -45,10 +45,10 @@ export default function OperationsCentre() {
 
       <nav
         aria-label="Executive workspaces"
-        className="preserve-island-theme grid grid-cols-2 gap-1.5 rounded-2xl border-2 border-[#0072FF] p-2 shadow-lg sm:grid-cols-3 lg:grid-cols-6"
+        className="preserve-island-theme grid grid-cols-2 gap-1.5 rounded-2xl border-2 border-[#0A2B6D] p-2 shadow-lg sm:grid-cols-3 lg:grid-cols-6"
         style={{
           background:
-            'radial-gradient(circle at 50% 35%, rgba(0, 198, 255, 0.38) 0%, #0072FF 42%, #0A2B6D 85%, #061539 100%)',
+            'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
         }}
       >
         {EXEC_TABS.map((t) => {

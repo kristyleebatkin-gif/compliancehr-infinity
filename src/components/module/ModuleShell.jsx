@@ -35,11 +35,13 @@ export default function ModuleShell({
 
       {actions && (
         <div
-          className="rounded-2xl p-[3px] shadow-sm"
-          style={{ background: TOP_BORDER_GRADIENT }}
+          className="preserve-island-theme rounded-2xl border-2 border-[#0A2B6D] p-1.5 shadow-md"
+          style={{ background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #131B4D 100%)' }}
         >
-          <div role="group" aria-label={`${title || 'Module'} actions`} className="module-shell-actions module-action-bar flex flex-wrap items-center justify-center rounded-[13px] bg-white p-2 [&_button]:rounded-full [&_button]:border-2 [&_button]:border-[#0A2B6D]">
-            {actions}
+          <div className="rounded-xl p-[2px]" style={{ background: TOP_BORDER_GRADIENT }}>
+            <div role="group" aria-label={`${title || 'Module'} actions`} className="module-shell-actions module-action-bar flex flex-wrap items-center justify-center rounded-[10px] bg-white p-2 [&_button]:rounded-full [&_button]:border-2 [&_button]:border-[#0072FF]">
+              {actions}
+            </div>
           </div>
         </div>
       )}
@@ -48,24 +50,26 @@ export default function ModuleShell({
 
       {search && (
         <div
-          className="rounded-2xl p-[3px] shadow-sm"
-          style={{ background: TOP_BORDER_GRADIENT }}
+          className="preserve-island-theme rounded-2xl border-2 border-[#0A2B6D] p-1.5 shadow-md"
+          style={{ background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #131B4D 100%)' }}
         >
-          <div role="search" aria-label={`${title || 'Module'} search and filters`} className="module-shell-search min-w-0 rounded-[13px] bg-white p-2.5">{search}</div>
+          <div className="rounded-xl p-[2px]" style={{ background: TOP_BORDER_GRADIENT }}>
+            <div role="search" aria-label={`${title || 'Module'} search and filters`} className="module-shell-search min-w-0 rounded-[10px] bg-white p-2.5">{search}</div>
+          </div>
         </div>
       )}
 
       {small && (
         <div
-          className="rounded-2xl p-[3px] shadow-sm"
-          style={{ background: TOP_BORDER_GRADIENT }}
+          className="preserve-island-theme rounded-2xl border-2 border-[#0A2B6D] p-1.5 shadow-md"
+          style={{ background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #131B4D 100%)' }}
         >
           <div
-            className={`module-shell-tiles grid gap-2 rounded-[13px] bg-white p-2.5 sm:grid-cols-2 ${
+            className={`module-shell-tiles grid gap-2 rounded-xl p-1 sm:grid-cols-2 ${
               React.Children.count(small) === 5
                 ? 'md:grid-cols-3 lg:grid-cols-5'
                 : ' lg:grid-cols-4'
-            } [&>*]:rounded-3xl [&>*]:border-2 [&>*]:border-[#0A2B6D] [&>*]:bg-white [&>*]:p-3`}
+            } [&>*]:rounded-3xl [&>*]:border-2 [&>*]:border-[#0072FF] [&>*]:bg-white [&>*]:p-3`}
           >
             {small}
           </div>
@@ -74,10 +78,10 @@ export default function ModuleShell({
 
       {medium && (
         <div
-          className="rounded-2xl p-[3px] shadow-sm"
-          style={{ background: TOP_BORDER_GRADIENT }}
+          className="preserve-island-theme rounded-2xl border-2 border-[#0A2B6D] p-1.5 shadow-md"
+          style={{ background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #131B4D 100%)' }}
         >
-          <div className="module-shell-tiles grid gap-2.5 rounded-[13px] bg-white p-2.5 md:grid-cols-2 [&>*]:rounded-3xl [&>*]:border-2 [&>*]:border-[#0A2B6D] [&>*]:bg-white [&>*]:p-3">
+          <div className="module-shell-tiles grid gap-2.5 rounded-xl p-1 md:grid-cols-2 [&>*]:rounded-3xl [&>*]:border-2 [&>*]:border-[#0072FF] [&>*]:bg-white [&>*]:p-3">
             {medium}
           </div>
         </div>

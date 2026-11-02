@@ -10,8 +10,11 @@ import {
 const BRAND_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)';
 
+const LANDING_TOP_LOGO_BLUE =
+  'radial-gradient(circle at 50% 35%, rgba(0, 198, 255, 0.42) 0%, #0072FF 44%, #0A2B6D 86%, #061539 100%)';
+
 const DARK_NAVY_CHASSIS =
-  'radial-gradient(circle at 50% 30%, rgba(0, 198, 255, 0.36) 0%, #0072FF 40%, #0A2B6D 84%, #061539 100%)';
+  'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #131B4D 100%)';
 
 const APP_DESIGN_ICON_COLOURS = ['#0072FF', '#5A00D6', '#FF2E9A', '#A100FF', '#00C6FF'];
 
@@ -229,20 +232,20 @@ export default function ObsidianSidebarRemote({
         {/* Top Blue -> Purple -> Pink Gradient Strip */}
         <div className="h-1.5 w-full shrink-0" style={{ background: BRAND_GRADIENT }} />
 
-        {/* Top Logo Area on Landing-Page Dashboard Blue with White Boxes & App-Design-Colour Borders */}
+        {/* Very Top Logo Section ONLY: Landing-Page Dashboard Blue Behind & Around Logo + Fitted Slogan */}
         <div
-          className="flex shrink-0 flex-col items-center border-b border-white/25 px-2 py-2 text-center shadow-sm"
-          style={{ background: DARK_NAVY_CHASSIS }}
+          className="flex shrink-0 flex-col items-center border-b-2 border-[#0072FF] px-2 py-2.5 text-center shadow-md"
+          style={{ background: LANDING_TOP_LOGO_BLUE }}
         >
-          <BrandLogoLockup size="xs" theme="light" />
+          <BrandLogoLockup size="xs" theme="light" showSlogan={true} />
 
-          {/* Mode Switcher: All-White Buttons with App-Design-Colour Borders on Blue */}
-          <div className="mt-1.5 grid w-full grid-cols-2 gap-1.5">
+          {/* Mode Switcher: All-White Buttons with App-Design-Colour Borders on Landing Blue */}
+          <div className="mt-2 grid w-full grid-cols-2 gap-1.5">
             <div className="rounded-full p-[1.5px]" style={{ background: BRAND_GRADIENT }}>
               <button
                 type="button"
                 onClick={() => setNavMode('os11')}
-                className={`min-h-[24px] w-full rounded-full bg-white py-0.5 text-[8.5px] font-extrabold transition-all ${
+                className={`min-h-[26px] w-full rounded-full bg-white py-0.5 text-[9px] font-extrabold transition-all ${
                   navMode === 'os11'
                     ? 'shadow-[0_0_12px_rgba(0,198,255,0.75)]'
                     : 'opacity-90 hover:opacity-100'
@@ -256,7 +259,7 @@ export default function ObsidianSidebarRemote({
               <button
                 type="button"
                 onClick={() => setNavMode('all')}
-                className={`min-h-[24px] w-full rounded-full bg-white py-0.5 text-[8.5px] font-extrabold transition-all ${
+                className={`min-h-[26px] w-full rounded-full bg-white py-0.5 text-[9px] font-extrabold transition-all ${
                   navMode === 'all'
                     ? 'shadow-[0_0_12px_rgba(255,46,154,0.75)]'
                     : 'opacity-90 hover:opacity-100'
@@ -269,10 +272,11 @@ export default function ObsidianSidebarRemote({
           </div>
         </div>
 
-        {/* 50% Compact Circular Control-Pod Navigation List — All-White Buttons with App-Design-Colour Borders & Icons */}
+        {/* Dark Blue Remote Body with Slightly Increased Size for Each of the 13 Main Modular Pods */}
         <nav
           aria-label="Page navigation"
-          className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-1.5 space-y-1.5"
+          className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-2 space-y-2"
+          style={{ background: DARK_NAVY_CHASSIS }}
         >
           {navMode === 'os11'
             ? PRIMARY_11_OS_NAV.map((pillar, pIdx) => {
@@ -284,31 +288,31 @@ export default function ObsidianSidebarRemote({
                 const isExpanded = expandedPillar === pillar.id || pillarActive;
 
                 return (
-                  <div key={pillar.id} className="space-y-1">
-                    {/* All-White Pod Button with App-Design-Colour Border & App-Coloured Icon */}
+                  <div key={pillar.id} className="space-y-1.5">
+                    {/* Slightly Larger Main Modular (13) Pod Button: Full White Area + App Design Border & Icon */}
                     <div
                       className={`group rounded-2xl p-[2px] transition-all duration-200 ${
                         pillarActive
-                          ? 'shadow-[0_0_14px_rgba(0,198,255,0.75)] scale-[1.01]'
-                          : 'hover:shadow-[0_0_10px_rgba(161,0,255,0.5)]'
+                          ? 'shadow-[0_0_16px_rgba(0,198,255,0.8)] scale-[1.01]'
+                          : 'hover:shadow-[0_0_12px_rgba(161,0,255,0.55)]'
                       }`}
                       style={{ background: BRAND_GRADIENT }}
                     >
-                      <div className="flex flex-col justify-between overflow-hidden rounded-[14px] bg-white px-2 py-1">
-                        <div className="flex items-center justify-between gap-1">
+                      <div className="flex min-h-[58px] flex-col justify-between overflow-hidden rounded-[14px] bg-white px-2.5 py-1.5">
+                        <div className="flex items-center justify-between gap-1.5">
                           <Link
                             to={pillar.path}
                             onClick={() => setExpandedPillar(pillar.id)}
-                            className="flex min-w-0 flex-1 items-center gap-1.5"
+                            className="flex min-w-0 flex-1 items-center gap-2"
                           >
                             <span
-                              className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#F5F0FF]"
-                              style={{ border: `1.5px solid ${iconColor}` }}
+                              className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#F5F0FF]"
+                              style={{ border: `2px solid ${iconColor}` }}
                             >
-                              <Icon className="h-2.5 w-2.5 shrink-0" style={{ color: iconColor }} />
+                              <Icon className="h-3.5 w-3.5 shrink-0" style={{ color: iconColor }} />
                             </span>
                             <span
-                              className="min-w-0 text-[9px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]"
+                              className="min-w-0 text-[10.5px] font-extrabold leading-snug tracking-tight text-[#0A2B6D]"
                               style={{ color: '#0A2B6D' }}
                             >
                               {pillar.label}
@@ -317,10 +321,10 @@ export default function ObsidianSidebarRemote({
 
                           <div className="flex shrink-0 items-center gap-0.5">
                             <span
-                              className="inline-flex items-center gap-0.5 rounded-full border px-1 py-0 text-[6.5px] font-black uppercase"
+                              className="inline-flex items-center gap-0.5 rounded-full border px-1.5 py-0 text-[7px] font-black uppercase"
                               style={{
                                 borderColor: iconColor,
-                                color: pillarActive ? '#5A00D6' : '#0A2B6D',
+                                color: pillarActive ? '#FF2E9A' : '#5A00D6',
                                 backgroundColor: '#F5F0FF',
                               }}
                             >
@@ -336,9 +340,9 @@ export default function ObsidianSidebarRemote({
                               className="rounded p-0.5 text-[#0A2B6D] hover:bg-slate-100"
                             >
                               {isExpanded ? (
-                                <ChevronDown className="h-3 w-3" style={{ color: iconColor }} />
+                                <ChevronDown className="h-3.5 w-3.5" style={{ color: iconColor }} />
                               ) : (
-                                <ChevronRight className="h-3 w-3" style={{ color: iconColor }} />
+                                <ChevronRight className="h-3.5 w-3.5" style={{ color: iconColor }} />
                               )}
                             </button>
                           </div>
@@ -347,19 +351,19 @@ export default function ObsidianSidebarRemote({
                         <Link
                           to={pillar.path}
                           onClick={() => setExpandedPillar(pillar.id)}
-                          className="mt-0.5 flex items-center justify-between gap-1 border-t border-[#C084FC]/35 pt-0.5"
+                          className="mt-1 flex items-center justify-between gap-1 border-t border-[#C084FC]/40 pt-1"
                         >
-                          <span className="text-[8px] font-bold leading-tight text-[#5A00D6]" style={{ color: '#5A00D6' }}>
+                          <span className="text-[8.5px] font-bold leading-snug text-[#5A00D6]" style={{ color: '#5A00D6' }}>
                             {pillar.sub}
                           </span>
-                          <ArrowRight className="h-2.5 w-2.5 shrink-0" style={{ color: iconColor }} />
+                          <ArrowRight className="h-3 w-3 shrink-0" style={{ color: iconColor }} />
                         </Link>
                       </div>
                     </div>
 
                     {/* Level 2 Sub-Navigation All-White Circular Pill Pods */}
                     {isExpanded && (
-                      <div className="ml-1.5 space-y-1 border-l-2 border-[#00C6FF] pl-1.5 py-0.5">
+                      <div className="ml-2 space-y-1 border-l-2 border-[#00C6FF] pl-2 py-0.5">
                         {pillar.children.map((child) => {
                           const subActive =
                             location.pathname === child.path ||
@@ -372,13 +376,13 @@ export default function ObsidianSidebarRemote({
                               style={{ background: BRAND_GRADIENT }}
                             >
                               <span
-                                className={`flex min-h-[24px] items-center justify-between rounded-full bg-white px-2 py-0.5 text-[8.5px] font-extrabold ${
+                                className={`flex min-h-[26px] items-center justify-between rounded-full bg-white px-2.5 py-0.5 text-[9px] font-extrabold ${
                                   subActive ? 'bg-[#F5F0FF]' : ''
                                 }`}
                               >
                                 <span className="flex items-center gap-1 min-w-0">
                                   <span
-                                    className="text-[8px] leading-none shrink-0"
+                                    className="text-[8.5px] leading-none shrink-0"
                                     style={{ color: subActive ? '#FF2E9A' : iconColor }}
                                   >
                                     ◉
@@ -411,40 +415,40 @@ export default function ObsidianSidebarRemote({
                     title={`${label} — ${subtitle}`}
                     className={`group block rounded-2xl p-[2px] transition-all duration-200 focus-visible:outline-none ${
                       active
-                        ? 'shadow-[0_0_14px_rgba(0,198,255,0.75)] scale-[1.01]'
+                        ? 'shadow-[0_0_16px_rgba(0,198,255,0.8)] scale-[1.01]'
                         : 'hover:-translate-y-0.5 hover:shadow-[0_0_10px_rgba(161,0,255,0.45)]'
                     }`}
                     style={{ background: BRAND_GRADIENT }}
                   >
-                    <div className="flex flex-col justify-between overflow-hidden rounded-[14px] bg-white px-2 py-1">
-                      <div className="flex items-center justify-between gap-1">
-                        <div className="flex min-w-0 items-center gap-1.5">
+                    <div className="flex min-h-[54px] flex-col justify-between overflow-hidden rounded-[14px] bg-white px-2.5 py-1.5">
+                      <div className="flex items-center justify-between gap-1.5">
+                        <div className="flex min-w-0 items-center gap-2">
                           <span
-                            className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#F5F0FF]"
-                            style={{ border: `1.5px solid ${iconColor}` }}
+                            className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#F5F0FF]"
+                            style={{ border: `2px solid ${iconColor}` }}
                           >
-                            <Icon className="h-2.5 w-2.5 shrink-0" style={{ color: iconColor }} />
+                            <Icon className="h-3.5 w-3.5 shrink-0" style={{ color: iconColor }} />
                           </span>
                           <span
-                            className="min-w-0 text-[9px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]"
+                            className="min-w-0 text-[10px] font-extrabold leading-snug tracking-tight text-[#0A2B6D]"
                             style={{ color: '#0A2B6D' }}
                           >
                             ◉ {label}
                           </span>
                         </div>
                         <span
-                          className="inline-flex items-center gap-0.5 rounded-full border px-1 py-0 text-[6.5px] font-black uppercase"
+                          className="inline-flex items-center gap-0.5 rounded-full border px-1.5 py-0 text-[7px] font-black uppercase"
                           style={{ borderColor: iconColor, color: active ? '#FF2E9A' : '#5A00D6' }}
                         >
                           {active ? 'ON' : 'LIVE'}
                         </span>
                       </div>
 
-                      <div className="mt-0.5 flex items-center justify-between gap-1 border-t border-[#C084FC]/35 pt-0.5">
-                        <span className="min-w-0 flex-1 break-words text-[8px] font-bold leading-tight text-[#5A00D6]" style={{ color: '#5A00D6' }}>
+                      <div className="mt-1 flex items-center justify-between gap-1 border-t border-[#C084FC]/40 pt-1">
+                        <span className="min-w-0 flex-1 break-words text-[8.5px] font-bold leading-snug text-[#5A00D6]" style={{ color: '#5A00D6' }}>
                           {subtitle}
                         </span>
-                        <ArrowRight className="h-2.5 w-2.5 shrink-0" style={{ color: iconColor }} />
+                        <ArrowRight className="h-3 w-3 shrink-0" style={{ color: iconColor }} />
                       </div>
                     </div>
                   </Link>

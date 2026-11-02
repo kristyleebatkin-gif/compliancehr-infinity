@@ -39,24 +39,54 @@ export default function PersonalProfileHeader({ profile, kind, onUpdated, showId
 
   return (
     <div className="overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white shadow-md space-y-3 p-3">
-      {/* MY PROFILE AT THE VERY TOP OF MY PROFILE */}
+      {/* MY PROFILE AT THE VERY TOP OF MY PROFILE — CONSISTENT REMOTE HEADER STYLE */}
       {showIdentity !== false && (
-        <div className="overflow-hidden rounded-xl border-2 border-[#0A2B6D] bg-white shadow-sm">
-          <div className="app-page-header relative flex items-center rounded-none px-4 py-3" style={{ background: 'var(--header-gradient)' }}>
-            <div className="relative flex w-full min-w-0 flex-wrap items-center justify-between gap-3">
-              <div className="flex min-w-0 items-center gap-3">
-                <ProfilePhotoControl profile={profile} kind={kind} onUpdated={onUpdated} />
-                <div className="min-w-0 flex-1">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="rounded-full border border-white/50 bg-white/20 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white">
-                      {staff ? 'MY EMPLOYEE PROFILE & PROFESSION' : 'MY PARTICIPANT PROFILE & NDIS PLAN'}
-                    </span>
-                    <Badge className="border border-white bg-[#00C6FF] font-extrabold text-[#0A2B6D]">{profile.status || 'Active'}</Badge>
+        <div
+          className="preserve-island-theme overflow-hidden rounded-2xl border-2 border-[#0A2B6D] shadow-md"
+          style={{
+            background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #131B4D 100%)',
+          }}
+        >
+          <div
+            className="h-1.5 w-full"
+            style={{
+              background:
+                'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+            }}
+          />
+          <div className="p-2.5">
+            <div
+              className="rounded-2xl p-[2px]"
+              style={{
+                background:
+                  'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+              }}
+            >
+              <div className="flex w-full min-w-0 flex-wrap items-center justify-between gap-3 rounded-[14px] bg-white px-4 py-3">
+                <div className="flex min-w-0 items-center gap-3">
+                  <ProfilePhotoControl profile={profile} kind={kind} onUpdated={onUpdated} />
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="rounded-full border border-[#5A00D6] bg-[#F5F0FF] px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                        ◉ {staff ? 'MY EMPLOYEE PROFILE & PROFESSION' : 'MY PARTICIPANT PROFILE & NDIS PLAN'}
+                      </span>
+                      <Badge className="border border-[#0072FF] bg-[#00C6FF] font-extrabold text-[#0A2B6D]">
+                        {profile.status || 'Active'}
+                      </Badge>
+                    </div>
+                    <h2
+                      className="mt-1 text-lg sm:text-xl font-extrabold text-[#0A2B6D]"
+                      style={{ color: '#0A2B6D' }}
+                    >
+                      {profile.full_name}
+                    </h2>
+                    <p
+                      className="text-xs font-bold text-[#5A00D6]"
+                      style={{ color: '#5A00D6' }}
+                    >
+                      {staff ? `Profession / Role: ${professionLabel}` : `Participant Support Profile: ${professionLabel}`}
+                    </p>
                   </div>
-                  <h2 className="mt-1 text-lg sm:text-xl font-extrabold text-white">{profile.full_name}</h2>
-                  <p className="text-xs font-bold text-white/95">
-                    {staff ? `Profession / Role: ${professionLabel}` : `Participant Support Profile: ${professionLabel}`}
-                  </p>
                 </div>
               </div>
             </div>

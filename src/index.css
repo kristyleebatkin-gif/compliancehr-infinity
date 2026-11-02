@@ -652,17 +652,16 @@
   }
 }
 
-/* ===== LOCKED HEADER STANDARD (src/HEADER_RULES.md) — restored 2 Nov 2026 at the owner's request =====
-   Page header: exactly 3cm tall, app blue-purple-pink gradient, black outer border, white text with a
-   black outline, standard body font, short description, modular icon tile on the left.
-   Section/card headers follow the same gradient, 3cm, border and text rules. */
+/* ===== CONSISTENT APP HEADER & SECTION HEADER STANDARD =====
+   Matches the Navigation Router Remote & Small Screen Remote colour scheme:
+   App blue-purple-pink gradient & dark blue borders, crisp typography, zero harsh black outlines. */
 @layer utilities {
   .app-readable .app-page-header {
     box-sizing: border-box;
-    min-height: 3cm !important;
-    height: 3cm !important;
-    max-height: 3cm !important;
-    padding: .25rem 1.25rem !important;
+    min-height: 4.25rem !important;
+    height: auto !important;
+    max-height: none !important;
+    padding: 0.75rem 1.25rem !important;
     display: flex !important;
     align-items: center;
     overflow: hidden;
@@ -670,23 +669,23 @@
   }
   .app-readable :is(.dashboard-panel-header, .app-section-card-header) {
     box-sizing: border-box;
-    min-height: 3cm !important;
+    min-height: 3.25rem !important;
     display: flex;
     align-items: center;
   }
   .app-readable :is(.app-page-header, .dashboard-panel-header, .app-section-card-header) {
     background: var(--header-gradient) !important;
-    border: 2px solid #000 !important;
+    border: 2px solid #0A2B6D !important;
+    border-bottom: 3px solid #FF2E9A !important;
     color: #fff !important;
     font-family: var(--font-body) !important;
   }
   .app-readable :is(.app-page-header, .dashboard-panel-header, .app-section-card-header) :is(h1, h2, h3, h4, p, span:not(.bg-white *), [data-panel-title]) {
     color: #fff !important;
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, 0 0 3px rgba(0, 0, 0, 0.9) !important;
+    text-shadow: none !important;
   }
-  .app-readable .app-page-header h1 { font-size: 1.5rem !important; font-weight: 700 !important; line-height: 2rem !important; letter-spacing: -0.025em !important; }
+  .app-readable .app-page-header h1 { font-size: 1.35rem !important; font-weight: 800 !important; line-height: 1.75rem !important; letter-spacing: -0.02em !important; }
   .app-readable .app-page-header p {
-    font-size: 0.875rem !important; font-weight: 600 !important; line-height: 1.25rem !important; margin-top: 0.125rem;
-    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+    font-size: 0.82rem !important; font-weight: 600 !important; line-height: 1.2rem !important; margin-top: 0.125rem;
   }
 }

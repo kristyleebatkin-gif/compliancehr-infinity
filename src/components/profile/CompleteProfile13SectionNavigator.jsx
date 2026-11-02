@@ -95,12 +95,12 @@ export default function CompleteProfile13SectionNavigator({ kind = 'staff', prof
         </div>
       </div>
 
-      {/* 9 Mandatory Ordered Profile Layout All-White Circular Control Pods on Landing Blue */}
+      {/* 9 Mandatory Ordered Profile Layout All-White Circular Control Pods on Dark Blue Chassis */}
       <div
-        className="preserve-island-theme grid grid-cols-1 gap-1.5 rounded-2xl border-2 border-[#0072FF] p-2 sm:grid-cols-2 md:grid-cols-3"
+        className="preserve-island-theme grid grid-cols-1 gap-1.5 rounded-2xl border-2 border-[#0A2B6D] p-2 sm:grid-cols-2 md:grid-cols-3"
         style={{
           background:
-            'radial-gradient(circle at 50% 35%, rgba(0, 198, 255, 0.38) 0%, #0072FF 42%, #0A2B6D 85%, #061539 100%)',
+            'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
         }}
       >
         {sections.map((sec, idx) => {

@@ -238,10 +238,10 @@ export default function VisualDesignModuleCommandStandard() {
     <div className="mx-auto w-full max-w-[1440px] px-3 pt-1 sm:px-5 lg:px-6">
       <section
         aria-label="Visual Design, Information Architecture & Module Experience Command Standard"
-        className="preserve-island-theme rounded-2xl border-2 border-[#0072FF] p-1 shadow-md"
+        className="preserve-island-theme rounded-2xl border-2 border-[#0A2B6D] p-1 shadow-md"
         style={{
           background:
-            'radial-gradient(circle at 50% 35%, rgba(0, 198, 255, 0.38) 0%, #0072FF 42%, #0A2B6D 85%, #061539 100%)',
+            'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
         }}
       >
         <div className="rounded-xl p-[1.5px]" style={{ background: TOP_BORDER_GRADIENT }}>

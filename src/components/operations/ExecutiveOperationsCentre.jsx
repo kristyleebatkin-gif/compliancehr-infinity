@@ -235,13 +235,13 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
           </div>
         </div>
 
-        {/* Executive Live KPI Circular Control Pods — All-White Buttons on Landing Blue */}
+        {/* Executive Live KPI Circular Control Pods — All-White Buttons on Dark Blue Chassis */}
         <div className="bg-white p-2.5 space-y-2.5">
           <div
-            className="preserve-island-theme grid auto-rows-fr grid-cols-2 gap-1.5 rounded-2xl border-2 border-[#0072FF] p-2 sm:grid-cols-4 lg:grid-cols-8 items-stretch"
+            className="preserve-island-theme grid auto-rows-fr grid-cols-2 gap-1.5 rounded-2xl border-2 border-[#0A2B6D] p-2 sm:grid-cols-4 lg:grid-cols-8 items-stretch"
             style={{
               background:
-                'radial-gradient(circle at 50% 35%, rgba(0, 198, 255, 0.38) 0%, #0072FF 42%, #0A2B6D 85%, #061539 100%)',
+                'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
             }}
           >
             {[
@@ -290,29 +290,35 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
             ))}
           </div>
 
-          {/* Executive Resource Suite Navigator — All-White Buttons with App-Design-Colour Borders & Icons on Landing Blue */}
+          {/* Executive Resource Suite Navigator — Top Logo Section on Landing Blue, Body on Dark Blue */}
           <section
-            className="preserve-island-theme overflow-hidden rounded-2xl border-2 border-[#0072FF] shadow-lg"
+            className="preserve-island-theme overflow-hidden rounded-2xl border-2 border-[#0A2B6D] shadow-lg"
             style={{
               background:
-                'radial-gradient(circle at 50% 35%, rgba(0, 198, 255, 0.38) 0%, #0072FF 42%, #0A2B6D 85%, #061539 100%)',
+                'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
             }}
           >
-            <div className="h-1 w-full" style={{ background: SQUISHED_GRADIENT }} />
+            <div className="h-1.5 w-full" style={{ background: SQUISHED_GRADIENT }} />
 
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/25 px-3 py-1.5">
+            <div
+              className="flex flex-wrap items-center justify-between gap-2 border-b-2 border-[#0072FF] px-3 py-2"
+              style={{
+                background:
+                  'radial-gradient(circle at 50% 35%, rgba(0, 198, 255, 0.42) 0%, #0072FF 44%, #0A2B6D 86%, #061539 100%)',
+              }}
+            >
               <div
-                className="inline-flex items-center gap-2 rounded-full p-[1.5px] shadow-2xs"
+                className="inline-flex items-center gap-2 rounded-full p-[2px] shadow-sm"
                 style={{ background: SQUISHED_GRADIENT }}
               >
-                <div className="flex items-center gap-2 rounded-full bg-white px-2.5 py-0.5">
+                <div className="flex items-center gap-2 rounded-full bg-white px-3 py-1">
                   <Image
                     src={CHR_LOGO}
                     alt="ComplianceHR Infinity"
                     fittingType="fit"
-                    className="h-5 w-12 rounded border border-slate-200 bg-white px-1 py-0.5"
+                    className="h-8 w-20 rounded border border-slate-200 bg-white px-1 py-0.5 object-contain"
                   />
-                  <span className="font-editorial text-[11px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]" style={{ color: '#0A2B6D' }}>
+                  <span className="font-editorial text-xs sm:text-sm font-extrabold leading-tight tracking-tight text-[#0A2B6D]" style={{ color: '#0A2B6D' }}>
                     Compliance
                     <span className="font-editorial-italic text-[#5A00D6]">HR</span>{' '}
                     <span className="bg-gradient-to-r from-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
@@ -325,7 +331,7 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
                 className="rounded-full p-[1.5px] shadow-2xs"
                 style={{ background: SQUISHED_GRADIENT }}
               >
-                <div className="rounded-full bg-white px-2.5 py-0.5 text-[8.5px] font-extrabold leading-tight">
+                <div className="rounded-full bg-white px-3 py-0.5 text-[9.5px] font-extrabold leading-tight">
                   <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
                   <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
                   <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>

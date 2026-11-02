@@ -36,40 +36,87 @@ export default function PageHeader({
   const description = subtitle || descriptionProp || resolveAuditModule(seg)?.blurb || '';
   const resolvedActions = action || actions;
 
+  const APP_BORDER_GRADIENT =
+    'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)';
+  const DARK_NAVY_CHASSIS =
+    'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #131B4D 100%)';
+
   return (
-    <div className="space-y-2.5">
-      <div
-        className={cn('app-page-header relative flex items-center overflow-hidden rounded-2xl px-4 shadow-lg', className)}
-        style={{ background: 'var(--header-gradient)' }}
-      >
-        <div className="relative flex min-w-0 w-full items-center gap-3">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/15 shadow-md ring-1 ring-white/30">
-            <Icon className="h-5 w-5" />
-          </div>
-          <div className="min-w-0 flex-1">
-            <h1>{title}</h1>
-            {description && <p className="line-clamp-2">{description}</p>}
-          </div>
-        </div>
-      </div>
+    <div className="space-y-2">
       <div
         className={cn(
-          'flex flex-wrap items-center border border-border/60 bg-card shadow-sm',
-          compactActions ? 'module-action-bar gap-1 rounded-lg px-1.5 py-1' : 'gap-1.5 rounded-xl p-2'
+          'preserve-island-theme overflow-hidden rounded-2xl border-2 border-[#0A2B6D] shadow-lg',
+          className
         )}
+        style={{ background: DARK_NAVY_CHASSIS }}
       >
-        <ModuleComplianceStrip path={seg} />
-        {beforeAudit}
-        <div className={cn('flex shrink-0 items-center gap-1 [&>button]:h-7 [&>button]:gap-1 [&>button]:px-2 [&>button]:text-[11px] [&>button_svg]:mr-0 [&>button_svg]:size-3', auditClassName)}>
-          <ModuleAuditChecklistButton />
-          <ModuleAuditButton />
-        </div>
-        {afterAudit}
-        {resolvedActions && (
-          <div className={cn('flex flex-wrap items-center', compactActions ? 'gap-1' : 'gap-2', actionClassName)}>
-            {resolvedActions}
+        <div className="h-1.5 w-full" style={{ background: APP_BORDER_GRADIENT }} />
+        <div className="p-2 sm:p-2.5 space-y-2">
+          {/* Main Header Pod: Full White Surface + App-Design-Colour Border + App-Coloured Icon */}
+          <div
+            className="rounded-2xl p-[2px] shadow-sm"
+            style={{ background: APP_BORDER_GRADIENT }}
+          >
+            <div className="flex min-w-0 w-full items-center gap-3 rounded-[14px] bg-white px-3.5 py-2.5">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-[#0072FF] bg-[#F5F0FF] shadow-2xs">
+                <Icon className="h-5 w-5 shrink-0" style={{ color: '#0072FF' }} />
+              </div>
+              <div className="min-w-0 flex-1">
+                <h1
+                  className="text-base sm:text-xl font-extrabold leading-tight tracking-tight text-[#0A2B6D]"
+                  style={{ color: '#0A2B6D' }}
+                >
+                  <span style={{ color: '#5A00D6' }}>◉</span> {title}
+                </h1>
+                {description && (
+                  <p
+                    className="mt-0.5 text-xs sm:text-sm font-bold leading-snug text-[#5A00D6]"
+                    style={{ color: '#5A00D6' }}
+                  >
+                    {description}
+                  </p>
+                )}
+              </div>
+            </div>
           </div>
-        )}
+
+          {/* Action & Compliance Strip Inside Matching White App-Design-Bordered Bar */}
+          <div
+            className="rounded-xl p-[1.5px]"
+            style={{ background: APP_BORDER_GRADIENT }}
+          >
+            <div
+              className={cn(
+                'flex flex-wrap items-center rounded-[10.5px] bg-white',
+                compactActions ? 'module-action-bar gap-1.5 px-2.5 py-1.5' : 'gap-2 p-2'
+              )}
+            >
+              <ModuleComplianceStrip path={seg} />
+              {beforeAudit}
+              <div
+                className={cn(
+                  'flex shrink-0 items-center gap-1 [&>button]:h-7 [&>button]:gap-1 [&>button]:px-2 [&>button]:text-[11px] [&>button_svg]:mr-0 [&>button_svg]:size-3',
+                  auditClassName
+                )}
+              >
+                <ModuleAuditChecklistButton />
+                <ModuleAuditButton />
+              </div>
+              {afterAudit}
+              {resolvedActions && (
+                <div
+                  className={cn(
+                    'flex flex-wrap items-center',
+                    compactActions ? 'gap-1' : 'gap-2',
+                    actionClassName
+                  )}
+                >
+                  {resolvedActions}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
       {under}
       {['Certificates', 'Equipment & MSDS', 'CRM & Leads', 'Projects Hub', 'Feedback & Surveys'].includes(title) && (
