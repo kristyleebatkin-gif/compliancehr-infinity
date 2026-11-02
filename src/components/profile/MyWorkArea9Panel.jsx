@@ -181,67 +181,61 @@ export default function MyWorkArea9Panel({ compact = false }) {
         </div>
       </div>
 
-      {/* 11 CIRCULAR CONTROL-POD STREAM TILES */}
+      {/* 11 ALL-WHITE CIRCULAR CONTROL-POD STREAM TILES ON LANDING BLUE */}
       <div
-        className="preserve-island-theme grid grid-cols-2 gap-1.5 rounded-2xl border-2 border-[#0A2B6D] p-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
+        className="preserve-island-theme grid grid-cols-2 gap-1.5 rounded-2xl border-2 border-[#0072FF] p-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
         style={{
           background:
-            'radial-gradient(circle at 50% 40%, rgba(0, 198, 255, 0.20) 0%, rgba(90, 0, 214, 0.34) 40%, rgba(10, 43, 109, 0.96) 80%, #061539 100%)',
+            'radial-gradient(circle at 50% 35%, rgba(0, 198, 255, 0.38) 0%, #0072FF 42%, #0A2B6D 85%, #061539 100%)',
         }}
       >
         {MY_WORK_11_STREAMS.map((stream, idx) => {
           const Icon = stream.icon;
           const active = activeStream === stream.id;
-          const ringColor = active ? '#00C6FF' : idx % 2 === 0 ? '#00C6FF' : '#FF6EDB';
+          const iconColors = ['#0072FF', '#5A00D6', '#FF2E9A', '#A100FF'];
+          const iconColor = iconColors[idx % iconColors.length];
           return (
             <button
               key={stream.id}
               type="button"
               onClick={() => setActiveStream(stream.id)}
-              className={`group flex min-h-[42px] items-center gap-1.5 rounded-full border px-2 py-1 text-left backdrop-blur-md transition-all duration-200 ${
+              className={`group flex min-h-[42px] rounded-full p-[2px] text-left transition-all duration-200 ${
                 active
-                  ? 'border-[#00C6FF] bg-white text-[#0A2B6D] shadow-[0_0_16px_rgba(0,198,255,0.75)] scale-[1.01]'
-                  : 'border-white/25 bg-white/10 text-white hover:border-[#00C6FF] hover:bg-white/20'
+                  ? 'shadow-[0_0_16px_rgba(0,198,255,0.85)] scale-[1.01]'
+                  : 'hover:-translate-y-0.5 hover:shadow-[0_0_10px_rgba(0,198,255,0.5)]'
               }`}
+              style={{
+                background:
+                  'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+              }}
             >
-              <span className="relative flex h-6 w-6 shrink-0 items-center justify-center">
-                <svg className="pointer-events-none absolute inset-0 h-full w-full -rotate-90" viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="10" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="2" />
-                  <circle
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    fill="none"
-                    stroke={ringColor}
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeDasharray="63"
-                    strokeDashoffset="8"
-                  />
-                </svg>
+              <span className="flex w-full items-center gap-1.5 rounded-full bg-white px-2.5 py-1">
                 <span
-                  className="relative z-10 flex h-4.5 w-4.5 items-center justify-center rounded-full text-white"
-                  style={{ background: 'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)' }}
+                  className="relative flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#F5F0FF]"
+                  style={{ border: `1.5px solid ${iconColor}` }}
                 >
-                  <Icon className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                  <Icon className="h-3 w-3 shrink-0" style={{ color: iconColor }} />
+                </span>
+
+                <span className="min-w-0 flex-1 flex items-center justify-between gap-1">
+                  <span
+                    className="text-[9.5px] font-extrabold leading-tight"
+                    style={{ color: '#0A2B6D' }}
+                  >
+                    <span style={{ color: iconColor }}>◉</span> {stream.label}
+                  </span>
+                  <span
+                    className="shrink-0 rounded-full border px-1.5 py-0 text-[8.5px] font-black"
+                    style={{
+                      borderColor: iconColor,
+                      color: active ? '#FF2E9A' : '#5A00D6',
+                      backgroundColor: '#F5F0FF',
+                    }}
+                  >
+                    {counts[stream.id] ?? 0}
+                  </span>
                 </span>
               </span>
-
-              <div className="min-w-0 flex-1 flex items-center justify-between gap-1">
-                <span
-                  className="text-[9px] font-extrabold leading-tight"
-                  style={{ color: active ? '#0A2B6D' : '#FFFFFF' }}
-                >
-                  ◉ {stream.label}
-                </span>
-                <span
-                  className={`shrink-0 rounded-full px-1.5 py-0 text-[8.5px] font-black ${
-                    active ? 'bg-[#0A2B6D] text-[#00C6FF]' : 'bg-[#00C6FF] text-[#0A2B6D]'
-                  }`}
-                >
-                  {counts[stream.id] ?? 0}
-                </span>
-              </div>
             </button>
           );
         })}

@@ -23,9 +23,9 @@ function GlowingOrbRing({ icon: Icon, ringColor, glowColor, ringPct, alertPulse 
   const dashOffset = dashArray - (dashArray * ringPct) / 100;
 
   return (
-    <div className="relative flex h-16 w-16 shrink-0 items-center justify-center">
+    <div className="relative flex h-14 w-14 shrink-0 items-center justify-center">
       <svg className="pointer-events-none absolute inset-0 h-full w-full -rotate-90" viewBox="0 0 64 64">
-        <circle cx="32" cy="32" r={r} fill="none" stroke="rgba(255,255,255,0.16)" strokeWidth="4" />
+        <circle cx="32" cy="32" r={r} fill="none" stroke="#E2E8F0" strokeWidth="4" />
         <circle
           cx="32"
           cy="32"
@@ -40,13 +40,13 @@ function GlowingOrbRing({ icon: Icon, ringColor, glowColor, ringPct, alertPulse 
         />
       </svg>
       <div
-        className="relative z-10 flex h-11 w-11 items-center justify-center rounded-full text-white shadow-lg"
+        className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full bg-[#F5F0FF] shadow-sm"
         style={{
-          background: POD_RING_GRADIENT,
-          boxShadow: `0 0 16px ${glowColor}, inset 0 2px 4px rgba(255,255,255,0.5)`,
+          border: `2px solid ${ringColor}`,
+          boxShadow: `0 0 12px ${glowColor}`,
         }}
       >
-        <Icon className="h-5 w-5 text-white" style={{ color: '#FFFFFF' }} />
+        <Icon className="h-5 w-5" style={{ color: ringColor }} />
       </div>
       <span
         className={`absolute right-0 top-0 flex h-4 w-4 items-center justify-center rounded-full border border-white text-[9px] font-black text-white ${
@@ -401,63 +401,66 @@ export default function MissionControlAiCoreHub({
                   </div>
                 )}
 
-                {/* Glowing Circular Control Pod — Spacious 3D Glassmorphic Pod Where All Words Fit */}
+                {/* All-White Circular Control Pod with App-Design-Colour Border & Icon on Landing Blue */}
                 <button
                   type="button"
                   onClick={() => handlePodClick(pod)}
-                  className={`group relative flex h-full w-full flex-col items-center justify-between rounded-[36px] border border-white/30 bg-white/10 px-4 py-3.5 text-center backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02] focus:outline-none ${pod.posClass}`}
+                  className={`group relative flex h-full w-full rounded-[34px] p-[2.5px] text-center transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] focus:outline-none ${pod.posClass}`}
                   style={{
-                    background:
-                      'radial-gradient(circle at 30% 20%, rgba(255,255,255,0.24) 0%, rgba(10, 43, 109, 0.92) 72%, #061539 100%)',
+                    background: POD_RING_GRADIENT,
                     boxShadow: isSelected
-                      ? `0 0 32px ${pod.glowColor}, inset 0 2px 6px rgba(255,255,255,0.45)`
-                      : `0 12px 28px -6px rgba(0,0,0,0.55), 0 0 18px ${pod.glowColor}, inset 0 2px 4px rgba(255,255,255,0.3)`,
+                      ? `0 0 28px ${pod.glowColor}`
+                      : `0 10px 24px -6px rgba(0,0,0,0.45), 0 0 14px ${pod.glowColor}`,
                   }}
                 >
-                  <GlowingOrbRing
-                    icon={pod.icon}
-                    ringColor={pod.ringColor}
-                    glowColor={pod.glowColor}
-                    ringPct={pod.ringPct}
-                    alertPulse={pod.alertPulse}
-                  />
+                  <div className="flex h-full w-full flex-col items-center justify-between rounded-[31px] bg-white px-4 py-3">
+                    <GlowingOrbRing
+                      icon={pod.icon}
+                      ringColor={pod.ringColor}
+                      glowColor={pod.glowColor}
+                      ringPct={pod.ringPct}
+                      alertPulse={pod.alertPulse}
+                    />
 
-                  {/* White Title Pill Background for Crisp Readability */}
-                  <div className="mt-2 inline-flex items-center justify-center gap-1.5 rounded-full bg-white px-3.5 py-1 shadow-sm">
-                    <span
-                      className={`text-xs leading-none ${pod.alertPulse ? 'animate-ping' : ''}`}
-                      style={{ color: pod.ringColor }}
+                    {/* White Title Pill with App Design Colour Border */}
+                    <div
+                      className="mt-1.5 inline-flex items-center justify-center gap-1.5 rounded-full bg-white px-3.5 py-0.5 shadow-2xs"
+                      style={{ border: `1.5px solid ${pod.ringColor}` }}
                     >
-                      ◉
-                    </span>
-                    <span
-                      className="text-xs sm:text-sm font-extrabold tracking-tight text-[#0A2B6D]"
-                      style={{ color: '#0A2B6D' }}
+                      <span
+                        className={`text-xs leading-none ${pod.alertPulse ? 'animate-ping' : ''}`}
+                        style={{ color: pod.ringColor }}
+                      >
+                        ◉
+                      </span>
+                      <span
+                        className="text-xs sm:text-sm font-extrabold tracking-tight text-[#0A2B6D]"
+                        style={{ color: '#0A2B6D' }}
+                      >
+                        {pod.label}
+                      </span>
+                    </div>
+
+                    {/* Live Metric Notification Badge on White with App Design Colour Border */}
+                    <div
+                      className="mt-1 rounded-full bg-[#F5F0FF] px-3.5 py-0.5 text-xs font-black tracking-wide"
+                      style={{
+                        border: `1.5px solid ${pod.ringColor}`,
+                        color: pod.alertPulse ? '#FF2E9A' : '#5A00D6',
+                      }}
                     >
-                      {pod.label}
-                    </span>
+                      {pod.metric}
+                    </div>
+
+                    {!compact && (
+                      <span
+                        className="mt-1 text-[10.5px] font-bold leading-snug text-[#0A2B6D]"
+                        style={{ color: '#0A2B6D' }}
+                      >
+                        {pod.sub}
+                      </span>
+                    )}
                   </div>
-
-                  {/* Live Metric Notification Badge */}
-                  <div
-                    className="mt-1.5 rounded-full px-3.5 py-0.5 text-xs font-black tracking-wide text-white"
-                    style={{
-                      backgroundColor: pod.alertPulse ? '#FF2E9A' : 'rgba(6, 21, 57, 0.88)',
-                      border: `1.5px solid ${pod.ringColor}`,
-                      color: '#FFFFFF',
-                    }}
-                  >
-                    {pod.metric}
-                  </div>
-
-                  {!compact && (
-                    <span
-                      className="mt-1.5 text-[11px] font-bold leading-snug text-white/90"
-                      style={{ color: '#E2E8F0' }}
-                    >
-                      {pod.sub}
-                    </span>
-                  )}
                 </button>
               </React.Fragment>
             );
@@ -485,7 +488,7 @@ export default function MissionControlAiCoreHub({
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 xl:grid-cols-8">
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 xl:grid-cols-8">
             {SUITE_PODS.map((suite) => {
               const active = activeSuite === suite.id;
               return (
@@ -494,35 +497,38 @@ export default function MissionControlAiCoreHub({
                   type="button"
                   onClick={() => onSelectSuite(suite.id)}
                   aria-pressed={active}
-                  className={`group flex items-center gap-2 rounded-full border px-3 py-2 text-left backdrop-blur-md transition-all duration-200 ${
+                  className={`group flex rounded-full p-[2px] text-left transition-all duration-200 ${
                     active
-                      ? 'border-[#00C6FF] bg-white text-[#0A2B6D] shadow-[0_0_20px_rgba(0,198,255,0.75)] scale-[1.02]'
-                      : 'border-white/25 bg-white/10 text-white hover:border-[#00C6FF] hover:bg-white/20'
+                      ? 'shadow-[0_0_20px_rgba(0,198,255,0.85)] scale-[1.02]'
+                      : 'hover:-translate-y-0.5 hover:shadow-[0_0_12px_rgba(0,198,255,0.5)]'
                   }`}
+                  style={{ background: POD_RING_GRADIENT }}
                 >
-                  <span
-                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[10px] font-black text-white shadow-inner"
-                    style={{
-                      backgroundColor: active ? '#0A2B6D' : suite.color,
-                      boxShadow: `0 0 10px ${suite.color}`,
-                    }}
-                  >
-                    ◉
+                  <span className="flex w-full items-center gap-2 rounded-full bg-white px-2.5 py-1.5">
+                    <span
+                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#F5F0FF] text-[10px] font-black"
+                      style={{
+                        border: `2px solid ${suite.color}`,
+                        color: suite.color,
+                      }}
+                    >
+                      ◉
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span
+                        className="block text-[10.5px] font-extrabold leading-tight"
+                        style={{ color: '#0A2B6D' }}
+                      >
+                        {suite.label}
+                      </span>
+                      <span
+                        className="block text-[9px] font-bold leading-tight"
+                        style={{ color: active ? '#FF2E9A' : '#5A00D6' }}
+                      >
+                        {suite.metric}
+                      </span>
+                    </span>
                   </span>
-                  <div className="min-w-0 flex-1">
-                    <div
-                      className="text-[11px] font-extrabold leading-tight"
-                      style={{ color: active ? '#0A2B6D' : '#FFFFFF' }}
-                    >
-                      {suite.label}
-                    </div>
-                    <div
-                      className="text-[9.5px] font-bold leading-tight"
-                      style={{ color: active ? '#5A00D6' : '#00C6FF' }}
-                    >
-                      {suite.metric}
-                    </div>
-                  </div>
                 </button>
               );
             })}

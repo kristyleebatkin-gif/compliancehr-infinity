@@ -238,10 +238,14 @@ export default function VisualDesignModuleCommandStandard() {
     <div className="mx-auto w-full max-w-[1440px] px-3 pt-1 sm:px-5 lg:px-6">
       <section
         aria-label="Visual Design, Information Architecture & Module Experience Command Standard"
-        className="rounded-xl p-[1.5px] shadow-2xs"
-        style={{ background: TOP_BORDER_GRADIENT }}
+        className="preserve-island-theme rounded-2xl border-2 border-[#0072FF] p-1 shadow-md"
+        style={{
+          background:
+            'radial-gradient(circle at 50% 35%, rgba(0, 198, 255, 0.38) 0%, #0072FF 42%, #0A2B6D 85%, #061539 100%)',
+        }}
       >
-        <div className="rounded-[10px] bg-white px-2.5 py-1.5 space-y-1.5">
+        <div className="rounded-xl p-[1.5px]" style={{ background: TOP_BORDER_GRADIENT }}>
+        <div className="rounded-[10.5px] bg-white px-2.5 py-1.5 space-y-1.5">
           {/* Top Row (50% Reduced): Subject Title + Inline Search Bar + 4 Status Indicators on the Same Line */}
           <div className="flex flex-wrap items-center justify-between gap-1.5">
             <div className="flex flex-wrap items-center gap-1.5 min-w-0">
@@ -577,6 +581,7 @@ export default function VisualDesignModuleCommandStandard() {
             </div>
           </>
           )}
+        </div>
         </div>
       </section>
     </div>

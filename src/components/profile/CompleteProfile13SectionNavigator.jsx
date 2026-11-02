@@ -95,38 +95,46 @@ export default function CompleteProfile13SectionNavigator({ kind = 'staff', prof
         </div>
       </div>
 
-      {/* 9 Mandatory Ordered Profile Layout Circular Control Pods */}
+      {/* 9 Mandatory Ordered Profile Layout All-White Circular Control Pods on Landing Blue */}
       <div
-        className="preserve-island-theme grid grid-cols-1 gap-1.5 rounded-2xl border-2 border-[#0A2B6D] p-2 sm:grid-cols-2 md:grid-cols-3"
+        className="preserve-island-theme grid grid-cols-1 gap-1.5 rounded-2xl border-2 border-[#0072FF] p-2 sm:grid-cols-2 md:grid-cols-3"
         style={{
           background:
-            'radial-gradient(circle at 50% 40%, rgba(0, 198, 255, 0.20) 0%, rgba(90, 0, 214, 0.34) 40%, rgba(10, 43, 109, 0.96) 80%, #061539 100%)',
+            'radial-gradient(circle at 50% 35%, rgba(0, 198, 255, 0.38) 0%, #0072FF 42%, #0A2B6D 85%, #061539 100%)',
         }}
       >
         {sections.map((sec, idx) => {
           const isInternal = sec.to.startsWith('#');
           const active = selectedSection === sec.id;
-          const ringColor = idx % 2 === 0 ? '#00C6FF' : '#FF6EDB';
+          const iconColors = ['#0072FF', '#5A00D6', '#FF2E9A', '#A100FF'];
+          const iconColor = iconColors[idx % iconColors.length];
           if (isInternal) {
             return (
               <button
                 key={sec.id}
                 type="button"
                 onClick={() => setSelectedSection(sec.id)}
-                className={`flex min-h-[38px] items-center justify-between gap-2 rounded-full border px-2.5 py-1 text-left backdrop-blur-md transition-all ${
-                  active
-                    ? 'border-[#00C6FF] bg-white text-[#0A2B6D] shadow-[0_0_14px_rgba(0,198,255,0.75)]'
-                    : 'border-white/25 bg-white/10 text-white hover:border-[#00C6FF]'
+                className={`flex min-h-[40px] rounded-full p-[2px] text-left transition-all ${
+                  active ? 'shadow-[0_0_16px_rgba(0,198,255,0.85)]' : ''
                 }`}
+                style={{
+                  background:
+                    'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+                }}
               >
-                <span className="flex items-center gap-1.5 min-w-0">
-                  <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-[#00C6FF]" />
-                  <span className="text-[9.5px] font-extrabold leading-tight" style={{ color: active ? '#0A2B6D' : '#FFFFFF' }}>
-                    ◉ {sec.label}
+                <span className="flex w-full items-center justify-between gap-2 rounded-full bg-white px-3 py-1">
+                  <span className="flex items-center gap-1.5 min-w-0">
+                    <CheckCircle2 className="h-3.5 w-3.5 shrink-0" style={{ color: iconColor }} />
+                    <span className="text-[9.5px] font-extrabold leading-tight" style={{ color: '#0A2B6D' }}>
+                      <span style={{ color: iconColor }}>◉</span> {sec.label}
+                    </span>
                   </span>
-                </span>
-                <span className="rounded-full bg-[#0A2B6D] px-1.5 py-0 text-[7px] font-black text-[#00C6FF]">
-                  ACTIVE
+                  <span
+                    className="rounded-full border px-1.5 py-0 text-[7px] font-black"
+                    style={{ borderColor: iconColor, color: '#5A00D6', backgroundColor: '#F5F0FF' }}
+                  >
+                    ACTIVE
+                  </span>
                 </span>
               </button>
             );
@@ -135,17 +143,23 @@ export default function CompleteProfile13SectionNavigator({ kind = 'staff', prof
             <Link
               key={sec.id}
               to={sec.to}
-              className="flex min-h-[38px] items-center justify-between gap-2 rounded-full border border-white/25 bg-white/10 px-2.5 py-1 text-left text-white backdrop-blur-md transition-all hover:-translate-y-0.5 hover:border-[#00C6FF] hover:bg-white/20"
+              className="flex min-h-[40px] rounded-full p-[2px] text-left transition-all hover:-translate-y-0.5 hover:shadow-[0_0_12px_rgba(0,198,255,0.65)]"
+              style={{
+                background:
+                  'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+              }}
             >
-              <span className="flex items-center gap-1.5 min-w-0">
-                <span className="text-[9px] leading-none shrink-0" style={{ color: ringColor }}>
-                  ◉
+              <span className="flex w-full items-center justify-between gap-2 rounded-full bg-white px-3 py-1">
+                <span className="flex items-center gap-1.5 min-w-0">
+                  <span className="text-[9px] leading-none shrink-0" style={{ color: iconColor }}>
+                    ◉
+                  </span>
+                  <span className="text-[9.5px] font-extrabold leading-tight" style={{ color: '#0A2B6D' }}>
+                    {sec.label}
+                  </span>
                 </span>
-                <span className="text-[9.5px] font-extrabold leading-tight text-white" style={{ color: '#FFFFFF' }}>
-                  {sec.label}
-                </span>
+                <ArrowUpRight className="h-3 w-3 shrink-0" style={{ color: iconColor }} />
               </span>
-              <ArrowUpRight className="h-3 w-3 shrink-0 text-[#00C6FF]" />
             </Link>
           );
         })}
