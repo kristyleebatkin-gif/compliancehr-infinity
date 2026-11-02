@@ -1,33 +1,62 @@
-/* My Profile: Dark Blue (#0A2B6D) boxes around every section and item, with clear visual separation and 8-colour Infinity palette accents. */
+/* My Profile: App Design Coloured Borders (#0072FF, #5A00D6, #FF2E9A, #A100FF) around every section, header, and item in white sections, with Dark Blue (#0A2B6D) writing and App Design Coloured Symbols. */
 html body .my-profile-pastels .app-section-card-header {
-  background: var(--header-gradient) !important;
-  color: #ffffff !important;
-  border: 2px solid #0A2B6D !important;
+  background: #ffffff !important;
+  color: #0A2B6D !important;
+  border: 2px solid #5A00D6 !important;
   border-bottom: 3px solid #FF2E9A !important;
-  box-shadow: 0 2px 8px -2px rgba(10, 43, 109, 0.25) !important;
+  box-shadow: 0 2px 8px -2px rgba(90, 0, 214, 0.18) !important;
 }
 
-/* Dark blue box around every profile section, details panel, and uniform box */
+/* App Design Coloured Border around every profile section, details panel, and uniform box */
 html body .my-profile-pastels .profile-uniform-box,
 html body .my-profile-pastels .profile-left-fill > details,
 html body .my-profile-pastels .profile-left-fill > :not(details),
 html body .my-profile-pastels details[data-profile-tone],
 html body .my-profile-pastels section[data-profile-tone],
 html body .my-profile-pastels .profile-dark-blue-box {
-  border: 2px solid #0A2B6D !important;
+  border: 2px solid #5A00D6 !important;
   border-radius: 0.75rem !important;
-  box-shadow: 0 2px 8px -2px rgba(10, 43, 109, 0.14) !important;
+  background: #ffffff !important;
+  box-shadow: 0 2px 8px -2px rgba(90, 0, 214, 0.14) !important;
   color: #0A2B6D !important;
 }
 
-/* Dark blue box around individual items inside profile sections */
+/* Alternate App Design Border Colours across sections */
+html body .my-profile-pastels .profile-left-fill > details:nth-child(4n+1),
+html body .my-profile-pastels .profile-uniform-box[data-profile-tone="blue"] {
+  border-color: #0072FF !important;
+}
+html body .my-profile-pastels .profile-left-fill > details:nth-child(4n+2),
+html body .my-profile-pastels .profile-uniform-box[data-profile-tone="violet"] {
+  border-color: #5A00D6 !important;
+}
+html body .my-profile-pastels .profile-left-fill > details:nth-child(4n+3),
+html body .my-profile-pastels .profile-uniform-box[data-profile-tone="pink"] {
+  border-color: #FF2E9A !important;
+}
+html body .my-profile-pastels .profile-left-fill > details:nth-child(4n),
+html body .my-profile-pastels .profile-uniform-box[data-profile-tone="orange"] {
+  border-color: #A100FF !important;
+}
+
+/* App Design Coloured Border around individual items inside white profile sections */
 html body .my-profile-pastels .profile-uniform-box li,
 html body .my-profile-pastels .profile-left-fill li,
 html body .my-profile-pastels .profile-item-box {
-  border: 1.5px solid #0A2B6D !important;
-  border-radius: 0.5rem !important;
+  border: 2px solid #0072FF !important;
+  border-radius: 0.625rem !important;
   background: #ffffff !important;
   color: #0A2B6D !important;
+}
+
+html body .my-profile-pastels .profile-uniform-box li:nth-child(3n+2),
+html body .my-profile-pastels .profile-item-box:nth-child(3n+2) {
+  border-color: #5A00D6 !important;
+}
+
+html body .my-profile-pastels .profile-uniform-box li:nth-child(3n),
+html body .my-profile-pastels .profile-item-box:nth-child(3n) {
+  border-color: #FF2E9A !important;
 }
 
 /* Uniform box sizing */
@@ -38,25 +67,7 @@ html body .my-profile-pastels .profile-uniform-box {
   box-sizing: border-box;
 }
 
-/* 8-Colour Palette backgrounds for profile boxes */
-html body .my-profile-pastels .profile-uniform-box[data-profile-tone="about"] { background: #ffffff !important; }
-html body .my-profile-pastels .profile-uniform-box[data-profile-tone="journey"] { background: rgba(0, 198, 255, 0.16) !important; }
-html body .my-profile-pastels .profile-uniform-box[data-profile-tone="blue"] { background: rgba(0, 114, 255, 0.12) !important; }
-html body .my-profile-pastels .profile-uniform-box[data-profile-tone="pink"] { background: rgba(255, 46, 154, 0.12) !important; }
-html body .my-profile-pastels .profile-uniform-box[data-profile-tone="green"] { background: rgba(255, 110, 219, 0.16) !important; }
-html body .my-profile-pastels .profile-uniform-box[data-profile-tone="orange"] { background: rgba(161, 0, 255, 0.12) !important; }
-html body .my-profile-pastels .profile-uniform-box[data-profile-tone="violet"] { background: rgba(192, 132, 252, 0.20) !important; }
-
-html body .my-profile-pastels .profile-left-fill > details:nth-child(8n+1) { background: rgba(0, 198, 255, 0.15) !important; }
-html body .my-profile-pastels .profile-left-fill > details:nth-child(8n+2) { background: rgba(0, 114, 255, 0.12) !important; }
-html body .my-profile-pastels .profile-left-fill > details:nth-child(8n+3) { background: rgba(10, 43, 109, 0.08) !important; }
-html body .my-profile-pastels .profile-left-fill > details:nth-child(8n+4) { background: rgba(90, 0, 214, 0.12) !important; }
-html body .my-profile-pastels .profile-left-fill > details:nth-child(8n+5) { background: rgba(161, 0, 255, 0.12) !important; }
-html body .my-profile-pastels .profile-left-fill > details:nth-child(8n+6) { background: rgba(255, 46, 154, 0.12) !important; }
-html body .my-profile-pastels .profile-left-fill > details:nth-child(8n+7) { background: rgba(255, 110, 219, 0.15) !important; }
-html body .my-profile-pastels .profile-left-fill > details:nth-child(8n) { background: rgba(192, 132, 252, 0.18) !important; }
-
-/* Section headers stand out larger than the writing underneath */
+/* Section headers inside My Profile: White background, App Design Border, and Dark Blue -> App Colour writing */
 html body .my-profile-pastels .app-section-card-header {
   height: auto !important;
   min-height: 2.25rem !important;
@@ -65,7 +76,7 @@ html body .my-profile-pastels .app-section-card-header {
   font-weight: 800 !important;
 }
 html body .my-profile-pastels .app-section-card-header :is(h1, h2, h3, h4, p, span) {
-  color: #ffffff !important;
+  color: #0A2B6D !important;
   font-size: 0.85rem !important;
   font-weight: 800 !important;
   line-height: 1.2rem !important;

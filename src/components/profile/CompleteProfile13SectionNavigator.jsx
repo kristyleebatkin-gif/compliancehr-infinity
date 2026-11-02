@@ -70,30 +70,55 @@ export default function CompleteProfile13SectionNavigator({ kind = 'staff', prof
   const tools = isParticipant ? PARTICIPANT_TOOLS : EMPLOYEE_TOOLS;
   const [selectedSection, setSelectedSection] = useState('overview');
 
+  const APP_BORDER_GRADIENT =
+    'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)';
+
   return (
     <section
       aria-label="Profile Information Layout, Command Centre Domains & Direct Tools"
-      className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-3.5 shadow-sm space-y-2.5"
+      className="preserve-island-theme rounded-2xl p-[3px] shadow-md"
+      style={{ background: APP_BORDER_GRADIENT }}
     >
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2">
-        <div>
-          <div className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
-            <ShieldCheck className="h-3.5 w-3.5 text-[#0072FF]" />
-            <span>
-              9-Section {isParticipant ? 'Participant' : 'Employee'} Profile Information Layout · 3-Second &amp; ≤3-Click Standard
+      <div className="rounded-[13px] bg-white p-3.5 space-y-2.5">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          {/* Main Header Inside White Section: App Design Coloured Border + White Background + Dark Blue -> App Colour Writing */}
+          <div
+            className="rounded-2xl p-[2px] shadow-2xs"
+            style={{ background: APP_BORDER_GRADIENT }}
+          >
+            <div className="rounded-[14px] bg-white px-3.5 py-2">
+              <div className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                <ShieldCheck className="h-3.5 w-3.5 text-[#0072FF]" />
+                <span>
+                  9-Section {isParticipant ? 'Participant' : 'Employee'} Profile Information Layout · 3-Second &amp; ≤3-Click Standard
+                </span>
+              </div>
+              <h3
+                className="mt-0.5 text-xs sm:text-sm font-extrabold bg-clip-text text-transparent"
+                style={{
+                  backgroundImage:
+                    'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
+                }}
+              >
+                ◉ {profile?.full_name || (isParticipant ? 'Participant Profile' : 'Employee Profile')} — Complete Subject Command Centre
+              </h3>
+            </div>
+          </div>
+
+          {/* Small Header Tiles with App Design Coloured Borders on White */}
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className="inline-flex items-center gap-1 rounded-full border-2 border-[#0072FF] bg-white px-2.5 py-1 text-[10px] font-extrabold text-[#0A2B6D]">
+              <span style={{ color: '#0072FF' }}>◉</span>
+              <span style={{ color: '#0A2B6D' }}>Green · Compliant &amp; Active</span>
+            </span>
+            <span className="inline-flex items-center gap-1 rounded-full border-2 border-[#5A00D6] bg-white px-2.5 py-1 text-[10px] font-extrabold text-[#0A2B6D]">
+              <span style={{ color: '#5A00D6' }}>◉</span>
+              <span style={{ color: '#0A2B6D' }}>
+                {isParticipant ? '9 Sections · 16 Domains' : '9 Sections · 13 Domains'}
+              </span>
             </span>
           </div>
-          <h3 className="text-xs sm:text-sm font-extrabold text-[#0A2B6D]">
-            {profile?.full_name || (isParticipant ? 'Participant Profile' : 'Employee Profile')} — Complete Subject Command Centre
-          </h3>
         </div>
-        <div className="flex flex-wrap items-center gap-1.5">
-          <Badge className="bg-emerald-600 text-white text-[10px]">Green · Compliant &amp; Active</Badge>
-          <Badge className="bg-[#0072FF] text-white text-[10px]">
-            {isParticipant ? '9 Sections · 16 Domains' : '9 Sections · 13 Domains'}
-          </Badge>
-        </div>
-      </div>
 
       {/* 9 Mandatory Ordered Profile Layout Illuminated Modular Tiles (Top 1/4 White + Bottom 3/4 Dark Blue) */}
       <div
@@ -125,7 +150,13 @@ export default function CompleteProfile13SectionNavigator({ kind = 'staff', prof
                   >
                     <CheckCircle2 className="h-3 w-3 shrink-0" style={{ color: iconColor }} />
                   </span>
-                  <span className="text-[9.5px] font-extrabold leading-tight" style={{ color: '#0A2B6D' }}>
+                  <span
+                    className="bg-clip-text text-[10px] font-extrabold leading-tight text-transparent"
+                    style={{
+                      backgroundImage:
+                        'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
+                    }}
+                  >
                     <span style={{ color: iconColor }}>◉</span> {sec.label}
                   </span>
                 </span>
@@ -191,63 +222,84 @@ export default function CompleteProfile13SectionNavigator({ kind = 'staff', prof
         })}
       </div>
 
-      {/* 16-Domain Participant Command Centre Strip */}
+      {/* 16-Domain Participant Command Centre Strip (Every Word Pill Has an App Design Coloured Border) */}
       {isParticipant && (
-        <div className="rounded-xl border border-slate-200 bg-[#F5F0FF]/40 p-2">
-          <div className="mb-1 text-[10px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-            All 16 Participant Command Centre Domains (One Location):
-          </div>
-          <div className="flex flex-wrap gap-1">
-            {PARTICIPANT_16_DOMAINS.map((dom) => (
-              <Link
-                key={dom.label}
-                to={dom.to}
-                className="rounded-md border border-slate-200 bg-white px-2 py-0.5 text-[10px] font-extrabold text-[#0A2B6D] hover:border-[#0072FF]"
-              >
-                {dom.label}
-              </Link>
-            ))}
+        <div className="rounded-xl border-2 border-[#5A00D6] bg-white p-2.5 space-y-1.5">
+          <span className="inline-flex items-center gap-1 rounded-full border-2 border-[#0072FF] bg-white px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+            <span style={{ color: '#0072FF' }}>◉</span> All 16 Participant Command Centre Domains (One Location)
+          </span>
+          <div className="flex flex-wrap gap-1.5">
+            {PARTICIPANT_16_DOMAINS.map((dom, dIdx) => {
+              const bCols = ['#0072FF', '#5A00D6', '#FF2E9A', '#A100FF'];
+              const bCol = bCols[dIdx % bCols.length];
+              return (
+                <Link
+                  key={dom.label}
+                  to={dom.to}
+                  className="inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D] transition hover:bg-[#F5F0FF]"
+                  style={{ border: `2px solid ${bCol}`, color: '#0A2B6D' }}
+                >
+                  <span style={{ color: bCol }}>◉</span>
+                  <span>{dom.label}</span>
+                </Link>
+              );
+            })}
           </div>
         </div>
       )}
 
-      {/* Tool Visibility Rule: 6 Instant Profile Actions */}
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-[#0072FF]/25 bg-white px-3 py-1.5">
-        <span className="inline-flex items-center gap-1 text-[11px] font-extrabold text-[#0072FF]">
+      {/* Tool Visibility Rule: 6 Instant Profile Actions (Every Word Pill Has an App Design Coloured Border on White) */}
+      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#0072FF] bg-white px-3 py-2">
+        <span className="inline-flex items-center gap-1.5 rounded-full border-2 border-[#5A00D6] bg-white px-2.5 py-0.5 text-[11px] font-extrabold text-[#0A2B6D]">
           <Wrench className="h-3.5 w-3.5 text-[#5A00D6]" />
-          Available Profile Actions &amp; Tools:
+          <span style={{ color: '#0A2B6D' }}>Available Profile Actions &amp; Tools</span>
         </span>
         <div className="flex flex-wrap gap-1.5">
-          {tools.map((tool) => (
+          {tools.map((tool, tIdx) => {
+            const bCols = ['#0072FF', '#5A00D6', '#FF2E9A', '#A100FF'];
+            const bCol = bCols[tIdx % bCols.length];
+            return (
+              <Link
+                key={tool.label}
+                to={tool.to}
+                className="inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D] transition hover:bg-[#F5F0FF]"
+                style={{ border: `2px solid ${bCol}`, color: '#0A2B6D' }}
+              >
+                <span style={{ color: bCol }}>◉</span>
+                <span>{tool.label}</span>
+                <ArrowUpRight className="h-2.5 w-2.5" style={{ color: bCol }} />
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Related Resources & Single-Source Access Paths (Every Word Pill Has an App Design Coloured Border on White) */}
+      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#FF2E9A] bg-white px-3 py-2 text-[11px] font-extrabold text-[#0A2B6D]">
+        <span className="inline-flex items-center gap-1.5 rounded-full border-2 border-[#0072FF] bg-white px-2.5 py-0.5 text-[#0A2B6D]">
+          <Layers className="h-3.5 w-3.5 text-[#0072FF]" />
+          <span style={{ color: '#0A2B6D' }}>Related Resources, Evidence &amp; Registers</span>
+        </span>
+        <div className="flex flex-wrap gap-1.5">
+          {[
+            { label: 'Consent Register', to: '/compliance', color: '#0072FF' },
+            { label: '45 Master Registers', to: '/registers', color: '#5A00D6' },
+            { label: 'Document Vault', to: '/documents', color: '#FF2E9A' },
+            { label: 'Related Reviews', to: '/review-due', color: '#A100FF' },
+            { label: 'Related Audits', to: '/auditor-portal', color: '#0072FF' },
+          ].map((res) => (
             <Link
-              key={tool.label}
-              to={tool.to}
-              className="inline-flex items-center gap-1 rounded-full bg-[#0A2B6D] px-2.5 py-0.5 text-[10px] font-extrabold text-white transition hover:bg-[#5A00D6]"
+              key={res.label}
+              to={res.to}
+              className="inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D] transition hover:bg-[#F5F0FF]"
+              style={{ border: `2px solid ${res.color}`, color: '#0A2B6D' }}
             >
-              <span>{tool.label}</span>
-              <ArrowUpRight className="h-2.5 w-2.5 text-[#00C6FF]" />
+              <span style={{ color: res.color }}>◉</span>
+              <span>{res.label}</span>
             </Link>
           ))}
         </div>
       </div>
-
-      {/* Related Resources & Single-Source Access Paths */}
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl bg-[#F5F0FF] px-3 py-1.5 text-[11px] font-bold text-[#0A2B6D]">
-        <span className="inline-flex items-center gap-1 text-[#5A00D6]">
-          <Layers className="h-3.5 w-3.5" />
-          Related Resources, Evidence &amp; Registers:
-        </span>
-        <div className="flex flex-wrap gap-2">
-          <Link to="/compliance" className="underline hover:text-[#0072FF]">Consent Register</Link>
-          <span>·</span>
-          <Link to="/registers" className="underline hover:text-[#0072FF]">45 Master Registers</Link>
-          <span>·</span>
-          <Link to="/documents" className="underline hover:text-[#0072FF]">Document Vault</Link>
-          <span>·</span>
-          <Link to="/review-due" className="underline hover:text-[#0072FF]">Related Reviews</Link>
-          <span>·</span>
-          <Link to="/auditor-portal" className="underline hover:text-[#0072FF]">Related Audits</Link>
-        </div>
       </div>
     </section>
   );
