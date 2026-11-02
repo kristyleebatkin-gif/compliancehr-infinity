@@ -4,6 +4,7 @@ import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
 import PageHeader from '@/components/PageHeader';
 import IncidentWorkflow from '@/components/IncidentWorkflow';
+import IncidentTriagePanel from '@/components/IncidentTriagePanel';
 import { Field, TextInput, Select, TextArea, DateInput, Checkbox } from '@/components/Field';
 import { ArrowLeft, Save, AlertTriangle } from 'lucide-react';
 import { recordSafetyEvent } from '@/lib/safetyEvent';
@@ -13,6 +14,7 @@ import { ROLES } from '@/lib/roles';
 const categories = ['Medical', 'Behavioural', 'Safety', 'Medication Error', 'Abuse/Neglect', 'Other'];
 const severities = ['Low', 'Medium', 'High', 'Critical'];
 const statuses = ['Reported', 'Under Investigation', 'Action Required', 'Resolved', 'Closed'];
+const sirsPriorities = ['Not Applicable', 'Priority 1 - 24 Hours', 'Priority 2 - 30 Days'];
 const reportableTypes = ['Not assessed', 'Death', 'Serious injury', 'Abuse or neglect', 'Unlawful sexual or physical contact', 'Sexual misconduct or grooming', 'Unauthorised restrictive practice', 'Other reportable incident', 'Not reportable'];
 
 export default function IncidentForm() {
@@ -35,6 +37,7 @@ export default function IncidentForm() {
     five_day_follow_up_due: '', five_day_follow_up_submitted: '', final_report_due: '', final_report_submitted: '',
     late_notification_reason: '', participant_or_nominee_notified_at: '', whs_notification_required: false,
     whs_notified_at: '', whs_reference: '', requires_police: false,
+    sirs_reportable: false, sirs_priority: 'Not Applicable',
   });
   const [participants, setParticipants] = useState([]);
   const [staff, setStaff] = useState([]);
@@ -154,7 +157,9 @@ export default function IncidentForm() {
         </div>
         {canReview && <div className="space-y-2 rounded-lg border border-warning/30 bg-warning/5 p-2.5">
           <div><h3 className="text-sm font-semibold">Regulatory Notification Assessment</h3><p className="text-xs text-foreground/55">Record applicable deadlines and references based on the incident type, provider jurisdiction and current regulator requirements.</p></div>
+          <IncidentTriagePanel form={form} incidentId={isEdit ? id : ''} onApply={(updates) => setForm((current) => ({ ...current, ...updates }))} />
           <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Aged Care SIRS Priority"><Select value={form.sirs_priority || 'Not Applicable'} onChange={(e) => setForm((current) => ({ ...current, sirs_priority: e.target.value, sirs_reportable: e.target.value !== 'Not Applicable' }))}>{sirsPriorities.map((value) => <option key={value}>{value}</option>)}</Select></Field>
             <Field label="Reportable Incident Type"><Select value={form.reportable_incident_type || 'Not assessed'} onChange={(e) => set('reportable_incident_type', e.target.value)}>{reportableTypes.map((value) => <option key={value}>{value}</option>)}</Select></Field>
             <Field label="Provider Awareness Date and Time"><TextInput type="datetime-local" value={form.provider_awareness_at || ''} onChange={(e) => set('provider_awareness_at', e.target.value)} /></Field>
             <Field label="Initial Notification Due"><TextInput type="datetime-local" value={form.initial_notification_due_at || ''} onChange={(e) => set('initial_notification_due_at', e.target.value)} /></Field>
