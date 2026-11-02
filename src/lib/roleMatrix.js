@@ -363,3 +363,71 @@ export function stampTenantWritePayload(payload = {}, user, explicitTenantId = n
   const resolved = explicitTenantId || userTenantId || payload?.tenant_id || undefined;
   return resolved ? { ...payload, tenant_id: resolved } : { ...payload };
 }
+
+export function isSyntheticParticipantId(participantId) {
+  const id = String(participantId || '').trim();
+  if (!id) return true;
+  return /^(?:PART-|DOC-PART-|P-\d+|FAKE-|SYNTH-|TEMP-)/i.test(id);
+}
+
+export function detectOrphanParticipantRecords(records = [], validParticipantIds = []) {
+  const validSet = new Set(validParticipantIds.map((id) => String(id).trim()).filter(Boolean));
+  const orphans = [];
+  for (const record of records) {
+    const pid = String(record?.participant_id || '').trim();
+    if (!pid || isSyntheticParticipantId(pid) || (validSet.size > 0 && !validSet.has(pid))) {
+      orphans.push({
+        id: record?.id || null,
+        title: record?.title || record?.document_type || 'Untitled',
+        participant_id: pid || null,
+        participant_name: record?.participant_name || null,
+        reason: !pid
+          ? 'Missing participant_id'
+          : isSyntheticParticipantId(pid)
+            ? `Synthetic participant_id (${pid})`
+            : `Unresolved participant_id (${pid})`,
+      });
+    }
+  }
+  return orphans;
+}
+
+export function repairOrphanParticipantDocuments(records = [], participants = []) {
+  const byId = new Map();
+  const byNameCounts = new Map();
+  const byNameSingle = new Map();
+  for (const p of participants) {
+    if (!p?.id) continue;
+    byId.set(String(p.id).trim(), p);
+    const key = String(p.full_name || '').trim().toLowerCase();
+    if (key) {
+      byNameCounts.set(key, (byNameCounts.get(key) || 0) + 1);
+      byNameSingle.set(key, p);
+    }
+  }
+  const repaired = [];
+  const unresolved = [];
+  for (const doc of records) {
+    const pid = String(doc?.participant_id || '').trim();
+    if (pid && !isSyntheticParticipantId(pid) && byId.has(pid)) continue;
+    const nameKey = String(doc?.participant_name || '').trim().toLowerCase();
+    const count = byNameCounts.get(nameKey) || 0;
+    if (nameKey && count === 1) {
+      const target = byNameSingle.get(nameKey);
+      repaired.push({
+        document_id: doc.id,
+        previous_participant_id: pid || null,
+        resolved_participant_id: target.id,
+        participant_name: target.full_name,
+      });
+    } else {
+      unresolved.push({
+        document_id: doc?.id || null,
+        participant_id: pid || null,
+        participant_name: doc?.participant_name || null,
+        reason: count > 1 ? 'Ambiguous duplicate participant name' : 'No matching ParticipantProfile found',
+      });
+    }
+  }
+  return { repaired, unresolved };
+}

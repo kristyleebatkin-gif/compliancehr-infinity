@@ -2,7 +2,7 @@
 // Provides deterministic backup snapshot creation, integrity checksums,
 // orphan/reference verification, and documented RTO/RPO recovery specifications.
 
-import { detectOrphanParticipantRecords } from './universalStorageAndExportEngine.js';
+import { detectOrphanParticipantRecords } from './roleMatrix.js';
 
 export const RECOVERY_SPECIFICATION = {
   rto_minutes: 60, // Recovery Time Objective: 60 minutes maximum service restoration window

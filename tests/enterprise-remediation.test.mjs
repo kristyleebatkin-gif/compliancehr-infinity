@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import {
   validateApprovalTransition,
   resolveUserTenantId,
@@ -9,20 +10,36 @@ import {
   canAccessDocumentClassification,
 } from '../src/lib/roleMatrix.js';
 import {
-  isSyntheticParticipantId,
-  detectOrphanParticipantRecords,
-  repairOrphanParticipantDocuments,
-  withRetryAndIdempotency,
-} from '../src/lib/universalStorageAndExportEngine.js';
-import {
-  evaluateThresholdBand,
-  loadAndCalculateExecutiveScores,
-} from '../src/lib/organisationHealthScoreEngine.js';
-import {
   createBackupManifest,
   verifyAndRestoreBackup,
   RECOVERY_SPECIFICATION,
 } from '../src/lib/disasterRecoveryAndBackup.js';
+
+async function importWithViteAliases(relPath) {
+  let src = await readFile(new URL(relPath, import.meta.url), 'utf8');
+  src = src
+    .replace(/import\s+\{\s*base44\s*\}\s+from\s+['"]@\/api\/base44Client['"];?/g, 'const base44 = { entities: {}, functions: { invoke: async () => ({}) } };')
+    .replace(/import\s+\{\s*esc\s*\}\s+from\s+['"]@\/lib\/visualPrint['"];?/g, 'const esc = (s) => String(s ?? "");')
+    .replace(/from\s+['"]@\/lib\/csvExport['"]/g, `from '${new URL('../src/lib/csvExport.js', import.meta.url).href}'`)
+    .replace(/from\s+['"]@\/lib\/roleMatrix['"]/g, `from '${new URL('../src/lib/roleMatrix.js', import.meta.url).href}'`);
+  return import(`data:text/javascript;base64,${Buffer.from(src).toString('base64')}`);
+}
+
+const storageEngine = await importWithViteAliases('../src/lib/universalStorageAndExportEngine.js');
+const scoreEngine = await importWithViteAliases('../src/lib/organisationHealthScoreEngine.js');
+
+const {
+  isSyntheticParticipantId,
+  detectOrphanParticipantRecords,
+  repairOrphanParticipantDocuments,
+  withRetryAndIdempotency,
+  saveUniversalRecordAcrossEcosystem,
+} = storageEngine;
+
+const {
+  evaluateThresholdBand,
+  loadAndCalculateExecutiveScores,
+} = scoreEngine;
 
 const activeAdmin = {
   id: 'usr_admin_1',
@@ -64,16 +81,12 @@ test('approval workflow enforces Draft -> Submitted -> Under Review -> Approved/
   const step1 = validateApprovalTransition('Draft', 'Submitted', { user: activeEmployee });
   assert.equal(step1.status, 'Submitted');
 
-  // Employee cannot move Submitted -> Under Review or Approved
   assert.throws(() => validateApprovalTransition('Submitted', 'Under Review', { user: activeEmployee }), /not permitted/);
 
   const step2 = validateApprovalTransition('Submitted', 'Under Review', { user: activeAdmin });
   assert.equal(step2.status, 'Under Review');
 
-  // Cannot skip directly from Draft to Approved
   assert.throws(() => validateApprovalTransition('Draft', 'Approved', { user: activeAdmin, reason: 'Fast track', evidence_uri: 'private/ev.pdf' }), /Cannot transition/);
-
-  // Approved requires reason and evidence
   assert.throws(() => validateApprovalTransition('Under Review', 'Approved', { user: activeAdmin, reason: '', evidence_uri: 'private/ev.pdf' }), /reason is required/);
   assert.throws(() => validateApprovalTransition('Under Review', 'Approved', { user: activeAdmin, reason: 'Verified against NDIS standard', evidence_uri: '' }), /evidence is required/);
 
@@ -86,7 +99,6 @@ test('approval workflow enforces Draft -> Submitted -> Under Review -> Approved/
   assert.equal(step3.approver_id, activeAdmin.id);
   assert.equal(step3.evidence_reference, 'private/evidence-pack-1.pdf');
 
-  // Suspended admin cannot approve
   assert.throws(() => validateApprovalTransition('Under Review', 'Approved', { user: suspendedAdmin, reason: 'ok', evidence_uri: 'private/ev.pdf' }), /Active, approved account/);
 });
 
@@ -98,7 +110,7 @@ test('document security classification restricts Sensitive and Regulated records
   assert.equal(canAccessDocumentClassification(suspendedAdmin, 'Public'), false);
 });
 
-test('synthetic participant IDs (PART-*, P-*) are detected and orphan repair avoids ambiguous matches', () => {
+test('synthetic participant IDs (PART-*, P-*) are detected and refused on filing', async () => {
   assert.equal(isSyntheticParticipantId('PART-CHR-UNI-123456'), true);
   assert.equal(isSyntheticParticipantId('P-10294'), true);
   assert.equal(isSyntheticParticipantId('6ae74dcdd5fc0ff3a4145f1f'), false);
@@ -122,6 +134,17 @@ test('synthetic participant IDs (PART-*, P-*) are detected and orphan repair avo
   assert.equal(repair.repaired[0].resolved_participant_id, '6ae74dcdd5fc0ff3a4145f1f');
   assert.equal(repair.unresolved.length, 1);
   assert.match(repair.unresolved[0].reason, /Ambiguous/);
+
+  await assert.rejects(
+    () =>
+      saveUniversalRecordAcrossEcosystem({
+        personType: 'Participant',
+        personName: "Liam O'Connor",
+        participantId: 'PART-FAKE-999',
+        user: activeAdmin,
+      }),
+    /Synthetic participant reference/
+  );
 });
 
 test('withRetryAndIdempotency retries transient errors and deduplicates idempotent keys', async () => {
@@ -193,7 +216,6 @@ test('disaster recovery manifest creation, checksum verification, and restore va
   assert.equal(restored.length, 3);
   assert.deepEqual(restored[0], ['ParticipantProfile', 'part_1']);
 
-  // Tampered payload is rejected by checksum
   const tampered = { ...manifest, payload: { ...payload, ParticipantProfile: [] } };
   await assert.rejects(() => verifyAndRestoreBackup(tampered, {}), /checksum mismatch/);
 });
