@@ -100,12 +100,8 @@ export default function AttachedFormsLibrary({
 
   const view = async (doc) => {
     try {
-      if (doc.file_uri) {
-        const { signed_url } = await base44.integrations.Core.CreateFileSignedUrl({ file_uri: doc.file_uri });
-        window.open(signed_url, '_blank');
-      } else if (safeUrl(doc.file_url)) {
-        window.open(safeUrl(doc.file_url), '_blank', 'noopener,noreferrer');
-      }
+      const { openDocumentInViewer } = await import('@/lib/openDocument');
+      await openDocumentInViewer(doc);
     } catch (error) {
       toast({ title: 'Unable to open document', description: error.message, variant: 'destructive' });
     }

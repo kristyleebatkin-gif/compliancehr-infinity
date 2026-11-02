@@ -1136,9 +1136,10 @@ export default function EnterpriseStandardQualityGateSuite() {
                     <td className="p-2.5 whitespace-nowrap">
                       <Button
                         size="sm"
-                        onClick={() => {
+                        onClick={async () => {
+                          const { openDocumentInViewer } = await import('@/lib/openDocument');
+                          await openDocumentInViewer(item);
                           setSelectedTemplateId(item.id);
-                          setActiveStudioTab('controlled-forms');
                         }}
                         className="h-7 bg-[#0A2B6D] px-2.5 text-[10px] font-extrabold text-white"
                       >

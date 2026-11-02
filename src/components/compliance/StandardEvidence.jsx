@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/components/ui/use-toast';
 import { currentUserName } from '@/lib/statusLog';
+import { openDocumentInViewer } from '@/lib/openDocument';
 import { format } from 'date-fns';
 import { Upload, FileDown, Loader2, Trash2, Paperclip } from 'lucide-react';
 
@@ -52,8 +53,7 @@ export default function StandardEvidence({ standard, controls, colour }) {
 
   const download = async (doc) => {
     try {
-      const { signed_url } = await base44.integrations.Core.CreateFileSignedUrl({ file_uri: doc.file_uri });
-      window.open(signed_url, '_blank');
+      await openDocumentInViewer(doc);
     } catch (error) {
       toast({ title: 'Could not open file', description: error.message, variant: 'destructive' });
     }

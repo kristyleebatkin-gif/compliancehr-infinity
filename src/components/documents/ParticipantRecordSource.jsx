@@ -20,9 +20,8 @@ export default function ParticipantRecordSource({ entity, query, title }) {
   const open = async (record) => {
     setOpening(record.id); setError('');
     try {
-      const uri = record.file_uri || record.submitted_document_url;
-      const url = uri && !/^https?:/.test(uri) ? (await base44.integrations.Core.CreateFileSignedUrl({ file_uri: uri })).signed_url : safeUrl(uri || record.file_url);
-      if (url) window.open(url, '_blank', 'noopener,noreferrer');
+      const { openDocumentInViewer } = await import('@/lib/openDocument');
+      await openDocumentInViewer(record);
     } catch (failure) { setError(failure.message); }
     finally { setOpening(''); }
   };
@@ -32,8 +31,8 @@ export default function ParticipantRecordSource({ entity, query, title }) {
     {loading && <p role="status" className="text-sm text-muted-foreground">Loading records...</p>}
     {!loading && !error && !items.length && <p className="text-xs text-muted-foreground">No records filed here yet.</p>}
     {items.map((record) => <article key={record.id} className="space-y-2 rounded-lg border border-border p-3">
-      <div className="flex flex-wrap items-start justify-between gap-2"><div className="min-w-0"><p className="break-words text-sm font-semibold">{record.form_type || record.form_title || record.document_type || record.entry_type || record.title}</p><p className="text-xs text-muted-foreground">{[record.completed_date || record.recorded_date || record.uploaded_date || record.submitted_date, record.completed_by || record.recorded_by || record.uploaded_by || record.submitted_by, record.status || record.review_outcome].filter(Boolean).join(' · ')}</p></div>
-      {(record.file_uri || record.file_url || record.submitted_document_url) && <Button size="sm" variant="outline" disabled={opening === record.id} onClick={() => open(record)}>{opening === record.id ? 'Opening...' : 'Open file'}</Button>}</div>
+      <div className="flex flex-wrap items-start justify-between gap-2"><div className="min-w-0"><button type="button" onClick={() => open(record)} className="break-words text-left text-sm font-semibold text-[#0A2B6D] hover:text-[#0072FF] hover:underline">{record.form_type || record.form_title || record.document_type || record.entry_type || record.title}</button><p className="text-xs text-muted-foreground">{[record.completed_date || record.recorded_date || record.uploaded_date || record.submitted_date, record.completed_by || record.recorded_by || record.uploaded_by || record.submitted_by, record.status || record.review_outcome].filter(Boolean).join(' · ')}</p></div>
+      <Button size="sm" variant="outline" disabled={opening === record.id} onClick={() => open(record)}>{opening === record.id ? 'Opening...' : 'Open document'}</Button></div>
       {(record.answers || record.data || record.notes || record.review_notes) && <details><summary className="cursor-pointer text-xs font-semibold text-primary">View saved content</summary><div className="mt-3"><ParticipantRecordDetails record={record} /></div></details>}
     </article>)}
     {cursor && <Button variant="outline" size="sm" disabled={loading} onClick={() => load(cursor)}>Load more</Button>}

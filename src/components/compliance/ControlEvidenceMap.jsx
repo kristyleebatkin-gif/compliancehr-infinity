@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { CheckCircle2, AlertTriangle } from 'lucide-react';
 import { NDIS_CORE_STANDARDS, NDIS_STANDARD_COLOURS } from '@/lib/ndisPracticeStandards';
 import StandardEvidence from '@/components/compliance/StandardEvidence';
+import { openDocumentInViewer } from '@/lib/openDocument';
 
 // NDIS Practice Standards map: vibrant, colourful cards - each principal gets
 // its fixed module colour, live evidence counts per control, and its own
@@ -59,13 +60,32 @@ export default function ControlEvidenceMap() {
                       {c.evidence.map((e) => {
                         const n = counts[e.entity];
                         return (
-                          <span
+                          <button
                             key={e.label}
-                            className="rounded-full border px-2 py-0.5 text-[11px] font-semibold tabular-nums"
+                            type="button"
+                            onClick={async () => {
+                              try {
+                                const page = await base44.entities[e.entity].list({ sort: '-created_date', limit: 1 });
+                                const first = page?.items?.[0];
+                                if (first) {
+                                  await openDocumentInViewer({ ...first, category: e.label, module: s.standard });
+                                  return;
+                                }
+                              } catch {
+                                // fallback below
+                              }
+                              await openDocumentInViewer({
+                                title: `${e.label} — ${c.control}`,
+                                category: s.standard,
+                                module: 'NDIS Practice Standards Evidence Map',
+                                description: `Evidence register "${e.label}" (${e.entity}) mapped to ${s.standard} — ${c.control}. Live count: ${n ?? 0}.`,
+                              });
+                            }}
+                            className="rounded-full border px-2 py-0.5 text-[11px] font-semibold tabular-nums transition hover:opacity-90"
                             style={{ backgroundColor: `${colour}1f`, borderColor: `${colour}55`, color: colour }}
                           >
-                            {e.label}: {n === undefined ? '…' : n}
-                          </span>
+                            {e.label}: {n === undefined ? '…' : n} · Open
+                          </button>
                         );
                       })}
                     </div>

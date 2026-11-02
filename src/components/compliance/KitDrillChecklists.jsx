@@ -224,8 +224,8 @@ export default function KitDrillChecklists() {
 
   const viewFile = async (entry) => {
     try {
-      const { signed_url } = await base44.integrations.Core.CreateFileSignedUrl({ file_uri: entry.file_uri });
-      window.open(signed_url, '_blank');
+      const { openDocumentInViewer } = await import('@/lib/openDocument');
+      await openDocumentInViewer(entry);
     } catch (error) {
       toast({ title: 'Unable to open file', description: error.message, variant: 'destructive' });
     }

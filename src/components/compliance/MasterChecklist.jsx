@@ -204,8 +204,7 @@ export default function MasterChecklist() {
 
   const viewDoc = async (doc) => {
     try {
-      const { signed_url } = await base44.integrations.Core.CreateFileSignedUrl({ file_uri: doc.file_uri });
-      window.open(signed_url, '_blank');
+      await openDocumentInViewer(doc);
     } catch (error) {
       toast({ title: 'Unable to open document', description: error.message, variant: 'destructive' });
     }
@@ -496,7 +495,7 @@ export default function MasterChecklist() {
                     <td className="py-2 pr-3 text-muted-foreground">{entry.completed_date ? format(new Date(entry.completed_date), 'd MMM yyyy') : '-'}</td>
                     <td className="py-2 pr-3 text-muted-foreground">{entry.next_due_date ? format(new Date(`${entry.next_due_date}T00:00:00`), 'd MMM yyyy') : '-'}</td>
                     <td className="py-2">
-                      {entry.file_uri && <Button variant="ghost" size="sm" onClick={() => viewDoc(entry)}><FileDown className="h-3.5 w-3.5" /> View</Button>}
+                      <Button variant="ghost" size="sm" onClick={() => viewDoc(entry)}><FileDown className="h-3.5 w-3.5" /> View</Button>
                     </td>
                   </tr>
                 ))}

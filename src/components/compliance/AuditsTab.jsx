@@ -126,10 +126,10 @@ export default function AuditsTab() {
     }
   };
 
-  const downloadFile = async (uri) => {
+  const downloadFile = async (uri, auditRecord) => {
     try {
-      const { signed_url } = await base44.integrations.Core.CreateFileSignedUrl({ file_uri: uri });
-      window.open(signed_url, '_blank');
+      const { openDocumentInViewer } = await import('@/lib/openDocument');
+      await openDocumentInViewer({ ...(auditRecord || {}), file_uri: uri });
     } catch (error) {
       toast({ title: 'Could not open file', description: error.message, variant: 'destructive' });
     }
