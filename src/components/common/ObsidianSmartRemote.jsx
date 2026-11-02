@@ -4,15 +4,10 @@ import BrandLogoLockup from '@/components/common/BrandLogoLockup';
 import { ArrowRight, ShieldCheck } from 'lucide-react';
 
 const BRAND_GRADIENT =
-  'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)';
-
-const LANDING_TOP_LOGO_BLUE =
-  'radial-gradient(circle at 50% 35%, rgba(0, 198, 255, 0.42) 0%, #0072FF 44%, #0A2B6D 86%, #061539 100%)';
+  'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)';
 
 const DARK_NAVY_CHASSIS =
   'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)';
-
-const APP_DESIGN_ICON_COLOURS = ['#0072FF', '#5A00D6', '#FF2E9A', '#A100FF', '#00C6FF'];
 
 const DEFAULT_CHANNEL_SUBTITLES = {
   'auditor-portal': 'Read-only external NDIS auditor view',
@@ -26,62 +21,53 @@ const DEFAULT_CHANNEL_SUBTITLES = {
   'master-checklist': '17 categories & 356 NDIS checkpoints',
   'master-audit-forms': 'Dual A4 master audit checklists',
   'printable-2026-templates': '100+ tailored NDIS & HR templates',
-  'screen-audit-2026': '46-screen smart-fill verification',
-  audits: 'External & certification audit log',
-  'internal-audits': 'Internal audit schedule & findings',
-  'audit-report-list': 'Saved A4 audit packs & board PDFs',
+  'screen-audit-2026': '46-screen smart verification matrix',
+  'audits': 'Scheduled & completed external audits',
+  'internal-audits': 'Internal quality & practice audits',
+  'audit-report-list': 'Archived formal audit reports',
   'weekly-audit-reports': 'Automated weekly compliance digests',
-  'executive-summary': 'Board-level governance & KPI brief',
-  issues: 'Open non-conformities & CAPA register',
-  readiness: 'Live readiness gauge & domain scores',
-  checklists: 'Operational & onboarding checklists',
-  consents: '3-part participant informed consents',
-  'form-templates': 'Review & assessment form masters',
-  'participant-reviews': '10-weekly & 3-monthly plan reviews',
-  'staff-compliance': 'Workforce credential & training matrix',
-  'worker-screening': 'NDIS Worker Screening & Blue Card gate',
-  'cert-renewals': '90/60/30-day qualification renewals',
-  'renewal-calendar': 'Interactive document expiry calendar',
-  'onboarding-progress': '100-point staff onboarding tracker',
-  'staff-bulk-actions': 'Bulk credential & reminder actions',
-  'risk-status': 'ISO 31000 risk register & controls',
-  'risk-heatmap': 'Likelihood × consequence matrix',
-  'trend-charts': 'Incident, risk & expiry trajectories',
-  'kits-drills': 'First aid kits & 6-monthly fire drills',
-  visitors: 'Digital visitor sign-in & sign-out log',
-  'quick-tasks': 'Rapid compliance task dispatch',
-  'task-kanban': 'Visual compliance task board',
-  'activity-feed': 'Live platform audit & action stream',
+  'form-templates': 'Customisable digital intake & review forms',
+  'checklists': 'Operational & safety compliance checklists',
+  'consents': 'Participant & employee consent register',
+  'issues': 'Open non-conformances & corrective actions',
+  'participant-reviews': 'Scheduled participant plan reviews',
+  'onboarding-tracker': 'New starter screening & induction progress',
+  'visitors': 'Site sign-in / sign-out & WHS log',
+  'kit-drills': 'First aid kit & emergency drill checks',
+  'staff-matrix': 'Live employee credential matrix',
+  'participant-matrix': 'Live participant folder completeness',
+  'control-evidence': 'Mapped evidence per NDIS control',
+  'renewal-calendar': 'Upcoming document & clearance renewals',
+  'certification-calendar': 'Staff certificate expiry calendar',
+  'risk-heatmap': '5×5 likelihood & consequence matrix',
+  'safety-trend': 'Incident & hazard trend analytics',
+  'staff-chart': 'Workforce compliance breakdown chart',
+  'acknowledgements': 'Staff policy read & sign-off tracking',
+  'policy-versions': 'Historical policy version control',
+  'activity-feed': 'Real-time compliance audit trail',
+  'bulk-actions': 'Bulk compliance reminders & updates',
+  'global-search': 'Search across all compliance registers',
+  'executive-summary': 'Board-ready compliance posture summary',
+  'enterprise-standard': '10-stage enterprise completeness gate',
 };
 
-/**
- * Remote Control + Command Centre + Glassmorphism iPad Screen Suite:
- * - White title backgrounds
- * - Blue -> Purple -> Pink gradients
- * - Rounded "remote buttons"
- * - LED active glow
- * - Glass cards on Dark navy background
- * - Enterprise spacing, large touch targets, consistent button sizes
- * - Status indicators on every module
- * - BrandLogoLockup (Logo top -> Name middle -> Slogan bottom, all centred)
- */
 export default function ObsidianSmartRemote({
-  compact = false,
   title = '',
-  subtitle = 'Interactive workspace screens',
-  screenModes = [],
-  activeScreenMode,
-  onSelectScreenMode,
-  banks = [],
-  activeBank,
-  onSelectBank,
+  subtitle = '',
   channels = [],
-  activeKey,
+  activeKey = '',
   onSelectChannel,
   onConfirmChannel,
-  confirmHref,
-  confirmLabel,
-  columnsClass = 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6',
+  confirmHref = '',
+  confirmLabel = '',
+  banks = [],
+  activeBank = '',
+  onSelectBank,
+  screenModes = [],
+  activeScreenMode = '',
+  onSelectScreenMode,
+  compact = false,
+  columnsClass = 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4',
 }) {
   return (
     <section
@@ -91,90 +77,72 @@ export default function ObsidianSmartRemote({
       {/* Top Blue -> Purple -> Pink Gradient Strip */}
       <div className="h-1.5 w-full" style={{ background: BRAND_GRADIENT }} />
 
-      {/* Very Top Logo Section ONLY: Landing-Page Dashboard Blue Around Enlarged Logo & Fitted Slogan */}
-      <div
-        className="flex flex-wrap items-center justify-between gap-2 border-b-2 border-[#0072FF] px-3 py-2"
-        style={{ background: LANDING_TOP_LOGO_BLUE }}
-      >
-        <BrandLogoLockup size="sm" theme="light" showSlogan={true} />
+      {/* TOP 1/4 WHITE: Title Header Card with Centred Logo -> Name -> Slogan */}
+      <div className="flex flex-col items-center justify-center border-b border-white/15 bg-white px-3 py-2 text-center">
+        <BrandLogoLockup size={compact ? 'xs' : 'sm'} theme="light" showSlogan={true} />
         {(title || subtitle) && (
-          <div className="flex flex-wrap items-center justify-center gap-1.5">
+          <div className="mt-1 flex flex-wrap items-center justify-center gap-1.5">
             {title && (
-              <span className="rounded-full p-[1.5px] shadow-2xs" style={{ background: BRAND_GRADIENT }}>
-                <span
-                  className="block rounded-full bg-white px-3 py-0.5 text-[9px] font-extrabold uppercase tracking-wider"
-                  style={{ color: '#5A00D6' }}
-                >
-                  ◉ {title}
-                </span>
+              <span
+                className="rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold uppercase tracking-wider text-white"
+                style={{ background: BRAND_GRADIENT }}
+              >
+                {title}
               </span>
             )}
             {subtitle && (
-              <span className="rounded-full p-[1.5px] shadow-2xs" style={{ background: BRAND_GRADIENT }}>
-                <span
-                  className="block rounded-full bg-white px-3 py-0.5 text-[9.5px] font-bold"
-                  style={{ color: '#0A2B6D' }}
-                >
-                  {subtitle}
-                </span>
+              <span className="text-[10px] font-bold text-[#0A2B6D]/85" style={{ color: '#0A2B6D' }}>
+                {subtitle}
               </span>
             )}
           </div>
         )}
       </div>
 
-      {/* Optional Dual-Screen & Category Pod Filter Bar — White Pills with App-Design-Colour Borders */}
+      {/* Optional Dual-Screen & Category Filter Bar */}
       {(screenModes.length > 0 || banks.length > 0) && (
-        <div className="flex flex-wrap items-center justify-between gap-1.5 border-b border-white/25 bg-white/10 px-2.5 py-1.5 backdrop-blur-md">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/15 bg-white/10 px-3 py-2 backdrop-blur-md">
           {banks.length > 0 && (
-            <div className="flex flex-wrap items-center gap-1">
+            <div className="flex flex-wrap items-center gap-1.5">
               {banks.map((b) => {
-                const isBankActive = b.id === activeBank;
+                const active = b.id === activeBank;
                 return (
-                  <span
+                  <button
                     key={b.id}
-                    className="rounded-full p-[1.5px]"
-                    style={{ background: BRAND_GRADIENT }}
+                    type="button"
+                    onClick={() => onSelectBank && onSelectBank(b.id)}
+                    className={`min-h-[28px] rounded-xl border px-2.5 py-1 text-[10px] font-extrabold transition-all ${
+                      active
+                        ? 'border-[#00C6FF] bg-white text-[#0A2B6D] shadow-[0_0_12px_rgba(0,198,255,0.65)]'
+                        : 'border-white/25 bg-[#0A2B6D]/80 text-white hover:border-[#00C6FF] hover:bg-[#0A2B6D]'
+                    }`}
+                    style={{ color: active ? '#0A2B6D' : '#FFFFFF' }}
                   >
-                    <button
-                      type="button"
-                      onClick={() => onSelectBank && onSelectBank(b.id)}
-                      className={`min-h-[24px] rounded-full bg-white px-2.5 py-0.5 text-[9px] font-extrabold leading-tight transition-all ${
-                        isBankActive
-                          ? 'shadow-[0_0_12px_rgba(0,198,255,0.75)]'
-                          : 'opacity-90 hover:opacity-100'
-                      }`}
-                    >
-                      <span style={{ color: isBankActive ? '#5A00D6' : '#0A2B6D' }}>◉ {b.label}</span>
-                    </button>
-                  </span>
+                    {b.label}
+                  </button>
                 );
               })}
             </div>
           )}
 
           {screenModes.length > 0 && (
-            <div className="ml-auto flex flex-wrap items-center gap-1">
+            <div className="flex flex-wrap items-center gap-1.5">
               {screenModes.map((m) => {
-                const isModeActive = m.key === activeScreenMode;
+                const active = m.id === activeScreenMode;
                 return (
-                  <span
-                    key={m.key}
-                    className="rounded-full p-[1.5px]"
-                    style={{ background: BRAND_GRADIENT }}
+                  <button
+                    key={m.id}
+                    type="button"
+                    onClick={() => onSelectScreenMode && onSelectScreenMode(m.id)}
+                    className={`min-h-[28px] rounded-xl border px-2.5 py-1 text-[10px] font-extrabold transition-all ${
+                      active
+                        ? 'border-[#FF2E9A] bg-white text-[#0A2B6D] shadow-[0_0_12px_rgba(255,46,154,0.65)]'
+                        : 'border-white/25 bg-[#0A2B6D]/80 text-white hover:border-[#FF2E9A]'
+                    }`}
+                    style={{ color: active ? '#0A2B6D' : '#FFFFFF' }}
                   >
-                    <button
-                      type="button"
-                      onClick={() => onSelectScreenMode && onSelectScreenMode(m.key)}
-                      className={`min-h-[24px] rounded-full bg-white px-2.5 py-0.5 text-[9px] font-extrabold leading-tight transition-all ${
-                        isModeActive
-                          ? 'shadow-[0_0_12px_rgba(255,46,154,0.75)]'
-                          : 'opacity-90 hover:opacity-100'
-                      }`}
-                    >
-                      <span style={{ color: isModeActive ? '#FF2E9A' : '#0A2B6D' }}>◉ {m.label}</span>
-                    </button>
-                  </span>
+                    {m.label}
+                  </button>
                 );
               })}
             </div>
@@ -182,14 +150,13 @@ export default function ObsidianSmartRemote({
         </div>
       )}
 
-      {/* All-White Control Pods with App-Design-Colour Borders & Icons in App Design Colour on Landing Blue */}
-      <div className={`grid auto-rows-fr gap-1.5 p-2 items-stretch ${columnsClass}`}>
-        {channels.map((ch, idx) => {
+      {/* BOTTOM 3/4 DARK BLUE: Glassmorphic Remote Control Buttons (Each Button Has Top 1/4 White + Bottom 3/4 Dark Blue) */}
+      <div className={`grid auto-rows-fr gap-2.5 p-3 items-stretch ${columnsClass}`}>
+        {channels.map((ch) => {
           const Icon = ch.icon || ShieldCheck;
           const active = ch.key === activeKey;
           const resolvedSub =
             ch.sub || DEFAULT_CHANNEL_SUBTITLES[ch.key] || `${ch.label} workspace`;
-          const iconColor = APP_DESIGN_ICON_COLOURS[idx % APP_DESIGN_ICON_COLOURS.length];
 
           return (
             <button
@@ -201,53 +168,71 @@ export default function ObsidianSmartRemote({
               }}
               aria-pressed={active}
               title={`${ch.label} — ${resolvedSub}`}
-              className={`group flex h-full min-h-[48px] rounded-3xl p-[2px] text-left transition-all duration-200 focus-visible:outline-none ${
+              className={`group flex h-full min-h-[78px] flex-col rounded-2xl p-[2px] text-left transition-all duration-200 focus-visible:outline-none ${
                 active
-                  ? 'shadow-[0_0_18px_rgba(0,198,255,0.85)] scale-[1.01]'
-                  : 'hover:-translate-y-0.5 hover:shadow-[0_0_12px_rgba(0,198,255,0.5)]'
+                  ? 'shadow-[0_0_20px_rgba(0,198,255,0.75)] scale-[1.01]'
+                  : 'hover:-translate-y-0.5 hover:shadow-[0_0_14px_rgba(161,0,255,0.5)]'
               }`}
               style={{ background: BRAND_GRADIENT }}
             >
-              <div className="flex w-full items-center gap-2 rounded-[22px] bg-white px-2.5 py-1.5">
-                {/* Circular Orb with Icon in App Design Colour */}
-                <span
-                  className="relative flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#F5F0FF]"
-                  style={{ border: `2px solid ${iconColor}` }}
-                >
-                  <Icon className="h-3.5 w-3.5 shrink-0" style={{ color: iconColor }} />
-                </span>
-
-                {/* Full White Surface for Clean Word Fit */}
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center justify-between gap-1">
+              {/* Glass Card Body */}
+              <div className="flex w-full flex-1 flex-col justify-between overflow-hidden rounded-[14px] bg-[#0A2B6D]/90 backdrop-blur-md">
+                {/* Top 1/4 White Title Background */}
+                <div className="flex min-h-[34px] w-full items-center justify-between gap-1.5 bg-white px-2.5 py-1">
+                  <div className="flex min-w-0 items-center gap-1.5">
                     <span
-                      className="text-[9.5px] font-extrabold leading-tight text-[#0A2B6D]"
+                      className="flex h-5 w-5 shrink-0 items-center justify-center rounded-lg text-white shadow-2xs"
+                      style={{ background: BRAND_GRADIENT }}
+                    >
+                      <Icon className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                    </span>
+                    <span
+                      className="min-w-0 text-[10px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]"
                       style={{ color: '#0A2B6D' }}
                     >
-                      <span style={{ color: iconColor }}>◉</span> {ch.label}
+                      {ch.label}
                     </span>
+                  </div>
 
+                  {/* Status Indicator + LED Active Glow */}
+                  <span
+                    className={`inline-flex shrink-0 items-center gap-1 rounded-full px-1.5 py-0.5 text-[7.5px] font-black uppercase tracking-wider ${
+                      active ? 'bg-[#0A2B6D] text-[#00C6FF]' : 'bg-[#F5F0FF] text-[#5A00D6]'
+                    }`}
+                  >
                     <span
-                      className="inline-flex shrink-0 items-center rounded-full border px-1.5 py-0 text-[6.5px] font-black uppercase"
+                      className="h-1.5 w-1.5 rounded-full"
                       style={{
-                        borderColor: iconColor,
-                        color: active ? '#FF2E9A' : '#5A00D6',
-                        backgroundColor: '#F5F0FF',
+                        backgroundColor: active ? '#00C6FF' : '#FF2E9A',
+                        boxShadow: active
+                          ? '0 0 8px 2px #00C6FF'
+                          : '0 0 4px 1px #FF2E9A',
                       }}
-                    >
-                      {active ? 'ON' : 'LIVE'}
-                    </span>
-                  </div>
+                    />
+                    {active ? 'ACTIVE' : ch.status || 'LIVE'}
+                  </span>
+                </div>
 
-                  <div className="mt-0.5 flex items-center justify-between gap-1">
-                    <span
-                      className="min-w-0 flex-1 break-words text-[8px] font-bold leading-tight text-[#5A00D6]"
-                      style={{ color: '#5A00D6' }}
-                    >
-                      {resolvedSub}
-                    </span>
-                    <ArrowRight className="h-2.5 w-2.5 shrink-0" style={{ color: iconColor }} />
-                  </div>
+                {/* Bottom 3/4 Dark Navy Glassmorphic Body */}
+                <div className="flex min-h-[34px] w-full flex-1 items-center justify-between gap-1.5 px-2.5 py-1.5">
+                  <span
+                    className="min-w-0 flex-1 break-words text-[9px] font-bold leading-snug text-white/95"
+                    style={{ color: '#FFFFFF' }}
+                  >
+                    {resolvedSub}
+                  </span>
+                  <ArrowRight className="h-3 w-3 shrink-0 text-[#00C6FF] transition group-hover:translate-x-0.5" />
+                </div>
+
+                {/* iPad LED Home Indicator Bar */}
+                <div className="flex h-[5px] w-full items-center justify-center pb-0.5">
+                  <span
+                    className={`h-[2.5px] rounded-full transition-all ${
+                      active
+                        ? 'w-9 bg-[#00C6FF] shadow-[0_0_8px_#00C6FF]'
+                        : 'w-6 bg-white/40 group-hover:bg-white/80'
+                    }`}
+                  />
                 </div>
               </div>
             </button>
@@ -256,7 +241,7 @@ export default function ObsidianSmartRemote({
       </div>
 
       {confirmHref && (
-        <div className="flex items-center justify-end border-t border-white/15 bg-white/10 px-3 py-1.5 backdrop-blur-md">
+        <div className="flex justify-end border-t border-white/15 bg-white/10 px-3 py-2">
           <Link
             to={confirmHref}
             className="inline-flex items-center gap-1.5 rounded-xl bg-white px-3 py-1 text-[10px] font-extrabold text-[#0A2B6D] shadow-sm transition hover:bg-[#F5F0FF]"
