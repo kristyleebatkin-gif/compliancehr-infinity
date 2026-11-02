@@ -59,61 +59,76 @@ export default function BrandLogoLockup({
 
   const isDark = theme === 'dark';
 
+  const APP_BORDER_GRADIENT =
+    'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)';
+
   return (
     <div
       className={`flex flex-col items-center justify-center text-center select-none ${className}`}
     >
-      {/* 1. TOP: LARGER READABLE LOGO (Centred) */}
-      <div className="flex items-center justify-center rounded-xl border border-slate-200/90 bg-white px-2 py-1 shadow-sm">
-        <Image
-          src={logoUrl || DEFAULT_BRAND_LOGO}
-          alt={companyName || 'ComplianceHR Infinity'}
-          fittingType="fit"
-          className={`${logoSizeClass} shrink-0 object-contain`}
-        />
-      </div>
-
-      {/* 2. MIDDLE: NAME (Centred) */}
+      {/* 1. TOP: LARGER READABLE LOGO ON WHITE WITH APP DESIGN COLOUR BORDER */}
       <div
-        className={`mt-1 font-editorial ${nameSizeClass} font-extrabold leading-tight tracking-tight whitespace-nowrap ${
-          isDark ? 'text-white' : 'text-[#0A2B6D]'
-        }`}
+        className="rounded-xl p-[2px] shadow-sm"
+        style={{ background: APP_BORDER_GRADIENT }}
       >
-        {isCustomName ? (
-          <span>{companyName}</span>
-        ) : (
-          <>
-            <span style={{ color: isDark ? '#FFFFFF' : '#0A2B6D' }}>Compliance</span>
-            <span
-              className="font-editorial-italic"
-              style={{ color: isDark ? '#00C6FF' : '#5A00D6' }}
-            >
-              HR
-            </span>{' '}
-            <span
-              className="bg-gradient-to-r from-[#0072FF] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent"
-              style={isDark ? { color: '#FF6EDB', WebkitTextFillColor: 'initial', background: 'none' } : undefined}
-            >
-              Infinity
-            </span>
-          </>
-        )}
+        <div className="flex items-center justify-center rounded-[10px] bg-white px-2.5 py-1">
+          <Image
+            src={logoUrl || DEFAULT_BRAND_LOGO}
+            alt={companyName || 'ComplianceHR Infinity'}
+            fittingType="fit"
+            className={`${logoSizeClass} shrink-0 object-contain`}
+          />
+        </div>
       </div>
 
-      {/* 3. BOTTOM: SLOGAN IN PREVIOUS SIGNATURE COLOURS (Blue / Purple / Pink, Centred) */}
+      {/* 2. MIDDLE: NAME ON WHITE BACKGROUND WITH APP DESIGN COLOUR BORDER */}
+      <div
+        className="mt-1 rounded-full p-[1.5px] shadow-2xs"
+        style={{ background: APP_BORDER_GRADIENT }}
+      >
+        <div
+          className={`rounded-full bg-white px-3 py-0.5 font-editorial ${nameSizeClass} font-extrabold leading-tight tracking-tight whitespace-nowrap text-[#0A2B6D]`}
+        >
+          {isCustomName ? (
+            <span style={{ color: '#0A2B6D' }}>{companyName}</span>
+          ) : (
+            <>
+              <span style={{ color: '#0A2B6D' }}>Compliance</span>
+              <span
+                className="font-editorial-italic"
+                style={{ color: '#5A00D6' }}
+              >
+                HR
+              </span>{' '}
+              <span
+                className="bg-gradient-to-r from-[#0072FF] via-[#A100FF] to-[#FF2E9A] bg-clip-text text-transparent"
+              >
+                Infinity
+              </span>
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* 3. BOTTOM: SLOGAN ON WHITE BACKGROUND WITH APP DESIGN COLOUR BORDER */}
       {showSlogan && (
         <div
-          className={`mt-0.5 ${sloganSizeClass} font-extrabold leading-tight whitespace-nowrap`}
+          className="mt-1 rounded-full p-[1.5px] shadow-2xs"
+          style={{ background: APP_BORDER_GRADIENT }}
         >
-          <span style={{ color: isDark ? '#00C6FF' : '#0072FF' }}>
-            Complete Control.
-          </span>{' '}
-          <span style={{ color: isDark ? '#C084FC' : '#5A00D6' }}>
-            Greater Confidence.
-          </span>{' '}
-          <span style={{ color: isDark ? '#FF6EDB' : '#FF2E9A' }}>
-            Brighter Success.
-          </span>
+          <div
+            className={`rounded-full bg-white px-2.5 py-0.5 ${sloganSizeClass} font-extrabold leading-tight whitespace-nowrap`}
+          >
+            <span style={{ color: '#0072FF' }}>
+              Complete Control.
+            </span>{' '}
+            <span style={{ color: '#5A00D6' }}>
+              Greater Confidence.
+            </span>{' '}
+            <span style={{ color: '#FF2E9A' }}>
+              Brighter Success.
+            </span>
+          </div>
         </div>
       )}
     </div>

@@ -45,10 +45,10 @@ export default function OperationsCentre() {
 
       <nav
         aria-label="Executive workspaces"
-        className="preserve-island-theme grid grid-cols-2 gap-1.5 rounded-2xl border-2 border-[#0A2B6D] p-2 shadow-lg sm:grid-cols-3 lg:grid-cols-6"
+        className="preserve-island-theme grid grid-cols-2 gap-1.5 rounded-2xl border-2 border-[#0072FF] p-2 shadow-lg sm:grid-cols-3 lg:grid-cols-6"
         style={{
           background:
-            'radial-gradient(circle at 50% 40%, rgba(0, 198, 255, 0.20) 0%, rgba(90, 0, 214, 0.34) 40%, rgba(10, 43, 109, 0.96) 80%, #061539 100%)',
+            'radial-gradient(circle at 50% 35%, rgba(0, 198, 255, 0.38) 0%, #0072FF 42%, #0A2B6D 85%, #061539 100%)',
         }}
       >
         {EXEC_TABS.map((t) => {
@@ -60,46 +60,36 @@ export default function OperationsCentre() {
               type="button"
               onClick={() => setActiveTab(t.id)}
               aria-pressed={active}
-              className={`group flex min-h-[48px] items-center gap-2 rounded-full border px-2.5 py-1.5 text-left backdrop-blur-md transition-all duration-200 focus:outline-none ${
+              className={`group flex min-h-[46px] rounded-full p-[2px] text-left transition-all duration-200 focus:outline-none ${
                 active
-                  ? 'border-[#00C6FF] bg-white text-[#0A2B6D] shadow-[0_0_18px_rgba(0,198,255,0.75)] scale-[1.01]'
-                  : 'border-white/25 bg-white/10 text-white hover:border-[#00C6FF] hover:bg-white/20'
+                  ? 'shadow-[0_0_18px_rgba(0,198,255,0.85)] scale-[1.01]'
+                  : 'hover:-translate-y-0.5 hover:shadow-[0_0_12px_rgba(0,198,255,0.5)]'
               }`}
+              style={{
+                background:
+                  'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+              }}
             >
-              <span className="relative flex h-7 w-7 shrink-0 items-center justify-center">
-                <svg className="pointer-events-none absolute inset-0 h-full w-full -rotate-90" viewBox="0 0 28 28">
-                  <circle cx="14" cy="14" r="12" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="2.5" />
-                  <circle
-                    cx="14"
-                    cy="14"
-                    r="12"
-                    fill="none"
-                    stroke={t.ring}
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeDasharray="75"
-                    strokeDashoffset="8"
-                  />
-                </svg>
+              <span className="flex w-full items-center gap-2 rounded-full bg-white px-2.5 py-1">
                 <span
-                  className="relative z-10 flex h-5 w-5 items-center justify-center rounded-full text-white"
-                  style={{ background: 'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)' }}
+                  className="relative flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#F5F0FF]"
+                  style={{ border: `2px solid ${t.ring}` }}
                 >
-                  <Icon className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                  <Icon className="h-3.5 w-3.5 shrink-0" style={{ color: t.ring }} />
                 </span>
-              </span>
-              <span className="min-w-0 flex-1">
-                <span
-                  className="block text-[9.5px] font-extrabold leading-tight"
-                  style={{ color: active ? '#0A2B6D' : '#FFFFFF' }}
-                >
-                  ◉ {t.label}
-                </span>
-                <span
-                  className="block text-[8px] font-bold leading-tight"
-                  style={{ color: active ? '#5A00D6' : '#00C6FF' }}
-                >
-                  {t.sub}
+                <span className="min-w-0 flex-1">
+                  <span
+                    className="block text-[9.5px] font-extrabold leading-tight"
+                    style={{ color: '#0A2B6D' }}
+                  >
+                    <span style={{ color: t.ring }}>◉</span> {t.label}
+                  </span>
+                  <span
+                    className="block text-[8px] font-bold leading-tight"
+                    style={{ color: active ? '#FF2E9A' : '#5A00D6' }}
+                  >
+                    {t.sub}
+                  </span>
                 </span>
               </span>
             </button>

@@ -229,71 +229,109 @@ export default function AppLayout() {
       )}
 
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
-        <header className="sticky top-0 z-40 shrink-0 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-md">
+        <header
+          className="preserve-island-theme sticky top-0 z-40 shrink-0 border-b-2 border-[#0072FF] shadow-md"
+          style={{
+            background:
+              'radial-gradient(circle at 50% 35%, rgba(0, 198, 255, 0.38) 0%, #0072FF 42%, #0A2B6D 85%, #061539 100%)',
+          }}
+        >
           <div
-            className="h-0.5 w-full"
+            className="h-1 w-full"
             style={{
               background:
-                'linear-gradient(120deg, #0072FF 0%, #0A2B6D 18%, #5A00D6 42%, #A100FF 68%, #FF2E9A 100%)',
+                'linear-gradient(120deg, #00C6FF 0%, #0072FF 25%, #5A00D6 55%, #FF2E9A 100%)',
             }}
           />
-          <div className="mx-auto flex max-w-[1440px] flex-col items-center gap-1 px-3 py-1 sm:px-6 lg:px-8">
-            {/* Top Centred Brand Lockup: From bottom to top -> Slogan, then Name, then Logo */}
+          <div className="mx-auto flex max-w-[1440px] flex-col items-center gap-1 px-3 py-1.5 sm:px-6 lg:px-8">
+            {/* Top Centred Brand Lockup Framed on Landing Dashboard Blue with White Boxes & App-Design-Colour Borders */}
             <Link
               to="/dashboard"
-              className="inline-flex flex-col items-center justify-center rounded-xl border border-slate-200/80 bg-[#F5F0FF]/40 px-3 py-0.5 text-center shadow-2xs transition hover:border-[#0072FF]/50"
+              className="inline-flex flex-col items-center justify-center rounded-2xl border border-white/35 bg-white/15 px-3 py-1 text-center shadow-sm backdrop-blur-md transition hover:bg-white/25"
             >
               <BrandLogoLockup size="xs" theme="light" />
             </Link>
 
-            {/* Single-Line Compact Command Row (50% Reduced Size): Dashboard Title on the Same Line as Search Bar & Items */}
-            <div className="flex w-full flex-wrap items-center justify-between gap-1.5 border-t border-slate-100 pt-1">
+            {/* Single-Line Compact Command Row: White Background Pills with App-Design-Colour Borders on Blue */}
+            <div className="flex w-full flex-wrap items-center justify-between gap-1.5 border-t border-white/20 pt-1">
               <div className="flex min-w-0 items-center gap-1.5">
                 <button
                   onClick={() => setMobileOpen(true)}
                   aria-label="Open menu"
-                  className="shrink-0 rounded-md border border-slate-200 bg-white p-1 text-[#0A2B6D] shadow-2xs transition hover:border-[#0072FF]/50 md:hidden"
+                  className="shrink-0 rounded-full border-2 border-[#0072FF] bg-white p-1 text-[#0A2B6D] shadow-2xs transition hover:border-[#FF2E9A] md:hidden"
                 >
-                  <Menu className="h-3 w-3" />
+                  <Menu className="h-3 w-3" style={{ color: '#0072FF' }} />
                 </button>
 
                 <span
-                  className="inline-flex min-h-[20px] items-center gap-1 rounded-full border border-[#0A2B6D] px-2.5 py-0.5 text-[9.5px] font-extrabold text-white shadow-2xs"
-                  style={{ background: getHeaderView(1) }}
+                  className="inline-flex rounded-full p-[1.5px] shadow-2xs"
+                  style={{
+                    background:
+                      'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+                  }}
                 >
-                  <Sparkles className="h-2.5 w-2.5 shrink-0" style={{ color: '#00C6FF' }} />
-                  <span className="whitespace-nowrap">{currentLabel}</span>
+                  <span className="inline-flex min-h-[22px] items-center gap-1 rounded-full bg-white px-2.5 py-0.5 text-[9.5px] font-extrabold text-[#0A2B6D]">
+                    <Sparkles className="h-3 w-3 shrink-0" style={{ color: '#5A00D6' }} />
+                    <span className="whitespace-nowrap" style={{ color: '#0A2B6D' }}>
+                      ◉ {currentLabel}
+                    </span>
+                  </span>
                 </span>
               </div>
 
               <div className="flex flex-1 items-center justify-center min-w-[160px] max-w-md">
-                <GlobalSearch />
+                <div
+                  className="w-full rounded-full p-[1.5px] shadow-2xs"
+                  style={{
+                    background:
+                      'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+                  }}
+                >
+                  <div className="rounded-full bg-white">
+                    <GlobalSearch />
+                  </div>
+                </div>
               </div>
 
               <div className="flex shrink-0 items-center gap-1">
-                {/* Workspace view selector (50% reduced) */}
-                <div className="hidden items-center gap-0.5 rounded-lg border border-slate-200 bg-white p-0.5 shadow-2xs sm:flex">
-                  {WORKSPACE_VIEWS.map(({ id, label, Icon }) => {
-                    const selected = workspaceView === id;
-                    return (
-                      <button
-                        key={id}
-                        type="button"
-                        onClick={() => switchWorkspaceView(id)}
-                        aria-pressed={selected}
-                        title={label}
-                        className={`inline-flex min-h-[18px] items-center gap-1 rounded px-1.5 py-0.5 text-[8.5px] font-extrabold transition-all ${
-                          selected ? 'bg-[#0A2B6D] text-white shadow-2xs' : 'text-[#0A2B6D] hover:text-[#0072FF]'
-                        }`}
-                      >
-                        <Icon className={`h-2.5 w-2.5 shrink-0 ${selected ? 'text-white' : 'text-[#5A00D6]'}`} />
-                        <span className="hidden whitespace-nowrap lg:inline">{label}</span>
-                      </button>
-                    );
-                  })}
+                {/* Workspace view selector on white with app-design-colour border */}
+                <div
+                  className="hidden rounded-full p-[1.5px] shadow-2xs sm:flex"
+                  style={{
+                    background:
+                      'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+                  }}
+                >
+                  <div className="flex items-center gap-0.5 rounded-full bg-white p-0.5">
+                    {WORKSPACE_VIEWS.map(({ id, label, Icon }) => {
+                      const selected = workspaceView === id;
+                      return (
+                        <button
+                          key={id}
+                          type="button"
+                          onClick={() => switchWorkspaceView(id)}
+                          aria-pressed={selected}
+                          title={label}
+                          className={`inline-flex min-h-[20px] items-center gap-1 rounded-full px-2 py-0.5 text-[8.5px] font-extrabold transition-all ${
+                            selected
+                              ? 'bg-[#F5F0FF] text-[#5A00D6] border border-[#5A00D6]'
+                              : 'text-[#0A2B6D] hover:text-[#0072FF]'
+                          }`}
+                        >
+                          <Icon
+                            className="h-2.5 w-2.5 shrink-0"
+                            style={{ color: selected ? '#FF2E9A' : '#0072FF' }}
+                          />
+                          <span className="hidden whitespace-nowrap lg:inline" style={{ color: '#0A2B6D' }}>
+                            {label}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
 
-                {/* Notifications Bell (50% reduced) */}
+                {/* Notifications Bell on white with app-design-colour border */}
                 <div className="relative">
                   <button
                     type="button"
@@ -302,9 +340,9 @@ export default function AppLayout() {
                       setUserMenuOpen(false);
                     }}
                     aria-label="Notifications"
-                    className="relative flex h-6 w-6 items-center justify-center rounded-md border border-slate-200 bg-white text-[#0A2B6D] shadow-2xs transition hover:border-[#0072FF]/50 hover:text-[#0072FF]"
+                    className="relative flex h-6 w-6 items-center justify-center rounded-full border-2 border-[#5A00D6] bg-white text-[#0A2B6D] shadow-2xs transition hover:border-[#FF2E9A]"
                   >
-                    <Bell className="h-3 w-3" />
+                    <Bell className="h-3 w-3" style={{ color: '#5A00D6' }} />
                     {unread > 0 && (
                       <span className="absolute -right-1 -top-1 flex h-3.5 min-w-3.5 items-center justify-center rounded-full bg-[#FF2E9A] px-0.5 text-[8px] font-black text-white">
                         {unread}

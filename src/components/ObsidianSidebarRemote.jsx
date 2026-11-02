@@ -8,10 +8,12 @@ import {
 } from 'lucide-react';
 
 const BRAND_GRADIENT =
-  'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)';
+  'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)';
 
 const DARK_NAVY_CHASSIS =
-  'linear-gradient(165deg, #061A44 0%, #0A2B6D 52%, #131B4D 100%)';
+  'radial-gradient(circle at 50% 30%, rgba(0, 198, 255, 0.36) 0%, #0072FF 40%, #0A2B6D 84%, #061539 100%)';
+
+const APP_DESIGN_ICON_COLOURS = ['#0072FF', '#5A00D6', '#FF2E9A', '#A100FF', '#00C6FF'];
 
 // Permanent 13-Group Architectural Map (Single Source of Truth, Zero Duplicates)
 export const PRIMARY_11_OS_NAV = [
@@ -227,48 +229,55 @@ export default function ObsidianSidebarRemote({
         {/* Top Blue -> Purple -> Pink Gradient Strip */}
         <div className="h-1.5 w-full shrink-0" style={{ background: BRAND_GRADIENT }} />
 
-        {/* Brand Lockup: Compact Readable Logo Top -> Name Middle -> Colourful Slogan Bottom */}
-        <div className="flex shrink-0 flex-col items-center border-b border-white/15 bg-white/95 px-2 py-1.5 text-center shadow-sm">
+        {/* Top Logo Area on Landing-Page Dashboard Blue with White Boxes & App-Design-Colour Borders */}
+        <div
+          className="flex shrink-0 flex-col items-center border-b border-white/25 px-2 py-2 text-center shadow-sm"
+          style={{ background: DARK_NAVY_CHASSIS }}
+        >
           <BrandLogoLockup size="xs" theme="light" />
 
-          {/* 50% Compact Circular Control Pod Mode Switcher */}
-          <div
-            className="mt-1.5 grid w-full grid-cols-2 gap-1 rounded-full p-[1.5px]"
-            style={{ background: BRAND_GRADIENT }}
-          >
-            <button
-              type="button"
-              onClick={() => setNavMode('os11')}
-              className={`min-h-[24px] rounded-full py-0.5 text-[8.5px] font-extrabold transition-all ${
-                navMode === 'os11'
-                  ? 'bg-[#0A2B6D] text-white shadow-[0_0_12px_rgba(0,198,255,0.65)]'
-                  : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
-              }`}
-            >
-              ◉ 13 Command Pods
-            </button>
-            <button
-              type="button"
-              onClick={() => setNavMode('all')}
-              className={`min-h-[24px] rounded-full py-0.5 text-[8.5px] font-extrabold transition-all ${
-                navMode === 'all'
-                  ? 'bg-[#0A2B6D] text-white shadow-[0_0_12px_rgba(255,46,154,0.65)]'
-                  : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
-              }`}
-            >
-              ◉ All 46 Pods
-            </button>
+          {/* Mode Switcher: All-White Buttons with App-Design-Colour Borders on Blue */}
+          <div className="mt-1.5 grid w-full grid-cols-2 gap-1.5">
+            <div className="rounded-full p-[1.5px]" style={{ background: BRAND_GRADIENT }}>
+              <button
+                type="button"
+                onClick={() => setNavMode('os11')}
+                className={`min-h-[24px] w-full rounded-full bg-white py-0.5 text-[8.5px] font-extrabold transition-all ${
+                  navMode === 'os11'
+                    ? 'shadow-[0_0_12px_rgba(0,198,255,0.75)]'
+                    : 'opacity-90 hover:opacity-100'
+                }`}
+                style={{ color: navMode === 'os11' ? '#5A00D6' : '#0A2B6D' }}
+              >
+                ◉ 13 Command Pods
+              </button>
+            </div>
+            <div className="rounded-full p-[1.5px]" style={{ background: BRAND_GRADIENT }}>
+              <button
+                type="button"
+                onClick={() => setNavMode('all')}
+                className={`min-h-[24px] w-full rounded-full bg-white py-0.5 text-[8.5px] font-extrabold transition-all ${
+                  navMode === 'all'
+                    ? 'shadow-[0_0_12px_rgba(255,46,154,0.75)]'
+                    : 'opacity-90 hover:opacity-100'
+                }`}
+                style={{ color: navMode === 'all' ? '#FF2E9A' : '#0A2B6D' }}
+              >
+                ◉ All 46 Pods
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* 50% Compact Circular Control-Pod Navigation List */}
+        {/* 50% Compact Circular Control-Pod Navigation List — All-White Buttons with App-Design-Colour Borders & Icons */}
         <nav
           aria-label="Page navigation"
           className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-1.5 space-y-1.5"
         >
           {navMode === 'os11'
-            ? PRIMARY_11_OS_NAV.map((pillar) => {
+            ? PRIMARY_11_OS_NAV.map((pillar, pIdx) => {
                 const Icon = pillar.icon;
+                const iconColor = APP_DESIGN_ICON_COLOURS[pIdx % APP_DESIGN_ICON_COLOURS.length];
                 const pillarActive =
                   isActive(pillar.path) ||
                   pillar.children.some((c) => location.pathname === c.path || location.pathname.startsWith(`${c.path}/`));
@@ -276,28 +285,27 @@ export default function ObsidianSidebarRemote({
 
                 return (
                   <div key={pillar.id} className="space-y-1">
-                    {/* Compact Circular Control Pod Button */}
+                    {/* All-White Pod Button with App-Design-Colour Border & App-Coloured Icon */}
                     <div
-                      className={`group rounded-2xl p-[1.5px] transition-all duration-200 ${
+                      className={`group rounded-2xl p-[2px] transition-all duration-200 ${
                         pillarActive
-                          ? 'shadow-[0_0_14px_rgba(0,198,255,0.65)] scale-[1.01]'
-                          : 'hover:shadow-[0_0_10px_rgba(161,0,255,0.45)]'
+                          ? 'shadow-[0_0_14px_rgba(0,198,255,0.75)] scale-[1.01]'
+                          : 'hover:shadow-[0_0_10px_rgba(161,0,255,0.5)]'
                       }`}
                       style={{ background: BRAND_GRADIENT }}
                     >
-                      <div className="flex flex-col justify-between overflow-hidden rounded-[14px] bg-[#0A2B6D]/90 backdrop-blur-md">
-                        {/* White Pill Header Bar */}
-                        <div className="flex min-h-[26px] items-center justify-between gap-1 bg-white px-2 py-0.5">
+                      <div className="flex flex-col justify-between overflow-hidden rounded-[14px] bg-white px-2 py-1">
+                        <div className="flex items-center justify-between gap-1">
                           <Link
                             to={pillar.path}
                             onClick={() => setExpandedPillar(pillar.id)}
                             className="flex min-w-0 flex-1 items-center gap-1.5"
                           >
                             <span
-                              className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-white shadow-2xs"
-                              style={{ background: BRAND_GRADIENT }}
+                              className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#F5F0FF]"
+                              style={{ border: `1.5px solid ${iconColor}` }}
                             >
-                              <Icon className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
+                              <Icon className="h-2.5 w-2.5 shrink-0" style={{ color: iconColor }} />
                             </span>
                             <span
                               className="min-w-0 text-[9px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]"
@@ -307,24 +315,15 @@ export default function ObsidianSidebarRemote({
                             </span>
                           </Link>
 
-                          {/* Status Indicator + LED Active Glow */}
                           <div className="flex shrink-0 items-center gap-0.5">
                             <span
-                              className={`inline-flex items-center gap-0.5 rounded-full px-1 py-0 text-[6.5px] font-black uppercase tracking-wider ${
-                                pillarActive
-                                  ? 'bg-[#0A2B6D] text-[#00C6FF]'
-                                  : 'bg-[#F5F0FF] text-[#5A00D6]'
-                              }`}
+                              className="inline-flex items-center gap-0.5 rounded-full border px-1 py-0 text-[6.5px] font-black uppercase"
+                              style={{
+                                borderColor: iconColor,
+                                color: pillarActive ? '#5A00D6' : '#0A2B6D',
+                                backgroundColor: '#F5F0FF',
+                              }}
                             >
-                              <span
-                                className="h-1.5 w-1.5 rounded-full"
-                                style={{
-                                  backgroundColor: pillarActive ? '#00C6FF' : '#FF2E9A',
-                                  boxShadow: pillarActive
-                                    ? '0 0 6px 1px #00C6FF'
-                                    : '0 0 4px 1px #FF2E9A',
-                                }}
-                              />
                               {pillarActive ? 'ON' : pillar.status}
                             </span>
 
@@ -337,31 +336,30 @@ export default function ObsidianSidebarRemote({
                               className="rounded p-0.5 text-[#0A2B6D] hover:bg-slate-100"
                             >
                               {isExpanded ? (
-                                <ChevronDown className="h-3 w-3 text-[#0A2B6D]" />
+                                <ChevronDown className="h-3 w-3" style={{ color: iconColor }} />
                               ) : (
-                                <ChevronRight className="h-3 w-3 text-[#0A2B6D]" />
+                                <ChevronRight className="h-3 w-3" style={{ color: iconColor }} />
                               )}
                             </button>
                           </div>
                         </div>
 
-                        {/* Dark Navy Glassmorphic Subtitle */}
                         <Link
                           to={pillar.path}
                           onClick={() => setExpandedPillar(pillar.id)}
-                          className="flex min-h-[20px] items-center justify-between gap-1 px-2 py-0.5 text-white/95"
+                          className="mt-0.5 flex items-center justify-between gap-1 border-t border-[#C084FC]/35 pt-0.5"
                         >
-                          <span className="text-[8px] font-bold leading-tight text-white" style={{ color: '#FFFFFF' }}>
+                          <span className="text-[8px] font-bold leading-tight text-[#5A00D6]" style={{ color: '#5A00D6' }}>
                             {pillar.sub}
                           </span>
-                          <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#00C6FF] transition group-hover:translate-x-0.5" />
+                          <ArrowRight className="h-2.5 w-2.5 shrink-0" style={{ color: iconColor }} />
                         </Link>
                       </div>
                     </div>
 
-                    {/* Level 2 Sub-Navigation Circular Pill Pods */}
+                    {/* Level 2 Sub-Navigation All-White Circular Pill Pods */}
                     {isExpanded && (
-                      <div className="ml-1.5 space-y-0.5 border-l-2 border-[#00C6FF]/60 pl-1.5 py-0.5">
+                      <div className="ml-1.5 space-y-1 border-l-2 border-[#00C6FF] pl-1.5 py-0.5">
                         {pillar.children.map((child) => {
                           const subActive =
                             location.pathname === child.path ||
@@ -370,24 +368,27 @@ export default function ObsidianSidebarRemote({
                             <Link
                               key={child.path}
                               to={child.path}
-                              className={`flex min-h-[26px] items-center justify-between rounded-full border px-2 py-0.5 text-[9px] font-extrabold transition-all ${
-                                subActive
-                                  ? 'border-[#00C6FF] bg-white text-[#0A2B6D] shadow-[0_0_10px_rgba(0,198,255,0.55)]'
-                                  : 'border-white/25 bg-white/95 text-[#0A2B6D] hover:border-[#00C6FF] hover:bg-white'
-                              }`}
+                              className="block rounded-full p-[1.5px] transition-all"
+                              style={{ background: BRAND_GRADIENT }}
                             >
-                              <div className="flex items-center gap-1 min-w-0">
-                                <span
-                                  className="text-[8px] leading-none shrink-0"
-                                  style={{ color: subActive ? '#00C6FF' : '#5A00D6' }}
-                                >
-                                  ◉
+                              <span
+                                className={`flex min-h-[24px] items-center justify-between rounded-full bg-white px-2 py-0.5 text-[8.5px] font-extrabold ${
+                                  subActive ? 'bg-[#F5F0FF]' : ''
+                                }`}
+                              >
+                                <span className="flex items-center gap-1 min-w-0">
+                                  <span
+                                    className="text-[8px] leading-none shrink-0"
+                                    style={{ color: subActive ? '#FF2E9A' : iconColor }}
+                                  >
+                                    ◉
+                                  </span>
+                                  <span className="leading-tight" style={{ color: '#0A2B6D' }}>
+                                    {child.label}
+                                  </span>
                                 </span>
-                                <span className="leading-tight" style={{ color: '#0A2B6D' }}>
-                                  {child.label}
-                                </span>
-                              </div>
-                              <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#5A00D6]" />
+                                <ArrowRight className="h-2.5 w-2.5 shrink-0" style={{ color: iconColor }} />
+                              </span>
                             </Link>
                           );
                         })}
@@ -396,33 +397,33 @@ export default function ObsidianSidebarRemote({
                   </div>
                 );
               })
-            : modules.map((item) => {
+            : modules.map((item, mIdx) => {
                 const Icon = item.icon;
                 const active = isActive(item.path);
                 const label = navLabel(item);
                 const subtitle = item.blurb || item.group || 'Open workspace';
+                const iconColor = APP_DESIGN_ICON_COLOURS[mIdx % APP_DESIGN_ICON_COLOURS.length];
 
                 return (
                   <Link
                     key={item.path}
                     to={item.path}
                     title={`${label} — ${subtitle}`}
-                    className={`group block rounded-2xl p-[1.5px] transition-all duration-200 focus-visible:outline-none ${
+                    className={`group block rounded-2xl p-[2px] transition-all duration-200 focus-visible:outline-none ${
                       active
-                        ? 'shadow-[0_0_14px_rgba(0,198,255,0.65)] scale-[1.01]'
+                        ? 'shadow-[0_0_14px_rgba(0,198,255,0.75)] scale-[1.01]'
                         : 'hover:-translate-y-0.5 hover:shadow-[0_0_10px_rgba(161,0,255,0.45)]'
                     }`}
                     style={{ background: BRAND_GRADIENT }}
                   >
-                    <div className="flex flex-col justify-between overflow-hidden rounded-[14px] bg-[#0A2B6D]/90 backdrop-blur-md">
-                      {/* White Pill Header */}
-                      <div className="flex min-h-[26px] items-center justify-between gap-1 bg-white px-2 py-0.5">
+                    <div className="flex flex-col justify-between overflow-hidden rounded-[14px] bg-white px-2 py-1">
+                      <div className="flex items-center justify-between gap-1">
                         <div className="flex min-w-0 items-center gap-1.5">
                           <span
-                            className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-white"
-                            style={{ background: BRAND_GRADIENT }}
+                            className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#F5F0FF]"
+                            style={{ border: `1.5px solid ${iconColor}` }}
                           >
-                            <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                            <Icon className="h-2.5 w-2.5 shrink-0" style={{ color: iconColor }} />
                           </span>
                           <span
                             className="min-w-0 text-[9px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]"
@@ -432,27 +433,18 @@ export default function ObsidianSidebarRemote({
                           </span>
                         </div>
                         <span
-                          className={`inline-flex items-center gap-0.5 rounded-full px-1 py-0 text-[6.5px] font-black uppercase ${
-                            active ? 'bg-[#0A2B6D] text-[#00C6FF]' : 'bg-[#F5F0FF] text-[#5A00D6]'
-                          }`}
+                          className="inline-flex items-center gap-0.5 rounded-full border px-1 py-0 text-[6.5px] font-black uppercase"
+                          style={{ borderColor: iconColor, color: active ? '#FF2E9A' : '#5A00D6' }}
                         >
-                          <span
-                            className="h-1.5 w-1.5 rounded-full"
-                            style={{
-                              backgroundColor: active ? '#00C6FF' : '#FF2E9A',
-                              boxShadow: active ? '0 0 6px 1px #00C6FF' : 'none',
-                            }}
-                          />
                           {active ? 'ON' : 'LIVE'}
                         </span>
                       </div>
 
-                      {/* Dark Navy Glass Body */}
-                      <div className="flex min-h-[20px] items-center justify-between gap-1 px-2 py-0.5">
-                        <span className="min-w-0 flex-1 break-words text-[8px] font-bold leading-tight text-white" style={{ color: '#FFFFFF' }}>
+                      <div className="mt-0.5 flex items-center justify-between gap-1 border-t border-[#C084FC]/35 pt-0.5">
+                        <span className="min-w-0 flex-1 break-words text-[8px] font-bold leading-tight text-[#5A00D6]" style={{ color: '#5A00D6' }}>
                           {subtitle}
                         </span>
-                        <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#00C6FF]" />
+                        <ArrowRight className="h-2.5 w-2.5 shrink-0" style={{ color: iconColor }} />
                       </div>
                     </div>
                   </Link>
