@@ -1,14 +1,18 @@
-import { hasApprovedAccess } from '../../shared/appAccess.ts';
+import { STAFF_SEND_ROLES } from '../../shared/roleMatrix.ts';
+import { authorizeAndLogAiAction } from '../../shared/aiGovernance.ts';
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 
 export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
-    const user = await base44.auth.me();
-    if (!hasApprovedAccess(user)) return Response.json({ error: 'Approved account access required.' }, { status: 403 });
-    if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
-
     const body = await req.json().catch(() => ({}));
+    const gate = await authorizeAndLogAiAction(base44, {
+      feature: 'composeAssist',
+      allowedRoles: STAFF_SEND_ROLES,
+      requestedTenantId: body.tenant_id || null,
+      recordTitle: body.message_type || 'Professional Communication',
+    });
+    if (!gate.authorized) return gate.response;
     const points = String(body.key_points || '').trim();
     if (!points) {
       return Response.json({ error: 'Add a few key points first.' }, { status: 400 });
@@ -40,6 +44,7 @@ Rules:
       },
     });
 
+    await gate.logSuccess(`Drafted ${body.message_type || 'email'} for recipient "${String(body.recipient || 'unspecified').slice(0, 80)}".`);
     return Response.json(result);
   } catch (error) {
     return Response.json({ error: error.message || 'Draft failed.' }, { status: 500 });

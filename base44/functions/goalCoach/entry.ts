@@ -1,14 +1,18 @@
-import { hasApprovedAccess } from '../../shared/appAccess.ts';
+import { STAFF_SEND_ROLES } from '../../shared/roleMatrix.ts';
+import { authorizeAndLogAiAction } from '../../shared/aiGovernance.ts';
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 
 export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
-    const user = await base44.auth.me();
-    if (!hasApprovedAccess(user)) return Response.json({ error: 'Approved account access required.' }, { status: 403 });
-    if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
-
     const body = await req.json().catch(() => ({}));
+    const gate = await authorizeAndLogAiAction(base44, {
+      feature: 'goalCoach',
+      allowedRoles: [...STAFF_SEND_ROLES, 'Participant'],
+      requestedTenantId: body.tenant_id || null,
+      recordTitle: String(body.goal || 'Participant Goal').slice(0, 120),
+    });
+    if (!gate.authorized) return gate.response;
     const goal = String(body.goal || '').trim();
     const participant = String(body.participant_name || '').trim();
     if (!goal) {
@@ -65,6 +69,7 @@ Keep language respectful, strengths-based and easy for support workers to action
       },
     });
 
+    await gate.logSuccess(`Generated goal coaching plan for "${goal.slice(0, 100)}".`);
     return Response.json(result);
   } catch (error) {
     return Response.json({ error: error.message || 'Goal coach failed.' }, { status: 500 });

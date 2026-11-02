@@ -1,27 +1,27 @@
 import React, { lazy } from 'react';
 import { AlertTriangle, BriefcaseBusiness, CalendarClock, CalendarDays, ClipboardList, Contact, FolderCheck, GraduationCap, Heart, IdCard, LayoutGrid, MapPin, MessagesSquare, Newspaper, Receipt, ShieldAlert, Siren, Target, ThumbsUp, UserRound } from 'lucide-react';
+import KeyContacts from '@/pages/KeyContacts';
+import HrHub from '@/pages/HrHub';
+import IntakeCentre from '@/pages/IntakeCentre';
+import VisualBoards from '@/pages/VisualBoards';
+import GoalProgress from '@/pages/GoalProgress';
+import Rostering from '@/pages/Rostering';
+import CommunityCouncil from '@/pages/CommunityCouncil';
+import ProgramsEvents from '@/pages/ProgramsEvents';
+import Incidents from '@/pages/Incidents';
+import Risks from '@/pages/Risks';
+import EmergencyResponse from '@/pages/EmergencyResponse';
+import NdisUpdates from '@/pages/NdisUpdates';
+import ReceiptHub from '@/pages/ReceiptHub';
+import Communications from '@/pages/Communications';
+import Training from '@/pages/Training';
+import Feedback from '@/pages/Feedback';
+import DocumentationChecklist from '@/components/profile/DocumentationChecklist';
+import ProfileCommDiary from '@/components/communications/ProfileCommDiary';
+import IntakeCaseWorkflow from '@/components/intake/IntakeCaseWorkflow';
+import ParticipantDocumentRegister from '@/components/documents/ParticipantDocumentRegister';
 
-const KeyContacts = lazy(() => import('@/pages/KeyContacts'));
-const HrHub = lazy(() => import('@/pages/HrHub'));
-const IntakeCentre = lazy(() => import('@/pages/IntakeCentre'));
-const VisualBoards = lazy(() => import('@/pages/VisualBoards'));
-const GoalProgress = lazy(() => import('@/pages/GoalProgress'));
-const Rostering = lazy(() => import('@/pages/Rostering'));
-const CommunityCouncil = lazy(() => import('@/pages/CommunityCouncil'));
-const ProgramsEvents = lazy(() => import('@/pages/ProgramsEvents'));
-const Incidents = lazy(() => import('@/pages/Incidents'));
-const Risks = lazy(() => import('@/pages/Risks'));
-const EmergencyResponse = lazy(() => import('@/pages/EmergencyResponse'));
-const NdisUpdates = lazy(() => import('@/pages/NdisUpdates'));
-const ReceiptHub = lazy(() => import('@/pages/ReceiptHub'));
-const Communications = lazy(() => import('@/pages/Communications'));
-const Training = lazy(() => import('@/pages/Training'));
-const Feedback = lazy(() => import('@/pages/Feedback'));
 const NameTags = lazy(() => import('@/pages/NameTags'));
-const DocumentationChecklist = lazy(() => import('@/components/profile/DocumentationChecklist'));
-const ProfileCommDiary = lazy(() => import('@/components/communications/ProfileCommDiary'));
-const IntakeCaseWorkflow = lazy(() => import('@/components/intake/IntakeCaseWorkflow'));
-const ParticipantDocumentRegister = lazy(() => import('@/components/documents/ParticipantDocumentRegister'));
 
 export default function OurProfileModuleList({ kind, profile, details, approvedParticipants, ourView = false }) {
   const employee = kind === 'staff';

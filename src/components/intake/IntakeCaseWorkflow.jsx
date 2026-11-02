@@ -422,12 +422,11 @@ export default function IntakeCaseWorkflow({ intakeType, profile, profileView })
       setForm(intakeType === 'Participant' ? PARTICIPANT_BLANK : EMPLOYEE_BLANK);
       setShowNew(false);
       try {
-        await base44.entities.AuditLog.create({
+        await base44.functions.invoke('logUserAction', {
           action: 'Create',
           entity_type: 'IntakeCase',
           record_id: created.id,
           record_title: created.applicant_name,
-          performed_by: user?.full_name || user?.email || 'ComplianceHR user',
           details: `${intakeType} intake case ${created.case_number} opened`,
         });
       } catch (auditError) {
@@ -663,12 +662,11 @@ export default function IntakeCaseWorkflow({ intakeType, profile, profileView })
       });
       if (intakeType === 'Employee') await syncEmployeeRecord('IntakeCase', activeCase.id);
       try {
-        await base44.entities.AuditLog.create({
+        await base44.functions.invoke('logUserAction', {
           action: 'Create',
           entity_type: intakeType === 'Participant' ? 'ParticipantProfile' : 'StaffProfile',
           record_id: profile.id,
           record_title: activeCase.applicant_name,
-          performed_by: user?.full_name || user?.email || 'ComplianceHR user',
           details: `Created from intake case ${activeCase.case_number}`,
         });
       } catch (auditError) {

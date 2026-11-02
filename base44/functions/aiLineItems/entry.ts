@@ -13,13 +13,15 @@ const ALLOWED_ROLES = [
 export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
+    const body = await req.json().catch(() => ({}));
     const user = await base44.auth.me().catch(() => null);
-    if (!hasApprovedAccess(user)) return Response.json({ error: 'Approved account access required.' }, { status: 403 });
-    if (!user || !ALLOWED_ROLES.includes(user.role)) {
+    if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    if (!hasApprovedAccess(user) || !ALLOWED_ROLES.includes(user.role)) {
       return Response.json({ error: 'Not authorised to generate billing items.' }, { status: 403 });
     }
-
-    const body = await req.json().catch(() => ({}));
+    if (body.tenant_id && user.tenant_id && body.tenant_id !== user.tenant_id) {
+      return Response.json({ error: 'Cross-tenant access denied.' }, { status: 403 });
+    }
     const requestText = String(body.request_text || '').slice(0, 2000).trim();
     const mode = body.mode === 'quote' ? 'quote' : 'invoice';
     const guide = Array.isArray(body.price_guide) ? body.price_guide.slice(0, 200) : [];
@@ -72,6 +74,18 @@ Suggest between 1 and 8 line items that cover the request, most relevant first.`
       unit_price: Number(i.unit_price) || 0,
       reason: String(i.reason || ''),
     }));
+    await base44.asServiceRole.entities.AuditLog.create({
+      action: 'AI Invoked (aiLineItems)',
+      entity_type: 'AIGovernance',
+      record_id: mode,
+      record_title: `NDIS ${mode} line-item suggestion`,
+      performed_by: user.full_name || user.email || user.id,
+      performed_by_user_id: user.id,
+      performed_by_email: user.email || '',
+      performed_by_role: user.role || '',
+      details: `Generated ${items.length} ${mode} line-item suggestion(s).`,
+      timestamp: new Date().toISOString(),
+    });
     return Response.json({ items });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });

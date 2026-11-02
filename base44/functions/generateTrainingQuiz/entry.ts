@@ -1,14 +1,16 @@
-import { hasApprovedAccess } from '../../shared/appAccess.ts';
+import { authorizeAndLogAiAction } from '../../shared/aiGovernance.ts';
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 
 export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
-    const user = await base44.auth.me();
-    if (!hasApprovedAccess(user)) return Response.json({ error: 'Approved account access required.' }, { status: 403 });
-    if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
-
     const body = await req.json().catch(() => ({}));
+    const gate = await authorizeAndLogAiAction(base44, {
+      feature: 'generateTrainingQuiz',
+      requestedTenantId: body.tenant_id || null,
+      recordTitle: String(body.topic || 'Training Quiz').slice(0, 120),
+    });
+    if (!gate.authorized) return gate.response;
     const topic = String(body.topic || '').trim().slice(0, 200);
     const count = Math.min(Math.max(Number(body.count) || 5, 3), 8);
     if (!topic) return Response.json({ error: 'Choose a training topic to drill.' }, { status: 400 });
@@ -45,6 +47,7 @@ Rules:
 
     const questions = (result?.questions || []).filter((q) => q && Array.isArray(q.options) && q.options.length === 4 && Number.isInteger(q.answer));
     if (questions.length === 0) return Response.json({ error: 'The quiz generator returned no questions. Try again.' }, { status: 502 });
+    await gate.logSuccess(`Generated ${questions.length} quiz questions for topic "${topic}".`);
     return Response.json({ questions });
   } catch (error) {
     return Response.json({ error: error.message || 'Quiz generation failed.' }, { status: 500 });

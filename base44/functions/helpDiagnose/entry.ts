@@ -1,14 +1,16 @@
-import { hasApprovedAccess } from '../../shared/appAccess.ts';
+import { authorizeAndLogAiAction } from '../../shared/aiGovernance.ts';
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 
 export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
-    const user = await base44.auth.me();
-    if (!hasApprovedAccess(user)) return Response.json({ error: 'Approved account access required.' }, { status: 403 });
-    if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
-
     const body = await req.json().catch(() => ({}));
+    const gate = await authorizeAndLogAiAction(base44, {
+      feature: 'helpDiagnose',
+      requestedTenantId: body.tenant_id || null,
+      recordTitle: String(body.module || 'Help Diagnose').slice(0, 120),
+    });
+    if (!gate.authorized) return gate.response;
     const problem = String(body.problem || '').trim();
     if (!problem) {
       return Response.json({ error: 'Describe the problem first.' }, { status: 400 });
@@ -43,6 +45,7 @@ Return:
       },
     });
 
+    await gate.logSuccess(`Generated troubleshooting diagnosis for module "${String(body.module || 'unspecified').slice(0, 80)}".`);
     return Response.json(result);
   } catch (error) {
     return Response.json({ error: error.message || 'Diagnosis failed.' }, { status: 500 });

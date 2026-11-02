@@ -12,10 +12,12 @@ import PublicPageShell from '@/components/landing/PublicPageShell';
 // Public volunteer / student placement interest form. Creates a
 // VolunteerInterest record through publicSubmissions (service-role endpoint).
 export default function PublicVolunteer() {
+  const [challenge] = useState(() => ({ a: 5, b: 2 }));
   const [form, setForm] = useState({
     interest_type: '', full_name: '', email: '', phone: '', suburb: '',
     institution_name: '', course_name: '', preferred_service_area: '',
     availability: '', relevant_experience: '', motivation: '', privacy_consent: false,
+    captcha_answer: '', website: '',
   });
   const [sending, setSending] = useState(false);
   const [error, setError] = useState('');
@@ -32,10 +34,14 @@ export default function PublicVolunteer() {
       setError('Please accept the privacy notice to continue.');
       return;
     }
+    if (Number(String(form.captcha_answer).trim()) !== challenge.a + challenge.b) {
+      setError(`Please answer the verification check (${challenge.a} + ${challenge.b}).`);
+      return;
+    }
     setSending(true);
     setError('');
     try {
-      await base44.functions.invoke('publicSubmissions', { kind: 'volunteer_interest', ...form });
+      await base44.functions.invoke('publicSubmissions', { kind: 'volunteer_interest', ...form, challenge_a: challenge.a, challenge_b: challenge.b });
       setDone(true);
     } catch (e) {
       setError(e?.response?.data?.error || 'Could not submit right now. Please try again.');
@@ -141,6 +147,14 @@ export default function PublicVolunteer() {
         <div>
           <Label htmlFor="pv-mot">Why would you like to join us? *</Label>
           <Textarea id="pv-mot" className="mt-1.5 min-h-[110px] bg-white" value={form.motivation} onChange={set('motivation')} />
+        </div>
+        <div className="hidden" aria-hidden="true">
+          <Label htmlFor="pv-website">Website</Label>
+          <Input id="pv-website" tabIndex={-1} autoComplete="off" value={form.website} onChange={set('website')} />
+        </div>
+        <div>
+          <Label htmlFor="pv-captcha">Human verification: What is {challenge.a} + {challenge.b}? *</Label>
+          <Input id="pv-captcha" inputMode="numeric" className="mt-1.5 max-w-[160px] bg-white" placeholder="Enter sum" value={form.captcha_answer} onChange={set('captcha_answer')} />
         </div>
         <label className="flex items-start gap-2.5 rounded-xl border border-slate-200 bg-slate-50/70 p-3 text-xs font-semibold leading-relaxed text-[#0A2B6D]/80">
           <input

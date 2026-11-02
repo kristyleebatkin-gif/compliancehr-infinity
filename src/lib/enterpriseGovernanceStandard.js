@@ -1258,53 +1258,58 @@ export function exportControlledRecordAsCsv(record) {
  * 2) Company Safe (CompanySafeDocument & CompanyDocument as Protected Master Copy + Version/Review/Approval History)
  * 3) Permanent Audit & Change History (AuditLog & StatusLog)
  */
-export async function autoFileToVaultAndCompanySafe(record, actionKind = 'Controlled Form Filed') {
+export async function autoFileToVaultAndCompanySafe(record, actionKind = 'Controlled Form Filed', client = base44) {
   const today = new Date().toISOString().slice(0, 10);
-  const nowIso = new Date().toISOString();
+  const hasRealApproval = Boolean(record.approvedBy && record.approvalDate && record.evidenceItems?.length);
 
-  await Promise.allSettled([
+  const results = await Promise.allSettled([
     // 1. Document Vault (FormsLibraryDocument)
-    base44.entities.FormsLibraryDocument.create({
+    client.entities.FormsLibraryDocument.create({
       library: `Document Vault · ${record.category || 'Compliance'}`,
       document_type: record.category || 'Compliance',
       title: `${record.documentNumber} — ${record.documentName} (${record.versionNumber})`,
       person_name: record.owner || 'ComplianceHR Infinity',
       file_name: `${record.documentNumber}-${record.versionNumber}.pdf`,
       uploaded_date: today,
-      uploaded_by: record.approvedBy || record.owner || 'Provider Administrator',
+      uploaded_by: record.owner || 'Authorised Officer',
     }),
-    // 2. Online Vault Submission (FormSubmission)
-    base44.entities.FormSubmission.create({
+    // 2. Online Vault Submission (FormSubmission) — starts Pending Review unless formally approved with evidence
+    client.entities.FormSubmission.create({
       form_title: `${record.documentNumber} — ${record.documentName}`,
       category: record.category || 'Compliance',
-      submitted_by: record.owner || 'Provider Administrator',
+      submitted_by: record.owner || 'Authorised Officer',
       submitted_date: today,
       submission_method: 'Online',
       online_document: true,
-      status: 'Reviewed',
-      review_outcome: 'Approved',
-      reviewed_date: today,
+      status: hasRealApproval ? 'Reviewed' : 'Submitted',
+      review_outcome: hasRealApproval ? 'Approved' : 'Pending Review',
+      reviewed_date: hasRealApproval ? record.approvalDate : undefined,
       submission_summary: `Filed under Document Vault → ${record.module} → ${record.category} → ${record.documentName} (${record.versionNumber}).`,
       data: JSON.stringify(record),
     }),
-    // 3. Company Safe Protected Master Copy (CompanyDocument)
-    base44.entities.CompanyDocument.create({
-      name: `[MASTER COPY] ${record.documentNumber} — ${record.documentName}`,
+    // 3. Company Safe Copy (CompanyDocument)
+    client.entities.CompanyDocument.create({
+      name: `[CONTROLLED COPY] ${record.documentNumber} — ${record.documentName}`,
       category: record.category || 'Governance',
       version: record.versionNumber || 'v1.0',
-      status: 'Current',
+      status: hasRealApproval ? 'Current' : 'Draft',
       issue_date: record.createdDate || today,
       expiry_date: record.nextReviewDate || today,
-      notes: `Protected Master Copy & Working Copy History | Module: ${record.module} | Owner: ${record.owner} | Approved By: ${record.approvedBy} on ${record.approvalDate}`,
+      notes: `Controlled Copy | Module: ${record.module} | Owner: ${record.owner} | Status: ${hasRealApproval ? `Approved by ${record.approvedBy} on ${record.approvalDate}` : 'Draft pending review'}`,
     }),
-    // 4. Permanent Audit & Change Log
-    base44.entities.AuditLog?.create?.({
+    // 4. Permanent Audit & Change Log via verified server function
+    client.functions.invoke('logUserAction', {
       action: actionKind,
       entity_type: record.module || 'ControlledDocument',
-      entity_id: record.documentNumber,
-      details: `${record.documentNumber} (${record.versionNumber}) filed to Document Vault (${record.category}) & Company Safe Master Copy. Approved by ${record.approvedBy}.`,
-      performed_by: record.approvedBy || 'Provider Administrator',
-      timestamp: nowIso,
+      record_id: record.documentNumber,
+      record_title: `${record.documentNumber} — ${record.documentName}`,
+      details: `${record.documentNumber} (${record.versionNumber}) filed to Document Vault (${record.category}) & Company Safe.`,
     }),
   ]);
+
+  const failures = results.filter((r) => r.status === 'rejected');
+  if (failures.length > 0) {
+    throw new Error(`Controlled filing incomplete (${failures.length} of ${results.length} steps failed).`);
+  }
+  return results;
 }

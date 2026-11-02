@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { safeUrl } from '@/lib/safeUrl';
+import { loadCompanyBranding } from '@/lib/companyBranding';
 import { downloadContractPdf, downloadPositionDescriptionPdf } from '@/lib/hrPaperworkPdf';
 import { Download, FileText } from 'lucide-react';
 import { statusTone } from '@/lib/statusStyles';
@@ -28,7 +29,6 @@ export default function HrEmployeeFileCard({ record, kind }) {
   const downloadPdf = async () => {
     setBusy(true); setError('');
     try {
-      const { loadCompanyBranding } = await import('@/lib/companyBranding');
       const business = await loadCompanyBranding();
       (kind === 'contract' ? downloadContractPdf : downloadPositionDescriptionPdf)(record, { business_name: business.companyName, address_line: business.addressLine, abn: business.abn }, record.employee_name);
     } catch (e) { setError(e.message); }

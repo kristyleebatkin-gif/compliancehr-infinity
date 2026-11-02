@@ -95,6 +95,18 @@ export default async function(req) {
         };
       });
 
+    await service.entities.AuditLog.create({
+      action: 'AI Invoked (rosterSuggest)',
+      entity_type: 'AIGovernance',
+      record_id: today,
+      record_title: 'AI Roster Fill Suggestions',
+      performed_by: user.full_name || user.email || user.id,
+      performed_by_user_id: user.id,
+      performed_by_email: user.email || '',
+      performed_by_role: user.role || '',
+      details: `Evaluated ${unfilled.length} unfilled shift(s) and returned ${suggestions.length} suggestion(s).`,
+      timestamp: new Date().toISOString(),
+    });
     return Response.json({ ok: true, summary: llm.summary || '', checked: unfilled.length, suggestions });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });

@@ -167,31 +167,41 @@ function computeWeightedScore(components, weights) {
   return { score: finalScore, breakdown: detailed, activeWeightSum };
 }
 
-export function evaluateThresholdBand(score, warningThreshold = 80, criticalThreshold = 65) {
+export function evaluateThresholdBand(score, warningThreshold = 80, criticalThreshold = 65, hasError = false) {
+  if (hasError) {
+    return { status: 'Error', badgeClass: 'bg-[#FF2E9A] text-white border-[#FF2E9A]', hex: '#FF2E9A' };
+  }
   if (score === null || score === undefined) {
-    return { status: 'Unassessed', badgeClass: 'bg-slate-100 text-[#0A2B6D] border-slate-300', hex: '#64748B' };
+    return { status: 'Missing Data', badgeClass: 'bg-slate-100 text-[#0A2B6D] border-slate-300', hex: '#64748B' };
   }
   if (score < criticalThreshold) {
-    return { status: 'Critical', badgeClass: 'bg-[#FF2E9A] text-white border-[#FF2E9A]', hex: '#FF2E9A' };
+    return { status: 'Fail', badgeClass: 'bg-[#FF2E9A] text-white border-[#FF2E9A]', hex: '#FF2E9A' };
   }
   if (score < warningThreshold) {
     return { status: 'Warning', badgeClass: 'bg-[#A100FF] text-white border-[#A100FF]', hex: '#A100FF' };
   }
-  return { status: 'Healthy', badgeClass: 'bg-[#0072FF] text-white border-[#0072FF]', hex: '#0072FF' };
+  return { status: 'Pass', badgeClass: 'bg-[#0072FF] text-white border-[#0072FF]', hex: '#0072FF' };
 }
 
-export async function loadAndCalculateExecutiveScores() {
+export async function loadAndCalculateExecutiveScores(client = base44) {
+  const queryErrors = [];
   const safeCount = (entityName, query = {}) =>
-    base44.entities[entityName]?.count
-      ? base44.entities[entityName].count(query).catch(() => 0)
+    client.entities[entityName]?.count
+      ? client.entities[entityName].count(query).catch((err) => {
+          queryErrors.push({ entity: entityName, error: err?.message || 'Count query failed' });
+          return 0;
+        })
       : Promise.resolve(0);
 
   const safeFilter = (entityName, query = {}, limit = 6) =>
-    base44.entities[entityName]?.filter
-      ? base44.entities[entityName]
+    client.entities[entityName]?.filter
+      ? client.entities[entityName]
           .filter(query, { sort: '-created_date', limit })
           .then((res) => (Array.isArray(res) ? res : res?.items || []))
-          .catch(() => [])
+          .catch((err) => {
+            queryErrors.push({ entity: entityName, error: err?.message || 'Filter query failed' });
+            return [];
+          })
       : Promise.resolve([]);
 
   const [
@@ -325,10 +335,10 @@ export async function loadAndCalculateExecutiveScores() {
       detail: `${chkApproved} of ${chkTotal} checklists completed/approved`,
     },
     audits: {
-      rate: safeRatio(audCompleted || audTotal, audTotal),
-      numerator: audCompleted || audTotal,
+      rate: safeRatio(audCompleted, audTotal),
+      numerator: audCompleted,
       denominator: audTotal,
-      detail: `${audCompleted || audTotal} of ${audTotal} internal audits progressed/completed`,
+      detail: `${audCompleted} of ${audTotal} internal audits completed/verified`,
     },
     tasks_sla: {
       rate: safeRatio(taskNotOverdue, taskTotal),
@@ -343,10 +353,10 @@ export async function loadAndCalculateExecutiveScores() {
   const certValid = Math.max(0, certTotal - certExpired);
   const workforceComponents = {
     active_staff: {
-      rate: safeRatio(staffActive || staffTotal, staffTotal),
-      numerator: staffActive || staffTotal,
+      rate: safeRatio(staffActive, staffTotal),
+      numerator: staffActive,
       denominator: staffTotal,
-      detail: `${staffActive || staffTotal} of ${staffTotal} staff profiles active`,
+      detail: `${staffActive} of ${staffTotal} staff profiles active`,
     },
     credentials_current: {
       rate: safeRatio(empDocCurrent, empDocTotal),
@@ -493,27 +503,24 @@ export async function loadAndCalculateExecutiveScores() {
     ...contributingRecordsByScore.quality.slice(0, 2),
   ];
 
-  const BASELINE_SCORES = {
-    organisation_health: 94,
-    compliance: 96,
-    workforce: 92,
-    risk: 91,
-    quality: 95,
-  };
+  const calculatedAt = new Date().toISOString();
+  const hasQueryError = queryErrors.length > 0;
 
   const buildResult = (key, calc) => {
     const cfg = mergedConfigs[key];
-    const resolvedScore = calc.score !== null ? calc.score : BASELINE_SCORES[key];
-    const resolvedBreakdown = calc.Breakdown || calc.breakdown.map((b) => ({
-      ...b,
-      rate: b.rate !== null ? b.rate : resolvedScore,
-    }));
-    const band = evaluateThresholdBand(resolvedScore, cfg.warning_threshold, cfg.critical_threshold);
+    // Never default unassessed or empty modules to synthetic baseline percentages.
+    const resolvedScore = hasQueryError ? null : calc.score;
+    const resolvedBreakdown = calc.breakdown;
+    const evidenceCount = resolvedBreakdown.reduce((sum, b) => sum + (Number(b.denominator) || 0), 0);
+    const band = evaluateThresholdBand(resolvedScore, cfg.warning_threshold, cfg.critical_threshold, hasQueryError);
     return {
       ...cfg,
       score: resolvedScore,
       band,
       breakdown: resolvedBreakdown,
+      evidenceCount,
+      calculatedAt,
+      errors: queryErrors,
       contributingRecords: contributingRecordsByScore[key] || [],
     };
   };
@@ -528,6 +535,8 @@ export async function loadAndCalculateExecutiveScores() {
 
   return {
     scores,
+    calculatedAt,
+    errors: queryErrors,
     snapshots: snapshots.sort((a, b) => (a.snapshot_date || '').localeCompare(b.snapshot_date || '')),
     rawCounts: {
       docTotal,

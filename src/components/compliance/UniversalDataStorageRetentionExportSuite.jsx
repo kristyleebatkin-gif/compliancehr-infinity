@@ -94,13 +94,13 @@ export default function UniversalDataStorageRetentionExportSuite() {
       const unified = [
         ...(pDocs?.items || []).map((d, i) => ({
           id: d.id,
-          recordId: `REC-P-${String(i + 1).padStart(3, '0')}`,
-          docNumber: `DOC-PART-${String(i + 101)}`,
+          recordId: d.id || `REC-P-${String(i + 1).padStart(3, '0')}`,
+          docNumber: d.source_submission_id || `DOC-P-${String(i + 101)}`,
           title: d.title || d.document_type,
           itemType: d.document_type || 'Participant Document',
           personName: d.participant_name || 'Participant',
           personType: 'Participant',
-          user: d.responsible_staff || 'Support Coordinator',
+          user: d.responsible_staff || 'Unassigned',
           date: d.uploaded_date || (d.created_date || '').slice(0, 10) || today,
           expiryDate: d.expiry_date || '',
           module: 'Participants',
@@ -109,12 +109,12 @@ export default function UniversalDataStorageRetentionExportSuite() {
           site: 'Community & SIL',
           standard: 'NDIS Module 1 & 3',
           complianceType: 'Participant Evidence',
-          status: d.status || 'Verified',
+          status: d.status || 'Unknown',
           hasEvidence: Boolean(d.file_uri || d.file_url),
-          hasSignature: true,
-          version: 'v1.0 (Original + Current Retained)',
-          destinations: 'Participant Profile · Module · Document Vault · Company Safe · Audit Log',
-          linkedSummary: 'Linked to Participant, Risk, 3-Monthly Review, Consent & Service Agreement',
+          hasSignature: Boolean(d.source_submission_id || d.reviewed_date),
+          version: 'v1.0',
+          destinations: 'Participant Profile · Document Vault',
+          linkedSummary: `Participant ID: ${d.participant_id || 'Unlinked'} · Review: ${d.review_outcome || 'Pending Review'}`,
         })),
         ...(eDocs?.items || []).map((d, i) => ({
           id: d.id,
@@ -205,12 +205,12 @@ export default function UniversalDataStorageRetentionExportSuite() {
           site: 'All Sites',
           standard: 'NDIS & Aged Care Standards',
           complianceType: 'Assessment Evidence',
-          status: ck.status || 'Approved',
+          status: ck.status || 'Draft',
           hasEvidence: Boolean(ck.evidence_uri || ck.digital_signature),
           hasSignature: Boolean(ck.digital_signature),
-          version: 'v1.0 (Signed Assessment Retained)',
-          destinations: 'Profile · Checklists · Document Vault · Company Safe · Audit Log',
-          linkedSummary: `Outcome: ${ck.outcome || 'Compliant'} · Approval: ${ck.approval_status || 'Approved'}`,
+          version: 'v1.0',
+          destinations: 'Profile · Checklists · Document Vault',
+          linkedSummary: `Outcome: ${ck.outcome || 'Unassessed'} · Approval: ${ck.approval_status || 'Pending Approval'}`,
         })),
         ...(safeDocs?.items || []).slice(0, 15).map((sd, i) => ({
           id: sd.id,
@@ -277,11 +277,17 @@ export default function UniversalDataStorageRetentionExportSuite() {
     try {
       const res = await saveUniversalRecordAcrossEcosystem({ ...form, user });
       toast({
-        title: `Saved to All 6 Destinations (${res.docNumber})`,
-        description: `Filed to ${form.personType} Profile, ${form.moduleName}, Document Vault, Company Safe, Reporting Engine & Audit History.`,
+        title: `Saved (${res.docNumber}) — Pending Review`,
+        description: `Filed to ${form.personType} Profile, Document Vault, Company Safe & Audit Log as Pending Review.`,
       });
       setForm((prev) => ({ ...prev, title: '', fileUri: '', fileName: '' }));
       await loadUniversalRecords();
+    } catch (err) {
+      toast({
+        title: 'Filing failed',
+        description: err?.message || 'Could not complete filing across all destinations.',
+        variant: 'destructive',
+      });
     } finally {
       setSaving(false);
     }

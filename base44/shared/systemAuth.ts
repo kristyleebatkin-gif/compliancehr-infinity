@@ -1,41 +1,40 @@
-// Shared authorization helpers for backend functions.
+// Shared authorization helpers for backend functions, backed by canonical roleMatrix.ts.
 
-import { hasApprovedAccess } from './appAccess.ts';
+import {
+  MANAGEMENT_ROLES,
+  COMPLIANCE_REVIEW_ROLES,
+  STAFF_SEND_ROLES,
+  CONSENT_ROLES,
+  HR_ROLES,
+  hasApprovedAccess,
+  hasAnyRole,
+  resolveUserTenantId,
+  assertTenantRecordAccess,
+  scopeQueryToTenant,
+  stampTenantWritePayload,
+} from './roleMatrix.ts';
 
-export const MANAGEMENT_ROLES = ['admin', 'Provider Administrator', 'Management'];
-
-// Roles trusted to send email from the organisation's identity.
-// External/low-trust roles (e.g. Auditor) are deliberately excluded: they must
-// never send email from the organisation's identity.
-export const STAFF_SEND_ROLES = [
-  ...MANAGEMENT_ROLES,
-  'Human Resources Manager',
-  'CRM & Marketing Officer',
-  'Finance & Accounts Officer',
-  'Rostering Coordinator',
-  'Team Leader',
-  'Quality & Improvement Manager',
-  'Intake Officer',
-  'Support Worker',
-  'Employee',
-];
-
-// Roles trusted to record NDIS audit consent.
-export const CONSENT_ROLES = [...MANAGEMENT_ROLES, 'Human Resources Manager', 'Quality & Improvement Manager'];
-
-// Roles trusted to manage HR paperwork (contracts and position descriptions).
-export const HR_ROLES = [...MANAGEMENT_ROLES, 'Team Leader', 'Human Resources Manager'];
-
-export function hasAnyRole(user: any, roles: string[]): boolean {
-  return hasApprovedAccess(user) && roles.includes(user.role);
-}
+export {
+  MANAGEMENT_ROLES,
+  COMPLIANCE_REVIEW_ROLES,
+  STAFF_SEND_ROLES,
+  CONSENT_ROLES,
+  HR_ROLES,
+  hasApprovedAccess,
+  hasAnyRole,
+  resolveUserTenantId,
+  assertTenantRecordAccess,
+  scopeQueryToTenant,
+  stampTenantWritePayload,
+};
 
 // Authorizes a privileged automation function: only an authenticated user
-// holding one of the allowed roles may call it. Workflow steps run as the
-// app's admin, so scheduled invocations also authenticate through auth.me().
+// with account_status === 'Active', access_approved === true, and one of the
+// allowed roles may call it.
 export async function authorizeSystemCall(base44: any, _body?: any, roles: string[] = MANAGEMENT_ROLES): Promise<boolean> {
   try {
-    return hasAnyRole(await base44.auth.me(), roles);
+    const user = await base44.auth.me();
+    return hasAnyRole(user, roles);
   } catch {
     return false;
   }

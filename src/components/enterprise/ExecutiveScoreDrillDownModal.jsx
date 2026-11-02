@@ -95,12 +95,11 @@ export default function ExecutiveScoreDrillDownModal({
         await base44.entities.ExecutiveScoreConfig.create(payload);
       }
 
-      await base44.entities.AuditLog.create({
+      await base44.functions.invoke('logUserAction', {
         action: 'Executive Score Configuration Updated',
         entity_type: 'ExecutiveScoreConfig',
         record_id: scoreData.score_key,
         record_title: scoreData.title,
-        performed_by: actor,
         details: `Warning=${warningThreshold}%, Critical=${criticalThreshold}%, Weights=${weights
           .map((w) => `${w.key}:${w.pct}%`)
           .join(', ')}. Reason: ${payload.change_reason}`,

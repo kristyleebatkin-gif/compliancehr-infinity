@@ -4,13 +4,60 @@ const COMPLAINT_CATEGORIES = ['Service Quality', 'Staff Conduct', 'Communication
 const RELATIONSHIPS = ['Participant', 'Family Member', 'Staff', 'Advocate', 'Other'];
 const INTEREST_TYPES = ['Volunteer', 'Student Placement'];
 
-const str = (v, max) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
+// Neutralises spreadsheet formula-injection prefixes in public text fields
+const sanitizePublicText = (v, max) => {
+  if (typeof v !== 'string') return '';
+  const trimmed = v.trim().slice(0, max);
+  return /^[\s\u0000-\u001f]*[=+\-@]/.test(trimmed) ? `'${trimmed}` : trimmed;
+};
+
 const emailOk = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 
-// Public, unauthenticated submission endpoint for the provider's website forms.
-// Complaints land in the complaint register; volunteer interest lands in the
-// Volunteers module applications list. Service role is required because both
-// entities restrict anonymous creates.
+// In-memory IP & tenant sliding-window throttle (supplements persisted DB count flood brake)
+const ipHits = new Map();
+const tenantHits = new Map();
+
+function checkSlidingWindow(store, key, maxRequests, windowMs, nowMs) {
+  const history = (store.get(key) || []).filter((ts) => nowMs - ts < windowMs);
+  if (history.length >= maxRequests) return false;
+  history.push(nowMs);
+  store.set(key, history);
+  return true;
+}
+
+export function verifyPublicAbuseControls(body, headers = new Headers(), nowMs = Date.now()) {
+  // 1. Bot honeypot trap
+  if (body?.website || body?.bot_field || body?.company_url) {
+    return { allowed: false, status: 400, error: 'Automated bot submission rejected.' };
+  }
+
+  // 2. CAPTCHA challenge check (when challenge_a & challenge_b or captcha_expected are supplied)
+  if (body?.challenge_a !== undefined && body?.challenge_b !== undefined) {
+    const expected = Number(body.challenge_a) + Number(body.challenge_b);
+    const provided = Number(String(body.captcha_answer ?? '').trim());
+    if (!Number.isFinite(provided) || provided !== expected) {
+      return { allowed: false, status: 400, error: 'Please complete the human verification challenge correctly.' };
+    }
+  }
+
+  // 3. IP throttling (max 8 submissions per IP per minute)
+  const ip =
+    (headers.get?.('x-forwarded-for') || headers.get?.('cf-connecting-ip') || 'anonymous-ip')
+      .split(',')[0]
+      .trim() || 'anonymous-ip';
+  if (!checkSlidingWindow(ipHits, ip, 8, 60000, nowMs)) {
+    return { allowed: false, status: 429, error: 'Too many requests from this IP address. Please wait 60 seconds.' };
+  }
+
+  // 4. Tenant throttling (max 20 submissions per tenant per minute)
+  const tenantKey = String(body?.tenant_id || body?.tenant_key || 'default-tenant').slice(0, 80);
+  if (!checkSlidingWindow(tenantHits, tenantKey, 20, 60000, nowMs)) {
+    return { allowed: false, status: 429, error: 'Too many submissions for this organisation. Please try again shortly.' };
+  }
+
+  return { allowed: true, ip, tenantKey };
+}
+
 export default async function(req) {
   try {
     if (req.method !== 'POST') {
@@ -22,24 +69,36 @@ export default async function(req) {
     } catch {
       return Response.json({ error: 'Invalid request body' }, { status: 400 });
     }
-    const base44 = createClientFromRequest(req);
+
     const now = new Date();
-    // Persisted counts apply across warm/cold function instances. This is a
-    // basic flood brake; simultaneous requests still require an atomic gateway limiter.
+    const abuseCheck = verifyPublicAbuseControls(body, req.headers, now.getTime());
+    if (!abuseCheck.allowed) {
+      return Response.json(
+        { error: abuseCheck.error },
+        { status: abuseCheck.status, headers: abuseCheck.status === 429 ? { 'Retry-After': '60' } : {} }
+      );
+    }
+
+    const base44 = createClientFromRequest(req);
     const recent = new Date(now.getTime() - 60000).toISOString();
     const [complaints, volunteers] = await Promise.all([
       base44.asServiceRole.entities.Complaint.count({ source_entity_type: 'Public Form', created_date: { $gte: recent } }),
       base44.asServiceRole.entities.VolunteerInterest.count({ created_date: { $gte: recent } }),
     ]);
-    if (complaints + volunteers >= 30) return Response.json({ error: 'Too many submissions. Please try again shortly.' }, { status: 429, headers: { 'Retry-After': '60' } });
+    if (complaints + volunteers >= 30) {
+      return Response.json(
+        { error: 'Too many submissions. Please try again shortly.' },
+        { status: 429, headers: { 'Retry-After': '60' } }
+      );
+    }
 
     const date = now.toISOString().slice(0, 10);
     const time = now.toLocaleTimeString('en-AU', { timeZone: 'Australia/Brisbane', hour12: false }).slice(0, 5);
 
     if (body.kind === 'complaint') {
-      const title = str(body.title, 140);
-      const description = str(body.description, 4000);
-      const complainant_name = str(body.complainant_name, 120);
+      const title = sanitizePublicText(body.title, 140);
+      const description = sanitizePublicText(body.description, 4000);
+      const complainant_name = sanitizePublicText(body.complainant_name, 120);
       if (!title || !description || !complainant_name) {
         return Response.json({ error: 'Name, subject and details are required.' }, { status: 400 });
       }
@@ -64,10 +123,10 @@ export default async function(req) {
     }
 
     if (body.kind === 'volunteer_interest') {
-      const full_name = str(body.full_name, 120);
-      const email = str(body.email, 160).toLowerCase();
-      const phone = str(body.phone, 40);
-      const motivation = str(body.motivation, 3000);
+      const full_name = sanitizePublicText(body.full_name, 120);
+      const email = sanitizePublicText(body.email, 160).toLowerCase();
+      const phone = sanitizePublicText(body.phone, 40);
+      const motivation = sanitizePublicText(body.motivation, 3000);
       if (!full_name || !emailOk(email) || !phone || !motivation || body.privacy_consent !== true) {
         return Response.json({ error: 'Full name, a valid email, phone, motivation and privacy consent are required.' }, { status: 400 });
       }
@@ -77,15 +136,15 @@ export default async function(req) {
         full_name,
         email,
         phone,
-        suburb: str(body.suburb, 120),
-        institution_name: str(body.institution_name, 160),
-        course_name: str(body.course_name, 160),
-        student_number: str(body.student_number, 60),
-        preferred_service_area: str(body.preferred_service_area, 200),
-        availability: str(body.availability, 300),
-        relevant_experience: str(body.relevant_experience, 3000),
+        suburb: sanitizePublicText(body.suburb, 120),
+        institution_name: sanitizePublicText(body.institution_name, 160),
+        course_name: sanitizePublicText(body.course_name, 160),
+        student_number: sanitizePublicText(body.student_number, 60),
+        preferred_service_area: sanitizePublicText(body.preferred_service_area, 200),
+        availability: sanitizePublicText(body.availability, 300),
+        relevant_experience: sanitizePublicText(body.relevant_experience, 3000),
         motivation,
-        support_or_adjustments: str(body.support_or_adjustments, 1000),
+        support_or_adjustments: sanitizePublicText(body.support_or_adjustments, 1000),
         privacy_consent: true,
         submitted_at: now.toISOString(),
         status: 'Received',

@@ -1,6 +1,7 @@
 import { esc } from '@/lib/visualPrint';
 import { base44 } from '@/api/base44Client';
 import { downloadCsv } from '@/lib/csvExport';
+import { validateApprovalTransition } from '@/lib/roleMatrix';
 
 export const UNIVERSAL_25_ITEM_TYPES = [
   'Form',
@@ -179,11 +180,68 @@ export function exportUniversalData(formatType, filenameBase, columns, rows, tit
   }
 }
 
+const idempotencyCache = new Map();
+
+export async function withRetryAndIdempotency(operation, { retries = 2, baseDelayMs = 150, idempotencyKey = null } = {}) {
+  if (idempotencyKey && idempotencyCache.has(idempotencyKey)) {
+    return idempotencyCache.get(idempotencyKey);
+  }
+  let lastError;
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const result = await operation();
+      if (idempotencyKey) idempotencyCache.set(idempotencyKey, result);
+      return result;
+    } catch (error) {
+      lastError = error;
+      if (error?.status === 400 || error?.status === 401 || error?.status === 403 || error?.status === 404) {
+        break;
+      }
+      if (attempt < retries) {
+        await new Promise((r) => setTimeout(r, baseDelayMs * (attempt + 1)));
+      }
+    }
+  }
+  throw lastError;
+}
+
+export function isSyntheticParticipantId(participantId) {
+  const id = String(participantId || '').trim();
+  if (!id) return true;
+  return /^(?:PART-|DOC-PART-|FAKE-|SYNTH-|TEMP-)/i.test(id);
+}
+
+export function detectOrphanParticipantRecords(records = [], validParticipantIds = []) {
+  const validSet = new Set(validParticipantIds.map((id) => String(id).trim()).filter(Boolean));
+  const orphans = [];
+  for (const record of records) {
+    const pid = String(record?.participant_id || '').trim();
+    if (!pid || isSyntheticParticipantId(pid) || (validSet.size > 0 && !validSet.has(pid))) {
+      orphans.push({
+        id: record?.id || null,
+        title: record?.title || record?.document_type || 'Untitled',
+        participant_id: pid || null,
+        participant_name: record?.participant_name || null,
+        reason: !pid
+          ? 'Missing participant_id'
+          : isSyntheticParticipantId(pid)
+            ? `Synthetic participant_id (${pid})`
+            : `Unresolved participant_id (${pid})`,
+      });
+    }
+  }
+  return orphans;
+}
+
+export { validateApprovalTransition };
+
 export async function saveUniversalRecordAcrossEcosystem({
   itemType = 'Service Agreement',
   title,
   personType = 'Participant',
-  personName = 'Assigned Profile',
+  personName = '',
+  participantId = '',
+  employeeId = '',
   moduleName = 'Compliance & Governance',
   program = 'NDIS & Aged Care',
   department = 'Service Delivery',
@@ -191,91 +249,174 @@ export async function saveUniversalRecordAcrossEcosystem({
   standard = 'NDIS Practice Standards Module 1–4',
   complianceType = 'Mandatory Governance Evidence',
   relatedIncident = 'None',
-  relatedRisk = 'Individual Risk Assessment Verified',
-  relatedReview = '3-Monthly / 12-Monthly Review Linked',
-  relatedAudit = 'Quarterly Internal Audit Linked',
-  relatedConsent = 'Active Signed Consent Verified',
-  relatedServiceAgreement = 'Current Service Agreement Linked',
+  relatedRisk = 'Pending Risk Verification',
+  relatedReview = 'Pending Review Link',
+  relatedAudit = 'Pending Internal Audit Link',
+  relatedConsent = 'Pending Consent Verification',
+  relatedServiceAgreement = 'Pending Service Agreement Link',
   fileUri = '',
   fileName = '',
   signature = '',
+  idempotencyKey = '',
   user,
+  client = base44,
 }) {
-  const today = new Date().toISOString().slice(0, 10);
-  const nextYear = new Date(Date.now() + 365 * 86400000).toISOString().slice(0, 10);
-  const actor = user?.full_name || user?.email || 'Authorised Officer';
-  const docNumber = `CHR-UNI-${Date.now().toString().slice(-6)}`;
-  const recordTitle = title?.trim() || `${itemType} — ${personName} (${docNumber})`;
-
-  // 1. Save to Profile Document Register (ParticipantDocument or EmployeeDocument)
-  if (personType === 'Participant') {
-    await base44.entities.ParticipantDocument.create({
-      participant_id: `PART-${docNumber}`,
-      participant_name: personName,
-      document_type: itemType === 'Service Agreement' ? 'Service Agreement' : 'Participant Intake Form',
-      title: recordTitle,
-      file_uri: fileUri || undefined,
-      status: 'Verified',
-      uploaded_date: today,
-      submitted_date: today,
-      reviewed_date: today,
-      review_date: nextYear,
-      expiry_date: nextYear,
-      responsible_staff: actor,
-      review_outcome: 'Approved',
-      document_summary: `${docNumber} | Module: ${moduleName} | Program: ${program} | Dept: ${department} | Site: ${site} | Standard: ${standard}`,
-      notes: `Linked Risk: ${relatedRisk} | Review: ${relatedReview} | Audit: ${relatedAudit} | Consent: ${relatedConsent} | Service Agreement: ${relatedServiceAgreement}`,
-    }).catch(() => {});
-  } else {
-    await base44.entities.EmployeeDocument.create({
-      title: recordTitle,
-      employee_name: personName,
-      employee_email: user?.email || undefined,
-      document_type: itemType === 'Qualification' || itemType === 'Certification' ? 'Qualifications' : 'Other',
-      issue_date: today,
-      expiry_date: nextYear,
-      status: 'Current',
-      file_uri: fileUri || undefined,
-      notes: `${docNumber} | Module: ${moduleName} | Program: ${program} | Dept: ${department} | Site: ${site} | Standard: ${standard}`,
-    }).catch(() => {});
+  if (!user?.id && !user?.email) {
+    throw new Error('Authenticated user context is required to file records.');
+  }
+  const cleanName = String(personName || '').trim();
+  if (!cleanName) {
+    throw new Error('A valid participant or employee name is required.');
   }
 
-  // 2. Save to Document Vault (ChecklistDocument)
-  await base44.entities.ChecklistDocument.create({
-    title: `[Document Vault · ${itemType}] ${recordTitle}`,
-    category: itemType,
-    status: 'Approved',
-    uploaded_by: actor,
-    uploaded_date: today,
-    file_uri: fileUri || undefined,
-    file_name: fileName || `${docNumber}.pdf`,
-    notes: `Universal 6-Destination Filing (${docNumber}) | Person: ${personName} (${personType}) | Standard: ${standard} | Original + Working Version v1.0 Retained`,
-  }).catch(() => {});
+  const today = new Date().toISOString().slice(0, 10);
+  const nextYear = new Date(Date.now() + 365 * 86400000).toISOString().slice(0, 10);
+  const actor = user?.full_name || user?.email;
+  const docNumber = idempotencyKey || `CHR-UNI-${Date.now().toString().slice(-6)}`;
+  const recordTitle = title?.trim() || `${itemType} — ${cleanName} (${docNumber})`;
 
-  // 3. Save Protected Copy to Company Safe (CompanySafeDocument)
-  await base44.entities.CompanySafeDocument.create({
-    title: `[Company Safe Protected Copy · v1.0] ${recordTitle}`,
-    category: itemType,
-    status: 'Active',
-    uploaded_by: actor,
-    uploaded_date: today,
-    review_date: nextYear,
-    file_uri: fileUri || undefined,
-    file_name: fileName || `${docNumber}-safe.pdf`,
-    notes: `Version v1.0 | Created & Approved by ${actor} on ${today} | Signature: ${signature || `Signed by ${actor}`} | Related Consent: ${relatedConsent} | Related Audit: ${relatedAudit}`,
-  }).catch(() => {});
+  let resolvedParticipantId = String(participantId || '').trim();
+  if (personType === 'Participant') {
+    if (resolvedParticipantId && isSyntheticParticipantId(resolvedParticipantId)) {
+      throw new Error(`Synthetic participant reference "${resolvedParticipantId}" is not permitted. Link a real ParticipantProfile ID.`);
+    }
+    if (!resolvedParticipantId) {
+      const page = await client.entities.ParticipantProfile.filter({ full_name: cleanName }, { limit: 2 });
+      const matches = Array.isArray(page) ? page : page?.items || [];
+      if (matches.length === 0) {
+        throw new Error(`No ParticipantProfile found for "${cleanName}". Create or select a valid participant profile before filing.`);
+      }
+      if (matches.length > 1) {
+        throw new Error(`Multiple participant profiles match "${cleanName}". Select an explicit participant_id to avoid ambiguous filing.`);
+      }
+      resolvedParticipantId = matches[0].id;
+    }
+    if (!resolvedParticipantId || isSyntheticParticipantId(resolvedParticipantId)) {
+      throw new Error('Valid participant_id relationship is required.');
+    }
+  }
 
-  // 4. Record in Global Audit Log (Audit History: Created, Viewed, Updated, Reviewed, Approved, Exported, Printed, Archived)
-  await base44.functions
-    .invoke('logUserAction', {
-      action: 'Create',
-      entity_type: `UniversalStorage:${itemType}`,
-      record_id: docNumber,
-      record_title: recordTitle,
-      details: `Universal 6-Destination Storage (${docNumber}) -> Saved to ${personType} Profile, ${moduleName}, Document Vault, Company Safe, Reporting Engine & Audit History.`,
-      route: window.location.pathname,
-    })
-    .catch(() => {});
+  const outcomes = {
+    docNumber,
+    recordTitle,
+    today,
+    initialStatus: 'Pending Review',
+    succeeded: [],
+    failed: [],
+  };
 
-  return { docNumber, recordTitle, today };
+  // 1. Save to Profile Document Register (starts in Pending Review / Draft, never synthetic Verified/Approved)
+  try {
+    if (personType === 'Participant') {
+      const createdProfileDoc = await withRetryAndIdempotency(
+        () =>
+          client.entities.ParticipantDocument.create({
+            participant_id: resolvedParticipantId,
+            participant_name: cleanName,
+            document_type: itemType === 'Service Agreement' ? 'Service Agreement' : 'Participant Intake Form',
+            title: recordTitle,
+            file_uri: fileUri || undefined,
+            status: fileUri ? 'Pending Review' : 'Requested',
+            uploaded_date: today,
+            submitted_date: today,
+            review_date: nextYear,
+            expiry_date: nextYear,
+            responsible_staff: actor,
+            review_outcome: 'Pending Review',
+            document_summary: `${docNumber} | Module: ${moduleName} | Program: ${program} | Dept: ${department} | Site: ${site} | Standard: ${standard}`,
+            notes: `Linked Risk: ${relatedRisk} | Review: ${relatedReview} | Audit: ${relatedAudit} | Consent: ${relatedConsent} | Service Agreement: ${relatedServiceAgreement}`,
+          }),
+        { idempotencyKey: `${docNumber}:profileDoc` }
+      );
+      outcomes.succeeded.push({ destination: 'ParticipantDocument', id: createdProfileDoc?.id });
+    } else {
+      const createdEmpDoc = await withRetryAndIdempotency(
+        () =>
+          client.entities.EmployeeDocument.create({
+            title: recordTitle,
+            employee_id: employeeId || undefined,
+            employee_name: cleanName,
+            employee_email: user?.email || undefined,
+            document_type: itemType === 'Qualification' || itemType === 'Certification' ? 'Qualifications' : 'Other',
+            issue_date: today,
+            expiry_date: nextYear,
+            status: 'Current',
+            file_uri: fileUri || undefined,
+            notes: `${docNumber} | Module: ${moduleName} | Program: ${program} | Dept: ${department} | Site: ${site} | Standard: ${standard}`,
+          }),
+        { idempotencyKey: `${docNumber}:profileDoc` }
+      );
+      outcomes.succeeded.push({ destination: 'EmployeeDocument', id: createdEmpDoc?.id });
+    }
+  } catch (err) {
+    outcomes.failed.push({ destination: 'ProfileDocument', error: err?.message || 'Profile document write failed' });
+  }
+
+  // 2. Save to Document Vault (ChecklistDocument) — starts in Draft / Pending Review until approved
+  try {
+    const vaultDoc = await withRetryAndIdempotency(
+      () =>
+        client.entities.ChecklistDocument.create({
+          title: `[Document Vault · ${itemType}] ${recordTitle}`,
+          category: itemType,
+          status: 'Draft',
+          uploaded_by: actor,
+          uploaded_date: today,
+          file_uri: fileUri || undefined,
+          file_name: fileName || `${docNumber}.pdf`,
+          notes: `Universal Filing (${docNumber}) | Person: ${cleanName} (${personType}) | Standard: ${standard} | Status: Draft awaiting review`,
+        }),
+      { idempotencyKey: `${docNumber}:vaultDoc` }
+    );
+    outcomes.succeeded.push({ destination: 'ChecklistDocument', id: vaultDoc?.id });
+  } catch (err) {
+    outcomes.failed.push({ destination: 'ChecklistDocument', error: err?.message || 'Vault write failed' });
+  }
+
+  // 3. Save Working Copy to Company Safe (CompanySafeDocument)
+  try {
+    const safeDoc = await withRetryAndIdempotency(
+      () =>
+        client.entities.CompanySafeDocument.create({
+          title: `[Company Safe Copy · v1.0] ${recordTitle}`,
+          category: itemType,
+          status: 'Draft',
+          uploaded_by: actor,
+          uploaded_date: today,
+          review_date: nextYear,
+          file_uri: fileUri || undefined,
+          file_name: fileName || `${docNumber}-safe.pdf`,
+          notes: `Version v1.0 | Submitted by ${actor} on ${today}${signature ? ` | Signatory: ${signature}` : ''} | Awaiting formal approval`,
+        }),
+      { idempotencyKey: `${docNumber}:safeDoc` }
+    );
+    outcomes.succeeded.push({ destination: 'CompanySafeDocument', id: safeDoc?.id });
+  } catch (err) {
+    outcomes.failed.push({ destination: 'CompanySafeDocument', error: err?.message || 'Company Safe write failed' });
+  }
+
+  if (outcomes.failed.length > 0) {
+    const summary = outcomes.failed.map((f) => `${f.destination}: ${f.error}`).join('; ');
+    throw new Error(
+      outcomes.succeeded.length > 0
+        ? `Partial filing failure (${outcomes.succeeded.length} succeeded, ${outcomes.failed.length} failed): ${summary}`
+        : `Filing failed across all destinations: ${summary}`
+    );
+  }
+
+  // 4. Record in Global Audit Log via server function
+  await withRetryAndIdempotency(
+    () =>
+      client.functions.invoke('logUserAction', {
+        action: 'Create',
+        entity_type: `UniversalStorage:${itemType}`,
+        record_id: docNumber,
+        record_title: recordTitle,
+        details: `Universal Storage (${docNumber}) -> Filed to ${personType} Profile (${resolvedParticipantId || cleanName}), ${moduleName}, Document Vault & Company Safe as Pending Review.`,
+        route: typeof window !== 'undefined' ? window.location.pathname : '/universal-storage',
+      }),
+    { idempotencyKey: `${docNumber}:audit` }
+  );
+
+  return outcomes;
 }

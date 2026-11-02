@@ -39,6 +39,7 @@
     "status": {
       "type": "string",
       "enum": [
+        "Pending Verification",
         "Current",
         "Expiring Soon",
         "Expired",
@@ -54,6 +55,10 @@
     "file_url": {
       "type": "string",
       "title": "Certificate File URL"
+    },
+    "file_uri": {
+      "type": "string",
+      "title": "Certificate Private File URI"
     },
     "notes": {
       "type": "string",

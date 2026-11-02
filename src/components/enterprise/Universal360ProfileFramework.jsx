@@ -419,12 +419,11 @@ export default function Universal360ProfileFramework({
       if (!task?.id) throw new Error('Task creation was not confirmed');
       taskCreated = true;
       completedActions.current.add(actionKey);
-      const audit = await base44.entities.AuditLog.create({
+      const { data: audit } = await base44.functions.invoke('logUserAction', {
         action: '360° Review Task Created',
         entity_type: currentTypeObj.shortLabel,
         record_id: String(recordId),
         record_title: activeRecord.name,
-        performed_by: user.email || user.full_name || user.id,
         details: `Created review task ${task.id}. No readiness scores, compliance mappings, notifications or other automation outputs were updated by this action.`,
       });
       if (!audit?.id) throw new Error('Audit entry was not confirmed');

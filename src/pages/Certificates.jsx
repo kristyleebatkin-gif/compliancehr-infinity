@@ -70,10 +70,10 @@ export default function Certificates() {
       if (editing) {
         await base44.entities.Certificate.update(editing.id, form);
         await recordStatusLog('Certificate', { id: editing.id, title: form.certificate_number || form.module_title || '', status: editing.status }, form.status, await currentUserName().catch(() => ''), 'Immutable status trail').catch((error) => console.error(error));
-        await base44.entities.AuditLog.create({ action: 'Updated', entity_type: 'Certificate', record_id: editing.id, record_title: form.certificate_number || form.module_title }).catch((error) => console.error(error));
+        await base44.functions.invoke('logUserAction', { action: 'Updated', entity_type: 'Certificate', record_id: editing.id, record_title: form.certificate_number || form.module_title }).catch((error) => console.error(error));
       } else {
         const rec = await base44.entities.Certificate.create(form);
-        await base44.entities.AuditLog.create({ action: 'Created', entity_type: 'Certificate', record_id: rec.id, record_title: form.certificate_number || form.module_title }).catch((error) => console.error(error));
+        await base44.functions.invoke('logUserAction', { action: 'Created', entity_type: 'Certificate', record_id: rec.id, record_title: form.certificate_number || form.module_title }).catch((error) => console.error(error));
       }
       setShowForm(false); load();
     } catch (err) { console.error(err); }
@@ -93,7 +93,7 @@ export default function Certificates() {
     setApplying(true);
     try {
       await base44.entities.Certificate.bulkUpdate(targets.map((t) => ({ id: t.id, status })));
-      await base44.entities.AuditLog.create({ action: 'Bulk Updated', entity_type: 'Certificate', record_id: targets.map((t) => t.id).join(','), record_title: `${targets.length} certificates set to ${status}` }).catch((error) => console.error(error));
+      await base44.functions.invoke('logUserAction', { action: 'Bulk Updated', entity_type: 'Certificate', record_id: targets.map((t) => t.id).join(','), record_title: `${targets.length} certificates set to ${status}` }).catch((error) => console.error(error));
       setSelected([]);
       load();
     } finally {
@@ -104,7 +104,7 @@ export default function Certificates() {
   const del = async (c) => {
     if (!confirm('Delete this certificate?')) return;
     await base44.entities.Certificate.delete(c.id);
-    await base44.entities.AuditLog.create({ action: 'Deleted', entity_type: 'Certificate', record_id: c.id, record_title: c.certificate_number }).catch((error) => console.error(error));
+    await base44.functions.invoke('logUserAction', { action: 'Deleted', entity_type: 'Certificate', record_id: c.id, record_title: c.certificate_number }).catch((error) => console.error(error));
     load();
   };
 

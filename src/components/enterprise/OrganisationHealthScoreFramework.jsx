@@ -11,6 +11,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/components/ui/use-toast';
 import { loadAndCalculateExecutiveScores } from '@/lib/organisationHealthScoreEngine';
+import { downloadCsv } from '@/lib/csvExport';
+import { logUserAction } from '@/lib/actionLog';
 import ExecutiveScoreDrillDownModal from '@/components/enterprise/ExecutiveScoreDrillDownModal';
 import EnterpriseArchitectureMasterBlueprint from '@/components/enterprise/EnterpriseArchitectureMasterBlueprint';
 
@@ -66,12 +68,9 @@ export default function OrganisationHealthScoreFramework({ onScoresLoaded }) {
         notes: 'Point-in-time executive health snapshot',
       });
 
-      await base44.entities.AuditLog.create({
-        action: 'Executive Score Snapshot Recorded',
-        entity_type: 'ExecutiveScoreSnapshot',
+      await logUserAction('Executive Score Snapshot Recorded', 'ExecutiveScoreSnapshot', {
         record_id: today,
         record_title: `Organisation Health Snapshot (${today})`,
-        performed_by: actor,
         details: `OrgHealth=${s.organisation_health.score ?? 'N/A'}%, Compliance=${s.compliance.score ?? 'N/A'}%, Workforce=${s.workforce.score ?? 'N/A'}%, Risk=${s.risk.score ?? 'N/A'}%, Quality=${s.quality.score ?? 'N/A'}%`,
       });
 
@@ -93,28 +92,32 @@ export default function OrganisationHealthScoreFramework({ onScoresLoaded }) {
 
   const handleExportCsv = () => {
     if (!data?.scores) return;
-    const rows = [
-      ['Score Title', 'Score (%)', 'Status Band', 'Warning Threshold (%)', 'Critical Threshold (%)', 'Formula'],
-      ...SCORE_ORDER.map(({ key }) => {
+    downloadCsv(
+      `executive-health-scores-${new Date().toISOString().slice(0, 10)}.csv`,
+      [
+        { key: 'title', label: 'Score Title' },
+        { key: 'score', label: 'Score (%)' },
+        { key: 'status', label: 'Status Band' },
+        { key: 'evidenceCount', label: 'Evidence Count' },
+        { key: 'calculatedAt', label: 'Calculated Timestamp' },
+        { key: 'warning_threshold', label: 'Warning Threshold (%)' },
+        { key: 'critical_threshold', label: 'Critical Threshold (%)' },
+        { key: 'formula_description', label: 'Formula' },
+      ],
+      SCORE_ORDER.map(({ key }) => {
         const sc = data.scores[key];
-        return [
-          sc.title,
-          sc.score !== null ? sc.score : 'Unassessed',
-          sc.band?.status || 'Unassessed',
-          sc.warning_threshold,
-          sc.critical_threshold,
-          `"${(sc.formula_description || '').replace(/"/g, '""')}"`,
-        ];
-      }),
-    ];
-    const csv = rows.map((r) => r.join(',')).join('\n');
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `executive-health-scores-${new Date().toISOString().slice(0, 10)}.csv`;
-    a.click();
-    URL.revokeObjectURL(url);
+        return {
+          title: sc.title,
+          score: sc.score !== null ? sc.score : 'Missing Data',
+          status: sc.band?.status || 'Missing Data',
+          evidenceCount: sc.evidenceCount ?? 0,
+          calculatedAt: sc.calculatedAt || data.calculatedAt || '',
+          warning_threshold: sc.warning_threshold,
+          critical_threshold: sc.critical_threshold,
+          formula_description: sc.formula_description || '',
+        };
+      })
+    );
   };
 
   const chartData = data?.scores

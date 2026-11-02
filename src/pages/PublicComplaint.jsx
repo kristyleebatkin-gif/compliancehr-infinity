@@ -12,7 +12,8 @@ import PublicPageShell from '@/components/landing/PublicPageShell';
 // Public complaint form: anyone visiting the provider's site can raise a
 // complaint without logging in. Creates the record through publicSubmissions.
 export default function PublicComplaint() {
-  const [form, setForm] = useState({ complainant_name: '', complainant_relationship: '', category: '', title: '', description: '' });
+  const [challenge] = useState(() => ({ a: 4, b: 3 }));
+  const [form, setForm] = useState({ complainant_name: '', complainant_relationship: '', category: '', title: '', description: '', captcha_answer: '', website: '' });
   const [sending, setSending] = useState(false);
   const [error, setError] = useState('');
   const [reference, setReference] = useState('');
@@ -24,10 +25,14 @@ export default function PublicComplaint() {
       setError('Please fill in your name, a short subject and the details.');
       return;
     }
+    if (Number(String(form.captcha_answer).trim()) !== challenge.a + challenge.b) {
+      setError(`Please answer the verification check (${challenge.a} + ${challenge.b}).`);
+      return;
+    }
     setSending(true);
     setError('');
     try {
-      const res = await base44.functions.invoke('publicSubmissions', { kind: 'complaint', ...form });
+      const res = await base44.functions.invoke('publicSubmissions', { kind: 'complaint', ...form, challenge_a: challenge.a, challenge_b: challenge.b });
       setReference(res.data.reference);
     } catch (e) {
       setError(e?.response?.data?.error || 'Could not submit right now. Please try again.');
@@ -114,6 +119,14 @@ export default function PublicComplaint() {
         <div>
           <Label htmlFor="pc-details">What happened? *</Label>
           <Textarea id="pc-details" className="mt-1.5 min-h-[130px] bg-white" placeholder="Please describe what happened, when, and who was involved." value={form.description} onChange={set('description')} />
+        </div>
+        <div className="hidden" aria-hidden="true">
+          <Label htmlFor="pc-website">Website</Label>
+          <Input id="pc-website" tabIndex={-1} autoComplete="off" value={form.website} onChange={set('website')} />
+        </div>
+        <div>
+          <Label htmlFor="pc-captcha">Human verification: What is {challenge.a} + {challenge.b}? *</Label>
+          <Input id="pc-captcha" inputMode="numeric" className="mt-1.5 max-w-[160px] bg-white" placeholder="Enter sum" value={form.captcha_answer} onChange={set('captcha_answer')} />
         </div>
         {error && <p className="rounded-xl bg-[#FF2E9A]/10 px-3 py-2 text-sm font-bold text-[#FF2E9A]">{error}</p>}
         <Button

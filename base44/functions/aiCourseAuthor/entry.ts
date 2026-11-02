@@ -1,14 +1,18 @@
-import { hasApprovedAccess } from '../../shared/appAccess.ts';
+import { COMPLIANCE_REVIEW_ROLES, HR_ROLES } from '../../shared/roleMatrix.ts';
+import { authorizeAndLogAiAction } from '../../shared/aiGovernance.ts';
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 
 export default async function(req: Request): Promise<Response> {
   try {
     const base44 = createClientFromRequest(req);
-    const user = await base44.auth.me();
-    if (!hasApprovedAccess(user)) return Response.json({ error: 'Approved account access required.' }, { status: 403 });
-    if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
-
     const body = await req.json().catch(() => ({}));
+    const gate = await authorizeAndLogAiAction(base44, {
+      feature: 'aiCourseAuthor',
+      allowedRoles: [...COMPLIANCE_REVIEW_ROLES, ...HR_ROLES],
+      requestedTenantId: body.tenant_id || null,
+      recordTitle: String(body.name || body.role || 'Training Curriculum').slice(0, 120),
+    });
+    if (!gate.authorized) return gate.response;
     const role = String(body.role || '').slice(0, 80);
     const name = String(body.name || '').slice(0, 120);
     const description = String(body.description || '').slice(0, 500);
@@ -63,6 +67,7 @@ Return JSON only.`,
     const valid = new Set(catalog.map((m: any) => m.title));
     const clean = (t: any) => String(t || '').replace(/\s*\[[^\]]*\]\s*$/, '').trim();
     const selected = (result?.selected || []).map(clean).filter((t: any) => valid.has(t));
+    await gate.logSuccess(`Authored curriculum selection (${selected.length} modules) for role "${role || 'unspecified'}".`);
     return Response.json({
       selected,
       new_modules: (result?.new_modules || []).slice(0, 5),

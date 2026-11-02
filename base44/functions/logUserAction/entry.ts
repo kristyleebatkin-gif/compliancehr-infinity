@@ -1,5 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
-import { STAFF_SEND_ROLES, hasAnyRole } from '../../shared/systemAuth.ts';
+import { STAFF_SEND_ROLES, hasAnyRole, hasApprovedAccess } from '../../shared/systemAuth.ts';
 
 // Logs one staff/participant action: always in the admin audit trail (AuditLog),
 // and when the action belongs to a person, also on that person's profile change
@@ -13,9 +13,9 @@ import { STAFF_SEND_ROLES, hasAnyRole } from '../../shared/systemAuth.ts';
 export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
-    const user = await base44.auth.me();
+    const user = await base44.auth.me().catch(() => null);
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
-    if (user.role === 'Archived') return Response.json({ error: 'Archived account' }, { status: 403 });
+    if (!hasApprovedAccess(user)) return Response.json({ error: 'Active approved account access is required.' }, { status: 403 });
 
     const body = await req.json().catch(() => ({}));
     const clean = (value, max) => {

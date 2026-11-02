@@ -35,7 +35,7 @@ export default function IncidentDetail() {
   const handleDelete = async () => {
     if (!confirm('Delete this incident record?')) return;
     await base44.entities.Incident.delete(id);
-    await base44.entities.AuditLog.create({ action: 'Delete', entity_type: 'Incident', record_id: id, record_title: item?.title, performed_by: 'ComplianceHR Infinity' }).catch((error) => console.error(error));
+    await base44.functions.invoke('logUserAction', { action: 'Delete', entity_type: 'Incident', record_id: id, record_title: item?.title }).catch((error) => console.error(error));
     navigate('/incidents');
   };
 

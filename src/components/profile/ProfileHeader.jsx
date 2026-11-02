@@ -7,7 +7,7 @@ import ProfileSummaryPanels from '@/components/profile/ProfileSummaryPanels';
 import ProfilePhotoControl from '@/components/profile/ProfilePhotoControl';
 import { profilePalette, hexToRgb } from '@/lib/profileColours';
 import { getCompanyBranding, loadCompanyBranding } from '@/lib/companyBranding';
-import { downloadStaffBadgePdf } from '@/lib/staffBadgePdf';
+import { downloadStaffBadgePdf, staffBadgeBlob } from '@/lib/staffBadgePdf';
 import { logUserAction } from '@/lib/actionLog';
 import { BadgeCheck, Download, Loader2, Save } from 'lucide-react';
 
@@ -43,7 +43,6 @@ export default function ProfileHeader({ profile, kind, onUpdated }) {
   const makeNameTag = async () => {
     setMakingTag(true);
     try {
-      const { staffBadgeBlob } = await import('@/lib/staffBadgePdf');
       const blob = staffBadgeBlob({ staffName: profile.full_name, position: profile.position, employeeNumber: profile.employee_number, colour: hexToRgb(primary) });
       const { file_uri } = await base44.integrations.Core.UploadPrivateFile({
         file: new File([blob], `Staff Badge - ${profile.full_name}.pdf`, { type: 'application/pdf' }),

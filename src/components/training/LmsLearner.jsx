@@ -132,12 +132,11 @@ export default function LmsLearner({ moduleNumber, user, onCompleted, onClose })
           programName: LMS_PROGRAM_NAME,
         });
         const file = new File([blob], `${module.title.replace(/[^a-zA-Z0-9]/g, '_')}_${certNum}.pdf`, { type: 'application/pdf' });
+        const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file });
         if (user?.role === 'Employee') {
-          const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file });
           await employeeTrainingClient.attach(certRecord.id, file_uri);
         } else {
-          const { file_url } = await base44.integrations.Core.UploadPublicFile({ file });
-          await base44.entities.Certificate.update(certRecord.id, { file_url });
+          await base44.entities.Certificate.update(certRecord.id, { file_uri, file_url: file_uri });
         }
       } catch (e) {
         console.error('Certificate file upload failed', e);
@@ -164,11 +163,12 @@ export default function LmsLearner({ moduleNumber, user, onCompleted, onClose })
         linked_entity_id: completion.id,
         notes: `Renewal reminder for ${module.title}. Certificate ${certNum} expires ${expiry.toISOString().slice(0, 10)}.`,
       });
-      await base44.entities.AuditLog.create({
+      await base44.functions.invoke('logUserAction', {
         action: 'Training Completed',
         entity_type: 'TrainingCompletion',
+        record_id: completion.id,
         record_title: `${module.title} — ${finalLearnerName}`,
-        performed_by: finalLearnerName,
+        details: `Completed module ${module.number}: ${module.title} (${certNum})`,
       });
       }
       setIssued(true);

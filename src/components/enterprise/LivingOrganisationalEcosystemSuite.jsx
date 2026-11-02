@@ -310,13 +310,12 @@ export default function LivingOrganisationalEcosystemSuite({ initialTab = 'comm-
       exportControlledRecordAsPdf(recordPayload);
     }
 
-    await base44.entities.AuditLog.create({
+    await base44.functions.invoke('logUserAction', {
       action: `Register Export (${formatId.toUpperCase()})`,
       entity_type: 'Register',
       record_title: `${regName} (${formatId.toUpperCase()})`,
-      performed_by: 'ComplianceHR Infinity Export Engine',
       details: `Exported ${regName} as ${formatId.toUpperCase()} with full export logging.`,
-    }).catch(() => {});
+    }).catch((error) => console.error(error));
 
     toast({
       title: `${formatId.toUpperCase()} Generated & Logged`,
