@@ -28,7 +28,7 @@ export default function OperationsCentre() {
   const show = (id) => activeTab === id || activeTab === 'all';
 
   return (
-    <div className="mx-auto w-full max-w-[1440px] bg-white px-4 py-3 sm:px-6 lg:px-8 space-y-3">
+    <div className="mx-auto w-full max-w-[1440px] space-y-3">
       <header className="app-page-header rounded-2xl border-2 border-[#0A2B6D] px-5 py-3 text-white shadow-md">
         <div>
           <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-white">

@@ -285,7 +285,7 @@ export default function ComplianceHub() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-[1440px] bg-white px-4 py-4 sm:px-6 lg:px-8 compact-module space-y-3">
+    <div className="mx-auto w-full max-w-[1440px] compact-module space-y-3">
       <ModuleShell
         icon={ShieldCheck}
         title="Compliance & Report Centre"

@@ -196,8 +196,13 @@ export default function PersonalProfileHeader({
                 </div>
               </div>
 
-              {/* All 8 Small Tiles on 2 Lines (4 per line) at the Bottom of the Section with App Design Coloured Gradient Borders */}
-              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+              {/* All 8 Small Tiles on 2 Lines (4 per line) at the Bottom of the Section with Dark Blue in Between Tiles */}
+              <div
+                className="grid grid-cols-2 gap-2.5 rounded-xl p-2.5 sm:grid-cols-4"
+                style={{
+                  background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+                }}
+              >
                 {summaryItems.map((item, idx) => {
                   const symColor = APP_COLOURS[idx % APP_COLOURS.length];
                   return (

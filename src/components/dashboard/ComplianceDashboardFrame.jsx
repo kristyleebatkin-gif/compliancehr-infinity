@@ -7,7 +7,7 @@ const APP_BORDER_GRADIENT =
 export default function ComplianceDashboardFrame({ children }) {
   return (
     <div
-      className="compliance-dashboard-frame preserve-island-theme overflow-hidden rounded-2xl p-[3px] shadow-md"
+      className="compliance-dashboard-frame overflow-hidden rounded-2xl p-[3px] shadow-md"
       style={{ background: APP_BORDER_GRADIENT }}
     >
       <div

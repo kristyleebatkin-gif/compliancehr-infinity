@@ -26,7 +26,12 @@ export default function ProfileFieldsSection({ section, form, onChange, prefix }
           <span>{section.title}</span>
         </h2>
       </div>
-      <div className="grid gap-2.5 md:grid-cols-2 bg-white">
+      <div
+        className="grid gap-2.5 rounded-xl p-2.5 md:grid-cols-2"
+        style={{
+          background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+        }}
+      >
         {section.fields.map((field, idx) => {
           const id = `${prefix}-${field.key}`;
           const symCol = ['#0072FF', '#5A00D6', '#FF2E9A', '#A100FF'][idx % 4];

@@ -35,13 +35,16 @@ export default function ModuleShell({
 
       {actions && (
         <div
-          className="preserve-island-theme rounded-2xl border-2 border-[#0A2B6D] p-1.5 shadow-md"
-          style={{ background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #131B4D 100%)' }}
+          className="preserve-island-theme rounded-2xl p-[3px] shadow-md"
+          style={{ background: TOP_BORDER_GRADIENT }}
         >
-          <div className="rounded-xl p-[2px]" style={{ background: TOP_BORDER_GRADIENT }}>
-            <div role="group" aria-label={`${title || 'Module'} actions`} className="module-shell-actions module-action-bar flex flex-wrap items-center justify-center rounded-[10px] bg-white p-2 [&_button]:rounded-full [&_button]:border-2 [&_button]:border-[#0072FF]">
-              {actions}
-            </div>
+          <div
+            role="group"
+            aria-label={`${title || 'Module'} actions`}
+            className="module-shell-actions module-action-bar flex flex-wrap items-center justify-center gap-2 rounded-[13px] p-2.5 [&_button]:rounded-full [&_button]:border-2 [&_button]:border-[#0072FF] [&_button]:bg-white [&_button]:text-[#0A2B6D] [&_a]:rounded-full [&_a]:border-2 [&_a]:border-[#0072FF] [&_a]:bg-white [&_a]:text-[#0A2B6D]"
+            style={{ background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #131B4D 100%)' }}
+          >
+            {actions}
           </div>
         </div>
       )}

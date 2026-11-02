@@ -447,7 +447,7 @@ export default function Universal360ProfileFramework({
 
   return (
     <section
-      className="preserve-island-theme overflow-hidden rounded-2xl p-[3px] shadow-md"
+      className="overflow-hidden rounded-2xl p-[3px] shadow-md"
       style={{ background: APP_BORDER_GRADIENT }}
     >
       <div

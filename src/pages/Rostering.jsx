@@ -312,7 +312,7 @@ function Rostering({ profile, profileKind, ourView = false, embedded = false } =
   };
 
   return (
-    <div className={embedded ? 'space-y-4' : 'mx-auto w-full max-w-[1440px] space-y-4 bg-white px-4 py-4 sm:px-6 lg:px-8'}>
+    <div className={embedded ? 'space-y-4' : 'mx-auto w-full max-w-[1440px] space-y-4'}>
       <Tabs value={tab} onValueChange={setTab}>
         <ModuleShell
           embedded={embedded}

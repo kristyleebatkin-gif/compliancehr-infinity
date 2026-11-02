@@ -241,13 +241,13 @@ export default function CompleteProfile13SectionNavigator({ kind = 'staff', prof
         })}
       </div>
 
-      {/* 16-Domain Participant Command Centre Strip (Every Word Pill Has an App Design Coloured Gradient Border) */}
+      {/* 16-Domain Participant Command Centre Strip (Dark Blue in Between Small Tiles) */}
       {isParticipant && (
         <div
-          className="rounded-xl p-2.5 space-y-1.5"
+          className="rounded-xl p-2.5 space-y-2"
           style={{
             border: '2px solid transparent',
-            background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+            background: `linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%) padding-box, ${APP_BORDER_GRADIENT} border-box`,
           }}
         >
           <span
@@ -283,12 +283,17 @@ export default function CompleteProfile13SectionNavigator({ kind = 'staff', prof
         </div>
       )}
 
-      {/* Bottom of Section: All Small Tiles on 2 Clean Lines Inside White Section with App Design Coloured Gradient Border */}
+      {/* Bottom of Section: All Small Tiles on 2 Clean Lines with Dark Blue in Between Small Tiles */}
       <div
         className="rounded-2xl p-[2px] shadow-2xs"
         style={{ background: APP_BORDER_GRADIENT }}
       >
-      <div className="space-y-1.5 rounded-[14px] bg-white p-2.5">
+      <div
+        className="space-y-2 rounded-[14px] p-2.5"
+        style={{
+          background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+        }}
+      >
         {/* Line 1: Available Profile Actions & Tools Small Tiles */}
         <div className="flex flex-wrap items-center gap-1.5">
           <span

@@ -103,20 +103,25 @@ export default function PageHeader({
             </div>
           </div>
 
-          {/* Small Header Tiles on 2 Lines Inside White Section with App Design Border */}
+          {/* Small Header Tiles on 2 Lines with Dark Blue in Between Tiles */}
           <div
             className="rounded-2xl p-[2px] shadow-2xs"
             style={{ background: APP_BORDER_GRADIENT }}
           >
-            <div className="space-y-1.5 rounded-[14px] bg-white p-2.5">
+            <div
+              className="space-y-2 rounded-[14px] p-2.5"
+              style={{
+                background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+              }}
+            >
               {/* Line 1 of Bottom Small Tiles: Compliance Tracker Small Tiles */}
-              <div className="flex flex-wrap items-center gap-1.5 bg-white">
+              <div className="flex flex-wrap items-center gap-1.5">
                 <ModuleComplianceStrip path={seg} />
               </div>
               {/* Line 2 of Bottom Small Tiles: Audit & Module Action Small Tiles */}
               <div
                 className={cn(
-                  'flex flex-wrap items-center bg-white',
+                  'flex flex-wrap items-center',
                   compactActions ? 'module-action-bar gap-1.5' : 'gap-2'
                 )}
               >

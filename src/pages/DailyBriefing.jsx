@@ -196,7 +196,7 @@ export default function DailyBriefing() {
   ] : [];
 
   return (
-    <div className="mx-auto w-full max-w-[1440px] bg-white px-4 py-4 sm:px-6 lg:px-8 space-y-4">
+    <div className="mx-auto w-full max-w-[1440px] space-y-4">
       <ModuleShell
         moduleKey="daily-briefing"
         title="Daily 8:30 AM Briefing & Role Summary"

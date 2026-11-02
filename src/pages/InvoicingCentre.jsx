@@ -133,7 +133,7 @@ export default function InvoicingCentre() {
   }), [invoices]);
 
   return (
-    <div className="finance-workspace mx-auto w-full max-w-[1440px] space-y-4 bg-white px-4 py-4 sm:px-6 lg:px-8">
+    <div className="finance-workspace mx-auto w-full max-w-[1440px] space-y-4">
       <Tabs defaultValue="invoices">
         <ModuleShell
           icon={FileSpreadsheet}

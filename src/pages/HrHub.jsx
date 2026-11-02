@@ -159,7 +159,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
   ));
 
   return (
-    <div className={embedded ? 'min-w-0 space-y-3' : 'mx-auto w-full max-w-[1440px] min-w-0 space-y-3 bg-white px-4 py-4 sm:px-6 lg:px-8'}>
+    <div className={embedded ? 'min-w-0 space-y-3' : 'mx-auto w-full max-w-[1440px] min-w-0 space-y-3'}>
       <Tabs value={tab} onValueChange={setTab}>
       <ModuleShell
         embedded={embedded}

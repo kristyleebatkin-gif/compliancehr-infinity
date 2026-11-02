@@ -15,6 +15,12 @@ const TONE_SYMBOL = {
   yellow: '#A100FF',
 };
 
+const SECTION_DARK_BLUE_STYLE = {
+  border: '2px solid transparent',
+  background:
+    'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%) padding-box, linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box',
+};
+
 const GRADIENT_BORDER_STYLE = {
   border: '2px solid transparent',
   background:
@@ -38,7 +44,7 @@ export default function EmployeeProfileSection({
       {...(half ? { 'data-profile-half': '' } : {})}
       {...(defaultOpen ? { open: true } : {})}
       className={`min-w-0 rounded-xl p-2.5 shadow-2xs ${uniform ? 'profile-uniform-box' : ''}`}
-      style={GRADIENT_BORDER_STYLE}
+      style={SECTION_DARK_BLUE_STYLE}
       onToggle={(event) => {
         if (event.target === event.currentTarget && event.currentTarget.open) setActivated(true);
       }}
