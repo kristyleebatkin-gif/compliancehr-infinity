@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import ModuleShell from '@/components/module/ModuleShell';
-import RegisterInsights from '@/components/RegisterInsights';
 import { base44 } from '@/api/base44Client';
 import { safeUrl } from '@/lib/safeUrl';
 import { Card, CardContent } from '@/components/ui/card';
@@ -11,7 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
 import { Plus, Trash2, ShieldCheck, Scale, FileText, ExternalLink, Download, FilePlus, History, Award } from 'lucide-react';

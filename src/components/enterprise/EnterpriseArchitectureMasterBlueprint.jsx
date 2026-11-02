@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  Layers, ShieldCheck, Users, Palette, HeartHandshake, Award,
-  Flame, Database, Building2, CheckCircle2, AlertTriangle, ArrowUpRight,
+import { ShieldCheck, Users, Palette, HeartHandshake, Award,
+  Flame, Database, Building2, CheckCircle2, ArrowUpRight,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 

@@ -2,17 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Activity,
-  Sparkles,
   ShieldCheck,
   Zap,
-  CheckCircle2,
   Search,
-  Volume2,
   ArrowUpRight,
   Radio,
 } from 'lucide-react';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
-import { getHeaderView, getAppBorderView } from '@/lib/fullColourTiles';
+import { getHeaderView } from '@/lib/fullColourTiles';
 
 const TOP_BORDER_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';

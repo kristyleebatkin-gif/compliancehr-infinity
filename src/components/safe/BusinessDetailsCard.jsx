@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Loader2, Save, Landmark, Building2, ScrollText, KeyRound, PenLine, ShieldAlert, Eye, Minimize2, Maximize2 } from 'lucide-react';

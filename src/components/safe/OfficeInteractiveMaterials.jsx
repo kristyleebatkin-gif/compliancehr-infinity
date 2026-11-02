@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  ShieldCheck, Users, Heart, UserRound, Lock, FolderLock,
+import { Lock, FolderLock,
   ClipboardCheck, AlertTriangle, Calendar, Award, ArrowRight,
-  FileText, BadgeCheck, Siren, ListTodo, Monitor, ExternalLink,
-  LayoutGrid, MessagesSquare, Sparkles, CheckCircle2,
+  FileText, BadgeCheck, Siren, ListTodo,
 } from 'lucide-react';
 import { Image } from '@/components/ui/image';
 import { base44 } from '@/api/base44Client';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
-import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
 import MasterComplianceAuditForms from '@/components/compliance/MasterComplianceAuditForms';
 import BusinessHealthComplianceIntelligenceDashboard from '@/components/compliance/BusinessHealthComplianceIntelligenceDashboard';
 import InfinityCoreEngine from '@/components/compliance/InfinityCoreEngine';

@@ -4,7 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { format } from 'date-fns';
-import { History, Loader2, RefreshCw } from 'lucide-react';
+import { History, RefreshCw } from 'lucide-react';
 
 const CATEGORY_TONE = {
   compliance: 'bg-safe/10 text-safe',

@@ -11,22 +11,15 @@ import { exportUniversalData } from '@/lib/universalStorageAndExportEngine';
 import {
   Sparkles,
   PhoneCall,
-  Mail,
   FileText,
   Upload,
   CheckCircle2,
-  AlertTriangle,
   ShieldAlert,
-  Target,
-  ClipboardList,
-  Layers,
   Printer,
   FileSpreadsheet,
   Download,
   Lock,
-  ArrowRight,
   GitBranch,
-  Database,
 } from 'lucide-react';
 
 export const UNIVERSAL_28_RECORD_TYPES = [

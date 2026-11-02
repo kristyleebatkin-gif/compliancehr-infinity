@@ -1,5 +1,5 @@
 import React from 'react';
-import { AlertTriangle, CheckCircle2, FileSpreadsheet, Layers, RefreshCw, ShieldCheck, XCircle } from 'lucide-react';
+import { AlertTriangle, CheckCircle2, FileSpreadsheet, Layers, RefreshCw, XCircle } from 'lucide-react';
 import Reveal from '@/components/landing/Reveal';
 
 const PAIN_POINTS = [

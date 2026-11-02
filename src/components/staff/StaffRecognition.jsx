@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
 import { downloadCsv } from '@/lib/csvExport';
 import LeaderboardSettingsDialog from '@/components/staff/LeaderboardSettingsDialog';
-import { Trophy, Award, Download, ShieldCheck, Users, BadgeCheck, Star, Loader2 } from 'lucide-react';
+import { Trophy, Award, Download, ShieldCheck, Users, BadgeCheck, Star } from 'lucide-react';
 
 const PODIUM = [
   { icon: Trophy, label: 'Champion', chip: 'from-amber-100 to-yellow-50 text-amber-800 border-amber-300 dark:from-amber-500/20 dark:to-yellow-500/10 dark:text-amber-300 dark:border-amber-500/30' },

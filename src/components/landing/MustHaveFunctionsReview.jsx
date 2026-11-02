@@ -15,16 +15,13 @@ import {
   BookOpen,
   Layers,
   Sparkles,
-  Monitor,
   Tv,
   Radio,
 } from 'lucide-react';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import {
   getHeaderView,
-  getTitleGradientView,
   getSymbolView,
-  getAppBorderView,
 } from '@/lib/fullColourTiles';
 
 const TOP_BORDER_GRADIENT =

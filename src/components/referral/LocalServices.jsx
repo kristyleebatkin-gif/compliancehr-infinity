@@ -4,7 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Search, Loader2, ExternalLink, Phone, Mail, MapPin, Building2 } from 'lucide-react';
+import { Search, Loader2, ExternalLink, Phone, Mail, Building2 } from 'lucide-react';
 
 const safeUrl = (url) => {
   if (!url || typeof url !== 'string') return null;

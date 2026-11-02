@@ -3,7 +3,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Plus, UserX, Check, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { addDays, differenceInCalendarDays, format, isSameMonth, isToday } from 'date-fns';
+import { addDays, differenceInCalendarDays, format, isToday } from 'date-fns';
 import { statusTone } from '@/lib/statusStyles';
 import { shiftHours, findShiftConflicts } from '@/lib/rostering';
 

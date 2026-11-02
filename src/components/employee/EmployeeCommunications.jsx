@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
-import { Megaphone, Mail, NotebookPen, Briefcase, Inbox, MessagesSquare, Video, Sparkles, Siren, ListTodo, BookMarked, History, Radio, LayoutDashboard, Lightbulb } from 'lucide-react';
+import { Mail, NotebookPen, Briefcase, Inbox, MessagesSquare, Video, Sparkles, ListTodo, BookMarked, Radio, LayoutDashboard, Lightbulb } from 'lucide-react';
 import CommunicationNavigation from '@/components/communications/CommunicationNavigation';
 import EmployeeCommunicationContent from '@/components/employee/EmployeeCommunicationContent';
 import ModuleShell from '@/components/module/ModuleShell';
@@ -14,7 +14,6 @@ import { AboutCommunication, CommHintsTips } from '@/components/communications/C
 import CommTeamDash from '@/components/communications/CommTeamDash';
 import RosterMiniOverview from '@/components/communications/RosterMiniOverview';
 import TaskLeaderboard from '@/components/communications/TaskLeaderboard';
-import TeamFeed from '@/components/communications/TeamFeed';
 import CommSharedTodo from '@/components/communications/CommSharedTodo';
 import { AutomatedAlertSystem } from '@/components/communications/AutomatedLogs';
 import '@/components/communications/commCentreTheme.css';

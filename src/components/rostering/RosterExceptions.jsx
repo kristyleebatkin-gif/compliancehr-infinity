@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
-import { Badge } from '@/components/ui/badge';
 import { AlertTriangle, UserX, Users, FileWarning, GraduationCap } from 'lucide-react';
 import SectionCard from '@/components/SectionCard';
 import EmptyState from '@/components/EmptyState';

@@ -7,7 +7,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { statusTone } from '@/lib/statusStyles';
 import { downloadCsv } from '@/lib/csvExport';
 import { downloadSurveyDocument } from '@/lib/surveyPdf';
 import { useToast } from '@/components/ui/use-toast';

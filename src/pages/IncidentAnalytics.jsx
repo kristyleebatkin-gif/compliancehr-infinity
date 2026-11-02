@@ -4,7 +4,7 @@ import ModuleShell from '@/components/module/ModuleShell';
 import IncidentAnalyticsGuidance from '@/components/incidents/IncidentAnalyticsGuidance';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, PieChart, Pie, Cell, AreaChart, Area } from 'recharts';
-import { Activity, HeartHandshake, CheckCircle2, Sparkles } from 'lucide-react';
+import { Activity, HeartHandshake, CheckCircle2 } from 'lucide-react';
 import { format, subMonths, startOfMonth } from 'date-fns';
 
 const CATEGORY_COLORS = ['#0072FF', '#5A00D6', '#A100FF', '#FF2E9A', '#00C6FF', '#0A2B6D'];

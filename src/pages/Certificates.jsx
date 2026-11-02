@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Plus, Award, Pencil, Trash2, Download, Trophy, Users, Heart, Sparkles } from 'lucide-react';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import BulkEditBar from '@/components/documents/BulkEditBar';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import StaffRecognition from '@/components/staff/StaffRecognition';
 import EmployeeJourneyForm from '@/components/profile/EmployeeJourneyForm';
 import ParticipantJourneyBox from '@/components/profile/ParticipantJourneyBox';

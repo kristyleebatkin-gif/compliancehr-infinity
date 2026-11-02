@@ -9,7 +9,6 @@ import {
   Award,
   FileCheck2,
   Tv,
-  Monitor,
   Radio,
 } from 'lucide-react';
 import ExecutiveWallScene from '@/components/safe/ExecutiveWallScene';
@@ -23,7 +22,6 @@ import InfinityControlCentreMasterSuite from '@/components/operations/InfinityCo
 import BeachDeepSeaWallShowcase from '@/components/safe/BeachDeepSeaWallShowcase';
 import {
   getHeaderView,
-  getTitleGradientView,
   getSymbolView,
   getAppBorderView,
 } from '@/lib/fullColourTiles';

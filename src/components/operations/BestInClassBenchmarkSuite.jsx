@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import {
-  ShieldCheck, CheckCircle2, Sparkles, Download, Calculator, WifiOff, RefreshCw,
-  DollarSign, Lock, Plus, Layers, FileSpreadsheet, AlertTriangle, Send, Database,
+import { CheckCircle2, Sparkles, Download, RefreshCw, FileSpreadsheet, Database,
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';

@@ -1,32 +1,20 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ShieldCheck, CheckCircle2, AlertTriangle, FileText, Download, Printer,
-  Plus, Search, Layers, ClipboardCheck, Sparkles, Clock, Lock,
-  ArrowRight, RefreshCw, Award, Eye, Wrench, CheckSquare, Building2,
+  ShieldCheck, AlertTriangle, FileText, Download, Layers, ClipboardCheck, Sparkles, Clock,
+  ArrowRight, RefreshCw, Award, Wrench, CheckSquare, Building2,
   Users, HeartHandshake, CalendarClock, MessagesSquare, Flame, FolderLock, DollarSign,
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
 import { downloadCsv } from '@/lib/csvExport';
 import {
-  getTilePalette,
   getHeaderView,
-  getTitleGradientView,
-  getSubheaderColourView,
-  getSymbolView,
-  getAppBorderView,
 } from '@/lib/fullColourTiles';
 import { useToast } from '@/components/ui/use-toast';
 import {
-  INFINITY_APPROVED_PALETTE,
-  SECTION_24_MODULE_COLOURS,
-  MASTER_17_AUDIT_CATEGORIES,
   MASTER_98_DOCUMENTS,
   MASTER_DEVELOPMENT_REGISTER,
-  BASE44_15_VERIFICATION_CHECKS,
   buildAll356Checkpoints,
 } from '@/lib/masterControlAndAuditData';
 import MasterSkillsAndInstructionsStudio from '@/components/training/MasterSkillsAndInstructionsStudio';

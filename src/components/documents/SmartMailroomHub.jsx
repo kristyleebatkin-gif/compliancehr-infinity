@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
-  Inbox, Upload, CheckCircle2, AlertTriangle, FileText, Search, ShieldCheck, UserCheck, FolderOpen,
+  Inbox, CheckCircle2, AlertTriangle,
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';

@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import SectionCard from '@/components/SectionCard';
-import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/components/ui/use-toast';
@@ -13,8 +12,8 @@ import StaffFileMatrix, { STAFF_COLUMNS, staffColumnStatus } from '@/components/
 import ParticipantFileMatrix from '@/components/compliance/ParticipantFileMatrix';
 import PlatformComplianceStatus from '@/components/compliance/PlatformComplianceStatus';
 import MasterComplianceAuditForms from '@/components/compliance/MasterComplianceAuditForms';
-import { format, differenceInCalendarDays } from 'date-fns';
-import { Download, ClipboardCheck, Boxes, Car, Flame, ShieldCheck, Wrench, FileDown, Loader2, UploadCloud } from 'lucide-react';
+import { format } from 'date-fns';
+import { Download, ClipboardCheck, Boxes, Car, Flame, ShieldCheck, FileDown, Loader2, UploadCloud } from 'lucide-react';
 
 const PARTICIPANT_COLUMNS = [
   'Service Agreement',

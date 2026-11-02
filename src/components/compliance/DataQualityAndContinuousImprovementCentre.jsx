@@ -2,7 +2,6 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   CheckCircle2,
-  ShieldCheck,
   Database,
   RefreshCw,
   Sparkles,

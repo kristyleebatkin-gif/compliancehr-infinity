@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  Bot, Sparkles, ShieldCheck, CheckCircle2, Cpu, Layers, Sliders, Activity,
-  FileText, ArrowRight, Lock, RefreshCw, AlertTriangle,
+import { Sparkles, CheckCircle2,
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';

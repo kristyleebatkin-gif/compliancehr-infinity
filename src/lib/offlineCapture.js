@@ -83,7 +83,6 @@ export function useOfflineCapture() {
       window.removeEventListener('offline', goOffline);
       window.removeEventListener('offline-capture-updated', refresh);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const save = useCallback(async (entity, record) => {

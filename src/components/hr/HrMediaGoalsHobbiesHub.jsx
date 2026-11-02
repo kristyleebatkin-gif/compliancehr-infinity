@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Tv, Radio, Smartphone, Monitor, Target, DoorOpen, Sparkles, Compass, Music, Heart, BookOpen, Dumbbell, Palette, Sprout, Utensils, Play, Volume2 } from 'lucide-react';
+import { Tv, Radio, Smartphone, Monitor, Target, DoorOpen, Sparkles, Music, Heart, BookOpen, Dumbbell, Palette, Sprout, Utensils, Play, Volume2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 
 const TV_CHANNELS = [
   {

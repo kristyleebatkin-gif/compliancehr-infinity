@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { HeartHandshake, Library, Phone, Send } from 'lucide-react';
+import { HeartHandshake, Phone } from 'lucide-react';
 import ModuleShell from '@/components/module/ModuleShell';
 import ModuleAlertsButton from '@/components/ModuleAlertsButton';
 import CrisisInformation from '@/components/referral/CrisisInformation';

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { useAuth } from '@/lib/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -21,8 +20,6 @@ import {
 } from '@/lib/universalStorageAndExportEngine';
 import {
   Database,
-  ShieldCheck,
-  Search,
   Download,
   Upload,
   CheckCircle2,
@@ -30,8 +27,6 @@ import {
   FileSpreadsheet,
   FileText,
   Printer,
-  Link2,
-  History,
   RefreshCw,
 } from 'lucide-react';
 

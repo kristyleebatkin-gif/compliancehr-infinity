@@ -2,7 +2,7 @@ import React from 'react';
 import DashboardTile from './DashboardTile';
 import { useRole } from '@/lib/useRole';
 import {
-  FolderOpen, Megaphone, AlertTriangle, ShieldAlert, Heart, Users, UserCog, LayoutPanelTop,
+  FolderOpen, Megaphone, AlertTriangle, ShieldAlert, Users, UserCog, LayoutPanelTop,
 } from 'lucide-react';
 
 const MODULES = [

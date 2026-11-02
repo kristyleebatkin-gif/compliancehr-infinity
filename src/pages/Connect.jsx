@@ -14,7 +14,6 @@ import {
   ShieldCheck,
   RefreshCw,
   Plug,
-  Sparkles,
   Terminal,
   Globe,
   ArrowLeft,

@@ -4,7 +4,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { UserCheck } from 'lucide-react';
-import { statusTone } from '@/lib/statusStyles';
 import { rangesOverlap } from '@/lib/rostering';
 
 // Suggests active staff for an unassigned shift, excluding staff marked

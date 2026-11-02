@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Download, ClipboardCheck, Users, Clock } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
-import { downloadCsv, buildCsv } from '@/lib/csvExport';
+import { buildCsv } from '@/lib/csvExport';
 
 /**
  * Intake & onboarding logs for one employee, sourced from their linked

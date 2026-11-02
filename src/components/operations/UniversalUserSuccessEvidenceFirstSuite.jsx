@@ -7,19 +7,8 @@ import { exportUniversalData } from '@/lib/universalStorageAndExportEngine';
 import {
   Zap,
   CheckCircle2,
-  Clock,
-  ShieldCheck,
-  UserCheck,
-  Eye,
-  Compass,
-  FileCheck2,
-  Sparkles,
   ArrowRight,
   Printer,
-  FileText,
-  FileSpreadsheet,
-  Download,
-  Layers,
 } from 'lucide-react';
 
 export const UX_6_AUTO_ANSWERS = [

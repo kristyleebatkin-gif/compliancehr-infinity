@@ -1,21 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ShieldCheck, Sparkles, CheckCircle2, FileText, ArrowRight,
-  Wand2, ClipboardCheck, Layers, Search, PlusCircle, ExternalLink, Download, Wrench, Activity,
+  ShieldCheck, CheckCircle2,
+  Wand2, Layers, Search,
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { MODULE_DIRECTORY, NAV_GROUPS } from '@/lib/moduleDirectory';
-import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
 import { useToast } from '@/components/ui/use-toast';
 import MasterComplianceAuditForms from '@/components/compliance/MasterComplianceAuditForms';
 import {
-  getTilePalette,
   getHeaderView,
-  getTitleGradientView,
-  getSubheaderColourView,
-  getSymbolView,
-  getAppBorderView,
 } from '@/lib/fullColourTiles';
 
 const HEADER_GRADIENT =

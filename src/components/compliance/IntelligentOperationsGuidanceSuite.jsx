@@ -2,26 +2,16 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { useAuth } from '@/lib/AuthContext';
-import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/components/ui/use-toast';
 import {
   Compass,
   CheckCircle2,
-  AlertTriangle,
-  Clock,
   ShieldCheck,
   BellRing,
-  Sparkles,
-  Layers,
-  GitBranch,
   ArrowUpRight,
   RefreshCw,
-  Award,
-  FileSignature,
-  ClipboardCheck,
-  Users,
 } from 'lucide-react';
 
 const SMART_REMINDER_HORIZONS = [

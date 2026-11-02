@@ -2,7 +2,7 @@ import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { statusTone } from '@/lib/statusStyles';
-import { format, isBefore, startOfDay } from 'date-fns';
+import { format } from 'date-fns';
 import { ShieldCheck, CalendarClock } from 'lucide-react';
 
 export default function NdisAudits({ audits }) {

@@ -4,7 +4,6 @@ import { format } from 'date-fns';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { statusTone } from '@/lib/statusStyles';
 import { useToast } from '@/components/ui/use-toast';
 import { logUserAction } from '@/lib/actionLog';
 import { Loader2, KanbanSquare, Clock } from 'lucide-react';

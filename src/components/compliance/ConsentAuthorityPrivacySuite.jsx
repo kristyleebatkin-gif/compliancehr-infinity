@@ -3,10 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useAuth } from '@/lib/AuthContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
 import {
   ParticipantConsentDialog,
@@ -14,21 +11,14 @@ import {
 } from '@/components/compliance/ConsentAuthorityModals';
 import {
   ShieldCheck,
-  FileSignature,
   Plus,
-  Download,
   BellRing,
   Lock,
-  Eye,
   Undo2,
-  RefreshCw,
-  UploadCloud,
-  CheckCircle2,
   History,
   Users,
   UserCheck,
   FileCheck2,
-  Trash2,
   Pencil,
 } from 'lucide-react';
 import {

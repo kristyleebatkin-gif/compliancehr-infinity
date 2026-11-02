@@ -9,7 +9,7 @@ import EmptyState from '@/components/EmptyState';
 import ScreenByScreenMasterAudit2026 from '@/components/compliance/ScreenByScreenMasterAudit2026';
 import Feedback from '@/pages/Feedback';
 import { useToast } from '@/components/ui/use-toast';
-import { Eye, Zap, SlidersHorizontal, Sparkles, Mail, Loader2, RefreshCw, Search, AlertTriangle, Clock, MessageSquare } from 'lucide-react';
+import { Eye, Zap, SlidersHorizontal, Mail, Loader2, RefreshCw, Search, MessageSquare } from 'lucide-react';
 
 const GROUPS = [
   { key: 'visualise', label: 'Visualise', icon: Eye, tone: 'text-blue-600 bg-blue-50' },

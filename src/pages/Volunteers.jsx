@@ -14,7 +14,6 @@ import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { format } from 'date-fns';
 import { downloadCsv } from '@/lib/csvExport';
-import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import VolunteerApplications from '@/components/volunteers/VolunteerApplications';
 import VolunteerForm from '@/components/volunteers/VolunteerForm';
 import VolunteerDetail from '@/components/volunteers/VolunteerDetail';

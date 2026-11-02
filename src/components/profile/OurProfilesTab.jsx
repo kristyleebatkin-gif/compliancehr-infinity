@@ -6,7 +6,6 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import EmptyState from '@/components/EmptyState';
 import ProfileLoadError from '@/components/profile/ProfileLoadError';
-import EmployeeCategoryTiles from '@/components/profile/EmployeeCategoryTiles';
 import useEmployeeDirectoryPage from '@/components/profile/useEmployeeDirectoryPage';
 import { loadProfileWithTimeout } from '@/lib/profileLoading';
 import { profilePalette } from '@/lib/profileColours';

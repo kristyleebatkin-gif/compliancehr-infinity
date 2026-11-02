@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   Activity, ShieldCheck, Users, HeartHandshake, AlertTriangle,
   Flame, DollarSign, Award, Lock, Download, RefreshCw,
-  ArrowUpRight, CheckCircle2, Clock, TrendingUp,
-  BarChart3, Layers, Sparkles, Monitor, Smartphone, Tablet,
-  Sun, CloudSun, Mail, Calendar, MessageSquare, ClipboardCheck, Radio,
+  ArrowUpRight, CheckCircle2, Sparkles, Monitor, Mail, Calendar, MessageSquare, ClipboardCheck,
 } from 'lucide-react';
 import {
   ResponsiveContainer, ComposedChart, Area, Bar, XAxis, YAxis,
@@ -15,9 +13,7 @@ import { base44 } from '@/api/base44Client';
 import { downloadBusinessHealthIntelligencePdf } from '@/lib/businessHealthIntelligencePdf';
 import {
   getHeaderView,
-  getTitleGradientView,
   getSymbolView,
-  getAppBorderView,
 } from '@/lib/fullColourTiles';
 
 const TOP_BORDER_GRADIENT =

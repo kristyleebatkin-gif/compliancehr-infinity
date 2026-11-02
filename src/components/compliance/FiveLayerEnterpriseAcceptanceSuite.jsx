@@ -10,15 +10,10 @@ import {
   Layers,
   ShieldCheck,
   CheckCircle2,
-  Sparkles,
   GraduationCap,
-  FolderCheck,
-  RefreshCw,
   Download,
   ArrowUpRight,
   Zap,
-  Award,
-  ClipboardCheck,
 } from 'lucide-react';
 
 const FIVE_LAYERS_OVERVIEW = [

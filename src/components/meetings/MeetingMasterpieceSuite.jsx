@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {
-  CalendarDays, Wand2, CheckCircle2, ClipboardList, Users,
-  Sparkles, FileText, Send, Plus, TrendingUp, Award, Clock,
+import { Wand2, CheckCircle2, ClipboardList,
+  Sparkles, TrendingUp,
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';

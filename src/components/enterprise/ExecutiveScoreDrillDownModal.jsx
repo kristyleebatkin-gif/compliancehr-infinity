@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   X, Calculator, Sliders, FileText, TrendingUp, History,
-  ArrowUpRight, Save, CheckCircle2, AlertTriangle,
+  ArrowUpRight, Save,
 } from 'lucide-react';
 import {
   ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid,

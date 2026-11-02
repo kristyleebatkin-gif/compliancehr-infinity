@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useAuth } from '@/lib/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -7,20 +7,12 @@ import { useToast } from '@/components/ui/use-toast';
 import { exportUniversalData } from '@/lib/universalStorageAndExportEngine';
 import {
   Clock,
-  ShieldCheck,
   CheckCircle2,
-  BarChart3,
-  GraduationCap,
-  HeartHandshake,
-  HelpCircle,
-  Bell,
   Printer,
   FileText,
   FileSpreadsheet,
   Download,
   Database,
-  Layers,
-  Sparkles,
 } from 'lucide-react';
 
 const SNAPSHOT_10_TYPES = [

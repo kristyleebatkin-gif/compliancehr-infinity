@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Loader2, GitCompareArrows, CircleCheck, CircleAlert, CircleX, Link2, Link2Off, Download } from 'lucide-react';
+import { Loader2, GitCompareArrows, CircleCheck, CircleAlert, CircleX, Link2Off, Download } from 'lucide-react';
 import { downloadCsv } from '@/lib/csvExport';
 
 const norm = (s) => String(s || '').trim().toLowerCase();

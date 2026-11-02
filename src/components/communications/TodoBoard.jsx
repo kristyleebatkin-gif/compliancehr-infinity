@@ -10,7 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Download, ListTodo, Loader2, Plus, PenLine } from 'lucide-react';
-import { APP_MODULES, loadCommContacts, exportCsv } from '@/lib/commTypes';
+import { APP_MODULES, exportCsv } from '@/lib/commTypes';
 import SharedTodoCommandBoard from '@/components/tasks/SharedTodoCommandBoard';
 import ReviewTodoBoard from '@/components/tasks/ReviewTodoBoard';
 

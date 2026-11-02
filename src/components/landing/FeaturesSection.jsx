@@ -10,7 +10,6 @@ import {
   GraduationCap,
   Heart,
   MapPinned,
-  Pin,
   RefreshCw,
   ShieldAlert,
   Sparkles,
@@ -19,7 +18,6 @@ import {
 import Reveal from '@/components/landing/Reveal';
 import {
   getHeaderView,
-  getSubheaderColourView,
   getSymbolView,
   getAppBorderView,
 } from '@/lib/fullColourTiles';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Quote, ShieldCheck, Star, MessageSquareQuote } from 'lucide-react';
+import { Quote, Star, MessageSquareQuote } from 'lucide-react';
 import Reveal from '@/components/landing/Reveal';
 import LandingSectionHeader from '@/components/landing/LandingSectionHeader';
 

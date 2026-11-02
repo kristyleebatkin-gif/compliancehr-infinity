@@ -5,7 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { ChevronLeft, ChevronRight, MapPin, Clock, DollarSign } from 'lucide-react';
 import {
   format, addMonths, subMonths, startOfMonth, endOfMonth,
-  startOfWeek, endOfWeek, eachDayOfInterval, isSameMonth, isSameDay, isToday, parseISO,
+  startOfWeek, endOfWeek, eachDayOfInterval, isSameMonth, isToday, parseISO,
 } from 'date-fns';
 
 const WEEK_LABELS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];

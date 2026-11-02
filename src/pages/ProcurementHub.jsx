@@ -6,12 +6,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ShoppingCart, Plus, Trash2, Send, Check, PackageCheck, Truck } from 'lucide-react';
-import FinanceMetricCards from '@/components/finance/FinanceMetricCards';
+import { ShoppingCart, Plus, Trash2, Send, Check, PackageCheck } from 'lucide-react';
 import '@/components/dashboard/operationsWorkspace.css';
 import ThreeWayMatch from '@/components/procurement/ThreeWayMatch';
 import ExpenseReconciliation from '@/components/procurement/ExpenseReconciliation';
-import RegisterInsights from '@/components/RegisterInsights';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 
 const today = () => new Date().toISOString().slice(0, 10);

@@ -3,10 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { TabsList } from '@/components/ui/tabs';
-import AlertLamp from '@/components/communications/AlertLamp';
-import AlertsCentre from '@/components/communications/AlertsCentre';
-import { History, Loader2, Mail, Search, ChevronDown, ChevronUp, Bot, Siren } from 'lucide-react';
+import { History, Loader2, Mail, Search, ChevronDown, ChevronUp, Bot } from 'lucide-react';
 
 const AUTOMATED_FILTER = {
   $or: [

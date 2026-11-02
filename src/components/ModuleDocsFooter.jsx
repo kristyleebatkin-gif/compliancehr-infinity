@@ -8,7 +8,6 @@ import { safeUrl } from '@/lib/safeUrl';
 import {
   getTilePalette,
   getHeaderView,
-  getTitleGradientView,
   getSubheaderColourView,
   getSymbolView,
 } from '@/lib/fullColourTiles';

@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Landmark, Download, Send, CheckCircle2, Plus, Users, RefreshCw, ExternalLink } from 'lucide-react';
-import { downloadAbaFile, estimatePayg } from '@/lib/payrollExports';
+import { downloadAbaFile } from '@/lib/payrollExports';
 import { downloadCsv } from '@/lib/csvExport';
 import { money, startOfWeek, round2, loadHolidaySet, buildPayRow, buildPayslipPayload } from '@/components/payroll/payrollShared';
 

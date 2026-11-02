@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
-import { Camera, FileDown, Images, Loader2, Trash2, UploadCloud, FileText, X } from 'lucide-react';
+import { Camera, FileDown, Images, Loader2, Trash2, UploadCloud, FileText } from 'lucide-react';
 import { readImageDataUrl as readImage } from '@/lib/imageToPdf';
 
 export default function ScanToPdf({ open, onOpenChange }) {

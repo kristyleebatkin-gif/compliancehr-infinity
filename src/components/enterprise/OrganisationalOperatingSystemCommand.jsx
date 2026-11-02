@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ShieldCheck, Activity, Users, Heart, AlertTriangle, ShieldAlert,
-  ClipboardCheck, Sparkles, ArrowRight, RefreshCw,
-  Cpu, Layers, Eye, Zap, Award, Lock, BarChart3, Search, PlusCircle,
-  Clock, Bell, FileCheck2, Building2, Target, GraduationCap,
+  ShieldCheck, Users, Sparkles, ArrowRight, RefreshCw,
+  Cpu, Award,
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';

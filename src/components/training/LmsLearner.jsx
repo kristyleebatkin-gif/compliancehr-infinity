@@ -4,7 +4,7 @@ import employeeTrainingClient from '@/lib/employeeTrainingClient';
 import { useToast } from '@/components/ui/use-toast';
 import {
   X, BookOpen, ClipboardCheck, Award, ShieldCheck, Info,
-  CheckCircle2, XCircle, Lock,
+  CheckCircle2, Lock,
 } from 'lucide-react';
 import { getModuleFull, getModuleByNumber, LMS_ACADEMY_NAME, LMS_PROGRAM_NAME } from '@/lib/lmsCurriculum';
 import { getCompetencyChecklist, COMPETENCY_CHECKLIST_TITLE } from '@/lib/lmsCompetencyChecklists';

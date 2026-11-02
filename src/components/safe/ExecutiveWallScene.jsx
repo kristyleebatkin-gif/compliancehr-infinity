@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {
   Lock, FolderLock, MessagesSquare, Mail,
   Building2, LogIn, Monitor, Columns, Users, CalendarClock, CheckCircle2, ArrowRight,
-  Tablet, Sun, Clock, Calendar,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';

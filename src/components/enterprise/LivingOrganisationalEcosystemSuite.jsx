@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Megaphone, ShieldCheck, FolderOpen, GraduationCap, CalendarClock,
-  Lock, Palette, Cpu, CheckCircle2, Sparkles, Download, PlusCircle,
-  AlertTriangle, Bell, FileCheck2, ArrowRight, RefreshCw, Zap, Layers,
+  Megaphone, FolderOpen, GraduationCap, CalendarClock,
+  Lock, Cpu, CheckCircle2, Download, PlusCircle, Bell, ArrowRight, Layers,
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';

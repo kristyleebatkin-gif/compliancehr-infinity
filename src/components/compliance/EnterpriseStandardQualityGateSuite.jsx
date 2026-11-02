@@ -1,15 +1,14 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import {
-  ShieldCheck, FileCheck2, FolderLock, Lock, Sparkles, Filter, Download,
-  Printer, Monitor, Tablet, Smartphone, FileText, CheckCircle2, History,
-  GitBranch, Palette, Calendar, RefreshCw, Layers, Award, Search, Eye,
+  ShieldCheck, FileCheck2, FolderLock, Sparkles, Filter, Download,
+  Printer, Monitor, Tablet, Smartphone, FileText, CheckCircle2,
+  GitBranch, Palette, Calendar, RefreshCw,
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/components/ui/use-toast';
-import { downloadCsv } from '@/lib/csvExport';
 import { getHeaderView } from '@/lib/fullColourTiles';
 import Enterprise12PillarCommandBar from '@/components/compliance/Enterprise12PillarCommandBar';
 import {
@@ -19,7 +18,6 @@ import {
   QUALITY_GATE_19_CHECKS,
   ENTERPRISE_12_REPORT_TYPES,
   ENTERPRISE_12_FORM_TEMPLATES,
-  matchQuickDateFilter,
   exportControlledRecordAsPdf,
   exportControlledRecordAsWord,
   exportControlledRecordAsExcel,

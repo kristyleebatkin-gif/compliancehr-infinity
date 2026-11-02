@@ -7,7 +7,6 @@ import {
 import { Image } from '@/components/ui/image';
 import { base44 } from '@/api/base44Client';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
-import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
 import { getHeaderView } from '@/lib/fullColourTiles';
 import Rostering from '@/pages/Rostering';
 import RosterMiniOverview from '@/components/communications/RosterMiniOverview';

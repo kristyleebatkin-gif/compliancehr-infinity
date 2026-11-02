@@ -17,14 +17,10 @@ import {
   Check,
   Download,
   UploadCloud,
-  ShieldCheck,
-  FileSignature,
-  FolderLock,
 } from 'lucide-react';
 import EmptyState from '@/components/EmptyState';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import { format } from 'date-fns';
-import { downloadChecklistPdf } from '@/lib/checklistsPdf';
 import ModuleShell from '@/components/module/ModuleShell';
 import ModuleSearchBar from '@/components/module/ModuleSearchBar';
 import {

@@ -9,7 +9,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Button } from '@/components/ui/button';
 import ModuleShell from '@/components/module/ModuleShell';
 import { ListTodo } from 'lucide-react';
-import RegisterInsights from '@/components/RegisterInsights';
 import { Field, TextInput, Select, TextArea, DateInput } from '@/components/Field';
 
 import TaskDashboard from '@/components/tasks/TaskDashboard';

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { TrendingUp, Users, Building2 } from 'lucide-react';
 import EmployeeDirectorySummary from '@/components/profile/EmployeeDirectorySummary';
 import ExecutiveWallScene from '@/components/safe/ExecutiveWallScene';

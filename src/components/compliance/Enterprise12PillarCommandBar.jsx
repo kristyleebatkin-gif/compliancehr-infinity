@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import {
-  ShieldCheck, Sparkles, Lock, CheckCircle2, BookmarkCheck, PlusCircle, FileCheck2, Layers,
+import { Sparkles, BookmarkCheck, PlusCircle,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';

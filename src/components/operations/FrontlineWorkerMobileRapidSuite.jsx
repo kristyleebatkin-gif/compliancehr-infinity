@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useAuth } from '@/lib/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -9,7 +9,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
 import {
   CheckCircle2,
-  AlertTriangle,
   Mic,
   MicOff,
   Sparkles,
@@ -18,16 +17,7 @@ import {
   WifiOff,
   Zap,
   ClipboardCheck,
-  Clock,
-  ShieldCheck,
-  HeartPulse,
-  Pill,
-  Siren,
-  Car,
-  FileCheck2,
-  ArrowRight,
   Send,
-  RefreshCw,
 } from 'lucide-react';
 
 const SMART_7_TEMPLATES = [

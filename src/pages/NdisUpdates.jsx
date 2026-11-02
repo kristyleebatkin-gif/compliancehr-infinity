@@ -10,7 +10,6 @@ import NdisNewsDashboard from '@/components/ndis/NdisNewsDashboard';
 import '@/components/ndis/ndisWorkspace.css';
 import { useToast } from '@/components/ui/use-toast';
 import NdisUpdateList from '@/components/ndis/NdisUpdateList';
-import ModuleComplianceStrip from '@/components/ModuleComplianceStrip';
 import ModuleAlertsButton from '@/components/ModuleAlertsButton';
 import { fetchAllRecords } from '@/lib/csvExport';
 import { Newspaper, ExternalLink, Mail } from 'lucide-react';

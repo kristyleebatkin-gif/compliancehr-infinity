@@ -4,7 +4,7 @@ import { getHeaderView } from '@/lib/fullColourTiles';
 import { Image } from '@/components/ui/image';
 import {
   LogOut, ArrowRight, ChevronDown, ChevronRight, LayoutDashboard, ClipboardList,
-  Users, CalendarClock, ShieldCheck, ShieldAlert, FolderOpen, Megaphone,
+  Users, ShieldCheck, ShieldAlert, FolderOpen, Megaphone,
   BarChart3, Cpu, Settings,
 } from 'lucide-react';
 

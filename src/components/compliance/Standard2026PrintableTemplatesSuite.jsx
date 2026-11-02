@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Printer, Download, FileCheck2, Sparkles, CheckSquare,
-  FileText, Building2, ShieldCheck, Layers, Save,
+  Printer, Download, Sparkles,
+  FileText, ShieldCheck, Layers, Save,
 } from 'lucide-react';
 import { Image } from '@/components/ui/image';
 import { base44 } from '@/api/base44Client';

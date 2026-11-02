@@ -2,13 +2,12 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Cpu, Zap, ShieldCheck, FileText, RefreshCw, Download, CheckCircle2,
-  Sparkles, Activity, Users, ArrowRight, Layers, Search, ClipboardCheck, Award,
+  Sparkles, Activity, Users, Layers, Search, ClipboardCheck, Award,
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { downloadInfinityCoreEnginePdf } from '@/lib/infinityCoreEnginePdf';
 import {
   getHeaderView,
-  getTitleGradientView,
   getSymbolView,
   getAppBorderView,
 } from '@/lib/fullColourTiles';

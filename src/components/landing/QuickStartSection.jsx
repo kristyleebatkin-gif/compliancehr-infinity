@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Bell, CheckCircle2, Compass, LayoutDashboard, Pin, RefreshCw, ShieldCheck, Workflow } from 'lucide-react';
+import { Bell, CheckCircle2, Compass, LayoutDashboard, RefreshCw, ShieldCheck, Workflow } from 'lucide-react';
 import Reveal from '@/components/landing/Reveal';
 import {
   getHeaderView,

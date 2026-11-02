@@ -9,23 +9,13 @@ import { useToast } from '@/components/ui/use-toast';
 import { exportUniversalData } from '@/lib/universalStorageAndExportEngine';
 import {
   ShieldCheck,
-  Clock,
-  DollarSign,
   CheckCircle2,
-  AlertTriangle,
-  Car,
-  Pill,
-  Flame,
-  Biohazard,
   Bell,
-  Lock,
   Printer,
   FileText,
   FileSpreadsheet,
   Download,
   GitBranch,
-  Layers,
-  Award,
 } from 'lucide-react';
 
 const SCHADS_10_CATEGORIES = [

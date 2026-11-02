@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { statusTone } from '@/lib/statusStyles';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/components/ui/use-toast';
-import { CalendarDays, Loader2, Mail, Pencil, Trash2 } from 'lucide-react';
+import { Loader2, Mail, Pencil } from 'lucide-react';
 import { parseEmails } from '@/lib/meetingPdf';
 import { format } from 'date-fns';
 import MeetingMinutes from '@/components/meetings/MeetingMinutes';

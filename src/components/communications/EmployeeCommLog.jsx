@@ -8,7 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { ChevronDown, ChevronRight, Download, Loader2, NotebookPen, Paperclip } from 'lucide-react';
-import { EMPLOYEE_LOG_TYPES, COMMON_SUBJECTS, loadCommContacts, loadManagementEmails, openAttachment, exportCsv } from '@/lib/commTypes';
+import { EMPLOYEE_LOG_TYPES, COMMON_SUBJECTS, loadManagementEmails, openAttachment, exportCsv } from '@/lib/commTypes';
 import { logCommunicationRegister } from '@/lib/commRouting';
 import { useRole } from '@/lib/useRole';
 import ContactPicker from './ContactPicker';

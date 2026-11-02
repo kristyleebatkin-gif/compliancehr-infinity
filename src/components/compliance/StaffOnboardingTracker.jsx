@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import { base44 } from '@/api/base44Client';
 import { fetchAllRecords } from '@/lib/csvExport';

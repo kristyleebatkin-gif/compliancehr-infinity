@@ -9,21 +9,11 @@ import { useToast } from '@/components/ui/use-toast';
 import { downloadCsv } from '@/lib/csvExport';
 import EnterpriseAiCopilotSuite from '@/components/compliance/EnterpriseAiCopilotSuite';
 import {
-  Bot,
   Cpu,
-  ShieldCheck,
   Search,
-  Database,
-  CalendarClock,
-  Workflow,
-  FileCheck2,
-  BookOpen,
-  Sparkles,
   Download,
   RefreshCw,
   ArrowUpRight,
-  CheckCircle2,
-  Layers,
   Zap,
 } from 'lucide-react';
 

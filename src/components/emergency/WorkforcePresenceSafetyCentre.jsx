@@ -8,29 +8,17 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
 import { exportUniversalData } from '@/lib/universalStorageAndExportEngine';
 import {
-  Users,
   Siren,
-  QrCode,
-  Smartphone,
-  Tablet,
-  Monitor,
   CheckCircle2,
-  AlertTriangle,
-  Flame,
-  HeartPulse,
   ShieldCheck,
-  Building2,
-  Clock,
   FileSpreadsheet,
   FileText,
   Printer,
   Download,
-  RefreshCw,
   LogOut,
   LogIn,
   ArrowRightLeft,
   Coffee,
-  Activity,
 } from 'lucide-react';
 
 const ATTENDANCE_9_ROLES = [

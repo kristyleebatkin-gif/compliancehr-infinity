@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
-import { NAV_PERMISSIONS, canAccessNav } from '@/lib/roles';
+import { canAccessNav } from '@/lib/roles';
 import { useRole } from '@/lib/useRole';
 import ProfileAuditConsentCard from '@/components/profile/ProfileAuditConsentCard';
 import { KeyRound, Loader2 } from 'lucide-react';

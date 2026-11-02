@@ -13,7 +13,7 @@ import { changeStatus, recordStatusLog, currentUserName, formatLogLine } from '@
 import { downloadCsv } from '@/lib/csvExport';
 import { useToast } from '@/components/ui/use-toast';
 import { format, isBefore, startOfDay } from 'date-fns';
-import { Plus, Trash2, Download, UserPlus, Lock } from 'lucide-react';
+import { Trash2, Download, UserPlus, Lock } from 'lucide-react';
 
 const STATUSES = ['Open', 'In Progress', 'Completed', 'Cancelled'];
 const EMPTY = { title: '', audit_title: '', description: '', allocated_to: '', allocated_email: '', priority: 'Medium', due_date: '', notes: '' };

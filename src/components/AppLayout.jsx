@@ -9,13 +9,12 @@ import ModuleGuide from '@/components/ModuleGuide';
 import { Navigate } from 'react-router-dom';
 import AuditorOnlyLayout from '@/components/AuditorOnlyLayout';
 import ModuleDocsFooter from '@/components/ModuleDocsFooter';
-import { MODULE_DIRECTORY as PRIMARY_NAV, NAV_GROUPS } from '@/lib/moduleDirectory';
+import { MODULE_DIRECTORY as PRIMARY_NAV } from '@/lib/moduleDirectory';
 import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
-import { getTilePalette, getHeaderView, getSymbolView } from '@/lib/fullColourTiles';
+import { getHeaderView } from '@/lib/fullColourTiles';
 import {
-  Bell, LogOut, Menu, X, ChevronDown, MoreHorizontal, ShieldQuestion, Siren, Sparkles, LifeBuoy,
-  LayoutDashboard, Users, Heart, GraduationCap, ShieldCheck, PartyPopper,
-  Search, Sun, Moon, User, Wallet, Building2, Layers,
+  Bell, LogOut, Menu, X, ChevronDown, MoreHorizontal, ShieldQuestion, Sparkles,
+  LayoutDashboard, Users, Heart, GraduationCap, ShieldCheck, User, Building2, Layers,
 } from 'lucide-react';
 import GlobalSearch from '@/components/GlobalSearch';
 import AutoRegisterInsights from '@/components/AutoRegisterInsights';

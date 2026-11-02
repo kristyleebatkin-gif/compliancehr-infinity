@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { statusTone } from '@/lib/statusStyles';
 import { SIGN_LIBRARY, findSign } from '@/lib/signPrompts';
 import { printRoutine, routineStepsToCsv } from '@/lib/visualPrint';
 import { CalendarDays, Check, ChevronDown, ChevronUp, Download, ImagePlus, ListChecks, Loader2, Mail, Plus, Printer, Trash2 } from 'lucide-react';

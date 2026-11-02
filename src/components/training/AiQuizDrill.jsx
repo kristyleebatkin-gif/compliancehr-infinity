@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Loader2, Sparkles, RotateCcw, CheckCircle2, XCircle, Target } from 'lucide-react';
-import { LMS_MODULES, LMS_GROUPS } from '@/lib/lmsCurriculum';
+import { Loader2, Sparkles, RotateCcw, Target } from 'lucide-react';
+import { LMS_MODULES } from '@/lib/lmsCurriculum';
 import ScoreRing from '@/components/ScoreRing';
 import QuizQuestionCard from '@/components/training/QuizQuestionCard';
 

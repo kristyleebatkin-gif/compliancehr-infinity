@@ -18,7 +18,7 @@ import FeedbackDetailDialog from '@/components/feedback/FeedbackDetailDialog';
 import { changeStatus } from '@/lib/statusLog';
 import { downloadCsv } from '@/lib/csvExport';
 import { useToast } from '@/components/ui/use-toast';
-import { CheckCircle2, Eye, FileDown, Loader2, Megaphone, Trash2, UploadCloud } from 'lucide-react';
+import { Eye, FileDown, Loader2, Megaphone, Trash2, UploadCloud } from 'lucide-react';
 import { Bar, BarChart, Legend, ResponsiveContainer, Tooltip, XAxis } from 'recharts';
 import { format } from 'date-fns';
 

@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { base44 } from '@/api/base44Client';
 import ModuleShell from '@/components/module/ModuleShell';
-import RegisterInsights from '@/components/RegisterInsights';
 import InvoiceNavigation from '@/components/invoicing/InvoiceNavigation';
-import FinanceMetricCards from '@/components/finance/FinanceMetricCards';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -26,7 +24,7 @@ import { downloadInvoicePdf, printInvoicePdf, invoicePdfBase64 } from '@/lib/inv
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import exportProdaClaims from '@/lib/prodaClaimExport';
 import BestInClassBenchmarkSuite from '@/components/operations/BestInClassBenchmarkSuite';
-import { Plus, Trash2, FileSpreadsheet, Printer, Send, FileDown, Loader2, BadgeCheck, AlertTriangle } from 'lucide-react';
+import { Plus, Trash2, FileSpreadsheet, Printer, Send, FileDown, Loader2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { loadCompanyBranding } from '@/lib/companyBranding';
 
