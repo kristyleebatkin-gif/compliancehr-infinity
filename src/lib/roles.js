@@ -29,9 +29,10 @@ export const ALL_ROLES = [
   'Auditor',
   'Volunteer',
 ];
-const OPEN_ACCESS_WINDOW_UNTIL = new Date('2026-12-01T00:00:00Z').getTime();
+// Production access is always governed by approval and role policies.
+// Keep this compatibility helper aligned with base44/shared/appAccess.ts.
 export function isOpenAccessWindowActive() {
-  return Date.now() < OPEN_ACCESS_WINDOW_UNTIL;
+  return false;
 }
 
 const FULL_ACCESS = ['admin', ROLES.ADMIN, ROLES.COMPLIANCE_ADMIN, ROLES.MANAGEMENT];
