@@ -311,14 +311,14 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
                 className="inline-flex flex-col items-center justify-center rounded-2xl p-[2.5px] shadow-sm"
                 style={{ background: SQUISHED_GRADIENT }}
               >
-                <div className="flex flex-col items-center justify-center rounded-[13.5px] bg-white px-3.5 py-2 text-center">
+                <div className="flex flex-col items-center justify-center rounded-[13.5px] bg-white px-4 py-2 text-center">
                   <Image
                     src={CHR_LOGO}
                     alt="ComplianceHR Infinity"
                     fittingType="fit"
-                    className="h-12 w-36 sm:h-14 sm:w-44 shrink-0 object-contain"
+                    className="h-20 w-56 sm:h-24 sm:w-68 shrink-0 object-contain"
                   />
-                  <span className="mt-1 font-editorial text-sm sm:text-base font-extrabold leading-tight tracking-tight text-[#0A2B6D]" style={{ color: '#0A2B6D' }}>
+                  <span className="mt-1 font-editorial text-lg sm:text-xl font-extrabold leading-tight tracking-tight text-[#0A2B6D]" style={{ color: '#0A2B6D' }}>
                     Compliance
                     <span className="font-editorial-italic text-[#5A00D6]">HR</span>{' '}
                     <span className="bg-gradient-to-r from-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">

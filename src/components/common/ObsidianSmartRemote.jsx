@@ -9,6 +9,8 @@ const BRAND_GRADIENT =
 const DARK_NAVY_CHASSIS =
   'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)';
 
+const APP_DESIGN_COLOURS = ['#0072FF', '#5A00D6', '#FF2E9A', '#A100FF', '#00C6FF'];
+
 const DEFAULT_CHANNEL_SUBTITLES = {
   'auditor-portal': 'Read-only external NDIS auditor view',
   'standards-map': 'Practice Standards & evidence links',
@@ -77,11 +79,11 @@ export default function ObsidianSmartRemote({
       {/* Top Blue -> Purple -> Pink Gradient Strip */}
       <div className="h-1.5 w-full" style={{ background: BRAND_GRADIENT }} />
 
-      {/* TOP 1/4 WHITE: Title Header Card with Centred Logo -> Name -> Slogan */}
-      <div className="flex flex-col items-center justify-center border-b border-white/15 bg-white px-3 py-2 text-center">
+      {/* TOP 1/4 WHITE: Enlarged Logo, Enlarged Name & Slogan inside ONE Border */}
+      <div className="flex flex-col items-center justify-center bg-white px-3 py-2 text-center">
         <BrandLogoLockup size={compact ? 'xs' : 'sm'} theme="light" showSlogan={true} />
         {(title || subtitle) && (
-          <div className="mt-1 flex flex-wrap items-center justify-center gap-1.5">
+          <div className="mt-1.5 flex flex-wrap items-center justify-center gap-1.5">
             {title && (
               <span
                 className="rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold uppercase tracking-wider text-white"
@@ -101,11 +103,15 @@ export default function ObsidianSmartRemote({
 
       {/* Optional Dual-Screen & Category Filter Bar */}
       {(screenModes.length > 0 || banks.length > 0) && (
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/15 bg-white/10 px-3 py-2 backdrop-blur-md">
+        <div
+          className="flex flex-wrap items-center justify-between gap-2 px-3 py-2"
+          style={{ background: DARK_NAVY_CHASSIS }}
+        >
           {banks.length > 0 && (
             <div className="flex flex-wrap items-center gap-1.5">
-              {banks.map((b) => {
+              {banks.map((b, bIdx) => {
                 const active = b.id === activeBank;
+                const bColor = APP_DESIGN_COLOURS[bIdx % APP_DESIGN_COLOURS.length];
                 return (
                   <button
                     key={b.id}
@@ -114,11 +120,11 @@ export default function ObsidianSmartRemote({
                     className={`min-h-[28px] rounded-xl border px-2.5 py-1 text-[10px] font-extrabold transition-all ${
                       active
                         ? 'border-[#00C6FF] bg-white text-[#0A2B6D] shadow-[0_0_12px_rgba(0,198,255,0.65)]'
-                        : 'border-white/25 bg-[#0A2B6D]/80 text-white hover:border-[#00C6FF] hover:bg-[#0A2B6D]'
+                        : 'border-white/25 bg-[#0A2B6D] text-white hover:border-[#00C6FF]'
                     }`}
                     style={{ color: active ? '#0A2B6D' : '#FFFFFF' }}
                   >
-                    {b.label}
+                    <span style={{ color: bColor }}>◉</span> {b.label}
                   </button>
                 );
               })}
@@ -127,8 +133,9 @@ export default function ObsidianSmartRemote({
 
           {screenModes.length > 0 && (
             <div className="flex flex-wrap items-center gap-1.5">
-              {screenModes.map((m) => {
+              {screenModes.map((m, mIdx) => {
                 const active = m.id === activeScreenMode;
+                const mColor = APP_DESIGN_COLOURS[mIdx % APP_DESIGN_COLOURS.length];
                 return (
                   <button
                     key={m.id}
@@ -137,11 +144,11 @@ export default function ObsidianSmartRemote({
                     className={`min-h-[28px] rounded-xl border px-2.5 py-1 text-[10px] font-extrabold transition-all ${
                       active
                         ? 'border-[#FF2E9A] bg-white text-[#0A2B6D] shadow-[0_0_12px_rgba(255,46,154,0.65)]'
-                        : 'border-white/25 bg-[#0A2B6D]/80 text-white hover:border-[#FF2E9A]'
+                        : 'border-white/25 bg-[#0A2B6D] text-white hover:border-[#FF2E9A]'
                     }`}
                     style={{ color: active ? '#0A2B6D' : '#FFFFFF' }}
                   >
-                    {m.label}
+                    <span style={{ color: mColor }}>◉</span> {m.label}
                   </button>
                 );
               })}
@@ -150,11 +157,15 @@ export default function ObsidianSmartRemote({
         </div>
       )}
 
-      {/* BOTTOM 3/4 DARK BLUE: Glassmorphic Remote Control Buttons (Each Button Has Top 1/4 White + Bottom 3/4 Dark Blue) */}
-      <div className={`grid auto-rows-fr gap-2.5 p-3 items-stretch ${columnsClass}`}>
-        {channels.map((ch) => {
+      {/* BOTTOM 3/4 DARK BLUE: Illuminated Modular Buttons (Top 1/4 White + Bottom 3/4 Dark Blue, App Design Colour Symbols, No Light Blue Line) */}
+      <div
+        className={`grid auto-rows-fr gap-2.5 p-3 items-stretch ${columnsClass}`}
+        style={{ background: DARK_NAVY_CHASSIS }}
+      >
+        {channels.map((ch, idx) => {
           const Icon = ch.icon || ShieldCheck;
           const active = ch.key === activeKey;
+          const symColor = APP_DESIGN_COLOURS[idx % APP_DESIGN_COLOURS.length];
           const resolvedSub =
             ch.sub || DEFAULT_CHANNEL_SUBTITLES[ch.key] || `${ch.label} workspace`;
 
@@ -168,29 +179,32 @@ export default function ObsidianSmartRemote({
               }}
               aria-pressed={active}
               title={`${ch.label} — ${resolvedSub}`}
-              className={`group flex h-full min-h-[78px] flex-col rounded-2xl p-[2px] text-left transition-all duration-200 focus-visible:outline-none ${
+              className={`group flex h-full min-h-[72px] flex-col rounded-2xl p-[2px] text-left transition-all duration-200 focus-visible:outline-none ${
                 active
-                  ? 'shadow-[0_0_20px_rgba(0,198,255,0.75)] scale-[1.01]'
-                  : 'hover:-translate-y-0.5 hover:shadow-[0_0_14px_rgba(161,0,255,0.5)]'
+                  ? 'shadow-[0_0_20px_rgba(0,198,255,0.85)] scale-[1.01]'
+                  : 'shadow-[0_0_12px_rgba(90,0,214,0.35)] hover:-translate-y-0.5 hover:shadow-[0_0_18px_rgba(0,198,255,0.7)]'
               }`}
               style={{ background: BRAND_GRADIENT }}
             >
-              {/* Glass Card Body */}
-              <div className="flex w-full flex-1 flex-col justify-between overflow-hidden rounded-[14px] bg-[#0A2B6D]/90 backdrop-blur-md">
-                {/* Top 1/4 White Title Background */}
+              {/* Card Body: Top 1/4 White + Bottom 3/4 Dark Blue */}
+              <div
+                className="flex w-full flex-1 flex-col justify-between overflow-hidden rounded-[14px]"
+                style={{ background: DARK_NAVY_CHASSIS }}
+              >
+                {/* Top 1/4 White Title Background with App-Design-Colour Symbol */}
                 <div className="flex min-h-[34px] w-full items-center justify-between gap-1.5 bg-white px-2.5 py-1">
                   <div className="flex min-w-0 items-center gap-1.5">
                     <span
-                      className="flex h-5 w-5 shrink-0 items-center justify-center rounded-lg text-white shadow-2xs"
-                      style={{ background: BRAND_GRADIENT }}
+                      className="flex h-5 w-5 shrink-0 items-center justify-center rounded-lg bg-[#F5F0FF] shadow-2xs"
+                      style={{ border: `1.5px solid ${symColor}` }}
                     >
-                      <Icon className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                      <Icon className="h-3 w-3 shrink-0" style={{ color: symColor }} />
                     </span>
                     <span
                       className="min-w-0 text-[10px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]"
                       style={{ color: '#0A2B6D' }}
                     >
-                      {ch.label}
+                      <span style={{ color: symColor }}>◉</span> {ch.label}
                     </span>
                   </div>
 
@@ -203,36 +217,25 @@ export default function ObsidianSmartRemote({
                     <span
                       className="h-1.5 w-1.5 rounded-full"
                       style={{
-                        backgroundColor: active ? '#00C6FF' : '#FF2E9A',
+                        backgroundColor: active ? '#00C6FF' : symColor,
                         boxShadow: active
                           ? '0 0 8px 2px #00C6FF'
-                          : '0 0 4px 1px #FF2E9A',
+                          : `0 0 5px 1px ${symColor}`,
                       }}
                     />
                     {active ? 'ACTIVE' : ch.status || 'LIVE'}
                   </span>
                 </div>
 
-                {/* Bottom 3/4 Dark Navy Glassmorphic Body */}
+                {/* Bottom 3/4 Dark Blue Body */}
                 <div className="flex min-h-[34px] w-full flex-1 items-center justify-between gap-1.5 px-2.5 py-1.5">
                   <span
-                    className="min-w-0 flex-1 break-words text-[9px] font-bold leading-snug text-white/95"
+                    className="min-w-0 flex-1 break-words text-[9px] font-bold leading-snug text-white"
                     style={{ color: '#FFFFFF' }}
                   >
                     {resolvedSub}
                   </span>
-                  <ArrowRight className="h-3 w-3 shrink-0 text-[#00C6FF] transition group-hover:translate-x-0.5" />
-                </div>
-
-                {/* iPad LED Home Indicator Bar */}
-                <div className="flex h-[5px] w-full items-center justify-center pb-0.5">
-                  <span
-                    className={`h-[2.5px] rounded-full transition-all ${
-                      active
-                        ? 'w-9 bg-[#00C6FF] shadow-[0_0_8px_#00C6FF]'
-                        : 'w-6 bg-white/40 group-hover:bg-white/80'
-                    }`}
-                  />
+                  <ArrowRight className="h-3 w-3 shrink-0 transition group-hover:translate-x-0.5" style={{ color: symColor }} />
                 </div>
               </div>
             </button>
@@ -241,7 +244,7 @@ export default function ObsidianSmartRemote({
       </div>
 
       {confirmHref && (
-        <div className="flex justify-end border-t border-white/15 bg-white/10 px-3 py-2">
+        <div className="flex justify-end px-3 py-2" style={{ background: DARK_NAVY_CHASSIS }}>
           <Link
             to={confirmHref}
             className="inline-flex items-center gap-1.5 rounded-xl bg-white px-3 py-1 text-[10px] font-extrabold text-[#0A2B6D] shadow-sm transition hover:bg-[#F5F0FF]"

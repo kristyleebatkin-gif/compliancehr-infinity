@@ -8,9 +8,10 @@ export const BRAND_SLOGAN_TEXT =
   'Complete Control. Greater Confidence. Brighter Success.';
 
 /**
- * Canonical ComplianceHR Infinity Brand Lockup (All Centred):
- * From bottom to top: Slogan -> Name -> Logo
- * (Top: Larger Readable Logo, Middle: Name, Bottom: Slogan in signature Blue / Purple / Pink colours)
+ * Canonical ComplianceHR Infinity Brand Lockup (All Centred inside ONE Border):
+ * Top: Enlarged Logo
+ * Middle: Enlarged Business Name
+ * Bottom: Slogan (kept at compact size)
  *
  * @param {{
  *   logoUrl?: string,
@@ -31,25 +32,27 @@ export default function BrandLogoLockup({
 }) {
   const isCustomName = companyName && companyName !== 'ComplianceHR Infinity';
 
-  // Enlarged, high-presence logo sizing across all module headers and remotes
+  // Larger, high-impact logo sizing across all headers and remotes
   const logoSizeClass =
     size === 'xs'
-      ? 'h-11 w-32 sm:h-12 sm:w-36'
+      ? 'h-16 w-48 sm:h-20 sm:w-56'
       : size === 'sm'
-        ? 'h-12 w-36 sm:h-14 sm:w-44'
+        ? 'h-20 w-56 sm:h-24 sm:w-68'
         : size === 'lg'
-          ? 'h-16 w-48 sm:h-20 sm:w-56'
-          : 'h-14 w-40 sm:h-16 sm:w-48';
+          ? 'h-28 w-72 sm:h-32 sm:w-80'
+          : 'h-24 w-64 sm:h-28 sm:w-72';
 
+  // Increased business name sizing
   const nameSizeClass =
     size === 'xs'
-      ? 'text-xs sm:text-sm'
+      ? 'text-base sm:text-lg'
       : size === 'sm'
-        ? 'text-sm sm:text-base'
+        ? 'text-lg sm:text-xl'
         : size === 'lg'
-          ? 'text-lg sm:text-xl'
-          : 'text-base sm:text-lg';
+          ? 'text-2xl sm:text-3xl'
+          : 'text-xl sm:text-2xl';
 
+  // Slogan size kept the same
   const sloganSizeClass =
     size === 'xs'
       ? 'text-[8.5px] sm:text-[9.5px]'
@@ -70,12 +73,12 @@ export default function BrandLogoLockup({
     >
       {/* SINGLE UNIFIED WHITE CONTAINER WITH ONE BORDER FOR LOGO, NAME & SLOGAN */}
       <div
-        className="flex w-full flex-col items-center justify-center rounded-[13.5px] bg-white px-3.5 py-2"
+        className="flex w-full flex-col items-center justify-center rounded-[13.5px] bg-white px-4 py-2"
         style={{
           background: 'radial-gradient(circle at 50% 50%, #FFFFFF 70%, #F5F0FF 100%)',
         }}
       >
-        {/* 1. TOP: LOGO */}
+        {/* 1. TOP: ENLARGED LOGO */}
         <Image
           src={logoUrl || DEFAULT_BRAND_LOGO}
           alt={companyName || 'ComplianceHR Infinity'}
@@ -83,7 +86,7 @@ export default function BrandLogoLockup({
           className={`${logoSizeClass} shrink-0 object-contain drop-shadow-2xs`}
         />
 
-        {/* 2. MIDDLE: NAME */}
+        {/* 2. MIDDLE: ENLARGED BUSINESS NAME */}
         <div
           className={`mt-1 font-editorial ${nameSizeClass} font-extrabold leading-tight tracking-tight text-[#0A2B6D]`}
         >
@@ -107,7 +110,7 @@ export default function BrandLogoLockup({
           )}
         </div>
 
-        {/* 3. BOTTOM: SLOGAN */}
+        {/* 3. BOTTOM: SLOGAN (SAME SIZE) */}
         {showSlogan && (
           <div
             className={`mt-0.5 flex flex-wrap items-center justify-center gap-x-1 gap-y-0 text-center ${sloganSizeClass} font-extrabold leading-snug`}

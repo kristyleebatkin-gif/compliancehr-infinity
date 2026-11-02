@@ -158,15 +158,15 @@ const TabsList = React.forwardRef(
         style={{ background: DARK_NAVY_CHASSIS }}
         {...props}
       >
-        {/* TOP 1/4 WHITE: Header with Centred Logo -> Name -> Slogan */}
-        <div className="col-span-full -mx-2 -mt-2 mb-1 border-b border-white/15 bg-white">
+        {/* TOP 1/4 WHITE: Header with Enlarged Logo, Enlarged Name & Slogan inside ONE Border */}
+        <div className="col-span-full -mx-2 -mt-2 mb-1 bg-white">
           <div className="h-1.5 w-full" style={{ background: BRAND_GRADIENT }} />
           <div className="flex flex-col items-center justify-center px-3 py-2 text-center">
             <BrandLogoLockup size="xs" theme="light" showSlogan={true} />
           </div>
         </div>
 
-        {/* BOTTOM 3/4 DARK BLUE: Remote Control Tab Triggers */}
+        {/* BOTTOM 3/4 DARK BLUE: Illuminated Remote Control Tab Triggers */}
         {indexedChildren}
       </TabsPrimitive.List>
     </DashboardTabsContext.Provider>
@@ -186,7 +186,7 @@ const TabsTrigger = React.forwardRef(
         data-dashboard-tone={dashboardTabTone(props.value)}
         ref={ref}
         className={cn(
-          "inline-flex min-h-[32px] items-center justify-center gap-1.5 whitespace-nowrap rounded-full border-2 border-[#0072FF] bg-white px-3 py-1 text-xs font-extrabold text-[#0A2B6D] [&_svg]:mr-0 [&_svg]:size-3.5 [&_svg]:shrink-0 ring-offset-background transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-white data-[state=active]:shadow-sm",
+          "inline-flex min-h-[32px] items-center justify-center gap-1.5 whitespace-nowrap rounded-full border-2 border-[#0A2B6D] bg-white px-3 py-1 text-xs font-extrabold text-[#0A2B6D] [&_svg]:mr-0 [&_svg]:size-3.5 [&_svg]:shrink-0 ring-offset-background transition-all hover:-translate-y-0.5 hover:bg-[#F5F0FF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-white data-[state=active]:shadow-sm",
           className
         )}
         {...props}
@@ -202,11 +202,13 @@ const TabsTrigger = React.forwardRef(
     labelText,
     props['data-hint'] || inferredHint
   );
-  const whiteIcon =
+  const tileIdx = Number(props['data-tile-index'] || 0);
+  const symColor = APP_DESIGN_ICON_COLOURS[tileIdx % APP_DESIGN_ICON_COLOURS.length];
+  const coloredIcon =
     iconNode && React.isValidElement(iconNode)
       ? React.cloneElement(iconNode, {
-          className: 'h-3 w-3 shrink-0 text-white',
-          style: { color: '#FFFFFF' },
+          className: 'h-3 w-3 shrink-0',
+          style: { color: symColor },
         })
       : null;
 
@@ -216,50 +218,54 @@ const TabsTrigger = React.forwardRef(
       data-dashboard-tone={dashboardTabTone(props.value)}
       ref={ref}
       className={cn(
-        "group relative flex h-full min-h-[72px] w-full flex-col rounded-2xl p-[2px] text-left transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_0_14px_rgba(161,0,255,0.5)] focus-visible:outline-none data-[state=active]:shadow-[0_0_20px_rgba(0,198,255,0.75)] data-[state=active]:scale-[1.01] disabled:pointer-events-none disabled:opacity-50",
+        "group relative flex h-full min-h-[68px] w-full flex-col rounded-2xl p-[2px] text-left shadow-[0_0_12px_rgba(90,0,214,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_0_18px_rgba(0,198,255,0.75)] focus-visible:outline-none data-[state=active]:shadow-[0_0_20px_rgba(0,198,255,0.85)] data-[state=active]:scale-[1.01] disabled:pointer-events-none disabled:opacity-50",
         className
       )}
       style={{ background: BRAND_GRADIENT }}
       {...props}
     >
-      <span className="flex w-full flex-1 flex-col justify-between overflow-hidden rounded-[14px] bg-[#0A2B6D]/90 backdrop-blur-md">
-        {/* Top 1/4 White Title Background */}
+      <span
+        className="flex w-full flex-1 flex-col justify-between overflow-hidden rounded-[14px]"
+        style={{ background: DARK_NAVY_CHASSIS }}
+      >
+        {/* Top 1/4 White Title Background with App Design Colour Symbol */}
         <span className="flex min-h-[32px] w-full items-center justify-between gap-1.5 bg-white px-2.5 py-1">
           <span className="flex min-w-0 items-center gap-1.5">
             <span
-              className="flex h-5 w-5 shrink-0 items-center justify-center rounded-lg text-white shadow-2xs"
-              style={{ background: BRAND_GRADIENT }}
+              className="flex h-5 w-5 shrink-0 items-center justify-center rounded-lg bg-[#F5F0FF] shadow-2xs"
+              style={{ border: `1.5px solid ${symColor}` }}
             >
-              {whiteIcon}
+              {coloredIcon}
             </span>
             <span
               className="min-w-0 text-[9.5px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]"
               style={{ color: '#0A2B6D', wordBreak: 'normal', overflowWrap: 'normal' }}
             >
-              {labelText}
+              <span style={{ color: symColor }}>◉</span> {labelText}
             </span>
           </span>
-          {/* Status Indicator + LED Active Glow */}
+          {/* Illuminated LED Status Pill */}
           <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-[#F5F0FF] px-1.5 py-0 text-[7px] font-black uppercase text-[#5A00D6] group-data-[state=active]:bg-[#0A2B6D] group-data-[state=active]:text-[#00C6FF]">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#FF2E9A] group-data-[state=active]:bg-[#00C6FF] group-data-[state=active]:shadow-[0_0_6px_1px_#00C6FF]" />
+            <span
+              className="h-1.5 w-1.5 rounded-full group-data-[state=active]:bg-[#00C6FF]"
+              style={{
+                backgroundColor: symColor,
+                boxShadow: `0 0 6px 1px ${symColor}`,
+              }}
+            />
             <span>LIVE</span>
           </span>
         </span>
 
-        {/* Bottom 3/4 Dark Navy Glassmorphic Body */}
-        <span className="qa-tab-body flex min-h-[34px] w-full flex-1 items-center justify-between gap-1 px-2.5 py-1">
+        {/* Bottom 3/4 Dark Blue Body (No Light Blue Line at Bottom) */}
+        <span className="qa-tab-body flex min-h-[34px] w-full flex-1 items-center justify-between gap-1 px-2.5 py-1.5">
           <span
-            className="min-w-0 flex-1 break-words text-[9px] font-bold leading-snug text-white/95"
+            className="min-w-0 flex-1 break-words text-[9px] font-bold leading-snug text-white"
             style={{ color: '#FFFFFF' }}
           >
             {subtitle}
           </span>
-          <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#00C6FF] transition group-hover:translate-x-0.5" />
-        </span>
-
-        {/* iPad LED Home Indicator Bar */}
-        <span className="flex h-[5px] w-full items-center justify-center pb-0.5">
-          <span className="h-[2.5px] w-6 rounded-full bg-white/40 transition-all group-hover:bg-white/80 group-data-[state=active]:w-9 group-data-[state=active]:bg-[#00C6FF] group-data-[state=active]:shadow-[0_0_8px_#00C6FF]" />
+          <ArrowRight className="h-2.5 w-2.5 shrink-0 transition group-hover:translate-x-0.5" style={{ color: symColor }} />
         </span>
       </span>
     </TabsPrimitive.Trigger>

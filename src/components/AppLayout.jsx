@@ -237,9 +237,9 @@ export default function AppLayout() {
                 'linear-gradient(120deg, #00C6FF 0%, #0072FF 25%, #5A00D6 55%, #FF2E9A 100%)',
             }}
           />
-          {/* Very Top Section Around Logo ONLY: Landing-Page Dashboard Blue */}
+          {/* Very Top Section Around Logo ONLY: Landing-Page Dashboard Blue (No Light Blue Line) */}
           <div
-            className="border-b border-white/25 px-3 py-1.5 sm:px-6 lg:px-8"
+            className="px-3 py-1.5 sm:px-6 lg:px-8"
             style={{
               background:
                 'radial-gradient(circle at 50% 35%, rgba(0, 198, 255, 0.42) 0%, #0072FF 44%, #0A2B6D 86%, #061539 100%)',
