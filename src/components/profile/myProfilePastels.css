@@ -1,62 +1,44 @@
-/* My Profile: App Design Coloured Borders (#0072FF, #5A00D6, #FF2E9A, #A100FF) around every section, header, and item in white sections, with Dark Blue (#0A2B6D) writing and App Design Coloured Symbols. */
+/* My Profile: ONLY App Design Coloured Gradient Borders around every section, header, and item in white sections, with Dark Blue (#0A2B6D) writing and App Design Coloured Symbols. */
 html body .my-profile-pastels .app-section-card-header {
-  background: #ffffff !important;
+  border: 2px solid transparent !important;
+  background:
+    linear-gradient(#ffffff, #ffffff) padding-box,
+    linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box !important;
   color: #0A2B6D !important;
-  border: 2px solid #5A00D6 !important;
-  border-bottom: 3px solid #FF2E9A !important;
   box-shadow: 0 2px 8px -2px rgba(90, 0, 214, 0.18) !important;
+  height: auto !important;
+  min-height: 2.25rem !important;
+  padding: 0.4rem 0.75rem !important;
+  font-size: 0.85rem !important;
+  font-weight: 800 !important;
 }
 
-/* App Design Coloured Border around every profile section, details panel, and uniform box */
+/* App Design Coloured Gradient Border around every profile section, details panel, and uniform box */
 html body .my-profile-pastels .profile-uniform-box,
 html body .my-profile-pastels .profile-left-fill > details,
 html body .my-profile-pastels .profile-left-fill > :not(details),
 html body .my-profile-pastels details[data-profile-tone],
 html body .my-profile-pastels section[data-profile-tone],
 html body .my-profile-pastels .profile-dark-blue-box {
-  border: 2px solid #5A00D6 !important;
+  border: 2px solid transparent !important;
   border-radius: 0.75rem !important;
-  background: #ffffff !important;
+  background:
+    linear-gradient(#ffffff, #ffffff) padding-box,
+    linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box !important;
   box-shadow: 0 2px 8px -2px rgba(90, 0, 214, 0.14) !important;
   color: #0A2B6D !important;
 }
 
-/* Alternate App Design Border Colours across sections */
-html body .my-profile-pastels .profile-left-fill > details:nth-child(4n+1),
-html body .my-profile-pastels .profile-uniform-box[data-profile-tone="blue"] {
-  border-color: #0072FF !important;
-}
-html body .my-profile-pastels .profile-left-fill > details:nth-child(4n+2),
-html body .my-profile-pastels .profile-uniform-box[data-profile-tone="violet"] {
-  border-color: #5A00D6 !important;
-}
-html body .my-profile-pastels .profile-left-fill > details:nth-child(4n+3),
-html body .my-profile-pastels .profile-uniform-box[data-profile-tone="pink"] {
-  border-color: #FF2E9A !important;
-}
-html body .my-profile-pastels .profile-left-fill > details:nth-child(4n),
-html body .my-profile-pastels .profile-uniform-box[data-profile-tone="orange"] {
-  border-color: #A100FF !important;
-}
-
-/* App Design Coloured Border around individual items inside white profile sections */
+/* App Design Coloured Gradient Border around individual items inside white profile sections */
 html body .my-profile-pastels .profile-uniform-box li,
 html body .my-profile-pastels .profile-left-fill li,
 html body .my-profile-pastels .profile-item-box {
-  border: 2px solid #0072FF !important;
+  border: 2px solid transparent !important;
   border-radius: 0.625rem !important;
-  background: #ffffff !important;
+  background:
+    linear-gradient(#ffffff, #ffffff) padding-box,
+    linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box !important;
   color: #0A2B6D !important;
-}
-
-html body .my-profile-pastels .profile-uniform-box li:nth-child(3n+2),
-html body .my-profile-pastels .profile-item-box:nth-child(3n+2) {
-  border-color: #5A00D6 !important;
-}
-
-html body .my-profile-pastels .profile-uniform-box li:nth-child(3n),
-html body .my-profile-pastels .profile-item-box:nth-child(3n) {
-  border-color: #FF2E9A !important;
 }
 
 /* Uniform box sizing */
@@ -67,14 +49,6 @@ html body .my-profile-pastels .profile-uniform-box {
   box-sizing: border-box;
 }
 
-/* Section headers inside My Profile: White background, App Design Border, and Dark Blue -> App Colour writing */
-html body .my-profile-pastels .app-section-card-header {
-  height: auto !important;
-  min-height: 2.25rem !important;
-  padding: 0.4rem 0.75rem !important;
-  font-size: 0.85rem !important;
-  font-weight: 800 !important;
-}
 html body .my-profile-pastels .app-section-card-header :is(h1, h2, h3, h4, p, span) {
   color: #0A2B6D !important;
   font-size: 0.85rem !important;

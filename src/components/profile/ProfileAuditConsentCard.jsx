@@ -8,8 +8,11 @@ import { Loader2, ShieldCheck } from 'lucide-react';
 import ProfileConsentLog from '@/components/profile/ProfileConsentLog';
 import ProfileConsentExport from '@/components/profile/ProfileConsentExport';
 
-const HEADING_TEXT_GRADIENT =
-  'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)';
+const GRADIENT_BORDER_STYLE = {
+  border: '2px solid transparent',
+  background:
+    'linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box',
+};
 
 export default function ProfileAuditConsentCard({
   profile,
@@ -63,23 +66,25 @@ export default function ProfileAuditConsentCard({
   };
   return (
     <details
-      className={`min-w-0 rounded-xl border-2 border-[#5A00D6] bg-white shadow-2xs ${
+      className={`min-w-0 rounded-xl shadow-2xs ${
         compact
           ? 'p-2.5 [&_button]:h-auto [&_button]:min-h-7 [&_button]:whitespace-normal [&_button]:px-2.5 [&_button]:py-1 [&_button]:text-[10px] [&_input]:h-7 [&_input]:text-xs'
           : 'p-3'
       }`}
+      style={GRADIENT_BORDER_STYLE}
     >
-      <summary className="mb-2 flex cursor-pointer flex-wrap items-center justify-between gap-2 rounded-lg border-2 border-[#0072FF] bg-white px-3 py-1.5 text-sm font-extrabold">
-        <span className="inline-flex items-center gap-1.5">
+      <summary
+        className="mb-2 flex cursor-pointer flex-wrap items-center justify-between gap-2 rounded-lg px-3 py-1.5 text-sm font-extrabold text-[#0A2B6D]"
+        style={GRADIENT_BORDER_STYLE}
+      >
+        <span className="inline-flex items-center gap-1.5 text-[#0A2B6D]">
           <ShieldCheck className="h-4 w-4 shrink-0 text-[#0072FF]" />
-          <span
-            className="bg-clip-text text-transparent font-extrabold"
-            style={{ backgroundImage: HEADING_TEXT_GRADIENT }}
-          >
-            Consent to audit
-          </span>
+          <span className="font-extrabold text-[#0A2B6D]">Consent to audit</span>
         </span>
-        <span className="rounded-full border-2 border-[#5A00D6] bg-white px-2.5 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D]">
+        <span
+          className="rounded-full px-2.5 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D]"
+          style={GRADIENT_BORDER_STYLE}
+        >
           <span style={{ color: '#5A00D6' }}>◉</span>{' '}
           {profile.audit_consent_recorded_date
             ? consent
@@ -88,7 +93,10 @@ export default function ProfileAuditConsentCard({
             : 'Not recorded'}
         </span>
       </summary>
-      <p className="rounded-lg border-2 border-[#0072FF] bg-white px-2.5 py-1.5 text-xs font-bold text-[#0A2B6D]">
+      <p
+        className="rounded-lg px-2.5 py-1.5 text-xs font-bold text-[#0A2B6D]"
+        style={GRADIENT_BORDER_STYLE}
+      >
         <span style={{ color: '#0072FF' }}>◉</span>{' '}
         {profile.audit_consent_recorded_date
           ? `Logged by ${
@@ -104,9 +112,10 @@ export default function ProfileAuditConsentCard({
             aria-label="Audit consent reason or evidence"
             className={
               compact
-                ? 'min-w-0 w-full flex-auto border-2 border-[#5A00D6]/50 bg-white'
-                : 'min-w-40 flex-1 border-2 border-[#5A00D6]/50 bg-white'
+                ? 'min-w-0 w-full flex-auto text-[#0A2B6D]'
+                : 'min-w-40 flex-1 text-[#0A2B6D]'
             }
+            style={GRADIENT_BORDER_STYLE}
             placeholder="Reason / consent evidence"
             maxLength={2000}
             value={reason}
@@ -115,7 +124,8 @@ export default function ProfileAuditConsentCard({
           <Button
             size="sm"
             variant="outline"
-            className="rounded-full border-2 border-[#0072FF] bg-white font-extrabold text-[#0A2B6D]"
+            className="rounded-full font-extrabold text-[#0A2B6D]"
+            style={GRADIENT_BORDER_STYLE}
             disabled={busy}
             onClick={() => record('Audit consent received')}
           >
@@ -125,7 +135,8 @@ export default function ProfileAuditConsentCard({
           <Button
             size="sm"
             variant="outline"
-            className="rounded-full border-2 border-[#FF2E9A] bg-white font-extrabold text-[#0A2B6D]"
+            className="rounded-full font-extrabold text-[#0A2B6D]"
+            style={GRADIENT_BORDER_STYLE}
             disabled={busy}
             onClick={() => record('Audit declined')}
           >

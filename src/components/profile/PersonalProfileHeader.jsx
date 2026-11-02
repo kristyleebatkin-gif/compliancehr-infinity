@@ -137,38 +137,52 @@ export default function PersonalProfileHeader({
                     <ProfilePhotoControl profile={profile} kind={kind} onUpdated={onUpdated} />
                     <div className="min-w-0 flex-1 space-y-1.5">
                       <div className="flex flex-wrap items-center gap-2">
-                        <span className="inline-flex items-center gap-1 rounded-full border-2 border-[#5A00D6] bg-white px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                        <span
+                          className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#0A2B6D]"
+                          style={{
+                            border: '2px solid transparent',
+                            background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+                          }}
+                        >
                           <span style={{ color: '#5A00D6' }}>◉</span>
                           <span style={{ color: '#0A2B6D' }}>
                             {staff ? 'MY EMPLOYEE PROFILE & PROFESSION' : 'MY PARTICIPANT PROFILE & NDIS PLAN'}
                           </span>
                         </span>
                         <Badge
-                          className="rounded-full border-2 border-[#0072FF] bg-white px-2.5 py-0.5 font-extrabold text-[#0A2B6D]"
-                          style={{ color: '#0A2B6D' }}
+                          className="rounded-full px-2.5 py-0.5 font-extrabold text-[#0A2B6D]"
+                          style={{
+                            border: '2px solid transparent',
+                            background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+                            color: '#0A2B6D',
+                          }}
                         >
                           <span className="mr-1" style={{ color: '#0072FF' }}>◉</span>
                           {profile.status || 'Active'}
                         </Badge>
                       </div>
 
-                      {/* Main Name Header with App Design Coloured Border & Dark Blue -> App Colour Writing */}
+                      {/* Main Name Header with App Design Coloured Gradient Border & Dark Blue Writing */}
                       <div className="flex flex-wrap items-center gap-2">
                         <div
                           className="inline-flex rounded-xl p-[2px]"
                           style={{ background: APP_BORDER_GRADIENT }}
                         >
                           <h2
-                            className="rounded-[10px] bg-white px-3 py-1 text-base sm:text-xl font-extrabold bg-clip-text text-transparent"
-                            style={{ backgroundImage: HEADING_TEXT_GRADIENT }}
+                            className="rounded-[10px] bg-white px-3 py-1 text-base sm:text-xl font-extrabold text-[#0A2B6D]"
+                            style={{ color: '#0A2B6D' }}
                           >
-                            ◉ {profile.full_name}
+                            <span style={{ color: '#0072FF' }}>◉</span> {profile.full_name}
                           </h2>
                         </div>
 
                         <span
-                          className="inline-flex items-center gap-1 rounded-full border-2 border-[#FF2E9A] bg-white px-3 py-1 text-xs font-extrabold text-[#0A2B6D]"
-                          style={{ color: '#0A2B6D' }}
+                          className="inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-extrabold text-[#0A2B6D]"
+                          style={{
+                            border: '2px solid transparent',
+                            background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+                            color: '#0A2B6D',
+                          }}
                         >
                           <span style={{ color: '#FF2E9A' }}>◉</span>
                           <span>
@@ -183,15 +197,18 @@ export default function PersonalProfileHeader({
                 </div>
               </div>
 
-              {/* App Design Coloured Borders Around Every Profile Item Tile on White */}
+              {/* App Design Coloured Gradient Borders Around Every Profile Item Tile on White */}
               <div className="grid grid-cols-1 gap-2 p-3 sm:grid-cols-2 lg:grid-cols-4">
                 {summaryItems.map((item, idx) => {
                   const symColor = APP_COLOURS[idx % APP_COLOURS.length];
                   return (
                     <div
                       key={item.label}
-                      className="profile-item-box flex flex-col justify-between rounded-xl bg-white p-2.5 shadow-2xs"
-                      style={{ border: `2px solid ${symColor}` }}
+                      className="profile-item-box flex flex-col justify-between rounded-xl p-2.5 shadow-2xs"
+                      style={{
+                        border: '2px solid transparent',
+                        background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+                      }}
                     >
                       <span
                         className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider text-[#0A2B6D]"

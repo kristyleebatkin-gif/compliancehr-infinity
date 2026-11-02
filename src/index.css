@@ -464,26 +464,18 @@
     }
     .compact-tabs [role="tab"]:not([data-dashboard-tab]) svg, .compact-module [role="tab"]:not([data-dashboard-tab]) svg { width: 0.875rem; height: 0.875rem; }
   }
-  /* Shared page and section headers: White background with App Design Coloured Border, Dark Blue writing, and App Design Coloured accents. */
+  /* Shared page and section headers: White background with App Design Coloured Gradient Border and Dark Blue writing. */
   .app-readable :is(.dashboard-panel-header, .app-section-card-header),
-  .app-readable .safety-workspace .dashboard-panel-header {
-    position: relative;
-    overflow: hidden;
-    background: #ffffff !important;
-    color: #0A2B6D !important;
-    border: 2px solid #5A00D6 !important;
-    border-bottom: 3px solid #FF2E9A !important;
-    box-shadow: 0 3px 10px -2px rgba(90, 0, 214, 0.18) !important;
-    font-family: var(--font-body) !important;
-  }
+  .app-readable .safety-workspace .dashboard-panel-header,
   .app-readable :is(.comm-weather-bar, .comm-panel-bar) {
     position: relative;
     overflow: hidden;
-    background: #ffffff !important;
+    border: 2px solid transparent !important;
+    background:
+      linear-gradient(#ffffff, #ffffff) padding-box,
+      linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box !important;
     color: #0A2B6D !important;
-    border: 2px solid #0072FF !important;
-    border-bottom: 3px solid #5A00D6 !important;
-    box-shadow: 0 3px 10px -2px rgba(0, 114, 255, 0.18) !important;
+    box-shadow: 0 3px 10px -2px rgba(90, 0, 214, 0.18) !important;
     font-family: var(--font-body) !important;
   }
   .app-readable :is(.dashboard-panel-header, .app-section-card-header) {
@@ -578,15 +570,17 @@
     box-shadow: 0 1px 3px rgba(10, 43, 109, 0.06), 0 18px 40px -24px rgba(10, 43, 109, 0.30) !important;
   }
 
-  /* Small tiles & cards inside grids across all modules: app design coloured border (#5A00D6 / #0072FF), pure white inside writing areas, and dark blue writing (#0A2B6D) */
+  /* Small tiles & cards inside grids across all modules: app design coloured gradient border, pure white inside writing areas, and dark blue writing (#0A2B6D) */
   :root:not(.dark) .app-dashboard-canvas .grid > :is(
     .rounded-xl.border,
     .rounded-2xl.border,
     .rounded-lg.border,
     .rounded-2xl.border-2
   ):not(.preserve-island-theme):not(.preserve-island-theme *) {
-    border: 2px solid #5A00D6 !important;
-    background: #FFFFFF !important;
+    border: 2px solid transparent !important;
+    background:
+      linear-gradient(#ffffff, #ffffff) padding-box,
+      linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box !important;
     color: #0A2B6D !important;
     padding: 0.375rem !important;
   }
@@ -601,17 +595,18 @@
 }
 
 /* ===== CONSISTENT APP HEADER & SECTION HEADER STANDARD =====
-   White Header Background with App Design Coloured Borders (#0072FF, #5A00D6, #FF2E9A),
-   Dark Blue (#0A2B6D) writing changing into App Design Colours, and App Design Coloured Symbols. */
+   White Header Background with App Design Coloured Gradient Borders,
+   Dark Blue (#0A2B6D) writing, and App Design Coloured Symbols. */
 @layer utilities {
   .app-readable :is(.dashboard-panel-header, .app-section-card-header) {
     box-sizing: border-box;
     min-height: 2.5rem !important;
     display: flex;
     align-items: center;
-    background: #ffffff !important;
-    border: 2px solid #5A00D6 !important;
-    border-bottom: 3px solid #FF2E9A !important;
+    border: 2px solid transparent !important;
+    background:
+      linear-gradient(#ffffff, #ffffff) padding-box,
+      linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box !important;
     color: #0A2B6D !important;
     font-family: var(--font-body) !important;
   }

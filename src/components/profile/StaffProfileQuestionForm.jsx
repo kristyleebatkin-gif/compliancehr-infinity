@@ -6,8 +6,11 @@ import { legacyFormFields } from '@/lib/formQuestionModel';
 import StaffProfileQuestionField from '@/components/profile/StaffProfileQuestionField';
 import useStaffProfileQuestions from '@/components/profile/useStaffProfileQuestions';
 
-const HEADING_TEXT_GRADIENT =
-  'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)';
+const GRADIENT_BORDER_STYLE = {
+  border: '2px solid transparent',
+  background:
+    'linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box',
+};
 
 export default function StaffProfileQuestionForm({ profile, title }) {
   const { answers, loading, ready, saving, error, saved, change, save, retry } =
@@ -16,17 +19,16 @@ export default function StaffProfileQuestionForm({ profile, title }) {
   return (
     <details
       data-profile-half
-      className="min-w-0 rounded-xl border-2 border-[#0072FF] bg-white p-2.5 shadow-2xs"
+      className="min-w-0 rounded-xl p-2.5 shadow-2xs"
+      style={GRADIENT_BORDER_STYLE}
     >
-      <summary className="app-section-card-header flex cursor-pointer items-center justify-between gap-2 rounded-lg border-2 border-[#0072FF] bg-white px-3 py-1.5 text-xs font-extrabold">
-        <span className="flex min-w-0 items-center gap-1.5">
+      <summary
+        className="app-section-card-header flex cursor-pointer items-center justify-between gap-2 rounded-lg px-3 py-1.5 text-xs font-extrabold text-[#0A2B6D]"
+        style={GRADIENT_BORDER_STYLE}
+      >
+        <span className="flex min-w-0 items-center gap-1.5 text-[#0A2B6D]">
           <span style={{ color: '#0072FF' }}>◉</span>
-          <span
-            className="bg-clip-text text-transparent font-extrabold"
-            style={{ backgroundImage: HEADING_TEXT_GRADIENT }}
-          >
-            {title}
-          </span>
+          <span className="font-extrabold text-[#0A2B6D]">{title}</span>
         </span>
         <ChevronDown className="h-3.5 w-3.5 shrink-0 text-[#0072FF]" />
       </summary>
@@ -66,7 +68,7 @@ export default function StaffProfileQuestionForm({ profile, title }) {
                 </fieldset>
                 <div className="mt-2 flex flex-wrap items-center justify-end gap-2">
                   {saved && (
-                    <span role="status" className="text-xs font-bold text-[#0072FF]">
+                    <span role="status" className="text-xs font-bold text-[#0A2B6D]">
                       Answers saved
                     </span>
                   )}
@@ -74,7 +76,8 @@ export default function StaffProfileQuestionForm({ profile, title }) {
                     type="submit"
                     size="sm"
                     variant="outline"
-                    className="h-7 rounded-full border-2 border-[#0072FF] bg-white px-3 text-[11px] font-extrabold text-[#0A2B6D]"
+                    className="h-7 rounded-full px-3 text-[11px] font-extrabold text-[#0A2B6D]"
+                    style={GRADIENT_BORDER_STYLE}
                     disabled={saving}
                   >
                     {saving ? (

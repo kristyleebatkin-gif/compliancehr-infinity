@@ -12,14 +12,17 @@ const TITLES = {
   medication: 'Medication consent',
 };
 
-const BORDER_COLOURS = {
+const SYMBOL_COLOURS = {
   medication: '#0072FF',
   sharing: '#5A00D6',
   advocacy: '#FF2E9A',
 };
 
-const HEADING_TEXT_GRADIENT =
-  'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)';
+const GRADIENT_BORDER_STYLE = {
+  border: '2px solid transparent',
+  background:
+    'linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box',
+};
 
 function latestEntry(staff, type) {
   try {
@@ -49,7 +52,7 @@ export default function StaffAuthorisationCard({ staff, type, onUpdated }) {
     'Quality & Improvement Manager',
   ].includes(user?.role);
   const title = TITLES[type];
-  const borderCol = BORDER_COLOURS[type] || '#5A00D6';
+  const symCol = SYMBOL_COLOURS[type] || '#5A00D6';
 
   useEffect(() => {
     setForm(saved || {});
@@ -82,34 +85,29 @@ export default function StaffAuthorisationCard({ staff, type, onUpdated }) {
   return (
     <details
       open
-      className="min-w-0 space-y-2 rounded-xl bg-white p-3 shadow-2xs"
-      style={{ border: `2px solid ${borderCol}` }}
+      className="min-w-0 space-y-2 rounded-xl p-3 shadow-2xs"
+      style={GRADIENT_BORDER_STYLE}
     >
       <summary
-        className="flex cursor-pointer flex-wrap items-center justify-between gap-2 rounded-lg bg-white px-3 py-1.5 text-sm font-extrabold"
-        style={{ border: `2px solid ${borderCol}` }}
+        className="flex cursor-pointer flex-wrap items-center justify-between gap-2 rounded-lg px-3 py-1.5 text-sm font-extrabold text-[#0A2B6D]"
+        style={GRADIENT_BORDER_STYLE}
       >
-        <span className="inline-flex items-center gap-1.5">
-          <ShieldCheck className="h-4 w-4 shrink-0" style={{ color: borderCol }} />
-          <span
-            className="bg-clip-text text-transparent font-extrabold"
-            style={{ backgroundImage: HEADING_TEXT_GRADIENT }}
-          >
-            {title}
-          </span>
+        <span className="inline-flex items-center gap-1.5 text-[#0A2B6D]">
+          <ShieldCheck className="h-4 w-4 shrink-0" style={{ color: symCol }} />
+          <span className="font-extrabold text-[#0A2B6D]">{title}</span>
         </span>
         <span
-          className="rounded-full bg-white px-2.5 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D]"
-          style={{ border: `1.5px solid ${borderCol}`, color: '#0A2B6D' }}
+          className="rounded-full px-2.5 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D]"
+          style={GRADIENT_BORDER_STYLE}
         >
-          <span style={{ color: borderCol }}>◉</span> {saved?.status || 'Not recorded'}
+          <span style={{ color: symCol }}>◉</span> {saved?.status || 'Not recorded'}
         </span>
       </summary>
       <p
-        className="rounded-lg bg-white px-2.5 py-1.5 text-xs font-bold text-[#0A2B6D]"
-        style={{ border: `1.5px solid ${borderCol}`, color: '#0A2B6D' }}
+        className="rounded-lg px-2.5 py-1.5 text-xs font-bold text-[#0A2B6D]"
+        style={GRADIENT_BORDER_STYLE}
       >
-        <span style={{ color: borderCol }}>◉</span>{' '}
+        <span style={{ color: symCol }}>◉</span>{' '}
         {saved?.recorded_date
           ? `Logged by ${saved.recorded_by} on ${saved.recorded_date} at ${saved.recorded_time} (Sydney time)`
           : 'No consent decision logged. Consent must not be assumed.'}
@@ -121,7 +119,8 @@ export default function StaffAuthorisationCard({ staff, type, onUpdated }) {
               aria-label={`${title}: person giving consent`}
               placeholder="Employee / representative giving consent"
               maxLength={200}
-              className="border-2 border-[#0072FF]/50 bg-white text-[#0A2B6D]"
+              className="text-[#0A2B6D]"
+              style={GRADIENT_BORDER_STYLE}
               value={form.granted_by || ''}
               onChange={(e) => set('granted_by', e.target.value)}
             />
@@ -135,7 +134,8 @@ export default function StaffAuthorisationCard({ staff, type, onUpdated }) {
                   : 'Person authorised to act as advocate'
               }
               maxLength={200}
-              className="border-2 border-[#5A00D6]/50 bg-white text-[#0A2B6D]"
+              className="text-[#0A2B6D]"
+              style={GRADIENT_BORDER_STYLE}
               value={form.authorised_person || ''}
               onChange={(e) => set('authorised_person', e.target.value)}
             />
@@ -149,7 +149,8 @@ export default function StaffAuthorisationCard({ staff, type, onUpdated }) {
                   : 'Scope of advocacy authorised'
               }
               maxLength={2000}
-              className="border-2 border-[#A100FF]/50 bg-white text-[#0A2B6D]"
+              className="text-[#0A2B6D]"
+              style={GRADIENT_BORDER_STYLE}
               value={form.scope || ''}
               onChange={(e) => set('scope', e.target.value)}
             />
@@ -157,7 +158,8 @@ export default function StaffAuthorisationCard({ staff, type, onUpdated }) {
               aria-label={`${title}: reason`}
               placeholder="Reason / evidence reference"
               maxLength={2000}
-              className="border-2 border-[#FF2E9A]/50 bg-white text-[#0A2B6D]"
+              className="text-[#0A2B6D]"
+              style={GRADIENT_BORDER_STYLE}
               value={form.reason || ''}
               onChange={(e) => set('reason', e.target.value)}
             />
@@ -170,8 +172,8 @@ export default function StaffAuthorisationCard({ staff, type, onUpdated }) {
                   key={status}
                   variant="outline"
                   size="sm"
-                  className="rounded-full bg-white font-extrabold text-[#0A2B6D]"
-                  style={{ border: `2px solid ${btnCol}`, color: '#0A2B6D' }}
+                  className="rounded-full font-extrabold text-[#0A2B6D]"
+                  style={GRADIENT_BORDER_STYLE}
                   disabled={
                     busy ||
                     (status === 'Consent received' &&

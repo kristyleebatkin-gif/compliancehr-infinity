@@ -94,24 +94,33 @@ export default function CompleteProfile13SectionNavigator({ kind = 'staff', prof
                 </span>
               </div>
               <h3
-                className="mt-0.5 text-xs sm:text-sm font-extrabold bg-clip-text text-transparent"
-                style={{
-                  backgroundImage:
-                    'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
-                }}
+                className="mt-0.5 text-xs sm:text-sm font-extrabold text-[#0A2B6D]"
+                style={{ color: '#0A2B6D' }}
               >
-                ◉ {profile?.full_name || (isParticipant ? 'Participant Profile' : 'Employee Profile')} — Complete Subject Command Centre
+                <span style={{ color: '#0072FF' }}>◉</span> {profile?.full_name || (isParticipant ? 'Participant Profile' : 'Employee Profile')} — Complete Subject Command Centre
               </h3>
             </div>
           </div>
 
-          {/* Small Header Tiles with App Design Coloured Borders on White */}
+          {/* Small Header Tiles with App Design Coloured Gradient Borders on White */}
           <div className="flex flex-wrap items-center gap-1.5">
-            <span className="inline-flex items-center gap-1 rounded-full border-2 border-[#0072FF] bg-white px-2.5 py-1 text-[10px] font-extrabold text-[#0A2B6D]">
+            <span
+              className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-extrabold text-[#0A2B6D]"
+              style={{
+                border: '2px solid transparent',
+                background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+              }}
+            >
               <span style={{ color: '#0072FF' }}>◉</span>
               <span style={{ color: '#0A2B6D' }}>Green · Compliant &amp; Active</span>
             </span>
-            <span className="inline-flex items-center gap-1 rounded-full border-2 border-[#5A00D6] bg-white px-2.5 py-1 text-[10px] font-extrabold text-[#0A2B6D]">
+            <span
+              className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-extrabold text-[#0A2B6D]"
+              style={{
+                border: '2px solid transparent',
+                background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+              }}
+            >
               <span style={{ color: '#5A00D6' }}>◉</span>
               <span style={{ color: '#0A2B6D' }}>
                 {isParticipant ? '9 Sections · 16 Domains' : '9 Sections · 13 Domains'}
@@ -222,10 +231,22 @@ export default function CompleteProfile13SectionNavigator({ kind = 'staff', prof
         })}
       </div>
 
-      {/* 16-Domain Participant Command Centre Strip (Every Word Pill Has an App Design Coloured Border) */}
+      {/* 16-Domain Participant Command Centre Strip (Every Word Pill Has an App Design Coloured Gradient Border) */}
       {isParticipant && (
-        <div className="rounded-xl border-2 border-[#5A00D6] bg-white p-2.5 space-y-1.5">
-          <span className="inline-flex items-center gap-1 rounded-full border-2 border-[#0072FF] bg-white px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+        <div
+          className="rounded-xl p-2.5 space-y-1.5"
+          style={{
+            border: '2px solid transparent',
+            background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+          }}
+        >
+          <span
+            className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#0A2B6D]"
+            style={{
+              border: '2px solid transparent',
+              background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+            }}
+          >
             <span style={{ color: '#0072FF' }}>◉</span> All 16 Participant Command Centre Domains (One Location)
           </span>
           <div className="flex flex-wrap gap-1.5">
@@ -236,8 +257,12 @@ export default function CompleteProfile13SectionNavigator({ kind = 'staff', prof
                 <Link
                   key={dom.label}
                   to={dom.to}
-                  className="inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D] transition hover:bg-[#F5F0FF]"
-                  style={{ border: `2px solid ${bCol}`, color: '#0A2B6D' }}
+                  className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D] transition hover:opacity-90"
+                  style={{
+                    border: '2px solid transparent',
+                    background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+                    color: '#0A2B6D',
+                  }}
                 >
                   <span style={{ color: bCol }}>◉</span>
                   <span>{dom.label}</span>
@@ -248,9 +273,21 @@ export default function CompleteProfile13SectionNavigator({ kind = 'staff', prof
         </div>
       )}
 
-      {/* Tool Visibility Rule: 6 Instant Profile Actions (Every Word Pill Has an App Design Coloured Border on White) */}
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#0072FF] bg-white px-3 py-2">
-        <span className="inline-flex items-center gap-1.5 rounded-full border-2 border-[#5A00D6] bg-white px-2.5 py-0.5 text-[11px] font-extrabold text-[#0A2B6D]">
+      {/* Tool Visibility Rule: 6 Instant Profile Actions (Every Word Pill Has an App Design Coloured Gradient Border on White) */}
+      <div
+        className="flex flex-wrap items-center justify-between gap-2 rounded-xl px-3 py-2"
+        style={{
+          border: '2px solid transparent',
+          background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+        }}
+      >
+        <span
+          className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-extrabold text-[#0A2B6D]"
+          style={{
+            border: '2px solid transparent',
+            background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+          }}
+        >
           <Wrench className="h-3.5 w-3.5 text-[#5A00D6]" />
           <span style={{ color: '#0A2B6D' }}>Available Profile Actions &amp; Tools</span>
         </span>
@@ -262,8 +299,12 @@ export default function CompleteProfile13SectionNavigator({ kind = 'staff', prof
               <Link
                 key={tool.label}
                 to={tool.to}
-                className="inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D] transition hover:bg-[#F5F0FF]"
-                style={{ border: `2px solid ${bCol}`, color: '#0A2B6D' }}
+                className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D] transition hover:opacity-90"
+                style={{
+                  border: '2px solid transparent',
+                  background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+                  color: '#0A2B6D',
+                }}
               >
                 <span style={{ color: bCol }}>◉</span>
                 <span>{tool.label}</span>
@@ -274,9 +315,21 @@ export default function CompleteProfile13SectionNavigator({ kind = 'staff', prof
         </div>
       </div>
 
-      {/* Related Resources & Single-Source Access Paths (Every Word Pill Has an App Design Coloured Border on White) */}
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[#FF2E9A] bg-white px-3 py-2 text-[11px] font-extrabold text-[#0A2B6D]">
-        <span className="inline-flex items-center gap-1.5 rounded-full border-2 border-[#0072FF] bg-white px-2.5 py-0.5 text-[#0A2B6D]">
+      {/* Related Resources & Single-Source Access Paths (Every Word Pill Has an App Design Coloured Gradient Border on White) */}
+      <div
+        className="flex flex-wrap items-center justify-between gap-2 rounded-xl px-3 py-2 text-[11px] font-extrabold text-[#0A2B6D]"
+        style={{
+          border: '2px solid transparent',
+          background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+        }}
+      >
+        <span
+          className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[#0A2B6D]"
+          style={{
+            border: '2px solid transparent',
+            background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+          }}
+        >
           <Layers className="h-3.5 w-3.5 text-[#0072FF]" />
           <span style={{ color: '#0A2B6D' }}>Related Resources, Evidence &amp; Registers</span>
         </span>
@@ -291,8 +344,12 @@ export default function CompleteProfile13SectionNavigator({ kind = 'staff', prof
             <Link
               key={res.label}
               to={res.to}
-              className="inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D] transition hover:bg-[#F5F0FF]"
-              style={{ border: `2px solid ${res.color}`, color: '#0A2B6D' }}
+              className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10.5px] font-extrabold text-[#0A2B6D] transition hover:opacity-90"
+              style={{
+                border: '2px solid transparent',
+                background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+                color: '#0A2B6D',
+              }}
             >
               <span style={{ color: res.color }}>◉</span>
               <span>{res.label}</span>

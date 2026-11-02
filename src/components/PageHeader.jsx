@@ -66,19 +66,19 @@ export default function PageHeader({
             <div className="flex min-w-0 w-full flex-wrap items-center justify-between gap-2.5 rounded-[14px] bg-white px-3.5 py-2.5">
               <div className="flex min-w-0 items-center gap-2.5">
                 <div
-                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white shadow-2xs"
-                  style={{ border: '2px solid #0072FF' }}
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl shadow-2xs"
+                  style={{
+                    border: '2px solid transparent',
+                    background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+                  }}
                 >
                   <Icon className="h-4.5 w-4.5 shrink-0" style={{ color: '#0072FF' }} />
                 </div>
-                <h1 className="text-base sm:text-xl font-extrabold leading-tight tracking-tight">
-                  <span style={{ color: '#5A00D6' }}>◉</span>{' '}
-                  <span
-                    className="bg-clip-text text-transparent"
-                    style={{ backgroundImage: HEADING_TEXT_GRADIENT }}
-                  >
-                    {title}
-                  </span>
+                <h1
+                  className="text-base sm:text-xl font-extrabold leading-tight tracking-tight text-[#0A2B6D]"
+                  style={{ color: '#0A2B6D' }}
+                >
+                  <span style={{ color: '#5A00D6' }}>◉</span> {title}
                 </h1>
               </div>
 

@@ -163,21 +163,24 @@ export default function MyWorkArea9Panel({ compact = false }) {
                 </span>
               </div>
               <h3
-                className="mt-0.5 text-sm sm:text-base font-extrabold bg-clip-text text-transparent"
-                style={{
-                  backgroundImage:
-                    'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
-                }}
+                className="mt-0.5 text-sm sm:text-base font-extrabold text-[#0A2B6D]"
+                style={{ color: '#0A2B6D' }}
               >
-                ◉ My Tasks · Actions · Reviews · Approvals · Communications · Skills · Certifications · Consents · Documents · Schedule · Compliance
+                <span style={{ color: '#0072FF' }}>◉</span> My Tasks · Actions · Reviews · Approvals · Communications · Skills · Certifications · Consents · Documents · Schedule · Compliance
               </h3>
             </div>
           </div>
 
-          {/* Small Header Tiles with App Design Coloured Borders on White */}
+          {/* Small Header Tiles with App Design Coloured Gradient Borders on White */}
           <div className="flex flex-wrap items-center gap-1.5">
             {user?.email && (
-              <span className="inline-flex items-center gap-1 rounded-full border-2 border-[#5A00D6] bg-white px-2.5 py-1 text-[10px] font-extrabold text-[#0A2B6D]">
+              <span
+                className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-extrabold text-[#0A2B6D]"
+                style={{
+                  border: '2px solid transparent',
+                  background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+                }}
+              >
                 <span style={{ color: '#5A00D6' }}>◉</span>
                 <span style={{ color: '#0A2B6D' }}>{user.full_name || user.email}</span>
               </span>
@@ -187,8 +190,12 @@ export default function MyWorkArea9Panel({ compact = false }) {
               variant="outline"
               onClick={loadWorkArea}
               disabled={loading}
-              className="h-7 rounded-full border-2 border-[#0072FF] bg-white px-3 text-[11px] font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
-              style={{ borderColor: '#0072FF', color: '#0A2B6D' }}
+              className="h-7 rounded-full px-3 text-[11px] font-extrabold text-[#0A2B6D] hover:opacity-90"
+              style={{
+                border: '2px solid transparent',
+                background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+                color: '#0A2B6D',
+              }}
             >
               <RefreshCw className={`mr-1 h-3 w-3 text-[#0072FF] ${loading ? 'animate-spin' : ''}`} />
               <span style={{ color: '#0A2B6D' }}>Sync</span>
@@ -300,7 +307,13 @@ export default function MyWorkArea9Panel({ compact = false }) {
         >
           <div className="rounded-[14px] bg-white p-3 space-y-2">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full border-2 border-[#0072FF] bg-white px-3 py-0.5 text-xs font-extrabold text-[#0A2B6D]">
+              <span
+                className="inline-flex items-center gap-1.5 rounded-full px-3 py-0.5 text-xs font-extrabold text-[#0A2B6D]"
+                style={{
+                  border: '2px solid transparent',
+                  background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+                }}
+              >
                 <span style={{ color: '#0072FF' }}>◉</span>
                 <span style={{ color: '#0A2B6D' }}>
                   {currentMeta.label} ({items.length} active records)
@@ -308,15 +321,25 @@ export default function MyWorkArea9Panel({ compact = false }) {
               </span>
               <Link
                 to={currentMeta.href}
-                className="inline-flex items-center gap-1 rounded-full border-2 border-[#5A00D6] bg-white px-3 py-0.5 text-[11px] font-extrabold text-[#0A2B6D] hover:bg-[#F5F0FF]"
-                style={{ color: '#0A2B6D' }}
+                className="inline-flex items-center gap-1 rounded-full px-3 py-0.5 text-[11px] font-extrabold text-[#0A2B6D] hover:opacity-90"
+                style={{
+                  border: '2px solid transparent',
+                  background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+                  color: '#0A2B6D',
+                }}
               >
                 <span style={{ color: '#5A00D6' }}>◉</span>
                 <span>View full register →</span>
               </Link>
             </div>
             {items.length === 0 ? (
-              <div className="rounded-xl border-2 border-[#0072FF] bg-white px-3 py-2 text-xs font-bold text-[#0A2B6D]">
+              <div
+                className="rounded-xl px-3 py-2 text-xs font-bold text-[#0A2B6D]"
+                style={{
+                  border: '2px solid transparent',
+                  background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+                }}
+              >
                 <span style={{ color: '#0072FF' }}>◉</span> No pending items in {currentMeta.label}. Everything is up to date.
               </div>
             ) : (
@@ -327,8 +350,11 @@ export default function MyWorkArea9Panel({ compact = false }) {
                   return (
                     <div
                       key={item.id}
-                      className="rounded-xl bg-white p-2.5 flex items-center justify-between gap-2 shadow-2xs"
-                      style={{ border: `2px solid ${bCol}` }}
+                      className="rounded-xl p-2.5 flex items-center justify-between gap-2 shadow-2xs"
+                      style={{
+                        border: '2px solid transparent',
+                        background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
+                      }}
                     >
                       <div className="min-w-0">
                         <div className="text-xs font-extrabold text-[#0A2B6D]" style={{ color: '#0A2B6D' }}>

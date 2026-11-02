@@ -80,13 +80,24 @@ export default function ProfileQuickSquares({ profile, kind, personal = false })
     if (src) window.open(src, '_blank', 'noopener');
   };
 
+  const GRADIENT_BORDER_STYLE = {
+    border: '2px solid transparent',
+    background:
+      'linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box',
+  };
   const Row = ({ children }) => (
-    <li className="break-words rounded-lg border-2 border-[#0072FF] bg-white px-2.5 py-1 text-[11px] font-bold leading-relaxed text-[#0A2B6D]">
+    <li
+      className="break-words rounded-lg px-2.5 py-1 text-[11px] font-bold leading-relaxed text-[#0A2B6D]"
+      style={GRADIENT_BORDER_STYLE}
+    >
       <span style={{ color: '#0072FF' }}>◉</span> {children}
     </li>
   );
   const MiniTitle = ({ icon: Icon, children }) => (
-    <p className="mb-1 inline-flex items-center gap-1.5 rounded-full border-2 border-[#5A00D6] bg-white px-2.5 py-0.5 text-[11px] font-extrabold text-[#0A2B6D]">
+    <p
+      className="mb-1 inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-extrabold text-[#0A2B6D]"
+      style={GRADIENT_BORDER_STYLE}
+    >
       <Icon className="h-3 w-3 text-[#5A00D6]" />
       <span style={{ color: '#0A2B6D' }}>{children}</span>
     </p>

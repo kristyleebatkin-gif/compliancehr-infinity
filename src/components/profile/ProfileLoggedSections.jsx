@@ -6,10 +6,19 @@ import ProfileAllLogs from '@/components/profile/ProfileAllLogs';
 
 const CONSENT = /(?:audit consent|consent to share information|consent to act as an advocate|medication consent):/i;
 
+const GRADIENT_BORDER_STYLE = {
+  border: '2px solid transparent',
+  background:
+    'linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box',
+};
+
 function LogList({ lines, empty }) {
   if (!lines.length) {
     return (
-      <p className="rounded-lg border-2 border-[#0072FF] bg-white px-2.5 py-1.5 text-[11px] font-bold text-[#0A2B6D]">
+      <p
+        className="rounded-lg px-2.5 py-1.5 text-[11px] font-bold text-[#0A2B6D]"
+        style={GRADIENT_BORDER_STYLE}
+      >
         <span style={{ color: '#0072FF' }}>◉</span> {empty}
       </p>
     );
@@ -19,7 +28,8 @@ function LogList({ lines, empty }) {
       {lines.map((line, i) => (
         <li
           key={i}
-          className="break-words rounded-lg border-2 border-[#5A00D6] bg-white px-2.5 py-1 text-[11px] font-bold leading-relaxed text-[#0A2B6D]"
+          className="break-words rounded-lg px-2.5 py-1 text-[11px] font-bold leading-relaxed text-[#0A2B6D]"
+          style={GRADIENT_BORDER_STYLE}
         >
           <span style={{ color: '#5A00D6' }}>◉</span> {line}
         </li>

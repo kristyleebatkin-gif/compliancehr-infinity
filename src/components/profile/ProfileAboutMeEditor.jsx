@@ -6,8 +6,11 @@ import { Textarea } from '@/components/ui/textarea';
 import { Loader2, Save, Sparkles } from 'lucide-react';
 import { businessDateTime } from '@/lib/intakeCases';
 
-const HEADING_TEXT_GRADIENT =
-  'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)';
+const GRADIENT_BORDER_STYLE = {
+  border: '2px solid transparent',
+  background:
+    'linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box',
+};
 
 export default function ProfileAboutMeEditor({ profile, kind, onUpdated, compact = false }) {
   const { user } = useAuth();
@@ -47,21 +50,18 @@ export default function ProfileAboutMeEditor({ profile, kind, onUpdated, compact
   return (
     <section
       data-profile-tone="about"
-      className={`min-w-0 rounded-xl border-2 border-[#5A00D6] bg-white shadow-2xs ${
+      className={`min-w-0 rounded-xl shadow-2xs ${
         compact ? 'profile-uniform-box p-2.5' : 'p-3'
       }`}
+      style={GRADIENT_BORDER_STYLE}
     >
       <label
         htmlFor={`about-${kind}-${profile.id}`}
-        className="mb-2 flex items-center gap-1.5 rounded-lg border-2 border-[#0072FF] bg-white px-3 py-1 text-sm font-extrabold"
+        className="mb-2 flex items-center gap-1.5 rounded-lg px-3 py-1 text-sm font-extrabold text-[#0A2B6D]"
+        style={GRADIENT_BORDER_STYLE}
       >
         <Sparkles className="h-4 w-4 text-[#0072FF]" />
-        <span
-          className="bg-clip-text text-transparent font-extrabold"
-          style={{ backgroundImage: HEADING_TEXT_GRADIENT }}
-        >
-          About Me
-        </span>
+        <span className="font-extrabold text-[#0A2B6D]">About Me</span>
       </label>
       <Textarea
         id={`about-${kind}-${profile.id}`}
@@ -72,19 +72,21 @@ export default function ProfileAboutMeEditor({ profile, kind, onUpdated, compact
           setValue(event.target.value);
           setSaved(false);
         }}
-        className="border-2 border-[#5A00D6]/45 bg-white text-xs font-semibold text-[#0A2B6D]"
+        className="text-xs font-semibold text-[#0A2B6D]"
+        style={GRADIENT_BORDER_STYLE}
         placeholder="Interests, story and anything to share."
       />
       <div className="mt-2 flex items-center justify-end gap-2">
         {saved && (
-          <span role="status" className="text-xs font-bold text-[#0072FF]">
+          <span role="status" className="text-xs font-bold text-[#0A2B6D]">
             Saved
           </span>
         )}
         <Button
           size="sm"
           variant="outline"
-          className="rounded-full border-2 border-[#0072FF] bg-white font-extrabold text-[#0A2B6D]"
+          className="rounded-full font-extrabold text-[#0A2B6D]"
+          style={GRADIENT_BORDER_STYLE}
           disabled={saving || value === (profile.about_me || '')}
           onClick={save}
         >
