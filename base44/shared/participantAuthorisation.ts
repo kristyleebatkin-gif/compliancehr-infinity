@@ -6,7 +6,7 @@ export async function recordParticipantAuthorisation(base44, user, body, profile
   if (!['sharing', 'advocacy', 'medication'].includes(type) || !['Consent received', 'Declined', 'Withdrawn'].includes(body.status)) {
     return Response.json({ error: 'A valid consent type and status are required' }, { status: 400 });
   }
-  const fields = {};
+  const fields = { granted_by: '', authorised_person: '', scope: '', reason: '' };
   for (const key of ['granted_by', 'authorised_person', 'scope', 'reason']) {
     fields[key] = String(body[key] || '').trim();
     if (fields[key].length > (['scope', 'reason'].includes(key) ? 2000 : 200)) return Response.json({ error: 'Consent details are too long' }, { status: 400 });

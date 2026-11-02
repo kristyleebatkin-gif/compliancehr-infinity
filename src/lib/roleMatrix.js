@@ -349,18 +349,19 @@ export function scopeQueryToTenant(query = {}, tenantId = null) {
   };
 }
 
-export function stampTenantWritePayload(payload = {}, user, explicitTenantId = null) {
+export function stampTenantWritePayload(payload = { tenant_id: undefined }, user = null, explicitTenantId = null) {
   if (!hasApprovedAccess(user)) {
     throw new Error('Active approved user is required to write records.');
   }
   const userTenantId = user.tenant_id || user.data?.tenant_id || null;
+  const incomingTenantId = payload && typeof payload === 'object' && 'tenant_id' in payload ? payload.tenant_id : undefined;
   if (explicitTenantId && userTenantId && explicitTenantId !== userTenantId) {
     throw new Error('Cross-tenant write denied: cannot write to another tenant.');
   }
-  if (payload?.tenant_id && userTenantId && payload.tenant_id !== userTenantId) {
+  if (incomingTenantId && userTenantId && incomingTenantId !== userTenantId) {
     throw new Error('Cross-tenant write denied: payload tenant_id does not match user tenant.');
   }
-  const resolved = explicitTenantId || userTenantId || payload?.tenant_id || undefined;
+  const resolved = explicitTenantId || userTenantId || incomingTenantId || undefined;
   return resolved ? { ...payload, tenant_id: resolved } : { ...payload };
 }
 

@@ -1,6 +1,11 @@
 {
   "extends": "./jsconfig.json",
   "compilerOptions": {
+    "allowJs": true,
+    "checkJs": false,
+    "allowImportingTsExtensions": true,
     "noEmit": true
-  }
+  },
+  "include": ["src/**/*.js", "src/**/*.jsx", "base44/shared/**/*.ts"],
+  "exclude": ["node_modules", "dist", "base44/shared/staffBadge.ts"]
 }

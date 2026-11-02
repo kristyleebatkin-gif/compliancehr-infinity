@@ -26,7 +26,7 @@ export function evidenceTypes(label) {
   const prefix = normalise(raw.split(/\s[-–—|]\s/)[0]);
   return byLabel.has(prefix) ? [byLabel.get(prefix)] : ALIASES[prefix] || [];
 }
-export function compileFileRows(staff, documentGroups, checklistEntries, ambiguousNames = []) {
+export function compileFileRows(staff = [], documentGroups = [], checklistEntries = [], ambiguousNames = []) {
   const evidence = new Map(staff.map((person) => [person.id, new Set()]));
   const byId = new Map(staff.map((person) => [person.id, person]));
   const byNumber = new Map(staff.filter((person) => person.employee_number).map((person) => [person.employee_number, person]));
@@ -40,21 +40,25 @@ export function compileFileRows(staff, documentGroups, checklistEntries, ambiguo
     const person = byId.get(group.employee_id) || byNumber.get(group.employee_id) || (!group.employee_id && named.length === 1 && !ambiguousNames.includes(group.employee_name) ? named[0] : null);
     if (!person) continue;
     const labels = group.document_type === 'Other' ? evidenceTypes(group.title) : evidenceTypes(group.document_type);
-    for (const type of labels) evidence.get(person.id).add(type);
+    const personSet = evidence.get(person.id);
+    if (personSet) for (const type of labels) personSet.add(type);
   }
   const seen = new Set();
   for (const entry of checklistEntries) {
     const id = String(entry.checklist_key).slice('staff-file-checklist-'.length);
     if (!evidence.has(id) || seen.has(id)) continue;
     seen.add(id);
-    let answers;
+    let answers = {};
     try { answers = JSON.parse(entry.answers || '{}'); } catch { continue; }
+    const personSet = evidence.get(id);
     for (const [label, answer] of Object.entries(answers)) {
-      if (answer?.on_file) for (const type of evidenceTypes(label)) evidence.get(id).add(type);
+      if (answer && typeof answer === 'object' && 'on_file' in answer && answer.on_file && personSet) {
+        for (const type of evidenceTypes(label)) personSet.add(type);
+      }
     }
   }
   return staff.map((person) => {
-    const found = evidence.get(person.id);
+    const found = evidence.get(person.id) || new Set();
     const missing = HR_FILE_TYPES.filter((type) => !found.has(type));
     return { id: person.id, name: person.full_name, status: person.status || 'Active', onFile: found.size, total: HR_FILE_TYPES.length,
       pct: Math.round(found.size / HR_FILE_TYPES.length * 100), missing, missingCount: missing.length };
