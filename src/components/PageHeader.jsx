@@ -15,21 +15,22 @@ import { resolveAuditModule } from '@/lib/moduleAuditReport';
  * Directly beneath: live compliance tracker, Audit Checklist export and Audit Report — always shown.
  * Sizing/colour/border/font are enforced in src/index.css (".app-page-header").
  */
+/** @param {any} props */
 export default function PageHeader({
-  title,
-  subtitle,
-  description: descriptionProp,
-  action,
-  actions,
+  title = '',
+  subtitle = undefined,
+  description: descriptionProp = undefined,
+  action = undefined,
+  actions = undefined,
   icon: Icon = LayoutGrid,
   className = undefined,
-  under,
-  beforeAudit,
-  afterAudit,
+  under = undefined,
+  beforeAudit = undefined,
+  afterAudit = undefined,
   compactActions = true,
-  actionClassName,
-  auditClassName,
-}) {
+  actionClassName = undefined,
+  auditClassName = undefined,
+} = {}) {
   const { pathname } = useLocation();
   const seg = `/${pathname.split('/')[1] || ''}`;
   const description = subtitle || descriptionProp || resolveAuditModule(seg)?.blurb || '';

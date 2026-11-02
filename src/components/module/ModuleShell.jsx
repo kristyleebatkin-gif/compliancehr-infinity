@@ -8,6 +8,7 @@ import '@/components/module/moduleShell.css';
 const TOP_BORDER_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
 
+/** @param {any} props */
 export default function ModuleShell({
   embedded = false,
   header = null,
@@ -24,8 +25,8 @@ export default function ModuleShell({
   small = null,
   medium = null,
   large = [],
-  children,
-}) {
+  children = null,
+} = {}) {
   const colour = moduleKeyColour(moduleKey) || '#0072FF';
   const rows = (
     <div className="module-shell-workspace min-w-0 space-y-4" style={{ '--module-colour': colour }}>

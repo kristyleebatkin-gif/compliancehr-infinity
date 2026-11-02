@@ -50,18 +50,26 @@ export default async function(req: Request) {
         return Response.json({ error: 'Recipients must be registered app users or contacts stored in the app' }, { status: 403 });
       }
     }
-    const attachments = Array.isArray(body.attachments)
-      ? body.attachments
-        .slice(0, 5)
-        .filter((a) => a && String(a.filename || '').trim() && String(a.file_url || a.content || '').trim())
-        .filter((a) => a.content || isAppFileUrl(String(a.file_url)))
-        .map((a) => {
-          const item = { filename: String(a.filename).trim() };
-          if (a.content) item.content = String(a.content);
-          else item.file_url = String(a.file_url);
-          return item;
-        })
-      : undefined;
+    const rawAttachments = Array.isArray(body.attachments) ? body.attachments.slice(0, 5) : [];
+    const resolvedAttachments = [];
+    for (const a of rawAttachments) {
+      if (!a || !String(a.filename || '').trim()) continue;
+      const filename = String(a.filename).trim();
+      if (a.content) {
+        resolvedAttachments.push({ filename, content: String(a.content) });
+      } else if (a.file_uri) {
+        const signed = await base44.asServiceRole.integrations.Core.CreateFileSignedUrl({
+          file_uri: String(a.file_uri),
+          expires_in: 300,
+        });
+        if (signed?.signed_url) {
+          resolvedAttachments.push({ filename, file_url: String(signed.signed_url) });
+        }
+      } else if (a.file_url && isAppFileUrl(String(a.file_url))) {
+        resolvedAttachments.push({ filename, file_url: String(a.file_url) });
+      }
+    }
+    const attachments = resolvedAttachments.length > 0 ? resolvedAttachments : undefined;
 
     const [businessPage, providerPage, contactsPage] = await Promise.allSettled([
       base44.asServiceRole.entities.BusinessDetails.list({ sort: '-created_date', limit: 1 }),

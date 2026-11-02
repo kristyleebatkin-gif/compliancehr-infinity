@@ -2,7 +2,8 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { statusTone, ratingTone } from '@/lib/statusStyles';
 
-export default function StatusBadge({ value, className = undefined }) {
+/** @param {any} props */
+export default function StatusBadge({ value = undefined, className = undefined } = {}) {
   const cls = ratingTone[value] || statusTone(value);
   return (
     <span className={cn(

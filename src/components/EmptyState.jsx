@@ -5,16 +5,17 @@ import { moduleColour } from '@/lib/moduleColours';
 
 // No Empty Sections Rule: Where information does not yet exist, always display
 // helpful guidance, quick actions, and create buttons — never large empty areas.
+/** @param {any} props */
 export default function EmptyState({
-  icon: Icon,
-  title,
-  message,
-  subtitle,
-  action,
+  icon: Icon = undefined,
+  title = undefined,
+  message = undefined,
+  subtitle = undefined,
+  action = undefined,
   modulePath = 'General',
   createHref = '/record-intelligence',
   createLabel = 'Create / File Record',
-}) {
+} = {}) {
   const accent = moduleColour(modulePath);
   return (
     <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-[#0A2B6D]/25 bg-[#F5F0FF]/35 px-5 py-6 text-center">

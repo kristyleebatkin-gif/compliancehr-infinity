@@ -60,8 +60,8 @@ export default function ProfessionalEmail() {
     try {
       const uploaded = [];
       for (const file of files.slice(0, 5)) {
-        const res = await base44.integrations.Core.UploadPublicFile({ file });
-        if (res?.file_url) uploaded.push({ filename: file.name, file_url: res.file_url });
+        const res = await base44.integrations.Core.UploadPrivateFile({ file });
+        if (res?.file_uri) uploaded.push({ filename: file.name, file_uri: res.file_uri });
       }
       const response = await base44.functions.invoke('sendProfessionalEmail', {
         recipients,
@@ -82,7 +82,7 @@ export default function ProfessionalEmail() {
         body: form.body,
         entry_date: form.date,
         entry_time: new Date().toTimeString().slice(0, 5),
-        attachments_json: JSON.stringify(uploaded.map((u) => ({ name: u.filename, uri: u.file_url }))),
+        attachments_json: JSON.stringify(uploaded.map((u) => ({ name: u.filename, uri: u.file_uri }))),
         recipients_json: JSON.stringify(recipients.map((r) => ({ email: r }))),
         send_copy_emails: recipients,
         email_sent: true,
@@ -111,7 +111,7 @@ export default function ProfessionalEmail() {
         <div className="flex items-center gap-2 text-sm font-semibold"><Mail className="h-4 w-4 text-brand" />Send a professional email</div>
         <Button variant="outline" size="sm" onClick={() => setPickerOpen(true)}><BookMarked className="h-3.5 w-3.5" />Use template</Button>
       </div>
-      <p className="mb-4 text-xs text-muted-foreground">Every email is wrapped in the company letterhead: business name and logo header, date, subject, attention line and greeting, then a footer with the administrative team, ABN, contact details, business goal, mission, vision, values, key personnel and a confidentiality disclaimer. Attachments are stored publicly so the mail service can deliver them.</p>
+      <p className="mb-4 text-xs text-muted-foreground">Every email is wrapped in the company letterhead: business name and logo header, date, subject, attention line and greeting, then a footer with the administrative team, ABN, contact details, business goal, mission, vision, values, key personnel and a confidentiality disclaimer. Attachments are uploaded to private storage and signed temporarily for mail delivery.</p>
       <div className="grid gap-3 md:grid-cols-2">
         <div className="grid gap-1.5 md:col-span-2">
           <div className="flex flex-wrap gap-2">

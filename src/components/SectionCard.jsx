@@ -56,17 +56,18 @@ function resolveSectionSubject(title = '', description = '') {
   return { label: 'Operations & Records', Icon: Sparkles };
 }
 
+/** @param {any} props */
 export default function SectionCard({
-  title,
-  subject,
-  description,
-  action,
-  children,
+  title = undefined,
+  subject = undefined,
+  description = undefined,
+  action = undefined,
+  children = undefined,
   className = undefined,
   collapsible = false,
   defaultOpen = false,
   ...props
-}) {
+} = {}) {
   const contentId = useId();
   const [expanded, setExpanded] = useState(
     !collapsible || defaultOpen || (props.id && window.location.hash === `#${props.id}`)

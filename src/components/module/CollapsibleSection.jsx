@@ -13,7 +13,8 @@ function hashIndex(str = '') {
   return h;
 }
 
-export default function CollapsibleSection({ title, subject, children, defaultOpen = true }) {
+/** @param {any} props */
+export default function CollapsibleSection({ title = undefined, subject = undefined, children = undefined, defaultOpen = true } = {}) {
   const [open, setOpen] = useState(defaultOpen);
   const seed = hashIndex(title || subject || 'section');
 

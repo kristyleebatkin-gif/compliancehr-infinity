@@ -230,16 +230,23 @@ export function analyzeNoteForHighValueTriggers(noteText = '') {
   };
 }
 
-export async function executeAutomaticRuleClosure(rule, user) {
+export async function executeAutomaticRuleClosure(rule, user, { signature = '', participantId = '', employeeId = '', evidenceUri = '' } = {}) {
+  if (!user?.id || user?.account_status !== 'Active' || user?.access_approved !== true) {
+    throw new Error('Active, approved user session is required to submit task closure evidence.');
+  }
+  const cleanSignature = String(signature || user?.full_name || user?.email || '').trim();
+  if (!cleanSignature) {
+    throw new Error('Explicit user attribution is required to submit task closure.');
+  }
   const today = new Date().toISOString().slice(0, 10);
-  const actor = user?.full_name || user?.email || 'Automatic Evidence Closure Engine';
-  const stampId = `AUTO-CLOSE-${Date.now().toString().slice(-6)}`;
+  const actor = user.full_name || user.email;
+  const stampId = `CLOSURE-${Date.now().toString().slice(-6)}`;
 
-  // 1. Find any open matching task or create a verified auto-closed task entry
+  // 1. Find any open matching task or create a submitted task entry awaiting review
   const existingOpen = await base44.entities.TodoTask.filter(
     { status: { $in: ['Open', 'In Progress', 'Pending', 'Pending Approval'] } },
     { sort: '-created_date', limit: 25 }
-  ).catch(() => ({ items: [] }));
+  );
 
   const openItems = existingOpen?.items || [];
   const keyword = rule.title.split(' ')[1]?.toLowerCase() || '';
@@ -247,59 +254,60 @@ export async function executeAutomaticRuleClosure(rule, user) {
 
   if (matchedTask) {
     await base44.entities.TodoTask.update(matchedTask.id, {
-      status: 'Completed',
+      status: 'Pending Approval',
       completed_date: today,
-      completed_by: `${actor} (Auto-Verified by Evidence Engine)`,
-      signed_off_by: actor,
-      signed_off_date: today,
-      signature: `AUTO-EVIDENCE-STAMP:${stampId}`,
-      notes: `${matchedTask.notes ? matchedTask.notes + '\n' : ''}[${stampId}] Automatically closed: All ${rule.conditions.length} evidence conditions satisfied (${rule.conditions.join(', ')}). Updated registers: ${rule.registersUpdated.join(', ')}.`,
-    }).catch(() => {});
+      completed_by: actor,
+      signature: cleanSignature,
+      notes: `${matchedTask.notes ? matchedTask.notes + '\n' : ''}[${stampId}] Submitted by ${actor} for supervisor review. Gates checked: ${rule.conditions.join(', ')}.`,
+    });
   } else {
     await base44.entities.TodoTask.create({
-      title: `[Auto-Completed] ${rule.title.replace(/^\d+\.\s*/, '')} — Evidence Verified`,
+      title: `${rule.title.replace(/^\d+\.\s*/, '')} — Submitted for Review`,
       task_type: rule.category,
       module: rule.category,
       task_date: today,
       due_date: today,
       completed_date: today,
-      completed_by: `${actor} (Auto-Closed)`,
-      signed_off_by: actor,
-      signed_off_date: today,
-      signature: `AUTO-EVIDENCE-STAMP:${stampId}`,
+      completed_by: actor,
+      signature: cleanSignature,
       priority: 'Medium',
-      status: 'Completed',
-      notes: `Automatically closed without manual clicks. Verified gates: ${rule.conditions.join(' ✓ | ')} ✓. Registers updated: ${rule.registersUpdated.join(', ')}.`,
-    }).catch(() => {});
+      status: 'Pending Approval',
+      notes: `Submitted by ${actor} for review. Gates checked: ${rule.conditions.join(' | ')}.`,
+    });
   }
 
-  // 2. Update Checklist / Register record
+  // 2. Create Checklist record in Under Review / Pending Approval state (never self-approved)
   await base44.entities.Checklist.create({
-    title: `[Auto-Closed Evidence] ${rule.title.replace(/^\d+\.\s*/, '')} (${stampId})`,
+    title: `${rule.title.replace(/^\d+\.\s*/, '')} (${stampId})`,
     category: rule.category,
-    status: 'Completed',
-    outcome: 'Compliant',
+    status: 'Under Review',
+    outcome: 'Pending Review',
     reviewer: actor,
     review_date: today,
-    approved_by: actor,
-    approval_date: today,
-    approval_status: 'Approved',
-    digital_signature: `AUTO-EVIDENCE-STAMP:${stampId}`,
+    approval_status: 'Pending Approval',
+    digital_signature: cleanSignature,
     signature_timestamp: new Date().toISOString(),
+    evidence_uri: evidenceUri || undefined,
     items: rule.conditions.map((c) => ({ text: c, done: true })),
-    notes: `Automatic Task Completion & Evidence Closure Engine. Registers updated: ${rule.registersUpdated.join(', ')}.`,
-  }).catch(() => {});
-
-  // 3. File across Universal 6-Destination Storage (Profile, Module, Vault, Company Safe, Reporting, Audit Trail)
-  await saveUniversalRecordAcrossEcosystem({
-    itemType: 'Checklist',
-    title: `${rule.title.replace(/^\d+\.\s*/, '')} — Auto-Closure Evidence (${stampId})`,
-    personType: rule.id.includes('participant') || rule.id.includes('consent') || rule.id.includes('service_agreement') ? 'Participant' : 'Employee',
-    personName: actor,
-    moduleName: rule.category,
-    signature: `AUTO-EVIDENCE-STAMP:${stampId}`,
-    user,
+    notes: `Submitted by ${actor} for compliance review. Target registers: ${rule.registersUpdated.join(', ')}.`,
   });
+
+  // 3. Only file to Universal Storage if a real subject profile ID is provided
+  if (participantId || employeeId) {
+    await saveUniversalRecordAcrossEcosystem({
+      itemType: 'Checklist',
+      title: `${rule.title.replace(/^\d+\.\s*/, '')} — Closure Submission (${stampId})`,
+      personType: participantId ? 'Participant' : 'Employee',
+      personName: actor,
+      participantId: participantId || undefined,
+      employeeId: employeeId || undefined,
+      moduleName: rule.category,
+      signature: cleanSignature,
+      evidenceUri: evidenceUri || undefined,
+      approvalState: 'Submitted',
+      user,
+    });
+  }
 
   return {
     stampId,
@@ -379,15 +387,21 @@ export async function compileAndExportZeroTouchAuditPack(format = 'pdf') {
     base44.entities.ParticipantDocument.filter({}, { sort: '-created_date', limit: 10 }).catch(() => ({ items: [] })),
   ]);
 
+  const asStatus = (n) => (n > 0 ? 'Backed by Live Register Records' : 'Missing Data (0 Records)');
+  const checklistCount = (checklists?.items || []).length;
+  const riskCount = (risks?.items || []).length;
+  const commCount = (comms?.items || []).length;
+  const docCount = (docs?.items || []).length;
+  const consentCount = (consents?.items || []).length;
+  const taskCount = (tasks?.items || []).length;
+
   const rows = [
-    { domain: '1. Participant & Plan Reviews', count: (checklists?.items || []).length || 12, status: 'Auto-Compiled & Stamped', source: 'Review Register & Checklists' },
-    { domain: '2. Risk Assessments & Controls', count: (risks?.items || []).length || 8, status: 'Auto-Compiled & Stamped', source: 'Enterprise Risk Register' },
-    { domain: '3. Participant Goals & Outcomes', count: 16, status: 'Auto-Compiled & Stamped', source: 'Goals & Outcomes Register' },
-    { domain: '4. Shift & Progress Notes', count: (comms?.items || []).length || 24, status: 'Auto-Compiled & Stamped', source: 'Communications & Shift Note Ledger' },
-    { domain: '5. Service Agreements', count: (docs?.items || []).length || 14, status: 'Auto-Compiled & Stamped', source: 'Participant Document Vault' },
-    { domain: '6. Signed Consents (Participant & Staff)', count: (consents?.items || []).length || 19, status: 'Auto-Compiled & Stamped', source: 'Master Consent Registers' },
-    { domain: '7. Multi-Channel Communications', count: (comms?.items || []).length || 24, status: 'Auto-Compiled & Stamped', source: '6-Stage Communication Register' },
-    { domain: '8. Workforce Training & Competency Records', count: (tasks?.items || []).length || 18, status: 'Auto-Compiled & Stamped', source: 'Training & Competency Register' },
+    { domain: '1. Participant & Plan Reviews', count: checklistCount, status: asStatus(checklistCount), source: 'Review Register & Checklists' },
+    { domain: '2. Risk Assessments & Controls', count: riskCount, status: asStatus(riskCount), source: 'Enterprise Risk Register' },
+    { domain: '3. Shift & Progress Notes', count: commCount, status: asStatus(commCount), source: 'Communications & Shift Note Ledger' },
+    { domain: '4. Service Agreements & Participant Documents', count: docCount, status: asStatus(docCount), source: 'Participant Document Vault' },
+    { domain: '5. Signed Consents (Participant & Staff)', count: consentCount, status: asStatus(consentCount), source: 'Master Consent Registers' },
+    { domain: '6. Completed Governance & Competency Tasks', count: taskCount, status: asStatus(taskCount), source: 'Task & Competency Register' },
   ];
 
   exportUniversalData(

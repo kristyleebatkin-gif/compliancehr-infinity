@@ -10,7 +10,8 @@ function hashIndex(str = '') {
   return h;
 }
 
-export default function StatCard({ label, value, icon: Icon, trend, onClick, index }) {
+/** @param {any} props */
+export default function StatCard({ label = undefined, value = undefined, icon: Icon = undefined, trend = undefined, onClick = undefined, index = undefined } = {}) {
   const seed = typeof index === 'number' ? index : hashIndex(String(label || value || '0'));
   const tile = getTilePalette(seed);
   const sym = getSymbolView(seed);
