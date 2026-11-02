@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { base44 } from '@/api/base44Client';
+import { base44, setClientTenantContext } from '@/api/base44Client';
 import { appParams } from '@/lib/app-params';
 import { hasApprovedAccess } from '@/lib/roles';
 
@@ -87,6 +87,7 @@ export const AuthProvider = ({ children }) => {
         const { data } = await base44.functions.invoke('acceptProfileInvitation', {});
         if (data.changed) currentUser = await base44.auth.me();
       }
+      setClientTenantContext(currentUser);
       setUser(currentUser);
       setAuthError(null);
       setIsAuthenticated(true);
@@ -117,6 +118,7 @@ export const AuthProvider = ({ children }) => {
   }, [isAuthenticated]);
 
   const logout = (shouldRedirect = true) => {
+    setClientTenantContext(null);
     setUser(null);
     setIsAuthenticated(false);
     

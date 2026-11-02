@@ -24,4 +24,9 @@ export {
   assertTenantRecordAccess,
   scopeQueryToTenant,
   stampTenantWritePayload,
+  isSyntheticParticipantId,
+  detectOrphanParticipantRecords,
+  repairOrphanParticipantDocuments,
+  SYSTEM_GLOBAL_ENTITIES,
+  createTenantScopedEntitiesProxy,
 } from './roleMatrix.ts';

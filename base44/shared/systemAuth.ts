@@ -12,6 +12,8 @@ import {
   assertTenantRecordAccess,
   scopeQueryToTenant,
   stampTenantWritePayload,
+  SYSTEM_GLOBAL_ENTITIES,
+  createTenantScopedEntitiesProxy,
 } from './roleMatrix.ts';
 
 export {
@@ -26,7 +28,15 @@ export {
   assertTenantRecordAccess,
   scopeQueryToTenant,
   stampTenantWritePayload,
+  SYSTEM_GLOBAL_ENTITIES,
+  createTenantScopedEntitiesProxy,
 };
+
+export function getTenantScopedEntities(base44: any, user: any, explicitTenantId: string | null = null) {
+  const tenantId = explicitTenantId || user?.tenant_id || user?.data?.tenant_id || null;
+  const rawEntities = base44?.asServiceRole?.entities || base44?.entities;
+  return createTenantScopedEntitiesProxy(rawEntities, () => ({ user, tenantId }));
+}
 
 // Authorizes a privileged automation function: only an authenticated user
 // with account_status === 'Active', access_approved === true, and one of the
@@ -42,14 +52,16 @@ export async function authorizeSystemCall(base44: any, _body?: any, roles: strin
 
 // Lowercased set of email addresses stored in the app (registered users,
 // staff, participants and contacts).
-export async function appContactEmails(base44: any): Promise<Set<string>> {
+export async function appContactEmails(base44: any, user?: any): Promise<Set<string>> {
   const emails = new Set<string>();
+  const tenantId = user?.tenant_id || user?.data?.tenant_id || null;
+  const baseQuery = scopeQueryToTenant({}, tenantId);
   const results = await Promise.allSettled([
     base44.asServiceRole.entities.User.list(),
-    base44.asServiceRole.entities.StaffProfile.filter({}, { limit: 1000, fields: ['email'] }),
-    base44.asServiceRole.entities.ParticipantProfile.filter({}, { limit: 1000, fields: ['email'] }),
-    base44.asServiceRole.entities.Contact.filter({}, { limit: 1000, fields: ['email'] }),
-    base44.asServiceRole.entities.KeyBusinessContact.filter({ archived: { $ne: true } }, { limit: 1000, fields: ['email'] }),
+    base44.asServiceRole.entities.StaffProfile.filter(baseQuery, { limit: 1000, fields: ['email', 'tenant_id'] }),
+    base44.asServiceRole.entities.ParticipantProfile.filter(baseQuery, { limit: 1000, fields: ['email', 'tenant_id'] }),
+    base44.asServiceRole.entities.Contact.filter(baseQuery, { limit: 1000, fields: ['email', 'tenant_id'] }),
+    base44.asServiceRole.entities.KeyBusinessContact.filter(scopeQueryToTenant({ archived: { $ne: true } }, tenantId), { limit: 1000, fields: ['email', 'tenant_id'] }),
   ]);
   for (const result of results) {
     if (result.status !== 'fulfilled') continue;
