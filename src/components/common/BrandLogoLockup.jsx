@@ -33,23 +33,23 @@ export default function BrandLogoLockup({
 }) {
   const isCustomName = companyName && companyName !== 'ComplianceHR Infinity';
 
-  // Approx 3cm logo size in the top header & footer areas (compact option only if explicitly 'xs')
+  // Only slightly bigger logo with balanced proportions (compact option for sidebar remote)
   const logoSizeClass =
     size === 'xs'
-      ? 'h-[2.2cm] w-[6.2cm] sm:h-[2.5cm] sm:w-[7cm]'
-      : 'h-[2.7cm] w-[7.4cm] sm:h-[3cm] sm:w-[8.4cm]';
+      ? 'h-14 w-36 sm:h-16 sm:w-40'
+      : 'h-16 w-44 sm:h-20 sm:w-52';
 
   // Line 2: Similar-sized structured heading on ONE single line
   const nameSizeClass =
     size === 'xs'
-      ? 'text-lg sm:text-xl'
-      : 'text-xl sm:text-[26px]';
+      ? 'text-base sm:text-lg'
+      : 'text-xl sm:text-2xl';
 
   // Line 3: Slightly smaller slogan on ONE single line that aligns with and extends just slightly past the business name
   const sloganSizeClass =
     size === 'xs'
-      ? 'text-[10px] sm:text-[11px] tracking-[0.01em]'
-      : 'text-[11px] sm:text-[13px] tracking-[0.015em]';
+      ? 'text-[9.5px] sm:text-[10.5px] tracking-[0.01em]'
+      : 'text-[11px] sm:text-[12.5px] tracking-[0.015em]';
 
   const APP_BORDER_GRADIENT =
     'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)';
@@ -63,8 +63,8 @@ export default function BrandLogoLockup({
       }}
     >
       {/* SINGLE UNIFIED WHITE CONTAINER WITH ONE APP-DESIGN GRADIENT BORDER FOR LOGO, NAME & SLOGAN */}
-      <div className="flex w-full flex-col items-center justify-center rounded-[13px] bg-white px-5 py-2.5">
-        {/* LINE 1: LOGO APPROX 3CM IN SIZE */}
+      <div className="flex w-full flex-col items-center justify-center rounded-[13px] bg-white px-5 py-3">
+        {/* LINE 1: LOGO ONLY SLIGHTLY BIGGER */}
         <Image
           src={logoUrl || DEFAULT_BRAND_LOGO}
           alt={companyName || 'ComplianceHR Infinity'}
@@ -72,9 +72,9 @@ export default function BrandLogoLockup({
           className={`${logoSizeClass} shrink-0 object-contain`}
         />
 
-        {/* LINE 2: "ComplianceHR Infinity" ON ONE LINE — DARK BLUE CHANGING INTO APP DESIGN COLOURS TOWARDS THE END */}
+        {/* LINE 2: SUITABLE SPACE BEFORE "ComplianceHR Infinity" ON ONE LINE */}
         <div
-          className={`mt-1 font-editorial ${nameSizeClass} font-extrabold leading-tight tracking-tight whitespace-nowrap`}
+          className={`mt-2.5 font-editorial ${nameSizeClass} font-extrabold leading-tight tracking-tight whitespace-nowrap`}
         >
           {isCustomName ? (
             <span

@@ -234,31 +234,19 @@ export default function ObsidianSidebarRemote({
         {/* Top Blue -> Purple -> Pink Gradient Strip */}
         <div className="h-1.5 w-full shrink-0" style={{ background: BRAND_GRADIENT }} />
 
-        {/* TOP WHITE COMMAND HEADER: Navigator Router Remote + Mode Switcher (No Duplicate Logo) */}
-        <div className="flex shrink-0 flex-col items-center bg-white px-2.5 py-2 text-center shadow-sm">
-          <div
-            className="w-full rounded-xl p-[2px]"
-            style={{ background: BRAND_GRADIENT }}
+        {/* TOP WHITE COMMAND HEADER: Brand Logo Lockup at Top of Nav Router Remote + Mode Switcher */}
+        <div className="flex shrink-0 flex-col items-center bg-white px-2.5 py-2.5 text-center shadow-sm">
+          <Link
+            to="/dashboard"
+            aria-label="ComplianceHR Infinity Home"
+            className="flex w-full justify-center"
           >
-            <div className="rounded-[10px] bg-white px-2.5 py-1.5">
-              <div
-                className="bg-clip-text text-xs font-extrabold tracking-tight text-transparent"
-                style={{
-                  backgroundImage:
-                    'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
-                }}
-              >
-                ◉ Navigator Router Remote
-              </div>
-              <div className="text-[8.5px] font-extrabold text-[#5A00D6]">
-                13 Command Channels · 46 Connected Modules
-              </div>
-            </div>
-          </div>
+            <BrandLogoLockup size="xs" showSlogan className="w-full" />
+          </Link>
 
           {/* Remote Control Mode Switcher */}
           <div
-            className="mt-1.5 grid w-full grid-cols-2 gap-1 rounded-xl p-[2px]"
+            className="mt-2 grid w-full grid-cols-2 gap-1 rounded-xl p-[2px]"
             style={{ background: BRAND_GRADIENT }}
           >
             <button
