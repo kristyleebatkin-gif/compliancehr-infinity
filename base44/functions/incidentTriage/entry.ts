@@ -30,7 +30,16 @@ WHS regulator notification is generally required for a death, a serious injury o
 const pad = (n: number) => String(n).padStart(2, '0');
 // Work on the local wall-clock time entered in the form (datetime-local, no timezone).
 const parseLocal = (value: string) => {
-  const m = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/.exec(value || '');
+  const v = String(value || '').trim();
+  // A stored timestamp with a timezone (e.g. ending in Z) is converted to Sydney wall-clock time.
+  if (/(Z|[+-]\d{2}:?\d{2})$/.test(v)) {
+    const d = new Date(v);
+    if (Number.isNaN(d.getTime())) return null;
+    const parts = new Intl.DateTimeFormat('en-CA', { timeZone: 'Australia/Sydney', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(d);
+    const g = (t: string) => Number(parts.find((p) => p.type === t)?.value);
+    return new Date(Date.UTC(g('year'), g('month') - 1, g('day'), g('hour'), g('minute')));
+  }
+  const m = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/.exec(v);
   return m ? new Date(Date.UTC(+m[1], +m[2] - 1, +m[3], +m[4], +m[5])) : null;
 };
 const fmtLocal = (d: Date) => `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())}T${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}`;
