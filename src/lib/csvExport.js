@@ -3,8 +3,11 @@
  */
 export function buildCsv(columns, rows) {
   const escape = (value) => {
-    const text = value === undefined || value === null ? '' : String(value);
-    return /[",\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
+    let text = value === undefined || value === null ? '' : String(value);
+    // Spreadsheet applications execute formula-looking text even in quoted CSV.
+    // Keep actual numeric values numeric, including negative amounts.
+    if (typeof value === 'string' && (/^[\s\u0000-\u001f]*[=+\-@]/.test(text) || /^[\t\r\n]/.test(text))) text = `'${text}`;
+    return /[",\r\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
   };
   return [
     columns.map((c) => escape(c.label ?? c)).join(','),
@@ -17,10 +20,16 @@ export function buildCsv(columns, rows) {
 export async function fetchAllRecords(entity, query = {}, sort = '-created_date', pageSize = 500) {
   const rows = [];
   let cursor;
+  const seenCursors = new Set();
   do {
     const page = await entity.filter(query, { sort, limit: pageSize, ...(cursor ? { cursor } : {}) });
-    rows.push(...(page.items || []));
+    if (!page || !Array.isArray(page.items)) throw new Error('Invalid export page; no complete export was produced.');
+    rows.push(...page.items);
     cursor = page.next_cursor;
+    if (cursor) {
+      if (typeof cursor !== 'string' || seenCursors.has(cursor)) throw new Error('Invalid or repeated export page cursor.');
+      seenCursors.add(cursor);
+    }
   } while (cursor);
   return rows;
 }

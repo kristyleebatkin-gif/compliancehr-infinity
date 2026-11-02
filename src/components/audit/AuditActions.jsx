@@ -39,7 +39,7 @@ export default function AuditActions({ audits }) {
         base44.entities.User.list(),
       ]);
       setActions(actionPage.items);
-      setUsers(userPage.items);
+      setUsers(userPage);
     } finally {
       setLoading(false);
     }

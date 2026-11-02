@@ -21,7 +21,7 @@ export default function AssistantChat({ agent, onBack }) {
   useEffect(() => {
     let cancelled = false;
     setLoadingList(true);
-    base44.agents.listConversations({ agent_name: agent.name })
+    base44.agents.listConversations({ q: { agent_name: agent.name } })
       .then((convs) => { if (!cancelled) setConversations(Array.isArray(convs) ? convs : []); })
       .catch((error) => console.error(error))
       .finally(() => { if (!cancelled) setLoadingList(false); });
