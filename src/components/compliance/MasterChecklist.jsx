@@ -8,6 +8,7 @@ import { useRole } from '@/lib/useRole';
 import { canonicalIntakeDocumentType } from '@/lib/intakeCases';
 import { downloadCsv } from '@/lib/csvExport';
 import { downloadComplianceAuditReport } from '@/lib/complianceAuditReportPdf';
+import { openDocumentInViewer } from '@/lib/openDocument';
 import StaffFileMatrix, { STAFF_COLUMNS, staffColumnStatus } from '@/components/compliance/StaffFileMatrix';
 import ParticipantFileMatrix from '@/components/compliance/ParticipantFileMatrix';
 import PlatformComplianceStatus from '@/components/compliance/PlatformComplianceStatus';
