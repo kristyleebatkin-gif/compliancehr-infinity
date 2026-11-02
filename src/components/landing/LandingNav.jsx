@@ -21,7 +21,7 @@ export default function LandingNav({ onBookDemo }) {
       id="top-landing"
       className="sticky top-0 z-40 w-full border-b border-slate-200/90 bg-white/95 backdrop-blur-md shadow-2xs"
     >
-      <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-2 px-3 py-2 sm:px-5">
+      <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-2 px-3 py-2 sm:flex-nowrap sm:px-5">
         <Link
           to="/"
           className="flex shrink-0 flex-col items-center rounded-xl border border-slate-200/90 bg-[#F5F0FF]/50 px-3 py-1 text-center shadow-2xs transition hover:border-[#0072FF]/50"
@@ -46,7 +46,7 @@ export default function LandingNav({ onBookDemo }) {
           </div>
         </Link>
 
-        <nav aria-label="Main navigation" className="hidden lg:flex items-center gap-2 xl:gap-3.5">
+        <nav aria-label="Main navigation" className="hidden xl:flex items-center gap-2.5 2xl:gap-3.5">
           {NAV_LINKS.map(([label, href]) => (
             <a
               key={href}
@@ -58,7 +58,7 @@ export default function LandingNav({ onBookDemo }) {
           ))}
         </nav>
 
-        <div className="flex shrink-0 items-center gap-1.5">
+        <div className="ml-auto flex shrink-0 items-center gap-1.5">
           <Link
             to="/dashboard"
             className="inline-flex items-center justify-center whitespace-nowrap rounded-lg border-2 border-[#0A2B6D] bg-white px-2.5 py-1.5 text-[11px] xl:text-xs font-extrabold text-[#0A2B6D] shadow-2xs transition hover:border-[#0072FF] hover:text-[#0072FF]"
@@ -67,7 +67,7 @@ export default function LandingNav({ onBookDemo }) {
           </Link>
           <Link
             to="/universal-storage"
-            className="hidden sm:inline-flex items-center justify-center whitespace-nowrap rounded-lg border-2 border-[#5A00D6] bg-[#F5F0FF] px-2.5 py-1.5 text-[11px] xl:text-xs font-extrabold text-[#5A00D6] shadow-2xs transition hover:bg-[#5A00D6] hover:text-white"
+            className="hidden 2xl:inline-flex items-center justify-center whitespace-nowrap rounded-lg border-2 border-[#5A00D6] bg-[#F5F0FF] px-2.5 py-1.5 text-[11px] xl:text-xs font-extrabold text-[#5A00D6] shadow-2xs transition hover:bg-[#5A00D6] hover:text-white"
           >
             Universal Storage Hub
           </Link>
@@ -81,7 +81,7 @@ export default function LandingNav({ onBookDemo }) {
           <button
             type="button"
             onClick={() => onBookDemo && onBookDemo('Book a Personal Demo')}
-            className="hidden md:inline-flex items-center gap-1 whitespace-nowrap rounded-lg border-2 border-[#0A2B6D] bg-white px-3 py-1.5 text-[11px] xl:text-xs font-extrabold text-[#0A2B6D] transition hover:bg-[#0A2B6D] hover:text-white"
+            className="hidden xl:inline-flex items-center gap-1 whitespace-nowrap rounded-lg border-2 border-[#0A2B6D] bg-white px-3 py-1.5 text-[11px] xl:text-xs font-extrabold text-[#0A2B6D] transition hover:bg-[#0A2B6D] hover:text-white"
           >
             <Calendar className="h-3.5 w-3.5 shrink-0 text-[#0072FF]" />
             <span>Book a Demo</span>
@@ -100,7 +100,7 @@ export default function LandingNav({ onBookDemo }) {
 
           <button
             type="button"
-            className="lg:hidden inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white p-1.5 text-[#0A2B6D]"
+            className="xl:hidden inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white p-1.5 text-[#0A2B6D]"
             aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
             onClick={() => setOpen(!open)}
@@ -146,7 +146,7 @@ export default function LandingNav({ onBookDemo }) {
       {open && (
         <nav
           aria-label="Mobile navigation"
-          className="lg:hidden border-t border-slate-200 bg-white px-4 py-3 space-y-2"
+          className="xl:hidden border-t border-slate-200 bg-white px-4 py-3 space-y-2"
         >
           <div className="grid grid-cols-2 gap-1.5">
             {NAV_LINKS.map(([label, href]) => (
