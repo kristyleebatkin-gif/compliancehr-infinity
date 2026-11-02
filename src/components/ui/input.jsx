@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils"
 
 const Input = React.forwardRef(
   /** @param {React.ComponentPropsWithoutRef<'input'>} props */
-({ className, type, ...props }, ref) => {
+({ className = undefined, type, ...props }, ref) => {
   const isSearch = type === 'search' || /search/i.test(`${props.placeholder || ''} ${props['aria-label'] || ''}`);
   return (
     (<input

@@ -1,7 +1,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 
-export function Field({ label, children, className }) {
+export function Field({ label, children, className = undefined }) {
   return (
     <div className={cn('space-y-1.5', className)}>
       {label && <label className="text-xs font-semibold text-foreground/70">{label}</label>}

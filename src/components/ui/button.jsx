@@ -36,7 +36,7 @@ const buttonVariants = cva(
 
 const Button = React.forwardRef(
   /** @param {React.ComponentPropsWithoutRef<'button'> & import('class-variance-authority').VariantProps<typeof buttonVariants> & { asChild?: boolean }} props */
-({ className, variant, size, asChild = false, ...props }, ref) => {
+({ className = undefined, variant, size, asChild = false, ...props }, ref) => {
   const Comp = asChild ? Slot : "button"
   return (
     (<Comp

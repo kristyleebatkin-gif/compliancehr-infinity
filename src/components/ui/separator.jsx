@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 const Separator = React.forwardRef(
   /** @param {React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root>} props */
 (
-  { className, orientation = "horizontal", decorative = true, ...props },
+  { className = undefined, orientation = "horizontal", decorative = true, ...props },
   ref
 ) => (
   <SeparatorPrimitive.Root

@@ -40,7 +40,7 @@ const entityExport = async (name, entity, query) => {
   };
 };
 
-export default function SectionExportButton({ kind, person, section, className }) {
+export default function SectionExportButton({ kind, person, section, className = undefined }) {
   const { isAdmin } = useRole();
   const [busy, setBusy] = useState(false);
 

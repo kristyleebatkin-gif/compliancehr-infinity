@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils"
 
 const Textarea = React.forwardRef(
   /** @param {React.ComponentPropsWithoutRef<'textarea'>} props */
-({ className, ...props }, ref) => {
+({ className = undefined, ...props }, ref) => {
   return (
     (<textarea
       className={cn(

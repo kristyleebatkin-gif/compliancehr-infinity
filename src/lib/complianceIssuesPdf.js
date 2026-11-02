@@ -209,6 +209,11 @@ export function downloadComplianceIssuesReport(issues, { loggedBy = '', subtitle
     else if (['Resolved', 'Closed'].includes(i.status)) counts.resolved += 1;
   });
 
+  const sorted = [...issues].sort((a, b) => {
+    const order = { Open: 0, 'In Progress': 1, Resolved: 2, Closed: 3 };
+    return (order[a.status] ?? 4) - (order[b.status] ?? 4);
+  });
+
   header(doc, subtitle);
   let y = statCards(doc, [
     { value: counts.total, label: 'Total Issues', tint: '#f3eef9' },
@@ -220,10 +225,6 @@ export function downloadComplianceIssuesReport(issues, { loggedBy = '', subtitle
   y = sectionTitle(doc, 'Issues by Category', y);
   y = categoryChart(doc, sorted, y + 2) + 6;
   y = sectionTitle(doc, 'Issues Register', y);
-  const sorted = [...issues].sort((a, b) => {
-    const order = { Open: 0, 'In Progress': 1, Resolved: 2, Closed: 3 };
-    return (order[a.status] ?? 4) - (order[b.status] ?? 4);
-  });
   y = issueTable(doc, sorted, y);
   y = actionLog(doc, sorted, y + 8);
 

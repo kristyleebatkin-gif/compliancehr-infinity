@@ -9,7 +9,7 @@ const DEFAULT_PROPS = [
   { icon: RefreshCw, title: 'Continuous Improvement', desc: 'Use data and feedback to drive better outcomes.' },
 ];
 
-export default function ValuePropsFooter({ items = DEFAULT_PROPS, className }) {
+export default function ValuePropsFooter({ items = DEFAULT_PROPS, className = undefined }) {
   return (
     <div
       className={`rounded-2xl text-white ${className || ''}`}

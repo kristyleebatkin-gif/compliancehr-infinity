@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils"
 
 const Card = React.forwardRef(
   /** @param {React.ComponentPropsWithoutRef<'div'>} props */
-({ className, ...props }, ref) => (
+({ className = undefined, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
@@ -17,7 +17,7 @@ Card.displayName = "Card"
 
 const CardHeader = React.forwardRef(
   /** @param {React.ComponentPropsWithoutRef<'div'>} props */
-({ className, ...props }, ref) => (
+({ className = undefined, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
@@ -31,7 +31,7 @@ CardHeader.displayName = "CardHeader"
 
 const CardTitle = React.forwardRef(
   /** @param {React.ComponentPropsWithoutRef<'div'>} props */
-({ className, ...props }, ref) => (
+({ className = undefined, ...props }, ref) => (
   <div
     ref={ref}
     className={cn("font-editorial text-base font-extrabold leading-tight tracking-tight text-[#0A2B6D]", className)}
@@ -42,7 +42,7 @@ CardTitle.displayName = "CardTitle"
 
 const CardDescription = React.forwardRef(
   /** @param {React.ComponentPropsWithoutRef<'div'>} props */
-({ className, ...props }, ref) => (
+({ className = undefined, ...props }, ref) => (
   <div
     ref={ref}
     className={cn("text-xs font-extrabold text-[#5A00D6]", className)}
@@ -53,14 +53,14 @@ CardDescription.displayName = "CardDescription"
 
 const CardContent = React.forwardRef(
   /** @param {React.ComponentPropsWithoutRef<'div'>} props */
-({ className, ...props }, ref) => (
+({ className = undefined, ...props }, ref) => (
   <div ref={ref} className={cn("p-4 pt-2 bg-white text-[#0A2B6D]", className)} {...props} />
 ))
 CardContent.displayName = "CardContent"
 
 const CardFooter = React.forwardRef(
   /** @param {React.ComponentPropsWithoutRef<'div'>} props */
-({ className, ...props }, ref) => (
+({ className = undefined, ...props }, ref) => (
   <div
     ref={ref}
     className={cn("flex items-center p-4 pt-0 bg-white", className)}

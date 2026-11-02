@@ -62,7 +62,7 @@ export default function SectionCard({
   description,
   action,
   children,
-  className,
+  className = undefined,
   collapsible = false,
   defaultOpen = false,
   ...props

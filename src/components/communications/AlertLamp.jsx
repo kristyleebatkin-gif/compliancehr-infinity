@@ -39,7 +39,7 @@ const CONFIG = {
   },
 };
 
-export default function AlertLamp({ kind, className }) {
+export default function AlertLamp({ kind, className = undefined }) {
   const [count, setCount] = useState(null);
   const prev = useRef(null);
   const { icon: Icon, label, colour, gradient, clear } = CONFIG[kind] || CONFIG.alerts;

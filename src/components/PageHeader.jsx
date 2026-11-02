@@ -22,7 +22,7 @@ export default function PageHeader({
   action,
   actions,
   icon: Icon = LayoutGrid,
-  className,
+  className = undefined,
   under,
   beforeAudit,
   afterAudit,
@@ -79,6 +79,6 @@ export default function PageHeader({
 }
 
 // Row of controls rendered just below the header card (left-aligned by default).
-export function HeaderUnderRow({ children, className }) {
+export function HeaderUnderRow({ children, className = undefined }) {
   return <div className={cn('module-action-bar flex flex-wrap items-center gap-1', className)}>{children}</div>;
 }
