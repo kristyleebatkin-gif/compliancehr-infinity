@@ -11,6 +11,8 @@ const REVIEW_ROLES = ['admin', 'Provider Administrator', 'Management', 'Complian
 const NDIS_TYPES = ['Death', 'Serious injury', 'Abuse or neglect', 'Unlawful sexual or physical contact', 'Sexual misconduct or grooming', 'Unauthorised restrictive practice', 'Other reportable incident', 'Not reportable', 'Unsure'];
 const SIRS_PRIORITIES = ['Not Applicable', 'Priority 1 - 24 Hours', 'Priority 2 - 30 Days', 'Unsure'];
 
+// Keep in step with base44/agent-skills/ndis-reportable-incidents.md and
+// aged-care-standards-and-sirs.md (last checked 2 November 2026).
 const RULES = `Reference rules (Australian context; summarise, do not quote):
 NDIS reportable incidents (NDIS Quality and Safeguards Commission) are the following when they occur, or are alleged to have occurred, in connection with the provision of NDIS supports or services:
 - the death of a person with disability;
@@ -19,10 +21,10 @@ NDIS reportable incidents (NDIS Quality and Safeguards Commission) are the follo
 - unlawful sexual or physical contact with, or assault of, a person with disability;
 - sexual misconduct committed against, or in the presence of, a person with disability, including grooming;
 - the use of a restrictive practice on a person with disability that is unauthorised or not in accordance with their behaviour support plan.
-Most must be notified to the Commission within 24 hours of the provider becoming aware, followed by a 5-business-day report. An unauthorised restrictive practice that caused no injury may instead be notified within 5 business days.
+Allegations count. Most must be notified to the NDIS Commission within 24 hours of key personnel becoming aware, followed by a report within 5 business days, and a final report (usually within 60 business days) if the Commission asks. An unauthorised restrictive practice that caused no harm is generally notified within 5 business days; if it caused harm, 24 hours applies.
 Aged Care Serious Incident Response Scheme (SIRS) incident types: unreasonable use of force; unlawful sexual contact or inappropriate sexual conduct; psychological or emotional abuse; unexpected death; stealing or financial coercion by a staff member; neglect; inappropriate use of restrictive practices; unexplained absence from care.
 SIRS Priority 1 (notify within 24 hours): the incident caused, or could reasonably have caused, physical or psychological injury or discomfort requiring medical or psychological treatment; or there are reasonable grounds to report it to police; or it is an unexpected death or unexplained absence from care. Priority 2 (notify within 30 days): all other reportable SIRS incidents.
-SIRS only applies to residential aged care and home/flexible aged care services. NDIS rules only apply to NDIS supports.
+SIRS covers incidents connected to the care of an older person receiving funded aged care services (residential care or in the home), under the Aged Care Act 2024 from 1 November 2025. NDIS rules only apply to NDIS supports.
 WHS regulator notification is generally required for a death, a serious injury or illness, or a dangerous incident at a workplace.`;
 
 const pad = (n: number) => String(n).padStart(2, '0');
