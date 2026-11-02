@@ -151,13 +151,19 @@ export const AUDIT_CATEGORIES_17 = [
 function ComplianceHrInfinityLogoEmblem({ ringClass = 'ring-purple-200/80' }) {
   return (
     <div className="flex flex-col items-center justify-center text-center select-none">
-      <div className={`flex h-24 w-52 sm:h-28 sm:w-60 items-center justify-center overflow-hidden rounded-xl bg-white px-2 py-0.5 shadow-sm ring-1 ${ringClass}`}>
+      <div className={`flex h-12 w-32 items-center justify-center overflow-hidden rounded-xl bg-white px-2 py-0.5 shadow-sm ring-1 ${ringClass}`}>
         <Image
           src={CHR_LOGO}
           alt="ComplianceHR Infinity — Complete Control. Greater Confidence. Brighter Success."
           fittingType="fit"
           className="h-full w-full object-contain"
         />
+      </div>
+      <div className="mt-0.5 font-editorial text-xs font-extrabold tracking-tight text-[#0A2B6D]">
+        Compliance<span className="text-[#5A00D6]">HR</span> Infinity
+      </div>
+      <div className="text-[7.5px] font-extrabold text-[#5A00D6]">
+        Complete Control. Greater Confidence. Brighter Success.
       </div>
     </div>
   );

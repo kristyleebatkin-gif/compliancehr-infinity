@@ -219,19 +219,24 @@ export default function DailyBriefing() {
       <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-panel">
         <div className="h-1 w-full" style={{ background: BRAND_GRADIENT }} />
 
-        <div className="flex flex-col items-center px-3.5 pb-1 pt-2.5 text-center sm:px-4">
+        <div className="flex flex-col items-center px-3.5 pb-1.5 pt-2 text-center sm:px-4">
           <Image
             src={CHR_LOGO}
             alt="ComplianceHR Infinity"
             fittingType="fit"
-            className="h-7 w-7 rounded-lg border border-slate-200 bg-white p-0.5 shadow-2xs"
+            className="h-5 w-14 rounded-md border border-slate-200 bg-white px-1 py-0.5 shadow-2xs"
           />
-          <span className="mt-1 font-editorial text-[12px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]">
+          <span className="mt-0.5 font-editorial text-[12px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]">
             Compliance
             <span className="font-editorial-italic text-[#5A00D6]">HR</span>{' '}
             <span className="bg-gradient-to-r from-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
               Infinity
             </span>
+          </span>
+          <span className="mt-0.5 text-[7.5px] font-extrabold leading-tight">
+            <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
+            <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
+            <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
           </span>
         </div>
 

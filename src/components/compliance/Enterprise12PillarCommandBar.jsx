@@ -77,12 +77,16 @@ export default function Enterprise12PillarCommandBar({
       {/* PILLAR 11: 12 LIVE EXECUTIVE DASHBOARD STATUS TILES */}
       <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-3 space-y-2">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <img
-              src={CHR_LOGO}
-              alt="ComplianceHR Infinity"
-              className="h-6 w-6 rounded-md border border-slate-200 bg-white p-0.5"
-            />
+          <div className="flex flex-col items-center text-center sm:flex-row sm:text-left gap-2">
+            <div className="flex flex-col items-center">
+              <img
+                src={CHR_LOGO}
+                alt="ComplianceHR Infinity"
+                className="h-5 w-12 rounded-md border border-slate-200 bg-white p-0.5 object-contain"
+              />
+              <span className="text-[8.5px] font-extrabold text-[#0A2B6D]">ComplianceHR Infinity</span>
+              <span className="text-[7px] font-bold text-[#5A00D6]">Complete Control. Greater Confidence. Brighter Success.</span>
+            </div>
             <span className="text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
               12-Pillar Executive Telemetry &amp; {PLATFORM_14_FOUNDATION_DOMAINS.length} Foundation Domains (Microsoft 365 / ServiceNow / Workday Grade)
             </span>

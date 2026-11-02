@@ -283,78 +283,102 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
             })}
           </div>
 
-          {/* Executive Resource Suite Navigator — Visually Matching Quick Access */}
-          <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-panel">
-            <div className="h-1 w-full" style={{ background: SQUISHED_GRADIENT }} />
+          {/* Executive Resource Suite Navigator — Remote Control + Command Centre + Glassmorphism */}
+          <section
+            className="preserve-island-theme overflow-hidden rounded-2xl border-2 border-[#0A2B6D] shadow-xl"
+            style={{ background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)' }}
+          >
+            <div className="h-1.5 w-full" style={{ background: SQUISHED_GRADIENT }} />
 
-            <div className="flex flex-col items-center px-3.5 pb-1 pt-2.5 text-center sm:px-4">
+            <div className="flex flex-col items-center border-b border-white/15 bg-white px-3.5 py-2 text-center">
               <Image
                 src={CHR_LOGO}
                 alt="ComplianceHR Infinity"
                 fittingType="fit"
-                className="h-7 w-7 rounded-lg border border-slate-200 bg-white p-0.5 shadow-2xs"
+                className="h-5 w-14 rounded-md border border-slate-200 bg-white px-1 py-0.5 shadow-2xs"
               />
-              <span className="mt-1 font-editorial text-[12px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]">
+              <span className="mt-0.5 font-editorial text-[12px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]" style={{ color: '#0A2B6D' }}>
                 Compliance
                 <span className="font-editorial-italic text-[#5A00D6]">HR</span>{' '}
                 <span className="bg-gradient-to-r from-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
                   Infinity
                 </span>
               </span>
+              <span className="mt-0.5 text-[7.5px] font-extrabold leading-tight">
+                <span style={{ color: '#0072FF' }}>Complete Control.</span>{' '}
+                <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>{' '}
+                <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
+              </span>
             </div>
 
-            <div className="grid auto-rows-fr grid-cols-2 gap-2 p-3 pt-2 sm:grid-cols-3 md:grid-cols-6 items-stretch">
-              {EXECUTIVE_RESOURCE_SUITES.map((suite, idx) => {
+            <div className="grid auto-rows-fr grid-cols-2 gap-2.5 p-3 sm:grid-cols-3 md:grid-cols-6 items-stretch">
+              {EXECUTIVE_RESOURCE_SUITES.map((suite) => {
                 const Icon = suite.icon;
                 const active = activeSuite === suite.id;
-                const headerBg = getHeaderView(idx);
                 return (
                   <button
                     key={suite.id}
                     type="button"
                     onClick={() => setActiveSuite(suite.id)}
                     aria-pressed={active}
-                    className={`group flex h-full min-h-[98px] flex-col gap-[3px] rounded-xl border-2 bg-[#0A2B6D] p-[3px] text-left transition-all duration-200 focus-visible:outline-none ${
+                    className={`group flex h-full min-h-[84px] flex-col rounded-2xl p-[2px] text-left transition-all duration-200 focus-visible:outline-none ${
                       active
-                        ? 'border-[#5A00D6] shadow-md ring-2 ring-[#5A00D6]/25 ring-offset-1'
-                        : 'border-[#0A2B6D] hover:-translate-y-0.5 hover:border-[#0072FF] hover:shadow-md'
+                        ? 'shadow-[0_0_20px_rgba(0,198,255,0.75)] scale-[1.01]'
+                        : 'hover:-translate-y-0.5 hover:shadow-[0_0_14px_rgba(161,0,255,0.5)]'
                     }`}
+                    style={{ background: 'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)' }}
                   >
-                    <div className="flex w-full flex-1 flex-col overflow-hidden rounded-[8px] bg-white">
-                      <div
-                        className="flex min-h-[38px] w-full items-center justify-between gap-1 px-1.5 py-1 text-white"
-                        style={{ background: headerBg }}
-                      >
-                        <div className="flex min-w-0 items-center gap-1">
-                          <Icon className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                    <div className="flex w-full flex-1 flex-col justify-between overflow-hidden rounded-[14px] bg-[#0A2B6D]/90 backdrop-blur-md">
+                      {/* White Title Background */}
+                      <div className="flex min-h-[34px] w-full items-center justify-between gap-1.5 bg-white px-2 py-1">
+                        <div className="flex min-w-0 items-center gap-1.5">
                           <span
-                            className="min-w-0 text-[9.5px] font-extrabold leading-[11px] tracking-tight text-white"
-                            style={{ color: '#FFFFFF', wordBreak: 'normal', overflowWrap: 'normal' }}
+                            className="flex h-5 w-5 shrink-0 items-center justify-center rounded-lg text-white"
+                            style={{ background: 'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)' }}
+                          >
+                            <Icon className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                          </span>
+                          <span
+                            className="min-w-0 text-[9.5px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]"
+                            style={{ color: '#0A2B6D' }}
                           >
                             {suite.shortLabel}
                           </span>
                         </div>
                         <span
-                          className={`h-1.5 w-1.5 shrink-0 rounded-full ${
-                            active ? 'bg-[#00C6FF]' : 'bg-white/75'
+                          className={`inline-flex shrink-0 items-center gap-1 rounded-full px-1.5 py-0 text-[7px] font-black uppercase ${
+                            active ? 'bg-[#0A2B6D] text-[#00C6FF]' : 'bg-[#F5F0FF] text-[#5A00D6]'
+                          }`}
+                        >
+                          <span
+                            className="h-1.5 w-1.5 rounded-full"
+                            style={{
+                              backgroundColor: active ? '#00C6FF' : '#FF2E9A',
+                              boxShadow: active ? '0 0 6px 1px #00C6FF' : 'none',
+                            }}
+                          />
+                          {active ? 'ON' : 'LIVE'}
+                        </span>
+                      </div>
+
+                      {/* Dark Navy Glassmorphic Body */}
+                      <div className="flex min-h-[34px] w-full flex-1 items-center justify-between gap-1 px-2 py-1">
+                        <span
+                          className="line-clamp-2 min-w-0 flex-1 break-words text-[9px] font-bold leading-snug text-white/95"
+                          style={{ color: '#FFFFFF' }}
+                        >
+                          {suite.badge} · {suite.subject}
+                        </span>
+                        <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#00C6FF] transition group-hover:translate-x-0.5" />
+                      </div>
+
+                      <div className="flex h-[5px] w-full items-center justify-center pb-0.5">
+                        <span
+                          className={`h-[2.5px] rounded-full transition-all ${
+                            active ? 'w-9 bg-[#00C6FF] shadow-[0_0_8px_#00C6FF]' : 'w-6 bg-white/40 group-hover:bg-white/80'
                           }`}
                         />
                       </div>
-
-                      <div className="flex min-h-[40px] w-full flex-1 items-center justify-between gap-1 border-t border-[#0A2B6D]/10 bg-white px-1.5 py-1">
-                        <span className="line-clamp-2 min-w-0 flex-1 break-words text-[10.5px] font-bold leading-[13px] text-[#0A2B6D]/85">
-                          {suite.badge} · {suite.subject}
-                        </span>
-                        <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#0072FF] transition group-hover:translate-x-0.5 group-hover:text-[#FF2E9A]" />
-                      </div>
-                    </div>
-
-                    <div className="flex h-[5px] w-full items-center justify-center">
-                      <span
-                        className={`h-[2.5px] w-6 rounded-full transition-all ${
-                          active ? 'w-8 bg-[#00C6FF]' : 'bg-white/45 group-hover:bg-white/80'
-                        }`}
-                      />
                     </div>
                   </button>
                 );
