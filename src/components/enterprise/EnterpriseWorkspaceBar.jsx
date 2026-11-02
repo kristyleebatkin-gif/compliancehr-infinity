@@ -297,16 +297,16 @@ export default function EnterpriseWorkspaceBar({
 
   return (
     <>
-      <div className="mx-auto w-full max-w-[1440px] bg-white px-4 pt-2.5 sm:px-6 lg:px-8">
-        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-panel">
+      <div className="mx-auto w-full max-w-[1440px] bg-white px-3 pt-1 sm:px-5 lg:px-6">
+        <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-2xs">
           <div
-            className="h-1 w-full"
+            className="h-0.5 w-full"
             style={{
               background:
                 'linear-gradient(120deg, #0072FF 0%, #0A2B6D 18%, #5A00D6 42%, #A100FF 68%, #FF2E9A 100%)',
             }}
           />
-          <div className="flex flex-wrap items-center justify-between gap-2 px-3.5 py-2 sm:px-4">
+          <div className="flex flex-wrap items-center justify-between gap-1 px-2.5 py-1">
           {/* Left: Interactive Enterprise Breadcrumbs + Save View Bookmark */}
           <nav
             aria-label="Breadcrumb"

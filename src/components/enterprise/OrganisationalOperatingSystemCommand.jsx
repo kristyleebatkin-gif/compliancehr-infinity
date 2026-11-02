@@ -236,66 +236,63 @@ export default function OrganisationalOperatingSystemCommand() {
 
 
   return (
-    <section className="overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white shadow-md">
-      {/* Top Executive OS Header */}
+    <section className="overflow-hidden rounded-xl border-2 border-[#0A2B6D] bg-white shadow-sm">
+      {/* Top Executive OS Header — 50% Compact */}
       <div
-        className="app-section-card-header flex flex-col lg:flex-row lg:items-center justify-between gap-3 px-4 py-3.5 text-white"
+        className="flex flex-wrap items-center justify-between gap-2 px-3 py-1.5 text-white"
         style={{ background: HEADER_GRADIENT }}
       >
-        <div>
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-3 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white">
-            <Cpu className="h-3.5 w-3.5 text-[#00C6FF]" />
+        <div className="min-w-0">
+          <div className="inline-flex items-center gap-1 rounded-full bg-white/20 px-2 py-0 text-[8.5px] font-extrabold uppercase tracking-wider text-white">
+            <Cpu className="h-2.5 w-2.5 text-[#00C6FF]" />
             <span>Australian Organisational Operating System · NDIS · Aged Care · WHS · Governance · AI</span>
           </div>
-          <h2 className="mt-1 font-editorial text-lg sm:text-xl font-extrabold text-white">
+          <h2 className="mt-0.5 font-editorial text-xs sm:text-sm font-extrabold text-white leading-tight">
             ComplianceHR Infinity — Home Command Centre &amp; Organisational Digital Twin
           </h2>
-          <p className="text-xs font-semibold text-white/95">
-            Record counts and source links across People → Work → Compliance → Evidence → Intelligence
-          </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 shrink-0">
-          <div className="rounded-xl border border-white/35 bg-white/15 px-3 py-1.5 text-center">
-            <div className="text-[9.5px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
-              Organisation Health
-            </div>
-            <div className="font-editorial text-lg font-extrabold text-white">
+        <div className="flex flex-wrap items-center gap-1.5 shrink-0">
+          <div className="rounded-lg border border-white/35 bg-white/15 px-2 py-0.5 text-center">
+            <span className="text-[8px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
+              Org Health:{' '}
+            </span>
+            <span className="font-editorial text-[10.5px] font-extrabold text-white">
               Not calculated
-            </div>
+            </span>
           </div>
           <Button
             size="sm"
             type="button"
             onClick={loadLiveOSMetrics}
             disabled={loading}
-            className="bg-white text-[#0A2B6D] hover:bg-slate-100 font-extrabold text-xs"
+            className="min-h-6 h-6 bg-white px-2 py-0.5 text-[#0A2B6D] hover:bg-slate-100 font-extrabold text-[9.5px]"
           >
-            <RefreshCw className={`mr-1 h-3.5 w-3.5 text-[#0072FF] ${loading ? 'animate-spin' : ''}`} />
-            <span style={{ color: '#0A2B6D' }}>Refresh record counts</span>
+            <RefreshCw className={`mr-1 h-2.5 w-2.5 text-[#0072FF] ${loading ? 'animate-spin' : ''}`} />
+            <span style={{ color: '#0A2B6D' }}>Refresh counts</span>
           </Button>
         </div>
       </div>
 
-      <div className="p-3 sm:p-4 space-y-4">
-        {/* 5 Master Architecture Layers Strip */}
-        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-5">
+      <div className="p-2 space-y-2">
+        {/* 5 Master Architecture Layers Strip (50% Reduced) */}
+        <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 lg:grid-cols-5">
           {FIVE_MASTER_LAYERS.map((layer) => (
             <Link
               key={layer.id}
               to={layer.route}
-              className="group flex flex-col justify-between rounded-xl border-2 border-[#0A2B6D] bg-white p-2.5 shadow-2xs transition hover:-translate-y-0.5 hover:border-[#5A00D6]"
+              className="group flex flex-col justify-between rounded-lg border border-[#0A2B6D] bg-white p-1.5 shadow-2xs transition hover:border-[#5A00D6]"
             >
               <div className="flex items-center justify-between">
                 <span
-                  className="rounded-md px-2 py-0.5 text-[10px] font-extrabold text-white"
+                  className="rounded px-1.5 py-0 text-[8.5px] font-extrabold text-white"
                   style={{ backgroundColor: layer.color }}
                 >
-                  LAYER {layer.step} · {layer.label}
+                  L{layer.step} · {layer.label}
                 </span>
-                <ArrowRight className="h-3.5 w-3.5 text-[#0072FF] transition group-hover:translate-x-0.5" />
+                <ArrowRight className="h-2.5 w-2.5 text-[#0072FF]" />
               </div>
-              <p className="mt-1.5 text-[11px] font-bold leading-snug text-[#0A2B6D]">
+              <p className="mt-0.5 text-[9px] font-bold leading-tight text-[#0A2B6D]">
                 {layer.sub}
               </p>
             </Link>
@@ -303,20 +300,20 @@ export default function OrganisationalOperatingSystemCommand() {
         </div>
 
         {/* Reference lifecycle model, kept collapsed to reduce dashboard density. */}
-        <details className="rounded-xl border border-[#C084FC]/60 bg-[#F6F0FF]/70 px-3 py-2">
-          <summary className="cursor-pointer text-[10.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+        <details className="rounded-lg border border-[#C084FC]/60 bg-[#F6F0FF]/70 px-2.5 py-1">
+          <summary className="cursor-pointer text-[9px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
             17-Stage Assurance Lifecycle Reference
           </summary>
-          <div className="mt-2 space-y-2">
-            <p className="text-[11px] font-semibold text-[#0A2B6D]/80">Reference sequence only. This view does not verify that each stage is completed or linked for every record.</p>
+          <div className="mt-1 space-y-1">
+            <p className="text-[9.5px] font-semibold text-[#0A2B6D]/80">Reference sequence only. This view does not verify that each stage is completed or linked for every record.</p>
             <div className="flex flex-wrap items-center gap-1">
               {ASSURANCE_17_STAGES.map((stage, idx) => (
                 <React.Fragment key={stage}>
-                  <span className="rounded-md border border-[#0A2B6D]/20 bg-white px-2 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
+                  <span className="rounded border border-[#0A2B6D]/20 bg-white px-1.5 py-0 text-[8.5px] font-extrabold text-[#0A2B6D]">
                     {idx + 1}. {stage}
                   </span>
                   {idx < ASSURANCE_17_STAGES.length - 1 && (
-                    <span className="text-[10px] font-black text-[#5A00D6]">→</span>
+                    <span className="text-[8.5px] font-black text-[#5A00D6]">→</span>
                   )}
                 </React.Fragment>
               ))}
@@ -324,8 +321,8 @@ export default function OrganisationalOperatingSystemCommand() {
           </div>
         </details>
 
-        {/* Mode Switcher Bar: 5 Clean Command Modes */}
-        <div className="flex flex-wrap items-center gap-1.5 border-b border-slate-200 pb-2.5">
+        {/* Mode Switcher Bar: 5 Clean Command Modes (50% Reduced) */}
+        <div className="flex flex-wrap items-center gap-1 border-b border-slate-200 pb-1.5">
           {[
             { id: 'command', label: '1. Command & Health Snapshot', icon: ShieldCheck },
             { id: 'twin', label: '2. Organisational Digital Twin — Record View', icon: Cpu },
@@ -340,49 +337,49 @@ export default function OrganisationalOperatingSystemCommand() {
                 key={tab.id}
                 type="button"
                 onClick={() => setActiveMode(tab.id)}
-                className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-extrabold transition ${
+                className={`inline-flex items-center gap-1 rounded-lg px-2 py-0.5 text-[9.5px] font-extrabold transition ${
                   active
-                    ? 'bg-[#0A2B6D] text-white shadow-sm'
+                    ? 'bg-[#0A2B6D] text-white shadow-2xs'
                     : 'border border-slate-200 bg-white text-[#0A2B6D] hover:border-[#0072FF]'
                 }`}
               >
-                <Icon className={`h-3.5 w-3.5 ${active ? 'text-[#00C6FF]' : 'text-[#5A00D6]'}`} />
+                <Icon className={`h-2.5 w-2.5 ${active ? 'text-[#00C6FF]' : 'text-[#5A00D6]'}`} />
                 <span>{tab.label}</span>
               </button>
             );
           })}
         </div>
 
-        {/* ==================== MODE 1: 30-SECOND COMMAND & HEALTH ==================== */}
+        {/* ==================== MODE 1: 30-SECOND COMMAND & HEALTH (50% Reduced) ==================== */}
         {activeMode === 'command' && (
-          <div className="space-y-3">
-            {/* 14 Primary User Outcome Questions Answered in 30 Seconds */}
-            <div className="rounded-xl border border-slate-200 bg-slate-50/60 p-3 space-y-2">
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <span className="text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+          <div className="space-y-2">
+            {/* 14 Primary User Outcome Questions */}
+            <div className="rounded-lg border border-slate-200 bg-slate-50/60 p-2 space-y-1.5">
+              <div className="flex flex-wrap items-center justify-between gap-1">
+                <span className="text-[9.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
                   Management Snapshot — 14 Questions Linked to Source Modules
                 </span>
-                <Badge className="bg-[#0A2B6D] text-white text-[10px]">
+                <Badge className="bg-[#0A2B6D] text-white text-[8.5px] px-1.5 py-0">
                   Current record counts · Open a source module to review
                 </Badge>
               </div>
-              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7">
+              <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-4 lg:grid-cols-7">
                 {outcome14Questions.map((item) => (
                   <Link
                     key={item.q}
                     to={item.path}
-                    className="flex flex-col justify-between rounded-xl border border-[#0A2B6D]/20 bg-white p-2.5 shadow-2xs transition hover:-translate-y-0.5 hover:border-[#0072FF]"
+                    className="flex flex-col justify-between rounded-lg border border-[#0A2B6D]/20 bg-white p-1.5 shadow-2xs transition hover:border-[#0072FF]"
                   >
-                    <div className="text-[10px] font-extrabold text-[#0A2B6D]/85 leading-snug">
+                    <div className="text-[8.5px] font-extrabold text-[#0A2B6D]/85 leading-tight">
                       {item.q}
                     </div>
                     <div
-                      className="mt-1 text-xs font-extrabold leading-tight"
+                      className="mt-0.5 text-[10px] font-extrabold leading-tight"
                       style={{ color: item.tone }}
                     >
                       {item.a}
                     </div>
-                    <div className="mt-0.5 text-[9.5px] font-semibold text-[#0A2B6D]/75 leading-tight">
+                    <div className="text-[8px] font-semibold text-[#0A2B6D]/75 leading-tight">
                       {item.sub}
                     </div>
                   </Link>
@@ -391,29 +388,28 @@ export default function OrganisationalOperatingSystemCommand() {
             </div>
 
             {/* Organisation Health (9 Pillars) + Today + Attention Required + AI Recommendations */}
-            <div className="grid grid-cols-1 gap-3 lg:grid-cols-12">
+            <div className="grid grid-cols-1 gap-2 lg:grid-cols-12">
               {/* 9 Health Pillars */}
-              <div className="lg:col-span-5 rounded-xl border border-slate-200 bg-white p-3 space-y-2">
+              <div className="lg:col-span-5 rounded-lg border border-slate-200 bg-white p-2 space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                  <span className="text-[9.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
                     Organisation Snapshot (9 Record Areas)
                   </span>
-                  <span className="rounded-full bg-[#0072FF] px-2.5 py-0.5 text-[10px] font-extrabold text-white">
+                  <span className="rounded-full bg-[#0072FF] px-2 py-0 text-[8.5px] font-extrabold text-white">
                     Not calculated
                   </span>
                 </div>
-                <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-3">
+                <div className="grid grid-cols-3 gap-1">
                   {healthPillars.map((h) => (
                     <Link
                       key={h.label}
                       to={h.path}
-                      className="rounded-lg border border-slate-200 bg-[#F6F0FF]/50 p-2 hover:border-[#5A00D6]"
+                      className="rounded border border-slate-200 bg-[#F6F0FF]/50 p-1 hover:border-[#5A00D6]"
                     >
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-extrabold text-[#0A2B6D]">{h.label}</span>
-                        <span className="text-[10px] font-bold text-slate-500">Counts</span>
+                        <span className="text-[8.5px] font-extrabold text-[#0A2B6D]">{h.label}</span>
                       </div>
-                      <p className="mt-0.5 text-[9.5px] font-semibold text-[#0A2B6D]/80 leading-tight">
+                      <p className="text-[8px] font-semibold text-[#0A2B6D]/80 leading-tight">
                         {h.detail}
                       </p>
                     </Link>
@@ -422,52 +418,52 @@ export default function OrganisationalOperatingSystemCommand() {
               </div>
 
               {/* Today + Attention Required */}
-              <div className="lg:col-span-4 rounded-xl border border-slate-200 bg-white p-3 space-y-2.5">
+              <div className="lg:col-span-4 rounded-lg border border-slate-200 bg-white p-2 space-y-1.5">
                 <div>
-                  <div className="text-xs font-extrabold uppercase tracking-wider text-[#0072FF]">
+                  <div className="text-[9.5px] font-extrabold uppercase tracking-wider text-[#0072FF]">
                     Workload &amp; Record Shortcuts
                   </div>
-                  <div className="mt-1.5 grid grid-cols-2 gap-1.5 sm:grid-cols-3">
+                  <div className="mt-1 grid grid-cols-3 gap-1">
                     {[
                       { label: 'Open Tasks', val: counts.tasksOpen, path: '/tasks' },
-                      { label: 'Reviews', val: 'Open Review Due Board', path: '/review-due' },
-                      { label: 'Training Modules', val: counts.trainingTotal, path: '/training' },
-                      { label: 'Assessments Due', val: 'Not assessed', path: '/checklists' },
-                      { label: 'Audits Logged', val: counts.auditsTotal, path: '/auditor-portal' },
-                      { label: 'Approvals Due', val: 'Not assessed', path: '/compliance' },
+                      { label: 'Reviews', val: 'Due Board', path: '/review-due' },
+                      { label: 'Training', val: counts.trainingTotal, path: '/training' },
+                      { label: 'Assessments', val: 'Checklists', path: '/checklists' },
+                      { label: 'Audits', val: counts.auditsTotal, path: '/auditor-portal' },
+                      { label: 'Approvals', val: 'Review', path: '/compliance' },
                     ].map((t) => (
                       <Link
                         key={t.label}
                         to={t.path}
-                        className="rounded-lg border border-slate-200 bg-white p-2 text-center hover:border-[#0072FF]"
+                        className="rounded border border-slate-200 bg-white p-1 text-center hover:border-[#0072FF]"
                       >
-                        <div className="text-xs font-extrabold text-[#0A2B6D]">{formatCount(t.val)}</div>
-                        <div className="text-[9.5px] font-bold text-[#5A00D6]">{t.label}</div>
+                        <div className="text-[9.5px] font-extrabold text-[#0A2B6D]">{formatCount(t.val)}</div>
+                        <div className="text-[8px] font-bold text-[#5A00D6]">{t.label}</div>
                       </Link>
                     ))}
                   </div>
                 </div>
 
                 <div>
-                  <div className="text-xs font-extrabold uppercase tracking-wider text-[#FF2E9A]">
-                    Attention Required — Priority Risk &amp; Safeguard Radar
+                  <div className="text-[9.5px] font-extrabold uppercase tracking-wider text-[#FF2E9A]">
+                    Priority Risk &amp; Safeguard Radar
                   </div>
-                  <div className="mt-1.5 grid grid-cols-2 gap-1.5 sm:grid-cols-3">
+                  <div className="mt-1 grid grid-cols-3 gap-1">
                     {[
-                      { label: 'High/Critical Risks', val: counts.risksCritical, path: '/risks?rating=high-critical' },
-                      { label: 'Unresolved Incidents', val: counts.incidentsOpen, path: '/incidents' },
-                      { label: 'Open Complaints', val: counts.complaintsOpen, path: '/feedback' },
-                      { label: 'Missing Evidence', val: 'Not assessed', path: '/documents' },
-                      { label: 'Compliance Gaps', val: 'Not assessed', path: '/compliance' },
-                      { label: 'Expiring Certs/Quals', val: counts.documentsExpiring, path: '/documents' },
+                      { label: 'High/Crit Risks', val: counts.risksCritical, path: '/risks?rating=high-critical' },
+                      { label: 'Open Incidents', val: counts.incidentsOpen, path: '/incidents' },
+                      { label: 'Complaints', val: counts.complaintsOpen, path: '/feedback' },
+                      { label: 'Evidence', val: 'Vault', path: '/documents' },
+                      { label: 'Compliance', val: 'Review', path: '/compliance' },
+                      { label: 'Expiring Docs', val: counts.documentsExpiring, path: '/documents' },
                     ].map((a) => (
                       <Link
                         key={a.label}
                         to={a.path}
-                        className="rounded-lg border border-[#FF2E9A]/35 bg-[#F6F0FF]/40 p-2 text-center hover:border-[#FF2E9A]"
+                        className="rounded border border-[#FF2E9A]/35 bg-[#F6F0FF]/40 p-1 text-center hover:border-[#FF2E9A]"
                       >
-                        <div className="text-xs font-extrabold text-[#0A2B6D]">{a.val}</div>
-                        <div className="text-[9.5px] font-bold text-[#FF2E9A]">{a.label}</div>
+                        <div className="text-[9.5px] font-extrabold text-[#0A2B6D]">{a.val}</div>
+                        <div className="text-[8px] font-bold text-[#FF2E9A]">{a.label}</div>
                       </Link>
                     ))}
                   </div>
@@ -475,19 +471,18 @@ export default function OrganisationalOperatingSystemCommand() {
               </div>
 
               {/* AI Recommendations */}
-              <div className="lg:col-span-3 rounded-xl border border-slate-200 bg-[#F6F0FF]/60 p-3 space-y-1.5">
-                <div className="flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider text-[#5A00D6]">
-                  <Sparkles className="h-3.5 w-3.5 text-[#FF2E9A]" />
+              <div className="lg:col-span-3 rounded-lg border border-slate-200 bg-[#F6F0FF]/60 p-2 space-y-1">
+                <div className="flex items-center gap-1 text-[9.5px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                  <Sparkles className="h-2.5 w-2.5 text-[#FF2E9A]" />
                   <span>Operational Snapshot Notes</span>
                 </div>
                 {[
-                  { tag: 'Profile records available', text: `${formatCount(counts.employees)} staff and ${formatCount(counts.participants)} participant profiles are in their source modules.` },
-                  { tag: 'What Is Overdue', text: `${formatCount(counts.tasksOverdue)} tasks are marked overdue; check owners and next steps in Tasks.` },
-                  { tag: 'What Is At Risk', text: `${formatCount(counts.risksCritical)} risk records are rated high or critical; review controls and owners in Risk Management.` },
-                  { tag: 'Requires Attention', text: `${formatCount(counts.documentsExpiring)} employee documents are marked Expiring Soon or Expired in the source records.` },
-                  { tag: 'What Happens Next', text: 'Review the linked modules to confirm evidence, owners, statuses and due dates.' },
+                  { tag: 'Profiles', text: `${formatCount(counts.employees)} staff · ${formatCount(counts.participants)} participants.` },
+                  { tag: 'Overdue', text: `${formatCount(counts.tasksOverdue)} overdue tasks in Tasks.` },
+                  { tag: 'At Risk', text: `${formatCount(counts.risksCritical)} high/critical risks.` },
+                  { tag: 'Expiring', text: `${formatCount(counts.documentsExpiring)} expiring/expired employee docs.` },
                 ].map((rec) => (
-                  <div key={rec.tag} className="rounded-lg border border-[#C084FC]/50 bg-white p-2 text-[10.5px]">
+                  <div key={rec.tag} className="rounded border border-[#C084FC]/50 bg-white px-1.5 py-1 text-[8.5px]">
                     <span className="font-extrabold text-[#5A00D6]">{rec.tag}: </span>
                     <span className="font-semibold text-[#0A2B6D]">{rec.text}</span>
                   </div>

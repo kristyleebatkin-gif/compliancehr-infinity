@@ -130,82 +130,78 @@ export default function OrganisationHealthScoreFramework({ onScoresLoaded }) {
     : [];
 
   return (
-    <section className="overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white shadow-md">
-      {/* Header Banner */}
+    <section className="overflow-hidden rounded-xl border-2 border-[#0A2B6D] bg-white shadow-sm">
+      {/* Header Banner — 50% Compact */}
       <div
-        className="app-section-card-header flex flex-wrap items-center justify-between gap-3 px-4 py-3.5 text-white"
+        className="flex flex-wrap items-center justify-between gap-2 px-3 py-1.5 text-white"
         style={{
           background:
             'linear-gradient(120deg, #0072FF 0%, #0A2B6D 18%, #5A00D6 45%, #A100FF 72%, #FF2E9A 100%)',
         }}
       >
-        <div>
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white">
-            <Activity className="h-3.5 w-3.5 text-[#00C6FF]" />
-            <span>Organisation Health &amp; 5-Score Executive Framework · Transparent · Auditable · Configurable</span>
+        <div className="min-w-0">
+          <div className="inline-flex items-center gap-1 rounded-full bg-white/20 px-2 py-0 text-[8.5px] font-extrabold uppercase tracking-wider text-white">
+            <Activity className="h-2.5 w-2.5 text-[#00C6FF]" />
+            <span>Organisation Health &amp; 5-Score Executive Framework</span>
           </div>
-          <h2 className="mt-1 font-editorial text-lg sm:text-xl font-extrabold text-white">
-            Executive Health Scorecards — Click Any Score to Inspect Formula, Weightings, Records &amp; Trends
+          <h2 className="mt-0.5 font-editorial text-xs sm:text-sm font-extrabold text-white leading-tight">
+            Executive Health Scorecards — Click Any Score to Inspect Formula, Weightings &amp; Trends
           </h2>
         </div>
 
-        <div className="flex flex-wrap items-center gap-1.5">
+        <div className="flex flex-wrap items-center gap-1">
           <Button
             size="sm"
             type="button"
             onClick={handleRecordSnapshot}
             disabled={recordingSnapshot || loading}
-            className="border border-white/35 bg-white/15 text-white hover:bg-white/25 font-extrabold text-xs"
+            className="min-h-6 h-6 border border-white/35 bg-white/15 px-2 py-0.5 text-white hover:bg-white/25 font-extrabold text-[9.5px]"
           >
-            <Camera className="mr-1 h-3.5 w-3.5 text-white" />
-            <span>
-              {recordingSnapshot ? 'Recording…' : 'Record Score Snapshot'}
-            </span>
+            <Camera className="mr-1 h-2.5 w-2.5 text-white" />
+            <span>{recordingSnapshot ? 'Recording…' : 'Snapshot'}</span>
           </Button>
           <Button
             size="sm"
             type="button"
             onClick={handleExportCsv}
             disabled={loading || !data}
-            className="border border-white/35 bg-white/15 text-white hover:bg-white/25 font-extrabold text-xs"
+            className="min-h-6 h-6 border border-white/35 bg-white/15 px-2 py-0.5 text-white hover:bg-white/25 font-extrabold text-[9.5px]"
           >
-            <Download className="mr-1 h-3.5 w-3.5 text-white" />
-            <span>Export Report (CSV)</span>
+            <Download className="mr-1 h-2.5 w-2.5 text-white" />
+            <span>CSV</span>
           </Button>
           <Button
             size="sm"
             type="button"
             onClick={() => setShowBlueprint((v) => !v)}
-            className="border border-white/35 bg-white/15 text-white hover:bg-white/25 font-extrabold text-xs"
+            className="min-h-6 h-6 border border-white/35 bg-white/15 px-2 py-0.5 text-white hover:bg-white/25 font-extrabold text-[9.5px]"
           >
-            <Layers className="mr-1 h-3.5 w-3.5 text-white" />
-            <span>
-              {showBlueprint ? 'Hide 8-Prompt Blueprint' : '8-Prompt Blueprint & Gap Audit'}
-            </span>
+            <Layers className="mr-1 h-2.5 w-2.5 text-white" />
+            <span>{showBlueprint ? 'Hide Blueprint' : 'Blueprint'}</span>
           </Button>
           <Button
             size="sm"
             type="button"
             onClick={refreshScores}
             disabled={loading}
-            className="border border-white/35 bg-white/15 text-white hover:bg-white/25 font-extrabold text-xs"
+            className="min-h-6 h-6 border border-white/35 bg-white/15 px-2 py-0.5 text-white hover:bg-white/25 font-extrabold text-[9.5px]"
           >
-            <RefreshCw className={`mr-1 h-3.5 w-3.5 text-white ${loading ? 'animate-spin' : ''}`} />
-            <span>Recalculate</span>
+            <RefreshCw className={`mr-1 h-2.5 w-2.5 text-white ${loading ? 'animate-spin' : ''}`} />
+            <span>Refresh</span>
           </Button>
         </div>
       </div>
 
-      <div className="p-4 space-y-4">
-        {/* 5 Interactive Executive Score Cards */}
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
+      <div className="p-2 space-y-2">
+        {/* 5 Interactive Executive Score Cards (50% Compact) */}
+        <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 lg:grid-cols-5">
           {SCORE_ORDER.map(({ key, icon: Icon }) => {
             const sc = data?.scores?.[key];
             if (!sc) {
               return (
                 <div
                   key={key}
-                  className="h-44 animate-pulse rounded-2xl border border-slate-200 bg-slate-50 p-4"
+                  className="h-24 animate-pulse rounded-xl border border-slate-200 bg-slate-50 p-2"
                 />
               );
             }
@@ -214,37 +210,36 @@ export default function OrganisationHealthScoreFramework({ onScoresLoaded }) {
                 key={key}
                 type="button"
                 onClick={() => setSelectedScoreKey(key)}
-                className="group flex flex-col justify-between rounded-2xl border-2 border-[#0A2B6D] bg-white p-3.5 text-left shadow-2xs transition hover:-translate-y-0.5 hover:border-[#5A00D6] focus:outline-none focus:ring-2 focus:ring-[#0072FF]"
+                className="group flex flex-col justify-between rounded-xl border border-[#0A2B6D] bg-white p-2 text-left shadow-2xs transition hover:border-[#5A00D6] focus:outline-none"
               >
-                <div className="w-full space-y-2">
+                <div className="w-full space-y-1">
                   <div className="flex items-center justify-between gap-1">
                     <span
-                      className="inline-flex h-8 w-8 items-center justify-center rounded-xl text-white"
+                      className="inline-flex h-5 w-5 items-center justify-center rounded-lg text-white"
                       style={{ backgroundColor: sc.color }}
                     >
-                      <Icon className="h-4 w-4" />
+                      <Icon className="h-3 w-3" />
                     </span>
-                    <Badge className={sc.band?.badgeClass}>
+                    <Badge className={`${sc.band?.badgeClass} text-[8.5px] px-1.5 py-0`}>
                       {sc.band?.status}
                     </Badge>
                   </div>
 
                   <div>
-                    <div className="text-xs font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                    <div className="text-[9.5px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
                       {sc.title}
                     </div>
-                    <div className="mt-0.5 flex flex-wrap items-baseline justify-between gap-1">
-                      <span className="font-editorial text-2xl font-extrabold text-[#0A2B6D]">
+                    <div className="flex flex-wrap items-baseline justify-between gap-1">
+                      <span className="font-editorial text-sm font-extrabold text-[#0A2B6D]">
                         {sc.score !== null ? `${sc.score}%` : 'Unassessed'}
                       </span>
-                      <span className="text-[10px] font-bold text-slate-600">
-                        Warn &lt;{sc.warning_threshold}% · Crit &lt;{sc.critical_threshold}%
+                      <span className="text-[8px] font-bold text-slate-600">
+                        W&lt;{sc.warning_threshold}% · C&lt;{sc.critical_threshold}%
                       </span>
                     </div>
                   </div>
 
-                  {/* Progress bar */}
-                  <div className="h-2 w-full overflow-hidden rounded-full bg-slate-100 border border-slate-200">
+                  <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100 border border-slate-200">
                     <div
                       className="h-full rounded-full transition-all"
                       style={{
@@ -253,26 +248,14 @@ export default function OrganisationHealthScoreFramework({ onScoresLoaded }) {
                       }}
                     />
                   </div>
-
-                  {/* Sub-weights summary */}
-                  <div className="space-y-0.5 pt-1">
-                    {sc.breakdown.slice(0, 2).map((b) => (
-                      <div key={b.key} className="flex items-center justify-between text-[10.5px]">
-                        <span className="truncate font-semibold text-[#0A2B6D]/85">{b.label}</span>
-                        <span className="shrink-0 font-extrabold text-[#0A2B6D]">
-                          {b.rate !== null ? `${b.rate}%` : '—'} ({b.pct}%)
-                        </span>
-                      </div>
-                    ))}
-                  </div>
                 </div>
 
-                <div className="mt-3 flex w-full items-center justify-between border-t border-slate-100 pt-2 text-[11px] font-extrabold text-[#0072FF] group-hover:text-[#5A00D6]">
-                  <span className="inline-flex items-center gap-1">
-                    <Eye className="h-3 w-3" />
-                    Formula, Records &amp; Trends
+                <div className="mt-1.5 flex w-full items-center justify-between border-t border-slate-100 pt-1 text-[8.5px] font-extrabold text-[#0072FF]">
+                  <span className="inline-flex items-center gap-0.5">
+                    <Eye className="h-2.5 w-2.5" />
+                    Formula &amp; Trends
                   </span>
-                  <Sliders className="h-3 w-3" />
+                  <Sliders className="h-2.5 w-2.5" />
                 </div>
               </button>
             );

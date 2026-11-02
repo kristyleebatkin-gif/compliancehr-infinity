@@ -235,25 +235,38 @@ export default function VisualDesignModuleCommandStandard() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-[1440px] px-4 pt-2.5 sm:px-6 lg:px-8">
+    <div className="mx-auto w-full max-w-[1440px] px-3 pt-1 sm:px-5 lg:px-6">
       <section
         aria-label="Visual Design, Information Architecture & Module Experience Command Standard"
-        className="rounded-2xl p-[2.5px] shadow-panel"
+        className="rounded-xl p-[1.5px] shadow-2xs"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
-        <div className="rounded-[14px] bg-white p-3 sm:p-3.5 space-y-2.5">
-          {/* Top Row: 3-Second Rule Subject Clarity + 4 Visual Status Indicators + Summary->Detail->Evidence->Action Flow */}
-          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2">
-            <div className="flex flex-wrap items-center gap-2 min-w-0">
+        <div className="rounded-[10px] bg-white px-2.5 py-1.5 space-y-1.5">
+          {/* Top Row (50% Reduced): Subject Title + Inline Search Bar + 4 Status Indicators on the Same Line */}
+          <div className="flex flex-wrap items-center justify-between gap-1.5">
+            <div className="flex flex-wrap items-center gap-1.5 min-w-0">
               <span
-                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10.5px] font-extrabold uppercase tracking-wider text-white shadow-2xs"
+                className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-white shadow-2xs"
                 style={{
                   background: 'linear-gradient(120deg, #0072FF 0%, #5A00D6 52%, #FF2E9A 100%)',
                 }}
               >
-                <Sparkles className="h-3 w-3 shrink-0 text-[#00C6FF]" />
+                <Sparkles className="h-2.5 w-2.5 shrink-0 text-[#00C6FF]" />
                 <span>{ctx.subject}</span>
               </span>
+
+              <form onSubmit={handleUniversalSearch} className="flex items-center gap-1">
+                <div className="relative">
+                  <Search className="pointer-events-none absolute left-2 top-1/2 h-2.5 w-2.5 -translate-y-1/2 text-[#5A00D6]" />
+                  <input
+                    type="search"
+                    value={searchText}
+                    onChange={(e) => setSearchText(e.target.value)}
+                    placeholder="Page search…"
+                    className="h-6 w-36 sm:w-48 rounded-full border border-slate-300 bg-white pl-6 pr-2 text-[9.5px] font-bold text-[#0A2B6D] focus:border-[#0072FF] focus:outline-none"
+                  />
+                </div>
+              </form>
 
               {/* Summary ↓ Detail ↓ Evidence ↓ Action flow */}
               <div className="hidden xl:inline-flex items-center gap-1 rounded-full border border-slate-200 bg-[#F5F0FF]/70 px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">

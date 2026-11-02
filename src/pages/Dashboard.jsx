@@ -93,36 +93,87 @@ export default function Dashboard() {
     : activeSuite === suiteId || activeSuite === 'all';
 
   return (
-    <div className="bright-dashboard mx-auto w-full max-w-[1440px] px-4 py-4 sm:px-6 lg:px-8 space-y-5">
-      <section className="rounded-2xl border border-slate-200 bg-white px-5 py-5 shadow-sm sm:px-7">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#5A00D6]">ComplianceHR Infinity</p>
-            <h1 className="mt-1 text-2xl font-bold tracking-tight text-[#0A2B6D] sm:text-3xl">{firstName ? `Welcome, ${firstName}` : heading.title}</h1>
-            <p className="mt-2 max-w-3xl text-sm text-slate-600">{heading.sub}</p>
+    <div className="bright-dashboard mx-auto w-full max-w-[1440px] px-3 py-2 sm:px-5 lg:px-6 space-y-2.5">
+      {/* Dashboard Executive Command — Centred Title Above + 50% Squashed Remote Control Tiles in Two Rows */}
+      <section
+        className="preserve-island-theme overflow-hidden rounded-2xl border-2 border-[#0A2B6D] p-2 shadow-lg"
+        style={{
+          background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+        }}
+      >
+        {/* Centred Dashboard Title Above on White Title Background */}
+        <div className="mb-1.5 flex flex-col items-center justify-center rounded-xl bg-white px-3 py-1 text-center shadow-2xs">
+          <div className="flex flex-wrap items-center justify-center gap-1.5">
+            <h1 className="text-xs sm:text-sm font-extrabold tracking-tight text-[#0A2B6D]" style={{ color: '#0A2B6D' }}>
+              {firstName ? `${heading.title} · Welcome, ${firstName}` : heading.title} — Dashboard &amp; Executive Command
+            </h1>
+            <span className="inline-flex items-center gap-1 rounded-full bg-[#F5F0FF] px-2 py-0 text-[8.5px] font-extrabold text-[#5A00D6]">
+              <ShieldCheck className="h-2.5 w-2.5 text-[#0072FF]" />
+              <span>LIVE</span>
+            </span>
           </div>
-          <span className="inline-flex w-fit items-center gap-2 rounded-full bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-600">
-            <ShieldCheck className="h-4 w-4 text-emerald-600" /> Secure workspace
-          </span>
+          <p className="text-[9.5px] font-semibold text-[#0A2B6D]/80 leading-tight" style={{ color: '#0A2B6D' }}>
+            {heading.sub}
+          </p>
         </div>
+
+        {/* 8 Executive Command Options Squashed by 50% in Two Rows (4 per row) */}
+        <nav aria-label="Dashboard workspaces" className="grid grid-cols-2 gap-1.5 sm:grid-cols-4">
+          {availableSuites.map((suite) => {
+            const Icon = suite.icon;
+            const active = activeSuite === suite.id;
+            return (
+              <button
+                key={suite.id}
+                type="button"
+                onClick={() => setActiveSuite(suite.id)}
+                aria-pressed={active}
+                className={`group rounded-xl p-[1.5px] text-left transition-all focus:outline-none ${
+                  active
+                    ? 'shadow-[0_0_14px_rgba(0,198,255,0.75)] scale-[1.01]'
+                    : 'hover:shadow-[0_0_10px_rgba(161,0,255,0.45)]'
+                }`}
+                style={{
+                  background: 'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)',
+                }}
+              >
+                <div className="flex min-h-[28px] items-center justify-between gap-1 rounded-[10px] bg-white px-2 py-1">
+                  <div className="flex min-w-0 items-center gap-1.5">
+                    <span
+                      className="flex h-4 w-4 shrink-0 items-center justify-center rounded-md text-white"
+                      style={{
+                        background: 'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)',
+                      }}
+                    >
+                      <Icon className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                    </span>
+                    <span className="truncate text-[10px] font-extrabold text-[#0A2B6D]" style={{ color: '#0A2B6D' }}>
+                      {suite.label}
+                    </span>
+                  </div>
+                  <span
+                    className={`inline-flex shrink-0 items-center gap-1 rounded-full px-1.5 py-0 text-[7px] font-black uppercase ${
+                      active ? 'bg-[#0A2B6D] text-[#00C6FF]' : 'bg-[#F5F0FF] text-[#5A00D6]'
+                    }`}
+                  >
+                    <span
+                      className="h-1.5 w-1.5 rounded-full"
+                      style={{
+                        backgroundColor: active ? '#00C6FF' : '#FF2E9A',
+                        boxShadow: active ? '0 0 6px 1px #00C6FF' : 'none',
+                      }}
+                    />
+                    {active ? 'ON' : 'READY'}
+                  </span>
+                </div>
+              </button>
+            );
+          })}
+        </nav>
       </section>
 
-      <nav aria-label="Dashboard workspaces" className="grid grid-cols-2 gap-2 sm:grid-cols-4 xl:grid-cols-8">
-        {availableSuites.map((suite) => {
-          const Icon = suite.icon;
-          const active = activeSuite === suite.id;
-          return (
-            <button key={suite.id} type="button" onClick={() => setActiveSuite(suite.id)} aria-pressed={active}
-              className={`flex min-h-14 items-center gap-2 rounded-xl border px-3 py-2 text-left text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#0072FF] focus:ring-offset-2 ${active ? 'border-[#0A2B6D] bg-[#0A2B6D] text-white shadow-sm' : 'border-slate-200 bg-white text-[#0A2B6D] hover:border-[#0072FF] hover:bg-blue-50'}`}>
-              <Icon className={`h-4 w-4 shrink-0 ${active ? 'text-[#00C6FF]' : 'text-[#5A00D6]'}`} />
-              <span>{suite.label}</span>
-            </button>
-          );
-        })}
-      </nav>
-
       {isSuiteVisible('os-command') && (
-        <div className="space-y-5">
+        <div className="space-y-2.5">
           <OrganisationHealthScoreFramework />
           <OrganisationalOperatingSystemCommand />
         </div>
