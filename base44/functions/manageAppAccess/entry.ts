@@ -49,7 +49,7 @@ export default async function(req) {
       if (body.action === 'role' && !hasApprovedAccess(target)) return Response.json({ error: 'Approve the account before changing its active role.' }, { status: 400 });
       Object.assign(patch, { role: body.role, account_status: 'Active', access_approved: true });
     } else {
-      Object.assign(patch, { account_status: body.action === 'reject' ? 'Rejected' : 'Suspended', access_approved: false });
+      Object.assign(patch, { role: 'Archived', account_status: body.action === 'reject' ? 'Rejected' : 'Suspended', access_approved: false });
     }
     await service.entities.User.update(target.id, patch);
     return Response.json({ ok: true });
