@@ -464,102 +464,50 @@
     }
     .compact-tabs [role="tab"]:not([data-dashboard-tab]) svg, .compact-module [role="tab"]:not([data-dashboard-tab]) svg { width: 0.875rem; height: 0.875rem; }
   }
-  /* Shared page and section headers: highlighted gradient, distinct borders for visual separation, subject design accents, and larger header typography than body text underneath. */
-  .app-readable :is(.app-page-header, .dashboard-panel-header, .app-section-card-header),
+  /* Shared page and section headers: White background with App Design Coloured Border, Dark Blue writing, and App Design Coloured accents. */
+  .app-readable :is(.dashboard-panel-header, .app-section-card-header),
   .app-readable .safety-workspace .dashboard-panel-header {
     position: relative;
     overflow: hidden;
-    background: var(--header-gradient) !important;
-    color: #ffffff !important;
+    background: #ffffff !important;
+    color: #0A2B6D !important;
     border: 2px solid #5A00D6 !important;
     border-bottom: 3px solid #FF2E9A !important;
-    box-shadow: 0 4px 14px -3px rgba(90, 0, 214, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.35) !important;
+    box-shadow: 0 3px 10px -2px rgba(90, 0, 214, 0.18) !important;
     font-family: var(--font-body) !important;
   }
   .app-readable :is(.comm-weather-bar, .comm-panel-bar) {
     position: relative;
     overflow: hidden;
-    background: var(--comm-bar-bg, var(--header-gradient)) !important;
-    color: #ffffff !important;
-    border: 2px solid #5A00D6 !important;
-    border-bottom: 3px solid #FF2E9A !important;
-    box-shadow: 0 3px 10px -2px rgba(90, 0, 214, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    background: #ffffff !important;
+    color: #0A2B6D !important;
+    border: 2px solid #0072FF !important;
+    border-bottom: 3px solid #5A00D6 !important;
+    box-shadow: 0 3px 10px -2px rgba(0, 114, 255, 0.18) !important;
     font-family: var(--font-body) !important;
-  }
-  .app-readable .app-page-header {
-    box-sizing: border-box;
-    min-height: 5rem;
-    height: auto !important;
-    max-height: none !important;
-    padding: 1.125rem 1.375rem !important;
-    border-radius: 1rem !important;
   }
   .app-readable :is(.dashboard-panel-header, .app-section-card-header) {
     box-sizing: border-box;
-    min-height: 3.25rem;
+    min-height: 2.75rem;
     height: auto !important;
     max-height: none !important;
-    padding: 0.75rem 1.125rem !important;
-  }
-  .app-readable :is(.app-page-header, .dashboard-panel-header, .app-section-card-header, .comm-weather-bar, .comm-panel-bar)::before {
-    content: '';
-    position: absolute;
-    left: -3.5rem;
-    bottom: -100%;
-    height: 220%;
-    width: 34%;
-    border-radius: 9999px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.18), transparent 70%);
-    pointer-events: none;
-  }
-  .app-readable :is(.app-page-header, .dashboard-panel-header, .app-section-card-header, .comm-weather-bar, .comm-panel-bar)::after {
-    content: '';
-    position: absolute;
-    right: -2.5rem;
-    top: -65%;
-    height: 220%;
-    width: 14rem;
-    border-radius: 9999px;
-    border: 26px solid rgba(255, 255, 255, 0.11);
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.14), transparent 68%);
-    pointer-events: none;
-  }
-  .app-readable :is(.app-page-header, .dashboard-panel-header, .app-section-card-header, .comm-weather-bar, .comm-panel-bar, .gradient-brand) :is(h1, h2, h3, h4, p, span, button:not(.bg-white), a:not(.bg-white), svg, [data-panel-title]) {
-    font-family: var(--font-body) !important;
-    color: #ffffff !important;
-    text-shadow: none !important;
-    -webkit-font-smoothing: antialiased;
-  }
-  .app-readable .app-page-header h1 {
-    font-size: 1.55rem;
-    font-weight: 800;
-    line-height: 1.95rem;
-    letter-spacing: -0.02em;
-  }
-  .app-readable .app-page-header p {
-    font-size: 0.78rem !important;
-    font-weight: 500;
-    line-height: 1.2rem !important;
-    margin-top: 0.2rem;
-    opacity: 0.95;
-    overflow: visible;
-    white-space: normal;
+    padding: 0.5rem 0.875rem !important;
   }
   .app-readable :is(.dashboard-panel-header, .app-section-card-header, .comm-panel-bar) :is(h1, h2, h3, [data-panel-title]) {
-    font-size: 1.02rem !important;
+    font-size: 0.95rem !important;
     font-weight: 800 !important;
-    line-height: 1.35rem !important;
+    line-height: 1.3rem !important;
     letter-spacing: -0.01em;
-    color: #ffffff !important;
+    color: #0A2B6D !important;
   }
   .app-readable :is(.dashboard-panel-header, .app-section-card-header, .comm-panel-bar) p {
     font-size: 0.72rem !important;
-    font-weight: 500 !important;
+    font-weight: 600 !important;
     line-height: 1.1rem !important;
-    color: rgba(255, 255, 255, 0.94) !important;
+    color: #0A2B6D !important;
   }
-  .app-readable :is(.dashboard-panel-header, .app-section-card-header) :is(h1, h2, h3, h4, p, [data-panel-title], button, span) {
-    color: #ffffff !important;
+  .app-readable :is(.dashboard-panel-header, .app-section-card-header) :is(h1, h2, h3, h4, p, [data-panel-title], span) {
+    color: #0A2B6D !important;
     opacity: 1;
     overflow-wrap: anywhere;
     white-space: normal;
@@ -653,39 +601,18 @@
 }
 
 /* ===== CONSISTENT APP HEADER & SECTION HEADER STANDARD =====
-   Matches the Navigation Router Remote & Small Screen Remote colour scheme:
-   App blue-purple-pink gradient & dark blue borders, crisp typography, zero harsh black outlines. */
+   White Header Background with App Design Coloured Borders (#0072FF, #5A00D6, #FF2E9A),
+   Dark Blue (#0A2B6D) writing changing into App Design Colours, and App Design Coloured Symbols. */
 @layer utilities {
-  .app-readable .app-page-header {
-    box-sizing: border-box;
-    min-height: 4.25rem !important;
-    height: auto !important;
-    max-height: none !important;
-    padding: 0.75rem 1.25rem !important;
-    display: flex !important;
-    align-items: center;
-    overflow: hidden;
-    border-radius: 1rem !important;
-  }
   .app-readable :is(.dashboard-panel-header, .app-section-card-header) {
     box-sizing: border-box;
-    min-height: 3.25rem !important;
+    min-height: 2.5rem !important;
     display: flex;
     align-items: center;
-  }
-  .app-readable :is(.app-page-header, .dashboard-panel-header, .app-section-card-header) {
-    background: var(--header-gradient) !important;
-    border: 2px solid #0A2B6D !important;
+    background: #ffffff !important;
+    border: 2px solid #5A00D6 !important;
     border-bottom: 3px solid #FF2E9A !important;
-    color: #fff !important;
+    color: #0A2B6D !important;
     font-family: var(--font-body) !important;
-  }
-  .app-readable :is(.app-page-header, .dashboard-panel-header, .app-section-card-header) :is(h1, h2, h3, h4, p, span:not(.bg-white *), [data-panel-title]) {
-    color: #fff !important;
-    text-shadow: none !important;
-  }
-  .app-readable .app-page-header h1 { font-size: 1.35rem !important; font-weight: 800 !important; line-height: 1.75rem !important; letter-spacing: -0.02em !important; }
-  .app-readable .app-page-header p {
-    font-size: 0.82rem !important; font-weight: 600 !important; line-height: 1.2rem !important; margin-top: 0.125rem;
   }
 }

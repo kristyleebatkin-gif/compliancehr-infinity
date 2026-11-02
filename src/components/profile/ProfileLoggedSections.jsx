@@ -7,8 +7,25 @@ import ProfileAllLogs from '@/components/profile/ProfileAllLogs';
 const CONSENT = /(?:audit consent|consent to share information|consent to act as an advocate|medication consent):/i;
 
 function LogList({ lines, empty }) {
-  if (!lines.length) return <p className="px-1 text-[11px] text-black">{empty}</p>;
-  return <ul className="max-h-60 space-y-1 overflow-y-auto">{lines.map((line, i) => <li key={i} className="break-words rounded-md bg-white px-2 py-1 text-[11px] leading-relaxed text-black">{line}</li>)}</ul>;
+  if (!lines.length) {
+    return (
+      <p className="rounded-lg border-2 border-[#0072FF] bg-white px-2.5 py-1.5 text-[11px] font-bold text-[#0A2B6D]">
+        <span style={{ color: '#0072FF' }}>◉</span> {empty}
+      </p>
+    );
+  }
+  return (
+    <ul className="max-h-60 space-y-1.5 overflow-y-auto">
+      {lines.map((line, i) => (
+        <li
+          key={i}
+          className="break-words rounded-lg border-2 border-[#5A00D6] bg-white px-2.5 py-1 text-[11px] font-bold leading-relaxed text-[#0A2B6D]"
+        >
+          <span style={{ color: '#5A00D6' }}>◉</span> {line}
+        </li>
+      ))}
+    </ul>
+  );
 }
 
 function Acknowledgements({ profile }) {

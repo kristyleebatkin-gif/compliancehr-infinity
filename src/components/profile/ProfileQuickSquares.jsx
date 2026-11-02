@@ -80,8 +80,17 @@ export default function ProfileQuickSquares({ profile, kind, personal = false })
     if (src) window.open(src, '_blank', 'noopener');
   };
 
-  const Row = ({ children }) => <li className="break-words rounded-md bg-white px-2 py-1 text-[11px] leading-relaxed text-black">{children}</li>;
-  const MiniTitle = ({ icon: Icon, children }) => <p className="flex items-center gap-1 text-[11px] font-bold text-black"><Icon className="h-3 w-3" />{children}</p>;
+  const Row = ({ children }) => (
+    <li className="break-words rounded-lg border-2 border-[#0072FF] bg-white px-2.5 py-1 text-[11px] font-bold leading-relaxed text-[#0A2B6D]">
+      <span style={{ color: '#0072FF' }}>◉</span> {children}
+    </li>
+  );
+  const MiniTitle = ({ icon: Icon, children }) => (
+    <p className="mb-1 inline-flex items-center gap-1.5 rounded-full border-2 border-[#5A00D6] bg-white px-2.5 py-0.5 text-[11px] font-extrabold text-[#0A2B6D]">
+      <Icon className="h-3 w-3 text-[#5A00D6]" />
+      <span style={{ color: '#0A2B6D' }}>{children}</span>
+    </p>
+  );
   const dateOnly = (value) => (value ? String(value).slice(0, 10) : '');
 
   const rosterBlock = (
