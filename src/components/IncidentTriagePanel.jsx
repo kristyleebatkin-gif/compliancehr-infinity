@@ -39,7 +39,7 @@ export default function IncidentTriagePanel({ form, incidentId, onApply }) {
     }
     if (s.whs_notification_likely) updates.whs_notification_required = true;
     const reasons = [s.ndis_reasons, s.sirs_applicable ? s.sirs_reasons : ''].filter(Boolean).join(' ');
-    if (reasons) {
+    if (reasons && !String(form.reportability_decision_reasons || '').includes(reasons)) {
       const stamp = `AI-assisted assessment (${new Date().toLocaleDateString('en-AU')}), reviewed and accepted by the reviewer: ${reasons}`;
       updates.reportability_decision_reasons = [form.reportability_decision_reasons, stamp].filter(Boolean).join('\n');
     }
