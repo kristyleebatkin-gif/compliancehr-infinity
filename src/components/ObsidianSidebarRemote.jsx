@@ -224,18 +224,18 @@ export default function ObsidianSidebarRemote({
 
   return (
     <div
-      className="preserve-island-theme flex h-full w-full min-w-0 min-h-0 flex-col overflow-hidden p-2 select-none"
+      className="preserve-island-theme flex h-full w-full min-w-0 min-h-0 flex-col overflow-hidden select-none"
       style={{ background: DARK_NAVY_CHASSIS }}
     >
       <section
-        className="flex h-full min-h-0 flex-col overflow-hidden rounded-2xl border-2 border-[#0A2B6D] shadow-2xl"
+        className="flex h-full min-h-0 flex-col overflow-hidden shadow-2xl"
         style={{ background: DARK_NAVY_CHASSIS }}
       >
-        {/* Top Blue -> Purple -> Pink Gradient Strip */}
+        {/* Top App-Design Gradient Strip — aligned flush with main header */}
         <div className="h-1.5 w-full shrink-0" style={{ background: BRAND_GRADIENT }} />
 
-        {/* TOP WHITE COMMAND HEADER: Brand Logo Lockup at Top of Nav Router Remote + Mode Switcher */}
-        <div className="flex shrink-0 flex-col items-center bg-white px-2.5 py-2.5 text-center shadow-sm">
+        {/* TOP WHITE SECTION OF REMOTE — exact same 176px height & alignment as the top white section of the main area */}
+        <div className="flex h-[176px] shrink-0 flex-col items-center justify-center bg-white px-2.5 py-2 text-center">
           <Link
             to="/dashboard"
             aria-label="ComplianceHR Infinity Home"
@@ -246,13 +246,13 @@ export default function ObsidianSidebarRemote({
 
           {/* Remote Control Mode Switcher */}
           <div
-            className="mt-2 grid w-full grid-cols-2 gap-1 rounded-xl p-[2px]"
+            className="mt-1.5 grid w-full grid-cols-2 gap-1 rounded-xl p-[2px]"
             style={{ background: BRAND_GRADIENT }}
           >
             <button
               type="button"
               onClick={() => setNavMode('os11')}
-              className={`min-h-[28px] rounded-[10px] py-1 text-[9.5px] font-extrabold transition-all ${
+              className={`min-h-[24px] rounded-[10px] py-0.5 text-[9px] font-extrabold transition-all ${
                 navMode === 'os11'
                   ? 'bg-[#0A2B6D] text-white shadow-[0_0_12px_rgba(0,198,255,0.6)]'
                   : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
@@ -264,7 +264,7 @@ export default function ObsidianSidebarRemote({
             <button
               type="button"
               onClick={() => setNavMode('all')}
-              className={`min-h-[28px] rounded-[10px] py-1 text-[9.5px] font-extrabold transition-all ${
+              className={`min-h-[24px] rounded-[10px] py-0.5 text-[9px] font-extrabold transition-all ${
                 navMode === 'all'
                   ? 'bg-[#0A2B6D] text-white shadow-[0_0_12px_rgba(255,46,154,0.6)]'
                   : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
@@ -275,6 +275,9 @@ export default function ObsidianSidebarRemote({
             </button>
           </div>
         </div>
+
+        {/* Continuous App-Design Gradient Divider Line aligned with main header */}
+        <div className="h-[3px] w-full shrink-0" style={{ background: BRAND_GRADIENT }} />
 
         {/* BOTTOM 3/4 DARK BLUE (Same Dark Blue as QuickAppBar / Command Centre) */}
         <nav

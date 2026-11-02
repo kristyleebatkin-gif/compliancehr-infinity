@@ -215,7 +215,16 @@ export default function AppLayout() {
       >
         Skip to main content
       </a>
-      <aside className="hidden w-64 shrink-0 overflow-hidden border-r-4 border-[#0A2B6D] bg-white md:flex">
+      <aside
+        className="hidden w-64 shrink-0 overflow-hidden bg-white md:flex"
+        style={{
+          borderRight: '3px solid transparent',
+          backgroundImage:
+            'linear-gradient(#ffffff, #ffffff), linear-gradient(180deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+          backgroundOrigin: 'border-box',
+          backgroundClip: 'padding-box, border-box',
+        }}
+      >
         {sidebarContent}
       </aside>
 
@@ -229,16 +238,17 @@ export default function AppLayout() {
       )}
 
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
-        <header className="preserve-island-theme sticky top-0 z-40 shrink-0 border-b-2 border-[#0A2B6D] shadow-md">
+        <header className="preserve-island-theme sticky top-0 z-40 shrink-0 shadow-md">
+          {/* Top App-Design Gradient Strip — matches remote top strip */}
           <div
-            className="h-1 w-full"
+            className="h-1.5 w-full"
             style={{
               background:
                 'linear-gradient(120deg, #00C6FF 0%, #0072FF 25%, #5A00D6 55%, #FF2E9A 100%)',
             }}
           />
-          {/* Very Top Logo Area ONLY: White Background Outside Logo Border to Side of Page */}
-          <div className="bg-white px-3 py-2 sm:px-6 lg:px-8">
+          {/* Top Section of White Area — exact same 176px height as the white section of the remote */}
+          <div className="flex h-[176px] items-center justify-center bg-white px-3 py-2 sm:px-6 lg:px-8">
             <div className="mx-auto flex max-w-[1440px] justify-center">
               <Link
                 to="/dashboard"
@@ -248,6 +258,15 @@ export default function AppLayout() {
               </Link>
             </div>
           </div>
+
+          {/* Continuous App-Design Gradient Divider Line aligned with remote white section bottom */}
+          <div
+            className="h-[3px] w-full"
+            style={{
+              background:
+                'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+            }}
+          />
 
           {/* Dark Blue Command Row Below Top Logo Section */}
           <div
