@@ -192,7 +192,7 @@ export default function LandingProductShowcase() {
                   'radial-gradient(circle at 50% 50%, rgba(0, 198, 255, 0.18) 0%, rgba(90, 0, 214, 0.32) 45%, #0A2B6D 100%)',
               }}
             >
-              <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 lg:grid-cols-7">
+              <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-7">
                 {SHOWCASE_PANELS.map((panel) => {
                   const Icon = panel.icon;
                   const isActive = panel.id === selectedId;
@@ -201,29 +201,29 @@ export default function LandingProductShowcase() {
                       key={panel.id}
                       type="button"
                       onClick={() => setSelectedId(panel.id)}
-                      className={`group flex items-center gap-2 rounded-full border px-3 py-2 text-left backdrop-blur-md transition-all duration-200 ${
+                      className={`group flex items-center gap-2.5 rounded-full border px-3.5 py-2 text-left backdrop-blur-md transition-all duration-200 ${
                         isActive
-                          ? 'border-[#00C6FF] bg-white text-[#0A2B6D] shadow-[0_0_20px_rgba(0,198,255,0.75)] scale-[1.02]'
+                          ? 'border-[#00C6FF] bg-white text-[#0A2B6D] shadow-[0_0_20px_rgba(0,198,255,0.75)] scale-[1.01]'
                           : 'border-white/30 bg-white/10 text-white hover:border-[#00C6FF] hover:bg-white/20'
                       }`}
                     >
                       <span
-                        className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-white shadow-sm"
+                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-white shadow-sm"
                         style={{
                           background: 'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)',
                         }}
                       >
-                        <Icon className="h-3.5 w-3.5 text-white" />
+                        <Icon className="h-4 w-4 text-white" />
                       </span>
                       <div className="min-w-0 flex-1">
                         <div
-                          className="truncate text-[10.5px] font-extrabold leading-tight"
+                          className="text-[11px] font-extrabold leading-snug"
                           style={{ color: isActive ? '#0A2B6D' : '#FFFFFF' }}
                         >
                           ◉ {panel.shortLabel}
                         </div>
                         <div
-                          className="truncate text-[9px] font-bold leading-tight"
+                          className="text-[9.5px] font-bold leading-tight"
                           style={{ color: isActive ? '#5A00D6' : '#00C6FF' }}
                         >
                           {panel.metricValue}

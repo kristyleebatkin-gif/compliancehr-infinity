@@ -359,13 +359,13 @@ export default function OrganisationalOperatingSystemCommand() {
                 </span>
                 <span className="min-w-0 flex-1">
                   <span
-                    className="block truncate text-[10px] font-extrabold leading-tight"
+                    className="block text-[10.5px] font-extrabold leading-snug"
                     style={{ color: active ? '#0A2B6D' : '#FFFFFF' }}
                   >
                     {tab.label}
                   </span>
                   <span
-                    className="block truncate text-[8.5px] font-bold leading-tight"
+                    className="block text-[9px] font-bold leading-tight"
                     style={{ color: active ? '#5A00D6' : '#00C6FF' }}
                   >
                     {tab.sub}

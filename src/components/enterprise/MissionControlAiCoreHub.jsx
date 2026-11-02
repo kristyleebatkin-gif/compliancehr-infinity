@@ -15,6 +15,52 @@ const POD_RING_GRADIENT =
   'linear-gradient(135deg, #00C6FF 0%, #0072FF 28%, #5A00D6 64%, #FF2E9A 100%)';
 
 /**
+ * Glowing Circular Ring Orb with 3D Specular Depth & Notification Dot
+ */
+function GlowingOrbRing({ icon: Icon, ringColor, glowColor, ringPct, alertPulse }) {
+  const r = 28;
+  const dashArray = 2 * Math.PI * r;
+  const dashOffset = dashArray - (dashArray * ringPct) / 100;
+
+  return (
+    <div className="relative flex h-16 w-16 shrink-0 items-center justify-center">
+      <svg className="pointer-events-none absolute inset-0 h-full w-full -rotate-90" viewBox="0 0 64 64">
+        <circle cx="32" cy="32" r={r} fill="none" stroke="rgba(255,255,255,0.16)" strokeWidth="4" />
+        <circle
+          cx="32"
+          cy="32"
+          r={r}
+          fill="none"
+          stroke={ringColor}
+          strokeWidth="4.5"
+          strokeLinecap="round"
+          strokeDasharray={dashArray}
+          strokeDashoffset={dashOffset}
+          className="transition-all duration-500"
+        />
+      </svg>
+      <div
+        className="relative z-10 flex h-11 w-11 items-center justify-center rounded-full text-white shadow-lg"
+        style={{
+          background: POD_RING_GRADIENT,
+          boxShadow: `0 0 16px ${glowColor}, inset 0 2px 4px rgba(255,255,255,0.5)`,
+        }}
+      >
+        <Icon className="h-5 w-5 text-white" style={{ color: '#FFFFFF' }} />
+      </div>
+      <span
+        className={`absolute right-0 top-0 flex h-4 w-4 items-center justify-center rounded-full border border-white text-[9px] font-black text-white ${
+          alertPulse ? 'animate-bounce bg-[#FF2E9A]' : 'bg-[#0A2B6D]'
+        }`}
+        style={{ boxShadow: `0 0 8px ${ringColor}` }}
+      >
+        ●
+      </span>
+    </div>
+  );
+}
+
+/**
  * Hybrid of:
  *   Premium Remote + Mission Control + Enterprise Dashboard
  * Centre:
@@ -22,11 +68,11 @@ const POD_RING_GRADIENT =
  * Around AI Core (8 Glowing Circular Control Pods):
  *   1. ◉ Compliance (2 actions due)
  *   2. ◉ Workforce (7 reviews due)
- *   3. ◉ Participants (4 plan reviews)
+ *   3. ◉ Participants (48 active plans)
  *   4. ◉ Documents (5 renewals due)
  *   5. ◉ Incidents (1 critical)
  *   6. ◉ Reports (12 audit packs)
- *   7. ◉ Operations (8 live sweeps)
+ *   7. ◉ Operations (8 open tasks)
  *   8. ◉ Training (3 certs due)
  */
 export default function MissionControlAiCoreHub({
@@ -85,7 +131,7 @@ export default function MissionControlAiCoreHub({
         aiRecommendations: 14,
       }));
     } catch {
-      // Keep baseline mission control telemetry when unauthenticated on public preview
+      // Keep baseline mission control telemetry
     } finally {
       setLoading(false);
     }
@@ -224,24 +270,23 @@ export default function MissionControlAiCoreHub({
 
   return (
     <section
-      className="preserve-island-theme relative overflow-hidden rounded-3xl border-2 border-[#00C6FF]/45 p-3 sm:p-5 shadow-[0_20px_60px_-15px_rgba(10,43,109,0.75)]"
+      className="preserve-island-theme relative overflow-hidden rounded-3xl border-2 border-[#00C6FF]/45 p-3.5 sm:p-5 shadow-[0_20px_60px_-15px_rgba(10,43,109,0.75)]"
       style={{ background: MISSION_CONTROL_BG }}
     >
       {/* Ambient Mission Control Radar Rings & 3D Depth Glow */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden opacity-30"
+        className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden opacity-25"
       >
         <div className="h-[260px] w-[260px] sm:h-[380px] sm:w-[380px] rounded-full border border-[#00C6FF]/40 animate-pulse" />
         <div className="absolute h-[420px] w-[420px] sm:h-[560px] sm:w-[560px] rounded-full border border-dashed border-[#FF6EDB]/35" />
-        <div className="absolute h-[640px] w-[640px] rounded-full border border-white/10" />
       </div>
 
-      {/* Top White Title Card with Readable Larger Logo & Previous Colourful Slogan */}
+      {/* Top White Title Card with Readable Larger Logo & Signature Three-Colour Slogan */}
       {showHeaderLogo && (
-        <div className="relative z-10 mb-4 flex flex-col items-center justify-between gap-2 rounded-2xl border border-white/40 bg-white/95 px-4 py-2.5 text-center shadow-lg backdrop-blur-md sm:flex-row sm:text-left">
-          <div className="flex flex-col items-center sm:items-start">
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-[#0A2B6D] px-3 py-0.5 text-[9.5px] font-black uppercase tracking-widest text-[#00C6FF]">
+        <div className="relative z-10 mb-4 flex flex-col items-center justify-between gap-3 rounded-2xl border border-white/40 bg-white/95 px-4 py-3 text-center shadow-lg backdrop-blur-md lg:flex-row lg:text-left">
+          <div className="flex flex-col items-center lg:items-start">
+            <div className="inline-flex items-center gap-1.5 rounded-full bg-[#0A2B6D] px-3 py-0.5 text-[10px] font-black uppercase tracking-widest text-[#00C6FF]">
               <span
                 className="h-2 w-2 rounded-full bg-[#00C6FF] animate-ping"
                 style={{ animationDuration: '2.4s' }}
@@ -249,27 +294,27 @@ export default function MissionControlAiCoreHub({
               <span>PREMIUM REMOTE · MISSION CONTROL · ENTERPRISE DASHBOARD</span>
             </div>
             <h2
-              className="mt-1 font-editorial text-sm sm:text-lg font-extrabold tracking-tight text-[#0A2B6D]"
+              className="mt-1 font-editorial text-base sm:text-lg font-extrabold tracking-tight text-[#0A2B6D]"
               style={{ color: '#0A2B6D' }}
             >
               NDIS &amp; Aged Care Support Super-Platform — Organisational Command System
             </h2>
-            <p className="text-[10.5px] font-bold text-[#5A00D6]" style={{ color: '#5A00D6' }}>
+            <p className="text-xs font-bold text-[#5A00D6]" style={{ color: '#5A00D6' }}>
               Click any glowing circular control pod around the AI Core to launch its live command centre
             </p>
           </div>
 
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center shrink-0">
             <BrandLogoLockup size="md" theme="light" />
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 shrink-0">
             <button
               type="button"
               onClick={fetchMetrics}
-              className="inline-flex items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] bg-[#F5F0FF] px-3 py-1.5 text-[10px] font-extrabold text-[#0A2B6D] shadow-sm transition hover:bg-[#0072FF] hover:text-white"
+              className="inline-flex items-center gap-1.5 rounded-full border-2 border-[#0A2B6D] bg-[#F5F0FF] px-3.5 py-1.5 text-xs font-extrabold text-[#0A2B6D] shadow-sm transition hover:bg-[#0072FF] hover:text-white"
             >
-              <RefreshCw className={`h-3 w-3 ${loading ? 'animate-spin' : ''}`} />
+              <RefreshCw className={`h-3.5 w-3.5 ${loading ? 'animate-spin' : ''}`} />
               <span>Sync Telemetry</span>
             </button>
           </div>
@@ -278,20 +323,15 @@ export default function MissionControlAiCoreHub({
 
       {/* ==================== ORBITAL MISSION CONTROL MATRIX: 8 CIRCULAR PODS AROUND CENTRAL AI CORE ==================== */}
       <div className="relative z-10 mx-auto max-w-5xl">
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-3 lg:gap-5 items-center justify-items-center">
+        <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-4 items-stretch">
           {ORBITAL_PODS.map((pod, index) => {
-            const Icon = pod.icon;
             const isSelected = selectedPod === pod.id;
-            const dashArray = 2 * Math.PI * 52;
-            const dashOffset = dashArray - (dashArray * pod.ringPct) / 100;
-
-            // Render the Central AI CORE right in the middle (position 5 of the 3x3 grid on desktop)
             const renderCenterAiCoreBefore = index === 4;
 
             return (
               <React.Fragment key={pod.id}>
                 {renderCenterAiCoreBefore && (
-                  <div className="col-span-2 sm:col-span-3 lg:col-span-1 lg:col-start-2 lg:row-start-2 flex items-center justify-center my-1">
+                  <div className="sm:col-span-2 lg:col-span-1 lg:col-start-2 lg:row-start-2 flex items-center justify-center">
                     <button
                       type="button"
                       onClick={() => {
@@ -299,167 +339,125 @@ export default function MissionControlAiCoreHub({
                         if (onSelectSuite) onSelectSuite('os-command');
                         else navigate('/assistant');
                       }}
-                      className="group relative flex h-44 w-44 sm:h-52 sm:w-52 flex-col items-center justify-center rounded-full p-2 text-center transition-all duration-300 hover:scale-105 focus:outline-none"
+                      className="group relative flex h-full w-full flex-col items-center justify-center rounded-full p-2 text-center transition-all duration-300 hover:scale-[1.02] focus:outline-none"
                       style={{
                         background: POD_RING_GRADIENT,
                         boxShadow:
-                          '0 0 42px rgba(0, 198, 255, 0.75), 0 0 80px rgba(255, 46, 154, 0.45), inset 0 2px 8px rgba(255, 255, 255, 0.65)',
+                          '0 0 38px rgba(0, 198, 255, 0.75), 0 0 70px rgba(255, 46, 154, 0.42), inset 0 2px 8px rgba(255, 255, 255, 0.65)',
                       }}
                     >
-                      {/* Outer Rotating / Pulsing Notification Ring */}
-                      <svg
-                        className="pointer-events-none absolute inset-0 h-full w-full -rotate-90"
-                        viewBox="0 0 140 140"
-                      >
-                        <circle
-                          cx="70"
-                          cy="70"
-                          r="64"
-                          fill="none"
-                          stroke="rgba(255,255,255,0.22)"
-                          strokeWidth="3"
-                        />
-                        <circle
-                          cx="70"
-                          cy="70"
-                          r="64"
-                          fill="none"
-                          stroke="#00C6FF"
-                          strokeWidth="4"
-                          strokeLinecap="round"
-                          strokeDasharray="360"
-                          strokeDashoffset="28"
-                        />
-                      </svg>
-
-                      {/* Inner 3D Glassmorphic Core Sphere */}
                       <div
-                        className="relative flex h-full w-full flex-col items-center justify-center rounded-full border border-white/40 px-3 py-2 backdrop-blur-xl"
+                        className="relative flex h-full w-full flex-col items-center justify-center rounded-full border border-white/40 px-5 py-4 backdrop-blur-xl"
                         style={{
                           background:
-                            'radial-gradient(circle at 32% 24%, rgba(0, 198, 255, 0.42) 0%, rgba(90, 0, 214, 0.88) 52%, #061539 100%)',
+                            'radial-gradient(circle at 32% 24%, rgba(0, 198, 255, 0.42) 0%, rgba(90, 0, 214, 0.90) 55%, #061539 100%)',
                           boxShadow: 'inset 0 4px 14px rgba(255,255,255,0.45), 0 10px 25px rgba(0,0,0,0.5)',
                         }}
                       >
-                        {/* White Pill Title Header Inside AI Core */}
-                        <span className="inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-0.5 text-[9px] font-black uppercase tracking-widest text-[#0A2B6D] shadow-sm">
-                          <Cpu className="h-3 w-3 text-[#5A00D6]" />
-                          <span style={{ color: '#0A2B6D' }}>CENTRAL HUB</span>
+                        <div className="relative flex h-16 w-16 items-center justify-center">
+                          <svg className="pointer-events-none absolute inset-0 h-full w-full -rotate-90" viewBox="0 0 64 64">
+                            <circle cx="32" cy="32" r="28" fill="none" stroke="rgba(255,255,255,0.22)" strokeWidth="4" />
+                            <circle
+                              cx="32"
+                              cy="32"
+                              r="28"
+                              fill="none"
+                              stroke="#00C6FF"
+                              strokeWidth="4.5"
+                              strokeLinecap="round"
+                              strokeDasharray="176"
+                              strokeDashoffset="14"
+                            />
+                          </svg>
+                          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-[#0A2B6D] shadow-md">
+                            <Cpu className="h-5 w-5 text-[#5A00D6]" />
+                          </div>
+                        </div>
+
+                        <span className="mt-2 inline-flex items-center gap-1 rounded-full bg-white px-3 py-0.5 text-[10px] font-black uppercase tracking-widest text-[#0A2B6D] shadow-sm">
+                          <span className="text-[#0072FF]">◉</span>
+                          <span style={{ color: '#0A2B6D' }}>CENTRAL AI CORE</span>
                         </span>
 
-                        <div className="mt-1.5 flex items-center justify-center gap-1 text-base sm:text-xl font-black tracking-tight text-white">
-                          <span className="text-[#00C6FF] animate-pulse">◉</span>
-                          <span style={{ color: '#FFFFFF' }}>AI CORE</span>
+                        <div className="mt-1.5 text-lg sm:text-xl font-black tracking-tight text-white">
+                          ◉ AI Core
                         </div>
 
                         <div
-                          className="mt-1 rounded-full border border-[#00C6FF]/60 bg-[#0A2B6D]/90 px-3 py-0.5 text-[11px] sm:text-xs font-extrabold text-[#00C6FF] shadow-[0_0_14px_rgba(0,198,255,0.6)]"
+                          className="mt-1 rounded-full border border-[#00C6FF]/60 bg-[#0A2B6D]/90 px-3.5 py-1 text-xs font-extrabold text-[#00C6FF] shadow-[0_0_14px_rgba(0,198,255,0.6)]"
                           style={{ color: '#00C6FF' }}
                         >
                           {liveMetrics.aiRecommendations} recommendations
                         </div>
 
                         <span
-                          className="mt-1 text-[9px] font-bold text-white/90"
+                          className="mt-1.5 text-[11px] font-bold text-white/95"
                           style={{ color: '#FFFFFF' }}
                         >
-                          Live Digital Twin · 46 Modules
+                          Live Digital Twin · 46 Connected Modules
                         </span>
                       </div>
                     </button>
                   </div>
                 )}
 
-                {/* Glowing Circular Control Pod */}
+                {/* Glowing Circular Control Pod — Spacious 3D Glassmorphic Pod Where All Words Fit */}
                 <button
                   type="button"
                   onClick={() => handlePodClick(pod)}
-                  className={`group relative flex h-36 w-36 sm:h-40 sm:w-40 flex-col items-center justify-center rounded-full p-1.5 text-center transition-all duration-300 hover:-translate-y-1 hover:scale-105 focus:outline-none ${pod.posClass}`}
+                  className={`group relative flex h-full w-full flex-col items-center justify-between rounded-[36px] border border-white/30 bg-white/10 px-4 py-3.5 text-center backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02] focus:outline-none ${pod.posClass}`}
                   style={{
                     background:
-                      'radial-gradient(circle at 30% 25%, rgba(255,255,255,0.28) 0%, rgba(10, 43, 109, 0.92) 70%, #061539 100%)',
+                      'radial-gradient(circle at 30% 20%, rgba(255,255,255,0.24) 0%, rgba(10, 43, 109, 0.92) 72%, #061539 100%)',
                     boxShadow: isSelected
                       ? `0 0 32px ${pod.glowColor}, inset 0 2px 6px rgba(255,255,255,0.45)`
                       : `0 12px 28px -6px rgba(0,0,0,0.55), 0 0 18px ${pod.glowColor}, inset 0 2px 4px rgba(255,255,255,0.3)`,
                   }}
                 >
-                  {/* Animated Notification Ring SVG */}
-                  <svg
-                    className="pointer-events-none absolute inset-0 h-full w-full -rotate-90"
-                    viewBox="0 0 120 120"
-                  >
-                    <circle
-                      cx="60"
-                      cy="60"
-                      r="52"
-                      fill="none"
-                      stroke="rgba(255,255,255,0.14)"
-                      strokeWidth="4"
-                    />
-                    <circle
-                      cx="60"
-                      cy="60"
-                      r="52"
-                      fill="none"
-                      stroke={pod.ringColor}
-                      strokeWidth="4.5"
-                      strokeLinecap="round"
-                      strokeDasharray={dashArray}
-                      strokeDashoffset={dashOffset}
-                      className="transition-all duration-500"
-                    />
-                  </svg>
+                  <GlowingOrbRing
+                    icon={pod.icon}
+                    ringColor={pod.ringColor}
+                    glowColor={pod.glowColor}
+                    ringPct={pod.ringPct}
+                    alertPulse={pod.alertPulse}
+                  />
 
-                  {/* Glassmorphic Circular Pod Interior */}
-                  <div className="relative z-10 flex h-full w-full flex-col items-center justify-center rounded-full border border-white/25 bg-white/10 px-2.5 py-2 backdrop-blur-md">
-                    {/* Icon Orb with 3D Specular Depth */}
-                    <div
-                      className="flex h-7 w-7 items-center justify-center rounded-full text-white shadow-md"
-                      style={{
-                        background: POD_RING_GRADIENT,
-                        boxShadow: `0 0 12px ${pod.glowColor}`,
-                      }}
+                  {/* White Title Pill Background for Crisp Readability */}
+                  <div className="mt-2 inline-flex items-center justify-center gap-1.5 rounded-full bg-white px-3.5 py-1 shadow-sm">
+                    <span
+                      className={`text-xs leading-none ${pod.alertPulse ? 'animate-ping' : ''}`}
+                      style={{ color: pod.ringColor }}
                     >
-                      <Icon className="h-3.5 w-3.5 text-white" style={{ color: '#FFFFFF' }} />
-                    </div>
-
-                    {/* White Title Pill Background for Crisp Readability */}
-                    <div className="mt-1 inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-0.5 shadow-xs">
-                      <span
-                        className={`text-[10px] leading-none ${pod.alertPulse ? 'animate-ping' : ''}`}
-                        style={{ color: pod.ringColor }}
-                      >
-                        ◉
-                      </span>
-                      <span
-                        className="text-[10.5px] font-extrabold tracking-tight text-[#0A2B6D]"
-                        style={{ color: '#0A2B6D' }}
-                      >
-                        {pod.label}
-                      </span>
-                    </div>
-
-                    {/* Live Metric Notification Badge */}
-                    <div
-                      className="mt-1 rounded-full px-2 py-0.5 text-[10px] font-black tracking-wide text-white"
-                      style={{
-                        backgroundColor: pod.alertPulse ? '#FF2E9A' : 'rgba(6, 21, 57, 0.85)',
-                        border: `1px solid ${pod.ringColor}`,
-                        color: '#FFFFFF',
-                      }}
+                      ◉
+                    </span>
+                    <span
+                      className="text-xs sm:text-sm font-extrabold tracking-tight text-[#0A2B6D]"
+                      style={{ color: '#0A2B6D' }}
                     >
-                      {pod.metric}
-                    </div>
-
-                    {!compact && (
-                      <span
-                        className="mt-0.5 line-clamp-1 text-[8px] font-bold text-white/85"
-                        style={{ color: '#E2E8F0' }}
-                      >
-                        {pod.sub}
-                      </span>
-                    )}
+                      {pod.label}
+                    </span>
                   </div>
+
+                  {/* Live Metric Notification Badge */}
+                  <div
+                    className="mt-1.5 rounded-full px-3.5 py-0.5 text-xs font-black tracking-wide text-white"
+                    style={{
+                      backgroundColor: pod.alertPulse ? '#FF2E9A' : 'rgba(6, 21, 57, 0.88)',
+                      border: `1.5px solid ${pod.ringColor}`,
+                      color: '#FFFFFF',
+                    }}
+                  >
+                    {pod.metric}
+                  </div>
+
+                  {!compact && (
+                    <span
+                      className="mt-1.5 text-[11px] font-bold leading-snug text-white/90"
+                      style={{ color: '#E2E8F0' }}
+                    >
+                      {pod.sub}
+                    </span>
+                  )}
                 </button>
               </React.Fragment>
             );
@@ -467,27 +465,27 @@ export default function MissionControlAiCoreHub({
         </div>
       </div>
 
-      {/* ==================== BOTTOM CIRCULAR POD SUITE SWITCHER (REPLACES FLAT BUTTONS) ==================== */}
+      {/* ==================== BOTTOM CIRCULAR POD SUITE SWITCHER (ALL WORDS FIT CLEANLY) ==================== */}
       {onSelectSuite && (
         <div className="relative z-10 mt-4 border-t border-white/15 pt-3">
-          <div className="mb-2 flex items-center justify-between px-1">
+          <div className="mb-2.5 flex flex-wrap items-center justify-between gap-2 px-1">
             <span
-              className="text-[9.5px] font-extrabold uppercase tracking-widest text-[#00C6FF]"
+              className="text-[10.5px] font-extrabold uppercase tracking-widest text-[#00C6FF]"
               style={{ color: '#00C6FF' }}
             >
               ◉ Mission Control Command Pods — Switch Active Executive Workspace
             </span>
             <Link
               to="/operations-centre"
-              className="inline-flex items-center gap-1 text-[10px] font-extrabold text-white hover:text-[#00C6FF]"
+              className="inline-flex items-center gap-1 text-xs font-extrabold text-white hover:text-[#00C6FF]"
               style={{ color: '#FFFFFF' }}
             >
               <span>Full Operations Centre</span>
-              <ArrowUpRight className="h-3 w-3 text-[#00C6FF]" />
+              <ArrowUpRight className="h-3.5 w-3.5 text-[#00C6FF]" />
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-8">
+          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 xl:grid-cols-8">
             {SUITE_PODS.map((suite) => {
               const active = activeSuite === suite.id;
               return (
@@ -496,7 +494,7 @@ export default function MissionControlAiCoreHub({
                   type="button"
                   onClick={() => onSelectSuite(suite.id)}
                   aria-pressed={active}
-                  className={`group flex items-center gap-2 rounded-full border px-2.5 py-1.5 text-left backdrop-blur-md transition-all duration-200 ${
+                  className={`group flex items-center gap-2 rounded-full border px-3 py-2 text-left backdrop-blur-md transition-all duration-200 ${
                     active
                       ? 'border-[#00C6FF] bg-white text-[#0A2B6D] shadow-[0_0_20px_rgba(0,198,255,0.75)] scale-[1.02]'
                       : 'border-white/25 bg-white/10 text-white hover:border-[#00C6FF] hover:bg-white/20'
@@ -513,13 +511,13 @@ export default function MissionControlAiCoreHub({
                   </span>
                   <div className="min-w-0 flex-1">
                     <div
-                      className="truncate text-[10px] font-extrabold leading-tight"
+                      className="text-[11px] font-extrabold leading-tight"
                       style={{ color: active ? '#0A2B6D' : '#FFFFFF' }}
                     >
                       {suite.label}
                     </div>
                     <div
-                      className="truncate text-[8.5px] font-bold leading-tight"
+                      className="text-[9.5px] font-bold leading-tight"
                       style={{ color: active ? '#5A00D6' : '#00C6FF' }}
                     >
                       {suite.metric}
