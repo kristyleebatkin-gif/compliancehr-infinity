@@ -2,6 +2,10 @@
   "name": "Shift",
   "type": "object",
   "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Tenant ID"
+    },
     "employee_name": {
       "type": "string",
       "title": "Employee (blank = unassigned)"

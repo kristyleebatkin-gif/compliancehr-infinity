@@ -492,10 +492,17 @@ export function createTenantScopedEntitiesProxy(rawEntities, contextResolver) {
     return record;
   };
 
+  const noTenantFieldEntities = new Set();
+  const isMissingTenantFieldError = (err) => {
+    const msg = String(err?.message || err || '');
+    return /Unknown field ["']?tenant_id["']?|has no field ["']?tenant_id["']?/i.test(msg);
+  };
+
   return new Proxy(rawEntities || {}, {
     get(target, entityName) {
       const dao = target[entityName];
-      if (!dao || typeof dao !== 'object' || SYSTEM_GLOBAL_ENTITIES.includes(String(entityName))) {
+      const entityKey = String(entityName);
+      if (!dao || typeof dao !== 'object' || SYSTEM_GLOBAL_ENTITIES.includes(entityKey)) {
         return dao;
       }
       return new Proxy(dao, {
@@ -514,10 +521,23 @@ export function createTenantScopedEntitiesProxy(rawEntities, contextResolver) {
           if (prop === 'filter') {
             return async (query = {}, options = undefined) => {
               const { tenantId } = resolveCtx();
-              const scopedQuery = tenantId ? scopeQueryToTenant(query, tenantId) : query;
-              const res = options !== undefined
-                ? await orig.call(daoTarget, scopedQuery, options)
-                : await orig.call(daoTarget, scopedQuery);
+              const useScoped = Boolean(tenantId && !noTenantFieldEntities.has(entityKey));
+              const scopedQuery = useScoped ? scopeQueryToTenant(query, tenantId) : query;
+              let res;
+              try {
+                res = options !== undefined
+                  ? await orig.call(daoTarget, scopedQuery, options)
+                  : await orig.call(daoTarget, scopedQuery);
+              } catch (err) {
+                if (useScoped && isMissingTenantFieldError(err)) {
+                  noTenantFieldEntities.add(entityKey);
+                  res = options !== undefined
+                    ? await orig.call(daoTarget, query, options)
+                    : await orig.call(daoTarget, query);
+                } else {
+                  throw err;
+                }
+              }
               if (!tenantId) return res;
               if (Array.isArray(res)) {
                 return res.filter((r) => filterRecordByTenant(r, tenantId));
@@ -547,19 +567,37 @@ export function createTenantScopedEntitiesProxy(rawEntities, contextResolver) {
           if (prop === 'count') {
             return async (query = {}) => {
               const { tenantId } = resolveCtx();
-              const scopedQuery = tenantId ? scopeQueryToTenant(query, tenantId) : query;
-              return orig.call(daoTarget, scopedQuery);
+              const useScoped = Boolean(tenantId && !noTenantFieldEntities.has(entityKey));
+              const scopedQuery = useScoped ? scopeQueryToTenant(query, tenantId) : query;
+              try {
+                return await orig.call(daoTarget, scopedQuery);
+              } catch (err) {
+                if (useScoped && isMissingTenantFieldError(err)) {
+                  noTenantFieldEntities.add(entityKey);
+                  return orig.call(daoTarget, query);
+                }
+                throw err;
+              }
             };
           }
 
           if (prop === 'aggregate') {
             return async (params = { query: undefined }) => {
               const { tenantId } = resolveCtx();
+              const useScoped = Boolean(tenantId && !noTenantFieldEntities.has(entityKey));
               const baseQuery = params && typeof params === 'object' && 'query' in params ? params.query || {} : {};
-              const scopedParams = tenantId
+              const scopedParams = useScoped
                 ? { ...params, query: scopeQueryToTenant(baseQuery, tenantId) }
                 : params;
-              return orig.call(daoTarget, scopedParams);
+              try {
+                return await orig.call(daoTarget, scopedParams);
+              } catch (err) {
+                if (useScoped && isMissingTenantFieldError(err)) {
+                  noTenantFieldEntities.add(entityKey);
+                  return orig.call(daoTarget, params);
+                }
+                throw err;
+              }
             };
           }
 
@@ -610,16 +648,34 @@ export function createTenantScopedEntitiesProxy(rawEntities, contextResolver) {
           if (prop === 'updateMany') {
             return async (query = {}, updateOp = {}) => {
               const { tenantId } = resolveCtx();
-              const scopedQuery = tenantId ? scopeQueryToTenant(query, tenantId) : query;
-              return orig.call(daoTarget, scopedQuery, updateOp);
+              const useScoped = Boolean(tenantId && !noTenantFieldEntities.has(entityKey));
+              const scopedQuery = useScoped ? scopeQueryToTenant(query, tenantId) : query;
+              try {
+                return await orig.call(daoTarget, scopedQuery, updateOp);
+              } catch (err) {
+                if (useScoped && isMissingTenantFieldError(err)) {
+                  noTenantFieldEntities.add(entityKey);
+                  return orig.call(daoTarget, query, updateOp);
+                }
+                throw err;
+              }
             };
           }
 
           if (prop === 'deleteMany') {
             return async (query = {}) => {
               const { tenantId } = resolveCtx();
-              const scopedQuery = tenantId ? scopeQueryToTenant(query, tenantId) : query;
-              return orig.call(daoTarget, scopedQuery);
+              const useScoped = Boolean(tenantId && !noTenantFieldEntities.has(entityKey));
+              const scopedQuery = useScoped ? scopeQueryToTenant(query, tenantId) : query;
+              try {
+                return await orig.call(daoTarget, scopedQuery);
+              } catch (err) {
+                if (useScoped && isMissingTenantFieldError(err)) {
+                  noTenantFieldEntities.add(entityKey);
+                  return orig.call(daoTarget, query);
+                }
+                throw err;
+              }
             };
           }
 
