@@ -24,6 +24,7 @@ import PendingApprovalNotice from '@/components/users/PendingApprovalNotice';
 import ModuleGuide from '@/components/ModuleGuide';
 import ModuleDocsFooter from '@/components/ModuleDocsFooter';
 import UniversalDocumentViewerModal from '@/components/documents/UniversalDocumentViewerModal';
+import EnterpriseFloatingWorkspaceDock from '@/components/EnterpriseFloatingWorkspaceDock';
 
 const BOTTOM_NAV = [
   { label: 'Home', path: '/dashboard', key: 'dashboard', icon: LayoutDashboard },
@@ -507,6 +508,7 @@ export default function AppLayout() {
           </div>
           {location.pathname !== '/our-employees' && <ModuleDocsFooter />}
           <UniversalDocumentViewerModal />
+          <EnterpriseFloatingWorkspaceDock />
         </main>
 
         {/* Bottom nav (mobile) */}

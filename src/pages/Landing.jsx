@@ -18,6 +18,7 @@ import LandingCTA from '@/components/landing/LandingCTA';
 import LandingFooter from '@/components/landing/LandingFooter';
 import EnterpriseTopTrustRibbon from '@/components/landing/EnterpriseTopTrustRibbon';
 import EnterpriseBelowFooterSuite from '@/components/landing/EnterpriseBelowFooterSuite';
+import FloatingQuickActionBar from '@/components/landing/FloatingQuickActionBar';
 import DemoBookingModal from '@/components/landing/DemoBookingModal';
 
 export default function Landing() {
@@ -90,6 +91,9 @@ export default function Landing() {
 
       {/* Below-Footer Sovereign Security, Regulatory Attestation & Module Launch Bar */}
       <EnterpriseBelowFooterSuite onBookDemo={openDemoModal} />
+
+      {/* Floating Bottom-Right Enterprise Quick-Action Bar */}
+      <FloatingQuickActionBar onBookDemo={openDemoModal} />
 
       {/* Interactive Demo & Sales Booking Modal */}
       <DemoBookingModal
