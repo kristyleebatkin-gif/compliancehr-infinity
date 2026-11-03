@@ -1,73 +1,86 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Image } from '@/components/ui/image';
 import {
-  Play, Pause, Volume2, VolumeX, Sparkles, Copy, Check, FileText, Film, HeartHandshake, ShieldCheck,
+  Pause, Volume2, Sparkles, Copy, Check, FileText, Film, HeartHandshake, ShieldCheck, XCircle, CheckCircle2,
 } from 'lucide-react';
 
-const VIDEO_1_URL =
-  'https://media.base44.com/videos/public/6ac9f91f0d82b1f80ec6a25f/8b510a8f7_Kristy_s_Story_Video.mp4';
-const VIDEO_2_URL =
-  'https://media.base44.com/videos/public/6ac9f91f0d82b1f80ec6a25f/6a4c74eaf_Future_of_Compliance_Video.mp4';
+const FOUNDER_PORTRAIT_URL =
+  'https://base44.app/api/apps/6ac9f91f0d82b1f80ec6a25f/files/mp/public/6ac9f91f0d82b1f80ec6a25f/2a65ee674_kristy-whelan-director-portrait.png';
 
-const EMOTIONAL_PILLARS = ['Relief', 'Confidence', 'Time', 'Simplicity', 'Hope', 'Vision'];
+const VIDEO_1_URL =
+  'https://media.base44.com/videos/public/6ac9f91f0d82b1f80ec6a25f/fdac19a47_My_Story_Founder_Video.mp4';
+const VIDEO_2_URL =
+  'https://media.base44.com/videos/public/6ac9f91f0d82b1f80ec6a25f/864197399_Future_of_Compliance_App_Video.mp4';
+
+const NOT_WHAT_PEOPLE_WAKE_UP_WANTING = [
+  'A compliance register',
+  'A risk matrix',
+  'An evidence library',
+];
+
+const TRANSFORMATION_OUTCOMES = [
+  'Less stress',
+  'More confidence',
+  'Better visibility',
+  'More time',
+  'Better outcomes',
+];
 
 const VIDEO_1_LINES = [
   'My name is Kristy Whelan.',
-  "I've worked as a Case Manager, Compliance Manager, Business Owner, Sole Trader and Director.",
-  "For years, I've watched genuinely caring people dedicate their lives to supporting others.",
-  'People who wanted to make a difference.',
-  'People who wanted to provide great services.',
-  'People who wanted to improve lives.',
-  'Yet every day, I watched those same people become overwhelmed.',
-  'Not by the people they were helping.',
-  'But by paperwork. Audits. Compliance. Policies. Evidence. Documentation.',
-  'Hours and hours spent trying to prove they were doing the right thing.',
-  'I remember thinking... There has to be a better way.',
-  "Because compliance shouldn't be something that holds us back. It should be something that supports us.",
-  'So I started building the platform I wished existed.',
-  'A platform that gives people clarity.',
-  'A platform that reduces stress.',
-  'A platform that gives business owners confidence.',
-  'A platform that helps organisations focus less on paperwork and more on people.',
-  'That platform became ComplianceHR Infinity.',
-  'Not just another software system. But a new way of thinking about compliance.',
-  'A future where organisations always know where they stand.',
-  'A future where quality comes naturally.',
-  'A future where compliance is visible, understandable and achievable.',
-  'Because our purpose was never paperwork.',
-  'Our purpose is people.',
-  "And that's why I built ComplianceHR Infinity.",
+  "I've spent years working as a Case Manager, Compliance Manager, Business Owner and Director.",
+  "Throughout my journey, I've had the privilege of supporting people, organisations and teams to achieve their goals.",
+  'Along the way, I noticed something.',
+  'Some of the most caring and dedicated people were spending an unbelievable amount of time buried in paperwork, audits, compliance requirements and administration.',
+  "Not because they weren't doing a great job.",
+  'But because proving it had become harder than doing it.',
+  'I watched passionate people become exhausted trying to keep up with documentation, evidence, reporting and endless systems that never seemed to connect.',
+  'I remember thinking there has to be a better way.',
+  'A way to make compliance simple.',
+  'Visible.',
+  'Understandable.',
+  'A way to help organisations spend more time supporting people and less time searching for paperwork.',
+  "That's why I created ComplianceHR Infinity.",
+  'Not just as software.',
+  'But as a vision for a better future.',
+  'One where quality becomes part of everyday operations.',
+  'One where organisations can focus on people, not paperwork.',
+  'Because our purpose was never compliance.',
+  'Our purpose has always been helping people achieve their goals.',
 ];
 
 const VIDEO_1_PROMPT =
-  'Cinematic founder story. Professional enterprise software founder. Stylised portrait matching uploaded cartoon image. Modern office environment. Soft blue and purple lighting. Scenes of compliance paperwork, audits, folders, spreadsheets and administrative burden. Transition into calm organised digital workspace. Inspirational atmosphere. Enterprise technology startup aesthetic. Premium SaaS advertisement. Smooth camera movement. Emotional storytelling. Professional corporate quality. No empty space. ComplianceHR Infinity blue-purple branding throughout.';
+  'Create a cinematic founder story featuring a stylised illustrated female business founder matching the uploaded portrait. Professional enterprise technology commercial. Modern Australian office environment. Working late at a laptop with compliance documents, folders, notebooks and business plans. Transition from chaos and paperwork into clarity, organisation and innovation. Blue, purple and pink enterprise branding. Premium SaaS founder documentary style. Inspirational and authentic. Focus on resilience, leadership, helping people and creating positive change. Soft cinematic lighting, smooth camera movement, emotional storytelling, professional corporate quality. No text on screen. No empty space. High-end startup launch video.';
 
 const VIDEO_2_LINES = [
-  'Imagine starting your day knowing exactly where your organisation stands.',
-  'No uncertainty. No searching. No guessing. No last-minute panic before an audit.',
-  'Imagine having complete visibility across your entire organisation.',
-  'Every document. Every responsibility. Every action. Every risk. Every review.',
-  'Connected. Visible. Accountable.',
-  'Now imagine a world where compliance becomes part of everyday operations instead of a stressful event that arrives once a year.',
-  'Where quality is continuously monitored.',
-  'Where evidence is captured as work happens.',
-  'Where leaders can instantly understand the health of their organisation.',
-  'Where teams can focus on delivering outcomes instead of chasing paperwork.',
-  'That is the vision behind ComplianceHR Infinity.',
-  'A complete operating system designed for organisations that want more than compliance.',
-  'Organisations that want confidence. Organisations that want clarity. Organisations that want excellence.',
-  'ComplianceHR Infinity connects governance, quality, risk, workforce capability, operational performance, evidence and accountability into a single source of truth.',
-  'Not because software should replace people. But because great technology should empower people.',
-  'It should remove barriers. Reduce stress. Create confidence.',
-  'And help organisations focus on why they exist.',
-  'To make a difference. To improve lives. To create better outcomes. To achieve their goals.',
-  "This isn't software built around forms. It's software built around people. Built around outcomes. Built around excellence.",
-  'Welcome to ComplianceHR Infinity.',
-  'The future of compliance is not more paperwork.',
-  'The future of compliance is visibility.',
+  'Imagine knowing exactly where your organisation stands every single day.',
+  'Imagine having complete visibility across your operations without searching through folders, spreadsheets, emails or disconnected systems.',
+  "Imagine a workplace where quality isn't something reviewed once a year.",
+  "It's something visible every day.",
+  "That's the vision behind ComplianceHR Infinity.",
+  'A complete enterprise operating system designed to bring together the information leaders need to confidently manage their organisations.',
+  'From governance and compliance to quality, risk, workforce capability and operational performance.',
+  'One source of truth.',
+  'One connected ecosystem.',
+  'One place to understand what matters most.',
+  'ComplianceHR Infinity helps organisations move from reacting to problems to proactively managing performance.',
+  'It provides visibility, accountability, traceability and confidence across every level of the organisation.',
+  'Not because technology replaces people.',
+  'But because the right technology empowers people.',
+  'It reduces complexity.',
+  'Improves decision making.',
+  'Creates confidence.',
+  'And allows organisations to focus on what they were created to do.',
+  'Support people.',
+  'Deliver quality services.',
+  'Achieve meaningful outcomes.',
+  'ComplianceHR Infinity.',
+  'Audit Ready.',
+  'Every Day.',
 ];
 
 const VIDEO_2_PROMPT =
-  'Premium enterprise SaaS product launch video. Futuristic compliance operating system. Large executive dashboards. AI powered business intelligence. Governance, risk, quality and compliance themes. Executive command centre aesthetic. Blue, purple and pink enterprise colour palette. Glassmorphism interface. Clean modern dashboards. Executive leaders using technology. Animated data visualisations. Enterprise software presentation. Microsoft and Atlassian style design quality. Professional camera fly-through of application. Premium startup launch video. Confidence, clarity, visibility and organisational excellence themes. No empty space. Highly polished commercial quality.';
+  'Premium enterprise software demonstration. Futuristic compliance operating system. Professional dashboard fly-through. Smooth transitions between compliance, governance, quality, audit, workforce, risk and evidence management screens. Executive command centre aesthetic. Modern Microsoft-quality design. Glassmorphism cards. Blue, purple and pink branding. Realistic user interactions. Data visualisations. Enterprise SaaS launch video. Focus on visibility, confidence, organisation, accountability and operational excellence. Cinematic camera movements. High-end product reveal. Professional software commercial quality. No text overlays. No empty space.';
 
 function StoryVideoCard({
   badge,
@@ -77,6 +90,8 @@ function StoryVideoCard({
   videoUrl,
   lines,
   aiPrompt,
+  referenceLabel,
+  portraitUrl,
   endingCard,
   accentColor = '#0072FF',
 }) {
@@ -167,27 +182,44 @@ function StoryVideoCard({
       <div className="rounded-[22px] bg-white p-5 sm:p-7 lg:p-8 space-y-6">
         {/* Card Header */}
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-b border-sky-100 pb-4">
-          <div className="space-y-1">
-            <div className="flex flex-wrap items-center gap-2">
-              <span
-                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-white"
+          <div className="flex items-center gap-3.5">
+            {portraitUrl && (
+              <div
+                className="h-16 w-16 shrink-0 overflow-hidden rounded-2xl p-[2px] shadow-md"
                 style={{
-                  background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+                  background: 'linear-gradient(120deg, #00C6FF 0%, #0072FF 45%, #FF2E9A 100%)',
                 }}
               >
-                <Film className="h-3.5 w-3.5 text-[#00C6FF]" />
-                {badge}
-              </span>
-              <span className="inline-flex items-center rounded-full border border-sky-200 bg-[#F0F7FF] px-3 py-1 text-xs font-extrabold text-[#0A2B6D]">
-                {durationLabel}
-              </span>
-            </div>
-            <h3 className="text-xl font-extrabold tracking-tight text-[#0A2B6D] sm:text-2xl">
-              {title}
-            </h3>
-            {subtitle && (
-              <p className="text-sm font-semibold text-[#0A2B6D]/75">{subtitle}</p>
+                <Image
+                  src={portraitUrl}
+                  alt="Kristy Whelan — Founder & Director Portrait"
+                  className="h-full w-full rounded-[14px] object-cover"
+                  fittingType="fill"
+                />
+              </div>
             )}
+            <div className="space-y-1">
+              <div className="flex flex-wrap items-center gap-2">
+                <span
+                  className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-white"
+                  style={{
+                    background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+                  }}
+                >
+                  <Film className="h-3.5 w-3.5 text-[#00C6FF]" />
+                  {badge}
+                </span>
+                <span className="inline-flex items-center rounded-full border border-sky-200 bg-[#F0F7FF] px-3 py-1 text-xs font-extrabold text-[#0A2B6D]">
+                  {durationLabel}
+                </span>
+              </div>
+              <h3 className="text-xl font-extrabold tracking-tight text-[#0A2B6D] sm:text-2xl">
+                {title}
+              </h3>
+              {subtitle && (
+                <p className="text-sm font-semibold text-[#0A2B6D]/75">{subtitle}</p>
+              )}
+            </div>
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
@@ -266,7 +298,7 @@ function StoryVideoCard({
             </div>
           </div>
 
-          {/* Ending / Closing Screen Card */}
+          {/* Ending / Final Tagline Card */}
           <div
             className="lg:col-span-4 flex flex-col justify-between rounded-2xl border-2 border-[#0A2B6D] p-6 text-white shadow-lg"
             style={{
@@ -278,6 +310,29 @@ function StoryVideoCard({
                 <Sparkles className="h-3.5 w-3.5" />
                 {endingCard.tag}
               </span>
+
+              {portraitUrl && (
+                <div className="flex items-center gap-3 rounded-2xl border border-white/20 bg-white/10 p-3">
+                  <div className="h-16 w-16 shrink-0 overflow-hidden rounded-xl border-2 border-[#00C6FF]">
+                    <Image
+                      src={portraitUrl}
+                      alt="Kristy Whelan Portrait"
+                      className="h-full w-full object-cover"
+                      fittingType="fill"
+                    />
+                  </div>
+                  <div>
+                    <div className="text-xs font-extrabold uppercase tracking-wider text-[#00C6FF]">
+                      Welcome From The Director
+                    </div>
+                    <div className="text-sm font-black text-white">Kristy Whelan</div>
+                    <div className="text-xs font-semibold text-white/80">
+                      Case Manager · Compliance Manager · Director
+                    </div>
+                  </div>
+                </div>
+              )}
+
               <div className="h-1 w-16 rounded-full bg-gradient-to-r from-[#00C6FF] via-[#0072FF] to-[#FF2E9A]" />
               <h4 className="text-2xl font-black tracking-tight text-white">
                 {endingCard.headline}
@@ -288,6 +343,11 @@ function StoryVideoCard({
               <p className="text-base font-bold text-white/95">
                 {endingCard.company}
               </p>
+              {endingCard.extraLine && (
+                <p className="text-sm font-extrabold text-[#FF2E9A]">
+                  {endingCard.extraLine}
+                </p>
+              )}
             </div>
 
             <div className="mt-6 rounded-xl border border-white/20 bg-white/10 p-4">
@@ -306,7 +366,7 @@ function StoryVideoCard({
               <div className="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-sky-200 pb-2.5">
                 <div>
                   <span className="text-xs font-black uppercase tracking-wider text-[#0072FF]">
-                    Full Voiceover Script ({durationLabel})
+                    Voiceover Script ({durationLabel})
                   </span>
                   <p className="text-xs font-semibold text-[#0A2B6D]/75">
                     Click any line to highlight or jump straight to that moment
@@ -355,10 +415,10 @@ function StoryVideoCard({
 
             {/* AI Video Prompt */}
             <div className="lg:col-span-5 flex flex-col justify-between rounded-2xl border border-purple-200 bg-[#F5F0FF]/60 p-4 sm:p-5">
-              <div className="space-y-2.5">
+              <div className="space-y-3">
                 <div className="flex items-center justify-between gap-2 border-b border-purple-200 pb-2.5">
                   <span className="text-xs font-black uppercase tracking-wider text-[#5A00D6]">
-                    AI Video Prompt (Sora, Runway, Pika, Canva)
+                    AI Video Prompt
                   </span>
                   <button
                     type="button"
@@ -379,13 +439,19 @@ function StoryVideoCard({
                   </button>
                 </div>
 
+                {referenceLabel && (
+                  <div className="rounded-lg border border-purple-200 bg-white px-3 py-2 text-xs font-extrabold text-[#5A00D6]">
+                    Reference: {referenceLabel}
+                  </div>
+                )}
+
                 <p className="text-xs font-semibold leading-relaxed text-[#0A2B6D]">
                   {aiPrompt}
                 </p>
               </div>
 
               <div className="mt-4 rounded-xl border border-sky-200 bg-white p-3 text-xs font-bold text-[#0A2B6D]">
-                <span style={{ color: accentColor }}>◉</span> Story-first launch format: sells the human purpose and executive vision before a single menu is listed.
+                <span style={{ color: accentColor }}>◉</span> Transformation-first story: sells less stress, more confidence, better visibility, more time, and better outcomes.
               </div>
             </div>
           </div>
@@ -398,57 +464,88 @@ function StoryVideoCard({
 export default function LandingLaunchVideosSection() {
   return (
     <section
-      aria-label="ComplianceHR Infinity Launch Videos"
+      aria-label="ComplianceHR Infinity Launch Transformation Videos"
       className="space-y-8"
     >
-      {/* Top Emotional Value Strip: Relief, Confidence, Time, Simplicity, Hope, Vision */}
+      {/* Transformation Header Banner */}
       <div
-        className="rounded-3xl p-5 sm:p-6 text-white shadow-xl"
+        className="rounded-3xl p-5 sm:p-7 text-white shadow-xl"
         style={{
           background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
         }}
       >
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <div className="space-y-1">
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 lg:items-center">
+          <div className="lg:col-span-5 space-y-2">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-[#00C6FF]">
               <HeartHandshake className="h-3.5 w-3.5" />
-              Because Our Purpose Is People
+              The Transformation Story
             </span>
             <h2 className="text-xl font-extrabold tracking-tight text-white sm:text-2xl">
-              Built for Relief, Confidence, Time, Simplicity, Hope &amp; Vision
+              People Don&apos;t Buy Features — They Buy Transformation
             </h2>
+            <p className="text-xs font-semibold leading-relaxed text-white/85">
+              Our purpose was never compliance. Our purpose has always been helping people achieve their goals.
+            </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2">
-            {EMOTIONAL_PILLARS.map((pillar) => (
-              <span
-                key={pillar}
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white px-3.5 py-1.5 text-xs font-extrabold text-[#0A2B6D] shadow-2xs"
-              >
-                <span className="h-2 w-2 rounded-full bg-[#0072FF]" />
-                {pillar}
-              </span>
-            ))}
+          <div className="lg:col-span-7 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {/* What people don't wake up wanting */}
+            <div className="rounded-2xl border border-white/15 bg-white/5 p-3.5 space-y-2">
+              <div className="text-[11px] font-extrabold uppercase tracking-wider text-rose-300">
+                People don&apos;t wake up wanting:
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {NOT_WHAT_PEOPLE_WAKE_UP_WANTING.map((item) => (
+                  <span
+                    key={item}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-bold text-white/85"
+                  >
+                    <XCircle className="h-3.5 w-3.5 text-rose-300 shrink-0" />
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* What they truly want */}
+            <div className="rounded-2xl border border-[#00C6FF]/40 bg-white p-3.5 space-y-2">
+              <div className="text-[11px] font-extrabold uppercase tracking-wider text-[#0072FF]">
+                They want:
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {TRANSFORMATION_OUTCOMES.map((item) => (
+                  <span
+                    key={item}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-sky-200 bg-[#F0F7FF] px-3 py-1 text-xs font-extrabold text-[#0A2B6D]"
+                  >
+                    <CheckCircle2 className="h-3.5 w-3.5 text-[#0072FF] shrink-0" />
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* VIDEO 1 — At the Top of the Homepage: Kristy's Story */}
+      {/* VIDEO 1 — "MY STORY" (with Uploaded Cartoon Character Reference) */}
       <StoryVideoCard
-        badge="Video 1 · Founder Story"
-        title={`KRISTY'S STORY — "Why I Built ComplianceHR Infinity"`}
-        subtitle="The story of how compliance can support caring people instead of overwhelming them."
-        durationLabel="90 Seconds Voiceover"
+        badge='VIDEO 1 · "MY STORY"'
+        title='KRISTY WHELAN — "Why I Created ComplianceHR Infinity"'
+        subtitle="Supporting people, organisations and teams to focus on people, not paperwork."
+        durationLabel="Founder Story Voiceover"
         videoUrl={VIDEO_1_URL}
         lines={VIDEO_1_LINES}
         aiPrompt={VIDEO_1_PROMPT}
+        referenceLabel="Use your uploaded cartoon image as the character reference."
+        portraitUrl={FOUNDER_PORTRAIT_URL}
         accentColor="#0072FF"
         endingCard={{
-          tag: 'Ending Screen',
+          tag: 'Founder Vision',
           headline: 'KRISTY WHELAN',
-          role: 'Founder & Platform Owner',
+          role: 'Case Manager · Compliance Manager · Business Owner · Director',
           company: 'ComplianceHR Infinity',
-          quote: 'Because our purpose is people.',
+          quote: 'Because our purpose was never compliance. Our purpose has always been helping people achieve their goals.',
         }}
       />
 
@@ -457,31 +554,33 @@ export default function LandingLaunchVideosSection() {
         <div className="flex flex-col items-center justify-center text-center space-y-2">
           <span className="inline-flex items-center gap-1.5 rounded-full border border-sky-200 bg-[#F0F7FF] px-4 py-1 text-xs font-extrabold uppercase tracking-wider text-[#0072FF]">
             <ShieldCheck className="h-4 w-4 text-[#0072FF]" />
-            The Vision in Action
+            One Source of Truth · One Connected Ecosystem
           </span>
           <h2 className="text-2xl font-black tracking-tight text-[#0A2B6D] sm:text-3xl">
             See ComplianceHR Infinity in action
           </h2>
           <p className="max-w-2xl text-sm font-semibold text-[#0A2B6D]/75">
-            The future of compliance is not more paperwork — the future of compliance is visibility.
+            Built from experience. Designed for excellence. Created to give people their time back.
           </p>
         </div>
 
         <StoryVideoCard
-          badge="Video 2 · The Future of Compliance"
-          title="THE FUTURE OF COMPLIANCE — App Vision Video"
-          subtitle="Complete visibility across every document, responsibility, action, risk, and review."
-          durationLabel="2 Minutes Voiceover"
+          badge='VIDEO 2 · "THE FUTURE OF COMPLIANCE"'
+          title='THE FUTURE OF COMPLIANCE — Enterprise Operating System'
+          subtitle="Visibility, accountability, traceability and confidence across every level of your organisation."
+          durationLabel="App Vision Voiceover"
           videoUrl={VIDEO_2_URL}
           lines={VIDEO_2_LINES}
           aiPrompt={VIDEO_2_PROMPT}
+          referenceLabel="Use screenshots from your app."
           accentColor="#5A00D6"
           endingCard={{
-            tag: 'Closing Screen',
-            headline: 'COMPLIANCEHR INFINITY',
-            role: 'Audit Ready. Every Day.',
-            company: 'Built by Experience. Built for People.',
-            quote: 'The future of compliance is not more paperwork. The future of compliance is visibility.',
+            tag: 'Final Tagline',
+            headline: 'ComplianceHR Infinity',
+            role: 'Built from experience.',
+            company: 'Designed for excellence.',
+            extraLine: 'Created to give people their time back.',
+            quote: 'ComplianceHR Infinity. Audit Ready. Every Day.',
           }}
         />
       </div>
