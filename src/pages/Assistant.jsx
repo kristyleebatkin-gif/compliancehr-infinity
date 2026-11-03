@@ -7,6 +7,7 @@ import { ShieldCheck, Sparkles, ReceiptText, CalendarClock, Bot, CheckCircle2, C
 import AssistantHints from '@/components/assistant/AssistantHints';
 import AdvancedIntelligenceAndToolsSuite from '@/components/operations/AdvancedIntelligenceAndToolsSuite';
 import EnterpriseToolsAiIntelligencePlatform from '@/components/compliance/EnterpriseToolsAiIntelligencePlatform';
+import AiCopilotTestingChecklistSuite from '@/components/assistant/AiCopilotTestingChecklistSuite';
 
 const AGENTS = [
   {
@@ -124,6 +125,14 @@ export default function Assistant() {
           );
         })}
       </div>
+      <AiCopilotTestingChecklistSuite
+        onRunPrompt={(promptText) =>
+          setAgent({
+            ...AGENTS[0],
+            suggestions: [promptText, ...AGENTS[0].suggestions],
+          })
+        }
+      />
       <EnterpriseToolsAiIntelligencePlatform />
       <AssistantHints />
       <AdvancedIntelligenceAndToolsSuite />
