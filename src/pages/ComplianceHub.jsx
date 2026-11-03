@@ -93,6 +93,7 @@ import StaffBulkActions from '@/components/compliance/StaffBulkActions';
 import ComplianceActivityFeed from '@/components/compliance/ComplianceActivityFeed';
 import AuditorsPortal from '@/pages/AuditorsPortal';
 import ObsidianSmartRemote from '@/components/common/ObsidianSmartRemote';
+import AuditorViewPreFlightBar from '@/components/compliance/AuditorViewPreFlightBar';
 
 const POLICY_CATEGORIES = ['Rights & Responsibilities', 'Privacy', 'Complaints', 'Incident Management', 'Risk Management', 'Medication', 'Human Resources', 'Emergency Management', 'Governance', 'Quality', 'Financial'];
 const POLICY_STATUSES = ['Draft', 'Active', 'Under Review', 'Expired', 'Archived'];
@@ -311,6 +312,15 @@ export default function ComplianceHub() {
       />
 
       {loadError && <div role="alert" className="flex items-center justify-between gap-3 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">Policy and legal-requirement data could not be confirmed. <Button size="sm" variant="outline" onClick={load} disabled={loading}>Retry</Button></div>}
+
+      {/* Pre-Audit Flight Check & External Auditor View Simulator */}
+      <AuditorViewPreFlightBar
+        onOpenAuditorScreen={() => setScreenView('both')}
+        onOpenConsentRegister={() => {
+          setTabGroup('policies');
+          setActiveTab('consents');
+        }}
+      />
 
       {/* Compliance Governance Navigation & Dual-Screen Selector */}
       <ObsidianSmartRemote

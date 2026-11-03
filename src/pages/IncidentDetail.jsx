@@ -14,6 +14,7 @@ import { useRole } from '@/lib/useRole';
 import { ROLES } from '@/lib/roles';
 import RecordResponseEditor from '@/components/safety/RecordResponseEditor';
 import Universal360ProfileFramework from '@/components/enterprise/Universal360ProfileFramework';
+import StatutoryIncidentLifecycleChain from '@/components/incidents/StatutoryIncidentLifecycleChain';
 
 export default function IncidentDetail() {
   const { id } = useParams();
@@ -67,6 +68,7 @@ export default function IncidentDetail() {
         {(initialNotificationLate || followUpLate) && <span className="rounded-full bg-danger/10 px-2.5 py-1 text-xs font-semibold text-danger">Regulatory Deadline Overdue</span>}
       </div>
 
+      <StatutoryIncidentLifecycleChain incident={item} canEdit={canReview} onUpdated={load} />
       <Universal360ProfileFramework initialType="incident" focusRecord={item} compact />
       <IncidentWorkflow status={item.status} />
 

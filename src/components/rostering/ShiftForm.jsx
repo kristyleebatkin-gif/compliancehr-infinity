@@ -27,6 +27,7 @@ export default function ShiftForm({ open, onOpenChange, shift, prefillDate, onSa
   const [staff, setStaff] = useState([]);
   const [participants, setParticipants] = useState([]);
   const [availability, setAvailability] = useState([]);
+  const [clearancesByStaff, setClearancesByStaff] = useState({});
   const [goals, setGoals] = useState([]);
 
   useEffect(() => {
@@ -55,6 +56,29 @@ export default function ShiftForm({ open, onOpenChange, shift, prefillDate, onSa
         .then((p) => setStaff(p.items.map((i) => i.full_name)));
       base44.entities.ParticipantProfile.filter({ status: 'Active' }, { sort: 'full_name', limit: 100, fields: ['full_name'] })
         .then((p) => setParticipants(p.items.map((i) => i.full_name)));
+      Promise.all([
+        base44.entities.EmployeeDocument.filter({}, { limit: 200 }).catch(() => ({ items: [] })),
+        base44.entities.Certificate.filter({}, { limit: 200 }).catch(() => ({ items: [] })),
+      ]).then(([empDocsRes, certsRes]) => {
+        const todayStr = new Date().toISOString().slice(0, 10);
+        const map = {};
+        const checkItem = (name, docTitle, status, expiry) => {
+          if (!name) return;
+          if (!map[name]) map[name] = { expired: [], expiring: [] };
+          if (status === 'Expired' || (expiry && expiry < todayStr)) {
+            map[name].expired.push(docTitle);
+          } else if (status === 'Expiring Soon') {
+            map[name].expiring.push(docTitle);
+          }
+        };
+        (empDocsRes?.items || []).forEach((d) =>
+          checkItem(d.employee_name, d.document_type || d.title, d.status, d.expiry_date)
+        );
+        (certsRes?.items || []).forEach((c) =>
+          checkItem(c.staff_name, c.module_title || 'Certificate', c.status, c.expiry_date)
+        );
+        setClearancesByStaff(map);
+      });
     }
   }, [open, shift]);
 
@@ -108,11 +132,29 @@ export default function ShiftForm({ open, onOpenChange, shift, prefillDate, onSa
                   <SelectItem value="__none__">Unassigned</SelectItem>
                   {staff.map((n) => {
                     const avail = AVAILABILITY_LABEL[availabilityForDate(availability, n, form.start_time, form.end_time)];
+                    const clr = clearancesByStaff[n];
+                    const hasExpired = clr?.expired?.length > 0;
+                    const hasExpiring = !hasExpired && clr?.expiring?.length > 0;
                     return (
                       <SelectItem key={n} value={n}>
-                        <span className="flex w-full items-center justify-between gap-3">
+                        <span className="flex w-full items-center justify-between gap-2">
                           <span>{n}</span>
-                          {avail && <span className={`whitespace-nowrap rounded-full px-1.5 py-0.5 text-[10px] font-semibold ${avail.cls}`}>{avail.text}</span>}
+                          <span className="flex items-center gap-1">
+                            {hasExpired ? (
+                              <span className="whitespace-nowrap rounded-full bg-rose-100 px-1.5 py-0.5 text-[10px] font-extrabold text-rose-700">
+                                Clearance Expired
+                              </span>
+                            ) : hasExpiring ? (
+                              <span className="whitespace-nowrap rounded-full bg-amber-100 px-1.5 py-0.5 text-[10px] font-extrabold text-amber-800">
+                                Expiring Soon
+                              </span>
+                            ) : (
+                              <span className="whitespace-nowrap rounded-full bg-emerald-50 px-1.5 py-0.5 text-[10px] font-bold text-emerald-700">
+                                Screened
+                              </span>
+                            )}
+                            {avail && <span className={`whitespace-nowrap rounded-full px-1.5 py-0.5 text-[10px] font-semibold ${avail.cls}`}>{avail.text}</span>}
+                          </span>
                         </span>
                       </SelectItem>
                     );
@@ -121,6 +163,11 @@ export default function ShiftForm({ open, onOpenChange, shift, prefillDate, onSa
               </Select>
               {form.employee_name && availabilityForDate(availability, form.employee_name, form.start_time, form.end_time) === 'unavailable' && (
                 <p className="text-xs font-medium text-destructive">{form.employee_name} has marked themselves unavailable on this date.</p>
+              )}
+              {form.employee_name && clearancesByStaff[form.employee_name]?.expired?.length > 0 && (
+                <p className="rounded-lg border border-rose-200 bg-rose-50 px-2.5 py-1.5 text-xs font-bold text-rose-700">
+                  Mandatory Clearance Alert: {form.employee_name} has expired record(s) ({clearancesByStaff[form.employee_name].expired.slice(0, 2).join(', ')}). Verify before publishing shift.
+                </p>
               )}
             </div>
             <div className="grid gap-1.5"><Label>Participant</Label>

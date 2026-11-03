@@ -25,6 +25,7 @@ import OrganisationalOperatingSystemCommand from '@/components/enterprise/Organi
 import OrganisationHealthScoreFramework from '@/components/enterprise/OrganisationHealthScoreFramework';
 
 import MissionControlAiCoreHub from '@/components/enterprise/MissionControlAiCoreHub';
+import AuditReadyTodayCommandStrip from '@/components/dashboard/AuditReadyTodayCommandStrip';
 import {
   Activity, ShieldCheck, Zap, LayoutGrid, Cpu, Users, Building2, Layers, Download, FileCheck2,
 } from 'lucide-react';
@@ -72,6 +73,9 @@ export default function Dashboard() {
 
   return (
     <div className="bright-dashboard mx-auto w-full max-w-[1440px] space-y-3">
+      {/* Priority 1 Audit Readiness Strip: "Am I Audit Ready Today?" */}
+      {!isRestrictedRole && <AuditReadyTodayCommandStrip />}
+
       {/* Main Screen Hybrid: Premium Remote + Mission Control + Enterprise Dashboard (AI CORE + 8 Glowing Circular Control Pods) */}
       <MissionControlAiCoreHub
         activeSuite={activeSuite}
