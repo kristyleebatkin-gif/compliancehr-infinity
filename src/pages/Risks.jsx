@@ -75,7 +75,7 @@ function Risks({ profile, profileKind, embedded = false } = {}) {
   const [statusFilter, setStatusFilter] = useState(searchParams.get('status') === 'open' ? 'Open' : 'All');
   const [issueFilter, setIssueFilter] = useState('All');
   const [query, setQuery] = useState('');
-  const [riskTab, setRiskTab] = useState('all');
+  const [riskTab, setRiskTab] = useState('register');
 
   const load = async () => {
     setLoading(true);

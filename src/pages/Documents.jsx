@@ -265,8 +265,6 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
         </TabsList>
 
         <TabsContent value="documents" className="mt-3 space-y-3">
-          {!profile && <UniversalRegisterManagementHubSuite />}
-          {!profile && <UniversalDataStorageRetentionExportSuite />}
           {!profile && <DocumentsDashboard role={me?.role} focus={focus} />}
       <div id="staff-docs" className="scroll-mt-24">
         <StaffDocumentToolbar profile={profile} staff={staff} scanning={scanning} scanMsg={scanMsg} onScan={runScan} onExport={exportAll} onAdd={() => { setEditing(null); setOpen(true); }} onDone={load} />

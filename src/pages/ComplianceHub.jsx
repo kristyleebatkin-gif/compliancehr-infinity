@@ -204,7 +204,7 @@ export default function ComplianceHub() {
   const [applyingPolicies, setApplyingPolicies] = useState(false);
   const [tabGroup, setTabGroup] = useState('all');
   const [activeTab, setActiveTab] = useState('standards-map');
-  const [screenView, setScreenView] = useState('both');
+  const [screenView, setScreenView] = useState('screen1');
 
   const togglePolicy = (id, checked) => {
     setSelPolicies((s) => (checked ? [...s, id] : s.filter((x) => x !== id)));
@@ -271,6 +271,7 @@ export default function ComplianceHub() {
   };
 
   const remove = async (entity, id) => {
+    if (!window.confirm('Delete this governance record from the register?')) return;
     await entity.delete(id);
     await load();
   };
@@ -310,14 +311,8 @@ export default function ComplianceHub() {
       />
 
       {loadError && <div role="alert" className="flex items-center justify-between gap-3 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">Policy and legal-requirement data could not be confirmed. <Button size="sm" variant="outline" onClick={load} disabled={loading}>Retry</Button></div>}
-      {/* Universal Data Storage, Retention, Traceability & Export Standard + Five-Layer Framework */}
-      <UniversalDataStorageRetentionExportSuite />
-      <FiveLayerEnterpriseAcceptanceSuite />
-      <EnterpriseToolsAiIntelligencePlatform />
-      <IntelligentOperationsGuidanceSuite />
-      <EasyAccessVisibilityHub />
 
-      {/* Obsidian Smart Remote for Dual-Screen & Compliance Workspaces */}
+      {/* Compliance Governance Navigation & Dual-Screen Selector */}
       <ObsidianSmartRemote
         title="Compliance Screen Remote"
         subtitle="Screen 1: Compliance & Report Centre · Screen 2: Live Auditor Portal"

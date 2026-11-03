@@ -5,9 +5,6 @@ import CollapsibleSection from '@/components/module/CollapsibleSection';
 import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
 import '@/components/module/moduleShell.css';
 
-const TOP_BORDER_GRADIENT =
-  'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
-
 /** @param {any} props */
 export default function ModuleShell({
   embedded = false,
@@ -29,64 +26,50 @@ export default function ModuleShell({
 } = {}) {
   const colour = moduleKeyColour(moduleKey) || '#0072FF';
   const rows = (
-    <div className="module-shell-workspace min-w-0 space-y-4" style={{ '--module-colour': colour }}>
+    <div className="module-shell-workspace min-w-0 space-y-3" style={{ '--module-colour': colour }}>
       {!insightAfterTiles && insight}
       {!insightAfterTiles && insightModule && <RegisterInsights module={insightModule} />}
 
-      {actions && (
-        <div
-          className="preserve-island-theme rounded-2xl p-[3px] shadow-md"
-          style={{ background: TOP_BORDER_GRADIENT }}
-        >
-          <div
-            role="group"
-            aria-label={`${title || 'Module'} actions`}
-            className="module-shell-actions module-action-bar flex flex-wrap items-center justify-center gap-2 rounded-[13px] p-2.5 [&_button]:rounded-full [&_button]:border-2 [&_button]:border-[#0072FF] [&_button]:bg-white [&_button]:text-[#0A2B6D] [&_a]:rounded-full [&_a]:border-2 [&_a]:border-[#0072FF] [&_a]:bg-white [&_a]:text-[#0A2B6D]"
-            style={{ background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #131B4D 100%)' }}
-          >
-            {actions}
-          </div>
+      {(actions || search) && (
+        <div className="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-3.5 shadow-2xs lg:flex-row lg:items-center lg:justify-between">
+          {search && (
+            <div
+              role="search"
+              aria-label={`${title || 'Module'} search and filters`}
+              className="module-shell-search min-w-0 flex-1"
+            >
+              {search}
+            </div>
+          )}
+          {actions && (
+            <div
+              role="group"
+              aria-label={`${title || 'Module'} actions`}
+              className="module-shell-actions module-action-bar flex flex-wrap items-center gap-2"
+            >
+              {actions}
+            </div>
+          )}
         </div>
       )}
 
       {tabs && <div className="min-w-0 w-full">{tabs}</div>}
 
-      {search && (
-        <div
-          className="preserve-island-theme rounded-2xl border-2 border-[#0A2B6D] p-1.5 shadow-md"
-          style={{ background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #131B4D 100%)' }}
-        >
-          <div className="rounded-xl p-[2px]" style={{ background: TOP_BORDER_GRADIENT }}>
-            <div role="search" aria-label={`${title || 'Module'} search and filters`} className="module-shell-search min-w-0 rounded-[10px] bg-white p-2.5">{search}</div>
-          </div>
-        </div>
-      )}
-
       {small && (
         <div
-          className="preserve-island-theme rounded-2xl border-2 border-[#0A2B6D] p-1.5 shadow-md"
-          style={{ background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #131B4D 100%)' }}
+          className={`module-shell-tiles grid gap-3 sm:grid-cols-2 ${
+            React.Children.count(small) === 5
+              ? 'md:grid-cols-3 lg:grid-cols-5'
+              : 'lg:grid-cols-4'
+          } [&>*]:rounded-xl [&>*]:border [&>*]:border-slate-200 [&>*]:bg-white [&>*]:p-4 [&>*]:shadow-2xs`}
         >
-          <div
-            className={`module-shell-tiles grid gap-2 rounded-xl p-1 sm:grid-cols-2 ${
-              React.Children.count(small) === 5
-                ? 'md:grid-cols-3 lg:grid-cols-5'
-                : ' lg:grid-cols-4'
-            } [&>*]:rounded-3xl [&>*]:border-2 [&>*]:border-[#0072FF] [&>*]:bg-white [&>*]:p-3`}
-          >
-            {small}
-          </div>
+          {small}
         </div>
       )}
 
       {medium && (
-        <div
-          className="preserve-island-theme rounded-2xl border-2 border-[#0A2B6D] p-1.5 shadow-md"
-          style={{ background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #131B4D 100%)' }}
-        >
-          <div className="module-shell-tiles grid gap-2.5 rounded-xl p-1 md:grid-cols-2 [&>*]:rounded-3xl [&>*]:border-2 [&>*]:border-[#0072FF] [&>*]:bg-white [&>*]:p-3">
-            {medium}
-          </div>
+        <div className="module-shell-tiles grid gap-3 md:grid-cols-2 [&>*]:rounded-xl [&>*]:border [&>*]:border-slate-200 [&>*]:bg-white [&>*]:p-4 [&>*]:shadow-2xs">
+          {medium}
         </div>
       )}
     </div>

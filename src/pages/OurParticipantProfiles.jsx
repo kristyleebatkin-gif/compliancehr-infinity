@@ -34,17 +34,19 @@ export default function OurParticipantProfiles({ basePath = '/our-participants',
           title={title}
           icon={Heart}
           moduleKey="our-participants"
-          tabs={<div className="flex flex-nowrap items-center gap-1.5">
-            <TabsList className="w-auto shrink-0"><TabsTrigger value="profiles">Participant profiles</TabsTrigger></TabsList>
-            <TabsList className="w-auto shrink-0"><TabsTrigger value="office"><Building2 />Office View</TabsTrigger></TabsList>
+          tabs={<div className="flex flex-wrap items-center gap-2">
+            <TabsList className="w-auto shrink-0">
+              <TabsTrigger value="profiles">Participant profiles</TabsTrigger>
+              <TabsTrigger value="office"><Building2 className="mr-1.5 h-3.5 w-3.5" />Office View</TabsTrigger>
+              {progressAllowed && <TabsTrigger value="progress"><TrendingUp className="mr-1.5 h-3.5 w-3.5" />Staff progress</TabsTrigger>}
+            </TabsList>
             <MyProfileTabLink />
-            {progressAllowed && <TabsList className="w-auto shrink-0"><TabsTrigger value="progress"><TrendingUp />Staff progress</TabsTrigger></TabsList>}
           </div>}
           search={<ModuleSearchBar value={search} onChange={setSearch} placeholder="Search participants…" />}
           insightModule="participants"
         >
           <div className="px-2 pb-2"><ParticipantDirectoryDashboard scoped={scoped} selected={status} onSelect={setStatus} /></div>
-          <TabsContent value="profiles"><div className="mt-[1cm]"><OurProfilesTab kind="participant" basePath={basePath} scoped={scoped} directory searchValue={search} groupValue={status} onGroupChange={setStatus} /></div></TabsContent>
+          <TabsContent value="profiles"><div className="mt-4"><OurProfilesTab kind="participant" basePath={basePath} scoped={scoped} directory searchValue={search} groupValue={status} onGroupChange={setStatus} /></div></TabsContent>
           <TabsContent value="office"><div className="mt-4"><ExecutiveWallScene defaultViewMode="office" /></div></TabsContent>
           {progressAllowed && <TabsContent value="progress"><Suspense fallback={<p role="status" className="py-8 text-sm text-muted-foreground">Loading staff progress...</p>}><StaffProgressDashboard embedded search={search} /></Suspense></TabsContent>}
         </ModuleShell>

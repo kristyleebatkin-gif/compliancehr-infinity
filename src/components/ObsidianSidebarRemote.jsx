@@ -2,26 +2,16 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import BrandLogoLockup from '@/components/common/BrandLogoLockup';
 import {
-  LogOut, ArrowRight, ChevronDown, ChevronRight, LayoutDashboard, ClipboardList,
+  LogOut, ChevronDown, ChevronRight, LayoutDashboard, ClipboardList,
   Users, ShieldCheck, ShieldAlert, FolderOpen, Megaphone,
-  BarChart3, Cpu, Settings,
+  BarChart3, Cpu, Settings, Search,
 } from 'lucide-react';
-
-const BRAND_GRADIENT =
-  'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)';
-
-// Exact same dark blue as around the modular tiles in QuickAppBar / Command Centre
-const DARK_NAVY_CHASSIS =
-  'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)';
-
-// App design colour palette for symbols and icons
-const APP_DESIGN_COLOURS = ['#0072FF', '#5A00D6', '#FF2E9A', '#A100FF', '#00C6FF'];
 
 // Permanent 13-Group Architectural Map (Single Source of Truth, Zero Duplicates)
 export const PRIMARY_11_OS_NAV = [
   {
     id: 'dashboard-executive',
-    label: '1. Dashboard & Executive Command',
+    label: '1. Executive Command',
     sub: 'Dashboard, Operations, Analytics, Suggestions & AI',
     path: '/dashboard',
     icon: LayoutDashboard,
@@ -37,7 +27,7 @@ export const PRIMARY_11_OS_NAV = [
   },
   {
     id: 'people-intake-profiles',
-    label: '2. People, Intake & Profiles',
+    label: '2. People & 360° Profiles',
     sub: 'Profiles, Intake, Visual Boards, Contacts & Users',
     path: '/our-employees',
     icon: Users,
@@ -55,7 +45,7 @@ export const PRIMARY_11_OS_NAV = [
   },
   {
     id: 'communications-workforce',
-    label: '3. Communications & Workforce',
+    label: '3. Service Delivery & Roster',
     sub: 'Communications, Rostering, Goals, Tasks & Meetings',
     path: '/communications',
     icon: Megaphone,
@@ -88,7 +78,7 @@ export const PRIMARY_11_OS_NAV = [
   },
   {
     id: 'compliance-quality-evidence',
-    label: '5. Compliance, Quality & Evidence',
+    label: '5. Compliance & Evidence',
     sub: 'Compliance, Auditor, Vault, Safe, Quality & Evidence',
     path: '/compliance',
     icon: ShieldCheck,
@@ -110,7 +100,7 @@ export const PRIMARY_11_OS_NAV = [
   },
   {
     id: 'training-capability',
-    label: '6. Training & Capability',
+    label: '6. Training & Credentials',
     sub: 'Training Centre, Certificates, LMS & Skills Matrix',
     path: '/training',
     icon: ClipboardList,
@@ -148,7 +138,7 @@ export const PRIMARY_11_OS_NAV = [
   },
   {
     id: 'crm-growth-relationships',
-    label: '9. CRM, Growth & Relationships',
+    label: '9. CRM & Referrals',
     sub: 'CRM & Leads, Referrals & Provider Relationships',
     path: '/crm',
     icon: Megaphone,
@@ -184,7 +174,7 @@ export const PRIMARY_11_OS_NAV = [
   },
   {
     id: 'community-support-services',
-    label: '12. Community & Support Services',
+    label: '12. Community & Council',
     sub: 'Community Council Hub, Networks & Accessibility',
     path: '/community-council',
     icon: FolderOpen,
@@ -195,7 +185,7 @@ export const PRIMARY_11_OS_NAV = [
   },
   {
     id: 'help-knowledge-support',
-    label: '13. Help, Knowledge & Support',
+    label: '13. Help & Documentation',
     sub: 'Help Centre, User Guides & System Documentation',
     path: '/help',
     icon: Settings,
@@ -214,347 +204,198 @@ export default function ObsidianSidebarRemote({
   onLogout,
 }) {
   const location = useLocation();
-  const [navMode, setNavMode] = useState('os11'); // 'os11' (13 Permanent Categories) | 'all' (All Modules)
+  const [navMode, setNavMode] = useState('os11');
   const [expandedPillar, setExpandedPillar] = useState('dashboard-executive');
+  const [filterText, setFilterText] = useState('');
 
   const modules = visiblePrimary.filter(
     (item) =>
       !(item.key === 'staff-progress' && visiblePrimary.some((entry) => entry.key === 'staff'))
   );
 
+  const q = filterText.trim().toLowerCase();
+
   return (
-    <div
-      className="preserve-island-theme flex h-full w-full min-w-0 min-h-0 flex-col overflow-hidden select-none"
-      style={{ background: DARK_NAVY_CHASSIS }}
-    >
-      <section
-        className="flex h-full min-h-0 flex-col overflow-hidden shadow-2xl"
-        style={{ background: DARK_NAVY_CHASSIS }}
-      >
-        {/* Top App-Design Gradient Strip — aligned flush with main header */}
-        <div className="h-1.5 w-full shrink-0" style={{ background: BRAND_GRADIENT }} />
+    <div className="flex h-full w-full min-w-0 min-h-0 flex-col overflow-hidden bg-white text-[#0A2B6D] select-none">
+      {/* Compact Brand Header & View Mode Toggle */}
+      <div className="shrink-0 border-b border-slate-200 p-3 space-y-2.5">
+        <Link
+          to="/dashboard"
+          aria-label="ComplianceHR Infinity Home"
+          className="flex w-full justify-center"
+        >
+          <BrandLogoLockup size="xs" showSlogan={false} className="w-full" />
+        </Link>
 
-        {/* TOP WHITE SECTION OF REMOTE — exact same 190px height & alignment as the top white section of the main area */}
-        <div className="flex h-[190px] shrink-0 flex-col items-center justify-center bg-white px-2.5 py-1.5 text-center">
-          <Link
-            to="/dashboard"
-            aria-label="ComplianceHR Infinity Home"
-            className="flex w-full justify-center"
-          >
-            <BrandLogoLockup size="xs" showSlogan className="w-full" />
-          </Link>
-
-          {/* Remote Control Mode Switcher */}
-          <div
-            className="mt-1.5 grid w-full grid-cols-2 gap-1 rounded-xl p-[2px]"
-            style={{ background: BRAND_GRADIENT }}
-          >
-            <button
-              type="button"
-              onClick={() => setNavMode('os11')}
-              className={`min-h-[24px] rounded-[10px] py-0.5 text-[9px] font-extrabold transition-all ${
-                navMode === 'os11'
-                  ? 'bg-[#0A2B6D] text-white shadow-[0_0_12px_rgba(0,198,255,0.6)]'
-                  : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
-              }`}
-              style={{ color: navMode === 'os11' ? '#FFFFFF' : '#0A2B6D' }}
-            >
-              ◉ 13 Command Channels
-            </button>
-            <button
-              type="button"
-              onClick={() => setNavMode('all')}
-              className={`min-h-[24px] rounded-[10px] py-0.5 text-[9px] font-extrabold transition-all ${
-                navMode === 'all'
-                  ? 'bg-[#0A2B6D] text-white shadow-[0_0_12px_rgba(255,46,154,0.6)]'
-                  : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
-              }`}
-              style={{ color: navMode === 'all' ? '#FFFFFF' : '#0A2B6D' }}
-            >
-              ◉ All 46 Modules
-            </button>
-          </div>
+        {/* Quick Sidebar Search */}
+        <div className="relative">
+          <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#0A2B6D]/50" />
+          <input
+            type="search"
+            value={filterText}
+            onChange={(e) => setFilterText(e.target.value)}
+            placeholder="Jump to module..."
+            aria-label="Filter navigation modules"
+            className="h-8 w-full rounded-lg border border-slate-200 bg-[#F8FAFC] pl-8 pr-2.5 text-xs font-medium text-[#0A2B6D] focus:border-[#0072FF] focus:bg-white focus:outline-none"
+          />
         </div>
 
-        {/* Continuous App-Design Gradient Divider Line aligned with main header */}
-        <div className="h-[3px] w-full shrink-0" style={{ background: BRAND_GRADIENT }} />
+        {/* Navigation Mode Switcher */}
+        <div className="grid grid-cols-2 gap-1 rounded-lg bg-slate-100 p-0.5">
+          <button
+            type="button"
+            onClick={() => setNavMode('os11')}
+            className={`rounded-md py-1 text-xs font-bold transition ${
+              navMode === 'os11'
+                ? 'bg-white text-[#0A2B6D] shadow-2xs'
+                : 'text-[#0A2B6D]/70 hover:text-[#0A2B6D]'
+            }`}
+          >
+            13 Domains
+          </button>
+          <button
+            type="button"
+            onClick={() => setNavMode('all')}
+            className={`rounded-md py-1 text-xs font-bold transition ${
+              navMode === 'all'
+                ? 'bg-white text-[#0A2B6D] shadow-2xs'
+                : 'text-[#0A2B6D]/70 hover:text-[#0A2B6D]'
+            }`}
+          >
+            All Modules
+          </button>
+        </div>
+      </div>
 
-        {/* BOTTOM 3/4 DARK BLUE (Same Dark Blue as QuickAppBar / Command Centre) */}
-        <nav
-          aria-label="Page navigation"
-          className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-2.5 space-y-2"
-          style={{ background: DARK_NAVY_CHASSIS }}
-        >
-          {navMode === 'os11'
-            ? PRIMARY_11_OS_NAV.map((pillar, pIdx) => {
-                const Icon = pillar.icon;
-                const symColor = APP_DESIGN_COLOURS[pIdx % APP_DESIGN_COLOURS.length];
-                const pillarActive =
-                  isActive(pillar.path) ||
-                  pillar.children.some((c) => location.pathname === c.path || location.pathname.startsWith(`${c.path}/`));
-                const isExpanded = expandedPillar === pillar.id || pillarActive;
-
-                return (
-                  <div key={pillar.id} className="space-y-1.5">
-                    {/* Illuminated Modular Remote Button: Top 1/4 White + Bottom 3/4 Dark Blue */}
-                    <div
-                      className={`group rounded-2xl p-[2px] transition-all duration-200 ${
-                        pillarActive
-                          ? 'shadow-[0_0_20px_rgba(0,198,255,0.8)] scale-[1.01]'
-                          : 'shadow-[0_0_10px_rgba(90,0,214,0.35)] hover:shadow-[0_0_16px_rgba(0,198,255,0.65)]'
-                      }`}
-                      style={{ background: BRAND_GRADIENT }}
-                    >
-                      <div
-                        className="flex min-h-[68px] flex-col justify-between overflow-hidden rounded-[14px]"
-                        style={{ background: DARK_NAVY_CHASSIS }}
-                      >
-                        {/* Top 1/4 White Title Bar with App-Design-Colour Symbol */}
-                        <div className="flex min-h-[34px] items-center justify-between gap-1.5 bg-white px-2.5 py-1">
-                          <Link
-                            to={pillar.path}
-                            onClick={() => setExpandedPillar(pillar.id)}
-                            className="flex min-w-0 flex-1 items-center gap-1.5"
-                          >
-                            <span
-                              className="flex h-5 w-5 shrink-0 items-center justify-center rounded-lg bg-[#F5F0FF] shadow-2xs"
-                              style={{ border: `1.5px solid ${symColor}` }}
-                            >
-                              <Icon className="h-3 w-3 shrink-0" style={{ color: symColor }} />
-                            </span>
-                            <span
-                              className="min-w-0 bg-clip-text text-[10.5px] font-extrabold leading-tight tracking-tight text-transparent"
-                              style={{
-                                backgroundImage:
-                                  'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
-                              }}
-                            >
-                              <span style={{ color: symColor }}>◉</span> {pillar.label}
-                            </span>
-                          </Link>
-
-                          {/* Illuminated LED Status Pill */}
-                          <div className="flex shrink-0 items-center gap-1">
-                            <span
-                              className={`inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[7.5px] font-black uppercase tracking-wider ${
-                                pillarActive
-                                  ? 'bg-[#0A2B6D] text-[#00C6FF]'
-                                  : 'bg-[#F5F0FF] text-[#5A00D6]'
-                              }`}
-                            >
-                              <span
-                                className="h-1.5 w-1.5 rounded-full"
-                                style={{
-                                  backgroundColor: pillarActive ? '#00C6FF' : symColor,
-                                  boxShadow: pillarActive
-                                    ? '0 0 8px 2px #00C6FF'
-                                    : `0 0 6px 1px ${symColor}`,
-                                }}
-                              />
-                              {pillarActive ? 'ACTIVE' : pillar.status}
-                            </span>
-
-                            <button
-                              type="button"
-                              aria-label={`Toggle ${pillar.label}`}
-                              onClick={() =>
-                                setExpandedPillar((prev) => (prev === pillar.id ? '' : pillar.id))
-                              }
-                              className="rounded p-0.5 text-[#0A2B6D] hover:bg-slate-100"
-                            >
-                              {isExpanded ? (
-                                <ChevronDown className="h-3.5 w-3.5 text-[#5A00D6]" />
-                              ) : (
-                                <ChevronRight className="h-3.5 w-3.5 text-[#0A2B6D]" />
-                              )}
-                            </button>
-                          </div>
-                        </div>
-
-                        {/* Bottom 3/4 Dark Blue Body */}
-                        <Link
-                          to={pillar.path}
-                          onClick={() => setExpandedPillar(pillar.id)}
-                          className="flex items-center justify-between gap-1.5 px-2.5 py-1.5"
-                        >
-                          <span
-                            className="text-[9px] font-bold leading-snug text-white"
-                            style={{ color: '#FFFFFF' }}
-                          >
-                            {pillar.sub}
-                          </span>
-                          <ArrowRight className="h-3 w-3 shrink-0 transition group-hover:translate-x-0.5" style={{ color: symColor }} />
-                        </Link>
-                      </div>
-                    </div>
-
-                    {/* Level 2 Page Modular Tiles: Each Page Tile Lights Up with Top 1/4 White + Bottom 3/4 Dark Blue & App Design Colour Symbols */}
-                    {isExpanded && (
-                      <div className="pl-2 space-y-1.5 py-0.5">
-                        {pillar.children.map((child, cIdx) => {
-                          const childColor = APP_DESIGN_COLOURS[(pIdx + cIdx + 1) % APP_DESIGN_COLOURS.length];
-                          const subActive =
-                            location.pathname === child.path ||
-                            (child.path !== '/dashboard' && location.pathname.startsWith(`${child.path}/`));
-                          return (
-                            <Link
-                              key={child.path}
-                              to={child.path}
-                              className={`group block rounded-2xl p-[2px] transition-all duration-200 ${
-                                subActive
-                                  ? 'shadow-[0_0_18px_rgba(0,198,255,0.8)] scale-[1.01]'
-                                  : 'shadow-[0_0_10px_rgba(90,0,214,0.3)] hover:-translate-y-0.5 hover:shadow-[0_0_14px_rgba(0,198,255,0.65)]'
-                              }`}
-                              style={{ background: BRAND_GRADIENT }}
-                            >
-                              <div
-                                className="flex min-h-[54px] flex-col justify-between overflow-hidden rounded-[14px]"
-                                style={{ background: DARK_NAVY_CHASSIS }}
-                              >
-                                {/* Top 1/4 White Bar */}
-                                <div className="flex min-h-[28px] items-center justify-between gap-1.5 bg-white px-2.5 py-0.5">
-                                  <div className="flex min-w-0 items-center gap-1.5">
-                                    <span
-                                      className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-md bg-[#F5F0FF]"
-                                      style={{ border: `1.5px solid ${childColor}` }}
-                                    >
-                                      <Icon className="h-2.5 w-2.5 shrink-0" style={{ color: childColor }} />
-                                    </span>
-                                    <span
-                                      className="min-w-0 bg-clip-text text-[10px] font-extrabold leading-tight text-transparent"
-                                      style={{
-                                        backgroundImage:
-                                          'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
-                                      }}
-                                    >
-                                      <span style={{ color: childColor }}>◉</span> {child.label}
-                                    </span>
-                                  </div>
-                                  <span
-                                    className={`inline-flex shrink-0 items-center gap-1 rounded-full px-1.5 py-0 text-[7px] font-black uppercase ${
-                                      subActive ? 'bg-[#0A2B6D] text-[#00C6FF]' : 'bg-[#F5F0FF] text-[#5A00D6]'
-                                    }`}
-                                  >
-                                    <span
-                                      className="h-1.5 w-1.5 rounded-full"
-                                      style={{
-                                        backgroundColor: subActive ? '#00C6FF' : childColor,
-                                        boxShadow: subActive
-                                          ? '0 0 8px 2px #00C6FF'
-                                          : `0 0 5px 1px ${childColor}`,
-                                      }}
-                                    />
-                                    {subActive ? 'ACTIVE' : 'LIVE'}
-                                  </span>
-                                </div>
-
-                                {/* Bottom 3/4 Dark Blue Body */}
-                                <div className="flex items-center justify-between gap-1.5 px-2.5 py-1">
-                                  <span
-                                    className="min-w-0 flex-1 text-[8.5px] font-bold leading-snug text-white"
-                                    style={{ color: '#FFFFFF' }}
-                                  >
-                                    {child.sub || `Open ${child.label}`}
-                                  </span>
-                                  <ArrowRight className="h-2.5 w-2.5 shrink-0 transition group-hover:translate-x-0.5" style={{ color: childColor }} />
-                                </div>
-                              </div>
-                            </Link>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
+      {/* Scrollable Navigation Tree */}
+      <nav
+        aria-label="Primary application navigation"
+        className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-2.5 space-y-1"
+      >
+        {navMode === 'os11' && !q
+          ? PRIMARY_11_OS_NAV.map((pillar) => {
+              const Icon = pillar.icon;
+              const pillarActive =
+                isActive(pillar.path) ||
+                pillar.children.some(
+                  (c) =>
+                    location.pathname === c.path ||
+                    location.pathname.startsWith(`${c.path}/`)
                 );
+              const isExpanded = expandedPillar === pillar.id || pillarActive;
+
+              return (
+                <div key={pillar.id} className="space-y-0.5">
+                  <div
+                    className={`flex items-center justify-between rounded-lg px-2.5 py-2 transition ${
+                      pillarActive
+                        ? 'bg-[#0A2B6D] text-white'
+                        : 'text-[#0A2B6D] hover:bg-slate-100'
+                    }`}
+                  >
+                    <Link
+                      to={pillar.path}
+                      onClick={() => setExpandedPillar(pillar.id)}
+                      className="flex min-w-0 flex-1 items-center gap-2 text-xs font-bold"
+                    >
+                      <Icon
+                        className="h-4 w-4 shrink-0"
+                        style={{ color: pillarActive ? '#00C6FF' : '#0072FF' }}
+                      />
+                      <span className="truncate">{pillar.label}</span>
+                    </Link>
+
+                    <button
+                      type="button"
+                      aria-label={`Toggle ${pillar.label}`}
+                      onClick={() =>
+                        setExpandedPillar((prev) => (prev === pillar.id ? '' : pillar.id))
+                      }
+                      className={`rounded p-0.5 ${
+                        pillarActive ? 'text-white/80 hover:text-white' : 'text-[#0A2B6D]/60 hover:text-[#0A2B6D]'
+                      }`}
+                    >
+                      {isExpanded ? (
+                        <ChevronDown className="h-3.5 w-3.5" />
+                      ) : (
+                        <ChevronRight className="h-3.5 w-3.5" />
+                      )}
+                    </button>
+                  </div>
+
+                  {isExpanded && (
+                    <div className="ml-3 border-l border-slate-200 pl-2 space-y-0.5 py-0.5">
+                      {pillar.children.map((child) => {
+                        const subActive =
+                          location.pathname === child.path ||
+                          (child.path !== '/dashboard' &&
+                            location.pathname.startsWith(`${child.path}/`));
+                        return (
+                          <Link
+                            key={child.path}
+                            to={child.path}
+                            className={`flex items-center justify-between rounded-md px-2.5 py-1.5 text-xs transition ${
+                              subActive
+                                ? 'bg-[#0072FF]/10 font-bold text-[#0072FF]'
+                                : 'font-medium text-[#0A2B6D]/80 hover:bg-slate-50 hover:text-[#0A2B6D]'
+                            }`}
+                          >
+                            <span className="truncate">{child.label}</span>
+                            {subActive && (
+                              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#0072FF]" />
+                            )}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              );
+            })
+          : modules
+              .filter((item) => {
+                if (!q) return true;
+                const label = navLabel(item).toLowerCase();
+                const blurb = (item.blurb || '').toLowerCase();
+                return label.includes(q) || blurb.includes(q);
               })
-            : modules.map((item, mIdx) => {
+              .map((item) => {
                 const Icon = item.icon;
-                const symColor = APP_DESIGN_COLOURS[mIdx % APP_DESIGN_COLOURS.length];
                 const active = isActive(item.path);
                 const label = navLabel(item);
-                const subtitle = item.blurb || item.group || 'Open workspace';
-
                 return (
                   <Link
                     key={item.path}
                     to={item.path}
-                    title={`${label} — ${subtitle}`}
-                    className={`group block rounded-2xl p-[2px] transition-all duration-200 focus-visible:outline-none ${
+                    className={`flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs transition ${
                       active
-                        ? 'shadow-[0_0_20px_rgba(0,198,255,0.8)] scale-[1.01]'
-                        : 'shadow-[0_0_10px_rgba(90,0,214,0.35)] hover:-translate-y-0.5 hover:shadow-[0_0_16px_rgba(0,198,255,0.65)]'
+                        ? 'bg-[#0A2B6D] font-bold text-white shadow-2xs'
+                        : 'font-semibold text-[#0A2B6D] hover:bg-slate-100'
                     }`}
-                    style={{ background: BRAND_GRADIENT }}
                   >
-                    <div
-                      className="flex min-h-[62px] flex-col justify-between overflow-hidden rounded-[14px]"
-                      style={{ background: DARK_NAVY_CHASSIS }}
-                    >
-                      {/* Top 1/4 White Title Background with App-Design-Colour Symbol */}
-                      <div className="flex min-h-[32px] items-center justify-between gap-1.5 bg-white px-2.5 py-1">
-                        <div className="flex min-w-0 items-center gap-1.5">
-                          <span
-                            className="flex h-5 w-5 shrink-0 items-center justify-center rounded-lg bg-[#F5F0FF] shadow-2xs"
-                            style={{ border: `1.5px solid ${symColor}` }}
-                          >
-                            <Icon className="h-3 w-3 shrink-0" style={{ color: symColor }} />
-                          </span>
-                          <span
-                            className="min-w-0 bg-clip-text text-[10.5px] font-extrabold leading-tight tracking-tight text-transparent"
-                            style={{
-                              backgroundImage:
-                                'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
-                            }}
-                          >
-                            <span style={{ color: symColor }}>◉</span> {label}
-                          </span>
-                        </div>
-                        <span
-                          className={`inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[7.5px] font-black uppercase ${
-                            active ? 'bg-[#0A2B6D] text-[#00C6FF]' : 'bg-[#F5F0FF] text-[#5A00D6]'
-                          }`}
-                        >
-                          <span
-                            className="h-1.5 w-1.5 rounded-full"
-                            style={{
-                              backgroundColor: active ? '#00C6FF' : symColor,
-                              boxShadow: active ? '0 0 8px 2px #00C6FF' : `0 0 5px 1px ${symColor}`,
-                            }}
-                          />
-                          {active ? 'ACTIVE' : 'LIVE'}
-                        </span>
-                      </div>
-
-                      {/* Bottom 3/4 Dark Blue Body */}
-                      <div className="flex items-center justify-between gap-1.5 px-2.5 py-1.5">
-                        <span
-                          className="min-w-0 flex-1 break-words text-[9px] font-bold leading-snug text-white"
-                          style={{ color: '#FFFFFF' }}
-                        >
-                          {subtitle}
-                        </span>
-                        <ArrowRight className="h-3 w-3 shrink-0 transition group-hover:translate-x-0.5" style={{ color: symColor }} />
-                      </div>
-                    </div>
+                    <Icon
+                      className="h-4 w-4 shrink-0"
+                      style={{ color: active ? '#00C6FF' : '#0072FF' }}
+                    />
+                    <span className="truncate">{label}</span>
                   </Link>
                 );
               })}
-        </nav>
+      </nav>
 
-        {/* Minimal Sign-Out Action */}
-        {onLogout && (
-          <div className="shrink-0 p-2" style={{ background: DARK_NAVY_CHASSIS }}>
-            <button
-              type="button"
-              onClick={onLogout}
-              className="flex min-h-[36px] w-full items-center justify-center gap-1.5 rounded-xl border border-[#0A2B6D] bg-white px-3 py-1.5 text-[10px] font-extrabold text-[#0A2B6D] shadow-sm transition hover:bg-[#F5F0FF]"
-            >
-              <LogOut className="h-3 w-3 text-[#FF2E9A]" />
-              <span style={{ color: '#0A2B6D' }}>Sign out</span>
-            </button>
-          </div>
-        )}
-      </section>
+      {/* Sign-Out Footer */}
+      {onLogout && (
+        <div className="shrink-0 border-t border-slate-200 p-2.5">
+          <button
+            type="button"
+            onClick={onLogout}
+            className="flex h-9 w-full items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-3 text-xs font-bold text-[#0A2B6D] transition hover:border-rose-200 hover:bg-rose-50 hover:text-rose-700"
+          >
+            <LogOut className="h-3.5 w-3.5 text-rose-600" />
+            <span>Sign out</span>
+          </button>
+        </div>
+      )}
     </div>
   );
 }

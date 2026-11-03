@@ -59,7 +59,7 @@ function Incidents({ profile, profileKind, embedded = false } = {}) {
   const [editingInvestigation, setEditingInvestigation] = useState(null);
   const [savingInvestigation, setSavingInvestigation] = useState(false);
   const [view, setView] = useState('list');
-  const [screenMode, setScreenMode] = useState('both');
+  const [screenMode, setScreenMode] = useState('clinic');
 
   useEffect(() => { load(); }, []);
 

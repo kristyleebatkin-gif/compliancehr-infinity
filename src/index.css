@@ -6,7 +6,7 @@
 
 @layer base {
   :root {
-    --background: 265 100% 97%;
+    --background: 210 40% 98%;
     --foreground: 220 83% 23%;
     --card: 0 0% 100%;
     --card-foreground: 220 83% 23%;
@@ -14,59 +14,59 @@
     --popover-foreground: 220 83% 23%;
     --primary: 265 100% 42%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 265 85% 95%;
+    --secondary: 210 40% 96%;
     --secondary-foreground: 220 83% 23%;
-    --muted: 265 85% 95%;
-    --muted-foreground: 220 65% 30%;
-    --accent: 270 95% 95%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 25% 35%;
+    --accent: 210 40% 96%;
     --accent-foreground: 265 100% 42%;
-    --destructive: 329 100% 59%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
-    --border: 270 80% 90%;
-    --input: 270 70% 88%;
+    --border: 214 32% 91%;
+    --input: 214 32% 88%;
     --ring: 213 100% 50%;
     --header-foreground: 0 0% 100%;
-    --payroll: 193 100% 50%;
+    --payroll: 193 100% 42%;
     --header-blue: 213 100% 50%;
     --header-pink: 329 100% 59%;
-    --header-gradient: linear-gradient(120deg, #0072FF 0%, #0A2B6D 13%, #5A00D6 26%, #A100FF 39%, #FF2E9A 50%, #A100FF 61%, #5A00D6 74%, #0A2B6D 87%, #0072FF 100%);
-    --section-header-gradient: linear-gradient(120deg, #0072FF 0%, #0A2B6D 13%, #5A00D6 26%, #A100FF 39%, #FF2E9A 50%, #A100FF 61%, #5A00D6 74%, #0A2B6D 87%, #0072FF 100%);
+    --header-gradient: linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%);
+    --section-header-gradient: linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%);
     --brand: 213 100% 50%;
     --brand-foreground: 0 0% 100%;
-    --teal: 193 100% 50%;
+    --teal: 193 100% 42%;
     --teal-foreground: 0 0% 100%;
-    --safe: 193 100% 42%;
+    --safe: 158 64% 38%;
     --safe-foreground: 0 0% 100%;
-    --warning: 277 100% 50%;
+    --warning: 32 95% 44%;
     --warning-foreground: 0 0% 100%;
-    --danger: 329 100% 59%;
+    --danger: 0 72% 51%;
     --danger-foreground: 0 0% 100%;
     --chart-1: 213 100% 50%;
     --chart-2: 265 100% 42%;
-    --chart-3: 277 100% 50%;
-    --chart-4: 193 100% 50%;
-    --chart-5: 329 100% 59%;
-    --hr-evidence: 315 100% 72%;
-    --ai-hint: 270 100% 96%;
-    --ai-hint-foreground: 265 100% 42%;
-    --profile-lilac: 270 95% 94%;
-    --profile-sky: 193 100% 93%;
-    --profile-mint: 213 100% 94%;
-    --profile-peach: 315 100% 94%;
-    --profile-rose: 329 100% 94%;
-    --profile-lemon: 277 100% 94%;
-    --radius: 0.75rem;
-    --font-heading: ui-sans-serif, system-ui, sans-serif;
-    --font-body: ui-sans-serif, system-ui, sans-serif;
-    --font-display: ui-sans-serif, system-ui, sans-serif;
+    --chart-3: 158 64% 38%;
+    --chart-4: 32 95% 44%;
+    --chart-5: 0 72% 51%;
+    --hr-evidence: 265 80% 55%;
+    --ai-hint: 214 100% 97%;
+    --ai-hint-foreground: 220 83% 23%;
+    --profile-lilac: 210 40% 98%;
+    --profile-sky: 210 40% 98%;
+    --profile-mint: 210 40% 98%;
+    --profile-peach: 210 40% 98%;
+    --profile-rose: 210 40% 98%;
+    --profile-lemon: 210 40% 98%;
+    --radius: 0.625rem;
+    --font-heading: "Manrope", ui-sans-serif, system-ui, sans-serif;
+    --font-body: "Manrope", ui-sans-serif, system-ui, sans-serif;
+    --font-display: "Manrope", ui-sans-serif, system-ui, sans-serif;
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     --sidebar-background: 0 0% 100%;
     --sidebar-foreground: 220 83% 23%;
-    --sidebar-primary: 265 100% 42%;
+    --sidebar-primary: 213 100% 50%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 265 100% 96%;
+    --sidebar-accent: 210 40% 96%;
     --sidebar-accent-foreground: 220 83% 23%;
-    --sidebar-border: 270 80% 90%;
+    --sidebar-border: 214 32% 91%;
     --sidebar-ring: 213 100% 50%;
   }
 
@@ -77,57 +77,57 @@
     --card-foreground: 210 40% 98%;
     --popover: 222 47% 11%;
     --popover-foreground: 210 40% 98%;
-    --primary: 262 83% 66%;
+    --primary: 213 94% 60%;
     --primary-foreground: 0 0% 100%;
     --secondary: 217 33% 17%;
     --secondary-foreground: 210 40% 98%;
     --muted: 217 33% 17%;
-    --muted-foreground: 215 25% 80%;
-    --accent: 262 47% 20%;
+    --muted-foreground: 215 25% 78%;
+    --accent: 217 33% 18%;
     --accent-foreground: 210 40% 98%;
     --destructive: 0 70% 55%;
     --destructive-foreground: 0 0% 98%;
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 262 83% 66%;
+    --border: 217 33% 20%;
+    --input: 217 33% 20%;
+    --ring: 213 94% 60%;
     --header-foreground: 0 0% 100%;
     --payroll: 160 70% 55%;
     --header-blue: 221 83% 53%;
     --header-pink: 330 81% 44%;
-    --header-gradient: linear-gradient(120deg, hsl(var(--header-blue)) 0%, hsl(262 83% 58%) 52%, hsl(var(--header-pink)) 100%);
-    --section-header-gradient: linear-gradient(110deg, hsl(var(--header-blue) / .2), hsl(var(--brand) / .22) 52%, hsl(var(--header-pink) / .18));
-    --brand: 262 83% 66%;
+    --header-gradient: linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%);
+    --section-header-gradient: linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%);
+    --brand: 213 94% 60%;
     --brand-foreground: 0 0% 100%;
     --teal: 217 91% 67%;
     --teal-foreground: 0 0% 100%;
-    --safe: 134 61% 50%;
+    --safe: 152 60% 45%;
     --safe-foreground: 0 0% 100%;
-    --warning: 33 100% 55%;
+    --warning: 35 95% 55%;
     --warning-foreground: 0 0% 100%;
     --danger: 0 70% 55%;
     --danger-foreground: 0 0% 100%;
-    --chart-1: 262 83% 66%;
-    --chart-2: 217 91% 67%;
-    --chart-3: 134 61% 50%;
-    --chart-4: 33 100% 55%;
-    --chart-5: 335 70% 60%;
+    --chart-1: 213 94% 60%;
+    --chart-2: 262 83% 66%;
+    --chart-3: 152 60% 45%;
+    --chart-4: 35 95% 55%;
+    --chart-5: 0 70% 55%;
     --hr-evidence: 185 70% 60%;
-    --profile-lilac: 270 38% 25%;
-    --profile-sky: 200 42% 23%;
-    --profile-mint: 155 32% 22%;
-    --profile-peach: 28 38% 24%;
-    --profile-rose: 330 36% 25%;
-    --profile-lemon: 50 32% 23%;
-    --ai-hint: 330 40% 19%;
-    --ai-hint-foreground: 330 90% 85%;
+    --profile-lilac: 222 47% 13%;
+    --profile-sky: 222 47% 13%;
+    --profile-mint: 222 47% 13%;
+    --profile-peach: 222 47% 13%;
+    --profile-rose: 222 47% 13%;
+    --profile-lemon: 222 47% 13%;
+    --ai-hint: 217 33% 16%;
+    --ai-hint-foreground: 210 40% 96%;
     --sidebar-background: 222 47% 11%;
     --sidebar-foreground: 210 40% 90%;
-    --sidebar-primary: 262 83% 66%;
+    --sidebar-primary: 213 94% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 217 33% 17%;
     --sidebar-accent-foreground: 210 40% 98%;
     --sidebar-border: 217 33% 20%;
-    --sidebar-ring: 262 83% 66%;
+    --sidebar-ring: 213 94% 60%;
   }
 }
 
@@ -138,6 +138,8 @@
 
   body {
     @apply bg-background text-foreground font-body;
+    font-size: 14px;
+    line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
@@ -160,7 +162,7 @@
   }
 
   ::selection {
-    background: hsl(var(--primary) / 0.25);
+    background: hsl(var(--primary) / 0.2);
   }
 }
 
@@ -172,18 +174,10 @@
     outline: 2px solid hsl(var(--ring));
     outline-offset: 2px;
   }
-  /* App-wide mobile fit: long words and titles wrap instead of overflowing */
   h1, h2, h3, h4 {
     overflow-wrap: break-word;
   }
-  /* Wide data registers scroll sideways on phones instead of stretching the page */
   @media (max-width: 640px) {
-    main table {
-      display: block;
-      max-width: 100%;
-      overflow-x: auto;
-    }
-    /* Dialog form fields stack on phones instead of squeezing side by side */
     [role="dialog"] .grid-cols-2,
     [role="dialog"] .grid-cols-3 {
       grid-template-columns: repeat(1, minmax(0, 1fr));
@@ -192,38 +186,12 @@
 }
 
 @layer utilities {
-  /* Map all text & surface tones into the 8-colour ComplianceHR Infinity palette:
-     skyBlue #00C6FF · blue #0072FF · darkBlue #0A2B6D · darkPurple #5A00D6 · purple #A100FF · pink #FF2E9A · magenta #FF6EDB · lightPurpleLilac #C084FC */
-  :root:not(.dark) .app-readable :is(.text-red-400, .text-red-500, .text-red-600, .text-red-700, .text-red-800, .text-rose-500, .text-rose-600, .text-rose-700, .text-rose-800, .text-pink-500, .text-pink-600, .text-pink-700, .text-pink-800, .text-danger, .text-destructive) { color: #FF2E9A; }
-  :root:not(.dark) .app-readable :is(.text-orange-400, .text-orange-500, .text-orange-600, .text-orange-700, .text-orange-800, .text-amber-500, .text-amber-600, .text-amber-700, .text-amber-800, .text-yellow-600, .text-yellow-700, .text-fuchsia-500, .text-fuchsia-600, .text-fuchsia-700, .text-warning) { color: #A100FF; }
-  :root:not(.dark) .app-readable :is(.text-lime-500, .text-lime-600, .text-green-500, .text-green-600, .text-green-700, .text-emerald-500, .text-emerald-600, .text-emerald-700, .text-teal-500, .text-teal-600, .text-teal-700, .text-cyan-500, .text-cyan-600, .text-cyan-700, .text-sky-500, .text-sky-600, .text-sky-700, .text-safe) { color: #0072FF; }
-  :root:not(.dark) .app-readable :is(.text-blue-400, .text-blue-500, .text-blue-600, .text-blue-700, .text-teal) { color: #0072FF; }
-  :root:not(.dark) .app-readable :is(.text-blue-800, .text-blue-900, .text-blue-950, .text-indigo-900, .text-indigo-950, .text-purple-950, .text-violet-950) { color: #0A2B6D; }
-  :root:not(.dark) .app-readable :is(.text-indigo-500, .text-indigo-600, .text-indigo-700, .text-violet-500, .text-violet-600, .text-violet-700, .text-violet-800, .text-purple-600, .text-purple-700, .text-purple-800, .text-purple-900, .text-brand, .text-primary, .text-accent-foreground) { color: #5A00D6; }
-  :root:not(.dark) .app-readable :is(.bg-amber-200, .bg-amber-300, .bg-amber-400) { background-color: #FF6EDB !important; color: #0A2B6D !important; }
-  :root:not(.dark) .app-readable :is(.bg-emerald-500, .bg-emerald-600, .bg-green-600, .bg-teal-600, .bg-cyan-600, .bg-sky-500) { background-color: #00C6FF !important; color: #0A2B6D !important; }
-  :root:not(.dark) .app-readable :is(.bg-purple-600, .bg-purple-700, .bg-purple-800, .bg-violet-600, .bg-violet-700, .bg-indigo-600) { background-color: #5A00D6 !important; color: #ffffff !important; }
-  :root:not(.dark) .app-readable :is(.bg-fuchsia-600, .bg-purple-500, .bg-violet-500) { background-color: #A100FF !important; color: #ffffff !important; }
-  :root:not(.dark) .app-readable :is(.bg-pink-500, .bg-pink-600, .bg-rose-600, .bg-red-600, .bg-red-500, .bg-orange-500, .bg-orange-600) { background-color: #FF2E9A !important; color: #ffffff !important; }
-  :root:not(.dark) .app-readable :is(.bg-blue-600, .bg-blue-700, .bg-sky-600, .bg-blue-500) { background-color: #0072FF !important; color: #ffffff !important; }
-  :root:not(.dark) .app-readable :is(.bg-blue-900, .bg-blue-950, .bg-purple-950, .bg-violet-950, .bg-indigo-950) { background-color: #0A2B6D !important; color: #ffffff !important; }
-  :root:not(.dark) .app-readable :is(.bg-emerald-50, .bg-green-50, .bg-teal-50, .bg-cyan-50, .bg-sky-50, [class*="bg-emerald-50/"], [class*="bg-teal-50/"]) { background-color: #FFFFFF !important; }
-  :root:not(.dark) .app-readable :is(.bg-blue-50, .bg-indigo-50, [class*="bg-blue-50/"], [class*="bg-indigo-50/"]) { background-color: #FFFFFF !important; }
-  :root:not(.dark) .app-readable :is(.bg-purple-50, .bg-violet-50, [class*="bg-purple-50/"], [class*="bg-violet-50/"]) { background-color: #FFFFFF !important; }
-  :root:not(.dark) .app-readable :is(.bg-pink-50, .bg-rose-50, .bg-red-50, .bg-amber-50, .bg-orange-50, .bg-fuchsia-50, [class*="bg-pink-50/"], [class*="bg-rose-50/"], [class*="bg-amber-50/"]) { background-color: #FFFFFF !important; }
-  :root:not(.dark) .app-readable :is(.border-purple-100, .border-purple-200, .border-purple-300, .border-purple-400, .border-purple-500, .border-purple-600, .border-purple-700, .border-violet-200, .border-violet-300, .border-violet-400, .border-pink-100, .border-pink-200, .border-pink-300, .border-pink-400, .border-pink-500, .border-amber-200, .border-amber-300, .border-amber-400, .border-blue-100, .border-blue-200, .border-blue-300, .border-blue-400, .border-blue-500, .border-emerald-200, .border-emerald-300, .border-red-300, .border-red-400, .border-orange-200, .border-orange-300) { border-color: rgba(192, 132, 252, 0.55) !important; }
-  /* Keep supporting copy legible without changing contrasting button labels. */
-  .app-readable [class*="text-foreground/"] {
-    color: hsl(var(--foreground) / 0.9);
-  }
-  .app-readable [class*="text-white/"] {
-    color: hsl(0 0% 100%);
-  }
   .gradient-brand {
-    background: var(--header-gradient);
+    background: linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%);
     color: hsl(var(--header-foreground));
   }
   .app-page-header, .gradient-brand.text-white {
+    background: linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%);
     color: hsl(var(--header-foreground));
   }
   .app-page-header :is(h1, h2, h3, p, [class*="text-white"]),
@@ -232,91 +200,55 @@
     opacity: 1;
     overflow-wrap: anywhere;
   }
-  .app-page-header :is(h1, h2, h3, p), .gradient-brand :is(h1, h2, h3, p) {
-    white-space: normal;
-    overflow: visible;
-    text-overflow: clip;
-    -webkit-line-clamp: unset;
-  }
   .gradient-brand-soft {
-    background: linear-gradient(135deg, rgba(0, 114, 255, 0.08) 0%, rgba(90, 0, 214, 0.08) 50%, rgba(255, 46, 154, 0.08) 100%);
+    background: #F8FAFC;
   }
   .gradient-teal {
-    background: linear-gradient(135deg, #0072FF 0%, #5A00D6 100%);
+    background: linear-gradient(135deg, #0A2B6D 0%, #0072FF 100%);
   }
   .app-workspace-bg {
-    background: #FFFFFF !important;
+    background: #F8FAFC !important;
   }
-  /* Prevent double horizontal padding when a page inside .app-dashboard-canvas defines its own max-w-[1440px] wrapper */
   .app-dashboard-canvas > .max-w-\[1440px\] {
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
-  .dark .app-workspace-bg,
-  .dark .app-readable > div > main {
-    background: hsl(var(--background)) !important;
-  }
-  .dark .app-readable :is(header, section, .bg-white):not(.preserve-island-theme):not(.preserve-island-theme *) {
-    background-color: hsl(var(--card)) !important;
-    color: hsl(var(--card-foreground)) !important;
-    border-color: hsl(var(--border)) !important;
-  }
-  .dark .app-readable :is(h1, h2, h3, h4, p, span, label, td, th):not(.app-page-header *):not(.gradient-brand *):not(.preserve-island-theme *) {
-    color: hsl(var(--foreground));
-  }
-  .dark .app-readable :is(input, textarea, select):not(.preserve-island-theme *) {
-    background-color: #0F172A !important;
-    color: #F8FAFC !important;
-    border-color: #334155 !important;
-  }
   .shadow-panel {
-    box-shadow: 0 1px 3px rgba(10, 43, 109, 0.06), 0 10px 26px -14px rgba(90, 0, 214, 0.22);
+    box-shadow: 0 1px 3px rgba(6, 26, 68, 0.05), 0 4px 12px -2px rgba(6, 26, 68, 0.04);
   }
   .text-gradient-brand {
-    background: linear-gradient(90deg, #0072FF 0%, #0A2B6D 16%, #5A00D6 34%, #A100FF 52%, #FF2E9A 74%, #FF6EDB 100%);
+    background: linear-gradient(90deg, #0A2B6D 0%, #0072FF 50%, #5A00D6 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
   ::-webkit-scrollbar {
-    width: 9px;
-    height: 9px;
+    width: 8px;
+    height: 8px;
   }
   ::-webkit-scrollbar-track {
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: rgba(124, 58, 237, 0.25);
-    border-radius: 8px;
+    background: rgba(10, 43, 109, 0.22);
+    border-radius: 6px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(124, 58, 237, 0.45);
+    background: rgba(10, 43, 109, 0.4);
   }
   .app-sidebar-bg {
-    background:
-      linear-gradient(180deg, rgba(124, 58, 237, 0.06), transparent 13rem),
-      hsl(var(--sidebar-background));
+    background: hsl(var(--sidebar-background));
   }
-  .font-editorial {
+  .font-editorial,
+  .font-editorial-italic,
+  .font-elegant {
     font-family: "Manrope", ui-sans-serif, system-ui, -apple-system, sans-serif;
     font-style: normal;
-  }
-  .font-editorial-italic {
-    font-family: "Manrope", ui-sans-serif, system-ui, -apple-system, sans-serif;
-    font-style: normal;
-    display: inline-block;
-  }
-  .app-readable :is(.font-editorial, .font-editorial-italic, .font-elegant, .font-heading, .font-display, .font-body) {
-    font-family: "Manrope", ui-sans-serif, system-ui, -apple-system, sans-serif !important;
-    font-style: normal !important;
   }
   .document-ruled-answer {
-    background-image: repeating-linear-gradient(to bottom, transparent 0, transparent calc(1.75rem - 1px), hsl(var(--primary) / 0.55) calc(1.75rem - 1px), hsl(var(--primary) / 0.55) 1.75rem);
+    background-image: repeating-linear-gradient(to bottom, transparent 0, transparent calc(1.75rem - 1px), hsl(var(--border)) calc(1.75rem - 1px), hsl(var(--border)) 1.75rem);
     background-origin: content-box;
     background-attachment: local;
-  }
-  .font-elegant {
-    font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
   }
   /* Expiry calendar day tones (Document Vault) */
   .expiry-day-expired {
@@ -330,347 +262,112 @@
     font-weight: 700;
   }
   .expiry-day-later {
-    background: hsl(var(--safe) / 0.10) !important;
+    background: hsl(var(--safe) / 0.12) !important;
     color: hsl(var(--safe)) !important;
+    font-weight: 600;
   }
+  /* Enterprise table standard (Microsoft Purview / ServiceNow Horizon) */
   @media screen {
     main table:not(.text-xs):not(.border-separate) > :is(thead, tbody, tfoot) > tr > :is(th, td) {
-      padding: 0.375rem 0.5rem;
-      font-size: 0.75rem;
-      line-height: 1.25rem;
+      padding: 0.625rem 0.875rem;
+      font-size: 0.875rem;
+      line-height: 1.35rem;
     }
     main table:not(.text-xs):not(.border-separate) > thead > tr > th {
-      height: 2rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #0A2B6D;
+      background-color: #F8FAFC;
     }
   }
-  /* Balanced hierarchy: keep writing under headers crisp and properly proportioned to its container */
-  .app-readable :is(.dashboard-panel-body, [role="tabpanel"], main section) p:not(.app-page-header p):not(.dashboard-panel-header p) {
-    font-size: 0.76rem;
-    line-height: 1.2rem;
-  }
-  /* Prevent words from being clipped or truncated with ellipsis across sections, cards, headers, and buttons */
-  .app-readable :is(section, header, footer, main, [role="tabpanel"], .dashboard-panel) .truncate {
-    white-space: normal !important;
-    overflow: visible !important;
-    text-overflow: clip !important;
-    overflow-wrap: break-word;
-    word-break: normal;
-  }
-  .app-readable :is(button, a):is(.h-5, .h-6, .h-7, .h-8):not(.w-5):not(.w-6):not(.w-7):not(.w-8) {
-    height: auto !important;
-    min-height: 1.625rem;
-    white-space: normal;
+  .module-action-bar {
+    gap: 0.5rem;
   }
   .module-action-bar :is(button, a) {
-    min-height: 1.625rem;
+    min-height: 2.25rem;
     height: auto;
-    white-space: normal;
+    white-space: nowrap;
     text-align: center;
-    gap: 0.25rem;
-    padding: 0.25rem 0.5rem;
-    font-size: 0.7rem;
-    line-height: 1rem;
-  }
-  .module-action-bar :is(button, a):is(.w-8, .w-9, .w-10) {
-    width: 1.75rem;
-    padding: 0.25rem;
-  }
-  .module-action-bar :is(button, a) svg {
-    width: 0.75rem;
-    height: 0.75rem;
-    margin-right: 0;
+    gap: 0.375rem;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.8125rem;
+    line-height: 1.25rem;
   }
   .module-filter-bar {
-    gap: 0.375rem;
+    gap: 0.5rem;
   }
   .module-filter-bar :is(button, select, input:not([type="checkbox"]):not([type="radio"])) {
-    min-height: 2rem;
+    min-height: 2.25rem;
     height: auto;
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
+    padding-top: 0.375rem;
+    padding-bottom: 0.375rem;
+    font-size: 0.8125rem;
   }
-  .module-filter-bar :is(button, select) {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    font-size: 0.75rem;
-    line-height: 1rem;
-  }
-  .module-filter-bar button {
-    gap: 0.25rem;
-  }
-  @media (min-width: 768px) {
-    .module-filter-bar input {
-      font-size: 0.75rem;
-    }
-  }
-  @media screen {
-    .tasks-workspace :is(div, section)[class~="p-3"],
-    .tasks-workspace :is(div, section)[class~="p-3.5"],
-    .tasks-workspace :is(div, section)[class~="p-5"],
-    .tasks-workspace :is(div, section)[class~="p-2.5"] { padding: 0.5rem; }
-    .tasks-workspace [class~="gap-3"], .tasks-workspace [class~="gap-5"] { gap: 0.375rem; }
-    .tasks-workspace [class~="space-y-3"] > :not([hidden]) ~ :not([hidden]),
-    .tasks-workspace [class~="space-y-4"] > :not([hidden]) ~ :not([hidden]) { margin-top: 0.375rem; }
-    .tasks-workspace [class~="mb-3"], .tasks-workspace [class~="mb-4"] { margin-bottom: 0.375rem; }
-    .tasks-workspace [class~="mt-3"] { margin-top: 0.375rem; }
-    .tasks-workspace [class~="text-sm"] { font-size: 0.75rem; line-height: 1rem; }
-    .tasks-workspace [class~="text-xs"] { font-size: 0.6875rem; line-height: 1rem; }
-    .tasks-workspace [class~="min-h-24"] { min-height: 3.25rem; }
-    .tasks-workspace [class~="h-44"] { height: 6rem; }
-    .tasks-workspace [class~="max-h-28"], .tasks-workspace [class~="max-h-32"] { max-height: 5rem; }
-    .tasks-workspace [class~="max-h-60"] { max-height: 9rem; }
-    .tasks-workspace [class~="py-12"], .tasks-workspace [class~="py-14"] { padding-top: 0.75rem; padding-bottom: 0.75rem; }
-  }
+  /* Clean Enterprise Form Standard */
   .compact-safety-form :is(input:not([type="checkbox"]), select) {
-    height: 2rem;
+    height: 2.5rem;
     min-width: 0;
-    padding: 0.25rem 0.5rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
   }
   .compact-safety-form textarea {
-    min-height: 4rem;
-    height: 4rem;
-    padding: 0.375rem 0.5rem;
+    min-height: 5rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
     resize: vertical;
   }
-  .compact-safety-form [class~="space-y-1.5"] > :not([hidden]) ~ :not([hidden]) { margin-top: 0.1875rem; }
-  .compact-safety-form label { font-size: 0.6875rem; line-height: 1rem; }
-  .compact-safety-form .grid { gap: 0.5rem; }
-  .compact-safety-form button { min-height: 1.75rem; padding: 0.25rem 0.625rem; font-size: 0.75rem; }
+  .compact-safety-form label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.125rem;
+    color: #0A2B6D;
+  }
+  .compact-safety-form .grid {
+    gap: 0.75rem;
+  }
+  .compact-safety-form button {
+    min-height: 2.25rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
   @media (min-width: 640px) {
-    .compact-safety-form :is(input:not([type="checkbox"]), select, textarea) { font-size: 0.75rem; line-height: 1rem; }
-    .compact-safety-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem; align-items: start; }
-    .compact-safety-form > * { min-width: 0; }
-    .compact-safety-form > :not([class~="space-y-1.5"]) { grid-column: 1 / -1; }
-    .compact-safety-form > :not([hidden]) ~ :not([hidden]) { margin-top: 0; }
-  }
-  @media screen {
-    .compact-module :is(div, section)[class~="p-4"],
-    .compact-module :is(div, section)[class~="p-5"],
-    .compact-module :is(div, section)[class~="p-6"],
-    .compact-module :is(div, section)[class~="p-3.5"] {
-      padding: 0.875rem;
+    .compact-safety-form {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.875rem;
+      align-items: start;
     }
-    .compact-module :is(div, section)[class~="gap-4"],
-    .compact-module :is(div, section)[class~="gap-5"] { gap: 0.75rem; }
-    .compact-module [class~="space-y-4"] > :not([hidden]) ~ :not([hidden]),
-    .compact-module [class~="space-y-5"] > :not([hidden]) ~ :not([hidden]) { margin-top: 0.75rem; }
-    .compact-module [class~="sm:p-4"] { padding: 0.875rem; }
-    .compact-module [class~="text-3xl"] { font-size: 1.5rem; line-height: 2rem; }
-    .compact-module [class~="text-2xl"] { font-size: 1.25rem; line-height: 1.75rem; }
-    .compact-tabs [role="tablist"]:not([data-dashboard-tabs]), .compact-module [role="tablist"]:not([data-dashboard-tabs]) { gap: 0.375rem; padding: 0.375rem; }
-    .compact-tabs [role="tab"]:not([data-dashboard-tab]), .compact-module [role="tab"]:not([data-dashboard-tab]) {
-      min-height: 2rem; height: auto; padding: 0.375rem 0.625rem;
-      font-size: 0.75rem; line-height: 1.125rem; gap: 0.375rem;
+    .compact-safety-form > * {
+      min-width: 0;
     }
-    .compact-tabs [role="tab"]:not([data-dashboard-tab]) svg, .compact-module [role="tab"]:not([data-dashboard-tab]) svg { width: 0.875rem; height: 0.875rem; }
+    .compact-safety-form > :not([class~="space-y-1.5"]) {
+      grid-column: 1 / -1;
+    }
   }
-  /* Shared page and section headers: White background with App Design Coloured Gradient Border and Dark Blue writing. */
-  .app-readable :is(.dashboard-panel-header, .app-section-card-header),
-  .app-readable .safety-workspace .dashboard-panel-header,
-  .app-readable :is(.comm-weather-bar, .comm-panel-bar) {
+  /* Shared panel headers: Clean Microsoft Purview / ServiceNow card header */
+  .app-readable :is(.dashboard-panel-header, .app-section-card-header, .comm-panel-bar) {
     position: relative;
-    overflow: hidden;
-    border: 2px solid transparent !important;
-    background:
-      linear-gradient(#ffffff, #ffffff) padding-box,
-      linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box !important;
+    min-height: 2.75rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #E2E8F0 !important;
+    background: #FFFFFF !important;
     color: #0A2B6D !important;
-    box-shadow: 0 3px 10px -2px rgba(90, 0, 214, 0.18) !important;
+    padding: 0.75rem 1rem !important;
     font-family: var(--font-body) !important;
   }
-  .app-readable :is(.dashboard-panel-header, .app-section-card-header) {
-    box-sizing: border-box;
-    min-height: 2.75rem;
-    height: auto !important;
-    max-height: none !important;
-    padding: 0.5rem 0.875rem !important;
-  }
   .app-readable :is(.dashboard-panel-header, .app-section-card-header, .comm-panel-bar) :is(h1, h2, h3, [data-panel-title]) {
-    font-size: 0.95rem !important;
+    font-size: 1rem !important;
     font-weight: 800 !important;
-    line-height: 1.3rem !important;
-    letter-spacing: -0.01em;
+    line-height: 1.4rem !important;
     color: #0A2B6D !important;
   }
   .app-readable :is(.dashboard-panel-header, .app-section-card-header, .comm-panel-bar) p {
-    font-size: 0.72rem !important;
-    font-weight: 600 !important;
-    line-height: 1.1rem !important;
-    color: #0A2B6D !important;
-  }
-  .app-readable :is(.dashboard-panel-header, .app-section-card-header) :is(h1, h2, h3, h4, p, [data-panel-title], span:not([style*="color"])) {
-    color: #0A2B6D !important;
-    opacity: 1;
-    overflow-wrap: anywhere;
-    white-space: normal;
-  }
-  .bright-dashboard > :not([hidden]) ~ :not([hidden]),
-  .bright-dashboard .compliance-dashboard-compact > :not([hidden]) ~ :not([hidden]) {
-    margin-top: .5cm !important;
-  }
-  .bright-dashboard .grid { gap: .5cm !important; }
-  .bright-dashboard :is(.dashboard-panel, [data-dashboard-module]) :is(p, .text-muted-foreground) {
-    opacity: 1;
-  }
-}
-
-/* ===== WHITE THIN-BORDER CONTROLS — buttons, tabs, tiles and dashboards sit on white with a thin
-   border and at least 0.5cm apart. Headers are frozen and excluded. ===== */
-@layer utilities {
-  main .module-action-bar:not(.app-page-header *) { gap: .5cm; }
-}
-
-/* ===== PLATFORM COLOUR SYSTEM =====
-   Spectrum: Blue (#0072FF) -> Dark blue (#0A2B6D) -> Dark purple (#5A00D6) -> Purple (#A100FF) -> Pink (#FF2E9A) -> Purple (#A100FF) -> Dark purple (#5A00D6) -> Dark blue (#0A2B6D) -> Blue (#0072FF)
-   Swatches: Sky blue #00C6FF · Blue #0072FF · Dark blue #0A2B6D · Dark purple #5A00D6 · Purple #A100FF · Pink #FF2E9A · Magenta #FF6EDB · Light purple / lilac #C084FC
-   Navigation & main headings: dark navy (#0A2B6D)
-   Buttons & controls: blue (#0072FF) and purple (#5A00D6 / #A100FF)
-   Highlights & brand accents: pink (#FF2E9A) and magenta (#FF6EDB)
-   Cards & forms: white (#FFFFFF) with light borders and subtle shadows
-   Background panels: pale lavender (#F5F0FF) */
-@layer utilities {
-  :root:not(.dark) :is(h1, h2, h3, h4):not(.app-page-header *):not(.gradient-brand *):not(.comm-panel-bar *):not(.comm-weather-bar *) {
-    color: #0A2B6D;
-  }
-  :root:not(.dark) nav a:not(.gradient-brand) {
-    color: #0A2B6D;
-  }
-  :root:not(.dark) :is(.bg-slate-50, .bg-slate-100, .bg-zinc-50, .bg-zinc-100) { background-color: #FFFFFF; }
-  :root:not(.dark) :is(.bg-slate-200, .bg-zinc-200) { background-color: #FFFFFF; }
-  :root:not(.dark) :is(.bg-slate-700, .bg-slate-800, .bg-slate-900, .bg-slate-950, .bg-black, .bg-zinc-800, .bg-zinc-900) { background-color: #0A2B6D; }
-  :root:not(.dark) :is(.border-slate-100, .border-slate-200, .border-slate-300, .border-zinc-200) { border-color: rgba(192, 132, 252, 0.42); }
-  :root:not(.dark) :is(.border-slate-700, .border-slate-800, .border-slate-900, .border-black) { border-color: #0A2B6D; }
-  :root:not(.dark) :is(.text-slate-300, .text-slate-200) { color: #C084FC; }
-  :root:not(.dark) :is(.text-slate-700, .text-slate-800, .text-slate-900, .text-slate-950, .text-zinc-900) { color: #0A2B6D; }
-  .team-command-board, .team-command-board :is(.tcb-mark, .tcb-lane, .tcb-task, .tcb-await) { --tcb-accent: #0072FF; }
-  .team-command-board .tcb-mark { background: #0A2B6D !important; color: #fff !important; }
-  .team-command-board .tcb-btn.tcb-primary, .team-command-board .tcb-await .tcb-smallbtn { background: #5A00D6 !important; border-color: #5A00D6 !important; color: #fff !important; }
-  .team-command-board .tcb-lane:before { background: #0072FF !important; }
-  .team-command-board .tcb-task:hover { border-color: #A100FF !important; }
-}
-
-/* ===== TOP SECTION OF LANDING PAGE DESIGN TEMPLATE ACROSS EVERY MODULE & SECTION (EXCEPT TREASURE HUNT, BEACH & DEEP SEA) ===== */
-@layer utilities {
-  /* Top-level sections inside modules get the thick gradient border frame with pink/blue/purple spray between the outer border and the inner writing boxes */
-  :root:not(.dark) .app-dashboard-canvas :is(
-    [role="tabpanel"] > section:not(.rounded-3xl),
-    [role="tabpanel"] > .rounded-2xl.border,
-    [role="tabpanel"] > .rounded-xl.border,
-    .compliance-dashboard-compact > section:not(.rounded-3xl),
-    .compliance-dashboard-compact > div:not(.rounded-3xl)
-  ):not(.preserve-island-theme):not(.preserve-island-theme *) {
-    border: 4px solid transparent !important;
-    border-radius: 1.5rem !important;
-    background:
-      radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.30) 0%, transparent 46%) padding-box,
-      radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.30) 0%, transparent 46%) padding-box,
-      radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.30) 0%, transparent 50%) padding-box,
-      linear-gradient(#ffffff, #ffffff) padding-box,
-      linear-gradient(120deg, #0A2B6D 0%, #0072FF 30%, #5A00D6 66%, #FF2E9A 100%) border-box !important;
-    box-shadow: 0 1px 3px rgba(10, 43, 109, 0.06), 0 18px 40px -24px rgba(10, 43, 109, 0.30) !important;
-  }
-
-  /* Every grid of small tiles/cards inside white sections has DARK BLUE in between the tiles,
-     while each individual tile is WHITE with an App Design Coloured Gradient Border and Dark Blue writing (#0A2B6D) */
-  :root:not(.dark) .app-dashboard-canvas .grid:is(
-    [class*="grid-cols-2"],
-    [class*="grid-cols-3"],
-    [class*="grid-cols-4"],
-    [class*="grid-cols-5"],
-    [class*="grid-cols-6"],
-    [class*="grid-cols-7"],
-    [class*="grid-cols-8"],
-    [class*="grid-cols-10"]
-  ):not(.preserve-island-theme):not(.preserve-island-theme *):not([role="dialog"] *) {
-    border: 2px solid transparent !important;
-    border-radius: 1rem !important;
-    background:
-      linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%) padding-box,
-      linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box !important;
-    padding: 0.625rem !important;
-    gap: 0.625rem !important;
-  }
-
-  :root:not(.dark) .app-dashboard-canvas .grid:is(
-    [class*="grid-cols-2"],
-    [class*="grid-cols-3"],
-    [class*="grid-cols-4"],
-    [class*="grid-cols-5"],
-    [class*="grid-cols-6"],
-    [class*="grid-cols-7"],
-    [class*="grid-cols-8"],
-    [class*="grid-cols-10"]
-  ):not(.preserve-island-theme):not(.preserve-island-theme *):not([role="dialog"] *) > :not(.preserve-island-theme) {
-    border: 2px solid transparent !important;
-    border-radius: 0.75rem !important;
-    background:
-      linear-gradient(#ffffff, #ffffff) padding-box,
-      linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box !important;
-    color: #0A2B6D !important;
-    padding: 0.5rem !important;
-  }
-
-  :root:not(.dark) .app-dashboard-canvas .grid > :is(
-    .rounded-xl.border,
-    .rounded-2xl.border,
-    .rounded-lg.border,
-    .rounded-2xl.border-2
-  ):not(.preserve-island-theme):not(.preserve-island-theme *) :is(p, span:not([style*="color"]), div, h3, h4):not(.gradient-brand *):not(.app-page-header *):not(.dashboard-panel-header *) {
-    color: #0A2B6D;
-  }
-}
-
-/* ===== CONSISTENT APP HEADER, SECTION, HEADING/TITLE & SINGLE WORD BORDER STANDARD =====
-   Every section, heading/title, label, badge, and item in white sections uses ONLY the
-   App Design Coloured Gradient Border on White with Dark Blue (#0A2B6D) writing and App Design Coloured Symbols. */
-@layer utilities {
-  .app-readable :is(.dashboard-panel-header, .app-section-card-header) {
-    box-sizing: border-box;
-    min-height: 2.5rem !important;
-    display: flex;
-    align-items: center;
-    border: 2px solid transparent !important;
-    background:
-      linear-gradient(#ffffff, #ffffff) padding-box,
-      linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box !important;
-    color: #0A2B6D !important;
-    font-family: var(--font-body) !important;
-  }
-
-  :root:not(.dark) .app-dashboard-canvas :is(section, details):not(.preserve-island-theme):not(.preserve-island-theme *) {
-    border: 2px solid transparent !important;
-    background:
-      linear-gradient(#ffffff, #ffffff) padding-box,
-      linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box !important;
-    color: #0A2B6D !important;
-  }
-
-  :root:not(.dark) .app-dashboard-canvas :is(h1, h2, h3, h4, label, summary, th):not(.preserve-island-theme):not(.preserve-island-theme *) {
-    border: 2px solid transparent !important;
-    border-radius: 9999px !important;
-    background:
-      linear-gradient(#ffffff, #ffffff) padding-box,
-      linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box !important;
-    color: #0A2B6D !important;
-    padding: 0.15rem 0.65rem !important;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    width: fit-content;
-    max-width: 100%;
-  }
-
-  /* App Design Coloured Symbols & Icons inside white sections */
-  :root:not(.dark) .app-dashboard-canvas :is(h1, h2, h3, h4, label, summary, th, button, a, li, p) > svg:not([style*="color"]) {
-    color: #0072FF !important;
-  }
-  :root:not(.dark) .app-dashboard-canvas :is(section, details, div):nth-of-type(4n + 2) :is(h1, h2, h3, h4, label, summary, th, button, a, li, p) > svg:not([style*="color"]) {
-    color: #5A00D6 !important;
-  }
-  :root:not(.dark) .app-dashboard-canvas :is(section, details, div):nth-of-type(4n + 3) :is(h1, h2, h3, h4, label, summary, th, button, a, li, p) > svg:not([style*="color"]) {
-    color: #FF2E9A !important;
-  }
-  :root:not(.dark) .app-dashboard-canvas :is(section, details, div):nth-of-type(4n + 4) :is(h1, h2, h3, h4, label, summary, th, button, a, li, p) > svg:not([style*="color"]) {
-    color: #A100FF !important;
+    font-size: 0.8125rem !important;
+    font-weight: 500 !important;
+    line-height: 1.25rem !important;
+    color: rgba(10, 43, 109, 0.75) !important;
   }
 }

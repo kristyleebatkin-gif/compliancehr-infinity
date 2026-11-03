@@ -5,22 +5,6 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-const TOP_BORDER_GRADIENT =
-  'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)';
-
-const HEADING_TEXT_GRADIENT =
-  'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)';
-
-const APP_COLOURS = ['#0072FF', '#5A00D6', '#FF2E9A', '#A100FF', '#00C6FF'];
-
-function hashIndex(str = '') {
-  let h = 0;
-  for (let i = 0; i < str.length; i += 1) {
-    h = (h * 31 + str.charCodeAt(i)) >>> 0;
-  }
-  return h;
-}
-
 function resolveSectionSubject(title = '', description = '') {
   const text = `${title} ${description}`.toLowerCase();
   if (/roster|shift|availab|coverage|schedule|leave/.test(text)) {
@@ -75,110 +59,68 @@ export default function SectionCard({
   const subjectInfo = resolveSectionSubject(title, description);
   const SubjectIcon = subjectInfo.Icon;
   const resolvedSubject = subject || subjectInfo.label;
-  const seed = hashIndex(`${title}-${resolvedSubject}`);
-  const symColor = APP_COLOURS[seed % APP_COLOURS.length];
 
   return (
     <div
       className={cn(
-        'dashboard-panel rounded-2xl p-[3px] shadow-lg transition-all duration-200',
+        'dashboard-panel overflow-hidden rounded-xl border border-slate-200 bg-white shadow-2xs',
         className
       )}
-      style={{ background: TOP_BORDER_GRADIENT }}
       {...props}
     >
-      <div
-        className="overflow-hidden rounded-[13px] p-3 space-y-2.5"
-        style={{
-          background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
-        }}
-      >
-        {(title || action) && (
-          <div
-            className="rounded-2xl p-[2px] shadow-2xs"
-            style={{ background: TOP_BORDER_GRADIENT }}
-          >
-            <div className="flex flex-wrap items-center justify-between gap-2.5 rounded-[14px] bg-white px-3.5 py-2.5 sm:px-4">
-              <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
-                {/* Small Subject Tile: App Design Coloured Gradient Border + White Background + Dark Blue Writing + App Design Coloured Symbol */}
-                <span
-                  className="inline-flex min-h-[30px] items-center gap-1.5 rounded-full px-3 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D] shadow-2xs"
-                  style={{
-                    border: '2px solid transparent',
-                    background: `linear-gradient(#ffffff, #ffffff) padding-box, ${TOP_BORDER_GRADIENT} border-box`,
-                    color: '#0A2B6D',
-                  }}
-                >
-                  <SubjectIcon className="h-3.5 w-3.5 shrink-0" style={{ color: symColor }} />
-                  <span style={{ color: '#0A2B6D' }}>{resolvedSubject}</span>
-                </span>
+      {(title || action) && (
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 bg-[#F8FAFC] px-4 py-3 sm:px-5">
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 rounded-md bg-[#0072FF]/10 px-2 py-0.5 text-xs font-bold text-[#0072FF]">
+                <SubjectIcon className="h-3.5 w-3.5 shrink-0" />
+                <span>{resolvedSubject}</span>
+              </span>
 
-                {/* Main Section Header Tile: App Design Coloured Gradient Border + White Background + Dark Blue Writing */}
-                {title && (
-                  <div
-                    className="rounded-xl p-[1.5px] shadow-2xs"
-                    style={{ background: TOP_BORDER_GRADIENT }}
+              {title && (
+                collapsible ? (
+                  <button
+                    type="button"
+                    aria-expanded={expanded}
+                    aria-controls={contentId}
+                    onClick={() => setExpanded((value) => !value)}
+                    className="inline-flex items-center gap-1.5 text-left font-editorial text-base sm:text-lg font-extrabold text-[#0A2B6D] hover:text-[#0072FF]"
                   >
-                    <div className="flex flex-wrap items-center gap-2 rounded-[10.5px] bg-white px-3 py-1">
-                      {collapsible ? (
-                        <button
-                          type="button"
-                          aria-expanded={expanded}
-                          aria-controls={contentId}
-                          onClick={() => setExpanded((value) => !value)}
-                          className="flex items-center gap-1.5 text-left font-editorial text-sm sm:text-base font-extrabold text-[#0A2B6D]"
-                        >
-                          <ChevronDown
-                            className={`h-4 w-4 shrink-0 text-[#5A00D6] transition-transform ${
-                              expanded ? '' : '-rotate-90'
-                            }`}
-                          />
-                          <span data-panel-title className="text-[#0A2B6D]">
-                            {title}
-                          </span>
-                        </button>
-                      ) : (
-                        <div
-                          data-panel-title
-                          className="break-words font-editorial text-sm sm:text-base font-extrabold tracking-tight text-[#0A2B6D]"
-                          style={{ color: '#0A2B6D' }}
-                        >
-                          <span style={{ color: symColor }}>◉</span> {title}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-
-                {/* Description Pill: App Design Coloured Gradient Border + White Background + Dark Blue Writing */}
-                {description && (
-                  <span
-                    className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-bold text-[#0A2B6D]"
-                    style={{
-                      border: '1.5px solid transparent',
-                      background: `linear-gradient(#ffffff, #ffffff) padding-box, ${TOP_BORDER_GRADIENT} border-box`,
-                      color: '#0A2B6D',
-                    }}
+                    <ChevronDown
+                      className={`h-4 w-4 shrink-0 text-[#0A2B6D] transition-transform ${
+                        expanded ? '' : '-rotate-90'
+                      }`}
+                    />
+                    <span data-panel-title>{title}</span>
+                  </button>
+                ) : (
+                  <h2
+                    data-panel-title
+                    className="font-editorial text-base sm:text-lg font-extrabold tracking-tight text-[#0A2B6D]"
                   >
-                    <span style={{ color: '#0072FF' }}>◉</span>
-                    <span style={{ color: '#0A2B6D' }}>{description}</span>
-                  </span>
-                )}
-              </div>
-              {action && <div className="flex flex-wrap items-center gap-1.5">{action}</div>}
+                    {title}
+                  </h2>
+                )
+              )}
             </div>
+
+            {description && (
+              <p className="mt-1 text-xs sm:text-sm font-normal text-[#0A2B6D]/75">
+                {description}
+              </p>
+            )}
           </div>
-        )}
-        <div
-          id={contentId}
-          hidden={collapsible && !expanded}
-          className="rounded-2xl p-[2px] shadow-2xs"
-          style={{ background: TOP_BORDER_GRADIENT }}
-        >
-          <div className="dashboard-panel-body rounded-[14px] bg-white p-4 text-xs text-[#0A2B6D]">
-            {children}
-          </div>
+
+          {action && <div className="flex flex-wrap items-center gap-2">{action}</div>}
         </div>
+      )}
+
+      <div
+        id={contentId}
+        hidden={collapsible && !expanded}
+        className="dashboard-panel-body p-4 sm:p-5 text-sm text-[#0A2B6D]"
+      >
+        {children}
       </div>
     </div>
   );
