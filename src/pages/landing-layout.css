@@ -1,64 +1,46 @@
-/* Enterprise SaaS Landing Page Styles — Clean whitespace, responsive typography, and accessible focus states */
+/* Enterprise OS Landing Page Styles — Microsoft Purview / ServiceNow GRC / Salesforce Lightning Standard */
 .landing-page {
-  background-color: #F6F0FF;
+  background-color: #F8FAFC;
   color: #0A2B6D;
   font-family: "Manrope", ui-sans-serif, system-ui, sans-serif !important;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
-.landing-page .font-editorial {
-  font-family: "Manrope", ui-sans-serif, system-ui, -apple-system, sans-serif !important;
-  font-style: normal !important;
-}
-
+.landing-page .font-editorial,
 .landing-page .font-editorial-italic {
   font-family: "Manrope", ui-sans-serif, system-ui, -apple-system, sans-serif !important;
   font-style: normal !important;
-  display: inline-block;
 }
 
-/* Prevent global app-readable / dark-navy heading rule in index.css from overriding white headings on gradient sections */
+/* Preserve white headings on dark-blue chassis and executive header bands */
 .landing-page :is(h1, h2, h3, h4).text-white,
 .landing-page .text-white :is(h1, h2, h3, h4) {
-  color: #ffffff !important;
+  color: #FFFFFF !important;
 }
 
 .landing-page section {
-  scroll-margin-top: 5rem;
+  scroll-margin-top: 4.5rem;
 }
 
-.landing-page :is(a, button):focus-visible {
-  outline: 3px solid #0072FF;
-  outline-offset: 3px;
+.landing-page :is(a, button, input, select):focus-visible {
+  outline: 2px solid #0072FF;
+  outline-offset: 2px;
 }
 
-/* ===== APP DESIGN COLOUR SYSTEM APPLIED TO THE PUBLIC LANDING PAGE =====
-   Palette: sky blue #00C6FF · blue #0072FF · dark blue #0A2B6D · dark purple #5A00D6
-            purple #A100FF · pink #FF2E9A · magenta #FF6EDB · lilac #C084FC
-   Surfaces: white cards on pale lavender #F6F0FF, lilac-tinted borders. */
-.landing-page [class*="border-slate-"]:not([class*="hover:border-slate-"]):not([class*="focus:border-slate-"]):not([class*="border-white"]) {
-  border-color: rgba(192, 132, 252, 0.4);
+/* Restrained enterprise border and surface tokens */
+.landing-page .enterprise-surface {
+  background-color: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 1px 3px rgba(6, 26, 68, 0.05), 0 4px 12px -2px rgba(6, 26, 68, 0.04);
 }
 
-.landing-page [class*="divide-slate-"] > :not([hidden]) ~ :not([hidden]) {
-  border-color: rgba(192, 132, 252, 0.32);
+.landing-page .enterprise-chassis {
+  background: linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%);
+  color: #FFFFFF;
 }
 
-.landing-page [class*="bg-slate-50"]:not([class*="hover:bg-slate-"]):not([class*="focus:bg-slate-"]),
-.landing-page [class*="bg-slate-100"]:not([class*="hover:bg-slate-"]):not([class*="focus:bg-slate-"]) {
-  background-color: #F5F0FF;
-}
-
-.landing-page [class*="text-slate-500"]:not([class*="hover:text-slate-"]),
-.landing-page [class*="text-slate-600"]:not([class*="hover:text-slate-"]),
-.landing-page [class*="text-slate-700"]:not([class*="hover:text-slate-"]) {
-  color: rgba(10, 43, 109, 0.72);
-}
-
-/* Preserve enterprise semantic status tokens (emerald = positive/compliant, amber = warning, rose = critical) */
-.landing-page [class*="bg-rose-"] {
-  background-color: rgba(255, 46, 154, 0.1);
-}
-
-.landing-page [class*="border-rose-"] {
-  border-color: rgba(255, 46, 154, 0.35);
+.landing-page .enterprise-primary-btn {
+  background: linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%);
+  color: #FFFFFF;
 }

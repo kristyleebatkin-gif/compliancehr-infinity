@@ -1,39 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ArrowRight, Calendar, Check, ShieldCheck, Sparkles, TrendingUp, Users, Activity,
+  ArrowRight, Calendar, Check, ShieldCheck, Lock, FileCheck2, Building2,
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import HeroDashboardMockup from '@/components/landing/HeroDashboardMockup';
 
-const TRUST_BADGES = [
-  'Readiness Tracking',
-  'AI Tools',
-  'Connected Modules',
-  'NDIS & Aged Care',
+const GOVERNANCE_PILLARS = [
+  'NDIS Practice Standards (356 Checkpoints)',
+  'Strengthened Aged Care Quality Standards',
+  '100-Point Worker Screening Gate',
+  '24h / 5d Statutory Incident Timers',
 ];
 
-const GLASS_KPIS = [
+const EXECUTIVE_METRICS = [
   {
-    icon: ShieldCheck,
-    label: 'NDIS Audit Readiness',
+    label: 'Audit Readiness',
     value: '99.2%',
-    sub: '356 / 356 Checkpoints',
-    accent: '#00C6FF',
+    detail: '17 Categories · 356 Checkpoints',
+    icon: ShieldCheck,
   },
   {
-    icon: Users,
-    label: '100-Pt Screening',
+    label: 'Workforce Clearance',
     value: '100%',
-    sub: 'Automated Roster Gate',
-    accent: '#FF6EDB',
+    detail: 'Automated Roster Screening Gate',
+    icon: Lock,
   },
   {
-    icon: Activity,
-    label: '24h / 5d Incident SLA',
-    value: 'Zero Overdue',
-    sub: 'Commission Timers',
-    accent: '#00C6FF',
+    label: 'Statutory SLA',
+    value: '0 Overdue',
+    detail: '24h & 5d Commission Reporting',
+    icon: FileCheck2,
   },
 ];
 
@@ -47,103 +44,99 @@ export default function LandingHero({ onBookDemo }) {
   return (
     <section className="relative w-full">
       <div
-        className="relative overflow-hidden rounded-3xl border border-white/20 shadow-2xl"
+        className="relative overflow-hidden rounded-2xl border border-[#0A2B6D]/20 shadow-xl"
         style={{
-          background:
-            'linear-gradient(125deg, #0A2B6D 0%, #0072FF 34%, #5A00D6 68%, #FF2E9A 100%)',
+          background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
         }}
       >
-        {/* Subtle Enterprise Grid & Ambient Radial Highlights */}
+        {/* Top Executive Accent Bar */}
         <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 opacity-20"
+          className="h-1.5 w-full"
           style={{
-            backgroundImage:
-              'radial-gradient(circle at 18% 20%, rgba(255,255,255,0.45) 0%, transparent 45%), radial-gradient(circle at 85% 80%, rgba(0,198,255,0.45) 0%, transparent 50%)',
+            background: 'linear-gradient(90deg, #00C6FF 0%, #0072FF 35%, #5A00D6 70%, #FF2E9A 100%)',
           }}
         />
 
-        <div className="relative z-10 px-5 py-7 sm:px-8 sm:py-10 lg:px-10 lg:py-11">
-          <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12">
-            {/* Left Column: High-Converting SaaS Hero Copy + High-Contrast KPI Strip */}
-            <div className="flex flex-col justify-between lg:col-span-6 text-left text-white space-y-5">
+        <div className="relative z-10 px-6 py-8 sm:px-8 sm:py-10 lg:px-10 lg:py-12">
+          <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
+            {/* Left Column: Executive Governance Copy & Core Metrics */}
+            <div className="flex flex-col justify-between lg:col-span-5 text-left text-white space-y-6">
               <div className="space-y-4">
-                {/* Top Enterprise Pill — NDIS & Aged Care Support Super-Platform */}
-                <div className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-[#061539]/70 px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider text-white backdrop-blur-md">
-                  <Sparkles className="h-3.5 w-3.5 shrink-0 text-[#00C6FF]" />
-                  <span>NDIS &amp; Aged Care Support Super-Platform</span>
+                <div className="inline-flex items-center gap-2 rounded-md border border-[#00C6FF]/40 bg-[#0072FF]/20 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#00C6FF]">
+                  <Building2 className="h-3.5 w-3.5 shrink-0 text-[#00C6FF]" />
+                  <span>Enterprise Compliance, Governance &amp; Clinical Risk OS</span>
                 </div>
 
-                {/* Main Headline */}
                 <h1
-                  className="font-editorial text-2xl sm:text-3xl lg:text-4xl xl:text-[2.65rem] font-extrabold tracking-tight text-white leading-[1.14]"
+                  className="font-editorial text-[32px] sm:text-[36px] lg:text-[40px] font-extrabold tracking-tight text-white leading-[1.15]"
                   style={{ color: '#FFFFFF' }}
                 >
-                  The Complete Compliance &amp; Workforce Management Platform
+                  The Complete Compliance &amp; Workforce Operating System
                 </h1>
 
-                {/* Subheading */}
-                <p className="text-sm sm:text-base font-normal leading-relaxed text-white/95">
-                  Manage participants, staff, compliance, incidents, rostering, HR, invoicing and audit readiness from one connected platform.
+                <p className="text-sm sm:text-base font-normal leading-relaxed text-white/90">
+                  Built for NDIS, Aged Care, and Allied Health executives, compliance managers, and auditors. Unify 45 self-maintaining master registers, 356 audit checkpoints, workforce credentials, rostering, and statutory reporting in one system of record.
                 </p>
 
-                {/* Two Primary CTA Buttons */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                {/* Primary & Secondary Enterprise CTAs */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                   <button
                     type="button"
-                    onClick={() => onBookDemo && onBookDemo('Book a Demo')}
-                    className="inline-flex min-h-[46px] w-full items-center justify-center gap-2 rounded-xl border-2 border-white bg-white px-5 py-2.5 text-sm xl:text-base font-bold text-[#0A2B6D] shadow-xl transition hover:-translate-y-0.5 hover:bg-slate-50"
+                    onClick={() => onBookDemo && onBookDemo('Executive Platform Demo')}
+                    className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-bold text-white shadow-md transition hover:opacity-95"
+                    style={{
+                      background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
+                    }}
                   >
-                    <Calendar className="h-4 w-4 shrink-0 text-[#5A00D6]" />
-                    <span>Book a Demo</span>
+                    <Calendar className="h-4 w-4 shrink-0 text-white" />
+                    <span>Book Executive Demo</span>
                   </button>
 
                   <Link
                     to={authed ? '/dashboard' : '/register'}
-                    className="inline-flex min-h-[46px] w-full items-center justify-center gap-2 rounded-xl border-2 border-white/40 bg-[#061539]/90 px-5 py-2.5 text-sm xl:text-base font-bold text-white shadow-xl backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-[#061539]"
+                    className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-lg border border-white/35 bg-white px-5 py-2.5 text-sm font-bold text-[#0A2B6D] shadow-sm transition hover:bg-slate-100"
                   >
-                    <span>Start Free Trial</span>
-                    <ArrowRight className="h-4 w-4 shrink-0 text-[#00C6FF]" />
+                    <span style={{ color: '#0A2B6D' }}>
+                      {authed ? 'Open Command Centre' : 'Start 14-Day Free Trial'}
+                    </span>
+                    <ArrowRight className="h-4 w-4 shrink-0 text-[#0072FF]" />
                   </Link>
                 </div>
 
-                {/* 4 Trust Badges — WCAG AA High-Contrast Surface & 12px Minimum Text */}
-                <div className="grid grid-cols-2 gap-2.5 xl:grid-cols-4 pt-1">
-                  {TRUST_BADGES.map((badge) => (
+                {/* 4 Structured Regulatory Checkpoints */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
+                  {GOVERNANCE_PILLARS.map((pillar) => (
                     <div
-                      key={badge}
-                      className="flex min-h-[38px] items-center gap-2 rounded-xl border border-white/25 bg-[#061539]/65 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur-md shadow-xs"
+                      key={pillar}
+                      className="flex items-center gap-2 rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-xs font-medium text-white"
                     >
-                      <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#00C6FF] text-[#0A2B6D]">
-                        <Check className="h-2.5 w-2.5 stroke-[3]" />
-                      </span>
-                      <span className="leading-snug">{badge}</span>
+                      <Check className="h-3.5 w-3.5 shrink-0 text-[#00C6FF]" />
+                      <span>{pillar}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* High-Contrast KPI Cards Row (WCAG AAA >7:1 Backing) */}
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 pt-1">
-                {GLASS_KPIS.map((kpi) => {
+              {/* 3 Executive Assurance Cards */}
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 border-t border-white/15 pt-5">
+                {EXECUTIVE_METRICS.map((kpi) => {
                   const Icon = kpi.icon;
                   return (
                     <div
                       key={kpi.label}
-                      className="flex flex-col justify-between rounded-2xl border border-white/25 bg-[#061539]/75 p-3.5 text-left text-white backdrop-blur-md shadow-lg"
+                      className="rounded-xl border border-white/15 bg-white/5 p-3.5 text-left"
                     >
                       <div className="flex items-center justify-between gap-1.5">
-                        <span className="text-xs font-semibold text-white/90 leading-snug">
+                        <span className="text-xs font-semibold text-white/80">
                           {kpi.label}
                         </span>
-                        <Icon className="h-4 w-4 shrink-0" style={{ color: kpi.accent }} />
+                        <Icon className="h-4 w-4 shrink-0 text-[#00C6FF]" />
                       </div>
-                      <div className="mt-1.5 font-editorial text-xl xl:text-2xl font-extrabold text-white leading-tight">
+                      <div className="mt-1.5 font-editorial text-xl font-extrabold text-white leading-none">
                         {kpi.value}
                       </div>
-                      <div className="mt-1 flex items-center gap-1.5 text-xs font-medium text-white/85 leading-snug">
-                        <TrendingUp className="h-3.5 w-3.5 shrink-0 text-[#00C6FF]" />
-                        <span>{kpi.sub}</span>
+                      <div className="mt-1.5 text-xs font-normal text-white/75 leading-snug">
+                        {kpi.detail}
                       </div>
                     </div>
                   );
@@ -151,8 +144,8 @@ export default function LandingHero({ onBookDemo }) {
               </div>
             </div>
 
-            {/* Right Column: Executive dashboard preview */}
-            <div className="lg:col-span-6 flex items-center">
+            {/* Right Column: 3-Row Enterprise GRC Command Preview */}
+            <div className="lg:col-span-7">
               <HeroDashboardMockup />
             </div>
           </div>

@@ -4,6 +4,7 @@ import {
   ArrowRight, Check, ShieldCheck, Zap, Layers,
   ClipboardCheck, Lock, RefreshCw, Award, PhoneCall,
 } from 'lucide-react';
+import LandingSectionHeader from '@/components/landing/LandingSectionHeader';
 
 // Exact Pricing Configured Within ComplianceHR Infinity — Preserved Unchanged
 export const COMPLIANCE_HR_PACKAGES = [
@@ -185,244 +186,212 @@ export default function PricingSection({ onContactSales }) {
 
   return (
     <section id="pricing" className="w-full scroll-mt-20">
-      <div
-        className="rounded-3xl p-[3px] shadow-xl"
-        style={{
-          background: 'linear-gradient(120deg, #0072FF 0%, #0A2B6D 28%, #5A00D6 62%, #FF2E9A 100%)',
-        }}
-      >
-        <div className="rounded-[21px] bg-white p-5 sm:p-8 lg:p-10 space-y-8">
-          {/* Header & Responsive Billing Toggle */}
-          <div className="mx-auto max-w-3xl text-center space-y-4">
-            <span className="inline-flex items-center gap-2 rounded-full bg-[#5A00D6]/10 px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-[#5A00D6]">
-              <Award className="h-3.5 w-3.5 text-[#FF2E9A]" />
-              Transparent All-In-One NDIS &amp; Aged Care Pricing
-            </span>
+      <div className="enterprise-surface rounded-2xl p-6 sm:p-8 lg:p-10 space-y-8">
+        <LandingSectionHeader
+          badge="Transparent Enterprise Licensing"
+          tone="purple"
+          icon={Award}
+          title="Smart Enhanced All-In-One Elite Packages"
+          description="Monthly subscription pricing is shown below. Confirm included modules, document availability, usage allowances, support, and any annual billing options with our team before purchase."
+        />
 
-            <h2 className="font-editorial text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#0A2B6D]">
-              Smart Enhanced{' '}
-              <span className="bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] bg-clip-text text-transparent">
-                All-In-One Elite Packages
-              </span>
-            </h2>
+        {/* 6 Smart Enhanced Subscription Cards Grid */}
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 items-stretch">
+          {COMPLIANCE_HR_PACKAGES.map((pkg) => {
+            const isFeatured = Boolean(pkg.featured);
+            return (
+              <div
+                key={pkg.id}
+                className={`relative flex h-full flex-col justify-between rounded-xl border bg-white p-6 transition ${
+                  isFeatured
+                    ? 'border-2 border-[#0072FF] shadow-lg'
+                    : 'border-slate-200 hover:border-[#0072FF]'
+                }`}
+              >
+                <div className="flex flex-col">
+                  {/* Top Badge & Capacity Tier Heading */}
+                  <div className="flex items-center justify-between gap-2">
+                    <span
+                      className={`inline-flex items-center rounded-md px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-white ${
+                        isFeatured ? 'bg-[#0072FF]' : 'bg-[#0A2B6D]'
+                      }`}
+                    >
+                      {pkg.badge}
+                    </span>
+                    <span className="text-xs font-bold text-[#5A00D6]">Monthly Plan</span>
+                  </div>
 
-            <p className="text-sm sm:text-base font-medium leading-relaxed text-[#0A2B6D]/80">
-              Monthly subscription pricing is shown below. Confirm included modules, document availability, usage allowances, support and any annual billing options with our team before purchase.
-            </p>
+                  <h3 className="mt-4 font-editorial text-2xl font-extrabold text-[#0A2B6D] leading-tight text-left">
+                    {pkg.users}
+                  </h3>
+                  <p className="mt-1 text-xs font-semibold text-[#5A00D6] text-left">
+                    {pkg.name}
+                  </p>
 
-            </div>
-
-          {/* 6 Smart Enhanced Subscription Cards Grid — Centred Users & Fitted Token Info */}
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 items-stretch">
-            {COMPLIANCE_HR_PACKAGES.map((pkg) => {
-              const isFeatured = Boolean(pkg.featured);
-              return (
-                <div
-                  key={pkg.id}
-                  className={`relative flex h-full flex-col justify-between rounded-3xl p-[2.5px] transition-all hover:-translate-y-0.5 ${
-                    isFeatured ? 'shadow-2xl' : 'shadow-md hover:shadow-xl'
-                  }`}
-                  style={{
-                    background: isFeatured
-                      ? 'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)'
-                      : 'linear-gradient(120deg, #cbd5e1 0%, #94a3b8 100%)',
-                  }}
-                >
-                  <div className="flex h-full flex-col justify-between rounded-[21px] bg-white p-5 sm:p-6">
-                    <div className="flex flex-col">
-                      {/* Centred Top Badge & Differentiated Tier Capacity Heading */}
-                      <div className="flex flex-col items-center justify-center text-center space-y-2">
-                        <span
-                          className={`inline-flex items-center justify-center rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider text-white ${
-                            isFeatured ? 'bg-[#FF2E9A]' : 'bg-[#0A2B6D]'
-                          }`}
-                        >
-                          {pkg.badge}
-                        </span>
-
-                        <h3 className="font-editorial text-xl sm:text-2xl font-extrabold text-[#0A2B6D] leading-snug text-center">
-                          {pkg.users}
-                        </h3>
-
-                        <div className="text-xs font-semibold text-[#5A00D6]">
-                          {pkg.name}
-                        </div>
-                      </div>
-
-                      {/* Exact Configured Price Box — Centred Price & Responsive Token Info */}
-                      <div className="mt-3.5 rounded-2xl border border-slate-200/90 bg-slate-50/70 p-3.5 text-center">
-                        <div className="flex flex-wrap items-baseline justify-center gap-x-1.5 gap-y-1">
-                          <span className="font-editorial text-3xl font-extrabold text-[#0A2B6D] leading-none">
-                            ${pkg.monthly.toLocaleString()}
-                          </span>
-                          <span className="text-xs font-bold text-[#0A2B6D]/80">
-                            per month
-                          </span>
-                          <span className="ml-1 rounded-md bg-[#5A00D6]/10 px-2 py-0.5 text-xs font-bold text-[#5A00D6]">
-                            Monthly
-                          </span>
-                        </div>
-                        <div className="mt-2 border-t border-slate-200/70 pt-2 text-xs font-semibold text-[#5A00D6] break-words">
-                          Base ${pkg.previousMonthly}/mo + ${pkg.eliteAddon}/mo Elite Tokens
-                        </div>
-                      </div>
-
-                      {/* Symmetrical 2-Column Credit Allowances */}
-                      <div className="mt-3 grid grid-cols-2 gap-2 items-stretch">
-                        <div className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white px-2.5 py-2 text-center">
-                          <div className="flex items-center justify-center gap-1">
-                            <Zap className="h-3.5 w-3.5 shrink-0 text-[#0072FF]" />
-                            <span className="text-sm font-extrabold text-[#0A2B6D]">1,200</span>
-                          </div>
-                          <span className="mt-0.5 text-xs font-medium text-[#0A2B6D]/80 leading-snug">
-                            Message credits / mo
-                          </span>
-                        </div>
-                        <div className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white px-2.5 py-2 text-center">
-                          <div className="flex items-center justify-center gap-1">
-                            <Layers className="h-3.5 w-3.5 shrink-0 text-[#5A00D6]" />
-                            <span className="text-sm font-extrabold text-[#0A2B6D]">50,000</span>
-                          </div>
-                          <span className="mt-0.5 text-xs font-medium text-[#0A2B6D]/80 leading-snug">
-                            Integration credits / mo
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Benefits List */}
-                      <ul className="mt-4 space-y-2 border-t border-slate-100 pt-3.5 text-left">
-                        {pkg.benefits.map((b) => (
-                          <li
-                            key={b}
-                            className="flex items-start gap-2 text-xs font-semibold leading-snug text-[#0A2B6D]"
-                          >
-                            <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#0072FF]" />
-                            <span>{b}</span>
-                          </li>
-                        ))}
-                      </ul>
+                  {/* Exact Configured Price Box */}
+                  <div className="mt-4 rounded-xl border border-slate-200 bg-[#F8FAFC] p-4 text-left">
+                    <div className="flex items-baseline gap-1.5">
+                      <span className="font-editorial text-3xl font-extrabold text-[#0A2B6D] leading-none">
+                        ${pkg.monthly.toLocaleString()}
+                      </span>
+                      <span className="text-sm font-semibold text-[#0A2B6D]/80">
+                        / month
+                      </span>
                     </div>
-
-                    {/* Bottom-Aligned Card CTAs */}
-                    <div className="mt-5 space-y-2 border-t border-slate-100 pt-4">
-                      <Link
-                        to="/register"
-                        className="inline-flex min-h-[42px] w-full items-center justify-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-xs xl:text-sm font-extrabold text-white shadow-md transition hover:opacity-95"
-                        style={{
-                          background: isFeatured
-                            ? 'linear-gradient(115deg, #0072FF 0%, #5A00D6 52%, #FF2E9A 100%)'
-                            : '#0A2B6D',
-                        }}
-                      >
-                        <span>Start Free Trial (14 Days)</span>
-                        <ArrowRight className="h-4 w-4 shrink-0 text-white" />
-                      </Link>
-
-                      <button
-                        type="button"
-                        onClick={() =>
-                          onContactSales &&
-                          onContactSales(`Sales Enquiry — ${pkg.users} (${pkg.priceLabel})`)
-                        }
-                        className="inline-flex min-h-[36px] w-full items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-extrabold text-[#0A2B6D] transition hover:border-[#0072FF] hover:text-[#0072FF]"
-                      >
-                        <PhoneCall className="h-3.5 w-3.5 text-[#5A00D6]" />
-                        <span>Contact Sales</span>
-                      </button>
+                    <div className="mt-2 border-t border-slate-200/80 pt-2 text-xs font-semibold text-[#5A00D6]">
+                      Base ${pkg.previousMonthly}/mo + ${pkg.eliteAddon}/mo Elite Tokens
                     </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
 
-          {/* 6 Core Platform Benefits Included in Every Plan */}
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
-            {CORE_PLATFORM_BENEFITS.map((b) => {
-              const Icon = b.icon;
-              return (
-                <div
-                  key={b.title}
-                  className="flex h-full flex-col justify-between rounded-2xl border border-slate-200/90 bg-slate-50/60 p-5 text-left"
-                >
-                  <div>
-                    <div className="flex items-start gap-3">
-                      <div
-                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-white"
-                        style={{
-                          background: 'linear-gradient(135deg, #0072FF 0%, #5A00D6 100%)',
-                        }}
-                      >
-                        <Icon className="h-5 w-5 text-white" />
+                  {/* Symmetrical 2-Column Credit Allowances */}
+                  <div className="mt-3 grid grid-cols-2 gap-2.5">
+                    <div className="rounded-lg border border-slate-200 bg-white p-2.5 text-left">
+                      <div className="flex items-center gap-1.5">
+                        <Zap className="h-3.5 w-3.5 shrink-0 text-[#0072FF]" />
+                        <span className="text-sm font-extrabold text-[#0A2B6D]">1,200</span>
                       </div>
-                      <h4 className="text-sm font-extrabold text-[#0A2B6D] leading-snug">
-                        {b.title}
-                      </h4>
+                      <span className="mt-0.5 block text-xs font-normal text-[#0A2B6D]/75">
+                        Message credits / mo
+                      </span>
                     </div>
-                    <p className="mt-2.5 text-xs leading-relaxed text-[#0A2B6D]/75">
-                      {b.desc}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Responsive Feature Comparison Grid */}
-          <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div className="text-left">
-                <h3 className="font-editorial text-xl sm:text-2xl font-extrabold text-[#0A2B6D]">
-                  Full Feature Comparison Across All Tiers
-                </h3>
-                <p className="text-xs sm:text-sm text-[#0A2B6D]/75">
-                  Every tier unlocks the complete 46-module platform—simply choose your active user capacity.
-                </p>
-              </div>
-              <div className="flex flex-wrap items-center gap-2 shrink-0">
-                <button
-                  type="button"
-                  onClick={() => setShowComparison((v) => !v)}
-                  className="rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-xs font-extrabold text-[#0A2B6D] transition hover:bg-slate-100"
-                >
-                  {showComparison ? 'Hide Comparison' : 'Show Comparison'}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => onContactSales && onContactSales('Enterprise & Multi-Site Sales Enquiry')}
-                  className="inline-flex items-center gap-1.5 rounded-xl bg-[#0A2B6D] px-3.5 py-2 text-xs font-extrabold text-white transition hover:bg-[#0072FF]"
-                >
-                  <PhoneCall className="h-3.5 w-3.5 text-[#00C6FF]" />
-                  <span>Contact Sales</span>
-                </button>
-              </div>
-            </div>
-
-            {showComparison && (
-              <div className="overflow-hidden rounded-xl border border-slate-200 divide-y divide-slate-200">
-                <div className="hidden sm:grid sm:grid-cols-12 bg-slate-50 px-4 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                  <div className="sm:col-span-7">Platform Capability</div>
-                  <div className="sm:col-span-5">Inclusion Across Tiers (Up to 20 → 101+ Users)</div>
-                </div>
-                {FEATURE_COMPARISON_ROWS.map((row) => (
-                  <div
-                    key={row.feature}
-                    className="grid grid-cols-1 gap-1.5 px-4 py-3 text-left sm:grid-cols-12 sm:items-center sm:gap-4"
-                  >
-                    <div className="sm:col-span-7 text-xs sm:text-sm font-bold text-[#0A2B6D]">
-                      {row.feature}
-                    </div>
-                    <div className="sm:col-span-5 text-xs sm:text-sm font-extrabold text-[#0072FF]">
-                      <span className="inline-flex items-center gap-1.5">
-                        <Check className="h-4 w-4 shrink-0 text-[#0072FF]" />
-                        <span>{row.included}</span>
+                    <div className="rounded-lg border border-slate-200 bg-white p-2.5 text-left">
+                      <div className="flex items-center gap-1.5">
+                        <Layers className="h-3.5 w-3.5 shrink-0 text-[#5A00D6]" />
+                        <span className="text-sm font-extrabold text-[#0A2B6D]">50,000</span>
+                      </div>
+                      <span className="mt-0.5 block text-xs font-normal text-[#0A2B6D]/75">
+                        Integration credits / mo
                       </span>
                     </div>
                   </div>
-                ))}
+
+                  {/* Benefits List (14px Body Standard) */}
+                  <ul className="mt-4 space-y-2.5 border-t border-slate-100 pt-4 text-left">
+                    {pkg.benefits.map((b) => (
+                      <li
+                        key={b}
+                        className="flex items-start gap-2 text-sm font-normal leading-snug text-[#0A2B6D]"
+                      >
+                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#0072FF]" />
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Bottom-Aligned Card CTAs */}
+                <div className="mt-6 space-y-2 border-t border-slate-100 pt-4">
+                  <Link
+                    to="/register"
+                    className="inline-flex min-h-[42px] w-full items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-bold text-white shadow-sm transition hover:opacity-95"
+                    style={{
+                      background: isFeatured
+                        ? 'linear-gradient(115deg, #0072FF 0%, #5A00D6 52%, #FF2E9A 100%)'
+                        : '#0A2B6D',
+                    }}
+                  >
+                    <span>Start Free Trial (14 Days)</span>
+                    <ArrowRight className="h-4 w-4 shrink-0 text-white" />
+                  </Link>
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      onContactSales &&
+                      onContactSales(`Sales Enquiry — ${pkg.users} (${pkg.priceLabel})`)
+                    }
+                    className="inline-flex min-h-[38px] w-full items-center justify-center gap-1.5 rounded-lg border border-slate-200 bg-white px-4 py-2 text-xs font-bold text-[#0A2B6D] transition hover:border-[#0072FF] hover:text-[#0072FF]"
+                  >
+                    <PhoneCall className="h-3.5 w-3.5 text-[#5A00D6]" />
+                    <span>Contact Sales</span>
+                  </button>
+                </div>
               </div>
-            )}
+            );
+          })}
+        </div>
+
+        {/* 6 Core Platform Benefits Included in Every Plan */}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
+          {CORE_PLATFORM_BENEFITS.map((b) => {
+            const Icon = b.icon;
+            return (
+              <div
+                key={b.title}
+                className="flex h-full flex-col justify-between rounded-xl border border-slate-200 bg-[#F8FAFC] p-5 text-left"
+              >
+                <div>
+                  <div className="flex items-start gap-3">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#0A2B6D] text-white">
+                      <Icon className="h-4 w-4 text-[#00C6FF]" />
+                    </div>
+                    <h3 className="text-lg font-extrabold text-[#0A2B6D] leading-snug">
+                      {b.title}
+                    </h3>
+                  </div>
+                  <p className="mt-2.5 text-sm font-normal leading-relaxed text-[#0A2B6D]/80">
+                    {b.desc}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Responsive Feature Comparison Table */}
+        <div className="rounded-xl border border-slate-200 bg-white p-5 sm:p-6 space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="text-left">
+              <h3 className="font-editorial text-xl font-extrabold text-[#0A2B6D]">
+                Standard Entitlements Across All Capacity Tiers
+              </h3>
+              <p className="text-sm font-normal text-[#0A2B6D]/75">
+                Every capacity tier includes the core governance architecture—select the active user band for your organisation.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-2 shrink-0">
+              <button
+                type="button"
+                onClick={() => setShowComparison((v) => !v)}
+                className="rounded-lg border border-slate-200 bg-slate-50 px-3.5 py-2 text-xs font-bold text-[#0A2B6D] transition hover:bg-slate-100"
+              >
+                {showComparison ? 'Hide Entitlement Table' : 'Show Entitlement Table'}
+              </button>
+              <button
+                type="button"
+                onClick={() => onContactSales && onContactSales('Enterprise & Multi-Site Sales Enquiry')}
+                className="inline-flex items-center gap-1.5 rounded-lg bg-[#0A2B6D] px-3.5 py-2 text-xs font-bold text-white transition hover:bg-[#0072FF]"
+              >
+                <PhoneCall className="h-3.5 w-3.5 text-[#00C6FF]" />
+                <span>Contact Sales</span>
+              </button>
+            </div>
           </div>
+
+          {showComparison && (
+            <div className="overflow-hidden rounded-lg border border-slate-200 divide-y divide-slate-200">
+              <div className="hidden sm:grid sm:grid-cols-12 bg-[#F8FAFC] px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-[#0A2B6D]">
+                <div className="sm:col-span-7">Platform Capability</div>
+                <div className="sm:col-span-5">Inclusion Across Tiers (Up to 20 → 101+ Users)</div>
+              </div>
+              {FEATURE_COMPARISON_ROWS.map((row) => (
+                <div
+                  key={row.feature}
+                  className="grid grid-cols-1 gap-1.5 px-4 py-3 text-left sm:grid-cols-12 sm:items-center sm:gap-4"
+                >
+                  <div className="sm:col-span-7 text-sm font-semibold text-[#0A2B6D]">
+                    {row.feature}
+                  </div>
+                  <div className="sm:col-span-5 text-sm font-bold text-[#0072FF]">
+                    <span className="inline-flex items-center gap-1.5">
+                      <Check className="h-4 w-4 shrink-0 text-[#0072FF]" />
+                      <span>{row.included}</span>
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </section>

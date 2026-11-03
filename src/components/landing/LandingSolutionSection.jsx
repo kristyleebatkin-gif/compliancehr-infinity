@@ -9,62 +9,58 @@ import LandingSectionHeader from '@/components/landing/LandingSectionHeader';
 const PILLARS = [
   {
     badge: 'PILLAR 01',
-    title: 'People & Profiles',
-    subtitle: 'Complete 360° lifecycle visibility for every staff member, participant, and volunteer.',
+    title: 'People & 360° Profiles',
+    subtitle: 'Complete lifecycle governance for every employee, participant, contractor, and volunteer.',
     icon: Users,
     accent: '#0072FF',
-    gradient: 'linear-gradient(135deg, #0A2B6D 0%, #0072FF 100%)',
     route: '/our-participants',
     items: [
-      { name: 'Staff Records', desc: '100-point HR dossiers, contracts, position descriptions & appraisals' },
-      { name: 'Participant Profiles', desc: 'NDIS plans, 3-part informed consents, support teams & 10-weekly reviews' },
-      { name: 'Credential Tracking', desc: 'NDIS Worker Screening, Blue Cards, First Aid, CPR & police checks' },
-      { name: 'Onboarding', desc: 'Online fillable intake forms with 1-click conversion into live profiles' },
+      { name: 'Staff Dossiers', desc: '100-point HR verification, contracts, position descriptions & appraisals.' },
+      { name: 'Participant Profiles', desc: 'NDIS plans, 3-part informed consents, support teams & 10-weekly reviews.' },
+      { name: 'Credential Gate', desc: 'NDIS Worker Screening, Blue Cards, First Aid, CPR & police checks.' },
+      { name: 'Structured Onboarding', desc: 'Online intake forms with 1-click conversion into verified profiles.' },
     ],
   },
   {
     badge: 'PILLAR 02',
-    title: 'Service Delivery',
-    subtitle: 'Coordinate daily frontline disability & aged care support with real-time compliance guardrails.',
+    title: 'Frontline Service Delivery',
+    subtitle: 'Coordinate disability, aged care, and allied health delivery with real-time compliance gates.',
     icon: CalendarCheck2,
     accent: '#5A00D6',
-    gradient: 'linear-gradient(135deg, #0072FF 0%, #5A00D6 100%)',
     route: '/roster',
     items: [
-      { name: 'Rostering', desc: 'Smart NDIS shift scheduling with screening & fatigue gatekeepers' },
-      { name: 'Communications', desc: 'Shift handover notes, branded emails, broadcasts & team diary' },
-      { name: 'Goals', desc: 'Participant NDIS goal progress sliders linked to shift notes & outcomes' },
-      { name: 'Incidents', desc: 'Statutory 24-hour & 5-day NDIS Commission timers & investigations' },
+      { name: 'Smart Rostering', desc: 'Shift scheduling with automated worker screening and fatigue gates.' },
+      { name: 'Communications', desc: 'Shift handover notes, 6-stage lifecycle tracking, and team diary.' },
+      { name: 'Goal Outcomes', desc: 'Participant NDIS goal tracking linked directly to shift evidence.' },
+      { name: 'Statutory Incidents', desc: '24-hour & 5-day NDIS Commission and Aged Care SIRS timers.' },
     ],
   },
   {
     badge: 'PILLAR 03',
-    title: 'Compliance & Risk',
-    subtitle: 'Continuous audit readiness mapped directly to the NDIS Practice Standards.',
+    title: 'Compliance, Risk & Audit',
+    subtitle: 'Continuous audit readiness mapped to NDIS Practice Standards and Aged Care Quality Standards.',
     icon: ShieldCheck,
     accent: '#FF2E9A',
-    gradient: 'linear-gradient(135deg, #5A00D6 0%, #FF2E9A 100%)',
     route: '/compliance',
     items: [
-      { name: 'Audits', desc: '17 categories & 356 checkpoints with 2-minute express audit exports' },
-      { name: 'Risk Registers', desc: 'ISO 31000 hierarchy of controls, home risk assessments & Take-5 checks' },
-      { name: 'Training', desc: 'Interactive LMS academy, AI competency quizzes & certificate studio' },
-      { name: 'Governance', desc: 'Controlled policies, legislative registers, board packs & auditor portal' },
+      { name: 'Master Audits', desc: '17 categories & 356 checkpoints with 1-click PDF evidence packs.' },
+      { name: 'ISO 31000 Risk Matrix', desc: 'Hierarchy of controls, home risk assessments, and Take-5 safety checks.' },
+      { name: 'Competency LMS', desc: 'Interactive training modules, AI quizzes, and certificate tracking.' },
+      { name: 'External Auditor Portal', desc: 'Read-only, consent-gated portal for external NDIS & Aged Care auditors.' },
     ],
   },
   {
     badge: 'PILLAR 04',
-    title: 'Business Operations',
-    subtitle: 'Streamline back-office finance, HR paperwork, procurement, and executive reporting.',
+    title: 'Commercial & Back-Office Operations',
+    subtitle: 'Unify NDIS claiming, SCHADS payroll, procurement, and board-level financial governance.',
     icon: Briefcase,
     accent: '#0A2B6D',
-    gradient: 'linear-gradient(135deg, #0A2B6D 0%, #5A00D6 100%)',
     route: '/invoicing',
     items: [
-      { name: 'HR', desc: 'Digital employment contracts, leave approvals, supervision & file audits' },
-      { name: 'Invoicing', desc: 'NDIS Price Guide billing, 3-way claim matching, payroll & payslips' },
-      { name: 'Procurement', desc: 'Approved suppliers, purchase orders, AI receipt scanner & bank match' },
-      { name: 'Analytics', desc: 'Executive KPIs, compliance trajectories, labour forecasting & board PDFs' },
+      { name: 'HR & Contracts', desc: 'Employment contracts, leave approvals, supervision, and file completeness.' },
+      { name: 'NDIS Invoicing', desc: 'Price Guide billing, 3-way shift-to-claim matching, and payroll runs.' },
+      { name: 'Procurement & Assets', desc: 'Approved suppliers, 3-way PO matching, fleet maintenance, and MSDS.' },
+      { name: 'Executive Analytics', desc: 'Board packs, compliance trajectory charts, and labour forecasting.' },
     ],
   },
 ];
@@ -72,75 +68,74 @@ const PILLARS = [
 export default function LandingSolutionSection() {
   return (
     <section id="solution" className="w-full scroll-mt-20">
-      <div className="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-8 lg:p-10 shadow-lg space-y-7">
+      <div className="enterprise-surface rounded-2xl p-6 sm:p-8 lg:p-10 space-y-6">
         <LandingSectionHeader
-          badge="Four Connected Feature Pillars"
+          badge="Four Architectural Pillars"
           tone="blue"
           icon={Layers}
-          title="One Unified Platform Across Every Department"
-          description="Spreadsheets and disconnected software create risk. ComplianceHR Infinity connects People, Service Delivery, Compliance, and Business Operations in real time."
+          title="One Unified Operating System Across Every Department"
+          description="Disconnected point solutions create compliance blind spots. ComplianceHR Infinity connects People, Service Delivery, Governance, and Finance on a single data model."
         />
 
-        {/* 4 Large Pillar Cards — "Business Operations" & All Pillar Titles Fitted on One Line */}
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 items-stretch">
           {PILLARS.map((pillar, idx) => {
             const Icon = pillar.icon;
             return (
               <Reveal
                 key={pillar.title}
-                delay={idx * 0.06}
-                className="group flex flex-col justify-between rounded-2xl border-2 border-[#0A2B6D]/15 bg-white p-5 sm:p-6 text-left shadow-sm transition-all hover:-translate-y-0.5 hover:border-[#0072FF] hover:shadow-xl"
+                delay={idx * 0.05}
+                className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-6 text-left transition hover:border-[#0072FF] hover:shadow-md"
               >
                 <div>
-                  <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-start justify-between gap-3 border-b border-slate-100 pb-4">
                     <div className="flex items-center gap-3 min-w-0">
                       <div
-                        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white shadow-md"
-                        style={{ background: pillar.gradient }}
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-white"
+                        style={{ backgroundColor: pillar.accent }}
                       >
                         <Icon className="h-5 w-5 text-white" />
                       </div>
                       <div className="min-w-0">
                         <span
-                          className="block text-[10px] font-extrabold uppercase tracking-wider whitespace-nowrap"
+                          className="block text-xs font-bold uppercase tracking-wider"
                           style={{ color: pillar.accent }}
                         >
                           {pillar.badge}
                         </span>
-                        <h3 className="font-editorial text-lg sm:text-xl lg:text-2xl font-extrabold text-[#0A2B6D] whitespace-nowrap leading-tight">
+                        <h3 className="mt-0.5 font-editorial text-xl font-extrabold text-[#0A2B6D] leading-snug">
                           {pillar.title}
                         </h3>
                       </div>
                     </div>
                     <Link
                       to={pillar.route}
-                      className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-xl bg-[#0A2B6D] px-3.5 py-2 text-xs font-extrabold text-white transition hover:bg-[#0072FF]"
+                      className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-bold text-[#0A2B6D] transition hover:border-[#0072FF] hover:bg-[#0A2B6D] hover:text-white"
                     >
                       <span>Open</span>
                       <ArrowRight className="h-3.5 w-3.5" />
                     </Link>
                   </div>
 
-                  <p className="mt-2.5 text-xs sm:text-sm font-medium text-[#0A2B6D]/75">
+                  <p className="mt-3 text-sm font-normal leading-relaxed text-[#0A2B6D]/80">
                     {pillar.subtitle}
                   </p>
 
-                  <div className="mt-4 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+                  <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
                     {pillar.items.map((item) => (
                       <div
                         key={item.name}
-                        className="rounded-xl border border-slate-200/90 bg-slate-50/70 p-3.5 transition group-hover:bg-white group-hover:border-[#0072FF]/35"
+                        className="rounded-lg border border-slate-200 bg-[#F8FAFC] p-3.5"
                       >
                         <div className="flex items-center gap-2">
                           <CheckCircle2
                             className="h-4 w-4 shrink-0"
                             style={{ color: pillar.accent }}
                           />
-                          <h4 className="text-sm font-extrabold text-[#0A2B6D] whitespace-nowrap">
+                          <h4 className="text-sm font-bold text-[#0A2B6D]">
                             {item.name}
                           </h4>
                         </div>
-                        <p className="mt-1 text-xs font-medium leading-relaxed text-[#0A2B6D]/75">
+                        <p className="mt-1.5 text-sm font-normal leading-relaxed text-[#0A2B6D]/75">
                           {item.desc}
                         </p>
                       </div>

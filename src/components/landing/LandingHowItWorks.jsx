@@ -1,51 +1,48 @@
 import React from 'react';
-import { Database, Workflow, ShieldCheck, ArrowRight, CheckCircle2, Route } from 'lucide-react';
+import { Database, Workflow, ShieldCheck, CheckCircle2, Route } from 'lucide-react';
 import Reveal from '@/components/landing/Reveal';
 import LandingSectionHeader from '@/components/landing/LandingSectionHeader';
 
 const STEPS = [
   {
-    step: 'Step 1',
-    number: '01',
-    title: 'Capture Information',
-    description: 'Participants, staff and compliance data.',
+    step: 'STAGE 01',
+    title: 'Onboard & Verify Records',
+    subtitle: 'Participants, workforce credentials, and governance baselines.',
     detail:
-      'Onboard participants and staff with structured online intake forms, 100-point credential uploads, 3-part informed consents, and NDIS plan budgets in one place.',
+      'Capture participant intake, 3-part informed consents, NDIS plan budgets, and 100-point employee screening credentials into structured 360° profiles.',
     icon: Database,
     accent: '#0072FF',
     highlights: [
       'Digital Participant & Employee Intake',
-      '3-Part Informed & Audit Consents',
-      '100-Point Screening & Qualification Vault',
+      '3-Part Informed & Auditor Consents',
+      '100-Point Worker Screening Vault',
     ],
   },
   {
-    step: 'Step 2',
-    number: '02',
-    title: 'Automate Workflows',
-    description: 'Tasks, reminders, approvals and notifications.',
+    step: 'STAGE 02',
+    title: 'Enforce Automated Guardrails',
+    subtitle: 'Rostering gates, statutory timers, and expiry workflows.',
     detail:
-      '65+ automated workflows monitor credential expiries, roster screening gates, 24h/5d reportable incident timers, and 10-weekly progress review schedules 24/7.',
+      '65+ automated workflows monitor credential expiries, prevent unscreened shift allocation, arm 24h/5d reportable incident timers, and route approvals.',
     icon: Workflow,
     accent: '#5A00D6',
     highlights: [
-      '90 / 60 / 30 / 14-Day Expiry Alerts',
+      '90 / 60 / 30 / 14-Day Expiry Sweeps',
       'Automated Roster Screening Gatekeeper',
-      'Instant Supervisor Approvals & Task Routing',
+      '5-Stage Document & Policy Approval Flow',
     ],
   },
   {
-    step: 'Step 3',
-    number: '03',
-    title: 'Stay Audit Ready',
-    description: 'Evidence, governance and ongoing compliance monitoring.',
+    step: 'STAGE 03',
+    title: 'Demonstrate Audit Readiness',
+    subtitle: 'Live executive scorecards and consent-gated auditor portal.',
     detail:
-      'Generate 2-minute express internal audits, 30-action PDF batch packs, and consent-gated External Auditor Portal views mapped to all 356 NDIS checkpoints.',
+      'Generate 1-click PDF board packs, inspect 45 self-maintaining master registers, and grant external auditors read-only access to verified evidence.',
     icon: ShieldCheck,
-    accent: '#FF2E9A',
+    accent: '#0A2B6D',
     highlights: [
       '17 Audit Categories & 356 Checkpoints',
-      '1-Click A4 PDF Board & Auditor Packs',
+      '1-Click A4 PDF Board & Evidence Packs',
       'Consent-Gated External Auditor Portal',
     ],
   },
@@ -54,62 +51,55 @@ const STEPS = [
 export default function LandingHowItWorks() {
   return (
     <section id="how-it-works" className="w-full scroll-mt-20">
-      <div className="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-8 lg:p-10 shadow-lg space-y-7">
+      <div className="enterprise-surface rounded-2xl p-6 sm:p-8 lg:p-10 space-y-6">
         <LandingSectionHeader
-          badge="Simple 3-Step Implementation"
+          badge="Implementation Lifecycle"
           tone="blue"
           icon={Route}
-          title="How It Works"
-          description="Move from fragmented spreadsheets to continuous NDIS & Aged Care audit readiness in three clear steps."
+          title="Three Stages to Continuous Audit Readiness"
+          description="Transition from fragmented spreadsheets to a governed, inspection-ready operating system in three structured stages."
         />
 
-        <div className="relative grid grid-cols-1 gap-5 md:grid-cols-3 items-stretch">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-3 items-stretch">
           {STEPS.map((item, idx) => {
             const Icon = item.icon;
             return (
               <Reveal
                 key={item.title}
-                delay={idx * 0.08}
-                className="relative flex h-full flex-col justify-between rounded-2xl border border-slate-200/90 bg-slate-50/40 p-6 text-left shadow-xs transition-all hover:-translate-y-0.5 hover:bg-white hover:border-[#0072FF] hover:shadow-lg"
+                delay={idx * 0.06}
+                className="flex h-full flex-col justify-between rounded-xl border border-slate-200 bg-white p-6 text-left transition hover:border-[#0072FF]"
               >
                 <div>
                   <div className="flex items-center justify-between gap-3">
                     <span
-                      className="inline-flex items-center gap-2 rounded-full px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider text-white"
-                      style={{ backgroundColor: item.accent }}
+                      className="rounded-md px-2.5 py-1 text-xs font-bold uppercase tracking-wider"
+                      style={{ backgroundColor: `${item.accent}12`, color: item.accent }}
                     >
-                      <span>{item.step}</span>
-                      <span>•</span>
-                      <span>{item.number}</span>
+                      {item.step}
                     </span>
 
                     <div
-                      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white shadow-sm"
-                      style={{
-                        background: 'linear-gradient(135deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
-                      }}
+                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-white"
+                      style={{ backgroundColor: item.accent }}
                     >
                       <Icon className="h-5 w-5 text-white" />
                     </div>
                   </div>
 
-                  <h3 className="mt-5 font-editorial text-xl sm:text-2xl font-extrabold text-[#0A2B6D]">
+                  <h3 className="mt-4 font-editorial text-xl font-extrabold text-[#0A2B6D]">
                     {item.title}
                   </h3>
 
-                  <p
-                    className="mt-1 text-sm font-extrabold"
-                    style={{ color: item.accent }}
-                  >
-                    {item.description}
+                  <p className="mt-1 text-sm font-semibold" style={{ color: item.accent }}>
+                    {item.subtitle}
                   </p>
 
-                  <p className="mt-2.5 text-xs sm:text-sm leading-relaxed text-[#0A2B6D]/75">
+                  <p className="mt-2.5 text-sm font-normal leading-relaxed text-[#0A2B6D]/80">
                     {item.detail}
                   </p>
                 </div>
 
-                <ul className="mt-5 space-y-2 border-t border-slate-200/70 pt-3.5">
+                <ul className="mt-5 space-y-2 border-t border-slate-100 pt-4">
                   {item.highlights.map((h) => (
                     <li key={h} className="flex items-center gap-2 text-xs font-bold text-[#0A2B6D]">
                       <CheckCircle2 className="h-4 w-4 shrink-0 text-[#0072FF]" />
@@ -117,15 +107,6 @@ export default function LandingHowItWorks() {
                     </li>
                   ))}
                 </ul>
-
-                {idx < STEPS.length - 1 && (
-                  <div
-                    aria-hidden="true"
-                    className="hidden md:flex absolute -right-4 top-1/2 z-20 -translate-y-1/2 h-7 w-7 items-center justify-center rounded-full border border-slate-200 bg-white text-[#5A00D6] shadow-sm"
-                  >
-                    <ArrowRight className="h-3.5 w-3.5" />
-                  </div>
-                )}
               </Reveal>
             );
           })}

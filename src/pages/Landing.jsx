@@ -31,11 +31,11 @@ export default function Landing() {
   };
 
   return (
-    <div className="landing-page relative min-h-screen overflow-x-hidden bg-[#F6F0FF] font-elegant text-[#0A2B6D] antialiased">
+    <div className="landing-page relative min-h-screen overflow-x-hidden bg-[#F8FAFC] font-elegant text-[#0A2B6D] antialiased">
       {/* Top Enterprise SaaS Navigation */}
       <LandingNav onBookDemo={openDemoModal} />
 
-      <main className="landing-main relative z-10 mx-auto w-full max-w-[1440px] px-4 py-8 sm:px-6 lg:px-8 space-y-12 sm:space-y-16 pb-20">
+      <main className="landing-main relative z-10 mx-auto w-full max-w-[1440px] px-4 py-8 sm:px-6 lg:px-8 space-y-10 sm:space-y-14 pb-20">
         {/* 1. Hero Section (Landscape) */}
         <LandingHero onBookDemo={openDemoModal} />
 

@@ -1,80 +1,82 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Calendar, ShieldCheck, Sparkles, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, Calendar, ShieldCheck, CheckCircle2, Building2 } from 'lucide-react';
 import Reveal from '@/components/landing/Reveal';
 
 export default function LandingCTA({ onBookDemo }) {
   return (
     <section id="final-cta" className="w-full scroll-mt-20">
       <Reveal
-        className="overflow-hidden rounded-3xl p-[3px] shadow-2xl"
+        className="overflow-hidden rounded-2xl border border-[#0A2B6D]/20 shadow-xl"
         style={{
-          background: 'linear-gradient(120deg, #0072FF 0%, #0A2B6D 28%, #5A00D6 62%, #FF2E9A 100%)',
+          background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
         }}
       >
         <div
-          className="relative overflow-hidden rounded-[21px] px-6 py-10 sm:px-10 sm:py-12 text-white"
+          className="h-1.5 w-full"
           style={{
-            background: 'linear-gradient(125deg, #0A2B6D 0%, #0072FF 40%, #5A00D6 75%, #FF2E9A 100%)',
+            background: 'linear-gradient(90deg, #00C6FF 0%, #0072FF 35%, #5A00D6 70%, #FF2E9A 100%)',
           }}
-        >
-          <div className="relative z-10 grid grid-cols-1 items-center gap-8 lg:grid-cols-12">
-            {/* Left 7 Columns: Headline & Value Proposition */}
+        />
+        <div className="px-6 py-10 sm:px-10 sm:py-12 text-white">
+          <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12">
             <div className="lg:col-span-7 text-left space-y-4">
-              <span className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/15 px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-white backdrop-blur-md">
-                <Sparkles className="h-3.5 w-3.5 text-[#00C6FF]" />
-                <span>14-Day Free Trial · Full 46-Module Access</span>
+              <span className="inline-flex items-center gap-2 rounded-md border border-[#00C6FF]/40 bg-[#0072FF]/20 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-[#00C6FF]">
+                <Building2 className="h-3.5 w-3.5 text-[#00C6FF]" />
+                <span>14-Day Enterprise Evaluation · Full 46-Module Access</span>
               </span>
 
               <h2
-                className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight"
+                className="font-editorial text-2xl sm:text-3xl lg:text-[32px] font-extrabold tracking-tight text-white leading-tight"
                 style={{ color: '#FFFFFF' }}
               >
-                Ready to Transform Compliance?
+                Deploy a Unified Compliance, Risk &amp; Workforce Operating System
               </h2>
 
-              <p className="max-w-2xl text-base sm:text-lg font-medium leading-relaxed text-white/90">
-                Manage compliance, workforce, participants and business operations from one connected platform.
+              <p className="max-w-2xl text-sm sm:text-base font-normal leading-relaxed text-white/90">
+                Replace disconnected spreadsheets and point tools with one audit-ready platform built for NDIS, Aged Care, and Allied Health governance.
               </p>
 
-              <div className="flex flex-wrap items-center gap-4 pt-1 text-xs font-bold text-white/90">
+              <div className="flex flex-wrap items-center gap-5 pt-1 text-xs font-semibold text-white/90">
                 <span className="inline-flex items-center gap-1.5">
                   <CheckCircle2 className="h-4 w-4 text-[#00C6FF]" />
                   46 Connected Modules
                 </span>
                 <span className="inline-flex items-center gap-1.5">
                   <CheckCircle2 className="h-4 w-4 text-[#00C6FF]" />
-                  356 NDIS Audit Checkpoints
+                  45 Self-Maintaining Master Registers
                 </span>
                 <span className="inline-flex items-center gap-1.5">
                   <CheckCircle2 className="h-4 w-4 text-[#00C6FF]" />
-                  100+ Tailored NDIS &amp; HR Documents
+                  356 NDIS &amp; Aged Care Checkpoints
                 </span>
               </div>
             </div>
 
-            {/* Right 5 Columns: Action Buttons & Executive Trust Card */}
-            <div className="lg:col-span-5 flex flex-col justify-center gap-3 rounded-2xl border border-white/25 bg-white/15 p-5 sm:p-6 backdrop-blur-md shadow-xl">
+            <div className="lg:col-span-5 flex flex-col justify-center gap-3 rounded-xl border border-white/20 bg-white/5 p-6">
               <button
                 type="button"
-                onClick={() => onBookDemo && onBookDemo('Book a Personal Demo')}
-                className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 whitespace-nowrap rounded-2xl border-2 border-white bg-white px-5 py-3.5 text-sm sm:text-base font-extrabold text-[#0A2B6D] shadow-lg transition hover:-translate-y-0.5 hover:bg-slate-50"
+                onClick={() => onBookDemo && onBookDemo('Executive Platform Demo')}
+                className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-bold text-white shadow-md transition hover:opacity-95"
+                style={{
+                  background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
+                }}
               >
-                <Calendar className="h-5 w-5 shrink-0 text-[#5A00D6]" />
-                <span>Book a Demo</span>
+                <Calendar className="h-4 w-4 shrink-0 text-white" />
+                <span>Book Executive Demo</span>
               </button>
 
               <Link
                 to="/register"
-                className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 whitespace-nowrap rounded-2xl border-2 border-white/40 bg-[#0A2B6D] px-5 py-3.5 text-sm sm:text-base font-extrabold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-[#0A2B6D]/90"
+                className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-lg border border-white/30 bg-white px-5 py-3 text-sm font-bold text-[#0A2B6D] shadow-sm transition hover:bg-slate-100"
               >
-                <span>Start Free Trial</span>
-                <ArrowRight className="h-5 w-5 shrink-0 text-[#00C6FF]" />
+                <span style={{ color: '#0A2B6D' }}>Start 14-Day Free Trial</span>
+                <ArrowRight className="h-4 w-4 shrink-0 text-[#0072FF]" />
               </Link>
 
-              <div className="flex items-center justify-center gap-1.5 pt-1 text-[11px] font-bold text-white/95 text-center">
+              <div className="flex items-center justify-center gap-1.5 pt-1 text-xs font-medium text-white/85 text-center">
                 <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-[#00C6FF]" />
-                <span>Set up in minutes · Dedicated Australian support</span>
+                <span>Role-based access controls · Dedicated Australian compliance support</span>
               </div>
             </div>
           </div>
