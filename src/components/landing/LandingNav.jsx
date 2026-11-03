@@ -51,6 +51,12 @@ export default function LandingNav({ onBookDemo }) {
             Dashboard
           </Link>
           <Link
+            to="/connect"
+            className="inline-flex items-center justify-center whitespace-nowrap rounded-lg border-2 border-[#5A00D6] bg-white px-2.5 py-1.5 text-[11px] xl:text-xs font-extrabold text-[#5A00D6] shadow-2xs transition hover:bg-[#5A00D6] hover:text-white"
+          >
+            Connect AI
+          </Link>
+          <Link
             to="/universal-storage"
             className="hidden 2xl:inline-flex items-center justify-center whitespace-nowrap rounded-lg border-2 border-[#5A00D6] bg-[#F5F0FF] px-2.5 py-1.5 text-[11px] xl:text-xs font-extrabold text-[#5A00D6] shadow-2xs transition hover:bg-[#5A00D6] hover:text-white"
           >

@@ -17,6 +17,8 @@ import {
   Terminal,
   Globe,
   ArrowLeft,
+  Sparkles,
+  Bot,
 } from 'lucide-react';
 
 export default function Connect() {
@@ -118,11 +120,23 @@ export default function Connect() {
           </h2>
 
           <Tabs defaultValue="claude" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4">
-              <TabsTrigger value="claude">Claude</TabsTrigger>
-              <TabsTrigger value="chatgpt">ChatGPT</TabsTrigger>
-              <TabsTrigger value="cursor">Cursor</TabsTrigger>
-              <TabsTrigger value="others">Others</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-2 gap-2.5 p-2.5 sm:grid-cols-4">
+              <TabsTrigger value="claude" data-hint="1-click custom connector for Claude web & desktop">
+                <Sparkles className="h-3.5 w-3.5" />
+                Claude
+              </TabsTrigger>
+              <TabsTrigger value="chatgpt" data-hint="Streamable HTTP server in ChatGPT desktop or web">
+                <Bot className="h-3.5 w-3.5" />
+                ChatGPT
+              </TabsTrigger>
+              <TabsTrigger value="cursor" data-hint="Add mcp.json server URL in Cursor IDE">
+                <Terminal className="h-3.5 w-3.5" />
+                Cursor
+              </TabsTrigger>
+              <TabsTrigger value="others" data-hint="Connect any Streamable HTTP MCP client">
+                <Globe className="h-3.5 w-3.5" />
+                Others
+              </TabsTrigger>
             </TabsList>
 
             {/* 1. Claude */}

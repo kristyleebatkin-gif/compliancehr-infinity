@@ -49,6 +49,7 @@ export default function LandingFooter({ onBookDemo }) {
                 <li><Link to="/compliance" className="whitespace-nowrap hover:text-[#0072FF]">Compliance Hub</Link></li>
                 <li><Link to="/roster" className="whitespace-nowrap hover:text-[#0072FF]">Smart Rostering</Link></li>
                 <li><Link to="/auditor-portal" className="whitespace-nowrap hover:text-[#0072FF]">External Auditor Portal</Link></li>
+                <li><Link to="/connect" className="whitespace-nowrap hover:text-[#0072FF]">Connect AI Assistant (MCP)</Link></li>
                 <li><a href="#pricing" className="whitespace-nowrap hover:text-[#0072FF]">Pricing &amp; Packages</a></li>
               </ul>
             </div>

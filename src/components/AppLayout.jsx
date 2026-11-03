@@ -446,6 +446,13 @@ export default function AppLayout() {
                         <User className="h-3.5 w-3.5 text-[#5A00D6]" />
                         My Profile
                       </Link>
+                      <Link
+                        to="/connect"
+                        className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-bold text-[#0A2B6D] hover:bg-[#F5F0FF]"
+                      >
+                        <Sparkles className="h-3.5 w-3.5 text-[#0072FF]" />
+                        Connect AI Agent (MCP)
+                      </Link>
                       <button
                         type="button"
                         onClick={handleLogout}

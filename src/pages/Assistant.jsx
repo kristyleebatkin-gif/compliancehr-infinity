@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import ModuleShell from '@/components/module/ModuleShell';
 import AssistantChat from '@/components/assistant/AssistantChat';
-import { ShieldCheck, Sparkles, ReceiptText, CalendarClock, Bot, CheckCircle2, ClipboardList, Wallet, Users2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { ShieldCheck, Sparkles, ReceiptText, CalendarClock, Bot, CheckCircle2, ClipboardList, Wallet, Users2, Plug } from 'lucide-react';
 import AssistantHints from '@/components/assistant/AssistantHints';
 import AdvancedIntelligenceAndToolsSuite from '@/components/operations/AdvancedIntelligenceAndToolsSuite';
 import EnterpriseToolsAiIntelligencePlatform from '@/components/compliance/EnterpriseToolsAiIntelligencePlatform';
@@ -89,6 +91,14 @@ export default function Assistant() {
         subtitle="One home for all four AI assistants. Each one reads your live app data to answer, check and summarise."
         icon={Bot}
         moduleKey="assistant"
+        actions={
+          <Button asChild variant="outline" size="sm">
+            <Link to="/connect">
+              <Plug className="h-3.5 w-3.5" />
+              Connect External AI Agent (MCP)
+            </Link>
+          </Button>
+        }
       />
       <div className="grid gap-3 sm:grid-cols-2">
         {AGENTS.map((a) => {
