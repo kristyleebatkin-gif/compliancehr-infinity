@@ -54,31 +54,7 @@
   color: rgba(10, 43, 109, 0.72);
 }
 
-/* Off-palette accents folded back into the brand spectrum */
-.landing-page :is([class*="text-amber-"], [class*="fill-amber-"]) {
-  color: #FF2E9A;
-  fill: #FF2E9A;
-}
-
-.landing-page [class*="bg-emerald-50"],
-.landing-page [class*="bg-emerald-100"] {
-  background-color: rgba(0, 198, 255, 0.16);
-}
-
-.landing-page [class*="bg-emerald-300"],
-.landing-page [class*="bg-emerald-400"],
-.landing-page [class*="bg-emerald-500"] {
-  background-color: #00C6FF;
-}
-
-.landing-page [class*="text-emerald-"] {
-  color: #0A2B6D;
-}
-
-.landing-page [class*="border-emerald-"] {
-  border-color: rgba(0, 198, 255, 0.55);
-}
-
+/* Preserve enterprise semantic status tokens (emerald = positive/compliant, amber = warning, rose = critical) */
 .landing-page [class*="bg-rose-"] {
   background-color: rgba(255, 46, 154, 0.1);
 }

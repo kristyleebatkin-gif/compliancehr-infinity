@@ -230,61 +230,60 @@ export default function PricingSection({ onContactSales }) {
                 >
                   <div className="flex h-full flex-col justify-between rounded-[21px] bg-white p-5 sm:p-6">
                     <div className="flex flex-col">
-                      {/* Centred Top Badge & Centred Users Capacity */}
+                      {/* Centred Top Badge & Differentiated Tier Capacity Heading */}
                       <div className="flex flex-col items-center justify-center text-center space-y-2">
                         <span
-                          className={`inline-flex items-center justify-center rounded-full px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap ${
+                          className={`inline-flex items-center justify-center rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider text-white ${
                             isFeatured ? 'bg-[#FF2E9A]' : 'bg-[#0A2B6D]'
                           }`}
                         >
                           {pkg.badge}
                         </span>
 
-                        <h3 className="font-editorial text-base sm:text-lg font-extrabold text-[#0A2B6D] leading-snug text-center">
-                          {pkg.name}
+                        <h3 className="font-editorial text-xl sm:text-2xl font-extrabold text-[#0A2B6D] leading-snug text-center">
+                          {pkg.users}
                         </h3>
 
-                        {/* Centred Users Pill */}
-                        <div className="inline-flex items-center justify-center rounded-full border-2 border-[#0072FF]/35 bg-[#0072FF]/10 px-4 py-1 text-xs font-extrabold text-[#0072FF] whitespace-nowrap">
-                          {pkg.users}
+                        <div className="text-xs font-semibold text-[#5A00D6]">
+                          {pkg.name}
                         </div>
                       </div>
 
-                      {/* Exact Configured Price Box — Centred Price & Fitted Token Info */}
+                      {/* Exact Configured Price Box — Centred Price & Responsive Token Info */}
                       <div className="mt-3.5 rounded-2xl border border-slate-200/90 bg-slate-50/70 p-3.5 text-center">
                         <div className="flex flex-wrap items-baseline justify-center gap-x-1.5 gap-y-1">
                           <span className="font-editorial text-3xl font-extrabold text-[#0A2B6D] leading-none">
                             ${pkg.monthly.toLocaleString()}
                           </span>
-                          <span className="whitespace-nowrap text-xs font-bold text-[#0A2B6D]/80">
+                          <span className="text-xs font-bold text-[#0A2B6D]/80">
                             per month
                           </span>
-                          <span className="ml-1 rounded-md bg-[#5A00D6]/10 px-2 py-0.5 text-[10px] font-extrabold text-[#5A00D6]">
+                          <span className="ml-1 rounded-md bg-[#5A00D6]/10 px-2 py-0.5 text-xs font-bold text-[#5A00D6]">
                             Monthly
                           </span>
                         </div>
-                        <div className="mt-2 border-t border-slate-200/70 pt-2 text-[10.5px] font-extrabold text-[#5A00D6] whitespace-nowrap">
+                        <div className="mt-2 border-t border-slate-200/70 pt-2 text-xs font-semibold text-[#5A00D6] break-words">
                           Base ${pkg.previousMonthly}/mo + ${pkg.eliteAddon}/mo Elite Tokens
                         </div>
                       </div>
 
                       {/* Symmetrical 2-Column Credit Allowances */}
                       <div className="mt-3 grid grid-cols-2 gap-2 items-stretch">
-                        <div className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white px-2 py-2 text-center">
+                        <div className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white px-2.5 py-2 text-center">
                           <div className="flex items-center justify-center gap-1">
                             <Zap className="h-3.5 w-3.5 shrink-0 text-[#0072FF]" />
                             <span className="text-sm font-extrabold text-[#0A2B6D]">1,200</span>
                           </div>
-                          <span className="mt-0.5 text-[9.5px] xl:text-[10.5px] font-semibold text-[#0A2B6D]/75 whitespace-nowrap">
+                          <span className="mt-0.5 text-xs font-medium text-[#0A2B6D]/80 leading-snug">
                             Message credits / mo
                           </span>
                         </div>
-                        <div className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white px-2 py-2 text-center">
+                        <div className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white px-2.5 py-2 text-center">
                           <div className="flex items-center justify-center gap-1">
                             <Layers className="h-3.5 w-3.5 shrink-0 text-[#5A00D6]" />
                             <span className="text-sm font-extrabold text-[#0A2B6D]">50,000</span>
                           </div>
-                          <span className="mt-0.5 text-[9.5px] xl:text-[10.5px] font-semibold text-[#0A2B6D]/75 whitespace-nowrap">
+                          <span className="mt-0.5 text-xs font-medium text-[#0A2B6D]/80 leading-snug">
                             Integration credits / mo
                           </span>
                         </div>

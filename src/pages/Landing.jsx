@@ -35,7 +35,7 @@ export default function Landing() {
       {/* Top Enterprise SaaS Navigation */}
       <LandingNav onBookDemo={openDemoModal} />
 
-      <main className="landing-main relative z-10 mx-auto w-full max-w-[1440px] px-4 py-6 sm:px-6 lg:px-8 space-y-8 pb-14">
+      <main className="landing-main relative z-10 mx-auto w-full max-w-[1440px] px-4 py-8 sm:px-6 lg:px-8 space-y-12 sm:space-y-16 pb-20">
         {/* 1. Hero Section (Landscape) */}
         <LandingHero onBookDemo={openDemoModal} />
 

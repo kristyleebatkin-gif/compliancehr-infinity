@@ -116,8 +116,8 @@ function CircularPodRing({ icon: Icon, ringColor, pct, pulse }) {
         <Icon className="h-4 w-4 text-white" style={{ color: '#FFFFFF' }} />
       </div>
       <span
-        className={`absolute -right-0.5 -top-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full border border-white text-[8px] font-black text-white ${
-          pulse ? 'animate-bounce bg-[#FF2E9A]' : 'bg-[#0A2B6D]'
+        className={`absolute -right-0.5 -top-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full border border-white text-[9px] font-bold text-white ${
+          pulse ? 'animate-pulse bg-[#FF2E9A]' : 'bg-[#0A2B6D]'
         }`}
         style={{ boxShadow: `0 0 8px ${ringColor}` }}
       >
@@ -239,24 +239,23 @@ export default function HeroDashboardMockup() {
                   pulse={pod.pulse}
                 />
 
-                {/* White Title Pill — Full Unclipped Word */}
+                {/* Title & Live Metric — Clean 12px Enterprise Typography */}
                 <div className="mt-2 inline-flex items-center justify-center gap-1 rounded-full bg-white px-2.5 py-0.5 shadow-xs">
-                  <span style={{ color: pod.ringColor }} className="text-[10px] leading-none">
+                  <span style={{ color: pod.ringColor }} className="text-xs leading-none">
                     ◉
                   </span>
                   <span
-                    className="text-[11px] font-extrabold tracking-tight text-[#0A2B6D]"
+                    className="text-xs font-bold tracking-tight text-[#0A2B6D]"
                     style={{ color: '#0A2B6D' }}
                   >
                     {pod.label}
                   </span>
                 </div>
 
-                {/* Live Metric Pill — Full Unclipped Text */}
                 <div
-                  className="mt-1.5 w-full rounded-full px-2 py-0.5 text-[10px] font-extrabold text-white"
+                  className="mt-1.5 w-full rounded-full px-2.5 py-0.5 text-xs font-semibold text-white"
                   style={{
-                    backgroundColor: pod.pulse ? '#FF2E9A' : 'rgba(6, 21, 57, 0.9)',
+                    backgroundColor: pod.pulse ? '#FF2E9A' : 'rgba(6, 21, 57, 0.92)',
                     border: `1px solid ${pod.ringColor}`,
                     color: '#FFFFFF',
                   }}

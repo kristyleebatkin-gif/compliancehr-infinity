@@ -42,6 +42,10 @@ const SHOWCASE_PANELS = [
     kpi: '99.2% Audit Readiness',
     metricValue: '99.2%',
     metricSub: '46 Modules Synced Live',
+    gaugeValue: '99.2%',
+    gaugeLabel: 'Audit Ready',
+    statLeft: ['356 / 356', 'Checkpoints'],
+    statRight: ['17 / 17', 'Categories'],
   },
   {
     id: 'score',
@@ -56,6 +60,10 @@ const SHOWCASE_PANELS = [
     kpi: '356 / 356 Checkpoints',
     metricValue: '99.2%',
     metricSub: '17 NDIS Categories Verified',
+    gaugeValue: '99.2%',
+    gaugeLabel: 'Practice Standards',
+    statLeft: ['356 / 356', 'Verified'],
+    statRight: ['100%', 'Evidence Linked'],
   },
   {
     id: 'credentials',
@@ -70,6 +78,10 @@ const SHOWCASE_PANELS = [
     kpi: 'Zero Unscreened Shifts',
     metricValue: '100%',
     metricSub: 'NDIS Screening & Blue Card Gate',
+    gaugeValue: '100%',
+    gaugeLabel: 'Cleared Staff',
+    statLeft: ['0', 'Unscreened Shifts'],
+    statRight: ['90/60/30d', 'Expiry Alerts'],
   },
   {
     id: 'participants',
@@ -84,6 +96,10 @@ const SHOWCASE_PANELS = [
     kpi: '99.1% Plan Alignment',
     metricValue: '99.1%',
     metricSub: '3-Part Consents & Goals Linked',
+    gaugeValue: '99.1%',
+    gaugeLabel: 'Plan Alignment',
+    statLeft: ['48', 'Active Plans'],
+    statRight: ['100%', 'Signed Consents'],
   },
   {
     id: 'incidents',
@@ -98,6 +114,10 @@ const SHOWCASE_PANELS = [
     kpi: '0 Overdue Alerts',
     metricValue: '100% SLA',
     metricSub: '24h & 5d Commission Timers Armed',
+    gaugeValue: '100%',
+    gaugeLabel: 'On-Time SLA',
+    statLeft: ['24h / 5d', 'Statutory Timers'],
+    statRight: ['0', 'Overdue Reports'],
   },
   {
     id: 'training',
@@ -112,6 +132,10 @@ const SHOWCASE_PANELS = [
     kpi: '142 Certificates Active',
     metricValue: '98.9%',
     metricSub: 'LMS Modules, First Aid & CPR',
+    gaugeValue: '98.9%',
+    gaugeLabel: 'LMS Current',
+    statLeft: ['142', 'Active Certs'],
+    statRight: ['3', 'Renewals Due'],
   },
   {
     id: 'reviews',
@@ -126,6 +150,10 @@ const SHOWCASE_PANELS = [
     kpi: '100% On-Schedule',
     metricValue: '90/60/30d',
     metricSub: '10-Weekly Notes & Risk Radar',
+    gaugeValue: '100%',
+    gaugeLabel: 'On-Schedule',
+    statLeft: ['10-Weekly', 'Progress Reviews'],
+    statRight: ['6-Monthly', 'Risk Checks'],
   },
 ];
 
@@ -239,19 +267,19 @@ export default function LandingProductShowcase() {
             <div className="p-5 sm:p-7 space-y-5 bg-white">
               {/* Top Row: Compliance Score Gauge + Executive Trajectory Chart + Department Benchmarks */}
               <div className="grid grid-cols-1 gap-4 md:grid-cols-12 items-stretch">
-                {/* Panel 1: Compliance Score Gauge Card */}
+                {/* Panel 1: Dynamic Selected Domain Gauge Card */}
                 <div className="md:col-span-4 lg:col-span-3 flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-xs">
                   <div className="flex items-center justify-between gap-2 border-b border-slate-100 pb-3">
                     <div>
-                      <span className="block text-[10px] font-extrabold uppercase tracking-wider text-[#0072FF]">
-                        Overall Readiness
+                      <span className="block text-xs font-bold uppercase tracking-wider text-[#0072FF]">
+                        {activePanel.badge}
                       </span>
                       <h3 className="font-editorial text-base font-extrabold text-[#0A2B6D]">
-                        Compliance Score
+                        {activePanel.shortLabel}
                       </h3>
                     </div>
-                    <span className="shrink-0 rounded-full bg-[#0072FF]/10 px-2.5 py-0.5 text-[10px] font-extrabold text-[#0072FF]">
-                      LIVE GAUGE
+                    <span className="shrink-0 rounded-full bg-[#0072FF]/10 px-2.5 py-0.5 text-xs font-bold text-[#0072FF]">
+                      LIVE
                     </span>
                   </div>
 
@@ -287,10 +315,10 @@ export default function LandingProductShowcase() {
                     </svg>
                     <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
                       <span className="font-editorial text-3xl font-extrabold text-[#0A2B6D] leading-none">
-                        99.2%
+                        {activePanel.gaugeValue}
                       </span>
-                      <span className="mt-1 text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
-                        Audit Ready
+                      <span className="mt-1 text-xs font-bold uppercase tracking-wider text-[#5A00D6]">
+                        {activePanel.gaugeLabel}
                       </span>
                     </div>
                   </div>
@@ -298,12 +326,12 @@ export default function LandingProductShowcase() {
                   {/* Aligned Footer Strip */}
                   <div className="grid grid-cols-2 gap-2 border-t border-slate-100 pt-3 text-center">
                     <div className="rounded-lg bg-slate-50 px-2 py-1.5">
-                      <div className="text-xs font-extrabold text-[#0A2B6D]">356 / 356</div>
-                      <div className="text-[10px] font-semibold text-[#0A2B6D]/70">Checkpoints</div>
+                      <div className="text-xs font-extrabold text-[#0A2B6D]">{activePanel.statLeft[0]}</div>
+                      <div className="text-xs font-medium text-[#0A2B6D]/75">{activePanel.statLeft[1]}</div>
                     </div>
                     <div className="rounded-lg bg-slate-50 px-2 py-1.5">
-                      <div className="text-xs font-extrabold text-[#5A00D6]">17 / 17</div>
-                      <div className="text-[10px] font-semibold text-[#0A2B6D]/70">Categories</div>
+                      <div className="text-xs font-extrabold text-[#5A00D6]">{activePanel.statRight[0]}</div>
+                      <div className="text-xs font-medium text-[#0A2B6D]/75">{activePanel.statRight[1]}</div>
                     </div>
                   </div>
                 </div>
