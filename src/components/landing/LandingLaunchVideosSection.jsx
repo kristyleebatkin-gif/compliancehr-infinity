@@ -98,7 +98,7 @@ function StoryVideoCard({
   const videoRef = useRef(null);
   const [isNarrating, setIsNarrating] = useState(false);
   const [activeLineIndex, setActiveLineIndex] = useState(0);
-  const [showScript, setShowScript] = useState(true);
+  const [showScript, setShowScript] = useState(false);
   const [copiedKey, setCopiedKey] = useState('');
 
   useEffect(() => {

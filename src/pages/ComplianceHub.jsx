@@ -94,6 +94,7 @@ import ComplianceActivityFeed from '@/components/compliance/ComplianceActivityFe
 import AuditorsPortal from '@/pages/AuditorsPortal';
 import ObsidianSmartRemote from '@/components/common/ObsidianSmartRemote';
 import AuditorViewPreFlightBar from '@/components/compliance/AuditorViewPreFlightBar';
+import AiCopilotTestingChecklistSuite from '@/components/assistant/AiCopilotTestingChecklistSuite';
 
 const POLICY_CATEGORIES = ['Rights & Responsibilities', 'Privacy', 'Complaints', 'Incident Management', 'Risk Management', 'Medication', 'Human Resources', 'Emergency Management', 'Governance', 'Quality', 'Financial'];
 const POLICY_STATUSES = ['Draft', 'Active', 'Under Review', 'Expired', 'Archived'];
@@ -102,8 +103,8 @@ const REQ_STATUSES = ['Current', 'Review Required', 'Superseded', 'Archived'];
 // Organized into clear functional groups so every register and suite is easy to find.
 const TAB_GROUPS = [
   { id: 'all', label: 'All Compliance Areas' },
-  { id: 'executive', label: 'Executive & AI Suites', keys: ['enterprise-standard', 'control-centre', 'one-click-operations', 'infinity-core-engine', 'health-intelligence', 'executive-summary'] },
-  { id: 'audits', label: 'NDIS Standards & Audits', keys: ['auditor-portal', 'standards-map', 'master-checklist', 'master-audit-forms', 'screen-audit-2026', 'audits', 'internal-audits', 'audit-report-list', 'weekly-audit-reports'] },
+  { id: 'executive', label: 'Executive & AI Suites', keys: ['ai-copilot-checklist', 'enterprise-standard', 'control-centre', 'one-click-operations', 'infinity-core-engine', 'health-intelligence', 'executive-summary'] },
+  { id: 'audits', label: 'NDIS Standards & Audits', keys: ['ai-copilot-checklist', 'auditor-portal', 'standards-map', 'master-checklist', 'master-audit-forms', 'screen-audit-2026', 'audits', 'internal-audits', 'audit-report-list', 'weekly-audit-reports'] },
   { id: 'policies', label: 'Policies, Legal & Templates', keys: ['enterprise-standard', 'policies', 'requirements', 'printable-2026-templates', 'form-templates', 'checklists', 'consents'] },
   { id: 'workforce', label: 'Workforce & Screening', keys: ['staff-compliance', 'worker-screening', 'cert-renewals', 'renewal-calendar', 'onboarding-progress', 'staff-bulk-actions'] },
   { id: 'risk-safety', label: 'Risk, Safety & Reviews', keys: ['issues', 'readiness', 'risk-status', 'risk-heatmap', 'trend-charts', 'participant-reviews', 'kits-drills', 'visitors'] },
@@ -111,6 +112,7 @@ const TAB_GROUPS = [
 ];
 
 const TABS = [
+  ['ai-copilot-checklist', '7-Point AI Audit Checklist'],
   ['enterprise-standard', 'Enterprise Build Standard'],
   ['auditor-portal', 'Auditor Portal'],
   ['standards-map', 'NDIS Standards Map'],
@@ -387,6 +389,10 @@ export default function ComplianceHub() {
       {screenView !== 'screen2' && (
       <div className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-sm space-y-2.5">
         <Tabs value={activeTab} onValueChange={setActiveTab}>
+
+          <TabsContent value="ai-copilot-checklist" className="mt-3">
+            <AiCopilotTestingChecklistSuite />
+          </TabsContent>
 
           <TabsContent value="enterprise-standard" className="mt-3">
             <EnterpriseStandardQualityGateSuite />

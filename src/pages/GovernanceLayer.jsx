@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PageHeader from '@/components/PageHeader';
+import ModuleShell from '@/components/module/ModuleShell';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ShieldCheck } from 'lucide-react';
 import LifecycleChain from '@/components/governance/LifecycleChain';
@@ -18,8 +18,9 @@ export default function GovernanceLayer() {
   const [tab, setTab] = useState('lifecycle');
 
   return (
-    <div className="space-y-4">
-      <PageHeader
+    <div className="mx-auto w-full max-w-[1440px] space-y-4">
+      <ModuleShell
+        moduleKey="governance"
         title="Governance Layer"
         subtitle="One governance engine: every policy, procedure, form, register, record, risk, incident, complaint, training item, consent, acknowledgement and audit evidence item linked — with document control, delegations, standards mapping and a one-click NDIS audit pack."
         icon={ShieldCheck}

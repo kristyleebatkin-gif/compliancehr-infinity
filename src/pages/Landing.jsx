@@ -37,11 +37,11 @@ export default function Landing() {
       <LandingNav onBookDemo={openDemoModal} />
 
       <main className="landing-main relative z-10 mx-auto w-full max-w-[1440px] px-4 py-8 sm:px-6 lg:px-8 space-y-10 sm:space-y-14 pb-20">
-        {/* Top Launch Story Videos: Video 1 (Kristy's Story) + "See ComplianceHR Infinity in action" Video 2 */}
-        <LandingLaunchVideosSection />
-
-        {/* 1. Hero Section (Landscape) */}
+        {/* 1. Hero Section (Landscape — Crystal-Clear Positioning Above the Fold) */}
         <LandingHero onBookDemo={openDemoModal} />
+
+        {/* 2. Launch Story Videos: Video 1 (Kristy's Story) + "See ComplianceHR Infinity in action" Video 2 */}
+        <LandingLaunchVideosSection />
 
         {/* Evidence-First Operating Standard */}
         <LandingEvidenceStandardSection />

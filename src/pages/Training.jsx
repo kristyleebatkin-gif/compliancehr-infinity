@@ -100,7 +100,7 @@ export default function Training({ profile, embedded = false } = {}) {
   }, [visible]);
 
   return (
-    <div className="mx-auto max-w-6xl space-y-4 rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/10 via-background to-teal/15 p-3 md:p-5">
+    <div className="mx-auto w-full max-w-[1440px] space-y-4">
       <ModuleShell
         embedded={embedded}
         title="Skills Assessment & Capability Centre"
