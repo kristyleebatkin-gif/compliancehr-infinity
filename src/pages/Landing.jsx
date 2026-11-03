@@ -16,6 +16,8 @@ import BlueprintPreviewSection from '@/components/landing/BlueprintPreviewSectio
 import LandingFaqSection from '@/components/landing/LandingFaqSection';
 import LandingCTA from '@/components/landing/LandingCTA';
 import LandingFooter from '@/components/landing/LandingFooter';
+import EnterpriseTopTrustRibbon from '@/components/landing/EnterpriseTopTrustRibbon';
+import EnterpriseBelowFooterSuite from '@/components/landing/EnterpriseBelowFooterSuite';
 import DemoBookingModal from '@/components/landing/DemoBookingModal';
 
 export default function Landing() {
@@ -33,6 +35,9 @@ export default function Landing() {
 
   return (
     <div className="landing-page relative min-h-screen overflow-x-hidden bg-[#F8FAFC] font-elegant text-[#0A2B6D] antialiased">
+      {/* Above-Header Enterprise Sovereign Trust & Live Regulatory Pulse Ribbon */}
+      <EnterpriseTopTrustRibbon onBookDemo={openDemoModal} />
+
       {/* Top Enterprise SaaS Navigation */}
       <LandingNav onBookDemo={openDemoModal} />
 
@@ -82,6 +87,9 @@ export default function Landing() {
 
       {/* Enterprise Multi-Column Footer */}
       <LandingFooter onBookDemo={openDemoModal} />
+
+      {/* Below-Footer Sovereign Security, Regulatory Attestation & Module Launch Bar */}
+      <EnterpriseBelowFooterSuite onBookDemo={openDemoModal} />
 
       {/* Interactive Demo & Sales Booking Modal */}
       <DemoBookingModal
