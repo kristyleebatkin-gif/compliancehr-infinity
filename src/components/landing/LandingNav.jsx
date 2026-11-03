@@ -163,6 +163,13 @@ export default function LandingNav({ onBookDemo }) {
               Book a Demo
             </button>
             <Link
+              to="/connect"
+              onClick={() => setOpen(false)}
+              className="flex-1 rounded-lg border border-[#5A00D6] bg-[#F5F0FF] px-3 py-2 text-center text-xs font-extrabold text-[#5A00D6]"
+            >
+              Connect AI
+            </Link>
+            <Link
               to="/login"
               onClick={() => setOpen(false)}
               className="flex-1 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-center text-xs font-extrabold text-[#0A2B6D]"
