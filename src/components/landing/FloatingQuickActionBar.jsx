@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import {
   Bot, Calendar, ClipboardCheck, Activity, ArrowUp, ChevronDown, ChevronUp, Sparkles,
 } from 'lucide-react';
+import InlineAiQuickAskPopup from '@/components/assistant/InlineAiQuickAskPopup';
 
 export default function FloatingQuickActionBar({ onBookDemo }) {
   const [collapsed, setCollapsed] = useState(false);
+  const [aiPopupOpen, setAiPopupOpen] = useState(false);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -16,6 +18,10 @@ export default function FloatingQuickActionBar({ onBookDemo }) {
       aria-label="Floating Enterprise Quick-Action Bar"
       className="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-2"
     >
+      {aiPopupOpen && !collapsed && (
+        <InlineAiQuickAskPopup onClose={() => setAiPopupOpen(false)} />
+      )}
+
       {!collapsed && (
         <div
           className="rounded-2xl p-[2px] shadow-2xl"
@@ -29,17 +35,19 @@ export default function FloatingQuickActionBar({ onBookDemo }) {
               background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
             }}
           >
-            {/* Primary Action 1: Instant AI Assistant */}
-            <Link
-              to="/assistant"
+            {/* Primary Action 1: Inline AI Quick-Ask Popup Toggle */}
+            <button
+              type="button"
+              onClick={() => setAiPopupOpen((v) => !v)}
+              aria-expanded={aiPopupOpen}
               className="inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-xs font-extrabold text-white shadow-sm transition hover:opacity-95"
               style={{
                 background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
               }}
             >
               <Bot className="h-4 w-4 text-white shrink-0" />
-              <span>AI Assistant</span>
-            </Link>
+              <span>{aiPopupOpen ? 'Close AI Ask' : 'AI Quick Ask'}</span>
+            </button>
 
             {/* Primary Action 2: Book Executive Demo */}
             <button

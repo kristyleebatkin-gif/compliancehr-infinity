@@ -3,15 +3,21 @@ import { Link } from 'react-router-dom';
 import {
   Bot, ClipboardCheck, Activity, ShieldCheck, ChevronDown, ChevronUp, Sparkles,
 } from 'lucide-react';
+import InlineAiQuickAskPopup from '@/components/assistant/InlineAiQuickAskPopup';
 
 export default function EnterpriseFloatingWorkspaceDock() {
   const [collapsed, setCollapsed] = useState(false);
+  const [aiPopupOpen, setAiPopupOpen] = useState(false);
 
   return (
     <aside
       aria-label="Workspace Floating Quick-Action Bar"
       className="fixed bottom-16 right-4 z-40 hidden md:flex flex-col items-end gap-2 md:bottom-4"
     >
+      {aiPopupOpen && !collapsed && (
+        <InlineAiQuickAskPopup onClose={() => setAiPopupOpen(false)} />
+      )}
+
       {!collapsed ? (
         <div
           className="rounded-2xl p-[2px] shadow-2xl"
@@ -25,16 +31,18 @@ export default function EnterpriseFloatingWorkspaceDock() {
               background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
             }}
           >
-            <Link
-              to="/assistant"
+            <button
+              type="button"
+              onClick={() => setAiPopupOpen((v) => !v)}
+              aria-expanded={aiPopupOpen}
               className="inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-extrabold text-white shadow-sm transition hover:opacity-95"
               style={{
                 background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
               }}
             >
               <Bot className="h-3.5 w-3.5 text-white shrink-0" />
-              <span>AI Copilot</span>
-            </Link>
+              <span>{aiPopupOpen ? 'Close AI Ask' : 'AI Quick Ask'}</span>
+            </button>
 
             <Link
               to="/frontline-hub"
