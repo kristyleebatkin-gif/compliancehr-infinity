@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Stethoscope, HeartPulse, ClipboardCheck, Sparkles, CheckCircle2,
-  ArrowRight, FileCheck2, Users, RefreshCw, PlusCircle, ShieldCheck,
+  Stethoscope, HeartPulse, ClipboardCheck, Sparkles,
+  ArrowRight, PlusCircle, BookOpen,
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
 import { logUserAction } from '@/lib/actionLog';
+import AlliedHealthMasterCataloguePanel from '@/components/enterprise/AlliedHealthMasterCataloguePanel';
 
 export const ALLIED_HEALTH_DISCIPLINES = [
   {
@@ -167,7 +167,7 @@ export const AI_12_WORKFORCE = [
 
 export default function AlliedHealthAndNursingOsSuite() {
   const { toast } = useToast();
-  const [subTab, setSubTab] = useState('allied-nursing'); // allied-nursing | assessments-reviews | ai-workforce
+  const [subTab, setSubTab] = useState('numbered-catalogue'); // numbered-catalogue | allied-nursing | assessments-reviews | ai-workforce
   const [participants, setParticipants] = useState([]);
   const [staff, setStaff] = useState([]);
   const [selectedAssessment, setSelectedAssessment] = useState(ASSESSMENT_17_LIBRARY[0].id);
@@ -308,6 +308,7 @@ export default function AlliedHealthAndNursingOsSuite() {
 
         <div className="flex flex-wrap items-center gap-1.5" role="tablist">
           {[
+            { id: 'numbered-catalogue', label: 'Numbered Allied Health & 12 Registers', icon: BookOpen },
             { id: 'allied-nursing', label: 'Allied Health & Nursing OS', icon: HeartPulse },
             { id: 'assessments-reviews', label: '17 Assessments & 13 Reviews', icon: ClipboardCheck },
             { id: 'ai-workforce', label: '12-Agent AI Workforce', icon: Sparkles },
@@ -336,6 +337,11 @@ export default function AlliedHealthAndNursingOsSuite() {
       </div>
 
       <div className="p-4 sm:p-5 space-y-5">
+        {/* TAB 0: NUMBERED ALLIED HEALTH OS MASTER CATALOGUE & 12 DOCUMENT REGISTERS */}
+        {subTab === 'numbered-catalogue' && (
+          <AlliedHealthMasterCataloguePanel participants={participants} staff={staff} />
+        )}
+
         {/* TAB 1: ALLIED HEALTH OS & NURSING OS */}
         {subTab === 'allied-nursing' && (
           <div className="space-y-5">
