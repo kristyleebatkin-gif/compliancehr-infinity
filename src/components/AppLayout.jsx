@@ -13,10 +13,16 @@ import {
   LayoutDashboard, Users, Heart, GraduationCap, ShieldCheck, User, Building2, Layers,
 } from 'lucide-react';
 import GlobalSearch from '@/components/GlobalSearch';
+import AutoRegisterInsights from '@/components/AutoRegisterInsights';
+import QuickAppBar from '@/components/QuickAppBar';
 import ObsidianSidebarRemote from '@/components/ObsidianSidebarRemote';
+import EnterpriseWorkspaceBar from '@/components/enterprise/EnterpriseWorkspaceBar';
+import VisualDesignModuleCommandStandard from '@/components/enterprise/VisualDesignModuleCommandStandard';
 import BrandLogoLockup from '@/components/common/BrandLogoLockup';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import PendingApprovalNotice from '@/components/users/PendingApprovalNotice';
+import ModuleGuide from '@/components/ModuleGuide';
+import ModuleDocsFooter from '@/components/ModuleDocsFooter';
 import UniversalDocumentViewerModal from '@/components/documents/UniversalDocumentViewerModal';
 
 const BOTTOM_NAV = [
@@ -28,9 +34,9 @@ const BOTTOM_NAV = [
 ];
 
 const WORKSPACE_VIEWS = [
-  { id: 'office', label: 'Operations View', Icon: Building2 },
-  { id: 'profiles', label: '360° Profiles', Icon: Users },
-  { id: 'both', label: 'Combined View', Icon: Layers },
+  { id: 'both', label: 'Both Views', Icon: Layers },
+  { id: 'office', label: 'Office View', Icon: Building2 },
+  { id: 'profiles', label: 'View Profiles', Icon: Users },
 ];
 
 export default function AppLayout() {
@@ -42,8 +48,8 @@ export default function AppLayout() {
   const [notifOpen, setNotifOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const [darkMode] = useState(() => localStorage.getItem('ch-theme') === 'dark');
-  const [workspaceView, setWorkspaceView] = useState(() => localStorage.getItem('chr-workspace-view-mode') || 'office');
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('ch-theme') === 'dark');
+  const [workspaceView, setWorkspaceView] = useState(() => localStorage.getItem('chr-workspace-view-mode') || 'both');
 
   useEffect(() => {
     const onModeChange = (e) => {
@@ -202,14 +208,23 @@ export default function AppLayout() {
   }
 
   return (
-    <div className="app-readable flex h-dvh overflow-hidden bg-[#F8FAFC] text-foreground">
+    <div className="app-readable flex h-dvh overflow-hidden bg-background text-foreground">
       <a
         href="#main-workspace-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-[#0A2B6D] focus:px-4 focus:py-2 focus:text-xs focus:font-bold focus:text-white focus:shadow-lg"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-xl focus:bg-[#0A2B6D] focus:px-4 focus:py-2 focus:text-xs focus:font-extrabold focus:text-white focus:shadow-lg"
       >
         Skip to main content
       </a>
-      <aside className="hidden w-64 shrink-0 overflow-hidden border-r border-slate-200 bg-white md:flex">
+      <aside
+        className="hidden w-64 shrink-0 overflow-hidden bg-white md:flex"
+        style={{
+          borderRight: '3px solid transparent',
+          backgroundImage:
+            'linear-gradient(#ffffff, #ffffff), linear-gradient(180deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+          backgroundOrigin: 'border-box',
+          backgroundClip: 'padding-box, border-box',
+        }}
+      >
         {sidebarContent}
       </aside>
 
@@ -223,199 +238,240 @@ export default function AppLayout() {
       )}
 
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
-        {/* Compact 56px Microsoft Purview / ServiceNow Global Header */}
-        <header
-          className="preserve-island-theme sticky top-0 z-40 shrink-0 border-b border-white/15 shadow-sm"
-          style={{
-            background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
-          }}
-        >
+        <header className="preserve-island-theme sticky top-0 z-40 shrink-0 shadow-md">
+          {/* Top App-Design Gradient Strip — matches remote top strip */}
           <div
-            className="h-1 w-full"
+            className="h-1.5 w-full"
             style={{
-              background: 'linear-gradient(90deg, #00C6FF 0%, #0072FF 35%, #5A00D6 70%, #FF2E9A 100%)',
+              background:
+                'linear-gradient(120deg, #00C6FF 0%, #0072FF 25%, #5A00D6 55%, #FF2E9A 100%)',
             }}
           />
-          <div className="mx-auto flex h-14 max-w-[1440px] w-full items-center justify-between gap-3 px-3 sm:px-6">
-            {/* Left: Mobile Drawer Trigger + Active Module Breadcrumb */}
-            <div className="flex min-w-0 items-center gap-2.5">
-              <button
-                onClick={() => setMobileOpen(true)}
-                aria-label="Open navigation menu"
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/20 bg-white/10 text-white transition hover:bg-white/20 md:hidden"
-              >
-                <Menu className="h-4 w-4" />
-              </button>
-
+          {/* Top Section of White Area — exact same 190px height as the white section of the remote */}
+          <div className="flex h-[190px] items-center justify-center bg-white px-3 py-1.5 sm:px-6 lg:px-8">
+            <div className="mx-auto flex max-w-[1440px] justify-center">
               <Link
                 to="/dashboard"
-                className="hidden sm:inline-flex items-center gap-2 rounded-lg bg-white px-2.5 py-1 text-xs font-extrabold text-[#0A2B6D] shadow-2xs"
+                className="inline-flex flex-col items-center justify-center text-center transition"
               >
-                <span className="h-2 w-2 rounded-full bg-[#0072FF]" />
-                <span style={{ color: '#0A2B6D' }}>ComplianceHR Infinity</span>
+                <BrandLogoLockup size="md" theme="light" showSlogan={true} />
               </Link>
-
-              <span className="hidden text-white/40 sm:inline">/</span>
-
-              <span className="inline-flex items-center gap-1.5 rounded-lg border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-bold text-white truncate">
-                <span className="h-2 w-2 shrink-0 rounded-full bg-[#00C6FF]" />
-                <span className="truncate">{currentLabel}</span>
-              </span>
             </div>
+          </div>
 
-            {/* Centre: Enterprise Global Search */}
-            <div className="flex flex-1 items-center justify-center min-w-[160px] max-w-md">
-              <div className="w-full rounded-lg bg-white shadow-2xs">
-                <GlobalSearch />
-              </div>
-            </div>
+          {/* Continuous App-Design Gradient Divider Line aligned with remote white section bottom */}
+          <div
+            className="h-[3px] w-full"
+            style={{
+              background:
+                'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+            }}
+          />
 
-            {/* Right: Workspace View Switcher, Notifications (36x36px), User Profile */}
-            <div className="flex shrink-0 items-center gap-2">
-              <div className="hidden items-center rounded-lg border border-white/20 bg-white/10 p-0.5 lg:flex">
-                {WORKSPACE_VIEWS.map(({ id, label, Icon }) => {
-                  const selected = workspaceView === id;
-                  return (
-                    <button
-                      key={id}
-                      type="button"
-                      onClick={() => switchWorkspaceView(id)}
-                      aria-pressed={selected}
-                      className={`inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-bold transition ${
-                        selected
-                          ? 'bg-white text-[#0A2B6D] shadow-2xs'
-                          : 'text-white/85 hover:text-white'
-                      }`}
-                    >
-                      <Icon
-                        className="h-3.5 w-3.5 shrink-0"
-                        style={{ color: selected ? '#0072FF' : '#00C6FF' }}
-                      />
-                      <span style={{ color: selected ? '#0A2B6D' : '#FFFFFF' }}>{label}</span>
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Notifications Bell (36x36px Enterprise Target) */}
-              <div className="relative">
+          {/* Dark Blue Command Row Below Top Logo Section */}
+          <div
+            className="px-3 py-1 sm:px-6 lg:px-8"
+            style={{
+              background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #131B4D 100%)',
+            }}
+          >
+            <div className="mx-auto flex max-w-[1440px] w-full flex-wrap items-center justify-between gap-1.5">
+              <div className="flex min-w-0 items-center gap-1.5">
                 <button
-                  type="button"
-                  onClick={() => {
-                    setNotifOpen((v) => !v);
-                    setUserMenuOpen(false);
-                  }}
-                  aria-label="Notifications"
-                  className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-white/20 bg-white/10 text-white transition hover:bg-white/20"
+                  onClick={() => setMobileOpen(true)}
+                  aria-label="Open menu"
+                  className="shrink-0 rounded-full border-2 border-[#0072FF] bg-white p-1 text-[#0A2B6D] shadow-2xs transition hover:border-[#FF2E9A] md:hidden"
                 >
-                  <Bell className="h-4 w-4 text-white" />
-                  {unread > 0 && (
-                    <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#FF2E9A] px-1 text-[10px] font-bold text-white">
-                      {unread}
+                  <Menu className="h-3 w-3" style={{ color: '#0072FF' }} />
+                </button>
+
+                <span
+                  className="inline-flex rounded-full p-[1.5px] shadow-2xs"
+                  style={{
+                    background:
+                      'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+                  }}
+                >
+                  <span className="inline-flex min-h-[22px] items-center gap-1 rounded-full bg-white px-2.5 py-0.5 text-[9.5px] font-extrabold text-[#0A2B6D]">
+                    <Sparkles className="h-3 w-3 shrink-0" style={{ color: '#5A00D6' }} />
+                    <span className="whitespace-nowrap" style={{ color: '#0A2B6D' }}>
+                      ◉ {currentLabel}
                     </span>
-                  )}
-                </button>
-                {notifOpen && (
-                  <div className="absolute right-0 top-11 z-50 w-80 rounded-xl border border-slate-200 bg-white p-3.5 shadow-xl">
-                    <div className="mb-2 flex items-center justify-between border-b border-slate-100 pb-2">
-                      <span className="text-xs font-bold uppercase tracking-wider text-[#0A2B6D]">
-                        Notifications
-                      </span>
-                      {unread > 0 && (
-                        <button
-                          type="button"
-                          onClick={markAllRead}
-                          className="text-xs font-bold text-[#0072FF] hover:underline"
-                        >
-                          Mark all read
-                        </button>
-                      )}
-                    </div>
-                    <div className="max-h-64 space-y-1.5 overflow-y-auto">
-                      {notifications.length === 0 ? (
-                        <p className="py-4 text-center text-xs text-muted-foreground">
-                          All caught up — no unread alerts.
-                        </p>
-                      ) : (
-                        notifications.map((n) => (
-                          <div
-                            key={n.id}
-                            className={`rounded-lg border p-2.5 text-xs ${
-                              n.read
-                                ? 'border-slate-100 bg-white'
-                                : 'border-[#0072FF]/30 bg-[#0072FF]/5 font-semibold'
-                            }`}
-                          >
-                            <div className="font-bold text-[#0A2B6D]">{n.title || 'System Alert'}</div>
-                            {n.message && <div className="mt-0.5 text-muted-foreground">{n.message}</div>}
-                          </div>
-                        ))
-                      )}
-                    </div>
-                    <Link
-                      to="/notifications"
-                      className="mt-2.5 block rounded-lg bg-slate-100 py-2 text-center text-xs font-bold text-[#0A2B6D] hover:bg-slate-200"
-                    >
-                      View All Notifications
-                    </Link>
-                  </div>
-                )}
+                  </span>
+                </span>
               </div>
 
-              {/* User Profile Menu (36px height) */}
-              <div className="relative">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setUserMenuOpen((v) => !v);
-                    setNotifOpen(false);
+              <div className="flex flex-1 items-center justify-center min-w-[160px] max-w-md">
+                <div
+                  className="w-full rounded-full p-[1.5px] shadow-2xs"
+                  style={{
+                    background:
+                      'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
                   }}
-                  aria-label="User account menu"
-                  className="flex h-9 items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-2.5 text-xs font-bold text-white transition hover:bg-white/20"
                 >
-                  <span className="flex h-6 w-6 items-center justify-center rounded bg-white text-xs font-extrabold text-[#0A2B6D]">
-                    {initials}
-                  </span>
-                  <span className="hidden max-w-[120px] truncate text-xs font-semibold text-white xl:inline">
-                    {user?.full_name || 'My Account'}
-                  </span>
-                  <ChevronDown className="h-3.5 w-3.5 shrink-0 text-white/80" />
-                </button>
-                {userMenuOpen && (
-                  <div className="absolute right-0 top-11 z-50 w-60 rounded-xl border border-slate-200 bg-white p-3.5 shadow-xl space-y-2">
-                    <div className="border-b border-slate-100 pb-2.5">
-                      <div className="truncate text-sm font-bold text-[#0A2B6D]">
-                        {user?.full_name || 'ComplianceHR User'}
-                      </div>
-                      <div className="truncate text-xs text-muted-foreground">{user?.email || role}</div>
-                      <span className="mt-1.5 inline-block rounded-md bg-[#0072FF]/10 px-2 py-0.5 text-xs font-bold text-[#0072FF]">
-                        {role}
-                      </span>
-                    </div>
-                    <Link
-                      to="/my-profile"
-                      className="flex items-center gap-2 rounded-lg px-2.5 py-2 text-xs font-bold text-[#0A2B6D] hover:bg-slate-50"
-                    >
-                      <User className="h-4 w-4 text-[#0072FF]" />
-                      My Profile &amp; Dossier
-                    </Link>
-                    <Link
-                      to="/connect"
-                      className="flex items-center gap-2 rounded-lg px-2.5 py-2 text-xs font-bold text-[#0A2B6D] hover:bg-slate-50"
-                    >
-                      <Sparkles className="h-4 w-4 text-[#5A00D6]" />
-                      Connect AI Agent (MCP)
-                    </Link>
-                    <button
-                      type="button"
-                      onClick={handleLogout}
-                      className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-xs font-bold text-rose-600 hover:bg-rose-50"
-                    >
-                      <LogOut className="h-4 w-4" />
-                      Sign out
-                    </button>
+                  <div className="rounded-full bg-white">
+                    <GlobalSearch />
                   </div>
-                )}
+                </div>
+              </div>
+
+              <div className="flex shrink-0 items-center gap-1">
+                <div
+                  className="rounded-full p-[1.5px] shadow-2xs"
+                  style={{
+                    background:
+                      'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+                  }}
+                >
+                  <div className="flex items-center gap-0.5 rounded-full bg-white p-0.5">
+                    {WORKSPACE_VIEWS.map(({ id, label, Icon }) => {
+                      const selected = workspaceView === id;
+                      return (
+                        <button
+                          key={id}
+                          type="button"
+                          onClick={() => switchWorkspaceView(id)}
+                          aria-pressed={selected}
+                          title={label}
+                          className={`inline-flex min-h-[20px] items-center gap-1 rounded-full px-2 py-0.5 text-[8.5px] font-extrabold transition-all ${
+                            selected
+                              ? 'bg-[#F5F0FF] text-[#5A00D6] border border-[#5A00D6]'
+                              : 'text-[#0A2B6D] hover:text-[#0072FF]'
+                          }`}
+                        >
+                          <Icon
+                            className="h-2.5 w-2.5 shrink-0"
+                            style={{ color: selected ? '#FF2E9A' : '#0072FF' }}
+                          />
+                          <span className="hidden whitespace-nowrap lg:inline" style={{ color: '#0A2B6D' }}>
+                            {label}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Notifications Bell */}
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setNotifOpen((v) => !v);
+                      setUserMenuOpen(false);
+                    }}
+                    aria-label="Notifications"
+                    className="relative flex h-7 w-7 items-center justify-center rounded-full border-2 border-[#0072FF] bg-white text-[#0A2B6D] shadow-2xs transition hover:border-[#FF2E9A]"
+                  >
+                    <Bell className="h-3.5 w-3.5 text-[#0072FF]" />
+                    {unread > 0 && (
+                      <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#FF2E9A] px-1 text-[9px] font-bold text-white">
+                        {unread}
+                      </span>
+                    )}
+                  </button>
+                  {notifOpen && (
+                    <div className="absolute right-0 top-10 z-50 w-80 rounded-xl border border-slate-200 bg-white p-3.5 shadow-xl">
+                      <div className="mb-2 flex items-center justify-between border-b border-slate-100 pb-2">
+                        <span className="text-xs font-bold uppercase tracking-wider text-[#0A2B6D]">
+                          Notifications
+                        </span>
+                        {unread > 0 && (
+                          <button
+                            type="button"
+                            onClick={markAllRead}
+                            className="text-xs font-bold text-[#0072FF] hover:underline"
+                          >
+                            Mark all read
+                          </button>
+                        )}
+                      </div>
+                      <div className="max-h-64 space-y-1.5 overflow-y-auto">
+                        {notifications.length === 0 ? (
+                          <p className="py-4 text-center text-xs text-muted-foreground">
+                            All caught up — no unread alerts.
+                          </p>
+                        ) : (
+                          notifications.map((n) => (
+                            <div
+                              key={n.id}
+                              className={`rounded-lg border p-2.5 text-xs ${
+                                n.read
+                                  ? 'border-slate-100 bg-white'
+                                  : 'border-[#0072FF]/30 bg-[#0072FF]/5 font-semibold'
+                              }`}
+                            >
+                              <div className="font-bold text-[#0A2B6D]">{n.title || 'System Alert'}</div>
+                              {n.message && <div className="mt-0.5 text-muted-foreground">{n.message}</div>}
+                            </div>
+                          ))
+                        )}
+                      </div>
+                      <Link
+                        to="/notifications"
+                        className="mt-2.5 block rounded-lg bg-slate-100 py-2 text-center text-xs font-bold text-[#0A2B6D] hover:bg-slate-200"
+                      >
+                        View All Notifications
+                      </Link>
+                    </div>
+                  )}
+                </div>
+
+                {/* User Profile Menu */}
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setUserMenuOpen((v) => !v);
+                      setNotifOpen(false);
+                    }}
+                    aria-label="User account menu"
+                    className="flex h-7 items-center gap-1.5 rounded-full border-2 border-[#5A00D6] bg-white px-2 text-xs font-extrabold text-[#0A2B6D] shadow-2xs transition hover:border-[#FF2E9A]"
+                  >
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#0A2B6D] text-[10px] font-black text-white">
+                      {initials}
+                    </span>
+                    <span className="hidden max-w-[110px] truncate text-[10px] font-extrabold text-[#0A2B6D] xl:inline">
+                      {user?.full_name || 'My Account'}
+                    </span>
+                    <ChevronDown className="h-3 w-3 shrink-0 text-[#5A00D6]" />
+                  </button>
+                  {userMenuOpen && (
+                    <div className="absolute right-0 top-10 z-50 w-60 rounded-xl border border-slate-200 bg-white p-3.5 shadow-xl space-y-2">
+                      <div className="border-b border-slate-100 pb-2.5">
+                        <div className="truncate text-sm font-bold text-[#0A2B6D]">
+                          {user?.full_name || 'ComplianceHR User'}
+                        </div>
+                        <div className="truncate text-xs text-muted-foreground">{user?.email || role}</div>
+                        <span className="mt-1.5 inline-block rounded-md bg-[#0072FF]/10 px-2 py-0.5 text-xs font-bold text-[#0072FF]">
+                          {role}
+                        </span>
+                      </div>
+                      <Link
+                        to="/my-profile"
+                        className="flex items-center gap-2 rounded-lg px-2.5 py-2 text-xs font-bold text-[#0A2B6D] hover:bg-slate-50"
+                      >
+                        <User className="h-4 w-4 text-[#0072FF]" />
+                        My Profile &amp; Dossier
+                      </Link>
+                      <Link
+                        to="/connect"
+                        className="flex items-center gap-2 rounded-lg px-2.5 py-2 text-xs font-bold text-[#0A2B6D] hover:bg-slate-50"
+                      >
+                        <Sparkles className="h-4 w-4 text-[#5A00D6]" />
+                        Connect AI Agent (MCP)
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={handleLogout}
+                        className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-xs font-bold text-rose-600 hover:bg-rose-50"
+                      >
+                        <LogOut className="h-4 w-4" />
+                        Sign out
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -423,24 +479,38 @@ export default function AppLayout() {
 
         <main
           id="main-workspace-content"
-          className="relative z-0 flex-1 overflow-y-auto overflow-x-hidden bg-[#F8FAFC] pb-20 md:pb-6"
+          className="relative z-0 flex-1 overflow-y-auto overflow-x-hidden pb-20 md:pb-6"
+          style={{
+            background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+          }}
         >
-          <div className="mx-auto max-w-[1440px] px-4 pt-3">
+          <EnterpriseWorkspaceBar
+            currentLabel={currentLabel}
+            role={role}
+            darkMode={darkMode}
+            onToggleDarkMode={() => setDarkMode((d) => !d)}
+          />
+          <QuickAppBar />
+          <VisualDesignModuleCommandStandard />
+          <div className={location.pathname === '/staff' || location.pathname.startsWith('/staff/') ? 'mx-auto max-w-[1440px] px-3' : 'mx-auto max-w-[1440px] px-3 pt-2'}>
             <PendingApprovalNotice />
+            <ModuleGuide />
           </div>
+          <AutoRegisterInsights />
           <div
-            className="app-dashboard-canvas mx-auto w-full max-w-[1440px] min-w-0 px-4 py-4"
+            className="app-dashboard-canvas mx-auto w-full max-w-[1440px] min-w-0 px-3 py-3"
             style={{ '--module-colour': currentModuleColour }}
           >
             <ErrorBoundary>
               <Outlet />
             </ErrorBoundary>
           </div>
+          {location.pathname !== '/our-employees' && <ModuleDocsFooter />}
           <UniversalDocumentViewerModal />
         </main>
 
         {/* Bottom nav (mobile) */}
-        <nav className="fixed bottom-0 left-0 right-0 z-30 flex items-center justify-around border-t border-slate-200 bg-white px-1 pb-[max(0.375rem,env(safe-area-inset-bottom))] pt-1.5 md:hidden">
+        <nav className="fixed bottom-0 left-0 right-0 z-30 flex items-center justify-around border-t border-border/60 bg-background px-1 pb-[max(0.375rem,env(safe-area-inset-bottom))] pt-1.5 md:hidden">
           {visibleBottom.map((item) => {
             const Icon = item.icon;
             const active = isActive(item.path);

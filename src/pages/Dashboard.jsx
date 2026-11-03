@@ -24,19 +24,22 @@ import Universal360ProfileFramework from '@/components/enterprise/Universal360Pr
 import OrganisationalOperatingSystemCommand from '@/components/enterprise/OrganisationalOperatingSystemCommand';
 import OrganisationHealthScoreFramework from '@/components/enterprise/OrganisationHealthScoreFramework';
 
+import MissionControlAiCoreHub from '@/components/enterprise/MissionControlAiCoreHub';
 import {
-  Activity, ShieldCheck, Zap, LayoutGrid, Cpu, Users, Download, FileCheck2,
+  Activity, ShieldCheck, Zap, LayoutGrid, Cpu, Users, Building2, Layers, Download, FileCheck2,
 } from 'lucide-react';
 import { ENTERPRISE_12_FORM_TEMPLATES, exportControlledRecordAsPdf } from '@/lib/enterpriseGovernanceStandard';
 import { openDocumentInViewer } from '@/lib/openDocument';
 
 const DASHBOARD_SUITES = [
-  { id: 'os-command', label: 'Executive Posture & KPIs', icon: Cpu },
-  { id: 'overview', label: 'Operational & Role View', icon: LayoutGrid },
-  { id: 'health-intelligence', label: 'Readiness & Board Review', icon: Activity },
-  { id: 'universal-360', label: '360° Profiles & Lineage', icon: Users },
-  { id: 'control-centre', label: '356 Checkpoints & Forms', icon: ShieldCheck },
-  { id: 'one-click', label: 'Automated Sweeps', icon: Zap },
+  { id: 'os-command', label: 'Executive overview', icon: Cpu },
+  { id: 'universal-360', label: '360° profiles', icon: Users },
+  { id: 'overview', label: 'Role dashboards', icon: LayoutGrid },
+  { id: 'control-centre', label: 'Forms & controls', icon: ShieldCheck },
+  { id: 'one-click', label: 'Operations', icon: Zap },
+  { id: 'health-intelligence', label: 'Readiness', icon: Activity },
+  { id: 'office-wall', label: 'Executive office', icon: Building2 },
+  { id: 'all', label: 'All workspaces', icon: Layers },
 ];
 
 export default function Dashboard() {
@@ -65,77 +68,40 @@ export default function Dashboard() {
   const isSuiteVisible = (suiteId) =>
     isRestrictedRole
       ? suiteId === 'overview' && activeSuite === 'overview'
-      : activeSuite === suiteId;
+      : activeSuite === suiteId || activeSuite === 'all';
 
   return (
-    <div className="mx-auto w-full max-w-[1440px] space-y-4">
-      {/* Microsoft Purview / ServiceNow Horizon Executive Command Header & Pivot Bar */}
-      <div className="rounded-xl border border-slate-200 bg-white p-4 sm:p-5 shadow-2xs">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-b border-slate-100 pb-4">
-          <div>
-            <span className="inline-flex items-center gap-1.5 rounded-md bg-[#0072FF]/10 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-[#0072FF]">
-              Executive Governance &amp; Compliance Command Centre
-            </span>
-            <h1 className="mt-1.5 font-editorial text-2xl font-extrabold tracking-tight text-[#0A2B6D] sm:text-3xl">
-              Organisation Posture, Risk &amp; Operational Readiness
-            </h1>
-          </div>
-          <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-[#0A2B6D]/75">
-            <button
-              type="button"
-              onClick={() => openDocumentInViewer(ENTERPRISE_12_FORM_TEMPLATES[2])}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-[#0072FF] bg-[#F0F7FF] px-3 py-1.5 text-xs font-extrabold text-[#0A2B6D] transition hover:bg-[#E0F2FE]"
-            >
-              <FileCheck2 className="h-3.5 w-3.5 text-[#0072FF]" />
-              <span>Preview New Form Template</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => exportControlledRecordAsPdf(ENTERPRISE_12_FORM_TEMPLATES[2])}
-              className="inline-flex items-center gap-1.5 rounded-lg bg-[#0A2B6D] px-3 py-1.5 text-xs font-extrabold text-white transition hover:bg-[#0072FF]"
-            >
-              <Download className="h-3.5 w-3.5 text-[#00C6FF]" />
-              <span>Download Form Template (PDF)</span>
-            </button>
-            <span className="inline-flex items-center gap-1.5 rounded-md border border-emerald-200 bg-emerald-50 px-2.5 py-1 font-bold text-emerald-700">
-              <span className="h-2 w-2 rounded-full bg-emerald-600" />
-              Live Telemetry Active
-            </span>
-          </div>
-        </div>
+    <div className="bright-dashboard mx-auto w-full max-w-[1440px] space-y-3">
+      {/* Main Screen Hybrid: Premium Remote + Mission Control + Enterprise Dashboard (AI CORE + 8 Glowing Circular Control Pods) */}
+      <MissionControlAiCoreHub
+        activeSuite={activeSuite}
+        onSelectSuite={(id) => setActiveSuite(id)}
+        showHeaderLogo={false}
+      />
 
-        {!isRestrictedRole && (
-          <div
-            role="tablist"
-            aria-label="Executive command views"
-            className="mt-3 flex flex-wrap items-center gap-1.5"
+      {/* Quick Access to New Form Template (White, Light Blue & Dark Blue) */}
+      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-sky-200 bg-[#F0F7FF] px-4 py-2.5 shadow-2xs">
+        <span className="text-xs font-extrabold text-[#0A2B6D]">
+          New Controlled Form Template (White, Light Blue &amp; Dark Blue Edition)
+        </span>
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onClick={() => openDocumentInViewer(ENTERPRISE_12_FORM_TEMPLATES[2])}
+            className="inline-flex items-center gap-1.5 rounded-lg border border-[#0072FF] bg-white px-3 py-1.5 text-xs font-extrabold text-[#0A2B6D] transition hover:bg-[#E0F2FE]"
           >
-            {availableSuites.map((suite) => {
-              const Icon = suite.icon;
-              const active = activeSuite === suite.id;
-              return (
-                <button
-                  key={suite.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={active}
-                  onClick={() => setActiveSuite(suite.id)}
-                  className={`inline-flex items-center gap-2 rounded-lg border px-3.5 py-2 text-xs font-bold transition ${
-                    active
-                      ? 'border-[#0A2B6D] bg-[#0A2B6D] text-white shadow-2xs'
-                      : 'border-slate-200 bg-slate-50 text-[#0A2B6D] hover:border-[#0072FF] hover:bg-white'
-                  }`}
-                >
-                  <Icon
-                    className="h-4 w-4 shrink-0"
-                    style={{ color: active ? '#00C6FF' : '#0072FF' }}
-                  />
-                  <span>{suite.label}</span>
-                </button>
-              );
-            })}
-          </div>
-        )}
+            <FileCheck2 className="h-3.5 w-3.5 text-[#0072FF]" />
+            <span>Preview New Form Template</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => exportControlledRecordAsPdf(ENTERPRISE_12_FORM_TEMPLATES[2])}
+            className="inline-flex items-center gap-1.5 rounded-lg bg-[#0A2B6D] px-3 py-1.5 text-xs font-extrabold text-white transition hover:bg-[#0072FF]"
+          >
+            <Download className="h-3.5 w-3.5 text-[#00C6FF]" />
+            <span>Download Form Template (PDF)</span>
+          </button>
+        </div>
       </div>
 
       {/* 1. Executive Overview (Default for Executives / Admins / Compliance) */}
