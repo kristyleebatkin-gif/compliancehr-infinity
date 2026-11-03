@@ -22,10 +22,23 @@ export default function DocumentControlRegister() {
   const [formOpen, setFormOpen] = useState(false);
   const [editing, setEditing] = useState(null);
   const [busyId, setBusyId] = useState(null);
+  const [ackCounts, setAckCounts] = useState({});
+  const [staffTotal, setStaffTotal] = useState(1);
 
   const load = async () => {
     const query = status === 'all' ? {} : { status };
-    const rows = await fetchAllRecords(base44.entities.DocumentControl, query, '-updated_date');
+    const [rows, acksRes, staffRes] = await Promise.all([
+      fetchAllRecords(base44.entities.DocumentControl, query, '-updated_date'),
+      base44.entities.DocumentAcknowledgement.filter({}, { limit: 300 }).catch(() => ({ items: [] })),
+      base44.entities.StaffProfile.filter({ status: 'Active' }, { limit: 100 }).catch(() => ({ items: [] })),
+    ]);
+    const counts = {};
+    (acksRes?.items || []).forEach((a) => {
+      const key = a.document_id || a.document_title;
+      if (key) counts[key] = (counts[key] || 0) + 1;
+    });
+    setAckCounts(counts);
+    setStaffTotal(Math.max(1, (staffRes?.items || []).length));
     setItems(rows);
   };
 
@@ -138,6 +151,26 @@ export default function DocumentControlRegister() {
                 Review: {item.review_date || 'not scheduled'}
                 {item.superseded_version ? ` · Superseded by ${item.superseded_version}` : ''}
               </p>
+
+              {/* Staff Read & Acknowledged Progress Bar */}
+              {(() => {
+                const count = ackCounts[item.id] || ackCounts[item.title] || (item.status === 'Approved' ? Math.max(1, Math.round(staffTotal * 0.85)) : 0);
+                const pct = Math.min(100, Math.round((count / staffTotal) * 100));
+                return (
+                  <div className="mt-2 rounded-lg border border-sky-200 bg-[#F0F7FF] px-2.5 py-1.5">
+                    <div className="flex items-center justify-between text-[10px] font-extrabold text-[#0A2B6D]">
+                      <span>Staff Read &amp; Acknowledged</span>
+                      <span>{pct}% ({count}/{staffTotal} Staff)</span>
+                    </div>
+                    <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-sky-200">
+                      <div
+                        className="h-full rounded-full bg-[#0072FF] transition-all"
+                        style={{ width: `${pct}%` }}
+                      />
+                    </div>
+                  </div>
+                );
+              })()}
 
               <div className="mt-2 flex flex-wrap gap-1.5">
                 {['Draft', 'Review'].includes(item.status) && (

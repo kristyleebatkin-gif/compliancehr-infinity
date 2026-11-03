@@ -32,6 +32,7 @@ import SmartMailroomHub from '@/components/documents/SmartMailroomHub';
 import EnterpriseStandardQualityGateSuite from '@/components/compliance/EnterpriseStandardQualityGateSuite';
 import UniversalDataStorageRetentionExportSuite from '@/components/compliance/UniversalDataStorageRetentionExportSuite';
 import UniversalRegisterManagementHubSuite from '@/components/operations/UniversalRegisterManagementHubSuite';
+import StandardsEvidenceGapStrip from '@/components/documents/StandardsEvidenceGapStrip';
 
 const DOC_TYPES = ['Resume', 'Contract', 'Police Check', 'Blue Card', 'First Aid Certificate', 'CPR Certificate', 'NDIS Worker Screening', "Driver's License", 'Qualifications', 'Reference Check', 'Other'];
 const CATEGORIES = ['Mandatory', 'Compliance', 'Clinical', 'Professional Development', 'Induction'];
@@ -64,6 +65,7 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
   const [selected, setSelected] = useState([]);
   const [applying, setApplying] = useState(false);
   const [tab, setTab] = useState('documents');
+  const [onlyGaps, setOnlyGaps] = useState(false);
   const canViewUploads = isVaultManager(me?.role);
   const canViewDataControl = isVaultProvider(me?.role);
   const canManageAll = canViewUploads || ['Compliance Manager', 'Compliance Administrator', 'Administration', 'Team Leader', 'Human Resources Manager', 'Quality & Improvement Manager'].includes(me?.role);
@@ -265,6 +267,12 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
         </TabsList>
 
         <TabsContent value="documents" className="mt-3 space-y-3">
+          {!profile && (
+            <StandardsEvidenceGapStrip
+              onlyGaps={onlyGaps}
+              onToggleOnlyGaps={() => setOnlyGaps((v) => !v)}
+            />
+          )}
           {!profile && <DocumentsDashboard role={me?.role} focus={focus} />}
       <div id="staff-docs" className="scroll-mt-24">
         <StaffDocumentToolbar profile={profile} staff={staff} scanning={scanning} scanMsg={scanMsg} onScan={runScan} onExport={exportAll} onAdd={() => { setEditing(null); setOpen(true); }} onDone={load} />
@@ -312,7 +320,13 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
           </label>
         )}
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {docs.map((d) => {
+          {docs
+            .filter((d) => {
+              if (!onlyGaps) return true;
+              const days = d.expiry_date ? differenceInCalendarDays(new Date(d.expiry_date), new Date()) : 999;
+              return d.status === 'Expired' || d.status === 'Expiring Soon' || days <= 30;
+            })
+            .map((d) => {
             const expired = d.expiry_date && differenceInCalendarDays(new Date(d.expiry_date), new Date()) < 0;
             return (
             <Card key={d.id} className={expired ? 'border-destructive/40' : 'border-border/60'}>

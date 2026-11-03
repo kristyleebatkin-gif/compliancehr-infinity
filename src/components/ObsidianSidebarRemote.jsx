@@ -207,6 +207,82 @@ export const PRIMARY_11_OS_NAV = [
   },
 ];
 
+export const FOCUSED_5_PILLAR_NAV = [
+  {
+    id: 'pillar-today',
+    label: "1. Today's Command",
+    sub: 'Dashboard, Daily Briefing, Tasks & AI Copilot',
+    path: '/dashboard',
+    icon: LayoutDashboard,
+    status: 'LIVE',
+    children: [
+      { label: 'Dashboard', path: '/dashboard', sub: 'Audit Ready Today & Executive KPIs' },
+      { label: 'Daily Briefing', path: '/briefing', sub: 'Morning operational briefing' },
+      { label: 'Tasks', path: '/tasks', sub: 'Shared to-do & sign-off board' },
+      { label: 'AI Assistant', path: '/assistant', sub: 'Compliance & HR intelligence copilot' },
+    ],
+  },
+  {
+    id: 'pillar-people',
+    label: '2. People & Care',
+    sub: 'Participants, Intake, Goals, Shift Notes & Roster',
+    path: '/our-participants',
+    icon: Users,
+    status: 'READY',
+    children: [
+      { label: 'Participant Profiles', path: '/our-participants', sub: '360° participant care folders' },
+      { label: 'Intake Centre', path: '/intake', sub: 'Participant & staff onboarding' },
+      { label: 'Rostering', path: '/rostering', sub: 'Shifts, clearances & coverage' },
+      { label: 'Communication Centre', path: '/communications', sub: 'Shift notes & team messages' },
+      { label: 'Goals', path: '/goals', sub: 'Participant & staff goal tracking' },
+    ],
+  },
+  {
+    id: 'pillar-workforce',
+    label: '3. Workforce & HR',
+    sub: 'Employees, Clearances, Training, HR & Payroll',
+    path: '/our-employees',
+    icon: ClipboardList,
+    status: 'READY',
+    children: [
+      { label: 'Employee Profiles', path: '/our-employees', sub: '360° staff directory & files' },
+      { label: 'HR Hub', path: '/hr', sub: 'Contracts, appraisals & payroll' },
+      { label: 'Training Centre', path: '/training', sub: 'LMS courses, quizzes & matrix' },
+      { label: 'Certificates', path: '/certificates', sub: 'Credentials & expiry alerts' },
+    ],
+  },
+  {
+    id: 'pillar-safety',
+    label: '4. Safety, Risk & Quality',
+    sub: 'Incidents, Risks, Continuous Improvement & Emergency',
+    path: '/incidents',
+    icon: ShieldAlert,
+    status: 'GUARDED',
+    children: [
+      { label: 'Incident Clinic', path: '/incidents', sub: 'NDIS 24h/5d & SIRS triage' },
+      { label: 'Risk Reporting', path: '/risks', sub: 'Risk register, hazards & Take-5' },
+      { label: 'Quality & Improvement', path: '/quality', sub: 'Closed-loop CAPA register' },
+      { label: 'Emergency Response', path: '/emergency-response', sub: 'Drills, plans & roll call' },
+      { label: 'Feedback & Surveys', path: '/feedback', sub: 'Complaints, compliments & surveys' },
+    ],
+  },
+  {
+    id: 'pillar-audit',
+    label: '5. Audit & Governance',
+    sub: 'Compliance Hub, Evidence Vault, Governance & Auditor',
+    path: '/compliance',
+    icon: ShieldCheck,
+    status: 'VERIFIED',
+    children: [
+      { label: 'Compliance Centre', path: '/compliance', sub: '356 audit checks & readiness' },
+      { label: 'Document Vault', path: '/documents', sub: 'Controlled policies & evidence' },
+      { label: 'Governance Layer', path: '/governance', sub: 'Delegations, lifecycle & board packs' },
+      { label: 'Auditor Portal', path: '/auditor-portal', sub: 'Consent-verified auditor view' },
+      { label: 'Invoicing & Finance', path: '/invoicing', sub: 'NDIS claims & financial controls' },
+    ],
+  },
+];
+
 export default function ObsidianSidebarRemote({
   visiblePrimary = [],
   isActive,
@@ -214,7 +290,7 @@ export default function ObsidianSidebarRemote({
   onLogout,
 }) {
   const location = useLocation();
-  const [navMode, setNavMode] = useState('os11'); // 'os11' (13 Permanent Categories) | 'all' (All Modules)
+  const [navMode, setNavMode] = useState('os11'); // 'pillars5' | 'os11' | 'all'
   const [expandedPillar, setExpandedPillar] = useState('dashboard-executive');
 
   const modules = visiblePrimary.filter(
@@ -244,34 +320,52 @@ export default function ObsidianSidebarRemote({
             <BrandLogoLockup size="xs" showSlogan className="w-full" />
           </Link>
 
-          {/* Remote Control Mode Switcher */}
+          {/* Remote Control Mode Switcher (5 Pillars | 13 Channels | All 46) */}
           <div
-            className="mt-1.5 grid w-full grid-cols-2 gap-1 rounded-xl p-[2px]"
+            className="mt-1.5 grid w-full grid-cols-3 gap-1 rounded-xl p-[2px]"
             style={{ background: BRAND_GRADIENT }}
           >
             <button
               type="button"
-              onClick={() => setNavMode('os11')}
-              className={`min-h-[24px] rounded-[10px] py-0.5 text-[9px] font-extrabold transition-all ${
+              onClick={() => {
+                setNavMode('pillars5');
+                setExpandedPillar('pillar-today');
+              }}
+              className={`min-h-[24px] rounded-[10px] py-0.5 text-[8.5px] font-extrabold transition-all ${
+                navMode === 'pillars5'
+                  ? 'bg-[#0A2B6D] text-white shadow-[0_0_12px_rgba(0,198,255,0.6)]'
+                  : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
+              }`}
+              style={{ color: navMode === 'pillars5' ? '#FFFFFF' : '#0A2B6D' }}
+            >
+              ◉ 5 Pillars
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setNavMode('os11');
+                setExpandedPillar('dashboard-executive');
+              }}
+              className={`min-h-[24px] rounded-[10px] py-0.5 text-[8.5px] font-extrabold transition-all ${
                 navMode === 'os11'
                   ? 'bg-[#0A2B6D] text-white shadow-[0_0_12px_rgba(0,198,255,0.6)]'
                   : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
               }`}
               style={{ color: navMode === 'os11' ? '#FFFFFF' : '#0A2B6D' }}
             >
-              ◉ 13 Command Channels
+              ◉ 13 Channels
             </button>
             <button
               type="button"
               onClick={() => setNavMode('all')}
-              className={`min-h-[24px] rounded-[10px] py-0.5 text-[9px] font-extrabold transition-all ${
+              className={`min-h-[24px] rounded-[10px] py-0.5 text-[8.5px] font-extrabold transition-all ${
                 navMode === 'all'
                   ? 'bg-[#0A2B6D] text-white shadow-[0_0_12px_rgba(255,46,154,0.6)]'
                   : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
               }`}
               style={{ color: navMode === 'all' ? '#FFFFFF' : '#0A2B6D' }}
             >
-              ◉ All 46 Modules
+              ◉ All 46
             </button>
           </div>
         </div>
@@ -285,8 +379,8 @@ export default function ObsidianSidebarRemote({
           className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-2.5 space-y-2"
           style={{ background: DARK_NAVY_CHASSIS }}
         >
-          {navMode === 'os11'
-            ? PRIMARY_11_OS_NAV.map((pillar, pIdx) => {
+          {navMode === 'os11' || navMode === 'pillars5'
+            ? (navMode === 'pillars5' ? FOCUSED_5_PILLAR_NAV : PRIMARY_11_OS_NAV).map((pillar, pIdx) => {
                 const Icon = pillar.icon;
                 const symColor = APP_DESIGN_COLOURS[pIdx % APP_DESIGN_COLOURS.length];
                 const pillarActive =

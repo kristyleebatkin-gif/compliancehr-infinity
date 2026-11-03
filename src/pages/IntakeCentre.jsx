@@ -6,6 +6,7 @@ import ModuleShell from '@/components/module/ModuleShell';
 import { ClipboardList } from 'lucide-react';
 import IntakeReadinessExport from '@/components/intake/IntakeReadinessExport';
 import IntakeAutomationTriggersBar from '@/components/intake/IntakeAutomationTriggersBar';
+import CanonicalIntakeConsolidationBar from '@/components/intake/CanonicalIntakeConsolidationBar';
 import { base44 } from '@/api/base44Client';
 import { STATUS_HEX, STATUS_ORDER } from '@/components/intake/intakeDisplay';
 import { Heart, Users, ArrowRight } from 'lucide-react';
@@ -140,7 +141,8 @@ export default function IntakeCentre({ embedded = false, profile, profileKind } 
           <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{stats ? value : '…'}</p></div>
         ))}
       />
-      <div className="mt-3">
+      <div className="mt-3 space-y-2.5">
+        <CanonicalIntakeConsolidationBar />
         <IntakeAutomationTriggersBar intakeType="All" />
       </div>
       <div className="mt-3 overflow-hidden rounded-2xl border border-[#1e293b] bg-[#0f172a] shadow-xl">
