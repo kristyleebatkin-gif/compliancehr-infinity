@@ -7,23 +7,59 @@ import { getTemplateMeta } from '@/lib/officialFormTemplates';
 export default function OnlineDocumentReading({ title, code }) {
   const branding = getCompanyBranding();
   const meta = getTemplateMeta(title);
-  return <div className="space-y-5">
-    <header className="flex items-center gap-4 border-b border-border pb-5">
-      {branding.logoUrl && <Image src={branding.logoUrl} alt={`${branding.companyName} logo`} fittingType="fit" className="h-14 w-14 shrink-0" />}
-      <div className="min-w-0"><h3 className="font-heading text-lg font-semibold">{branding.companyName}</h3><p className="text-sm text-muted-foreground">{branding.slogan}</p>{code && <p className="mt-2 text-xs font-semibold text-primary">{code} · {meta?.docType || 'Form'}</p>}</div>
-    </header>
-    <div className="space-y-3 rounded-xl border border-primary/30 bg-accent p-5 text-sm leading-relaxed">
-      {meta?.purpose && <p className="font-semibold">{meta.purpose}</p>}
-      <p>Fill out this document on screen. Save a draft at any time, then reopen it here to continue. Saving a completed document also files a PDF copy.</p>
-      <p className="text-muted-foreground">{FORM_NOTICES.privacy}</p>
+  return (
+    <div className="space-y-4">
+      <header className="flex items-center gap-4 rounded-xl border border-sky-200 bg-[#F0F7FF] p-4">
+        {branding.logoUrl && (
+          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-sky-200 bg-white p-1">
+            <Image src={branding.logoUrl} alt={`${branding.companyName} logo`} fittingType="fit" className="h-full w-full" />
+          </div>
+        )}
+        <div className="min-w-0">
+          <h3 className="font-editorial text-lg font-extrabold text-[#0A2B6D]">{branding.companyName}</h3>
+          <p className="text-xs font-medium text-[#0A2B6D]/75">{branding.slogan}</p>
+          {code && (
+            <span className="mt-1.5 inline-flex items-center rounded-md bg-[#0A2B6D] px-2.5 py-0.5 text-xs font-bold text-white">
+              {code} · {meta?.docType || 'Controlled Form'}
+            </span>
+          )}
+        </div>
+      </header>
+
+      <div className="space-y-2.5 rounded-xl border border-sky-200 bg-white p-4 text-sm leading-relaxed text-[#0A2B6D] shadow-2xs">
+        {meta?.purpose && <p className="font-bold text-[#0A2B6D]">{meta.purpose}</p>}
+        <p className="text-[#0A2B6D]/85">
+          Fill out this document on screen. Save a draft at any time, then reopen it here to continue. Saving a completed document also files a controlled PDF copy in the Document Vault.
+        </p>
+        <p className="text-xs font-medium text-[#0072FF]">{FORM_NOTICES.privacy}</p>
+      </div>
+
+      {!!meta?.sections?.length && (
+        <details className="rounded-xl border border-sky-200 bg-[#F0F7FF]/60 p-4" open>
+          <summary className="cursor-pointer text-sm font-extrabold text-[#0A2B6D]">
+            Read Document Guidance — {title}
+          </summary>
+          <div className="mt-4 space-y-5 text-sm leading-relaxed text-[#0A2B6D]">
+            {meta.sections.map((section, i) => (
+              <section key={section.heading} className="space-y-2 rounded-lg border border-sky-100 bg-white p-3.5">
+                <h4 className="font-bold text-[#0072FF]">
+                  {i + 1}. {section.heading}
+                </h4>
+                {section.paragraphs?.map((text, j) => (
+                  <p key={j} className="text-[#0A2B6D]/85">{text}</p>
+                ))}
+                {section.bullets && (
+                  <ul className="list-disc space-y-1.5 pl-5 text-[#0A2B6D]/85">
+                    {section.bullets.map((text, j) => (
+                      <li key={j}>{text}</li>
+                    ))}
+                  </ul>
+                )}
+              </section>
+            ))}
+          </div>
+        </details>
+      )}
     </div>
-    {!!meta?.sections?.length && <details className="rounded-xl border border-border p-5" open>
-      <summary className="cursor-pointer font-semibold">Read {title}</summary>
-      <div className="mt-5 space-y-6 text-sm leading-7">{meta.sections.map((section, i) => <section key={section.heading} className="space-y-3">
-        <h4 className="font-semibold text-primary">{i + 1}. {section.heading}</h4>
-        {section.paragraphs?.map((text, j) => <p key={j}>{text}</p>)}
-        {section.bullets && <ul className="list-disc space-y-2 pl-5">{section.bullets.map((text, j) => <li key={j}>{text}</li>)}</ul>}
-      </section>)}</div>
-    </details>}
-  </div>;
+  );
 }
