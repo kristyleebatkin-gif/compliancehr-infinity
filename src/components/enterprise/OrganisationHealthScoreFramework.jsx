@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Activity, ShieldCheck, Users, AlertTriangle, Award,
-  RefreshCw, Camera, Download, Sliders, Eye, Layers,
+  RefreshCw, Camera, Download, Sliders, Eye, Layers, CheckCircle2,
 } from 'lucide-react';
 import {
   ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Cell, CartesianGrid,
@@ -31,6 +32,7 @@ export default function OrganisationHealthScoreFramework({ onScoresLoaded }) {
   const [recordingSnapshot, setRecordingSnapshot] = useState(false);
   const [selectedScoreKey, setSelectedScoreKey] = useState(null);
   const [showBlueprint, setShowBlueprint] = useState(false);
+  const [showIntelligenceMatrix, setShowIntelligenceMatrix] = useState(true);
 
   const refreshScores = useCallback(async () => {
     setLoading(true);
@@ -92,31 +94,51 @@ export default function OrganisationHealthScoreFramework({ onScoresLoaded }) {
 
   const handleExportCsv = () => {
     if (!data?.scores) return;
-    downloadCsv(
-      `executive-health-scores-${new Date().toISOString().slice(0, 10)}.csv`,
-      [
-        { key: 'title', label: 'Score Title' },
-        { key: 'score', label: 'Score (%)' },
-        { key: 'status', label: 'Status Band' },
-        { key: 'evidenceCount', label: 'Evidence Count' },
-        { key: 'calculatedAt', label: 'Calculated Timestamp' },
-        { key: 'warning_threshold', label: 'Warning Threshold (%)' },
-        { key: 'critical_threshold', label: 'Critical Threshold (%)' },
-        { key: 'formula_description', label: 'Formula' },
-      ],
-      SCORE_ORDER.map(({ key }) => {
+    const rows = [
+      ...SCORE_ORDER.map(({ key }) => {
         const sc = data.scores[key];
         return {
+          category: 'Executive Core Score',
           title: sc.title,
           score: sc.score !== null ? sc.score : 'Missing Data',
           status: sc.band?.status || 'Missing Data',
           evidenceCount: sc.evidenceCount ?? 0,
           calculatedAt: sc.calculatedAt || data.calculatedAt || '',
-          warning_threshold: sc.warning_threshold,
-          critical_threshold: sc.critical_threshold,
           formula_description: sc.formula_description || '',
         };
-      })
+      }),
+      ...(data.accuracyControl || []).map((ac) => ({
+        category: 'Accuracy Control Framework',
+        title: ac.title,
+        score: ac.score !== null ? ac.score : 'Missing Data',
+        status: ac.band?.status || 'Missing Data',
+        evidenceCount: ac.detail,
+        calculatedAt: data.calculatedAt || '',
+        formula_description: ac.detail,
+      })),
+      ...(data.liveIntelligence13 || []).map((li) => ({
+        category: '13-Score Live Compliance Intelligence',
+        title: li.title,
+        score: li.score !== null ? li.score : 'Missing Data',
+        status: li.band?.status || 'Missing Data',
+        evidenceCount: li.detail,
+        calculatedAt: data.calculatedAt || '',
+        formula_description: li.detail,
+      })),
+    ];
+
+    downloadCsv(
+      `executive-health-and-accuracy-scores-${new Date().toISOString().slice(0, 10)}.csv`,
+      [
+        { key: 'category', label: 'Framework Category' },
+        { key: 'title', label: 'Score Title' },
+        { key: 'score', label: 'Score (%)' },
+        { key: 'status', label: 'Status Band' },
+        { key: 'evidenceCount', label: 'Evidence / Detail' },
+        { key: 'calculatedAt', label: 'Calculated Timestamp' },
+        { key: 'formula_description', label: 'Formula / Basis' },
+      ],
+      rows
     );
   };
 
@@ -129,121 +151,93 @@ export default function OrganisationHealthScoreFramework({ onScoresLoaded }) {
       }))
     : [];
 
-  const APP_BORDER_GRADIENT =
-    'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)';
-
   return (
-    <section
-      className="overflow-hidden rounded-2xl p-[3px] shadow-md"
-      style={{ background: APP_BORDER_GRADIENT }}
-    >
+    <section className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-2xs">
       <div
-        className="rounded-[13px] p-3 space-y-3"
+        className="h-1 w-full"
         style={{
-          background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+          background: 'linear-gradient(90deg, #00C6FF 0%, #0072FF 35%, #5A00D6 70%, #FF2E9A 100%)',
         }}
-      >
-        {/* Header White Section Inside Dark Blue Surround */}
-        <div
-          className="rounded-2xl p-[2px] shadow-2xs"
-          style={{ background: APP_BORDER_GRADIENT }}
-        >
-          <div className="flex flex-wrap items-center justify-between gap-2 rounded-[14px] bg-white px-3.5 py-2.5 text-[#0A2B6D]">
-            <div className="min-w-0">
-              <div
-                className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]"
-                style={{
-                  border: '2px solid transparent',
-                  background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
-                }}
-              >
-                <Activity className="h-3 w-3 text-[#0072FF]" />
-                <span style={{ color: '#0A2B6D' }}>Organisation Health &amp; 5-Score Executive Framework</span>
-              </div>
-              <h2 className="mt-1 font-editorial text-xs sm:text-sm font-extrabold text-[#0A2B6D] leading-tight" style={{ color: '#0A2B6D' }}>
-                <span style={{ color: '#5A00D6' }}>◉</span> Executive Health Scorecards — Click Any Score to Inspect Formula, Weightings &amp; Trends
-              </h2>
-            </div>
+      />
 
-            <div className="flex flex-wrap items-center gap-1.5">
-              <Button
-                size="sm"
-                type="button"
-                onClick={handleRecordSnapshot}
-                disabled={recordingSnapshot || loading}
-                className="min-h-7 h-7 rounded-full px-2.5 py-0.5 text-[#0A2B6D] font-extrabold text-[10px]"
-                style={{
-                  border: '2px solid transparent',
-                  background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
-                  color: '#0A2B6D',
-                }}
-              >
-                <Camera className="mr-1 h-3 w-3 text-[#0072FF]" />
-                <span style={{ color: '#0A2B6D' }}>{recordingSnapshot ? 'Recording…' : 'Snapshot'}</span>
-              </Button>
-              <Button
-                size="sm"
-                type="button"
-                onClick={handleExportCsv}
-                disabled={loading || !data}
-                className="min-h-7 h-7 rounded-full px-2.5 py-0.5 text-[#0A2B6D] font-extrabold text-[10px]"
-                style={{
-                  border: '2px solid transparent',
-                  background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
-                  color: '#0A2B6D',
-                }}
-              >
-                <Download className="mr-1 h-3 w-3 text-[#5A00D6]" />
-                <span style={{ color: '#0A2B6D' }}>CSV</span>
-              </Button>
-              <Button
-                size="sm"
-                type="button"
-                onClick={() => setShowBlueprint((v) => !v)}
-                className="min-h-7 h-7 rounded-full px-2.5 py-0.5 text-[#0A2B6D] font-extrabold text-[10px]"
-                style={{
-                  border: '2px solid transparent',
-                  background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
-                  color: '#0A2B6D',
-                }}
-              >
-                <Layers className="mr-1 h-3 w-3 text-[#FF2E9A]" />
-                <span style={{ color: '#0A2B6D' }}>{showBlueprint ? 'Hide Blueprint' : 'Blueprint'}</span>
-              </Button>
-              <Button
-                size="sm"
-                type="button"
-                onClick={refreshScores}
-                disabled={loading}
-                className="min-h-7 h-7 rounded-full px-2.5 py-0.5 text-[#0A2B6D] font-extrabold text-[10px]"
-                style={{
-                  border: '2px solid transparent',
-                  background: `linear-gradient(#ffffff, #ffffff) padding-box, ${APP_BORDER_GRADIENT} border-box`,
-                  color: '#0A2B6D',
-                }}
-              >
-                <RefreshCw className={`mr-1 h-3 w-3 text-[#0072FF] ${loading ? 'animate-spin' : ''}`} />
-                <span style={{ color: '#0A2B6D' }}>Refresh</span>
-              </Button>
-            </div>
+      {/* Clean Microsoft Purview / ServiceNow Header */}
+      <div className="flex flex-col gap-3 border-b border-slate-200 bg-[#F8FAFC] px-4 py-3.5 sm:flex-row sm:items-center sm:justify-between sm:px-5">
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 rounded-md bg-[#0072FF]/10 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-[#0072FF]">
+              <Activity className="h-3.5 w-3.5" />
+              Accuracy Control &amp; Live Compliance Intelligence
+            </span>
+            <span className="text-xs font-semibold text-[#0A2B6D]/70">
+              Evidence-backed · Zero synthetic fallbacks
+            </span>
           </div>
+          <h2 className="mt-1 font-editorial text-lg font-extrabold text-[#0A2B6D] sm:text-xl">
+            Executive Health Scorecards, Accuracy Control &amp; 13-Score Live Intelligence
+          </h2>
         </div>
 
-        {/* Body White Section Inside Dark Blue Surround */}
-        <div
-          className="rounded-2xl p-[2px] shadow-2xs"
-          style={{ background: APP_BORDER_GRADIENT }}
-        >
-          <div className="rounded-[14px] bg-white p-3 space-y-2.5">
-        {/* 5 Interactive Executive Score Cards (50% Compact) */}
-        <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 lg:grid-cols-5">
+        <div className="flex flex-wrap items-center gap-2">
+          <Button
+            size="sm"
+            variant="outline"
+            type="button"
+            onClick={() => setShowIntelligenceMatrix((v) => !v)}
+          >
+            <CheckCircle2 className="mr-1.5 h-3.5 w-3.5 text-[#0072FF]" />
+            {showIntelligenceMatrix ? 'Hide 13-Score Matrix' : 'Show 13-Score Matrix'}
+          </Button>
+          <Button
+            size="sm"
+            variant="outline"
+            type="button"
+            onClick={handleRecordSnapshot}
+            disabled={recordingSnapshot || loading}
+          >
+            <Camera className="mr-1.5 h-3.5 w-3.5 text-[#0072FF]" />
+            {recordingSnapshot ? 'Recording…' : 'Record Snapshot'}
+          </Button>
+          <Button
+            size="sm"
+            variant="outline"
+            type="button"
+            onClick={handleExportCsv}
+            disabled={loading || !data}
+          >
+            <Download className="mr-1.5 h-3.5 w-3.5 text-[#5A00D6]" />
+            Export CSV
+          </Button>
+          <Button
+            size="sm"
+            variant="outline"
+            type="button"
+            onClick={() => setShowBlueprint((v) => !v)}
+          >
+            <Layers className="mr-1.5 h-3.5 w-3.5 text-[#5A00D6]" />
+            {showBlueprint ? 'Hide Blueprint' : 'Master Blueprint'}
+          </Button>
+          <Button
+            size="sm"
+            type="button"
+            onClick={refreshScores}
+            disabled={loading}
+          >
+            <RefreshCw className={`mr-1.5 h-3.5 w-3.5 ${loading ? 'animate-spin' : ''}`} />
+            Refresh
+          </Button>
+        </div>
+      </div>
+
+      <div className="p-4 sm:p-5 space-y-5">
+        {/* ROW 1: 5 Interactive Executive Score Cards */}
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
           {SCORE_ORDER.map(({ key, icon: Icon }) => {
             const sc = data?.scores?.[key];
             if (!sc) {
               return (
                 <div
                   key={key}
-                  className="h-24 animate-pulse rounded-xl border border-slate-200 bg-slate-50 p-2"
+                  className="h-32 animate-pulse rounded-xl border border-slate-200 bg-slate-50 p-4"
                 />
               );
             }
@@ -252,36 +246,36 @@ export default function OrganisationHealthScoreFramework({ onScoresLoaded }) {
                 key={key}
                 type="button"
                 onClick={() => setSelectedScoreKey(key)}
-                className="group flex flex-col justify-between rounded-xl border border-[#0A2B6D] bg-white p-2 text-left shadow-2xs transition hover:border-[#5A00D6] focus:outline-none"
+                className="group flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-4 text-left shadow-2xs transition hover:border-[#0072FF] hover:shadow-sm focus:outline-none"
               >
-                <div className="w-full space-y-1">
-                  <div className="flex items-center justify-between gap-1">
+                <div className="w-full space-y-2">
+                  <div className="flex items-center justify-between gap-2">
                     <span
-                      className="inline-flex h-5 w-5 items-center justify-center rounded-lg text-white"
+                      className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-white"
                       style={{ backgroundColor: sc.color }}
                     >
-                      <Icon className="h-3 w-3" />
+                      <Icon className="h-4 w-4" />
                     </span>
-                    <Badge className={`${sc.band?.badgeClass} text-[8.5px] px-1.5 py-0`}>
+                    <Badge className={`${sc.band?.badgeClass} text-xs px-2 py-0.5`}>
                       {sc.band?.status}
                     </Badge>
                   </div>
 
                   <div>
-                    <div className="text-[9.5px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                    <div className="text-xs font-bold uppercase tracking-wider text-[#0A2B6D]/75">
                       {sc.title}
                     </div>
-                    <div className="flex flex-wrap items-baseline justify-between gap-1">
-                      <span className="font-editorial text-sm font-extrabold text-[#0A2B6D]">
+                    <div className="mt-1 flex items-baseline justify-between gap-2">
+                      <span className="font-editorial text-2xl font-extrabold text-[#0A2B6D]">
                         {sc.score !== null ? `${sc.score}%` : 'Unassessed'}
                       </span>
-                      <span className="text-[8px] font-bold text-slate-600">
+                      <span className="text-xs font-medium text-[#0A2B6D]/60">
                         W&lt;{sc.warning_threshold}% · C&lt;{sc.critical_threshold}%
                       </span>
                     </div>
                   </div>
 
-                  <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100 border border-slate-200">
+                  <div className="h-2 w-full overflow-hidden rounded-full bg-slate-100">
                     <div
                       className="h-full rounded-full transition-all"
                       style={{
@@ -292,38 +286,111 @@ export default function OrganisationHealthScoreFramework({ onScoresLoaded }) {
                   </div>
                 </div>
 
-                <div className="mt-1.5 flex w-full items-center justify-between border-t border-slate-100 pt-1 text-[8.5px] font-extrabold text-[#0072FF]">
-                  <span className="inline-flex items-center gap-0.5">
-                    <Eye className="h-2.5 w-2.5" />
-                    Formula &amp; Trends
+                <div className="mt-3 flex w-full items-center justify-between border-t border-slate-100 pt-2 text-xs font-bold text-[#0072FF]">
+                  <span className="inline-flex items-center gap-1">
+                    <Eye className="h-3.5 w-3.5" />
+                    Inspect Formula &amp; Evidence
                   </span>
-                  <Sliders className="h-2.5 w-2.5" />
+                  <Sliders className="h-3.5 w-3.5" />
                 </div>
               </button>
             );
           })}
         </div>
 
-        {/* Comparative Visualisation & Explainability Bar */}
+        {/* ROW 2: Accuracy Control Framework (5 Live Integrity Scores) + 13 Live Compliance Intelligence Scores */}
+        {showIntelligenceMatrix && data && (
+          <div className="space-y-4 rounded-xl border border-slate-200 bg-[#F8FAFC] p-4">
+            <div>
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <h3 className="text-sm font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                    Accuracy Control Framework — 5 Continuous Verification Scores
+                  </h3>
+                  <p className="text-xs text-[#0A2B6D]/75">
+                    Continuously validates participant, workforce, training, compliance, audit, risk, incident, and document evidence.
+                  </p>
+                </div>
+                <Badge variant="outline" className="text-xs">
+                  100% Evidence-Backed
+                </Badge>
+              </div>
+
+              <div className="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-5">
+                {(data.accuracyControl || []).map((ac) => (
+                  <Link
+                    key={ac.key}
+                    to={ac.route}
+                    className="flex flex-col justify-between rounded-lg border border-slate-200 bg-white p-3 shadow-2xs transition hover:border-[#0072FF]"
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-xs font-bold text-[#0A2B6D]">{ac.title}</span>
+                      <Badge className={`${ac.band?.badgeClass} text-xs px-2 py-0`}>
+                        {ac.band?.status}
+                      </Badge>
+                    </div>
+                    <div className="mt-1.5 text-xl font-extrabold text-[#0A2B6D]">
+                      {ac.score !== null ? `${ac.score}%` : 'Unassessed'}
+                    </div>
+                    <p className="mt-1 text-xs text-[#0A2B6D]/70">{ac.detail}</p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            <div className="border-t border-slate-200 pt-4">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <h3 className="text-sm font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                    13-Score Live Compliance &amp; Outcomes Intelligence
+                  </h3>
+                  <p className="text-xs text-[#0A2B6D]/75">
+                    Real-time posture across NDIS Practice Standards, Strengthened Aged Care Standards, Clinical Governance, WHS, and Participant Outcomes.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-3 grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                {(data.liveIntelligence13 || []).map((item) => (
+                  <Link
+                    key={item.key}
+                    to={item.route}
+                    className="flex flex-col justify-between rounded-lg border border-slate-200 bg-white p-3 shadow-2xs transition hover:border-[#0072FF]"
+                  >
+                    <div className="flex items-center justify-between gap-1.5">
+                      <span className="text-xs font-bold text-[#0A2B6D]">{item.title}</span>
+                      <span className="text-sm font-extrabold text-[#0072FF]">
+                        {item.score !== null ? `${item.score}%` : '—'}
+                      </span>
+                    </div>
+                    <p className="mt-1 text-xs text-[#0A2B6D]/70">{item.detail}</p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ROW 3: Comparative Visualisation & Explainability Bar */}
         {data?.scores && (
-          <div className="grid grid-cols-1 gap-3 lg:grid-cols-12">
-            <div className="lg:col-span-5 rounded-xl border border-slate-200 bg-[#F6F0FF]/50 p-3 space-y-2">
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
+            <div className="lg:col-span-5 rounded-xl border border-slate-200 bg-[#F8FAFC] p-4 space-y-2.5">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
                   Executive Score Comparison vs Thresholds
                 </span>
-                <span className="text-[10.5px] font-bold text-[#5A00D6]">
+                <span className="text-xs font-bold text-[#5A00D6]">
                   {data.snapshots?.length || 0} saved snapshot(s)
                 </span>
               </div>
-              <div className="h-40 w-full rounded-lg bg-white p-2 border border-slate-200">
+              <div className="h-44 w-full rounded-lg bg-white p-2.5 border border-slate-200">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={chartData}>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e9d5ff" />
-                    <XAxis dataKey="name" fontSize={10} tick={{ fill: '#0A2B6D', fontWeight: 800 }} />
-                    <YAxis domain={[0, 100]} fontSize={10} tick={{ fill: '#0A2B6D', fontWeight: 700 }} />
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
+                    <XAxis dataKey="name" fontSize={11} tick={{ fill: '#0A2B6D', fontWeight: 700 }} />
+                    <YAxis domain={[0, 100]} fontSize={11} tick={{ fill: '#0A2B6D', fontWeight: 600 }} />
                     <Tooltip formatter={(v) => `${v}%`} />
-                    <Bar dataKey="score" name="Live Score (%)" radius={[4, 4, 0, 0]} barSize={28}>
+                    <Bar dataKey="score" name="Live Score (%)" radius={[4, 4, 0, 0]} barSize={30}>
                       {chartData.map((entry) => (
                         <Cell key={entry.name} fill={entry.color} />
                       ))}
@@ -333,31 +400,30 @@ export default function OrganisationHealthScoreFramework({ onScoresLoaded }) {
               </div>
             </div>
 
-            <div className="lg:col-span-7 rounded-xl border border-slate-200 bg-white p-3 space-y-2">
-              <div className="flex items-center justify-between">
+            <div className="lg:col-span-7 rounded-xl border border-slate-200 bg-white p-4 space-y-2.5">
+              <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
                   Transparent Formula &amp; Weighting Reference
                 </span>
-                <span className="text-[10.5px] font-bold text-[#0072FF]">
-                  Click any score card above to customise weightings or drill into records
+                <span className="text-xs font-semibold text-[#0072FF]">
+                  Click any score row to customise weightings or inspect source evidence
                 </span>
               </div>
-              <div className="space-y-1.5">
+              <div className="space-y-2">
                 {SCORE_ORDER.map(({ key }) => {
                   const sc = data.scores[key];
                   return (
-                    <div
+                    <button
                       key={key}
+                      type="button"
                       onClick={() => setSelectedScoreKey(key)}
-                      className="cursor-pointer rounded-lg border border-slate-200 bg-[#F6F0FF]/35 px-3 py-1.5 hover:border-[#0072FF]"
+                      className="flex w-full flex-wrap items-center justify-between gap-2 rounded-lg border border-slate-200 bg-[#F8FAFC] px-3.5 py-2 text-left text-xs transition hover:border-[#0072FF] hover:bg-white"
                     >
-                      <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-                        <span className="font-extrabold text-[#0A2B6D]">{sc.title}</span>
-                        <span className="font-mono text-[10.5px] font-bold text-[#5A00D6]">
-                          {sc.weights.map((w) => `${w.key}:${w.pct}%`).join(' + ')}
-                        </span>
-                      </div>
-                    </div>
+                      <span className="font-bold text-[#0A2B6D]">{sc.title}</span>
+                      <span className="font-mono text-xs font-semibold text-[#5A00D6]">
+                        {sc.weights.map((w) => `${w.key}:${w.pct}%`).join(' + ')}
+                      </span>
+                    </button>
                   );
                 })}
               </div>
@@ -365,13 +431,9 @@ export default function OrganisationHealthScoreFramework({ onScoresLoaded }) {
           </div>
         )}
 
-        {/* Collapsible 8-Prompt Blueprint & Master Audit */}
         {showBlueprint && <EnterpriseArchitectureMasterBlueprint />}
-          </div>
-        </div>
       </div>
 
-      {/* Drill-Down Modal */}
       {selectedScoreKey && data?.scores?.[selectedScoreKey] && (
         <ExecutiveScoreDrillDownModal
           scoreData={data.scores[selectedScoreKey]}

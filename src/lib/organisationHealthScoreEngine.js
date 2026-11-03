@@ -169,18 +169,18 @@ function computeWeightedScore(components, weights) {
 
 export function evaluateThresholdBand(score, warningThreshold = 80, criticalThreshold = 65, hasError = false) {
   if (hasError) {
-    return { status: 'Error', badgeClass: 'bg-[#FF2E9A] text-white border-[#FF2E9A]', hex: '#FF2E9A' };
+    return { status: 'Error', badgeClass: 'bg-rose-50 text-rose-700 border-rose-200', hex: '#DC2626' };
   }
   if (score === null || score === undefined) {
     return { status: 'Missing Data', badgeClass: 'bg-slate-100 text-[#0A2B6D] border-slate-300', hex: '#64748B' };
   }
   if (score < criticalThreshold) {
-    return { status: 'Fail', badgeClass: 'bg-[#FF2E9A] text-white border-[#FF2E9A]', hex: '#FF2E9A' };
+    return { status: 'Fail', badgeClass: 'bg-rose-50 text-rose-700 border-rose-200', hex: '#DC2626' };
   }
   if (score < warningThreshold) {
-    return { status: 'Warning', badgeClass: 'bg-[#A100FF] text-white border-[#A100FF]', hex: '#A100FF' };
+    return { status: 'Warning', badgeClass: 'bg-amber-50 text-amber-800 border-amber-200', hex: '#D97706' };
   }
-  return { status: 'Pass', badgeClass: 'bg-[#0072FF] text-white border-[#0072FF]', hex: '#0072FF' };
+  return { status: 'Pass', badgeClass: 'bg-emerald-50 text-emerald-700 border-emerald-200', hex: '#059669' };
 }
 
 export async function loadAndCalculateExecutiveScores(client = base44) {
@@ -211,6 +211,8 @@ export async function loadAndCalculateExecutiveScores(client = base44) {
     docApproved,
     chkTotal,
     chkApproved,
+    chkNdisCompliant,
+    chkAgedCareCompliant,
     audTotal,
     audCompleted,
     taskTotal,
@@ -236,7 +238,9 @@ export async function loadAndCalculateExecutiveScores(client = base44) {
     goalTotal,
     partConsentTotal,
     partConsentActive,
-    // Sample records for drill-down explainability
+    partDocTotal,
+    partDocVerified,
+    policyTotal,
     sampleDocs,
     sampleChecklists,
     sampleStaff,
@@ -246,12 +250,14 @@ export async function loadAndCalculateExecutiveScores(client = base44) {
     sampleQuality,
     sampleComplaints,
   ] = await Promise.all([
-     safeFilter('ExecutiveScoreConfig', {}, 10),
+    safeFilter('ExecutiveScoreConfig', {}, 10),
     safeFilter('ExecutiveScoreSnapshot', {}, 20),
     safeCount('DocumentControl', {}),
     safeCount('DocumentControl', { status: 'Approved' }),
     safeCount('Checklist', {}),
     safeCount('Checklist', { status: { $in: ['Approved', 'Completed'] } }),
+    safeCount('Checklist', { ndis_compliant: true }),
+    safeCount('Checklist', { aged_care_compliant: true }),
     safeCount('InternalAudit', {}),
     safeCount('InternalAudit', { status: { $in: ['Completed', 'Closed', 'Verified'] } }),
     safeCount('TodoTask', { status: { $nin: ['Cancelled'] } }),
@@ -277,6 +283,9 @@ export async function loadAndCalculateExecutiveScores(client = base44) {
     safeCount('Goal', {}),
     safeCount('InformationSharingConsent', {}),
     safeCount('InformationSharingConsent', { status: 'Active' }),
+    safeCount('ParticipantDocument', {}),
+    safeCount('ParticipantDocument', { status: { $in: ['Completed', 'Verified', 'Received'] } }),
+    safeCount('Policy', {}),
     safeFilter('DocumentControl', {}, 5),
     safeFilter('Checklist', {}, 5),
     safeFilter('StaffProfile', {}, 5),
@@ -287,7 +296,6 @@ export async function loadAndCalculateExecutiveScores(client = base44) {
     safeFilter('Complaint', {}, 5),
   ]);
 
-  // Merge stored custom configs over defaults
   const mergedConfigs = { ...DEFAULT_SCORE_CONFIGS };
   for (const row of savedConfigs) {
     if (row.score_key && mergedConfigs[row.score_key]) {
@@ -508,7 +516,6 @@ export async function loadAndCalculateExecutiveScores(client = base44) {
 
   const buildResult = (key, calc) => {
     const cfg = mergedConfigs[key];
-    // Never default unassessed or empty modules to synthetic baseline percentages.
     const resolvedScore = hasQueryError ? null : calc.score;
     const resolvedBreakdown = calc.breakdown;
     const evidenceCount = resolvedBreakdown.reduce((sum, b) => sum + (Number(b.denominator) || 0), 0);
@@ -533,8 +540,118 @@ export async function loadAndCalculateExecutiveScores(client = base44) {
     quality: buildResult('quality', qualCalc),
   };
 
+  // =========================================================================
+  // ACCURACY CONTROL FRAMEWORK (5 Evidence-Backed Integrity Scores)
+  // =========================================================================
+  const accuracyNum = docApproved + chkApproved + empDocCurrent + partDocVerified;
+  const accuracyDen = docTotal + chkTotal + empDocTotal + partDocTotal;
+  const accuracyScore = hasQueryError ? null : safeRatio(accuracyNum, accuracyDen);
+
+  const dataQualityNum = staffActive + certValid + riskControlled + taskNotOverdue;
+  const dataQualityDen = staffTotal + certTotal + riskTotal + taskTotal;
+  const dataQualityScore = hasQueryError ? null : safeRatio(dataQualityNum, dataQualityDen);
+
+  const evidenceCompNum = empDocCurrent + partDocVerified + certValid + partConsentActive + empConsentActive;
+  const evidenceCompDen = empDocTotal + partDocTotal + certTotal + partConsentTotal + empConsentTotal;
+  const evidenceCompletenessScore = hasQueryError ? null : safeRatio(evidenceCompNum, evidenceCompDen);
+
+  const compIntegrityNum = docApproved + chkApproved + taskNotOverdue;
+  const compIntegrityDen = docTotal + chkTotal + taskTotal;
+  const complianceIntegrityScore = hasQueryError ? null : safeRatio(compIntegrityNum, compIntegrityDen);
+
+  const auditReadyNum = audCompleted + chkApproved + docApproved + partConsentActive;
+  const auditReadyDen = audTotal + chkTotal + docTotal + partConsentTotal;
+  const auditReadinessScore = hasQueryError ? null : safeRatio(auditReadyNum, auditReadyDen);
+
+  const accuracyControl = [
+    {
+      key: 'accuracy_score',
+      title: 'Accuracy Score',
+      score: accuracyScore,
+      band: evaluateThresholdBand(accuracyScore, 80, 65, hasQueryError),
+      detail: `${accuracyNum} of ${accuracyDen} controlled docs, checklists & files verified`,
+      route: '/compliance',
+    },
+    {
+      key: 'data_quality_score',
+      title: 'Data Quality Score',
+      score: dataQualityScore,
+      band: evaluateThresholdBand(dataQualityScore, 80, 65, hasQueryError),
+      detail: `${dataQualityNum} of ${dataQualityDen} profiles, certificates, risks & tasks valid`,
+      route: '/universal-storage',
+    },
+    {
+      key: 'evidence_completeness_score',
+      title: 'Evidence Completeness Score',
+      score: evidenceCompletenessScore,
+      band: evaluateThresholdBand(evidenceCompletenessScore, 80, 65, hasQueryError),
+      detail: `${evidenceCompNum} of ${evidenceCompDen} evidence files, consents & credentials linked`,
+      route: '/documents',
+    },
+    {
+      key: 'compliance_integrity_score',
+      title: 'Compliance Integrity Score',
+      score: complianceIntegrityScore,
+      band: evaluateThresholdBand(complianceIntegrityScore, 82, 68, hasQueryError),
+      detail: `${compIntegrityNum} of ${compIntegrityDen} statutory controls & SLA tasks compliant`,
+      route: '/governance',
+    },
+    {
+      key: 'audit_readiness_score',
+      title: 'Audit Readiness Score',
+      score: auditReadinessScore,
+      band: evaluateThresholdBand(auditReadinessScore, 80, 65, hasQueryError),
+      detail: `${auditReadyNum} of ${auditReadyDen} audits, checklists & audit consents ready`,
+      route: '/auditor-portal',
+    },
+  ];
+
+  // =========================================================================
+  // 13 LIVE COMPLIANCE INTELLIGENCE SCORES (Evidence-Backed)
+  // =========================================================================
+  const ndisScore = hasQueryError
+    ? null
+    : safeRatio(
+        chkNdisCompliant + partConsentActive + partDocVerified + empDocCurrent,
+        chkTotal + partConsentTotal + partDocTotal + empDocTotal
+      );
+  const agedCareScore = hasQueryError
+    ? null
+    : safeRatio(chkAgedCareCompliant + incResolved + docApproved, chkTotal + incTotal + docTotal);
+  const clinicalGovScore = hasQueryError
+    ? null
+    : safeRatio(incResolved + riskControlled + partConsentActive, incTotal + riskTotal + partConsentTotal);
+  const governanceScore = hasQueryError
+    ? null
+    : safeRatio(docApproved + audCompleted + policyTotal, docTotal + audTotal + Math.max(policyTotal, 0));
+  const trainingScore = hasQueryError ? null : safeRatio(certValid, certTotal);
+  const safetyScore = hasQueryError
+    ? null
+    : safeRatio(riskNonCritUntreated + incResolved + drillTotal, riskTotal + incTotal + Math.max(drillTotal, 0));
+  const participantOutcomesScore = hasQueryError
+    ? null
+    : safeRatio(partConsentActive + compResolved + goalTotal, partConsentTotal + compTotal + Math.max(goalTotal, 0));
+
+  const liveIntelligence13 = [
+    { key: 'enterprise_compliance', title: 'Enterprise Compliance', score: scores.compliance.score, band: scores.compliance.band, route: '/compliance', detail: 'Composite statutory compliance' },
+    { key: 'ndis_compliance', title: 'NDIS Compliance', score: ndisScore, band: evaluateThresholdBand(ndisScore, 82, 68, hasQueryError), route: '/ndis-portal', detail: 'NDIS Practice Standards & worker screening' },
+    { key: 'aged_care_compliance', title: 'Aged Care Compliance', score: agedCareScore, band: evaluateThresholdBand(agedCareScore, 82, 68, hasQueryError), route: '/compliance', detail: 'Strengthened Aged Care Standards & SIRS' },
+    { key: 'clinical_governance', title: 'Clinical Governance', score: clinicalGovScore, band: evaluateThresholdBand(clinicalGovScore, 80, 65, hasQueryError), route: '/incidents', detail: 'Clinical incidents, medications & risk controls' },
+    { key: 'risk_score', title: 'Risk Score', score: scores.risk.score, band: scores.risk.band, route: '/risks', detail: 'ISO 31000 risk treatment & critical controls' },
+    { key: 'quality_score', title: 'Quality Score', score: scores.quality.score, band: scores.quality.band, route: '/quality', detail: 'CAPA, continuous improvement & feedback' },
+    { key: 'governance_score', title: 'Governance Score', score: governanceScore, band: evaluateThresholdBand(governanceScore, 80, 65, hasQueryError), route: '/governance', detail: 'Controlled documents, policies & internal audits' },
+    { key: 'training_compliance', title: 'Training Compliance', score: trainingScore, band: evaluateThresholdBand(trainingScore, 85, 70, hasQueryError), route: '/training', detail: `${certValid} of ${certTotal} certificates current` },
+    { key: 'workforce_compliance', title: 'Workforce Compliance', score: scores.workforce.score, band: scores.workforce.band, route: '/our-employees', detail: 'Cleared staff, credentials & employee consents' },
+    { key: 'safety_score', title: 'Safety Score', score: safetyScore, band: evaluateThresholdBand(safetyScore, 80, 65, hasQueryError), route: '/emergency-response', detail: 'WHS controls, emergency drills & incident closure' },
+    { key: 'audit_readiness', title: 'Audit Readiness', score: auditReadinessScore, band: evaluateThresholdBand(auditReadinessScore, 80, 65, hasQueryError), route: '/auditor-portal', detail: 'Continuous audit pack & consent readiness' },
+    { key: 'evidence_completeness', title: 'Evidence Completeness', score: evidenceCompletenessScore, band: evaluateThresholdBand(evidenceCompletenessScore, 80, 65, hasQueryError), route: '/documents', detail: 'Mapped evidence across vaults & profiles' },
+    { key: 'participant_outcomes', title: 'Participant Outcomes', score: participantOutcomesScore, band: evaluateThresholdBand(participantOutcomesScore, 80, 65, hasQueryError), route: '/goals', detail: 'Goals tracked, consents active & feedback resolved' },
+  ];
+
   return {
     scores,
+    accuracyControl,
+    liveIntelligence13,
     calculatedAt,
     errors: queryErrors,
     snapshots: snapshots.sort((a, b) => (a.snapshot_date || '').localeCompare(b.snapshot_date || '')),
@@ -551,6 +668,8 @@ export async function loadAndCalculateExecutiveScores(client = base44) {
       qualTotal,
       compTotal,
       goalTotal,
+      partDocTotal,
+      policyTotal,
     },
   };
 }
