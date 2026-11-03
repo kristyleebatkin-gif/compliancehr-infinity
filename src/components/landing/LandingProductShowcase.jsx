@@ -220,7 +220,7 @@ export default function LandingProductShowcase() {
                   'radial-gradient(circle at 50% 50%, rgba(0, 198, 255, 0.18) 0%, rgba(90, 0, 214, 0.32) 45%, #0A2B6D 100%)',
               }}
             >
-              <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-7">
+              <div role="tablist" aria-label="Executive dashboard showcase views" className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-7">
                 {SHOWCASE_PANELS.map((panel) => {
                   const Icon = panel.icon;
                   const isActive = panel.id === selectedId;
@@ -228,11 +228,13 @@ export default function LandingProductShowcase() {
                     <button
                       key={panel.id}
                       type="button"
+                      role="tab"
+                      aria-selected={isActive}
                       onClick={() => setSelectedId(panel.id)}
-                      className={`group flex items-center gap-2.5 rounded-full border px-3.5 py-2 text-left backdrop-blur-md transition-all duration-200 ${
+                      className={`group flex items-center gap-2.5 rounded-2xl border px-3.5 py-2.5 text-left backdrop-blur-md transition-all duration-200 ${
                         isActive
-                          ? 'border-[#00C6FF] bg-white text-[#0A2B6D] shadow-[0_0_20px_rgba(0,198,255,0.75)] scale-[1.01]'
-                          : 'border-white/30 bg-white/10 text-white hover:border-[#00C6FF] hover:bg-white/20'
+                          ? 'border-[#00C6FF] bg-white text-[#0A2B6D] shadow-lg scale-[1.01]'
+                          : 'border-white/30 bg-[#061539]/70 text-white hover:border-[#00C6FF] hover:bg-[#061539]/90'
                       }`}
                     >
                       <span
@@ -245,13 +247,13 @@ export default function LandingProductShowcase() {
                       </span>
                       <div className="min-w-0 flex-1">
                         <div
-                          className="text-[11px] font-extrabold leading-snug"
+                          className="text-xs font-extrabold leading-snug"
                           style={{ color: isActive ? '#0A2B6D' : '#FFFFFF' }}
                         >
-                          ◉ {panel.shortLabel}
+                          {panel.shortLabel}
                         </div>
                         <div
-                          className="text-[9.5px] font-bold leading-tight"
+                          className="text-xs font-semibold leading-tight"
                           style={{ color: isActive ? '#5A00D6' : '#00C6FF' }}
                         >
                           {panel.metricValue}
