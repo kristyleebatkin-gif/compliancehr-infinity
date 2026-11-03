@@ -2,82 +2,83 @@
   min-width: 0;
   border-radius: var(--radius);
   padding: 0.5rem;
-  background: hsl(var(--ai-hint) / 0.65);
+  background: #F8FAFC;
 }
 .vault-workspace .vault-record-count {
   display: inline-flex;
   align-items: center;
   min-height: 2.5rem;
   padding: .5rem 1rem;
-  border: 1px solid hsl(var(--header-pink) / .7);
+  border: 1px solid #BAE6FD;
   border-radius: .75rem;
-  background: hsl(var(--chart-5) / .75);
-  color: hsl(var(--foreground));
+  background: #F0F7FF;
+  color: #0A2B6D;
   font-size: .875rem;
   font-weight: 800;
 }
-.dark .vault-workspace .vault-record-count { background: hsl(var(--chart-5) / .3); }
+.dark .vault-workspace .vault-record-count { background: rgba(0, 114, 255, 0.2); }
 .vault-workspace .vault-document-tabs { margin-left: 0; margin-right: auto; }
 .vault-workspace #staff-docs .vault-staff-actions { gap: .375rem; }
 .vault-workspace #staff-docs .vault-staff-actions button {
   flex-shrink: 0;
   height: 2.25rem;
   gap: .3rem;
-  padding: .375rem .5rem;
-  font-size: .6875rem;
-  font-weight: 750;
-  color: hsl(var(--foreground));
+  padding: .375rem .75rem;
+  font-size: .75rem;
+  font-weight: 700;
+  color: #0A2B6D;
 }
 .vault-workspace #staff-docs .vault-staff-actions button svg { width: .875rem; height: .875rem; }
-.vault-workspace #staff-docs [data-staff-action="scan"] { border-color: hsl(var(--teal) / .6); background: hsl(var(--teal) / .25); }
-.vault-workspace #staff-docs [data-staff-action="export"] { border-color: hsl(var(--safe) / .6); background: hsl(var(--safe) / .25); }
-.vault-workspace #staff-docs [data-staff-action="bulk"] button { border-color: hsl(var(--primary) / .6); background: hsl(var(--primary) / .25); }
-.vault-workspace #staff-docs [data-staff-action="add"] { border-color: hsl(var(--header-pink) / .6); background: hsl(var(--chart-5) / .45); }
-.vault-workspace #staff-docs .vault-staff-actions button:hover { filter: brightness(.95); }
+.vault-workspace #staff-docs [data-staff-action="scan"] { border-color: #BAE6FD; background: #F0F7FF; }
+.vault-workspace #staff-docs [data-staff-action="export"] { border-color: #BAE6FD; background: #FFFFFF; }
+.vault-workspace #staff-docs [data-staff-action="bulk"] button { border-color: #0072FF; background: #F0F7FF; }
+.vault-workspace #staff-docs [data-staff-action="add"] { border-color: #0A2B6D; background: #0A2B6D; color: #FFFFFF; }
+.vault-workspace #staff-docs .vault-staff-actions button:hover { filter: brightness(.97); }
 .vault-workspace > :first-child { min-width: 0; }
 .vault-workspace > :first-child > :first-child { margin-bottom: 0; }
-.vault-workspace [role="tablist"] { background: hsl(var(--chart-5) / 0.2); }
-.vault-workspace [role="tab"] { border: 1px solid hsl(var(--chart-5) / 0.35); }
+.vault-workspace [role="tablist"] { background: #F0F7FF; border: 1px solid #BAE6FD; }
+.vault-workspace [role="tab"] { border: 1px solid transparent; color: #0A2B6D; }
 .vault-workspace [role="tab"][data-state="active"] {
-  background: linear-gradient(120deg, hsl(var(--chart-5) / 0.35), hsl(var(--primary) / 0.25));
-  color: hsl(var(--foreground));
+  background: #0A2B6D;
+  color: #FFFFFF;
 }
 .vault-workspace .module-action-bar button,
 .vault-workspace #staff-docs button,
 .vault-workspace .vault-uploads > div:first-child button,
 .analytics-workspace .module-action-bar button {
-  border-color: hsl(var(--primary) / 0.5);
-  background: linear-gradient(120deg, hsl(var(--primary) / 0.27), hsl(var(--chart-5) / 0.32));
-  color: hsl(var(--foreground));
+  border-color: #BAE6FD;
+  background: #F0F7FF;
+  color: #0A2B6D;
   font-weight: 700;
-  box-shadow: 0 2px 5px hsl(var(--primary) / 0.12);
+  box-shadow: 0 1px 2px rgba(10, 43, 109, 0.06);
 }
 .vault-workspace .module-action-bar button:nth-child(even),
 .analytics-workspace .module-action-bar button:nth-child(even) {
-  border-color: hsl(var(--teal) / 0.6);
-  background: linear-gradient(120deg, hsl(var(--teal) / 0.3), hsl(var(--safe) / 0.28));
+  border-color: #CBD5E1;
+  background: #FFFFFF;
+  color: #0A2B6D;
 }
-.vault-workspace .vault-data-control { border-color: hsl(var(--primary) / 0.45); background: hsl(var(--primary) / 0.08); }
+.vault-workspace .vault-data-control { border-color: #BAE6FD; background: #F0F7FF; }
 .analytics-workspace .analytics-kpi {
-  border-width: 2px;
-  border-color: hsl(var(--primary) / 0.55);
-  background: linear-gradient(125deg, hsl(var(--primary) / 0.3), hsl(var(--chart-5) / 0.25));
+  border-width: 1px;
+  border-color: #BAE6FD;
+  background: #FFFFFF;
 }
 .analytics-workspace .analytics-kpi:nth-child(2n) {
-  border-color: hsl(var(--safe) / 0.6);
-  background: linear-gradient(125deg, hsl(var(--safe) / 0.3), hsl(var(--teal) / 0.25));
+  border-color: #BAE6FD;
+  background: #F0F7FF;
 }
 .analytics-workspace .analytics-kpi:nth-child(3n) {
-  border-color: hsl(var(--warning) / 0.65);
-  background: linear-gradient(125deg, hsl(var(--warning) / 0.35), hsl(var(--chart-5) / 0.25));
+  border-color: #CBD5E1;
+  background: #FFFFFF;
 }
-.analytics-workspace .analytics-kpi p { color: hsl(var(--foreground)); }
+.analytics-workspace .analytics-kpi p { color: #0A2B6D; }
 .vault-workspace [data-vault-subject] {
-  border-color: var(--subject-color);
-  background: linear-gradient(125deg, color-mix(in srgb, var(--subject-color) 40%, hsl(var(--card))), color-mix(in srgb, var(--subject-color) 18%, hsl(var(--card))));
+  border-color: #BAE6FD;
+  background: #FFFFFF;
 }
 .vault-workspace [data-vault-subject] > button > span:first-child {
-  background: color-mix(in srgb, var(--subject-color) 48%, hsl(var(--card)));
+  background: #F0F7FF;
 }
 .vault-workspace .vault-uploads.vault-uploads { padding: 0.375rem; border-radius: 0.5rem; }
 .vault-uploads > p { margin-bottom: 0.375rem; font-size: 0.625rem; line-height: 0.875rem; }

@@ -19,7 +19,7 @@ export function drawPdfRegisterTable(doc, y, columns, { rows = 12, values = [], 
   const labels = columns.map((c) => doc.splitTextToSize(String(c), colW - 14));
   const headH = Math.max(34, ...labels.map((l) => l.length * 11 + 18));
   const header = () => {
-    doc.setFillColor(124, 58, 237); doc.setDrawColor(124, 58, 237);
+    doc.setFillColor(10, 43, 109); doc.setDrawColor(10, 43, 109);
     doc.rect(M, y, width, headH, 'FD');
     doc.setFont('helvetica', 'bold'); doc.setFontSize(8); doc.setTextColor(255);
     labels.forEach((l, i) => doc.text(l, M + i * colW + 7, y + 15, { lineHeightFactor: 1.375 }));
@@ -36,10 +36,10 @@ export function drawPdfRegisterTable(doc, y, columns, { rows = 12, values = [], 
       const chunks = cells.map((cell) => cell.slice(offset, offset + capacity));
       const height = Math.max(rowH, ...chunks.map((c) => c.length * 12 + 18));
       if (y + height + 14 > pdfContentBottom(doc)) { doc.addPage(); y = pdfContentTop(doc); header(); }
-      doc.setDrawColor(167, 139, 219); doc.setLineWidth(0.8);
-      doc.setFillColor(...(r % 2 ? [248, 246, 253] : [255, 255, 255]));
+      doc.setDrawColor(186, 230, 253); doc.setLineWidth(0.8);
+      doc.setFillColor(...(r % 2 ? [240, 247, 255] : [255, 255, 255]));
       doc.rect(M, y, width, height, 'FD');
-      doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5); doc.setTextColor(30, 30, 45);
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5); doc.setTextColor(10, 43, 109);
       chunks.forEach((chunk, i) => {
         if (i) doc.line(M + i * colW, y, M + i * colW, y + height);
         if (interactive) addPdfTextField(doc, M + i * colW + 4, y + 4, colW - 8, height - 8, true, chunk.join('\n'));

@@ -25,8 +25,7 @@ import {
   autoFileToVaultAndCompanySafe,
 } from '@/lib/enterpriseGovernanceStandard';
 
-const BRAND_GRADIENT =
-  'linear-gradient(120deg, #0072FF 0%, #0A2B6D 16%, #5A00D6 40%, #A100FF 68%, #FF2E9A 100%)';
+const BRAND_GRADIENT = '#0A2B6D';
 
 const PREVIEW_MODES = [
   { id: 'desktop', label: 'Desktop Preview', icon: Monitor, widthClass: 'w-full' },
@@ -558,28 +557,25 @@ export default function EnterpriseStandardQualityGateSuite() {
           {/* Controlled Form Container with Responsive Preview Width */}
           <div className={`${currentPreviewConfig.widthClass} transition-all duration-200`}>
             <div className="overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white shadow-lg">
-              {/* SECTION 1: HEADER */}
-              <div
-                className="app-section-card-header flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 py-3.5 text-white"
-                style={{ background: BRAND_GRADIENT }}
-              >
+              {/* SECTION 1: HEADER — Clean Solid Dark Blue & Light Blue (No Gradient) */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b-4 border-[#0072FF] bg-[#0A2B6D] px-5 py-4 text-white">
                 <div>
-                  <span className="inline-block rounded-full bg-white/20 px-2.5 py-0.5 text-[9.5px] font-extrabold uppercase tracking-wider text-white">
+                  <span className="inline-block rounded-full bg-[#0072FF] px-3 py-0.5 text-xs font-extrabold uppercase tracking-wider text-white">
                     1. Header · Controlled Enterprise Form · {activeTemplate.domain}
                   </span>
-                  <h3 className="mt-1 font-editorial text-lg sm:text-xl font-extrabold text-white">
+                  <h3 className="mt-1.5 font-editorial text-lg sm:text-xl font-extrabold text-white">
                     {activeTemplate.documentName}
                   </h3>
-                  <p className="text-[11px] font-semibold text-white/90">
+                  <p className="text-xs font-semibold text-[#E0F2FE]">
                     Module: {activeTemplate.module} · Category: {activeTemplate.category} · Department: {activeTemplate.department}
                   </p>
                 </div>
-                <div className="rounded-xl border border-white/30 bg-white/15 px-3 py-2 text-left sm:text-right text-white shrink-0">
-                  <div className="text-xs font-extrabold">{activeTemplate.documentNumber}</div>
-                  <div className="text-[10px] font-bold">
+                <div className="rounded-xl border border-[#0072FF] bg-[#F0F7FF] px-3.5 py-2 text-left sm:text-right text-[#0A2B6D] shrink-0">
+                  <div className="text-xs font-extrabold text-[#0A2B6D]">{activeTemplate.documentNumber}</div>
+                  <div className="text-xs font-bold text-[#0A2B6D]/80">
                     Record ID: {activeTemplate.recordId} · {activeTemplate.versionNumber}
                   </div>
-                  <div className="text-[10px] font-extrabold text-[#00C6FF]">
+                  <div className="text-xs font-extrabold text-[#0072FF]">
                     Status: {activeTemplate.status}
                   </div>
                 </div>

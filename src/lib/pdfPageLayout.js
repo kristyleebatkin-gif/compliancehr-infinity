@@ -20,20 +20,19 @@ function paintHeader(doc, options) {
   const badge = [String(docType).toUpperCase(), code].filter(Boolean).join('  |  ');
   const badgeLines = doc.splitTextToSize(badge, width - 28);
   const badgeH = badgeLines.length * 10 + 12;
-  doc.setFillColor(124, 58, 237);
+  doc.setFillColor(10, 43, 109);
   doc.roundedRect(PDF_MARGIN, y, width, badgeH, 5, 5, 'F');
   doc.setTextColor(255);
   doc.text(badgeLines, PDF_MARGIN + 12, y + 13, { lineHeightFactor: 1.25 });
   y += badgeH + 22;
   doc.setFontSize(17);
-  doc.setTextColor(49, 27, 105);
+  doc.setTextColor(10, 43, 109);
   const titles = doc.splitTextToSize(titleCase(title), width);
   doc.text(titles, PDF_MARGIN, y, { lineHeightFactor: 1.2 });
   y += titles.length * 20.4;
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(8.5);
   doc.setTextColor(71, 85, 105);
-  // A subtitle that repeats the document name is dropped so the header reads cleanly.
   const simplify = (text) => String(text || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').replace(/\s+form\b.*$/, '').trim();
   const subtitleText = String(subtitle || '').trim();
   const repeatsTitle = subtitleText && simplify(subtitleText) === simplify(title);
@@ -42,7 +41,7 @@ function paintHeader(doc, options) {
     doc.text(lines, PDF_MARGIN, y, { lineHeightFactor: 1.35 });
     y += lines.length * 11.5 + 4;
   }
-  doc.setDrawColor(196, 181, 253);
+  doc.setDrawColor(0, 114, 255);
   doc.setLineWidth(0.8);
   doc.line(PDF_MARGIN, y + 2, PDF_MARGIN + width, y + 2);
   return y + 22;

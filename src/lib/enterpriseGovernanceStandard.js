@@ -1015,7 +1015,7 @@ export function exportControlledRecordAsPdf(record, { save = true, log = true } 
   };
   doc.setFillColor(10, 43, 109);
   doc.rect(0, 0, width, 94, 'F');
-  doc.setFillColor(255, 46, 154);
+  doc.setFillColor(0, 114, 255);
   doc.rect(0, 94, width, 4, 'F');
   line('1. COMPLIANCEHR INFINITY - CONTROLLED FORM', { bold: true, size: 10, white: true });
   line(record.documentName || record.title || 'Controlled Record', { bold: true, size: 15, white: true });
@@ -1096,14 +1096,14 @@ export function exportControlledRecordAsWord(record) {
 <title>${record.documentNumber} - ${record.documentName}</title>
 <style>
   body { font-family: Arial, sans-serif; color: #0A2B6D; margin: 28px; }
-  .header { background: linear-gradient(120deg, #0072FF, #5A00D6, #FF2E9A); color: #ffffff; padding: 18px; border-bottom: 4px solid #FF2E9A; }
+  .header { background: #0A2B6D; color: #ffffff; padding: 18px; border-bottom: 4px solid #0072FF; }
   h1 { font-size: 18px; margin: 4px 0; }
-  h2 { font-size: 13px; color: #5A00D6; border-bottom: 2px solid #C084FC; padding-bottom: 4px; margin-top: 16px; text-transform: uppercase; }
+  h2 { font-size: 13px; color: #0072FF; border-bottom: 2px solid #BAE6FD; padding-bottom: 4px; margin-top: 16px; text-transform: uppercase; }
   table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 11px; }
   th { background: #0A2B6D; color: #ffffff; padding: 6px; text-align: left; border: 1px solid #0A2B6D; }
-  td { padding: 6px; border: 1px solid #C084FC; }
-  .label { background: #F5F0FF; font-weight: bold; width: 24%; }
-  .footer { margin-top: 20px; padding: 10px; background: #F5F0FF; border: 1px solid #5A00D6; font-size: 10px; font-weight: bold; }
+  td { padding: 6px; border: 1px solid #BAE6FD; }
+  .label { background: #F0F7FF; font-weight: bold; width: 24%; }
+  .footer { margin-top: 20px; padding: 10px; background: #F0F7FF; border: 1px solid #0072FF; font-size: 10px; font-weight: bold; }
 </style>
 </head>
 <body>

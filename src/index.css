@@ -305,22 +305,41 @@
     padding-bottom: 0.375rem;
     font-size: 0.8125rem;
   }
-  /* Clean Enterprise Form Standard */
+  /* Landing-Page Modern White, Light Blue & Dark Blue Form Standard */
+  .compact-safety-form {
+    background: #FFFFFF;
+    border: 1px solid #BAE6FD;
+    border-radius: 0.875rem;
+    padding: 1rem;
+    box-shadow: 0 2px 10px -2px rgba(10, 43, 109, 0.06);
+  }
   .compact-safety-form :is(input:not([type="checkbox"]), select) {
     height: 2.5rem;
     min-width: 0;
     padding: 0.5rem 0.75rem;
     font-size: 0.875rem;
+    background: #F0F7FF;
+    border: 1px solid #BAE6FD;
+    border-radius: 0.5rem;
+    color: #0A2B6D;
+  }
+  .compact-safety-form :is(input:not([type="checkbox"]), select, textarea):focus {
+    background: #FFFFFF;
+    border-color: #0072FF;
   }
   .compact-safety-form textarea {
     min-height: 5rem;
     padding: 0.5rem 0.75rem;
     font-size: 0.875rem;
     resize: vertical;
+    background: #F0F7FF;
+    border: 1px solid #BAE6FD;
+    border-radius: 0.5rem;
+    color: #0A2B6D;
   }
   .compact-safety-form label {
     font-size: 0.75rem;
-    font-weight: 700;
+    font-weight: 800;
     line-height: 1.125rem;
     color: #0A2B6D;
   }
@@ -328,9 +347,16 @@
     gap: 0.75rem;
   }
   .compact-safety-form button {
-    min-height: 2.25rem;
-    padding: 0.5rem 1rem;
+    min-height: 2.5rem;
+    padding: 0.5rem 1.25rem;
     font-size: 0.875rem;
+    font-weight: 700;
+    background: #0A2B6D;
+    color: #FFFFFF;
+    border-radius: 0.625rem;
+  }
+  .compact-safety-form button:hover {
+    background: #0072FF;
   }
   @media (min-width: 640px) {
     .compact-safety-form {

@@ -127,29 +127,29 @@ export default function MasterDocumentAndAlliedHealthCatalogueModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-3 sm:p-6 overflow-y-auto">
-      <div className="relative flex max-h-[92vh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
-        {/* Modal Header */}
-        <div className="flex items-start justify-between gap-3 border-b border-slate-200 bg-[#F8FAFC] px-5 py-4">
+      <div className="relative flex max-h-[92vh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white shadow-2xl">
+        {/* Clean Solid Dark Blue & Light Blue Controlled Document Header (No Gradient) */}
+        <div className="flex items-start justify-between gap-3 border-b-4 border-[#0072FF] bg-[#0A2B6D] px-5 py-4 text-white">
           <div>
             <div className="flex flex-wrap items-center gap-2">
-              <Badge className="bg-[#0A2B6D] text-white text-xs font-mono">{item.code}</Badge>
-              <Badge variant="outline" className="text-xs">{item.docType}</Badge>
-              <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 text-xs">
+              <Badge className="bg-[#0072FF] text-white text-xs font-mono">{item.code}</Badge>
+              <Badge className="bg-white text-[#0A2B6D] text-xs font-bold">{item.docType}</Badge>
+              <Badge className="bg-[#E0F2FE] text-[#0A2B6D] border-sky-200 text-xs font-bold">
                 Review Cycle: {item.reviewCycle}
               </Badge>
             </div>
-            <h3 className="mt-1.5 font-editorial text-xl font-extrabold text-[#0A2B6D]">
+            <h3 className="mt-1.5 font-editorial text-xl font-extrabold text-white">
               {item.title}
             </h3>
-            <p className="mt-0.5 text-xs font-medium text-[#0A2B6D]/75">
-              Clinical / Operational Owner: <strong className="font-bold">{item.clinicalOwner}</strong> ·{' '}
+            <p className="mt-0.5 text-xs font-medium text-[#E0F2FE]">
+              Clinical / Operational Owner: <strong className="font-bold text-white">{item.clinicalOwner}</strong> ·{' '}
               {item.ndisStandard} · {item.agedCareStandard}
             </p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg border border-slate-200 bg-white p-2 text-[#0A2B6D] hover:bg-slate-100"
+            className="rounded-lg border border-white/25 bg-white/10 p-2 text-white hover:bg-white/20"
             aria-label="Close modal"
           >
             <X className="h-4 w-4" />
@@ -157,9 +157,9 @@ export default function MasterDocumentAndAlliedHealthCatalogueModal({
         </div>
 
         {/* Scrollable Content */}
-        <form onSubmit={handleSaveCompleteRecord} className="flex-1 overflow-y-auto p-5 space-y-5">
+        <form onSubmit={handleSaveCompleteRecord} className="flex-1 overflow-y-auto p-5 space-y-5 bg-white">
           {/* Level 2 Document Standards Metadata Bar */}
-          <div className="rounded-xl border border-slate-200 bg-[#F8FAFC] p-4 space-y-3">
+          <div className="rounded-xl border border-sky-200 bg-[#F0F7FF] p-4 space-y-3">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <span className="text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
                 Level 2 &amp; Level 5 — Document Governance &amp; Compliance Mapping

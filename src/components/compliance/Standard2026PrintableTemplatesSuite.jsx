@@ -13,8 +13,7 @@ import {
 } from '@/lib/standard2026PrintablePdf';
 import EnterpriseStandardQualityGateSuite from '@/components/compliance/EnterpriseStandardQualityGateSuite';
 
-const HEADER_GRADIENT =
-  'linear-gradient(120deg, #0072FF 0%, #0A2B6D 13%, #5A00D6 26%, #A100FF 39%, #FF2E9A 50%, #A100FF 61%, #5A00D6 74%, #0A2B6D 87%, #0072FF 100%)';
+const HEADER_GRADIENT = '#0A2B6D';
 const CHR_LOGO =
   'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/3196f8f22_generated_image.png';
 
@@ -217,49 +216,49 @@ export default function Standard2026PrintableTemplatesSuite() {
       </div>
 
       {/* Office Branding Bar — Automatically stamps all 12 Printable Templates */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-1.5 rounded-xl border-2 border-purple-300 bg-purple-50/40 p-2 text-[7.8px]">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2 rounded-xl border border-sky-200 bg-[#F0F7FF] p-3 text-xs">
         <div>
-          <label className="font-extrabold uppercase text-purple-900">Organisation / Provider Name</label>
+          <label className="font-extrabold uppercase text-[#0A2B6D]">Organisation / Provider Name</label>
           <input
             type="text"
             value={orgInfo.businessName}
             onChange={(e) => setOrgInfo({ ...orgInfo, businessName: e.target.value })}
-            className="mt-0.5 w-full rounded border border-purple-300 bg-white px-2 py-1 font-bold text-blue-950"
+            className="mt-1 w-full rounded-lg border border-sky-200 bg-white px-2.5 py-1.5 font-bold text-[#0A2B6D]"
           />
         </div>
         <div>
-          <label className="font-extrabold uppercase text-purple-900">ABN (Printed on Header)</label>
+          <label className="font-extrabold uppercase text-[#0A2B6D]">ABN (Printed on Header)</label>
           <input
             type="text"
             value={orgInfo.abn}
             onChange={(e) => setOrgInfo({ ...orgInfo, abn: e.target.value })}
-            className="mt-0.5 w-full rounded border border-purple-300 bg-white px-2 py-1 font-bold text-blue-950"
+            className="mt-1 w-full rounded-lg border border-sky-200 bg-white px-2.5 py-1.5 font-bold text-[#0A2B6D]"
           />
         </div>
         <div>
-          <label className="font-extrabold uppercase text-purple-900">NDIS Provider Reg #</label>
+          <label className="font-extrabold uppercase text-[#0A2B6D]">NDIS Provider Reg #</label>
           <input
             type="text"
             value={orgInfo.ndisReg}
             onChange={(e) => setOrgInfo({ ...orgInfo, ndisReg: e.target.value })}
-            className="mt-0.5 w-full rounded border border-purple-300 bg-white px-2 py-1 font-bold text-blue-950"
+            className="mt-1 w-full rounded-lg border border-sky-200 bg-white px-2.5 py-1.5 font-bold text-[#0A2B6D]"
           />
         </div>
         <div>
-          <label className="font-extrabold uppercase text-purple-900">Site / Branch Location</label>
+          <label className="font-extrabold uppercase text-[#0A2B6D]">Site / Branch Location</label>
           <input
             type="text"
             value={orgInfo.siteName}
             onChange={(e) => setOrgInfo({ ...orgInfo, siteName: e.target.value })}
-            className="mt-0.5 w-full rounded border border-purple-300 bg-white px-2 py-1 font-bold text-blue-950"
+            className="mt-1 w-full rounded-lg border border-sky-200 bg-white px-2.5 py-1.5 font-bold text-[#0A2B6D]"
           />
         </div>
         <div>
-          <label className="font-extrabold uppercase text-purple-900">Audit Consent Stamp</label>
+          <label className="font-extrabold uppercase text-[#0A2B6D]">Audit Consent Stamp</label>
           <select
             value={orgInfo.auditConsent}
             onChange={(e) => setOrgInfo({ ...orgInfo, auditConsent: e.target.value })}
-            className="mt-0.5 w-full rounded border border-purple-300 bg-white px-2 py-1 font-bold text-blue-950"
+            className="mt-1 w-full rounded-lg border border-sky-200 bg-white px-2.5 py-1.5 font-bold text-[#0A2B6D]"
           >
             <option value="Audit consent received">☑ Audit consent received</option>
             <option value="Audit declined">☐ Audit declined</option>
@@ -310,11 +309,8 @@ export default function Standard2026PrintableTemplatesSuite() {
         className="mx-auto max-w-5xl overflow-hidden rounded-2xl border-2 bg-white shadow-lg print:border-0 print:shadow-none"
         style={{ borderColor: baseTpl.accent }}
       >
-        {/* Official 2026 Document Header Band */}
-        <div
-          className="app-section-card-header flex flex-wrap items-center justify-between gap-2 px-3.5 py-2.5 text-white"
-          style={{ background: HEADER_GRADIENT }}
-        >
+        {/* Official 2026 Document Header Band — Clean Solid Dark Blue & Light Blue (No Gradient) */}
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b-4 border-[#0072FF] bg-[#0A2B6D] px-4 py-3.5 text-white">
           <div className="flex items-center gap-2.5 min-w-0">
             <div className="flex h-11 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-white p-0.5 shadow">
               <Image
