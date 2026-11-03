@@ -478,7 +478,7 @@ export default function LandingProductShowcase() {
                             <Icon className="h-3.5 w-3.5 text-white" />
                           </div>
                           <span
-                            className="whitespace-nowrap rounded-full px-1.5 py-0.5 text-[8.5px] xl:text-[9px] font-extrabold uppercase tracking-tight leading-tight text-right"
+                            className="rounded-full px-2 py-0.5 text-xs font-bold tracking-tight leading-tight text-right"
                             style={{
                               backgroundColor: `${card.color}15`,
                               color: card.color,
@@ -492,13 +492,13 @@ export default function LandingProductShowcase() {
                         <div className="mt-2.5 font-editorial text-xl xl:text-2xl font-extrabold text-[#0A2B6D] leading-none">
                           {card.metricValue}
                         </div>
-                        <div className="mt-1.5 text-[11.5px] font-extrabold text-[#0A2B6D] leading-snug">
+                        <div className="mt-1.5 text-xs font-extrabold text-[#0A2B6D] leading-snug">
                           {card.shortLabel}
                         </div>
                       </div>
 
                       {/* Card Bottom Row: Aligned Subtitle */}
-                      <div className="mt-2.5 border-t border-slate-100 pt-2 text-[10.5px] font-semibold leading-snug text-[#0A2B6D]/75">
+                      <div className="mt-2.5 border-t border-slate-100 pt-2 text-xs font-medium leading-snug text-[#0A2B6D]/75">
                         {card.metricSub}
                       </div>
                     </button>
