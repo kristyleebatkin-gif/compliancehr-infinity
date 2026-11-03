@@ -25,8 +25,10 @@ import OrganisationalOperatingSystemCommand from '@/components/enterprise/Organi
 import OrganisationHealthScoreFramework from '@/components/enterprise/OrganisationHealthScoreFramework';
 
 import {
-  Activity, ShieldCheck, Zap, LayoutGrid, Cpu, Users,
+  Activity, ShieldCheck, Zap, LayoutGrid, Cpu, Users, Download, FileCheck2,
 } from 'lucide-react';
+import { ENTERPRISE_12_FORM_TEMPLATES, exportControlledRecordAsPdf } from '@/lib/enterpriseGovernanceStandard';
+import { openDocumentInViewer } from '@/lib/openDocument';
 
 const DASHBOARD_SUITES = [
   { id: 'os-command', label: 'Executive Posture & KPIs', icon: Cpu },
@@ -78,7 +80,23 @@ export default function Dashboard() {
               Organisation Posture, Risk &amp; Operational Readiness
             </h1>
           </div>
-          <div className="flex items-center gap-2 text-xs font-semibold text-[#0A2B6D]/75">
+          <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-[#0A2B6D]/75">
+            <button
+              type="button"
+              onClick={() => openDocumentInViewer(ENTERPRISE_12_FORM_TEMPLATES[2])}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-[#0072FF] bg-[#F0F7FF] px-3 py-1.5 text-xs font-extrabold text-[#0A2B6D] transition hover:bg-[#E0F2FE]"
+            >
+              <FileCheck2 className="h-3.5 w-3.5 text-[#0072FF]" />
+              <span>Preview New Form Template</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => exportControlledRecordAsPdf(ENTERPRISE_12_FORM_TEMPLATES[2])}
+              className="inline-flex items-center gap-1.5 rounded-lg bg-[#0A2B6D] px-3 py-1.5 text-xs font-extrabold text-white transition hover:bg-[#0072FF]"
+            >
+              <Download className="h-3.5 w-3.5 text-[#00C6FF]" />
+              <span>Download Form Template (PDF)</span>
+            </button>
             <span className="inline-flex items-center gap-1.5 rounded-md border border-emerald-200 bg-emerald-50 px-2.5 py-1 font-bold text-emerald-700">
               <span className="h-2 w-2 rounded-full bg-emerald-600" />
               Live Telemetry Active
