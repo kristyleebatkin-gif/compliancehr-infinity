@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './landing-layout.css';
 import LandingNav from '@/components/landing/LandingNav';
+import LandingLaunchVideosSection from '@/components/landing/LandingLaunchVideosSection';
 import LandingHero from '@/components/landing/LandingHero';
 import LandingEvidenceStandardSection from '@/components/landing/LandingEvidenceStandardSection';
 import LandingRegisterEngineSection from '@/components/landing/LandingRegisterEngineSection';
@@ -36,6 +37,9 @@ export default function Landing() {
       <LandingNav onBookDemo={openDemoModal} />
 
       <main className="landing-main relative z-10 mx-auto w-full max-w-[1440px] px-4 py-8 sm:px-6 lg:px-8 space-y-10 sm:space-y-14 pb-20">
+        {/* Top Launch Story Videos: Video 1 (Kristy's Story) + "See ComplianceHR Infinity in action" Video 2 */}
+        <LandingLaunchVideosSection />
+
         {/* 1. Hero Section (Landscape) */}
         <LandingHero onBookDemo={openDemoModal} />
 
