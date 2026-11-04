@@ -104,7 +104,23 @@
   ],
   "rls": {
     "read": {
-      "data.recipient_id": "{{user.id}}"
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "data.recipient_id": "{{user.id}}"
+            },
+            {
+              "data.organisation_id": "{{user.data.organisation_id}}"
+            }
+          ]
+        }
+      ]
     },
     "create": {
       "user_condition": {
@@ -119,7 +135,14 @@
           }
         },
         {
-          "data.recipient_id": "{{user.id}}"
+          "$and": [
+            {
+              "data.recipient_id": "{{user.id}}"
+            },
+            {
+              "data.organisation_id": "{{user.data.organisation_id}}"
+            }
+          ]
         }
       ]
     },
@@ -131,7 +154,14 @@
           }
         },
         {
-          "data.recipient_id": "{{user.id}}"
+          "$and": [
+            {
+              "data.recipient_id": "{{user.id}}"
+            },
+            {
+              "data.organisation_id": "{{user.data.organisation_id}}"
+            }
+          ]
         }
       ]
     }

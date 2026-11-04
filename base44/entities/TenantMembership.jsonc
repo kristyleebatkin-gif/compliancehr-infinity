@@ -117,9 +117,55 @@
           }
         },
         {
-          "user_condition": {
-            "role": "Provider Administrator"
-          }
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "$and": [
+            {
+              "data.organisation_id": "{{user.data.organisation_id}}"
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            }
+          ]
+        },
+        {
+          "$and": [
+            {
+              "data.organisation_id": "{{user.data.organisation_id}}"
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            }
+          ]
+        },
+        {
+          "$and": [
+            {
+              "data.organisation_id": "{{user.data.organisation_id}}"
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            }
+          ]
+        },
+        {
+          "$and": [
+            {
+              "data.organisation_id": "{{user.data.organisation_id}}"
+            },
+            {
+              "user_condition": {
+                "role": "Human Resources Manager"
+              }
+            }
+          ]
         }
       ]
     },
@@ -131,9 +177,28 @@
           }
         },
         {
-          "user_condition": {
-            "role": "Provider Administrator"
-          }
+          "$and": [
+            {
+              "data.organisation_id": "{{user.data.organisation_id}}"
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            }
+          ]
+        },
+        {
+          "$and": [
+            {
+              "data.organisation_id": "{{user.data.organisation_id}}"
+            },
+            {
+              "user_condition": {
+                "role": "Human Resources Manager"
+              }
+            }
+          ]
         }
       ]
     },
@@ -145,16 +210,51 @@
           }
         },
         {
-          "user_condition": {
-            "role": "Provider Administrator"
-          }
+          "$and": [
+            {
+              "data.organisation_id": "{{user.data.organisation_id}}"
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            }
+          ]
+        },
+        {
+          "$and": [
+            {
+              "data.organisation_id": "{{user.data.organisation_id}}"
+            },
+            {
+              "user_condition": {
+                "role": "Human Resources Manager"
+              }
+            }
+          ]
         }
       ]
     },
     "delete": {
-      "user_condition": {
-        "role": "admin"
-      }
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "data.organisation_id": "{{user.data.organisation_id}}"
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            }
+          ]
+        }
+      ]
     }
   }
 }

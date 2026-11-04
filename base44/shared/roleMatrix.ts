@@ -320,11 +320,25 @@ export function resolveUserTenantId(user, membership = null, tenant = null) {
       throw new Error('Tenant membership does not belong to the authenticated user.');
     }
   }
-  const userTenantId = user.tenant_id || user.data?.tenant_id || membership?.tenant_id || null;
-  if (membership?.tenant_id && userTenantId && membership.tenant_id !== userTenantId) {
+  const userTenantId =
+    user.organisation_id ||
+    user.tenant_id ||
+    user.data?.organisation_id ||
+    user.data?.tenant_id ||
+    membership?.organisation_id ||
+    membership?.tenant_id ||
+    null;
+  const membershipOrgId = membership?.organisation_id || membership?.tenant_id || null;
+  if (membershipOrgId && userTenantId && membershipOrgId !== userTenantId) {
     throw new Error('Cross-tenant mismatch between user profile and tenant membership.');
   }
-  if (tenant?.id && userTenantId && tenant.id !== userTenantId && tenant.tenant_key !== userTenantId) {
+  if (
+    tenant?.id &&
+    userTenantId &&
+    tenant.id !== userTenantId &&
+    tenant.tenant_key !== userTenantId &&
+    tenant.organisation_id !== userTenantId
+  ) {
     throw new Error('Cross-tenant access denied.');
   }
   return userTenantId;
@@ -334,8 +348,19 @@ export function assertTenantRecordAccess(user, record, expectedTenantId = null) 
   if (!hasApprovedAccess(user)) {
     throw new Error('Active approved user is required.');
   }
-  const activeTenantId = expectedTenantId || user.tenant_id || user.data?.tenant_id || null;
-  const recordTenantId = record?.tenant_id || record?.data?.tenant_id || null;
+  const activeTenantId =
+    expectedTenantId ||
+    user.organisation_id ||
+    user.tenant_id ||
+    user.data?.organisation_id ||
+    user.data?.tenant_id ||
+    null;
+  const recordTenantId =
+    record?.organisation_id ||
+    record?.tenant_id ||
+    record?.data?.organisation_id ||
+    record?.data?.tenant_id ||
+    null;
   if (activeTenantId && recordTenantId && activeTenantId !== recordTenantId) {
     throw new Error('Cross-tenant access denied.');
   }
@@ -357,8 +382,16 @@ export function stampTenantWritePayload(payload = {}, user = null, explicitTenan
   if (!hasApprovedAccess(user)) {
     throw new Error('Active approved user is required to write records.');
   }
-  const userTenantId = user.tenant_id || user.data?.tenant_id || null;
-  const incomingTenantId = payload && typeof payload === 'object' && 'tenant_id' in payload ? payload.tenant_id : undefined;
+  const userTenantId =
+    user.organisation_id ||
+    user.tenant_id ||
+    user.data?.organisation_id ||
+    user.data?.tenant_id ||
+    null;
+  const incomingTenantId =
+    payload && typeof payload === 'object'
+      ? payload.organisation_id ?? payload.tenant_id
+      : undefined;
   if (explicitTenantId && userTenantId && explicitTenantId !== userTenantId) {
     throw new Error('Cross-tenant write denied: cannot write to another tenant.');
   }
@@ -366,7 +399,12 @@ export function stampTenantWritePayload(payload = {}, user = null, explicitTenan
     throw new Error('Cross-tenant write denied: payload tenant_id does not match user tenant.');
   }
   const resolved = explicitTenantId || userTenantId || incomingTenantId || undefined;
-  return resolved ? { ...payload, tenant_id: resolved } : { ...payload };
+  if (!resolved) return { ...payload };
+  const stamped = { ...payload, tenant_id: resolved };
+  if ('organisation_id' in payload || user.organisation_id || user.data?.organisation_id) {
+    stamped.organisation_id = resolved;
+  }
+  return stamped;
 }
 
 export function isSyntheticParticipantId(participantId) {

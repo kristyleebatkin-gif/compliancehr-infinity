@@ -109,25 +109,74 @@
           }
         },
         {
-          "user_condition": {
-            "role": "Provider Administrator"
-          }
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "$and": [
+            {
+              "data.organisation_id": "{{user.data.organisation_id}}"
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            }
+          ]
+        },
+        {
+          "$and": [
+            {
+              "data.organisation_id": "{{user.data.organisation_id}}"
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            }
+          ]
+        },
+        {
+          "$and": [
+            {
+              "data.organisation_id": "{{user.data.organisation_id}}"
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            }
+          ]
+        },
+        {
+          "$and": [
+            {
+              "data.organisation_id": "{{user.data.organisation_id}}"
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            }
+          ]
+        },
+        {
+          "$and": [
+            {
+              "data.organisation_id": "{{user.data.organisation_id}}"
+            },
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            }
+          ]
         }
       ]
     },
     "create": {
-      "$or": [
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Provider Administrator"
-          }
-        }
-      ]
+      "user_condition": {
+        "role": "admin"
+      }
     },
     "update": {
       "$or": [
@@ -137,9 +186,16 @@
           }
         },
         {
-          "user_condition": {
-            "role": "Provider Administrator"
-          }
+          "$and": [
+            {
+              "data.organisation_id": "{{user.data.organisation_id}}"
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            }
+          ]
         }
       ]
     },

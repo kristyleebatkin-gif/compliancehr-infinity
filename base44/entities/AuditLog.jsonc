@@ -149,9 +149,55 @@
           }
         },
         {
-          "user_condition": {
-            "role": "Provider Administrator"
-          }
+          "$and": [
+            {
+              "data.organisation_id": "{{user.data.organisation_id}}"
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            }
+          ]
+        },
+        {
+          "$and": [
+            {
+              "data.organisation_id": "{{user.data.organisation_id}}"
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            }
+          ]
+        },
+        {
+          "$and": [
+            {
+              "data.organisation_id": "{{user.data.organisation_id}}"
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            }
+          ]
+        },
+        {
+          "$and": [
+            {
+              "data.organisation_id": "{{user.data.organisation_id}}"
+            },
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            },
+            {
+              "data.audit_consent": "Audit consent received"
+            }
+          ]
         }
       ]
     },
