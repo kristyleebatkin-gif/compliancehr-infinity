@@ -14,6 +14,7 @@ import ModuleShell from '@/components/module/ModuleShell';
 import ModuleAlertsButton from '@/components/ModuleAlertsButton';
 import ProgramsEvents from '@/pages/ProgramsEvents';
 import ReferralSupport from '@/pages/ReferralSupport';
+import Wave2CommunityPlatformSuite from '@/components/community/Wave2CommunityPlatformSuite';
 
 const safeUrl = (url) => {
   if (!url || typeof url !== 'string') return null;
@@ -21,7 +22,7 @@ const safeUrl = (url) => {
 };
 
 export default function CommunityCouncil() {
-  const [activeTab, setActiveTab] = useState('all');
+  const [activeTab, setActiveTab] = useState('wave2');
   const [postcode, setPostcode] = useState('2000');
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -170,6 +171,9 @@ export default function CommunityCouncil() {
           }
           tabs={
             <TabsList className="flex flex-wrap gap-1.5 h-auto rounded-xl border-2 border-[#0A2B6D] bg-white p-1.5 shadow-sm">
+              <TabsTrigger value="wave2" className="border border-[#0A2B6D]/40 font-extrabold">
+                <Sparkles className="mr-1.5 h-3.5 w-3.5" /> Wave 2 Community Platform &amp; Benchmarking
+              </TabsTrigger>
               <TabsTrigger value="all" className="border border-[#0A2B6D]/40 font-extrabold">
                 <Sparkles className="mr-1.5 h-3.5 w-3.5" /> All Community, Programs &amp; Referrals
               </TabsTrigger>
@@ -188,6 +192,10 @@ export default function CommunityCouncil() {
             </TabsList>
           }
         />
+
+        <TabsContent value="wave2" className="space-y-4">
+          <Wave2CommunityPlatformSuite />
+        </TabsContent>
 
         <TabsContent value="all" className="space-y-4">
           {/* 1. Programs & Events in the same modular */}
