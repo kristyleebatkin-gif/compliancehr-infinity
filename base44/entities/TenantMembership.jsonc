@@ -2,6 +2,10 @@
   "name": "TenantMembership",
   "type": "object",
   "properties": {
+    "organisation_id": {
+      "type": "string",
+      "title": "Organisation ID"
+    },
     "tenant_id": {
       "type": "string",
       "title": "Tenant ID"
@@ -10,9 +14,51 @@
       "type": "string",
       "title": "User ID"
     },
+    "user_email": {
+      "type": "string",
+      "format": "email",
+      "title": "User Email"
+    },
     "membership_role": {
       "type": "string",
-      "title": "Tenant Role"
+      "title": "Tenant Role",
+      "enum": [
+        "admin",
+        "Provider Administrator",
+        "Compliance Manager",
+        "Human Resources Manager",
+        "Quality & Improvement Manager",
+        "Finance & Accounts Officer",
+        "Rostering Coordinator",
+        "Team Leader",
+        "Intake Officer",
+        "CRM & Marketing Officer",
+        "Administration",
+        "Support Worker",
+        "Employee",
+        "Volunteer",
+        "Participant",
+        "Auditor"
+      ],
+      "enumColors": [
+        "purple",
+        "purple",
+        "blue",
+        "blue",
+        "blue",
+        "green",
+        "blue",
+        "blue",
+        "blue",
+        "pink",
+        "blue",
+        "green",
+        "green",
+        "yellow",
+        "pink",
+        "gray"
+      ],
+      "default": "Support Worker"
     },
     "status": {
       "type": "string",
@@ -22,6 +68,12 @@
         "Active",
         "Suspended",
         "Ended"
+      ],
+      "enumColors": [
+        "blue",
+        "green",
+        "red",
+        "gray"
       ],
       "default": "Invited"
     },
@@ -39,12 +91,18 @@
       "type": "string",
       "title": "Invited By User ID"
     },
+    "mfa_enforced": {
+      "type": "boolean",
+      "default": true,
+      "title": "MFA Enforced"
+    },
     "notes": {
       "type": "string",
       "title": "Notes"
     }
   },
   "required": [
+    "organisation_id",
     "tenant_id",
     "user_id",
     "membership_role",

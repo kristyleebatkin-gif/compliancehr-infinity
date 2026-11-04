@@ -2,6 +2,14 @@
   "name": "BusinessDetails",
   "type": "object",
   "properties": {
+    "organisation_id": {
+      "type": "string",
+      "title": "Organisation ID"
+    },
+    "tenant_id": {
+      "type": "string",
+      "title": "Tenant ID"
+    },
     "business_name": {
       "type": "string",
       "title": "Business Name"
@@ -36,7 +44,27 @@
     },
     "state": {
       "type": "string",
-      "title": "State"
+      "title": "State",
+      "enum": [
+        "NSW",
+        "VIC",
+        "QLD",
+        "WA",
+        "SA",
+        "TAS",
+        "ACT",
+        "NT"
+      ],
+      "enumColors": [
+        "blue",
+        "purple",
+        "red",
+        "yellow",
+        "green",
+        "pink",
+        "blue",
+        "gray"
+      ]
     },
     "postcode": {
       "type": "string",

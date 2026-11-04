@@ -2,6 +2,14 @@
   "name": "Notification",
   "type": "object",
   "properties": {
+    "organisation_id": {
+      "type": "string",
+      "title": "Organisation ID"
+    },
+    "tenant_id": {
+      "type": "string",
+      "title": "Tenant ID"
+    },
     "type": {
       "type": "string",
       "enum": [
@@ -17,8 +25,36 @@
         "Birthday Shout-out",
         "NDIS Audit Due"
       ],
+      "enumColors": [
+        "yellow",
+        "yellow",
+        "blue",
+        "red",
+        "blue",
+        "purple",
+        "red",
+        "red",
+        "gray",
+        "pink",
+        "yellow"
+      ],
       "default": "General",
       "title": "Type"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "Info",
+        "Warning",
+        "Critical"
+      ],
+      "enumColors": [
+        "blue",
+        "yellow",
+        "red"
+      ],
+      "default": "Info",
+      "title": "Severity"
     },
     "recipient": {
       "type": "string",

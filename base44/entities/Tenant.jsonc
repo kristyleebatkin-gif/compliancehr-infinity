@@ -2,6 +2,11 @@
   "name": "Tenant",
   "type": "object",
   "properties": {
+    "organisation_id": {
+      "type": "string",
+      "title": "Organisation ID",
+      "description": "Canonical organisation identifier used for multi-tenant isolation."
+    },
     "tenant_key": {
       "type": "string",
       "title": "Tenant Key",
@@ -15,6 +20,14 @@
       "type": "string",
       "title": "Trading Name"
     },
+    "abn": {
+      "type": "string",
+      "title": "ABN"
+    },
+    "ndis_provider_number": {
+      "type": "string",
+      "title": "NDIS Registered Provider Number"
+    },
     "status": {
       "type": "string",
       "title": "Status",
@@ -24,7 +37,30 @@
         "Suspended",
         "Archived"
       ],
+      "enumColors": [
+        "yellow",
+        "green",
+        "red",
+        "gray"
+      ],
       "default": "Provisioning"
+    },
+    "subscription_tier": {
+      "type": "string",
+      "title": "Subscription Tier",
+      "enum": [
+        "Free",
+        "Pro",
+        "Guild",
+        "Enterprise"
+      ],
+      "enumColors": [
+        "gray",
+        "blue",
+        "purple",
+        "green"
+      ],
+      "default": "Enterprise"
     },
     "primary_domain": {
       "type": "string",
@@ -36,11 +72,13 @@
     },
     "brand_primary_color": {
       "type": "string",
-      "title": "Primary Brand Colour"
+      "title": "Primary Brand Colour",
+      "default": "#0A2B6D"
     },
     "brand_secondary_color": {
       "type": "string",
-      "title": "Secondary Brand Colour"
+      "title": "Secondary Brand Colour",
+      "default": "#0072FF"
     },
     "timezone": {
       "type": "string",
