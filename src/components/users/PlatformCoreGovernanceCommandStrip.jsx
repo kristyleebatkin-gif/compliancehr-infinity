@@ -18,7 +18,7 @@ import {
   X,
 } from 'lucide-react';
 import { downloadCsv } from '@/lib/csvExport';
-import { logAction } from '@/lib/actionLog';
+import { logUserAction } from '@/lib/actionLog';
 
 const STATUS_BADGE_STYLES = {
   Active: 'bg-emerald-50 text-emerald-800 border-emerald-200',
@@ -89,12 +89,13 @@ export default function PlatformCoreGovernanceCommandStrip() {
         organisation_id: membership.organisation_id || activeOrgId,
         tenant_id: membership.tenant_id || activeOrgId,
       });
-      await logAction({
-        action: `TenantMembership status changed to ${nextStatus}`,
-        entityType: 'TenantMembership',
-        recordId: membership.id,
-        recordTitle: membership.user_email || membership.user_id,
-        details: `Transitioned from ${membership.status} to ${nextStatus} inside organisation ${membership.organisation_id || activeOrgId}`,
+      await logUserAction(`Status changed to ${nextStatus}`, 'TenantMembership', {
+        record_id: membership.id,
+        record_title: membership.user_email || membership.user_id,
+        previous_value: membership.status,
+        new_value: nextStatus,
+        module: 'Platform Core',
+        details: `Transitioned inside organisation ${membership.organisation_id || activeOrgId}`,
       });
       return updated;
     },
@@ -119,11 +120,11 @@ export default function PlatformCoreGovernanceCommandStrip() {
         notes: formData.notes || '',
       };
       const created = await base44.entities.TenantMembership.create(payload);
-      await logAction({
-        action: 'Created TenantMembership invitation',
-        entityType: 'TenantMembership',
-        recordId: created?.id || '',
-        recordTitle: payload.user_email,
+      await logUserAction('Create', 'TenantMembership', {
+        record_id: created?.id || '',
+        record_title: payload.user_email,
+        new_value: payload.membership_role,
+        module: 'Platform Core',
         details: `Assigned role ${payload.membership_role} in organisation ${activeOrgId}`,
       });
       return created;
