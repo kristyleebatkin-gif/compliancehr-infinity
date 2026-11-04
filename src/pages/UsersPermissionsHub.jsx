@@ -5,65 +5,75 @@ import { Users, ShieldCheck } from 'lucide-react';
 import UsersTable from '@/components/users/UsersTable';
 import PermissionMatrix from '@/components/users/PermissionMatrix';
 import RecentActionsPanel from '@/components/dashboard/RecentActionsPanel';
+import PlatformCoreGovernanceCommandStrip from '@/components/users/PlatformCoreGovernanceCommandStrip';
 
 export default function UsersPermissionsHub() {
   return (
-    <div className="users-workspace compact-module space-y-2">
+    <div className="users-workspace compact-module space-y-4">
       <ModuleShell
         icon={Users}
         title="Users & Permissions Hub"
-        subtitle="Manage app users, access approvals, and module visibility for the 9 roles defined in the app."
+        subtitle="Manage organisation memberships, account approvals, row-level isolation, and role-based module access."
         moduleKey="users"
       />
 
-      <div className="rounded-xl border-2 border-[#0284c7] bg-sky-50/70 p-2.5" style={{ borderTopWidth: '4px' }}>
-        <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+      <PlatformCoreGovernanceCommandStrip />
+
+      <section
+        aria-label="Defined App Roles Overview"
+        className="rounded-xl border border-slate-200 bg-white p-4 shadow-panel"
+      >
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
           <div>
-            <h3 className="text-xs font-black uppercase tracking-wider text-sky-950">
-              Defined app roles and module visibility
-            </h3>
-            <p className="text-[10px] font-semibold text-sky-800">
-              The matrix shows which modules each defined role can open.
+            <h2 className="text-sm font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+              Defined App Roles &amp; Module Visibility
+            </h2>
+            <p className="text-xs font-medium text-slate-600">
+              Each role below enforces navigation gating and pairs with organisation-scoped Row-Level Security (RLS).
             </p>
           </div>
-          <span className="rounded-full bg-[#0284c7] px-2.5 py-0.5 text-[10px] font-black text-white">
-            9 Defined Roles
+          <span className="rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-bold text-[#0A2B6D]">
+            9 Canonical Roles
           </span>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-9 gap-1.5">
+        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-9 gap-2.5">
           {[
-            ['Guest', 'Guest access', '#6366f1'],
-            ['Participant', 'Participant workspace', '#e11d48'],
-            ['Employee', 'Employee workspace', '#2563eb'],
-            ['Administration', 'Operations access', '#0891b2'],
-            ['Compliance Administrator', 'Compliance access', '#6d28d9'],
-            ['Provider Administrator', 'Provider administration', '#db2777'],
-            ['Management', 'Management access', '#0d9488'],
-            ['Auditor', 'Auditor access', '#1d4ed8'],
-            ['Volunteer', 'Volunteer access', '#0f766e'],
-          ].map(([roleName, desc, hex]) => (
-            <div key={roleName} className="rounded-lg border bg-white p-1.5" style={{ borderColor: `${hex}66`, borderTopWidth: '3px', borderTopColor: hex }}>
-              <div className="text-[10px] font-black" style={{ color: hex }}>{roleName}</div>
-              <div className="text-[9px] font-semibold text-violet-900 leading-tight">{desc}</div>
+            ['Guest', 'Public & induction view'],
+            ['Participant', 'Participant portal & plans'],
+            ['Employee', 'Frontline shifts & records'],
+            ['Administration', 'Operational coordination'],
+            ['Compliance Administrator', 'Governance, audits & risk'],
+            ['Provider Administrator', 'Full organisation control'],
+            ['Management', 'Executive oversight'],
+            ['Auditor', 'Consented evidence review'],
+            ['Volunteer', 'Supervised placement view'],
+          ].map(([roleName, desc]) => (
+            <div
+              key={roleName}
+              className="rounded-lg border border-slate-200 bg-slate-50/60 p-2.5"
+            >
+              <div className="text-xs font-extrabold text-[#0A2B6D]">{roleName}</div>
+              <div className="mt-0.5 text-xs text-slate-600 leading-snug">{desc}</div>
             </div>
           ))}
         </div>
-      </div>
+      </section>
 
-      <p className="px-1 text-[11px] text-muted-foreground">The matrix describes module visibility only; it does not confirm record-level or action-level controls.</p>
-
-      <div className="grid min-w-0 gap-2">
-        {/* Left side under the header: users and the permission matrix */}
-        <div className="min-w-0 space-y-2">
-          <div className="flex items-center gap-2 text-sm font-bold text-foreground/80">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-purple-500 text-white shadow-sm"><Users className="h-3.5 w-3.5" /></span>
-            Users &amp; roles
+      <div className="grid min-w-0 gap-4">
+        <div className="min-w-0 space-y-4">
+          <div className="flex items-center gap-2 text-sm font-extrabold text-[#0A2B6D]">
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#0A2B6D] text-white shadow-2xs">
+              <Users className="h-4 w-4" />
+            </span>
+            User Account Approvals &amp; Role Assignments
           </div>
           <UsersTable />
 
-          <div className="flex items-center gap-2 text-sm font-bold text-foreground/80">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-sky-500 to-indigo-600 text-white shadow-sm"><ShieldCheck className="h-3.5 w-3.5" /></span>
-            Permission matrix
+          <div className="flex items-center gap-2 text-sm font-extrabold text-[#0A2B6D]">
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#0A2B6D] text-white shadow-2xs">
+              <ShieldCheck className="h-4 w-4" />
+            </span>
+            Role-to-Module Permission Matrix
           </div>
           <PermissionMatrix />
         </div>
