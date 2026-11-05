@@ -25,6 +25,7 @@ import ModuleGuide from '@/components/ModuleGuide';
 import ModuleDocsFooter from '@/components/ModuleDocsFooter';
 import UniversalDocumentViewerModal from '@/components/documents/UniversalDocumentViewerModal';
 import EnterpriseFloatingWorkspaceDock from '@/components/EnterpriseFloatingWorkspaceDock';
+import ProviderOnboardingDrawer from '@/components/enterprise/ProviderOnboardingDrawer';
 
 const BOTTOM_NAV = [
   { label: 'Home', path: '/dashboard', key: 'dashboard', icon: LayoutDashboard },
@@ -51,13 +52,20 @@ export default function AppLayout() {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('ch-theme') === 'dark');
   const [workspaceView, setWorkspaceView] = useState(() => localStorage.getItem('chr-workspace-view-mode') || 'both');
+  const [compactHeader, setCompactHeader] = useState(false);
+  const [onboardingOpen, setOnboardingOpen] = useState(false);
 
   useEffect(() => {
     const onModeChange = (e) => {
       if (e?.detail?.mode) setWorkspaceView(e.detail.mode);
     };
+    const onOpenOnboarding = () => setOnboardingOpen(true);
     window.addEventListener('chr-view-mode-change', onModeChange);
-    return () => window.removeEventListener('chr-view-mode-change', onModeChange);
+    window.addEventListener('chr-open-onboarding-checklist', onOpenOnboarding);
+    return () => {
+      window.removeEventListener('chr-view-mode-change', onModeChange);
+      window.removeEventListener('chr-open-onboarding-checklist', onOpenOnboarding);
+    };
   }, []);
 
   const switchWorkspaceView = (mode) => {
@@ -247,8 +255,8 @@ export default function AppLayout() {
                 'linear-gradient(120deg, #00C6FF 0%, #0072FF 25%, #5A00D6 55%, #FF2E9A 100%)',
             }}
           />
-          {/* Top Section of White Area — exact same 190px height as the white section of the remote */}
-          <div className="bg-white px-3 py-2 sm:px-6 lg:px-8">
+          {/* Top Section of White Area — auto-compacts when scrolling down workspace registers */}
+          <div className={`bg-white px-3 sm:px-6 lg:px-8 transition-all duration-200 ${compactHeader ? 'hidden' : 'py-2'}`}>
             <div className="mx-auto flex min-h-[190px] max-w-[1440px] flex-col justify-between md:h-[190px] md:flex-row md:items-stretch">
               {/* Left at the Bottom: Sign In & Book Demo (App Coloured) */}
               <div className="order-2 flex shrink-0 items-center justify-center gap-2 self-center md:order-1 md:self-end md:pb-1">
@@ -363,6 +371,23 @@ export default function AppLayout() {
               </div>
 
               <div className="flex shrink-0 items-center gap-1">
+                <button
+                  type="button"
+                  onClick={() => setOnboardingOpen(true)}
+                  className="hidden sm:inline-flex min-h-[24px] items-center gap-1 rounded-full border border-[#00C6FF]/50 bg-white px-2.5 py-0.5 text-[9.5px] font-extrabold text-[#0A2B6D] shadow-2xs transition hover:bg-[#F5F0FF]"
+                  title="Open 5-Step Provider Launch & Audit Readiness Checklist"
+                >
+                  <Sparkles className="h-3 w-3 text-[#5A00D6]" />
+                  <span>Setup Checklist</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setCompactHeader((v) => !v)}
+                  className="hidden md:inline-flex min-h-[24px] items-center gap-1 rounded-full border border-white/25 bg-white/10 px-2 py-0.5 text-[9px] font-bold text-white transition hover:bg-white/20"
+                  title={compactHeader ? 'Show full top banner' : 'Compact top banner for more table space'}
+                >
+                  <span>{compactHeader ? 'Expand Banner' : 'Compact View'}</span>
+                </button>
                 <div
                   className="rounded-full p-[1.5px] shadow-2xs"
                   style={{
@@ -526,6 +551,11 @@ export default function AppLayout() {
 
         <main
           id="main-workspace-content"
+          onScroll={(e) => {
+            const top = e.currentTarget.scrollTop;
+            if (top > 120 && !compactHeader) setCompactHeader(true);
+            else if (top < 20 && compactHeader) setCompactHeader(false);
+          }}
           className="relative z-0 flex-1 overflow-y-auto overflow-x-hidden pb-20 md:pb-6"
           style={{
             background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
@@ -555,6 +585,7 @@ export default function AppLayout() {
           {location.pathname !== '/our-employees' && <ModuleDocsFooter />}
           <UniversalDocumentViewerModal />
           <EnterpriseFloatingWorkspaceDock />
+          <ProviderOnboardingDrawer open={onboardingOpen} onClose={() => setOnboardingOpen(false)} />
         </main>
 
         {/* Bottom nav (mobile) */}

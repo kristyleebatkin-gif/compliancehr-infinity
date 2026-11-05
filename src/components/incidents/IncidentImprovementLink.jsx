@@ -17,6 +17,8 @@ export default function IncidentImprovementLink({ incident, canEdit }) {
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState(null);
   const [saving, setSaving] = useState(false);
+  const [escalating, setEscalating] = useState(false);
+  const [linkedRisks, setLinkedRisks] = useState([]);
   const [myName, setMyName] = useState('');
 
   useEffect(() => {
@@ -26,10 +28,72 @@ export default function IncidentImprovementLink({ incident, canEdit }) {
   const load = async () => {
     setLoading(true);
     try {
-      const page = await base44.entities.ImprovementAction.filter({ linked_entity_type: 'Incident', linked_entity_id: incident.id }, { sort: '-created_date', limit: 50 });
+      const [page, riskPage] = await Promise.all([
+        base44.entities.ImprovementAction.filter({ linked_entity_type: 'Incident', linked_entity_id: incident.id }, { sort: '-created_date', limit: 50 }),
+        base44.entities.Risk.filter({ source_entity_type: 'Incident', source_entity_id: incident.id }, { sort: '-created_date', limit: 20 }).catch(() => ({ items: [] })),
+      ]);
       setItems(page.items || []);
+      setLinkedRisks(riskPage.items || []);
     } catch (e) { console.error(e); }
     finally { setLoading(false); }
+  };
+
+  const handleOneClickEscalate = async () => {
+    setEscalating(true);
+    const targetDate = new Date(Date.now() + 14 * 86400000).toISOString().slice(0, 10);
+    const priority = incident.severity === 'Critical' || incident.severity === 'High' ? 'High' : 'Medium';
+    const riskRating = incident.severity === 'Critical' ? 'Critical' : incident.severity === 'High' ? 'High' : 'Medium';
+    try {
+      await Promise.all([
+        base44.entities.ImprovementAction.create({
+          title: `CAPA: ${incident.title}`,
+          improvement_id: `IMP-${Date.now().toString().slice(-6)}`,
+          description: incident.immediate_actions || incident.description || 'Corrective and preventive action escalated from incident.',
+          owner: incident.responsible_manager || myName || 'Compliance Manager',
+          priority,
+          target_date: targetDate,
+          source: 'Incident Reviews',
+          date_identified: new Date().toISOString().slice(0, 10),
+          identified_by: myName || 'System Escalation',
+          status: 'Identified',
+          linked_entity_type: 'Incident',
+          linked_entity_id: incident.id,
+        }),
+        base44.entities.QualityItem.create({
+          title: `CAPA: ${incident.title}`,
+          type: 'Corrective Action',
+          source_type: 'Incident',
+          source_record_id: incident.id,
+          description: incident.description || '',
+          raised_by: myName || incident.reported_by || 'Compliance Manager',
+          raised_date: new Date().toISOString().slice(0, 10),
+          owner: incident.responsible_manager || myName || 'Compliance Manager',
+          priority,
+          status: 'In Progress',
+          target_date: targetDate,
+        }).catch(() => null),
+        base44.entities.Risk.create({
+          title: `Incident Risk: ${incident.title}`,
+          report_type: 'Risk',
+          category: incident.category === 'Medical' || incident.category === 'Medication Error' ? 'Clinical' : 'Operational',
+          rating: riskRating,
+          status: 'Treating',
+          owner: incident.responsible_manager || myName || 'Compliance Manager',
+          participant_name: incident.participant_name || '',
+          hazards_identified: incident.hazards_identified || incident.description || '',
+          control_measures: incident.control_measures || incident.immediate_actions || '',
+          source_entity_type: 'Incident',
+          source_entity_id: incident.id,
+          identified_date: new Date().toISOString().slice(0, 10),
+        }),
+      ]);
+      toast({ title: '1-Click CAPA & Risk Escalation Complete', description: 'Linked Improvement Action, Quality Item, and Risk Register entry created.' });
+      load();
+    } catch (err) {
+      toast({ title: 'Escalation failed', description: err.message, variant: 'destructive' });
+    } finally {
+      setEscalating(false);
+    }
   };
 
   useEffect(() => { load(); }, [incident.id]);
@@ -65,24 +129,44 @@ export default function IncidentImprovementLink({ incident, canEdit }) {
       title="Improvement actions"
       description="Corrective and preventive actions raised from this incident, visible in the quality improvement register"
       action={canEdit && !form && (
-        <Button size="sm" className="h-8 text-xs" onClick={() => setForm({ title: '', owner: '', priority: 'Medium', target_date: '', description: '' })}>
-          <Plus className="mr-1.5 h-3.5 w-3.5" />Raise action
-        </Button>
+        <div className="flex flex-wrap items-center gap-2">
+          <Button
+            size="sm"
+            variant="secondary"
+            disabled={escalating}
+            className="h-8 text-xs font-extrabold"
+            onClick={handleOneClickEscalate}
+          >
+            <Lightbulb className="mr-1.5 h-3.5 w-3.5 text-[#5A00D6]" />
+            {escalating ? 'Escalating…' : '1-Click CAPA & Risk Escalation'}
+          </Button>
+          <Button size="sm" className="h-8 text-xs" onClick={() => setForm({ title: '', owner: '', priority: 'Medium', target_date: '', description: '' })}>
+            <Plus className="mr-1.5 h-3.5 w-3.5" />Raise action
+          </Button>
+        </div>
       )}
     >
       {loading ? (
         <div className="flex justify-center py-6"><div className="h-6 w-6 animate-spin rounded-full border-4 border-brand/20 border-t-brand" /></div>
-      ) : items.length === 0 && !form ? (
-        <EmptyState icon={Lightbulb} title="No improvement actions" subtitle="Raise one to feed lessons from this incident into the improvement register." />
+      ) : items.length === 0 && linkedRisks.length === 0 && !form ? (
+        <EmptyState icon={Lightbulb} title="No linked CAPA or risk entries yet" subtitle="Use 1-Click CAPA & Risk Escalation to automatically create linked Quality Improvement and Risk Register records." />
       ) : (
         <div className="space-y-2">
           {items.map((it) => (
             <div key={it.id} className="flex flex-wrap items-center gap-2 rounded-lg border border-border/60 p-3">
               <Lightbulb className="h-4 w-4 shrink-0 text-brand" />
               <span className="text-sm font-medium">{it.title}</span>
-              <Badge className="border-transparent bg-brand/10 text-brand">{it.status}</Badge>
+              <Badge className="border-transparent bg-brand/10 text-brand">CAPA · {it.status}</Badge>
               {it.owner && <span className="text-xs text-foreground/60">Owner: {it.owner}</span>}
               {it.target_date && <span className="text-xs text-foreground/60">Target {it.target_date}</span>}
+            </div>
+          ))}
+          {linkedRisks.map((rk) => (
+            <div key={rk.id} className="flex flex-wrap items-center gap-2 rounded-lg border border-rose-200 bg-rose-50/40 p-3">
+              <Lightbulb className="h-4 w-4 shrink-0 text-rose-600" />
+              <span className="text-sm font-semibold text-[#0A2B6D]">{rk.title}</span>
+              <Badge variant="destructive">Risk · {rk.rating} ({rk.status})</Badge>
+              {rk.owner && <span className="text-xs text-foreground/60">Owner: {rk.owner}</span>}
             </div>
           ))}
         </div>

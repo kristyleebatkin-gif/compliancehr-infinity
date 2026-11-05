@@ -28,6 +28,8 @@ export default function ShiftForm({ open, onOpenChange, shift, prefillDate, onSa
   const [participants, setParticipants] = useState([]);
   const [availability, setAvailability] = useState([]);
   const [clearancesByStaff, setClearancesByStaff] = useState({});
+  const [staffRates, setStaffRates] = useState({});
+  const [overrideExpiredClearance, setOverrideExpiredClearance] = useState(false);
   const [goals, setGoals] = useState([]);
 
   useEffect(() => {
@@ -52,8 +54,17 @@ export default function ShiftForm({ open, onOpenChange, shift, prefillDate, onSa
         repeat_rule: shift.repeat_rule || 'none', repeat_until: shift.repeat_until || '',
         approval_status: shift.approval_status || 'Not Required',
       } : { ...BLANK, date: prefillDate || '' });
-      base44.entities.StaffProfile.filter({ status: 'Active' }, { sort: 'full_name', limit: 100, fields: ['full_name'] })
-        .then((p) => setStaff(p.items.map((i) => i.full_name)));
+      setOverrideExpiredClearance(false);
+      base44.entities.StaffProfile.filter({ status: 'Active' }, { sort: 'full_name', limit: 100, fields: ['full_name', 'hourly_rate'] })
+        .then((p) => {
+          const items = p.items || [];
+          setStaff(items.map((i) => i.full_name));
+          const rMap = {};
+          items.forEach((i) => {
+            if (i.full_name && i.hourly_rate) rMap[i.full_name] = Number(i.hourly_rate);
+          });
+          setStaffRates(rMap);
+        });
       base44.entities.ParticipantProfile.filter({ status: 'Active' }, { sort: 'full_name', limit: 100, fields: ['full_name'] })
         .then((p) => setParticipants(p.items.map((i) => i.full_name)));
       Promise.all([
@@ -126,7 +137,15 @@ export default function ShiftForm({ open, onOpenChange, shift, prefillDate, onSa
         <div className="grid gap-3">
           <div className="grid grid-cols-2 gap-3">
             <div className="grid gap-1.5"><Label>Employee</Label>
-              <Select value={form.employee_name || '__none__'} onValueChange={(v) => setForm({ ...form, employee_name: v === '__none__' ? '' : v })}>
+              <Select
+                value={form.employee_name || '__none__'}
+                onValueChange={(v) => {
+                  const chosen = v === '__none__' ? '' : v;
+                  const defaultRate = chosen && !form.billable_rate && staffRates[chosen] ? String(staffRates[chosen]) : form.billable_rate;
+                  setOverrideExpiredClearance(false);
+                  setForm({ ...form, employee_name: chosen, billable_rate: defaultRate });
+                }}
+              >
                 <SelectTrigger><SelectValue placeholder="Unassigned" /></SelectTrigger>
                 <SelectContent className="min-w-[15rem]">
                   <SelectItem value="__none__">Unassigned</SelectItem>
@@ -165,9 +184,20 @@ export default function ShiftForm({ open, onOpenChange, shift, prefillDate, onSa
                 <p className="text-xs font-medium text-destructive">{form.employee_name} has marked themselves unavailable on this date.</p>
               )}
               {form.employee_name && clearancesByStaff[form.employee_name]?.expired?.length > 0 && (
-                <p className="rounded-lg border border-rose-200 bg-rose-50 px-2.5 py-1.5 text-xs font-bold text-rose-700">
-                  Mandatory Clearance Alert: {form.employee_name} has expired record(s) ({clearancesByStaff[form.employee_name].expired.slice(0, 2).join(', ')}). Verify before publishing shift.
-                </p>
+                <div className="space-y-1.5 rounded-lg border border-rose-200 bg-rose-50 p-2.5 text-xs text-rose-800">
+                  <p className="font-extrabold">
+                    Smart Roster Screening Gate: {form.employee_name} has expired clearance(s) ({clearancesByStaff[form.employee_name].expired.slice(0, 2).join(', ')}).
+                  </p>
+                  <label className="flex items-center gap-2 font-semibold cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={overrideExpiredClearance}
+                      onChange={(e) => setOverrideExpiredClearance(e.target.checked)}
+                      className="h-3.5 w-3.5 rounded border-rose-400"
+                    />
+                    <span>I acknowledge the expired clearance and authorise an administrative override</span>
+                  </label>
+                </div>
               )}
             </div>
             <div className="grid gap-1.5"><Label>Participant</Label>
@@ -237,10 +267,47 @@ export default function ShiftForm({ open, onOpenChange, shift, prefillDate, onSa
           )}
           <div className="grid gap-1.5"><Label>Notes</Label><Input value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} /></div>
         </div>
-        <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
-          <Button onClick={submit} disabled={saving || !form.date}>{editing ? 'Save changes' : 'Schedule shift'}</Button>
-        </DialogFooter>
+        {(() => {
+          const hasExpiredForSelected = Boolean(
+            form.employee_name && clearancesByStaff[form.employee_name]?.expired?.length > 0
+          );
+          const guardrailBlocked = hasExpiredForSelected && !overrideExpiredClearance;
+          let hours = 0;
+          if (form.start_time && form.end_time) {
+            const [sh, sm] = form.start_time.split(':').map(Number);
+            const [eh, em] = form.end_time.split(':').map(Number);
+            const raw = (eh * 60 + em - (sh * 60 + sm) - (Number(form.break_minutes) || 0)) / 60;
+            if (raw > 0) hours = Number(raw.toFixed(2));
+          }
+          const rate = Number(form.billable_rate) || (form.employee_name && staffRates[form.employee_name]) || 0;
+          const estCost = hours > 0 && rate > 0 ? (hours * rate).toFixed(2) : null;
+          return (
+            <>
+              {(hours > 0 || form.employee_name) && (
+                <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-slate-200 bg-[#F8FAFC] px-3 py-2 text-xs font-bold text-[#0A2B6D]">
+                  <span>
+                    Duration: <strong className="text-[#0072FF]">{hours > 0 ? `${hours} hrs` : 'Set times'}</strong>
+                  </span>
+                  <span>
+                    Est. Shift Cost: <strong className="text-[#5A00D6]">{estCost ? `$${estCost}` : '—'}</strong>
+                  </span>
+                  <span>
+                    Screening Gate:{' '}
+                    <strong className={hasExpiredForSelected ? 'text-rose-600' : 'text-emerald-600'}>
+                      {hasExpiredForSelected ? (overrideExpiredClearance ? 'Override Active' : 'Blocked (Expired)') : 'Cleared'}
+                    </strong>
+                  </span>
+                </div>
+              )}
+              <DialogFooter>
+                <Button variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
+                <Button onClick={submit} disabled={saving || !form.date || guardrailBlocked}>
+                  {editing ? 'Save changes' : 'Schedule shift'}
+                </Button>
+              </DialogFooter>
+            </>
+          );
+        })()}
       </DialogContent>
     </Dialog>
   );

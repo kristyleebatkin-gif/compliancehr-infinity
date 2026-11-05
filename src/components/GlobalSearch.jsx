@@ -24,9 +24,12 @@ const EMPTY = {
 };
 
 const QUICK_ACTIONS = [
-  { id: 'qa-incident', label: 'New Incident Report', path: '/incidents/new', hint: 'Report & investigate' },
+  { id: 'qa-onboarding', label: 'Open 5-Step Provider Setup Checklist', event: 'chr-open-onboarding-checklist', hint: 'Guided activation & readiness' },
+  { id: 'qa-incident', label: 'New Incident Report (24h/5d SIRS)', path: '/incidents/new', hint: 'Report & auto-escalate CAPA' },
+  { id: 'qa-roster', label: 'Schedule Screened Roster Shift', path: '/roster', hint: '100-point worker screening gate' },
   { id: 'qa-participant', label: 'New Participant Intake', path: '/intake/participant', hint: 'Onboard a participant' },
   { id: 'qa-employee', label: 'New Employee Intake', path: '/intake/employee', hint: 'Onboard an employee' },
+  { id: 'qa-auditor', label: 'Preview External Auditor Portal', path: '/auditor-portal', hint: 'Consent-gated evidence view' },
   { id: 'qa-ai', label: 'Ask Infinity AI Copilot', path: '/assistant', hint: 'Instant NDIS & HR intelligence' },
   { id: 'qa-compliance', label: 'Compliance & Audit Centre', path: '/compliance', hint: '356 checkpoints & readiness' },
   { id: 'qa-dashboard', label: 'Go to Executive Dashboard', path: '/dashboard', hint: 'Live overview' },
@@ -131,7 +134,8 @@ export default function GlobalSearch() {
   };
 
   const actionKeys = {
-    'qa-incident': 'incidents', 'qa-participant': 'intake', 'qa-employee': 'intake',
+    'qa-onboarding': 'dashboard', 'qa-incident': 'incidents', 'qa-roster': 'rostering',
+    'qa-participant': 'intake', 'qa-employee': 'intake', 'qa-auditor': 'auditor-portal',
     'qa-ai': 'assistant', 'qa-compliance': 'compliance', 'qa-dashboard': 'dashboard',
   };
   const quickActions = QUICK_ACTIONS.filter((action) =>
@@ -179,7 +183,18 @@ export default function GlobalSearch() {
                 {quickActions.length > 0 && (
                   <CommandGroup heading="Quick Actions">
                     {quickActions.map((a) => (
-                      <CommandItem key={a.id} value={a.id} onSelect={() => go(a.path)}>
+                      <CommandItem
+                        key={a.id}
+                        value={a.id}
+                        onSelect={() => {
+                          if (a.event) {
+                            setOpen(false);
+                            window.dispatchEvent(new CustomEvent(a.event));
+                          } else {
+                            go(a.path);
+                          }
+                        }}
+                      >
                         <Plus className="text-brand" />
                         <span className="font-medium">{a.label}</span>
                         <span className="ml-auto text-[11px] text-foreground/40">{a.hint}</span>
