@@ -256,13 +256,13 @@ export default function AppLayout() {
             }}
           />
           {/* Top Section of White Area — auto-compacts when scrolling down workspace registers */}
-          <div className={`bg-white px-3 sm:px-6 lg:px-8 transition-all duration-200 ${compactHeader ? 'hidden' : 'py-2'}`}>
-            <div className="mx-auto flex min-h-[190px] max-w-[1440px] flex-col justify-between md:h-[190px] md:flex-row md:items-stretch">
-              {/* Left at the Bottom: Sign In & Book Demo (App Coloured) */}
-              <div className="order-2 flex shrink-0 items-center justify-center gap-2 self-center md:order-1 md:self-end md:pb-1">
+          <div className={`bg-white px-3 sm:px-6 lg:px-8 transition-all duration-200 ${compactHeader ? 'hidden' : 'py-1.5'}`}>
+            <div className="mx-auto flex min-h-[calc(190px+1cm)] max-w-[1440px] flex-col justify-between md:h-[calc(190px+1cm)] md:flex-row md:items-stretch">
+              {/* Left at the Bottom: Sign In & Book Demo (Slightly Reduced) */}
+              <div className="order-2 flex shrink-0 items-center justify-center gap-1.5 self-center md:order-1 md:self-end md:pb-1">
                 <Link
                   to="/login"
-                  className="inline-flex min-h-[34px] items-center justify-center whitespace-nowrap rounded-lg px-3.5 py-1.5 text-xs font-extrabold text-white shadow-sm transition hover:opacity-95"
+                  className="inline-flex min-h-[27px] items-center justify-center whitespace-nowrap rounded-md px-2.5 py-1 text-[10.5px] font-extrabold text-white shadow-2xs transition hover:opacity-95"
                   style={{
                     background: 'linear-gradient(115deg, #0A2B6D 0%, #0072FF 55%, #5A00D6 100%)',
                   }}
@@ -271,7 +271,7 @@ export default function AppLayout() {
                 </Link>
                 <Link
                   to="/?demo=book"
-                  className="inline-flex min-h-[34px] items-center justify-center whitespace-nowrap rounded-lg px-3.5 py-1.5 text-xs font-extrabold text-white shadow-sm transition hover:opacity-95"
+                  className="inline-flex min-h-[27px] items-center justify-center whitespace-nowrap rounded-md px-2.5 py-1 text-[10.5px] font-extrabold text-white shadow-2xs transition hover:opacity-95"
                   style={{
                     background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
                   }}
@@ -280,7 +280,7 @@ export default function AppLayout() {
                 </Link>
               </div>
 
-              {/* Centre: Business Logo, Name & Slogan Fitted Top-to-Bottom */}
+              {/* Centre: Business Logo (+1cm x +1cm), Name & Slogan Fitted Top-to-Bottom */}
               <div className="order-1 flex flex-1 items-center justify-center py-0.5 md:order-2">
                 <Link
                   to="/dashboard"
@@ -290,11 +290,11 @@ export default function AppLayout() {
                 </Link>
               </div>
 
-              {/* Right at the Bottom: Demo & Start Free (App Coloured) */}
-              <div className="order-3 flex shrink-0 items-center justify-center gap-2 self-center md:self-end md:pb-1">
+              {/* Right at the Bottom: Demo & Start Free (Slightly Reduced) */}
+              <div className="order-3 flex shrink-0 items-center justify-center gap-1.5 self-center md:self-end md:pb-1">
                 <Link
                   to="/dashboard"
-                  className="inline-flex min-h-[34px] items-center justify-center whitespace-nowrap rounded-lg px-3.5 py-1.5 text-xs font-extrabold text-white shadow-sm transition hover:opacity-95"
+                  className="inline-flex min-h-[27px] items-center justify-center whitespace-nowrap rounded-md px-2.5 py-1 text-[10.5px] font-extrabold text-white shadow-2xs transition hover:opacity-95"
                   style={{
                     background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #A100FF 100%)',
                   }}
@@ -303,7 +303,7 @@ export default function AppLayout() {
                 </Link>
                 <Link
                   to="/register"
-                  className="inline-flex min-h-[34px] items-center justify-center whitespace-nowrap rounded-lg px-3.5 py-1.5 text-xs font-extrabold text-white shadow-sm transition hover:opacity-95"
+                  className="inline-flex min-h-[27px] items-center justify-center whitespace-nowrap rounded-md px-2.5 py-1 text-[10.5px] font-extrabold text-white shadow-2xs transition hover:opacity-95"
                   style={{
                     background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
                   }}

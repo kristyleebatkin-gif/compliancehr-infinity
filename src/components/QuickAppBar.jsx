@@ -155,26 +155,26 @@ export default function QuickAppBar() {
             </div>
           </div>
 
-          {/* Selected Major Section Opened Prominently in Main View on the Navigator Remote */}
+          {/* Selected Major Section Opened Prominently in Main View on the Navigator Remote (Slightly Reduced Tiles) */}
           {!collapsed && expandedGroup && (
-            <div id="quick-access-modules" className="px-2 pb-2 pt-0.5">
+            <div id="quick-access-modules" className="px-1.5 pb-1.5 pt-0.5">
               <nav
                 aria-label={expandedGroup.label}
-                className="rounded-xl border border-[#00C6FF]/40 p-2 shadow-[0_0_20px_rgba(0,198,255,0.25)]"
+                className="rounded-xl border border-[#00C6FF]/40 p-1.5 shadow-[0_0_16px_rgba(0,198,255,0.2)]"
                 style={{ background: DARK_NAVY_CHASSIS }}
               >
-                <div className="mb-1.5 flex flex-wrap items-center justify-between gap-2">
+                <div className="mb-1 flex flex-wrap items-center justify-between gap-1.5">
                   <span
-                    className="inline-flex items-center gap-1.5 rounded-full border-2 border-[#00C6FF] bg-white px-2.5 py-0.5 text-[9.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D] shadow-2xs"
+                    className="inline-flex items-center gap-1 rounded-full border border-[#00C6FF] bg-white px-2 py-0 text-[8.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D] shadow-2xs"
                     style={{ color: '#0A2B6D' }}
                   >
-                    <span style={{ color: '#0072FF' }}>◉</span> {expandedGroup.label} — Opened in Main View on Navigator Remote ({expandedGroup.modules.length} Modules)
+                    <span style={{ color: '#0072FF' }}>◉</span> {expandedGroup.label} — Opened in Main View ({expandedGroup.modules.length} Modules)
                   </span>
-                  <span className="text-[8.5px] font-bold text-[#00C6FF]">
-                    Select any module below to open its workspace
+                  <span className="text-[8px] font-bold text-[#00C6FF]">
+                    Click any module tile to open
                   </span>
                 </div>
-                <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 items-stretch">
+                <div className="grid grid-cols-2 gap-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 items-stretch">
                   {expandedGroup.modules.map((module, mIdx) => {
                     const Icon = module.icon;
                     const modActive = isActive(module.path);
@@ -184,58 +184,58 @@ export default function QuickAppBar() {
                         key={module.key}
                         to={module.path}
                         aria-current={modActive ? 'page' : undefined}
-                        className={`group flex min-h-[52px] flex-col rounded-xl p-[1.5px] text-left transition-all duration-200 ${
+                        className={`group flex min-h-[38px] flex-col rounded-lg p-[1.5px] text-left transition-all duration-200 ${
                           modActive
-                            ? 'shadow-[0_0_18px_rgba(0,198,255,0.85)] scale-[1.01]'
-                            : 'shadow-[0_0_10px_rgba(90,0,214,0.35)] hover:-translate-y-0.5 hover:shadow-[0_0_16px_rgba(0,198,255,0.75)]'
+                            ? 'shadow-[0_0_14px_rgba(0,198,255,0.85)] scale-[1.01]'
+                            : 'shadow-[0_0_8px_rgba(90,0,214,0.3)] hover:-translate-y-0.5 hover:shadow-[0_0_12px_rgba(0,198,255,0.7)]'
                         }`}
                         style={{ background: BRAND_GRADIENT }}
                       >
                         <div
-                          className="flex flex-1 flex-col justify-between overflow-hidden rounded-[10.5px]"
+                          className="flex flex-1 flex-col justify-between overflow-hidden rounded-[9px]"
                           style={{ background: DARK_NAVY_CHASSIS }}
                         >
-                          <div className="flex min-h-[24px] items-center justify-between gap-1 bg-white px-2 py-0.5">
+                          <div className="flex min-h-[18px] items-center justify-between gap-1 bg-white px-1.5 py-0">
                             <div className="flex min-w-0 items-center gap-1">
                               <span
-                                className="flex h-4 w-4 shrink-0 items-center justify-center rounded-md bg-[#F5F0FF]"
-                                style={{ border: `1.5px solid ${modColor}` }}
+                                className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded bg-[#F5F0FF]"
+                                style={{ border: `1px solid ${modColor}` }}
                               >
-                                <Icon className="h-2.5 w-2.5 shrink-0" style={{ color: modColor }} />
+                                <Icon className="h-2 w-2 shrink-0" style={{ color: modColor }} />
                               </span>
                               <span
-                                className="min-w-0 bg-clip-text text-[10px] font-extrabold leading-tight text-transparent"
+                                className="min-w-0 truncate bg-clip-text text-[8.5px] font-extrabold leading-tight text-transparent"
                                 style={{ backgroundImage: HEADING_TEXT_GRADIENT }}
                               >
                                 <span style={{ color: modColor }}>◉</span> {module.label}
                               </span>
                             </div>
                             <span
-                              className={`inline-flex shrink-0 items-center gap-0.5 rounded-full px-1 py-0 text-[6.5px] font-black uppercase ${
+                              className={`inline-flex shrink-0 items-center gap-0.5 rounded-full px-1 py-0 text-[6px] font-black uppercase ${
                                 modActive ? 'bg-[#0A2B6D] text-[#00C6FF]' : 'bg-[#F5F0FF] text-[#5A00D6]'
                               }`}
                             >
                               <span
-                                className="h-1.5 w-1.5 shrink-0 rounded-full"
+                                className="h-1 w-1 shrink-0 rounded-full"
                                 style={{
                                   backgroundColor: modActive ? '#00C6FF' : modColor,
                                   boxShadow: modActive
-                                    ? '0 0 6px 1px #00C6FF'
-                                    : `0 0 5px 1px ${modColor}`,
+                                    ? '0 0 5px 1px #00C6FF'
+                                    : `0 0 4px 1px ${modColor}`,
                                 }}
                               />
                               {modActive ? 'ACTIVE' : 'OPEN'}
                             </span>
                           </div>
 
-                          <div className="flex flex-1 items-center justify-between gap-1 px-2 py-1">
+                          <div className="flex flex-1 items-center justify-between gap-1 px-1.5 py-0.5">
                             <span
-                              className="min-w-0 flex-1 break-words text-[8px] font-bold leading-snug text-white"
+                              className="min-w-0 flex-1 truncate text-[7.5px] font-bold leading-snug text-white"
                               style={{ color: '#FFFFFF' }}
                             >
                               {module.blurb || `Open ${module.label}`}
                             </span>
-                            <ArrowRight className="h-2.5 w-2.5 shrink-0 transition group-hover:translate-x-0.5" style={{ color: modColor }} />
+                            <ArrowRight className="h-2 w-2 shrink-0 transition group-hover:translate-x-0.5" style={{ color: modColor }} />
                           </div>
                         </div>
                       </Link>
@@ -246,57 +246,55 @@ export default function QuickAppBar() {
             </div>
           )}
 
-          {/* Uniform Small Remote Buttons (Capped at ≤ 5cm Vertical Height on Desktop/Tablet) */}
+          {/* Uniform Small Remote Buttons (Slightly Reduced Height & Padding) */}
           {!collapsed && (
             <div
-              className="grid grid-cols-2 gap-1.5 px-2 pb-2 pt-0.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 lg:max-h-[4.3cm] lg:overflow-y-auto items-stretch"
+              className="grid grid-cols-2 gap-1 px-1.5 pb-1.5 pt-0.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 lg:max-h-[3.6cm] lg:overflow-y-auto items-stretch"
               style={{ background: DARK_NAVY_CHASSIS }}
             >
               {/* AI Core Button: Uniform Small Remote Tile */}
               <Link
                 to="/assistant"
                 title="AI Core — 14 live recommendations"
-                className="group flex min-h-[46px] flex-col rounded-xl p-[1.5px] text-left shadow-[0_0_14px_rgba(0,198,255,0.55)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(0,198,255,0.85)]"
+                className="group flex min-h-[36px] flex-col rounded-lg p-[1.5px] text-left shadow-[0_0_12px_rgba(0,198,255,0.5)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_0_16px_rgba(0,198,255,0.8)]"
                 style={{ background: BRAND_GRADIENT }}
               >
                 <div
-                  className="flex flex-1 flex-col justify-between overflow-hidden rounded-[10.5px]"
+                  className="flex flex-1 flex-col justify-between overflow-hidden rounded-[9px]"
                   style={{ background: DARK_NAVY_CHASSIS }}
                 >
-                  {/* Top Title Bar: Slightly Larger Heading (Dark Blue -> App Design Colour) */}
-                  <div className="flex min-h-[22px] items-center justify-between gap-1 bg-white px-2 py-0.5">
+                  <div className="flex min-h-[18px] items-center justify-between gap-1 bg-white px-1.5 py-0">
                     <div className="flex min-w-0 items-center gap-1">
                       <span
-                        className="flex h-4 w-4 shrink-0 items-center justify-center rounded-md bg-[#F5F0FF]"
-                        style={{ border: '1.5px solid #0072FF' }}
+                        className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded bg-[#F5F0FF]"
+                        style={{ border: '1px solid #0072FF' }}
                       >
-                        <Cpu className="h-2.5 w-2.5 shrink-0" style={{ color: '#0072FF' }} />
+                        <Cpu className="h-2 w-2 shrink-0" style={{ color: '#0072FF' }} />
                       </span>
                       <span
-                        className="min-w-0 bg-clip-text text-[10px] font-extrabold leading-tight text-transparent"
+                        className="min-w-0 truncate bg-clip-text text-[8.5px] font-extrabold leading-tight text-transparent"
                         style={{ backgroundImage: HEADING_TEXT_GRADIENT }}
                       >
                         ◉ AI Core Hub
                       </span>
                     </div>
-                    <span className="inline-flex shrink-0 items-center gap-0.5 rounded-full bg-[#0A2B6D] px-1 py-0 text-[6.5px] font-black uppercase text-[#00C6FF]">
+                    <span className="inline-flex shrink-0 items-center gap-0.5 rounded-full bg-[#0A2B6D] px-1 py-0 text-[6px] font-black uppercase text-[#00C6FF]">
                       <span
-                        className="h-1.5 w-1.5 shrink-0 rounded-full"
-                        style={{ backgroundColor: '#00C6FF', boxShadow: '0 0 6px 1px #00C6FF' }}
+                        className="h-1 w-1 shrink-0 rounded-full"
+                        style={{ backgroundColor: '#00C6FF', boxShadow: '0 0 5px 1px #00C6FF' }}
                       />
                       LIVE
                     </span>
                   </div>
 
-                  {/* Bottom Dark Navy Body: Smaller Crisp White Writing */}
-                  <div className="flex flex-1 items-center justify-between gap-1 px-2 py-1">
+                  <div className="flex flex-1 items-center justify-between gap-1 px-1.5 py-0.5">
                     <span
-                      className="text-[8px] font-bold leading-tight text-white"
+                      className="truncate text-[7.5px] font-bold leading-tight text-white"
                       style={{ color: '#FFFFFF' }}
                     >
                       14 live recommendations
                     </span>
-                    <ArrowRight className="h-2.5 w-2.5 shrink-0 text-[#00C6FF]" />
+                    <ArrowRight className="h-2 w-2 shrink-0 text-[#00C6FF]" />
                   </div>
                 </div>
               </Link>
@@ -323,60 +321,58 @@ export default function QuickAppBar() {
                     aria-expanded={expandedGroup?.id === item.id}
                     aria-controls="quick-access-modules"
                     title={`${item.label} — ${currentSub}`}
-                    className={`group flex min-h-[46px] flex-col rounded-xl p-[1.5px] text-left transition-all duration-200 focus-visible:outline-none ${
+                    className={`group flex min-h-[36px] flex-col rounded-lg p-[1.5px] text-left transition-all duration-200 focus-visible:outline-none ${
                       active
-                        ? 'shadow-[0_0_18px_rgba(0,198,255,0.85)] scale-[1.01]'
-                        : 'shadow-[0_0_10px_rgba(90,0,214,0.35)] hover:-translate-y-0.5 hover:shadow-[0_0_16px_rgba(0,198,255,0.7)]'
+                        ? 'shadow-[0_0_14px_rgba(0,198,255,0.85)] scale-[1.01]'
+                        : 'shadow-[0_0_8px_rgba(90,0,214,0.3)] hover:-translate-y-0.5 hover:shadow-[0_0_12px_rgba(0,198,255,0.65)]'
                     }`}
                     style={{ background: BRAND_GRADIENT }}
                   >
                     <div
-                      className="flex flex-1 flex-col justify-between overflow-hidden rounded-[10.5px]"
+                      className="flex flex-1 flex-col justify-between overflow-hidden rounded-[9px]"
                       style={{ background: DARK_NAVY_CHASSIS }}
                     >
-                      {/* Top Title Bar: Slightly Larger Heading (Dark Blue -> App Design Colour) */}
-                      <div className="flex min-h-[22px] items-center justify-between gap-1 bg-white px-2 py-0.5">
+                      <div className="flex min-h-[18px] items-center justify-between gap-1 bg-white px-1.5 py-0">
                         <div className="flex min-w-0 items-center gap-1">
                           <span
-                            className="flex h-4 w-4 shrink-0 items-center justify-center rounded-md bg-[#F5F0FF]"
-                            style={{ border: `1.5px solid ${symColor}` }}
+                            className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded bg-[#F5F0FF]"
+                            style={{ border: `1px solid ${symColor}` }}
                           >
-                            <Icon className="h-2.5 w-2.5 shrink-0" style={{ color: symColor }} />
+                            <Icon className="h-2 w-2 shrink-0" style={{ color: symColor }} />
                           </span>
                           <span
-                            className="min-w-0 bg-clip-text text-[10px] font-extrabold leading-tight text-transparent"
+                            className="min-w-0 truncate bg-clip-text text-[8.5px] font-extrabold leading-tight text-transparent"
                             style={{ backgroundImage: HEADING_TEXT_GRADIENT }}
                           >
                             <span style={{ color: symColor }}>◉</span> {item.label}
                           </span>
                         </div>
                         <span
-                          className={`inline-flex shrink-0 items-center gap-0.5 rounded-full px-1 py-0 text-[6.5px] font-black uppercase ${
+                          className={`inline-flex shrink-0 items-center gap-0.5 rounded-full px-1 py-0 text-[6px] font-black uppercase ${
                             active ? 'bg-[#0A2B6D] text-[#00C6FF]' : 'bg-[#F5F0FF] text-[#5A00D6]'
                           }`}
                         >
                           <span
-                            className="h-1.5 w-1.5 shrink-0 rounded-full"
+                            className="h-1 w-1 shrink-0 rounded-full"
                             style={{
                               backgroundColor: active ? '#00C6FF' : symColor,
                               boxShadow: active
-                                ? '0 0 6px 1px #00C6FF'
-                                : `0 0 5px 1px ${symColor}`,
+                                ? '0 0 5px 1px #00C6FF'
+                                : `0 0 4px 1px ${symColor}`,
                             }}
                           />
                           {active ? 'ON' : 'LIVE'}
                         </span>
                       </div>
 
-                      {/* Bottom Dark Navy Body: Smaller Crisp White Writing */}
-                      <div className="flex flex-1 items-center justify-between gap-1 px-2 py-1">
+                      <div className="flex flex-1 items-center justify-between gap-1 px-1.5 py-0.5">
                         <span
-                          className="text-[8px] font-bold leading-tight text-white"
+                          className="truncate text-[7.5px] font-bold leading-tight text-white"
                           style={{ color: '#FFFFFF' }}
                         >
                           {currentSub}
                         </span>
-                        <ArrowRight className="h-2.5 w-2.5 shrink-0" style={{ color: symColor }} />
+                        <ArrowRight className="h-2 w-2 shrink-0" style={{ color: symColor }} />
                       </div>
                     </div>
                   </button>

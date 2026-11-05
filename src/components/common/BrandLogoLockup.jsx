@@ -33,11 +33,11 @@ export default function BrandLogoLockup({
 }) {
   const isCustomName = companyName && companyName !== 'ComplianceHR Infinity';
 
-  // Proportional logo size so logo + name + slogan fit cleanly top-to-bottom in both navigation and header
+  // Proportional logo size (+1cm height x +1cm length in both Navigator Remote and header above dashboard)
   const logoSizeClass =
     size === 'xs'
-      ? 'h-16 w-40 sm:h-[4.25rem] sm:w-44'
-      : 'h-24 w-52 sm:h-[6.25rem] sm:w-60';
+      ? 'h-[calc(4rem+1cm)] w-[calc(10rem+1cm)] sm:h-[calc(4.25rem+1cm)] sm:w-[calc(11rem+1cm)]'
+      : 'h-[calc(6rem+1cm)] w-[calc(13rem+1cm)] sm:h-[calc(6.25rem+1cm)] sm:w-[calc(15rem+1cm)]';
 
   // Line 2: Structured heading on ONE single line
   const nameSizeClass =

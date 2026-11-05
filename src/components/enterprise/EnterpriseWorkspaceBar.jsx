@@ -299,21 +299,21 @@ export default function EnterpriseWorkspaceBar({
     <>
       <div className="mx-auto w-full max-w-[1440px] px-3 pt-1 sm:px-5 lg:px-6">
         <div
-          className="preserve-island-theme overflow-hidden rounded-2xl p-[2.5px] shadow-md"
+          className="preserve-island-theme overflow-hidden rounded-xl p-[2px] shadow-sm"
           style={{
             background:
               'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
           }}
         >
-          <div className="space-y-1.5 rounded-[13.5px] bg-white px-2.5 py-1.5">
-          {/* Line 1: Interactive Enterprise Breadcrumbs + Save View Bookmark with App Design Coloured Gradient Borders */}
+          <div className="space-y-1 rounded-[10px] bg-white px-2 py-1">
+          {/* Line 1: Interactive Enterprise Breadcrumbs + Save View Bookmark (Slightly Reduced) */}
           <nav
             aria-label="Breadcrumb"
-            className="flex min-w-0 flex-wrap items-center gap-1 text-[11px] font-extrabold text-[#0A2B6D]"
+            className="flex min-w-0 flex-wrap items-center gap-1 text-[9.5px] font-extrabold text-[#0A2B6D]"
           >
             <Link
               to="/"
-              className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[#0A2B6D] transition hover:opacity-90"
+              className="inline-flex items-center gap-1 rounded-full px-2 py-0 text-[#0A2B6D] transition hover:opacity-90"
               style={{
                 border: '2px solid transparent',
                 background: 'linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box',

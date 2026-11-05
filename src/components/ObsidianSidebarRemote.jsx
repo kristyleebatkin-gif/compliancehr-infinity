@@ -409,8 +409,8 @@ export default function ObsidianSidebarRemote({
         {/* Top App-Design Gradient Strip — aligned flush with main header */}
         <div className="h-1.5 w-full shrink-0" style={{ background: BRAND_GRADIENT }} />
 
-        {/* TOP WHITE SECTION OF REMOTE — exact same 190px height & alignment as the top white section of the main area */}
-        <div className="flex h-[190px] shrink-0 flex-col items-center justify-between bg-white px-1.5 py-2 text-center">
+        {/* TOP WHITE SECTION OF REMOTE — exact same height & alignment as the top white section of the main area (+1cm for taller logo) */}
+        <div className="flex h-[calc(190px+1cm)] shrink-0 flex-col items-center justify-between bg-white px-1.5 py-1.5 text-center">
           <Link
             to="/dashboard"
             aria-label="ComplianceHR Infinity Home"

@@ -235,39 +235,39 @@ export default function VisualDesignModuleCommandStandard() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-[1440px] px-3 pt-2">
+    <div className="mx-auto w-full max-w-[1440px] px-3 pt-1.5">
       <section
         aria-label="Visual Design, Information Architecture & Module Experience Command Standard"
-        className="preserve-island-theme rounded-2xl p-[3px] shadow-md"
+        className="preserve-island-theme rounded-xl p-[2px] shadow-sm"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
         <div
-          className="rounded-[13px] p-3"
+          className="rounded-[10px] p-1.5"
           style={{
             background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
           }}
         >
         <div
-          className="rounded-2xl p-[2px]"
+          className="rounded-xl p-[1.5px]"
           style={{ background: TOP_BORDER_GRADIENT }}
         >
         <div
-          className="rounded-[14px] px-3 py-2.5 space-y-2"
+          className="rounded-[10.5px] px-2.5 py-1.5 space-y-1"
           style={{
             background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
           }}
         >
-          {/* 2 Clean Lines of Small Tiles with App Design Coloured Gradient Borders & Dark Blue Writing */}
-          <div className="space-y-1.5">
+          {/* 2 Clean Lines of Small Tiles with App Design Coloured Gradient Borders & Dark Blue Writing (Slightly Reduced) */}
+          <div className="space-y-1">
             {/* Line 1: Main Subject Tile + Inline Search + Summary/Detail/Evidence/Action Flow */}
-            <div className="flex flex-wrap items-center justify-between gap-1.5 min-w-0">
-              <div className="flex flex-wrap items-center gap-1.5 min-w-0">
+            <div className="flex flex-wrap items-center justify-between gap-1 min-w-0">
+              <div className="flex flex-wrap items-center gap-1 min-w-0">
                 <span
                   className="inline-flex rounded-full p-[1.5px] shadow-2xs"
                   style={{ background: TOP_BORDER_GRADIENT }}
                 >
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]">
-                    <Sparkles className="h-3 w-3 shrink-0 text-[#0072FF]" />
+                  <span className="inline-flex items-center gap-1 rounded-full bg-white px-2 py-0 text-[9px] font-extrabold text-[#0A2B6D]">
+                    <Sparkles className="h-2.5 w-2.5 shrink-0 text-[#0072FF]" />
                     <span className="text-[#0A2B6D]">{ctx.subject}</span>
                   </span>
                 </span>
@@ -310,81 +310,81 @@ export default function VisualDesignModuleCommandStandard() {
               </div>
             </div>
 
-            {/* Line 2: 4 Consistent Visual Status Small Tiles + Command Dock Trigger */}
-            <div className="flex flex-wrap items-center gap-1.5">
+            {/* Line 2: 4 Consistent Visual Status Small Tiles + Command Dock Trigger (Slightly Reduced) */}
+            <div className="flex flex-wrap items-center gap-1">
               <Link
                 to="/registers"
-                className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]"
+                className="inline-flex items-center gap-1 rounded-full px-2 py-0 text-[9px] font-extrabold text-[#0A2B6D]"
                 title="Green: Current · Compliant · Complete"
                 style={{
-                  border: '2px solid transparent',
+                  border: '1.5px solid transparent',
                   background: `linear-gradient(#ffffff, #ffffff) padding-box, ${TOP_BORDER_GRADIENT} border-box`,
                   color: '#0A2B6D',
                 }}
               >
-                <span className="h-2 w-2 rounded-full bg-emerald-500" />
-                <CheckCircle2 className="h-3 w-3 text-[#0072FF]" />
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                <CheckCircle2 className="h-2.5 w-2.5 text-[#0072FF]" />
                 <span>Green · Compliant ({counts.compliant})</span>
               </Link>
 
               <Link
                 to="/review-due"
-                className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]"
+                className="inline-flex items-center gap-1 rounded-full px-2 py-0 text-[9px] font-extrabold text-[#0A2B6D]"
                 title="Amber: Due Soon · Requires Review"
                 style={{
-                  border: '2px solid transparent',
+                  border: '1.5px solid transparent',
                   background: `linear-gradient(#ffffff, #ffffff) padding-box, ${TOP_BORDER_GRADIENT} border-box`,
                   color: '#0A2B6D',
                 }}
               >
-                <span className="h-2 w-2 rounded-full bg-amber-500" />
-                <AlertTriangle className="h-3 w-3 text-[#A100FF]" />
+                <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
+                <AlertTriangle className="h-2.5 w-2.5 text-[#A100FF]" />
                 <span>Amber · Due Soon ({counts.dueSoon})</span>
               </Link>
 
               <Link
                 to="/incidents"
-                className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]"
+                className="inline-flex items-center gap-1 rounded-full px-2 py-0 text-[9px] font-extrabold text-[#0A2B6D]"
                 title="Red: Overdue · Action Required · High Risk"
                 style={{
-                  border: '2px solid transparent',
+                  border: '1.5px solid transparent',
                   background: `linear-gradient(#ffffff, #ffffff) padding-box, ${TOP_BORDER_GRADIENT} border-box`,
                   color: '#0A2B6D',
                 }}
               >
-                <span className="h-2 w-2 rounded-full bg-[#FF2E9A]" />
-                <Siren className="h-3 w-3 text-[#FF2E9A]" />
+                <span className="h-1.5 w-1.5 rounded-full bg-[#FF2E9A]" />
+                <Siren className="h-2.5 w-2.5 text-[#FF2E9A]" />
                 <span>Red · Action Required ({counts.actionRequired})</span>
               </Link>
 
               <Link
                 to="/tasks"
-                className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]"
+                className="inline-flex items-center gap-1 rounded-full px-2 py-0 text-[9px] font-extrabold text-[#0A2B6D]"
                 title="Blue: Information · In Progress"
                 style={{
-                  border: '2px solid transparent',
+                  border: '1.5px solid transparent',
                   background: `linear-gradient(#ffffff, #ffffff) padding-box, ${TOP_BORDER_GRADIENT} border-box`,
                   color: '#0A2B6D',
                 }}
               >
-                <span className="h-2 w-2 rounded-full bg-[#0072FF]" />
-                <Info className="h-3 w-3 text-[#5A00D6]" />
+                <span className="h-1.5 w-1.5 rounded-full bg-[#0072FF]" />
+                <Info className="h-2.5 w-2.5 text-[#5A00D6]" />
                 <span>Blue · In Progress ({counts.inProgress})</span>
               </Link>
 
               <button
                 type="button"
                 onClick={() => setExpanded((v) => !v)}
-                className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D] transition hover:opacity-90"
+                className="inline-flex items-center gap-1 rounded-full px-2 py-0 text-[9px] font-extrabold text-[#0A2B6D] transition hover:opacity-90"
                 style={{
-                  border: '2px solid transparent',
+                  border: '1.5px solid transparent',
                   background: `linear-gradient(#ffffff, #ffffff) padding-box, ${TOP_BORDER_GRADIENT} border-box`,
                   color: '#0A2B6D',
                 }}
               >
-                <Wrench className="h-3 w-3 text-[#5A00D6]" />
+                <Wrench className="h-2.5 w-2.5 text-[#5A00D6]" />
                 <span>{expanded ? 'Hide Command Dock' : 'All Tools, 10 Resources & 16 Domains'}</span>
-                {expanded ? <ChevronUp className="h-3 w-3 text-[#0072FF]" /> : <ChevronDown className="h-3 w-3 text-[#0072FF]" />}
+                {expanded ? <ChevronUp className="h-2.5 w-2.5 text-[#0072FF]" /> : <ChevronDown className="h-2.5 w-2.5 text-[#0072FF]" />}
               </button>
             </div>
           </div>
