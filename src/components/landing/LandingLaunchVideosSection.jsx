@@ -273,28 +273,23 @@ function StoryVideoCard({
               >
                 Your browser does not support the video tag.
               </video>
+            </div>
 
-              {/* Live Synchronized Voiceover Subtitle Bar */}
-              <div
-                className="pointer-events-none absolute inset-x-3 bottom-12 rounded-xl border border-white/20 px-4 py-2.5 text-center backdrop-blur-md"
-                style={{
-                  background: 'rgba(6, 26, 68, 0.86)',
-                }}
-              >
+            {/* Live Synchronized Voiceover Subtitle + Status Bar (below video, clear of play button) */}
+            <div className="border-t border-white/15 bg-[#0A2B6D] px-4 py-3 text-white space-y-2">
+              <div className="rounded-xl border border-white/15 bg-[#061A44]/90 px-4 py-2 text-center">
                 <p className="text-xs font-extrabold leading-relaxed text-white sm:text-sm">
                   “{lines[activeLineIndex] || lines[0]}”
                 </p>
               </div>
-            </div>
-
-            {/* Bottom Caption Scrub Bar */}
-            <div className="flex flex-wrap items-center justify-between gap-2 border-t border-white/15 bg-[#0A2B6D] px-4 py-2.5 text-xs text-white">
-              <span className="font-bold text-[#00C6FF]">
-                {isNarrating ? '◉ Live Voiceover Narration Active' : '◉ Ready — Click Play Video + Full Voiceover'}
-              </span>
-              <span className="font-semibold text-white/80">
-                Line {activeLineIndex + 1} of {lines.length}
-              </span>
+              <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+                <span className="font-bold text-[#00C6FF]">
+                  {isNarrating ? '◉ Live Voiceover Narration Active' : '◉ Ready — Click Play Video + Full Voiceover'}
+                </span>
+                <span className="font-semibold text-white/80">
+                  Line {activeLineIndex + 1} of {lines.length}
+                </span>
+              </div>
             </div>
           </div>
 
