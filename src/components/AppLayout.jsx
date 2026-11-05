@@ -248,14 +248,61 @@ export default function AppLayout() {
             }}
           />
           {/* Top Section of White Area — exact same 190px height as the white section of the remote */}
-          <div className="flex h-[190px] items-center justify-center bg-white px-3 py-1.5 sm:px-6 lg:px-8">
-            <div className="mx-auto flex max-w-[1440px] justify-center">
-              <Link
-                to="/dashboard"
-                className="inline-flex flex-col items-center justify-center text-center transition"
-              >
-                <BrandLogoLockup size="md" theme="light" showSlogan={true} />
-              </Link>
+          <div className="bg-white px-3 py-2 sm:px-6 lg:px-8">
+            <div className="mx-auto flex min-h-[190px] max-w-[1440px] flex-col justify-between md:h-[190px] md:flex-row md:items-stretch">
+              {/* Left at the Bottom: Sign In & Book Demo (App Coloured) */}
+              <div className="order-2 flex shrink-0 items-center justify-center gap-2 self-center md:order-1 md:self-end md:pb-1">
+                <Link
+                  to="/login"
+                  className="inline-flex min-h-[34px] items-center justify-center whitespace-nowrap rounded-lg px-3.5 py-1.5 text-xs font-extrabold text-white shadow-sm transition hover:opacity-95"
+                  style={{
+                    background: 'linear-gradient(115deg, #0A2B6D 0%, #0072FF 55%, #5A00D6 100%)',
+                  }}
+                >
+                  Sign In
+                </Link>
+                <Link
+                  to="/?demo=book"
+                  className="inline-flex min-h-[34px] items-center justify-center whitespace-nowrap rounded-lg px-3.5 py-1.5 text-xs font-extrabold text-white shadow-sm transition hover:opacity-95"
+                  style={{
+                    background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
+                  }}
+                >
+                  Book Demo
+                </Link>
+              </div>
+
+              {/* Centre: Business Logo, Name & Slogan Fitted Top-to-Bottom */}
+              <div className="order-1 flex flex-1 items-center justify-center py-0.5 md:order-2">
+                <Link
+                  to="/dashboard"
+                  className="inline-flex flex-col items-center justify-center text-center transition"
+                >
+                  <BrandLogoLockup size="md" theme="light" showSlogan={true} />
+                </Link>
+              </div>
+
+              {/* Right at the Bottom: Demo & Start Free (App Coloured) */}
+              <div className="order-3 flex shrink-0 items-center justify-center gap-2 self-center md:self-end md:pb-1">
+                <Link
+                  to="/dashboard"
+                  className="inline-flex min-h-[34px] items-center justify-center whitespace-nowrap rounded-lg px-3.5 py-1.5 text-xs font-extrabold text-white shadow-sm transition hover:opacity-95"
+                  style={{
+                    background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #A100FF 100%)',
+                  }}
+                >
+                  Demo
+                </Link>
+                <Link
+                  to="/register"
+                  className="inline-flex min-h-[34px] items-center justify-center whitespace-nowrap rounded-lg px-3.5 py-1.5 text-xs font-extrabold text-white shadow-sm transition hover:opacity-95"
+                  style={{
+                    background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
+                  }}
+                >
+                  Start Free
+                </Link>
+              </div>
             </div>
           </div>
 

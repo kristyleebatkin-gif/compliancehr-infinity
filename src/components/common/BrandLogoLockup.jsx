@@ -33,38 +33,31 @@ export default function BrandLogoLockup({
 }) {
   const isCustomName = companyName && companyName !== 'ComplianceHR Infinity';
 
-  // Larger logo image (approx. 3cm on main header, scaled proportionally in sidebar remote)
+  // Proportional logo size so logo + name + slogan fit cleanly top-to-bottom in both navigation and header
   const logoSizeClass =
     size === 'xs'
-      ? 'h-[4.75rem] w-44 sm:h-[5.25rem] sm:w-48'
-      : 'h-24 w-56 sm:h-28 sm:w-64';
+      ? 'h-16 w-40 sm:h-[4.25rem] sm:w-44'
+      : 'h-24 w-52 sm:h-[6.25rem] sm:w-60';
 
-  // Line 2: Similar-sized structured heading on ONE single line
+  // Line 2: Structured heading on ONE single line
   const nameSizeClass =
     size === 'xs'
-      ? 'text-base sm:text-lg'
-      : 'text-xl sm:text-2xl';
+      ? 'text-[15px] sm:text-base mt-1'
+      : 'text-xl sm:text-2xl mt-1.5';
 
-  // Line 3: Slightly smaller slogan on ONE single line that aligns with and extends just slightly past the business name
+  // Line 3: Slogan under name — sized to fit cleanly inside the 256px navigation bar for 'xs' and align under the name for 'md'
   const sloganSizeClass =
     size === 'xs'
-      ? 'text-[9.5px] sm:text-[10.5px] tracking-[0.01em]'
-      : 'text-[11px] sm:text-[12.5px] tracking-[0.015em]';
-
-  const APP_BORDER_GRADIENT =
-    'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)';
+      ? 'text-[7.5px] tracking-[-0.01em] gap-x-1 mt-0.5'
+      : 'text-[11px] sm:text-xs tracking-[0.01em] gap-x-1.5 mt-1';
 
   return (
     <div
-      className={`inline-flex max-w-full flex-col items-center justify-center rounded-2xl p-[3px] text-center select-none transition-transform duration-200 ${className}`}
-      style={{
-        background: APP_BORDER_GRADIENT,
-        boxShadow: '0 4px 16px -2px rgba(0, 114, 255, 0.25), 0 2px 8px rgba(90, 0, 214, 0.2)',
-      }}
+      className={`inline-flex max-w-full flex-col items-center justify-center text-center select-none ${className}`}
     >
-      {/* SINGLE UNIFIED WHITE CONTAINER WITH ONE APP-DESIGN GRADIENT BORDER FOR LOGO, NAME & SLOGAN */}
-      <div className="flex w-full flex-col items-center justify-center rounded-[13px] bg-white px-5 py-2">
-        {/* LINE 1: LARGER LOGO */}
+      {/* BORDERLESS UNIFIED CONTAINER FOR LOGO, NAME & SLOGAN */}
+      <div className="flex w-full flex-col items-center justify-center bg-transparent px-1 py-0.5">
+        {/* LINE 1: LOGO */}
         <Image
           src={logoUrl || DEFAULT_BRAND_LOGO}
           alt={companyName || 'ComplianceHR Infinity'}
@@ -72,9 +65,9 @@ export default function BrandLogoLockup({
           className={`${logoSizeClass} shrink-0 object-contain`}
         />
 
-        {/* LINE 2: LESS SPACE ABOVE "ComplianceHR Infinity" ON ONE LINE */}
+        {/* LINE 2: "ComplianceHR Infinity" ON ONE LINE */}
         <div
-          className={`mt-0.5 font-editorial ${nameSizeClass} font-extrabold leading-tight tracking-tight whitespace-nowrap`}
+          className={`font-editorial ${nameSizeClass} font-extrabold leading-tight tracking-tight whitespace-nowrap`}
         >
           {isCustomName ? (
             <span
@@ -102,10 +95,10 @@ export default function BrandLogoLockup({
           )}
         </div>
 
-        {/* LINE 3: SLOGAN ON ONE LINE — MEDIUM BLUE, PURPLE, PINK — ALMOST LINING UP ON EACH END (JUST SLIGHTLY LONGER) */}
+        {/* LINE 3: SLOGAN UNDER NAME — MEDIUM BLUE, PURPLE, PINK */}
         {showSlogan && (
           <div
-            className={`mt-0.5 flex items-center justify-center gap-x-1.5 text-center ${sloganSizeClass} font-extrabold leading-tight whitespace-nowrap`}
+            className={`flex max-w-full items-center justify-center text-center ${sloganSizeClass} font-extrabold leading-tight whitespace-nowrap`}
           >
             <span style={{ color: '#0072FF' }}>Complete Control.</span>
             <span style={{ color: '#5A00D6' }}>Greater Confidence.</span>

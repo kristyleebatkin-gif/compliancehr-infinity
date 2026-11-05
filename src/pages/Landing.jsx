@@ -29,6 +29,11 @@ export default function Landing() {
 
   useEffect(() => {
     document.documentElement.classList.remove('dark');
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('demo') === 'book') {
+      setDemoTopic('Book a Personal Demo');
+      setDemoModalOpen(true);
+    }
   }, []);
 
   const openDemoModal = (topic = 'Executive Platform Demo') => {
@@ -67,11 +72,11 @@ export default function Landing() {
       )}
 
       <div className="flex min-w-0 flex-1 flex-col">
-        {/* Above-Header Enterprise Sovereign Trust & Live Regulatory Pulse Ribbon */}
-        <EnterpriseTopTrustRibbon onBookDemo={openDemoModal} />
-
-        {/* Top Enterprise SaaS Navigation */}
+        {/* Top Enterprise SaaS Navigation — flush with Navigator Remote */}
         <LandingNav onBookDemo={openDemoModal} />
+
+        {/* Enterprise Sovereign Trust & Live Regulatory Pulse Ribbon */}
+        <EnterpriseTopTrustRibbon onBookDemo={openDemoModal} />
 
         <main className="landing-main relative z-10 mx-auto w-full max-w-[1440px] px-4 py-8 sm:px-6 lg:px-8 space-y-10 sm:space-y-14 pb-20">
         {/* 1. Hero Section (Landscape — Crystal-Clear Positioning Above the Fold) */}
