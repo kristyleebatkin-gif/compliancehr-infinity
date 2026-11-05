@@ -578,12 +578,8 @@ export default function AppLayout() {
             compactHeader={compactHeader}
             onToggleCompactHeader={() => setCompactHeader((v) => !v)}
           />
-          {!compactHeader && (
-            <>
-              <QuickAppBar />
-              <VisualDesignModuleCommandStandard />
-            </>
-          )}
+          <QuickAppBar />
+          {!compactHeader && <VisualDesignModuleCommandStandard />}
           <div className={location.pathname === '/staff' || location.pathname.startsWith('/staff/') ? 'mx-auto max-w-[1440px] px-3' : 'mx-auto max-w-[1440px] px-3 pt-2'}>
             <PendingApprovalNotice />
             <ModuleGuide />

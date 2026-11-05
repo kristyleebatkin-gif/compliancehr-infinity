@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import BrandLogoLockup from '@/components/common/BrandLogoLockup';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import {
@@ -324,6 +324,7 @@ export default function ObsidianSidebarRemote({
   onLogout,
 }) {
   const location = useLocation();
+  const navigate = useNavigate();
   const [navMode, setNavMode] = useState(() => localStorage.getItem('chr-active-remote-mode') || 'os11'); // 'pillars5' | 'os11' | 'all'
   const [selectedPillarId, setSelectedPillarId] = useState(
     () => localStorage.getItem('chr-active-remote-pillar') || 'dashboard-executive'
@@ -361,7 +362,7 @@ export default function ObsidianSidebarRemote({
     }
   };
 
-  const openMajorSectionInMainView = (pillar, modeOverride) => {
+  const openMajorSectionInMainView = (pillar, modeOverride, shouldNavigate = true) => {
     const activeMode = modeOverride || navMode;
     setSelectedPillarId(pillar.id);
     localStorage.setItem('chr-active-remote-pillar', pillar.id);
@@ -371,12 +372,10 @@ export default function ObsidianSidebarRemote({
         detail: { pillarId: pillar.id, navMode: activeMode, pillar },
       })
     );
-    const remoteInMain = document.getElementById('main-view-navigator-remote');
-    if (remoteInMain) {
-      remoteInMain.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    } else {
-      scrollWorkspaceToTop();
+    if (shouldNavigate && pillar?.path && location.pathname !== pillar.path) {
+      navigate(pillar.path);
     }
+    scrollWorkspaceToTop();
   };
 
   const sourceList =
@@ -428,7 +427,13 @@ export default function ObsidianSidebarRemote({
               type="button"
               onClick={() => {
                 setNavMode('pillars5');
-                openMajorSectionInMainView(FOCUSED_5_PILLAR_NAV[0], 'pillars5');
+                const match =
+                  FOCUSED_5_PILLAR_NAV.find(
+                    (p) =>
+                      location.pathname === p.path ||
+                      p.children.some((c) => location.pathname === c.path || location.pathname.startsWith(`${c.path}/`))
+                  ) || FOCUSED_5_PILLAR_NAV[0];
+                openMajorSectionInMainView(match, 'pillars5', false);
               }}
               className={`min-h-[24px] rounded-[10px] py-0.5 text-[8.5px] font-extrabold transition-all ${
                 navMode === 'pillars5'
@@ -443,7 +448,13 @@ export default function ObsidianSidebarRemote({
               type="button"
               onClick={() => {
                 setNavMode('os11');
-                openMajorSectionInMainView(PRIMARY_11_OS_NAV[0], 'os11');
+                const match =
+                  PRIMARY_11_OS_NAV.find(
+                    (p) =>
+                      location.pathname === p.path ||
+                      p.children.some((c) => location.pathname === c.path || location.pathname.startsWith(`${c.path}/`))
+                  ) || PRIMARY_11_OS_NAV[0];
+                openMajorSectionInMainView(match, 'os11', false);
               }}
               className={`min-h-[24px] rounded-[10px] py-0.5 text-[8.5px] font-extrabold transition-all ${
                 navMode === 'os11'

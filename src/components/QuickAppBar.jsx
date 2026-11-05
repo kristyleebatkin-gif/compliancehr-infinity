@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Zap, ArrowRight, ChevronDown, ChevronUp, Cpu } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Zap, ArrowRight, ChevronDown, ChevronUp, Cpu, LayoutGrid } from 'lucide-react';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import { PRIMARY_11_OS_NAV, FOCUSED_5_PILLAR_NAV } from '@/components/ObsidianSidebarRemote';
 import { useRole } from '@/lib/useRole';
@@ -19,6 +19,7 @@ const HEADING_TEXT_GRADIENT =
 
 export default function QuickAppBar() {
   const location = useLocation();
+  const navigate = useNavigate();
   const { role } = useRole();
   const [remoteMode, setRemoteMode] = useState(
     () => localStorage.getItem('chr-active-remote-mode') || 'os11'
@@ -33,7 +34,37 @@ export default function QuickAppBar() {
       ? location.pathname === '/'
       : location.pathname === path || location.pathname.startsWith(`${path}/`);
 
+  const allAccessibleModules = useMemo(
+    () =>
+      MODULE_DIRECTORY.filter(
+        (m) =>
+          (!role || !m.key || canAccessNav(role, m.key)) &&
+          !(m.key === 'staff-progress' && MODULE_DIRECTORY.some((e) => e.key === 'staff'))
+      ),
+    [role]
+  );
+
   const sourceSections = useMemo(() => {
+    if (remoteMode === 'all') {
+      return [
+        {
+          id: 'all-46-modules',
+          label: `All ${allAccessibleModules.length} Enterprise Modules`,
+          sub: 'Complete directory of all connected workspaces',
+          path: '/dashboard',
+          icon: LayoutGrid,
+          colourIndex: 0,
+          modules: allAccessibleModules.map((m) => ({
+            key: m.key || m.path,
+            label: m.label,
+            path: m.path,
+            blurb: m.blurb || m.group || `Open ${m.label}`,
+            icon: m.icon || LayoutGrid,
+          })),
+        },
+      ];
+    }
+
     const baseList = remoteMode === 'pillars5' ? FOCUSED_5_PILLAR_NAV : PRIMARY_11_OS_NAV;
     return baseList.map((pillar, colourIndex) => {
       const enrichedChildren = pillar.children
@@ -61,9 +92,10 @@ export default function QuickAppBar() {
         })),
       };
     });
-  }, [remoteMode, role]);
+  }, [remoteMode, role, allAccessibleModules]);
 
   useEffect(() => {
+    if (remoteMode === 'all') return;
     const match = sourceSections.find(
       (p) =>
         location.pathname === p.path ||
@@ -73,7 +105,7 @@ export default function QuickAppBar() {
       setSelectedPillarId(match.id);
       localStorage.setItem('chr-active-remote-pillar', match.id);
     }
-  }, [location.pathname, sourceSections]);
+  }, [location.pathname, sourceSections, remoteMode]);
 
   useEffect(() => {
     const onRemoteSelect = (e) => {
@@ -82,23 +114,49 @@ export default function QuickAppBar() {
       }
       if (e?.detail?.pillarId) {
         setSelectedPillarId(e.detail.pillarId);
-        setCollapsed(false);
       }
+      setCollapsed(false);
     };
     window.addEventListener('chr-remote-pillar-select', onRemoteSelect);
     return () => window.removeEventListener('chr-remote-pillar-select', onRemoteSelect);
   }, []);
 
   const expandedGroup =
-    sourceSections.find((g) => g.id === selectedPillarId) || sourceSections[0];
+    remoteMode === 'all'
+      ? sourceSections[0]
+      : sourceSections.find((g) => g.id === selectedPillarId) || sourceSections[0];
 
-  const handleSelectMajorSection = (pillar) => {
+  const handleSelectMajorSection = (pillar, shouldNavigate = true) => {
     setSelectedPillarId(pillar.id);
     setCollapsed(false);
     localStorage.setItem('chr-active-remote-pillar', pillar.id);
     window.dispatchEvent(
       new CustomEvent('chr-remote-pillar-select', {
         detail: { pillarId: pillar.id, navMode: remoteMode, pillar },
+      })
+    );
+    if (shouldNavigate && pillar?.path && location.pathname !== pillar.path) {
+      navigate(pillar.path);
+    }
+  };
+
+  const switchRemoteMode = (nextMode) => {
+    setRemoteMode(nextMode);
+    setCollapsed(false);
+    localStorage.setItem('chr-active-remote-mode', nextMode);
+    const list = nextMode === 'pillars5' ? FOCUSED_5_PILLAR_NAV : PRIMARY_11_OS_NAV;
+    const match =
+      list.find(
+        (p) =>
+          location.pathname === p.path ||
+          p.children.some((c) => location.pathname === c.path || location.pathname.startsWith(`${c.path}/`))
+      ) || list[0];
+    const nextPillarId = nextMode === 'all' ? 'all-46-modules' : match.id;
+    setSelectedPillarId(nextPillarId);
+    localStorage.setItem('chr-active-remote-pillar', nextPillarId);
+    window.dispatchEvent(
+      new CustomEvent('chr-remote-pillar-select', {
+        detail: { pillarId: nextPillarId, navMode: nextMode },
       })
     );
   };
@@ -131,11 +189,38 @@ export default function QuickAppBar() {
               </div>
             </div>
 
-            <div className="flex items-center gap-1.5">
+            <div className="flex flex-wrap items-center gap-1.5">
+              {/* Synced Mode Switcher inside Main View Navigator Remote */}
+              <div
+                className="inline-flex items-center gap-0.5 rounded-full p-[1.5px]"
+                style={{ background: BRAND_GRADIENT }}
+              >
+                <div className="inline-flex items-center gap-0.5 rounded-full bg-white p-0.5">
+                  {[
+                    { id: 'pillars5', label: '5 Pillars' },
+                    { id: 'os11', label: '13 Channels' },
+                    { id: 'all', label: 'All 46' },
+                  ].map((m) => (
+                    <button
+                      key={m.id}
+                      type="button"
+                      onClick={() => switchRemoteMode(m.id)}
+                      className={`rounded-full px-2 py-0.5 text-[8.5px] font-extrabold transition ${
+                        remoteMode === m.id
+                          ? 'bg-[#0A2B6D] text-white'
+                          : 'text-[#0A2B6D] hover:bg-[#F5F0FF]'
+                      }`}
+                    >
+                      ◉ {m.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               {expandedGroup?.path && (
                 <Link
                   to={expandedGroup.path}
-                  className="inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-0.5 text-[9px] font-extrabold text-[#0A2B6D] shadow-2xs transition hover:bg-[#F5F0FF]"
+                  className="inline-flex items-center gap-1 rounded-full bg-white px-2 py-0.5 text-[8.5px] font-extrabold text-[#0A2B6D] shadow-2xs transition hover:bg-[#F5F0FF]"
                 >
                   <span style={{ color: '#0A2B6D' }}>Open {expandedGroup.label.replace(/^\d+\.\s*/, '')} Home</span>
                   <ArrowRight className="h-2.5 w-2.5 text-[#0072FF]" />
@@ -147,7 +232,7 @@ export default function QuickAppBar() {
                 className="inline-flex items-center gap-1 rounded-full p-[1.5px] transition hover:scale-[1.02]"
                 style={{ background: BRAND_GRADIENT }}
               >
-                <span className="inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-0.5 text-[9px] font-extrabold text-[#0A2B6D]">
+                <span className="inline-flex items-center gap-1 rounded-full bg-white px-2 py-0.5 text-[8.5px] font-extrabold text-[#0A2B6D]">
                   {collapsed ? <ChevronDown className="h-3 w-3 text-[#0072FF]" /> : <ChevronUp className="h-3 w-3 text-[#5A00D6]" />}
                   <span style={{ color: '#0A2B6D' }}>{collapsed ? 'Expand Remote View' : 'Collapse Remote View'}</span>
                 </span>
