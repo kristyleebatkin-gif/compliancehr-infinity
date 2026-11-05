@@ -152,6 +152,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
 
   const topKpis = [
     {
+      domainId: 'governance',
       category: 'Governance & Audit', icon: ShieldCheck,
       label: 'Governance & Policy Records',
       value: formatRecordCount(liveCounts.policies),
@@ -159,6 +160,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
       badge: 'Status unassessed',
     },
     {
+      domainId: 'workforce',
       category: 'People & HR', icon: Users,
       label: 'Workforce Records',
       value: formatRecordCount(liveCounts.staff),
@@ -166,6 +168,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
       badge: 'Screening unassessed',
     },
     {
+      domainId: 'participants',
       category: 'Care & Consents', icon: HeartHandshake,
       label: 'Participant Records',
       value: formatRecordCount(liveCounts.participants),
@@ -173,6 +176,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
       badge: 'Status unassessed',
     },
     {
+      domainId: 'safety',
       category: 'Safety & WHS', icon: AlertTriangle,
       label: 'Incident & Risk Records',
       value: formatRecordCount(liveCounts.incidents),
@@ -180,6 +184,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
       badge: 'SLA status unassessed',
     },
     {
+      domainId: 'finance',
       category: 'Finance & Claims', icon: DollarSign,
       label: 'NDIS Billing & Financial Health',
       value: 'Unassessed',
@@ -187,6 +192,7 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
       badge: 'Status unassessed',
     },
     {
+      domainId: 'quality',
       category: 'Tasks & Quality', icon: CheckCircle2,
       label: 'Task & Audit Records',
       value: `${formatRecordCount(liveCounts.completedTasks)} completed tasks`,
@@ -320,8 +326,21 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
           return (
             <div
               key={k.label}
+              role="button"
+              tabIndex={0}
+              onClick={() => {
+                if (k.domainId) setSelectedDomainId(k.domainId);
+                document.getElementById('bh-selected-domain-panel')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  if (k.domainId) setSelectedDomainId(k.domainId);
+                  document.getElementById('bh-selected-domain-panel')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+              }}
               className={`flex h-full cursor-pointer rounded-xl border-2 border-[#0A2B6D] p-[3px] transition-all duration-300 ${
-                isGovernanceTile ? '-translate-y-0.5 shadow-md' : 'shadow-2xs'
+                selectedDomainId === k.domainId ? '-translate-y-0.5 shadow-md ring-2 ring-[#FF2E9A]' : 'shadow-2xs'
               }`}
               style={{
                 background: outerBg,
@@ -533,7 +552,8 @@ export default function BusinessHealthComplianceIntelligenceDashboard({ compact 
 
           {/* Right 5 Columns: Selected Pillar Side Panel — 50% Smaller, Live Tracker at Top of Tile With Governance Lit in Yellow on One Line, 50% Smaller Charts & Date Above Open Governance */}
           <div
-            className="lg:col-span-5 flex rounded-xl p-[3.5px] shadow-sm"
+            id="bh-selected-domain-panel"
+            className="lg:col-span-5 flex rounded-xl p-[3.5px] shadow-sm scroll-mt-20"
             style={{ background: TOP_BORDER_GRADIENT }}
           >
             {(() => {

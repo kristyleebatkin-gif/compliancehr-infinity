@@ -380,10 +380,19 @@ export default function EnterpriseStandardQualityGateSuite() {
       {/* 12-Pillar Executive Telemetry, Subject-Researched Form Generator & Saved Report Presets */}
       <Enterprise12PillarCommandBar
         liveTelemetry={liveTelemetry}
+        onSelectStudioTab={(tabId) => {
+          setActiveStudioTab(tabId);
+          setTimeout(() => {
+            document.getElementById('quality-gate-active-tab-panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 50);
+        }}
         onGeneratedForm={(newTpl) => {
           setCustomTemplates((prev) => [newTpl, ...prev]);
           setSelectedTemplateId(newTpl.id);
           setActiveStudioTab('controlled-forms');
+          setTimeout(() => {
+            document.getElementById('quality-gate-active-tab-panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 50);
           toast({
             title: 'Subject Researched & 24-Point Enterprise Form Generated',
             description: `${newTpl.documentNumber} — ${newTpl.documentName} ready for editing, preview, export, and Vault/Safe filing.`,
@@ -405,11 +414,14 @@ export default function EnterpriseStandardQualityGateSuite() {
           setFilterCategory(preset.filterCategory || 'ALL');
           setFilterStatus(preset.filterStatus || 'ALL');
           setActiveStudioTab('enterprise-reports');
+          setTimeout(() => {
+            document.getElementById('quality-gate-active-tab-panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 50);
         }}
       />
 
       {/* 6 Studio Navigation Tiles (Matching Quick Access iPad Screen Style) */}
-      <div className="grid auto-rows-fr grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
+      <div id="quality-gate-active-tab-panel" className="scroll-mt-20 grid auto-rows-fr grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
         {[
           {
             id: 'controlled-forms',
@@ -454,7 +466,12 @@ export default function EnterpriseStandardQualityGateSuite() {
             <button
               key={tab.id}
               type="button"
-              onClick={() => setActiveStudioTab(tab.id)}
+              onClick={() => {
+                setActiveStudioTab(tab.id);
+                setTimeout(() => {
+                  document.getElementById('quality-gate-active-tab-panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 40);
+              }}
               className={`group flex h-full min-h-[88px] flex-col gap-[3px] rounded-xl border-2 bg-[#0A2B6D] p-[3px] text-left transition-all ${
                 active
                   ? 'border-[#5A00D6] shadow-md ring-2 ring-[#5A00D6]/25'

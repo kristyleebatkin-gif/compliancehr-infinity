@@ -212,21 +212,24 @@ export const FOCUSED_5_PILLAR_NAV = [
   {
     id: 'pillar-today',
     label: "1. Today's Command",
-    sub: 'Dashboard, Daily Briefing, Tasks & AI Copilot',
+    sub: 'Dashboard, Operations, Analytics, Briefing, Tasks & AI',
     path: '/dashboard',
     icon: LayoutDashboard,
     status: 'LIVE',
     children: [
       { label: 'Dashboard', path: '/dashboard', sub: 'Audit Ready Today & Executive KPIs' },
+      { label: 'Operations Centre', path: '/operations-centre', sub: 'Master operations & control deck' },
+      { label: 'Business Analytics', path: '/analytics', sub: 'Cross-module trends & reports' },
       { label: 'Daily Briefing', path: '/briefing', sub: 'Morning operational briefing' },
       { label: 'Tasks', path: '/tasks', sub: 'Shared to-do & sign-off board' },
+      { label: 'Suggestions Hub', path: '/suggestions', sub: 'Continuous improvement ideas' },
       { label: 'AI Assistant', path: '/assistant', sub: 'Compliance & HR intelligence copilot' },
     ],
   },
   {
     id: 'pillar-people',
     label: '2. People & Care',
-    sub: 'Participants, Intake, Goals, Shift Notes & Roster',
+    sub: 'Participants, Intake, Goals, Roster, Comms & Community',
     path: '/our-participants',
     icon: Users,
     status: 'READY',
@@ -236,20 +239,32 @@ export const FOCUSED_5_PILLAR_NAV = [
       { label: 'Rostering', path: '/rostering', sub: 'Shifts, clearances & coverage' },
       { label: 'Communication Centre', path: '/communications', sub: 'Shift notes & team messages' },
       { label: 'Goals', path: '/goals', sub: 'Participant & staff goal tracking' },
+      { label: 'Visual Boards', path: '/visual-boards', sub: 'Accessible visual routines & AAC' },
+      { label: 'Programs & Events', path: '/programs', sub: 'Community programs & calendar' },
+      { label: 'Frontline Rapid Hub', path: '/frontline-hub', sub: '60-second mobile field actions' },
+      { label: 'CRM & Leads', path: '/crm', sub: 'Enquiries, leads & partnerships' },
+      { label: 'Referrals', path: '/referrals', sub: 'Inbound & outbound referrals' },
+      { label: 'Community Council Hub', path: '/community-council', sub: 'Local council programs & events' },
     ],
   },
   {
     id: 'pillar-workforce',
     label: '3. Workforce & HR',
-    sub: 'Employees, Clearances, Training, HR & Payroll',
+    sub: 'Employees, Clearances, Training, HR, Presence & Users',
     path: '/our-employees',
     icon: ClipboardList,
     status: 'READY',
     children: [
+      { label: 'My Profile', path: '/my-profile', sub: 'Personal profile, work & docs' },
       { label: 'Employee Profiles', path: '/our-employees', sub: '360° staff directory & files' },
       { label: 'HR Hub', path: '/hr', sub: 'Contracts, appraisals & payroll' },
       { label: 'Training Centre', path: '/training', sub: 'LMS courses, quizzes & matrix' },
       { label: 'Certificates', path: '/certificates', sub: 'Credentials & expiry alerts' },
+      { label: 'Workforce Presence Centre', path: '/workforce-presence', sub: 'Live sign-in & roll call' },
+      { label: 'Volunteering & Placements', path: '/volunteers', sub: 'Volunteer screening & placements' },
+      { label: 'Key Personnel Contacts', path: '/key-contacts', sub: 'Key personnel & emergency directory' },
+      { label: 'Meetings', path: '/meetings', sub: 'Agendas, minutes & action items' },
+      { label: 'Users & Permissions', path: '/users', sub: 'Role matrix & access control' },
     ],
   },
   {
@@ -261,25 +276,43 @@ export const FOCUSED_5_PILLAR_NAV = [
     status: 'GUARDED',
     children: [
       { label: 'Incident Clinic', path: '/incidents', sub: 'NDIS 24h/5d & SIRS triage' },
+      { label: 'Incident Analytics', path: '/incident-analytics', sub: 'Root-cause & trend intelligence' },
       { label: 'Risk Reporting', path: '/risks', sub: 'Risk register, hazards & Take-5' },
       { label: 'Quality & Improvement', path: '/quality', sub: 'Closed-loop CAPA register' },
       { label: 'Emergency Response', path: '/emergency-response', sub: 'Drills, plans & roll call' },
+      { label: 'Equipment Manuals & MSDS', path: '/equipment-manuals', sub: 'Safety data sheets & manuals' },
       { label: 'Feedback & Surveys', path: '/feedback', sub: 'Complaints, compliments & surveys' },
     ],
   },
   {
     id: 'pillar-audit',
-    label: '5. Audit & Governance',
-    sub: 'Compliance Hub, Evidence Vault, Governance & Auditor',
+    label: '5. Audit, Governance & Finance',
+    sub: 'Compliance, Vault, Safe, Registers, NDIS & Finance',
     path: '/compliance',
     icon: ShieldCheck,
     status: 'VERIFIED',
     children: [
       { label: 'Compliance Centre', path: '/compliance', sub: '356 audit checks & readiness' },
-      { label: 'Document Vault', path: '/documents', sub: 'Controlled policies & evidence' },
-      { label: 'Governance Layer', path: '/governance', sub: 'Delegations, lifecycle & board packs' },
       { label: 'Auditor Portal', path: '/auditor-portal', sub: 'Consent-verified auditor view' },
+      { label: 'Document Vault', path: '/documents', sub: 'Controlled policies & evidence' },
+      { label: 'Company Safe', path: '/company-safe', sub: 'Executive vault & credentials' },
+      { label: 'Governance Layer', path: '/governance', sub: 'Delegations, lifecycle & board packs' },
+      { label: 'Universal Register Hub', path: '/registers', sub: '45 connected master registers' },
+      { label: 'Checklists', path: '/checklists', sub: 'Operational & audit checklists' },
+      { label: 'Review Due Board', path: '/review-due', sub: 'Upcoming scheduled reviews' },
+      { label: 'Universal Storage & Export Hub', path: '/universal-storage', sub: 'Retention, backup & PDF packs' },
+      { label: 'Evidence & User Success Hub', path: '/user-success', sub: 'Evidence-first verification' },
+      { label: 'Record Intelligence & Routing', path: '/record-intelligence', sub: 'Automated cross-module routing' },
+      { label: 'NDIS Provider Portal', path: '/ndis-portal', sub: 'Registration groups & KPIs' },
+      { label: 'NDIS Updates & News', path: '/ndis-updates', sub: 'Price guide & regulatory alerts' },
       { label: 'Invoicing & Finance', path: '/invoicing', sub: 'NDIS claims & financial controls' },
+      { label: 'Quote Centre', path: '/quotes', sub: 'Service quotes & agreements' },
+      { label: 'Receipt Hub', path: '/receipts', sub: 'Expense scanner & reimbursements' },
+      { label: 'Procurement', path: '/procurement', sub: 'Purchase orders & suppliers' },
+      { label: 'Asset Management', path: '/assets', sub: 'Fleet, equipment & maintenance' },
+      { label: 'Projects Hub', path: '/projects', sub: 'Strategic projects & milestones' },
+      { label: 'Help Centre', path: '/help', sub: 'AI troubleshooter & support tickets' },
+      { label: 'User Guides', path: '/user-guides', sub: 'Step-by-step platform manuals' },
     ],
   },
 ];
@@ -293,6 +326,28 @@ export default function ObsidianSidebarRemote({
   const location = useLocation();
   const [navMode, setNavMode] = useState('os11'); // 'pillars5' | 'os11' | 'all'
   const [expandedPillar, setExpandedPillar] = useState('dashboard-executive');
+
+  React.useEffect(() => {
+    const list = navMode === 'pillars5' ? FOCUSED_5_PILLAR_NAV : PRIMARY_11_OS_NAV;
+    const match = list.find(
+      (p) =>
+        location.pathname === p.path ||
+        p.children.some((c) => location.pathname === c.path || location.pathname.startsWith(`${c.path}/`))
+    );
+    if (match) {
+      setExpandedPillar(match.id);
+    }
+  }, [location.pathname, navMode]);
+
+  const scrollWorkspaceToTop = () => {
+    const mainEl = document.getElementById('main-workspace-content');
+    if (mainEl && typeof mainEl.scrollTo === 'function') {
+      mainEl.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    if (typeof window !== 'undefined' && typeof window.scrollTo === 'function') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   const sourceList =
     Array.isArray(visiblePrimary) && visiblePrimary.length > 0
@@ -400,7 +455,7 @@ export default function ObsidianSidebarRemote({
                 const pillarActive =
                   isActive(pillar.path) ||
                   pillar.children.some((c) => location.pathname === c.path || location.pathname.startsWith(`${c.path}/`));
-                const isExpanded = expandedPillar === pillar.id || pillarActive;
+                const isExpanded = expandedPillar === pillar.id;
 
                 return (
                   <div key={pillar.id} className="space-y-1.5">
@@ -421,7 +476,10 @@ export default function ObsidianSidebarRemote({
                         <div className="flex min-h-[34px] items-center justify-between gap-1.5 bg-white px-2.5 py-1">
                           <Link
                             to={pillar.path}
-                            onClick={() => setExpandedPillar(pillar.id)}
+                            onClick={() => {
+                              setExpandedPillar(pillar.id);
+                              scrollWorkspaceToTop();
+                            }}
                             className="flex min-w-0 flex-1 items-center gap-1.5"
                           >
                             <span
@@ -482,7 +540,10 @@ export default function ObsidianSidebarRemote({
                         {/* Bottom 3/4 Dark Blue Body */}
                         <Link
                           to={pillar.path}
-                          onClick={() => setExpandedPillar(pillar.id)}
+                          onClick={() => {
+                            setExpandedPillar(pillar.id);
+                            scrollWorkspaceToTop();
+                          }}
                           className="flex items-center justify-between gap-1.5 px-2.5 py-1.5"
                         >
                           <span
@@ -508,6 +569,7 @@ export default function ObsidianSidebarRemote({
                             <Link
                               key={child.path}
                               to={child.path}
+                              onClick={scrollWorkspaceToTop}
                               className={`group block rounded-2xl p-[2px] transition-all duration-200 ${
                                 subActive
                                   ? 'shadow-[0_0_18px_rgba(0,198,255,0.8)] scale-[1.01]'
@@ -586,6 +648,7 @@ export default function ObsidianSidebarRemote({
                   <Link
                     key={item.path}
                     to={item.path}
+                    onClick={scrollWorkspaceToTop}
                     title={`${label} — ${subtitle}`}
                     className={`group block rounded-2xl p-[2px] transition-all duration-200 focus-visible:outline-none ${
                       active

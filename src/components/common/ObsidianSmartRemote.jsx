@@ -68,10 +68,33 @@ export default function ObsidianSmartRemote({
   activeScreenMode = '',
   onSelectScreenMode,
   compact = false,
+  targetSectionId = '',
   columnsClass = 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4',
 }) {
+  const remoteRef = React.useRef(null);
+
+  const scrollToTargetSection = (channelObj) => {
+    const targetId = channelObj?.targetId || targetSectionId;
+    if (targetId && typeof document !== 'undefined') {
+      setTimeout(() => {
+        const el = document.getElementById(targetId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          return;
+        }
+      }, 60);
+      return;
+    }
+    if (remoteRef.current && remoteRef.current.nextElementSibling) {
+      setTimeout(() => {
+        remoteRef.current?.nextElementSibling?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 60);
+    }
+  };
+
   return (
     <section
+      ref={remoteRef}
       className="preserve-island-theme overflow-hidden rounded-2xl border-2 border-[#0A2B6D] shadow-xl"
       style={{ background: DARK_NAVY_CHASSIS }}
     >
@@ -186,8 +209,9 @@ export default function ObsidianSmartRemote({
               key={ch.key}
               type="button"
               onClick={() => {
-                if (onSelectChannel) onSelectChannel(ch.key);
+                if (onSelectChannel) onSelectChannel(ch.key, ch);
                 if (onConfirmChannel && active) onConfirmChannel(ch);
+                scrollToTargetSection(ch);
               }}
               aria-pressed={active}
               title={`${ch.label} — ${resolvedSub}`}

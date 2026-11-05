@@ -29,8 +29,25 @@ const EXECUTIVE_13_ADMIN_CENTRES = [
   'Data Quality Centre',
 ];
 
+const ADMIN_CENTRE_TAB_MAP = {
+  'Form Generator': 'controlled-forms',
+  'Template Library': 'controlled-forms',
+  'Workflow Builder': 'traceability-logs',
+  'Dashboard Builder': 'ai-intelligence',
+  'Report Builder': 'enterprise-reports',
+  'Security & Permissions': 'traceability-logs',
+  'User Management': 'traceability-logs',
+  'Branding & Themes': 'branding-quality-gate',
+  'Reviews Management': 'enterprise-reports',
+  'Audit Management': 'traceability-logs',
+  'Document Vault Management': 'vault-safe-master',
+  'Company Safe Management': 'vault-safe-master',
+  'Data Quality Centre': 'branding-quality-gate',
+};
+
 export default function Enterprise12PillarCommandBar({
   liveTelemetry = {},
+  onSelectStudioTab,
   onGeneratedForm,
   savedPresets = [],
   onSavePreset,
@@ -210,7 +227,13 @@ export default function Enterprise12PillarCommandBar({
               <button
                 key={centre}
                 type="button"
-                onClick={() => setActiveAdminCentre(centre)}
+                onClick={() => {
+                  setActiveAdminCentre(centre);
+                  const mappedTab = ADMIN_CENTRE_TAB_MAP[centre];
+                  if (mappedTab && onSelectStudioTab) {
+                    onSelectStudioTab(mappedTab);
+                  }
+                }}
                 className={`rounded-lg px-2.5 py-1 text-[10px] font-extrabold transition ${
                   active
                     ? 'bg-[#0A2B6D] text-white shadow-2xs'

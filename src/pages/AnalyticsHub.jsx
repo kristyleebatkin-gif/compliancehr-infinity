@@ -8,6 +8,7 @@ import '@/components/documents/vaultWorkspace.css';
 import BusinessHealthComplianceIntelligenceDashboard from '@/components/compliance/BusinessHealthComplianceIntelligenceDashboard';
 import EnterpriseStandardQualityGateSuite from '@/components/compliance/EnterpriseStandardQualityGateSuite';
 import EnterpriseToolsAiIntelligencePlatform from '@/components/compliance/EnterpriseToolsAiIntelligencePlatform';
+import ObsidianSmartRemote from '@/components/common/ObsidianSmartRemote';
 
 const PIE_COLOURS = ['#4f46e5', '#0d9488', '#16a34a', '#ca8a04', '#dc2626', '#9333ea', '#2563eb', '#db2777'];
 const BUCKET_COMPUTED = ['count', 'sum_amount', 'avg_amount', 'min_amount', 'max_amount'];
@@ -22,10 +23,38 @@ const bucketRows = (rows, valueKey) => (rows || [])
   .filter((r) => r.bucket)
   .sort((a, b) => a.bucket.localeCompare(b.bucket));
 
+const ANALYTICS_REMOTE_CHANNELS = [
+  {
+    key: 'ai-intelligence',
+    label: '1. AI & Intelligence Platform',
+    sub: '9 AI Copilots · 6 Live Scores · NDIS Explorer',
+    targetId: 'analytics-sec-ai-platform',
+  },
+  {
+    key: 'business-health',
+    label: '2. 8-Pillar Business Health',
+    sub: '8-Domain NDIS Matrix · 90/60/30d Radar · PDF',
+    targetId: 'business-health-intelligence',
+  },
+  {
+    key: 'forms-reports-studio',
+    label: '3. Controlled Forms & Reports',
+    sub: '11-Section Forms · 12 Reports · 19-Pt QA Gate',
+    targetId: 'analytics-sec-quality-gate',
+  },
+  {
+    key: 'financial-ops-charts',
+    label: '4. Revenue, Quotes & Ops Charts',
+    sub: 'Invoiced Revenue · Quote Win Rate · Incidents',
+    targetId: 'analytics-sec-charts',
+  },
+];
+
 export default function AnalyticsHub() {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [activeSectionKey, setActiveSectionKey] = useState('ai-intelligence');
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -97,18 +126,39 @@ export default function AnalyticsHub() {
         moduleKey="analytics"
       />
 
-      <EnterpriseToolsAiIntelligencePlatform />
+      <ObsidianSmartRemote
+        title="Analytics & Intelligence Navigator Remote"
+        subtitle="Select any analytics command section to jump directly to it"
+        channels={ANALYTICS_REMOTE_CHANNELS}
+        activeKey={activeSectionKey}
+        onSelectChannel={(key, ch) => {
+          setActiveSectionKey(key);
+          if (ch?.targetId) {
+            const el = document.getElementById(ch.targetId);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }}
+        columnsClass="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+      />
 
-      <BusinessHealthComplianceIntelligenceDashboard />
+      <div id="analytics-sec-ai-platform" className="scroll-mt-20">
+        <EnterpriseToolsAiIntelligencePlatform />
+      </div>
 
-      <EnterpriseStandardQualityGateSuite />
+      <div id="analytics-sec-health-dashboard" className="scroll-mt-20">
+        <BusinessHealthComplianceIntelligenceDashboard />
+      </div>
+
+      <div id="analytics-sec-quality-gate" className="scroll-mt-20">
+        <EnterpriseStandardQualityGateSuite />
+      </div>
 
       {loading && <Card><CardContent className="flex items-center justify-center gap-2 p-10 text-sm text-muted-foreground"><Loader2 className="h-4 w-4 animate-spin" />Crunching the numbers...</CardContent></Card>}
 
       {error && <Card><CardContent className="flex items-center gap-2 p-4 text-sm text-danger"><AlertCircle className="h-4 w-4" />{error}</CardContent></Card>}
 
       {stats && (
-        <>
+        <div id="analytics-sec-charts" className="scroll-mt-20 space-y-2">
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-6">
             {kpis.map((k) => (
               <Card key={k.label} className={`analytics-kpi ${k.tone} ${k.warn ? 'ring-1 ring-danger/40' : ''}`}>
@@ -190,7 +240,7 @@ export default function AnalyticsHub() {
               </CardContent>
             </Card>
           </div>
-        </>
+        </div>
       )}
     </div>
   );
