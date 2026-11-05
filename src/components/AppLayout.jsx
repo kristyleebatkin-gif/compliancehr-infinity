@@ -380,13 +380,22 @@ export default function AppLayout() {
                   <Sparkles className="h-3 w-3 text-[#5A00D6]" />
                   <span>Setup Checklist</span>
                 </button>
+                <Link
+                  to="/incidents"
+                  className="hidden lg:inline-flex min-h-[22px] items-center gap-1 rounded-full border border-[#FF2E9A]/60 bg-white px-2 py-0.5 text-[9px] font-extrabold text-[#0A2B6D] shadow-2xs transition hover:bg-[#F5F0FF]"
+                  title="Open Incident Clinic & 1-Click CAPA / Risk Escalation"
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#FF2E9A]" />
+                  <span>Incident Escalation</span>
+                </Link>
                 <button
                   type="button"
                   onClick={() => setCompactHeader((v) => !v)}
-                  className="hidden md:inline-flex min-h-[24px] items-center gap-1 rounded-full border border-white/25 bg-white/10 px-2 py-0.5 text-[9px] font-bold text-white transition hover:bg-white/20"
-                  title={compactHeader ? 'Show full top banner' : 'Compact top banner for more table space'}
+                  className="inline-flex min-h-[22px] items-center gap-1 rounded-full border border-[#00C6FF]/60 bg-white px-2 py-0.5 text-[9px] font-extrabold text-[#0A2B6D] shadow-2xs transition hover:bg-[#F5F0FF]"
+                  title={compactHeader ? 'Expand full workspace header & remote decks' : 'Collapse top banner & decks for maximum register space'}
                 >
-                  <span>{compactHeader ? 'Expand Banner' : 'Compact View'}</span>
+                  <span style={{ color: '#0072FF' }}>{compactHeader ? '▼' : '▲'}</span>
+                  <span>{compactHeader ? 'Expand Header' : 'Collapse Header'}</span>
                 </button>
                 <div
                   className="rounded-full p-[1.5px] shadow-2xs"
@@ -566,9 +575,15 @@ export default function AppLayout() {
             role={role}
             darkMode={darkMode}
             onToggleDarkMode={() => setDarkMode((d) => !d)}
+            compactHeader={compactHeader}
+            onToggleCompactHeader={() => setCompactHeader((v) => !v)}
           />
-          <QuickAppBar />
-          <VisualDesignModuleCommandStandard />
+          {!compactHeader && (
+            <>
+              <QuickAppBar />
+              <VisualDesignModuleCommandStandard />
+            </>
+          )}
           <div className={location.pathname === '/staff' || location.pathname.startsWith('/staff/') ? 'mx-auto max-w-[1440px] px-3' : 'mx-auto max-w-[1440px] px-3 pt-2'}>
             <PendingApprovalNotice />
             <ModuleGuide />

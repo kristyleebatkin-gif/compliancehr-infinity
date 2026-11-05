@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, ArrowRight, Calendar, ChevronDown, LayoutGrid } from 'lucide-react';
+import { Menu, X, ArrowRight, Calendar, ChevronDown, ChevronUp, LayoutGrid, Minimize2, Maximize2, ShieldAlert } from 'lucide-react';
 import BrandLogoLockup from '@/components/common/BrandLogoLockup';
 
 const NAV_LINKS = [
@@ -32,11 +32,31 @@ const WORKSPACE_ROUTES = [
 export default function LandingNav({ onBookDemo }) {
   const [open, setOpen] = useState(false);
   const [workspaceMenuOpen, setWorkspaceMenuOpen] = useState(false);
+  const [collapsedHeader, setCollapsedHeader] = useState(false);
+  const [manualOverride, setManualOverride] = useState(null);
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (manualOverride !== null) return;
+      if (window.scrollY > 140) setCollapsedHeader(true);
+      else if (window.scrollY < 40) setCollapsedHeader(false);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [manualOverride]);
+
+  const toggleHeaderCollapse = () => {
+    setCollapsedHeader((prev) => {
+      const next = !prev;
+      setManualOverride(next);
+      return next;
+    });
+  };
 
   return (
     <header
       id="top-landing"
-      className="sticky top-0 z-40 w-full bg-white shadow-sm"
+      className="sticky top-0 z-40 w-full bg-white shadow-sm transition-all duration-200"
     >
       {/* Top App-Design Gradient Strip — aligned flush with navigation remote */}
       <div
@@ -47,78 +67,80 @@ export default function LandingNav({ onBookDemo }) {
         }}
       />
 
-      {/* White Header Section Above Dashboard — exact 190px height aligned with navigation remote */}
-      <div className="mx-auto flex min-h-[190px] max-w-[1440px] flex-col justify-between bg-white px-4 py-2.5 sm:px-6 lg:px-8 md:h-[190px] md:flex-row md:items-stretch">
-        {/* Left at the Bottom: Sign In & Book Demo (App Coloured) */}
-        <div className="order-2 flex shrink-0 items-center justify-center gap-2 self-center md:order-1 md:self-end md:pb-1">
-          <Link
-            to="/login"
-            className="inline-flex min-h-[36px] items-center justify-center whitespace-nowrap rounded-lg px-4 py-2 text-xs font-extrabold text-white shadow-sm transition hover:opacity-95"
-            style={{
-              background: 'linear-gradient(115deg, #0A2B6D 0%, #0072FF 55%, #5A00D6 100%)',
-            }}
-          >
-            Sign In
-          </Link>
+      {/* Collapsible White Header Section Above Dashboard — aligned with navigation remote (+1cm logo height) */}
+      {!collapsedHeader && (
+        <div className="mx-auto flex min-h-[calc(190px+1cm)] max-w-[1440px] flex-col justify-between bg-white px-4 py-1.5 sm:px-6 lg:px-8 md:h-[calc(190px+1cm)] md:flex-row md:items-stretch">
+          {/* Left at the Bottom: Sign In & Book Demo (Slightly Reduced) */}
+          <div className="order-2 flex shrink-0 items-center justify-center gap-1.5 self-center md:order-1 md:self-end md:pb-1">
+            <Link
+              to="/login"
+              className="inline-flex min-h-[27px] items-center justify-center whitespace-nowrap rounded-md px-2.5 py-1 text-[10.5px] font-extrabold text-white shadow-2xs transition hover:opacity-95"
+              style={{
+                background: 'linear-gradient(115deg, #0A2B6D 0%, #0072FF 55%, #5A00D6 100%)',
+              }}
+            >
+              Sign In
+            </Link>
 
-          <button
-            type="button"
-            onClick={() => onBookDemo && onBookDemo('Book a Personal Demo')}
-            className="inline-flex min-h-[36px] items-center gap-1.5 whitespace-nowrap rounded-lg px-4 py-2 text-xs font-extrabold text-white shadow-sm transition hover:opacity-95"
-            style={{
-              background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
-            }}
-          >
-            <Calendar className="h-3.5 w-3.5 shrink-0 text-white" />
-            <span>Book Demo</span>
-          </button>
+            <button
+              type="button"
+              onClick={() => onBookDemo && onBookDemo('Book a Personal Demo')}
+              className="inline-flex min-h-[27px] items-center gap-1 whitespace-nowrap rounded-md px-2.5 py-1 text-[10.5px] font-extrabold text-white shadow-2xs transition hover:opacity-95"
+              style={{
+                background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
+              }}
+            >
+              <Calendar className="h-3 w-3 shrink-0 text-white" />
+              <span>Book Demo</span>
+            </button>
+          </div>
+
+          {/* Centre: Business Logo (+1cm x +1cm), Name & Slogan Under Name Fitted Top-to-Bottom */}
+          <div className="order-1 flex flex-1 items-center justify-center py-0.5 md:order-2">
+            <Link
+              to="/"
+              className="inline-flex flex-col items-center justify-center text-center"
+              aria-label="ComplianceHR Infinity home"
+            >
+              <BrandLogoLockup size="md" theme="light" showSlogan={true} />
+            </Link>
+          </div>
+
+          {/* Right at the Bottom: Demo & Start Free (Slightly Reduced) */}
+          <div className="order-3 flex shrink-0 items-center justify-center gap-1.5 self-center md:self-end md:pb-1">
+            <Link
+              to="/dashboard"
+              className="inline-flex min-h-[27px] items-center gap-1 whitespace-nowrap rounded-md px-2.5 py-1 text-[10.5px] font-extrabold text-white shadow-2xs transition hover:opacity-95"
+              style={{
+                background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #A100FF 100%)',
+              }}
+            >
+              <span>Demo</span>
+            </Link>
+
+            <Link
+              to="/register"
+              className="inline-flex min-h-[27px] shrink-0 items-center gap-1 whitespace-nowrap rounded-md px-2.5 py-1 text-[10.5px] font-extrabold text-white shadow-2xs transition hover:opacity-95"
+              style={{
+                background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
+              }}
+            >
+              <span>Start Free</span>
+              <ArrowRight className="h-3 w-3 shrink-0 text-white" />
+            </Link>
+
+            <button
+              type="button"
+              className="xl:hidden inline-flex items-center justify-center rounded-md border border-slate-200 bg-white p-1.5 text-[#0A2B6D]"
+              aria-label={open ? 'Close menu' : 'Open menu'}
+              aria-expanded={open}
+              onClick={() => setOpen(!open)}
+            >
+              {open ? <X className="h-3.5 w-3.5" /> : <Menu className="h-3.5 w-3.5" />}
+            </button>
+          </div>
         </div>
-
-        {/* Centre: Business Logo, Name & Slogan Under Name Fitted Top-to-Bottom */}
-        <div className="order-1 flex flex-1 items-center justify-center py-1 md:order-2">
-          <Link
-            to="/"
-            className="inline-flex flex-col items-center justify-center text-center"
-            aria-label="ComplianceHR Infinity home"
-          >
-            <BrandLogoLockup size="md" theme="light" showSlogan={true} />
-          </Link>
-        </div>
-
-        {/* Right at the Bottom: Demo & Start Free (App Coloured) */}
-        <div className="order-3 flex shrink-0 items-center justify-center gap-2 self-center md:self-end md:pb-1">
-          <Link
-            to="/dashboard"
-            className="inline-flex min-h-[36px] items-center gap-1.5 whitespace-nowrap rounded-lg px-4 py-2 text-xs font-extrabold text-white shadow-sm transition hover:opacity-95"
-            style={{
-              background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #A100FF 100%)',
-            }}
-          >
-            <span>Demo</span>
-          </Link>
-
-          <Link
-            to="/register"
-            className="inline-flex min-h-[36px] shrink-0 items-center gap-1.5 whitespace-nowrap rounded-lg px-4 py-2 text-xs font-extrabold text-white shadow-sm transition hover:opacity-95"
-            style={{
-              background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
-            }}
-          >
-            <span>Start Free</span>
-            <ArrowRight className="h-3.5 w-3.5 shrink-0 text-white" />
-          </Link>
-
-          <button
-            type="button"
-            className="xl:hidden inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white p-2 text-[#0A2B6D]"
-            aria-label={open ? 'Close menu' : 'Open menu'}
-            aria-expanded={open}
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-          </button>
-        </div>
-      </div>
+      )}
 
       {/* Continuous App-Design Gradient Divider Line aligned with remote white section bottom */}
       <div
@@ -131,17 +153,56 @@ export default function LandingNav({ onBookDemo }) {
 
       {/* Compact Section Navigation Bar Below Divider */}
       <div
-        className="hidden xl:block px-4 py-1.5 sm:px-6"
+        className="px-3 py-1 sm:px-6"
         style={{
           background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
         }}
       >
-        <nav aria-label="Main navigation" className="mx-auto flex max-w-[1440px] items-center justify-center gap-6">
+        <nav aria-label="Main navigation" className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <Link
+              to="/"
+              className="inline-flex items-center gap-1.5 rounded-full border border-[#00C6FF]/40 bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]"
+            >
+              <span style={{ color: '#0072FF' }}>◉</span>
+              <span>ComplianceHR Infinity</span>
+            </Link>
+            <button
+              type="button"
+              onClick={toggleHeaderCollapse}
+              className="inline-flex items-center gap-1 rounded-full border border-[#00C6FF]/50 bg-white/10 px-2.5 py-0.5 text-[10px] font-extrabold text-white transition hover:bg-white/20"
+              title={collapsedHeader ? 'Expand full brand header' : 'Collapse top banner for maximum screen space'}
+            >
+              {collapsedHeader ? (
+                <>
+                  <Maximize2 className="h-2.5 w-2.5 text-[#00C6FF]" />
+                  <span>Expand Header</span>
+                  <ChevronDown className="h-2.5 w-2.5 text-[#00C6FF]" />
+                </>
+              ) : (
+                <>
+                  <Minimize2 className="h-2.5 w-2.5 text-[#00C6FF]" />
+                  <span>Collapse Header</span>
+                  <ChevronUp className="h-2.5 w-2.5 text-[#00C6FF]" />
+                </>
+              )}
+            </button>
+            <Link
+              to="/incidents"
+              className="hidden sm:inline-flex items-center gap-1 rounded-full border border-[#FF2E9A]/60 bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D] transition hover:bg-[#F5F0FF]"
+              title="Open Incident Clinic & 1-Click CAPA/Risk Escalation"
+            >
+              <ShieldAlert className="h-2.5 w-2.5 text-[#FF2E9A]" />
+              <span>1-Click Incident Escalation</span>
+            </Link>
+          </div>
+
+          <div className="hidden xl:flex items-center justify-center gap-5">
           {NAV_LINKS.map(([label, href]) => (
             <a
               key={href}
               href={href}
-              className="whitespace-nowrap text-xs font-semibold text-white/90 transition hover:text-[#00C6FF]"
+              className="whitespace-nowrap text-[11px] font-semibold text-white/90 transition hover:text-[#00C6FF]"
             >
               {label}
             </a>
@@ -183,6 +244,7 @@ export default function LandingNav({ onBookDemo }) {
                 </div>
               </div>
             )}
+          </div>
           </div>
         </nav>
       </div>

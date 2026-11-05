@@ -115,6 +115,8 @@ export default function EnterpriseWorkspaceBar({
   role,
   darkMode,
   onToggleDarkMode,
+  compactHeader = false,
+  onToggleCompactHeader,
 }) {
   const location = useLocation();
   const navigate = useNavigate();
@@ -614,6 +616,39 @@ export default function EnterpriseWorkspaceBar({
               <span>Activity &amp; Audit</span>
             </button>
 
+            {/* 1-Click Collapsible Header Toggle */}
+            {onToggleCompactHeader && (
+              <button
+                type="button"
+                onClick={onToggleCompactHeader}
+                title={compactHeader ? 'Expand workspace header & remote decks' : 'Collapse workspace header for maximum table height'}
+                className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[9.5px] font-extrabold text-[#0A2B6D] shadow-2xs transition hover:opacity-90"
+                style={{
+                  border: '1.5px solid transparent',
+                  background: 'linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box',
+                  color: '#0A2B6D',
+                }}
+              >
+                <span style={{ color: '#0072FF' }}>{compactHeader ? '▼' : '▲'}</span>
+                <span>{compactHeader ? 'Expand Header' : 'Compact Header'}</span>
+              </button>
+            )}
+
+            {/* Quick Incident Escalation Link */}
+            <Link
+              to="/incidents#incident-register"
+              title="Open Incident Clinic & 1-Click CAPA / Risk Escalation"
+              className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[9.5px] font-extrabold text-[#0A2B6D] shadow-2xs transition hover:opacity-90"
+              style={{
+                border: '1.5px solid transparent',
+                background: 'linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%) border-box',
+                color: '#0A2B6D',
+              }}
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-[#FF2E9A]" />
+              <span>1-Click Escalate</span>
+            </Link>
+
             {/* AI Assistant Copilot */}
             <button
               type="button"
@@ -621,13 +656,13 @@ export default function EnterpriseWorkspaceBar({
                 setDrawerMode((prev) => (prev === 'ai' ? null : 'ai'))
               }
               title="Open Infinity AI Copilot"
-              className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-[11px] font-extrabold text-white shadow-2xs transition hover:opacity-95"
+              className="inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[9.5px] font-extrabold text-white shadow-2xs transition hover:opacity-95"
               style={{
                 background:
                   'linear-gradient(120deg, #0072FF 0%, #5A00D6 52%, #FF2E9A 100%)',
               }}
             >
-              <Sparkles className="h-3 w-3 text-white" />
+              <Sparkles className="h-2.5 w-2.5 text-white" />
               <span>Ask AI</span>
             </button>
 
@@ -637,12 +672,12 @@ export default function EnterpriseWorkspaceBar({
               onClick={onToggleDarkMode}
               aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
               title={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
-              className="inline-flex h-7 w-7 items-center justify-center rounded-lg border border-slate-200 bg-white text-[#0A2B6D] shadow-2xs transition hover:border-[#0072FF] hover:text-[#0072FF]"
+              className="inline-flex h-6 w-6 items-center justify-center rounded-md border border-slate-200 bg-white text-[#0A2B6D] shadow-2xs transition hover:border-[#0072FF] hover:text-[#0072FF]"
             >
               {darkMode ? (
-                <Sun className="h-3.5 w-3.5 text-[#FF2E9A]" />
+                <Sun className="h-3 w-3 text-[#FF2E9A]" />
               ) : (
-                <Moon className="h-3.5 w-3.5 text-[#5A00D6]" />
+                <Moon className="h-3 w-3 text-[#5A00D6]" />
               )}
             </button>
           </div>

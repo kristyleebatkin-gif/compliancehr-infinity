@@ -60,6 +60,99 @@ function Incidents({ profile, profileKind, embedded = false } = {}) {
   const [savingInvestigation, setSavingInvestigation] = useState(false);
   const [view, setView] = useState('list');
   const [screenMode, setScreenMode] = useState('clinic');
+  const [escalatingId, setEscalatingId] = useState(null);
+  const [lastEscalatedSummary, setLastEscalatedSummary] = useState(null);
+
+  const escalateIncidentClosedLoop = async (target) => {
+    if (!target) {
+      toast({ title: 'No incident available to escalate' });
+      return;
+    }
+    setEscalatingId(target.id);
+    const fiveDayDue = new Date(Date.now() + 5 * 86400000).toISOString().slice(0, 10);
+    const fourteenDayTarget = new Date(Date.now() + 14 * 86400000).toISOString().slice(0, 10);
+    const priority = target.severity === 'Critical' || target.severity === 'High' ? 'High' : 'Medium';
+    const riskRating = target.severity === 'Critical' ? 'Critical' : target.severity === 'High' ? 'High' : 'Medium';
+    try {
+      const userName = await currentUserName().catch(() => 'Compliance Manager');
+      await Promise.all([
+        base44.entities.QualityItem.create({
+          title: `CAPA: ${target.title || target.incident_id || 'Incident Follow-up'}`,
+          type: 'Corrective Action',
+          source_type: 'Incident',
+          source_record_id: target.id,
+          source: 'Incident',
+          priority,
+          status: 'In Progress',
+          owner: target.responsible_manager || userName || 'Compliance Manager',
+          raised_by: userName || target.reported_by || 'Compliance Manager',
+          raised_date: new Date().toISOString().slice(0, 10),
+          target_date: fourteenDayTarget,
+          description: `Closed-loop corrective action linked to Incident ${target.incident_id || target.id}: ${target.description || ''}`,
+          notes: target.immediate_actions || 'Complete root-cause investigation, verify NDIS Commission 5-day report, and update participant risk controls.',
+        }),
+        base44.entities.ImprovementAction.create({
+          title: `CAPA: ${target.title || target.incident_id || 'Incident Follow-up'}`,
+          improvement_id: `IMP-${Date.now().toString().slice(-6)}`,
+          description: target.immediate_actions || target.description || 'Corrective and preventive action escalated from incident.',
+          owner: target.responsible_manager || userName || 'Compliance Manager',
+          priority,
+          target_date: fourteenDayTarget,
+          source: 'Incident Reviews',
+          date_identified: new Date().toISOString().slice(0, 10),
+          identified_by: userName || 'System Escalation',
+          status: 'Identified',
+          linked_entity_type: 'Incident',
+          linked_entity_id: target.id,
+        }).catch(() => null),
+        base44.entities.Risk.create({
+          title: `Incident Risk: ${target.title || target.incident_id || 'Safety Hazard'}`,
+          report_type: 'Risk',
+          category: target.category === 'Medical' || target.category === 'Medication Error' ? 'Clinical' : 'Operational',
+          rating: riskRating,
+          status: 'Treating',
+          owner: target.responsible_manager || userName || 'Compliance Manager',
+          participant_name: target.participant_name || '',
+          hazards_identified: target.hazards_identified || target.description || '',
+          control_measures: target.control_measures || target.immediate_actions || '',
+          source_entity_type: 'Incident',
+          source_entity_id: target.id,
+          identified_date: new Date().toISOString().slice(0, 10),
+          review_date: fourteenDayTarget,
+        }),
+        base44.entities.Incident.update(target.id, {
+          status: target.status === 'Reported' ? 'Action Required' : target.status,
+          five_day_follow_up_due: target.five_day_follow_up_due || fiveDayDue,
+        }),
+      ]);
+      setItems((prev) =>
+        prev.map((i) =>
+          i.id === target.id
+            ? {
+                ...i,
+                status: i.status === 'Reported' ? 'Action Required' : i.status,
+                five_day_follow_up_due: i.five_day_follow_up_due || fiveDayDue,
+              }
+            : i
+        )
+      );
+      setLastEscalatedSummary({
+        id: target.id,
+        title: target.title || target.incident_id || 'Incident',
+        priority,
+        riskRating,
+        fiveDayDue,
+      });
+      toast({
+        title: 'Closed-Loop Incident Escalation Complete',
+        description: `Created linked CAPA, Quality Item & ${riskRating} Risk for "${target.title}".`,
+      });
+    } catch (err) {
+      toast({ title: 'Escalation failed', description: err.message, variant: 'destructive' });
+    } finally {
+      setEscalatingId(null);
+    }
+  };
 
   useEffect(() => { load(); }, []);
 
@@ -291,36 +384,40 @@ function Incidents({ profile, profileKind, embedded = false } = {}) {
           {canReview && (
             <Button
               size="sm"
+              disabled={Boolean(escalatingId)}
               className="h-7 border border-[#dc2626] bg-white text-[10px] font-black text-rose-900 hover:bg-rose-100"
-              onClick={async () => {
+              onClick={() => {
                 const highIncidents = items.filter((i) => (i.requires_ndis_report || i.severity === 'Critical' || i.severity === 'High') && i.status !== 'Closed');
                 const target = highIncidents[0] || items[0];
-                if (!target) {
-                  toast({ title: 'No incident available to escalate' });
-                  return;
-                }
-                await base44.entities.QualityItem.create({
-                  title: `CAPA: ${target.title || target.incident_id || 'Incident Follow-up'}`,
-                  source: 'Incident',
-                  category: 'Safety & Clinical Governance',
-                  status: 'In Progress',
-                  priority: 'High',
-                  owner: 'Compliance Administrator',
-                  due_date: new Date(Date.now() + 5 * 86400000).toISOString().slice(0, 10),
-                  description: `Closed-loop corrective action linked to Incident ${target.incident_id || target.id}: ${target.description || ''}`,
-                  action_plan: target.immediate_actions || 'Complete root-cause investigation, verify NDIS Commission 5-day report, and update participant risk controls.',
-                });
-                toast({
-                  title: 'Linked CAPA Created in Quality Register',
-                  description: `Corrective action created for "${target.title}".`,
-                });
+                escalateIncidentClosedLoop(target);
               }}
             >
-              Escalate Latest High/Reportable Incident to CAPA
+              {escalatingId ? 'Escalating…' : '1-Click Escalate Latest High/Reportable Incident (CAPA + Risk)'}
             </Button>
           )}
         </div>
       </div>
+
+      {lastEscalatedSummary && (
+        <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-emerald-600 bg-emerald-50/90 px-3 py-2 text-xs font-bold text-[#0A2B6D]">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="rounded-full bg-emerald-600 px-2 py-0.5 text-[10px] font-black uppercase text-white">
+              Escalated
+            </span>
+            <span>
+              <strong>{lastEscalatedSummary.title}</strong> linked to CAPA ({lastEscalatedSummary.priority}), Risk Register ({lastEscalatedSummary.riskRating}), and 5-Day Follow-up ({lastEscalatedSummary.fiveDayDue}).
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Link to="/quality" className="rounded-md bg-white px-2.5 py-1 text-[11px] font-extrabold text-[#0072FF] shadow-2xs hover:underline">
+              Open CAPA Register →
+            </Link>
+            <Link to="/risks" className="rounded-md bg-white px-2.5 py-1 text-[11px] font-extrabold text-[#5A00D6] shadow-2xs hover:underline">
+              Open Risk Register →
+            </Link>
+          </div>
+        </div>
+      )}
 
       <HealthMedicationResponse />
 
@@ -399,7 +496,19 @@ function Incidents({ profile, profileKind, embedded = false } = {}) {
                     <Link to={`/incidents/${inc.id}`} className="text-sm font-semibold text-foreground hover:underline">{inc.title || 'Untitled'}</Link>
                     {inc.incident_id && <div className="text-xs text-foreground/40">{inc.incident_id}</div>}
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    {canReview && (
+                      <button
+                        type="button"
+                        disabled={escalatingId === inc.id}
+                        onClick={() => escalateIncidentClosedLoop(inc)}
+                        className="flex items-center gap-1 rounded-md border border-[#5A00D6]/40 bg-[#F5F0FF] px-2 py-1 text-[11px] font-extrabold text-[#5A00D6] hover:bg-[#EDE9FE] disabled:opacity-50"
+                        title="1-Click Closed-Loop Escalation to CAPA, Quality & Risk Registers"
+                      >
+                        <ShieldAlert className="h-3 w-3 text-[#FF2E9A]" />
+                        {escalatingId === inc.id ? 'Escalating…' : '1-Click Escalate (CAPA + Risk)'}
+                      </button>
+                    )}
                     {canReview && <Link to={`/incidents/${inc.id}/edit`} className="rounded-md border border-border px-2 py-1 text-[11px] font-semibold hover:bg-muted">Edit all sections</Link>}
                     <button onClick={() => downloadIncidentReport([inc])} className="flex items-center gap-1 rounded-md border border-border px-2 py-1 text-[11px] font-semibold text-foreground/70 hover:bg-muted"><Download className="h-3 w-3" />PDF</button>
                     {(inc.participant_name || inc.staff_name) && (
