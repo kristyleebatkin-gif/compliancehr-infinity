@@ -40,11 +40,9 @@ export default function QuickAppBar() {
   const allAccessibleModules = useMemo(
     () =>
       MODULE_DIRECTORY.filter(
-        (m) =>
-          (!role || !m.key || canAccessNav(role, m.key)) &&
-          !(m.key === 'staff-progress' && MODULE_DIRECTORY.some((e) => e.key === 'staff'))
+        (m) => !(m.key === 'staff-progress' && MODULE_DIRECTORY.some((e) => e.key === 'staff'))
       ),
-    [role]
+    []
   );
 
   const sourceSections = useMemo(() => {
@@ -70,32 +68,24 @@ export default function QuickAppBar() {
 
     const baseList = remoteMode === 'pillars5' ? FOCUSED_5_PILLAR_NAV : PRIMARY_11_OS_NAV;
     return baseList.map((pillar, colourIndex) => {
-      const enrichedChildren = pillar.children
-        .map((ch) => {
-          const dirMatch = MODULE_DIRECTORY.find((m) => m.path === ch.path);
-          return {
-            key: dirMatch?.key || ch.path,
-            label: ch.label,
-            path: ch.path,
-            blurb: ch.sub || dirMatch?.blurb || `Open ${ch.label}`,
-            icon: dirMatch?.icon || pillar.icon,
-          };
-        })
-        .filter((mod) => !role || !mod.key || mod.key.startsWith('/') || canAccessNav(role, mod.key));
+      const enrichedChildren = pillar.children.map((ch) => {
+        const dirMatch = MODULE_DIRECTORY.find((m) => m.path === ch.path);
+        return {
+          key: dirMatch?.key || ch.path,
+          label: ch.label,
+          path: ch.path,
+          blurb: ch.sub || dirMatch?.blurb || `Open ${ch.label}`,
+          icon: dirMatch?.icon || pillar.icon,
+        };
+      });
 
       return {
         ...pillar,
         colourIndex,
-        modules: enrichedChildren.length > 0 ? enrichedChildren : pillar.children.map((ch) => ({
-          key: ch.path,
-          label: ch.label,
-          path: ch.path,
-          blurb: ch.sub,
-          icon: pillar.icon,
-        })),
+        modules: enrichedChildren,
       };
     });
-  }, [remoteMode, role, allAccessibleModules]);
+  }, [remoteMode, allAccessibleModules]);
 
   useEffect(() => {
     if (remoteMode === 'all') return;
@@ -253,101 +243,10 @@ export default function QuickAppBar() {
             </div>
           </div>
 
-          {/* Selected Major Section Opened Prominently in Main View on the Navigator Remote (Slightly Reduced Tiles) */}
-          {!collapsed && expandedGroup && (
-            <div id="quick-access-modules" className="px-1.5 pb-1.5 pt-0.5">
-              <nav
-                aria-label={expandedGroup.label}
-                className="rounded-xl border border-[#00C6FF]/40 p-1.5 shadow-[0_0_16px_rgba(0,198,255,0.2)]"
-                style={{ background: DARK_NAVY_CHASSIS }}
-              >
-                <div className="mb-1 flex flex-wrap items-center justify-between gap-1.5">
-                  <span
-                    className="inline-flex items-center gap-1 rounded-full border border-[#00C6FF] bg-white px-2 py-0 text-[8.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D] shadow-2xs"
-                    style={{ color: '#0A2B6D' }}
-                  >
-                    <span style={{ color: '#0072FF' }}>◉</span> {expandedGroup.label} — Opened in Main View ({expandedGroup.modules.length} Modules)
-                  </span>
-                  <span className="text-[8px] font-bold text-[#00C6FF]">
-                    Click any module tile to open
-                  </span>
-                </div>
-                <div className="grid grid-cols-2 gap-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 items-stretch">
-                  {expandedGroup.modules.map((module, mIdx) => {
-                    const Icon = module.icon;
-                    const modActive = isActive(module.path);
-                    const modColor = APP_DESIGN_COLOURS[mIdx % APP_DESIGN_COLOURS.length];
-                    return (
-                      <Link
-                        key={module.key}
-                        to={module.path}
-                        aria-current={modActive ? 'page' : undefined}
-                        className={`group flex min-h-[38px] flex-col rounded-lg p-[1.5px] text-left transition-all duration-200 ${
-                          modActive
-                            ? 'shadow-[0_0_14px_rgba(0,198,255,0.85)] scale-[1.01]'
-                            : 'shadow-[0_0_8px_rgba(90,0,214,0.3)] hover:-translate-y-0.5 hover:shadow-[0_0_12px_rgba(0,198,255,0.7)]'
-                        }`}
-                        style={{ background: BRAND_GRADIENT }}
-                      >
-                        <div
-                          className="flex flex-1 flex-col justify-between overflow-hidden rounded-[9px]"
-                          style={{ background: DARK_NAVY_CHASSIS }}
-                        >
-                          <div className="flex min-h-[18px] items-center justify-between gap-1 bg-white px-1.5 py-0">
-                            <div className="flex min-w-0 items-center gap-1">
-                              <span
-                                className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded bg-[#F5F0FF]"
-                                style={{ border: `1px solid ${modColor}` }}
-                              >
-                                <Icon className="h-2 w-2 shrink-0" style={{ color: modColor }} />
-                              </span>
-                              <span
-                                className="min-w-0 truncate bg-clip-text text-[8.5px] font-extrabold leading-tight text-transparent"
-                                style={{ backgroundImage: HEADING_TEXT_GRADIENT }}
-                              >
-                                <span style={{ color: modColor }}>◉</span> {module.label}
-                              </span>
-                            </div>
-                            <span
-                              className={`inline-flex shrink-0 items-center gap-0.5 rounded-full px-1 py-0 text-[6px] font-black uppercase ${
-                                modActive ? 'bg-[#0A2B6D] text-[#00C6FF]' : 'bg-[#F5F0FF] text-[#5A00D6]'
-                              }`}
-                            >
-                              <span
-                                className="h-1 w-1 shrink-0 rounded-full"
-                                style={{
-                                  backgroundColor: modActive ? '#00C6FF' : modColor,
-                                  boxShadow: modActive
-                                    ? '0 0 5px 1px #00C6FF'
-                                    : `0 0 4px 1px ${modColor}`,
-                                }}
-                              />
-                              {modActive ? 'ACTIVE' : 'OPEN'}
-                            </span>
-                          </div>
-
-                          <div className="flex flex-1 items-center justify-between gap-1 px-1.5 py-0.5">
-                            <span
-                              className="min-w-0 flex-1 truncate text-[7.5px] font-bold leading-snug text-white"
-                              style={{ color: '#FFFFFF' }}
-                            >
-                              {module.blurb || `Open ${module.label}`}
-                            </span>
-                            <ArrowRight className="h-2 w-2 shrink-0 transition group-hover:translate-x-0.5" style={{ color: modColor }} />
-                          </div>
-                        </div>
-                      </Link>
-                    );
-                  })}
-                </div>
-              </nav>
-            </div>
-          )}
-
-          {/* Uniform Small Remote Buttons (Slightly Reduced Height & Padding) */}
+          {/* TOP: Major Section Selector Buttons (Click any section to open and display its modules underneath) */}
           {!collapsed && (
             <div
-              className="grid grid-cols-2 gap-1 px-1.5 pb-1.5 pt-0.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 lg:max-h-[3.6cm] lg:overflow-y-auto items-stretch"
+              className="grid grid-cols-2 gap-1 px-1.5 pb-1 pt-0.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 items-stretch"
               style={{ background: DARK_NAVY_CHASSIS }}
             >
               {/* AI Core Button: Uniform Small Remote Tile */}
@@ -398,9 +297,7 @@ export default function QuickAppBar() {
               </Link>
 
               {sourceSections.map((item, gIdx) => {
-                const active =
-                  expandedGroup?.id === item.id ||
-                  item.modules.some((module) => isActive(module.path));
+                const isSelectedSection = expandedGroup?.id === item.id;
                 const Icon = item.icon || item.modules[0]?.icon || Cpu;
                 const symColor = APP_DESIGN_COLOURS[gIdx % APP_DESIGN_COLOURS.length];
                 const currentSub =
@@ -415,13 +312,13 @@ export default function QuickAppBar() {
                   <button
                     key={item.id}
                     type="button"
-                    onClick={() => handleSelectMajorSection(item)}
-                    aria-expanded={expandedGroup?.id === item.id}
+                    onClick={() => handleSelectMajorSection(item, false)}
+                    aria-expanded={isSelectedSection}
                     aria-controls="quick-access-modules"
-                    title={`${item.label} — ${currentSub}`}
+                    title={`${item.label} — Click to display ${item.modules.length} modules underneath`}
                     className={`group flex min-h-[36px] flex-col rounded-lg p-[1.5px] text-left transition-all duration-200 focus-visible:outline-none ${
-                      active
-                        ? 'shadow-[0_0_14px_rgba(0,198,255,0.85)] scale-[1.01]'
+                      isSelectedSection
+                        ? 'shadow-[0_0_16px_rgba(0,198,255,0.95)] scale-[1.02] ring-1 ring-[#00C6FF]'
                         : 'shadow-[0_0_8px_rgba(90,0,214,0.3)] hover:-translate-y-0.5 hover:shadow-[0_0_12px_rgba(0,198,255,0.65)]'
                     }`}
                     style={{ background: BRAND_GRADIENT }}
@@ -447,19 +344,19 @@ export default function QuickAppBar() {
                         </div>
                         <span
                           className={`inline-flex shrink-0 items-center gap-0.5 rounded-full px-1 py-0 text-[6px] font-black uppercase ${
-                            active ? 'bg-[#0A2B6D] text-[#00C6FF]' : 'bg-[#F5F0FF] text-[#5A00D6]'
+                            isSelectedSection ? 'bg-[#0A2B6D] text-[#00C6FF]' : 'bg-[#F5F0FF] text-[#5A00D6]'
                           }`}
                         >
                           <span
                             className="h-1 w-1 shrink-0 rounded-full"
                             style={{
-                              backgroundColor: active ? '#00C6FF' : symColor,
-                              boxShadow: active
+                              backgroundColor: isSelectedSection ? '#00C6FF' : symColor,
+                              boxShadow: isSelectedSection
                                 ? '0 0 5px 1px #00C6FF'
                                 : `0 0 4px 1px ${symColor}`,
                             }}
                           />
-                          {active ? 'ON' : 'LIVE'}
+                          {isSelectedSection ? 'OPEN ▼' : `${item.modules.length} MODS`}
                         </span>
                       </div>
 
@@ -470,7 +367,7 @@ export default function QuickAppBar() {
                         >
                           {currentSub}
                         </span>
-                        <ArrowRight className="h-2 w-2 shrink-0" style={{ color: symColor }} />
+                        <ChevronDown className={`h-2.5 w-2.5 shrink-0 transition-transform ${isSelectedSection ? 'rotate-180' : ''}`} style={{ color: symColor }} />
                       </div>
                     </div>
                   </button>
@@ -479,12 +376,105 @@ export default function QuickAppBar() {
             </div>
           )}
 
-          {/* All Major Sections Switcher Bar */}
-          {!collapsed && (
-            <div className="px-2 pb-1.5 pt-0.5">
-              <div className="text-[8.5px] font-extrabold uppercase tracking-wider text-white/80 px-1">
-                Major Sections (Click any section here or in the left remote to open its modules above)
-              </div>
+          {/* UNDERNEATH: Selected Major Section Modules Opened & Displayed Underneath */}
+          {!collapsed && expandedGroup && (
+            <div id="quick-access-modules" className="px-1.5 pb-1.5 pt-1">
+              <nav
+                aria-label={expandedGroup.label}
+                className="rounded-xl border-2 border-[#00C6FF] p-2 shadow-[0_0_20px_rgba(0,198,255,0.28)]"
+                style={{ background: DARK_NAVY_CHASSIS }}
+              >
+                <div className="mb-1.5 flex flex-wrap items-center justify-between gap-1.5">
+                  <span
+                    className="inline-flex items-center gap-1.5 rounded-full border border-[#00C6FF] bg-white px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-[#0A2B6D] shadow-2xs"
+                    style={{ color: '#0A2B6D' }}
+                  >
+                    <span style={{ color: '#0072FF' }}>▼</span> {expandedGroup.label} — {expandedGroup.modules.length} Modules Displayed Underneath
+                  </span>
+                  <div className="flex items-center gap-2">
+                    {expandedGroup.path && (
+                      <Link
+                        to={expandedGroup.path}
+                        className="inline-flex items-center gap-1 rounded-full bg-[#00C6FF] px-2.5 py-0.5 text-[8.5px] font-extrabold text-[#0A2B6D] shadow-2xs transition hover:bg-white"
+                      >
+                        <span>Open {expandedGroup.label.replace(/^\d+\.\s*/, '')} Workspace</span>
+                        <ArrowRight className="h-2.5 w-2.5" />
+                      </Link>
+                    )}
+                    <span className="text-[8px] font-bold text-[#00C6FF]">
+                      Click any module below to launch
+                    </span>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 items-stretch">
+                  {expandedGroup.modules.map((module, mIdx) => {
+                    const Icon = module.icon;
+                    const modActive = isActive(module.path);
+                    const modColor = APP_DESIGN_COLOURS[mIdx % APP_DESIGN_COLOURS.length];
+                    return (
+                      <Link
+                        key={module.key}
+                        to={module.path}
+                        aria-current={modActive ? 'page' : undefined}
+                        className={`group flex min-h-[42px] flex-col rounded-lg p-[1.5px] text-left transition-all duration-200 ${
+                          modActive
+                            ? 'shadow-[0_0_14px_rgba(0,198,255,0.85)] scale-[1.01]'
+                            : 'shadow-[0_0_8px_rgba(90,0,214,0.3)] hover:-translate-y-0.5 hover:shadow-[0_0_12px_rgba(0,198,255,0.7)]'
+                        }`}
+                        style={{ background: BRAND_GRADIENT }}
+                      >
+                        <div
+                          className="flex flex-1 flex-col justify-between overflow-hidden rounded-[9px]"
+                          style={{ background: DARK_NAVY_CHASSIS }}
+                        >
+                          <div className="flex min-h-[19px] items-center justify-between gap-1 bg-white px-1.5 py-0.5">
+                            <div className="flex min-w-0 items-center gap-1">
+                              <span
+                                className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded bg-[#F5F0FF]"
+                                style={{ border: `1px solid ${modColor}` }}
+                              >
+                                <Icon className="h-2 w-2 shrink-0" style={{ color: modColor }} />
+                              </span>
+                              <span
+                                className="min-w-0 truncate bg-clip-text text-[8.5px] font-extrabold leading-tight text-transparent"
+                                style={{ backgroundImage: HEADING_TEXT_GRADIENT }}
+                              >
+                                <span style={{ color: modColor }}>◉</span> {module.label}
+                              </span>
+                            </div>
+                            <span
+                              className={`inline-flex shrink-0 items-center gap-0.5 rounded-full px-1 py-0 text-[6px] font-black uppercase ${
+                                modActive ? 'bg-[#0A2B6D] text-[#00C6FF]' : 'bg-[#F5F0FF] text-[#5A00D6]'
+                              }`}
+                            >
+                              <span
+                                className="h-1 w-1 shrink-0 rounded-full"
+                                style={{
+                                  backgroundColor: modActive ? '#00C6FF' : modColor,
+                                  boxShadow: modActive
+                                    ? '0 0 5px 1px #00C6FF'
+                                    : `0 0 4px 1px ${modColor}`,
+                                }}
+                              />
+                              {modActive ? 'ACTIVE' : 'OPEN'}
+                            </span>
+                          </div>
+
+                          <div className="flex flex-1 items-center justify-between gap-1 px-1.5 py-0.5">
+                            <span
+                              className="min-w-0 flex-1 truncate text-[7.5px] font-bold leading-snug text-white"
+                              style={{ color: '#FFFFFF' }}
+                            >
+                              {module.blurb || `Open ${module.label}`}
+                            </span>
+                            <ArrowRight className="h-2 w-2 shrink-0 transition group-hover:translate-x-0.5" style={{ color: modColor }} />
+                          </div>
+                        </div>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </nav>
             </div>
           )}
         </div>

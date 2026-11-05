@@ -374,7 +374,7 @@ export default function ObsidianSidebarRemote({
     }
   };
 
-  const openMajorSectionInMainView = (pillar, modeOverride, shouldNavigate = true) => {
+  const openMajorSectionInMainView = (pillar, modeOverride, shouldNavigate = false) => {
     const activeMode = modeOverride || navMode;
     setSelectedPillarId(pillar.id);
     localStorage.setItem('chr-active-remote-pillar', pillar.id);
@@ -590,6 +590,40 @@ export default function ObsidianSidebarRemote({
                         </div>
                       </div>
                     </button>
+
+                    {/* Modules Displayed Underneath When Selected */}
+                    {selectedPillarId === pillar.id && pillar.children?.length > 0 && (
+                      <div className="mt-1.5 ml-2 space-y-1 border-l-2 border-[#00C6FF]/60 pl-2">
+                        {pillar.children.map((child, cIdx) => {
+                          const childColor = APP_DESIGN_COLOURS[cIdx % APP_DESIGN_COLOURS.length];
+                          const childActive =
+                            location.pathname === child.path ||
+                            location.pathname.startsWith(`${child.path}/`);
+                          return (
+                            <Link
+                              key={`${pillar.id}-${child.path}-${cIdx}`}
+                              to={child.path}
+                              onClick={scrollWorkspaceToTop}
+                              className={`flex items-center justify-between gap-1.5 rounded-xl border px-2.5 py-1.5 text-left transition ${
+                                childActive
+                                  ? 'border-[#00C6FF] bg-white text-[#0A2B6D] shadow-sm'
+                                  : 'border-white/20 bg-[#0A2B6D]/90 text-white hover:border-[#00C6FF] hover:bg-white hover:text-[#0A2B6D]'
+                              }`}
+                            >
+                              <div className="min-w-0 flex-1">
+                                <div className="truncate text-[9.5px] font-extrabold">
+                                  <span style={{ color: childColor }}>◉</span> {child.label}
+                                </div>
+                                {child.sub && (
+                                  <div className="truncate text-[8px] opacity-80">{child.sub}</div>
+                                )}
+                              </div>
+                              <ArrowRight className="h-2.5 w-2.5 shrink-0" style={{ color: childColor }} />
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    )}
                   </div>
                 );
               })

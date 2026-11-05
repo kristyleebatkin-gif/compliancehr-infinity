@@ -26,6 +26,7 @@ import OrganisationHealthScoreFramework from '@/components/enterprise/Organisati
 
 import MissionControlAiCoreHub from '@/components/enterprise/MissionControlAiCoreHub';
 import AuditReadyTodayCommandStrip from '@/components/dashboard/AuditReadyTodayCommandStrip';
+import ExecutiveWallScene from '@/components/safe/ExecutiveWallScene';
 import {
   Activity, ShieldCheck, Zap, LayoutGrid, Cpu, Users, Building2, Layers, Download, FileCheck2,
 } from 'lucide-react';
@@ -51,24 +52,12 @@ export default function Dashboard() {
     role === ROLES.GUEST ||
     role === ROLES.VOLUNTEER;
 
-  const [activeSuite, setActiveSuite] = useState(() =>
-    isRestrictedRole ? 'overview' : 'os-command'
-  );
+  const [activeSuite, setActiveSuite] = useState('os-command');
 
-  useEffect(() => {
-    setActiveSuite((current) =>
-      isRestrictedRole ? 'overview' : current === 'overview' ? 'os-command' : current
-    );
-  }, [isRestrictedRole]);
-
-  const availableSuites = isRestrictedRole
-    ? DASHBOARD_SUITES.filter((suite) => suite.id === 'overview')
-    : DASHBOARD_SUITES;
+  const availableSuites = DASHBOARD_SUITES;
 
   const isSuiteVisible = (suiteId) =>
-    isRestrictedRole
-      ? suiteId === 'overview' && activeSuite === 'overview'
-      : activeSuite === suiteId || activeSuite === 'all';
+    activeSuite === suiteId || activeSuite === 'all';
 
   return (
     <div className="bright-dashboard mx-auto w-full max-w-[1440px] space-y-3">
@@ -107,98 +96,105 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* 1. Executive Overview (Default for Executives / Admins / Compliance) */}
-      {isSuiteVisible('os-command') && (
-        <div className="space-y-4">
-          <OrganisationHealthScoreFramework />
-          <OrganisationalOperatingSystemCommand />
-        </div>
-      )}
+      <div id="dashboard-active-suite-section" className="scroll-mt-24 space-y-4">
+        {/* 1. Executive Overview (Default for Executives / Admins / Compliance) */}
+        {isSuiteVisible('os-command') && (
+          <div className="space-y-4">
+            <OrganisationHealthScoreFramework />
+            <OrganisationalOperatingSystemCommand />
+          </div>
+        )}
 
-      {/* 2. Universal 360° Profiles */}
-      {isSuiteVisible('universal-360') && <Universal360ProfileFramework />}
+        {/* 2. Universal 360° Profiles */}
+        {isSuiteVisible('universal-360') && <Universal360ProfileFramework />}
 
-      {/* 3. Role Dashboards & Morning Brief */}
-      {isSuiteVisible('overview') && (
-        <div className="space-y-4">
-          {canAccessNav(role, 'compliance') && (
-            <ComplianceDashboardFrame>
-              <MorningBrief />
-            </ComplianceDashboardFrame>
-          )}
-          {canAccessNav(role, 'compliance') && (
-            <ComplianceDashboardFrame>
-              <IssuesDashboardWidget />
-            </ComplianceDashboardFrame>
-          )}
-          {OVERVIEW_ROLES.includes(role) && (
-            <ComplianceDashboardFrame>
-              <LiveDashboards />
-            </ComplianceDashboardFrame>
-          )}
-          {[ROLES.GUEST, ROLES.VOLUNTEER].includes(role) ? (
-            <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-2xs">
-              <h2 className="text-lg font-bold text-[#0A2B6D]">
-                {role === ROLES.VOLUNTEER ? 'Your volunteer workspace' : 'Guest access'}
-              </h2>
-              <p className="mt-1 text-sm text-slate-600">
-                {role === ROLES.VOLUNTEER
-                  ? 'Open your placement details and volunteer records.'
-                  : 'This account can open the Help Centre and User Guides. Contact an administrator if you need a different role.'}
-              </p>
-              {role === ROLES.VOLUNTEER && (
-                <a
-                  className="mt-4 inline-flex rounded-lg bg-[#0A2B6D] px-4 py-2 text-sm font-semibold text-white hover:bg-[#17408b]"
-                  href="/volunteers"
-                >
-                  Open volunteering records
-                </a>
-              )}
-            </section>
-          ) : role === ROLES.PARTICIPANT ? (
-            <ComplianceDashboardFrame>
-              <ParticipantDashboard />
-            </ComplianceDashboardFrame>
-          ) : role === ROLES.SUPPORT ? (
-            <ComplianceDashboardFrame>
-              <StaffDashboard />
-            </ComplianceDashboardFrame>
-          ) : (
-            <AdminDashboard />
-          )}
-          {![ROLES.GUEST, ROLES.VOLUNTEER].includes(role) && <DashboardQuickStart />}
-          {![ROLES.GUEST, ROLES.VOLUNTEER].includes(role) && <AllModulesHub />}
-        </div>
-      )}
+        {/* 3. Role Dashboards & Morning Brief */}
+        {isSuiteVisible('overview') && (
+          <div className="space-y-4">
+            {canAccessNav(role, 'compliance') && (
+              <ComplianceDashboardFrame>
+                <MorningBrief />
+              </ComplianceDashboardFrame>
+            )}
+            {canAccessNav(role, 'compliance') && (
+              <ComplianceDashboardFrame>
+                <IssuesDashboardWidget />
+              </ComplianceDashboardFrame>
+            )}
+            {OVERVIEW_ROLES.includes(role) && (
+              <ComplianceDashboardFrame>
+                <LiveDashboards />
+              </ComplianceDashboardFrame>
+            )}
+            {[ROLES.GUEST, ROLES.VOLUNTEER].includes(role) ? (
+              <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-2xs">
+                <h2 className="text-lg font-bold text-[#0A2B6D]">
+                  {role === ROLES.VOLUNTEER ? 'Your volunteer workspace' : 'Guest access'}
+                </h2>
+                <p className="mt-1 text-sm text-slate-600">
+                  {role === ROLES.VOLUNTEER
+                    ? 'Open your placement details and volunteer records.'
+                    : 'This account can open the Help Centre and User Guides. Contact an administrator if you need a different role.'}
+                </p>
+                {role === ROLES.VOLUNTEER && (
+                  <a
+                    className="mt-4 inline-flex rounded-lg bg-[#0A2B6D] px-4 py-2 text-sm font-semibold text-white hover:bg-[#17408b]"
+                    href="/volunteers"
+                  >
+                    Open volunteering records
+                  </a>
+                )}
+              </section>
+            ) : role === ROLES.PARTICIPANT ? (
+              <ComplianceDashboardFrame>
+                <ParticipantDashboard />
+              </ComplianceDashboardFrame>
+            ) : role === ROLES.SUPPORT ? (
+              <ComplianceDashboardFrame>
+                <StaffDashboard />
+              </ComplianceDashboardFrame>
+            ) : (
+              <AdminDashboard />
+            )}
+            <DashboardQuickStart />
+            <AllModulesHub />
+          </div>
+        )}
 
-      {/* 4. 356 Checkpoints & Control Centre */}
-      {isSuiteVisible('control-centre') && (
-        <div className="space-y-4">
-          <EnterpriseStandardQualityGateSuite />
-          <InfinityControlCentreMasterSuite />
-        </div>
-      )}
+        {/* 4. 356 Checkpoints & Control Centre */}
+        {isSuiteVisible('control-centre') && (
+          <div className="space-y-4">
+            <EnterpriseStandardQualityGateSuite />
+            <InfinityControlCentreMasterSuite />
+          </div>
+        )}
 
-      {/* 5. 1-Click Operations Deck & Core Engine */}
-      {isSuiteVisible('one-click') && (
-        <div className="space-y-4">
-          <InfinityOneClickOperations />
-          <InfinityCoreEngine />
-        </div>
-      )}
+        {/* 5. 1-Click Operations Deck & Core Engine */}
+        {isSuiteVisible('one-click') && (
+          <div className="space-y-4">
+            <InfinityOneClickOperations />
+            <InfinityCoreEngine />
+          </div>
+        )}
 
-      {/* 6. Health & Readiness + Management Review */}
-      {isSuiteVisible('health-intelligence') && (
-        <div className="space-y-4">
-          <BusinessHealthComplianceIntelligenceDashboard />
-          {role !== ROLES.PARTICIPANT && role !== ROLES.SUPPORT && <ManagementReviewReport />}
-          {canAccessNav(role, 'safety-insights') && (
+        {/* 6. Health & Readiness + Management Review */}
+        {isSuiteVisible('health-intelligence') && (
+          <div className="space-y-4">
+            <BusinessHealthComplianceIntelligenceDashboard />
+            <ManagementReviewReport />
             <ComplianceDashboardFrame>
               <SafetyTrendsDashboard />
             </ComplianceDashboardFrame>
-          )}
-        </div>
-      )}
+          </div>
+        )}
+
+        {/* 7. Executive Office Wall Scene */}
+        {isSuiteVisible('office-wall') && (
+          <div className="space-y-4">
+            <ExecutiveWallScene />
+          </div>
+        )}
+      </div>
     </div>
   );
 }

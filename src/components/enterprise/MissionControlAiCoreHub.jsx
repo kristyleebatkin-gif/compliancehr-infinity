@@ -264,8 +264,13 @@ export default function MissionControlAiCoreHub({
     setSelectedPod(pod.id);
     if (onSelectSuite && pod.suiteId) {
       onSelectSuite(pod.suiteId);
+      setTimeout(() => {
+        const el = document.getElementById('dashboard-active-suite-section');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 60);
+    } else {
+      navigate(pod.path);
     }
-    navigate(pod.path);
   };
 
   return (
