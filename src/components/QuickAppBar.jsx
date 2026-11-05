@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Zap, ArrowRight, ChevronDown, ChevronUp, Cpu, LayoutGrid } from 'lucide-react';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import { PRIMARY_11_OS_NAV, FOCUSED_5_PILLAR_NAV } from '@/components/ObsidianSidebarRemote';
 import { useRole } from '@/lib/useRole';
 import { canAccessNav } from '@/lib/roles';
+import { useAuth } from '@/lib/AuthContext';
 
 const BRAND_GRADIENT =
   'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)';
@@ -21,6 +22,7 @@ export default function QuickAppBar() {
   const location = useLocation();
   const navigate = useNavigate();
   const { role } = useRole();
+  const { isAuthenticated } = useAuth();
   const [remoteMode, setRemoteMode] = useState(
     () => localStorage.getItem('chr-active-remote-mode') || 'os11'
   );
@@ -28,6 +30,7 @@ export default function QuickAppBar() {
     () => localStorage.getItem('chr-active-remote-pillar') || 'dashboard-executive'
   );
   const [collapsed, setCollapsed] = useState(false);
+  const prevPathnameRef = useRef(location.pathname);
 
   const isActive = (path) =>
     path === '/'
@@ -96,6 +99,15 @@ export default function QuickAppBar() {
 
   useEffect(() => {
     if (remoteMode === 'all') return;
+    if (prevPathnameRef.current === location.pathname) return;
+    prevPathnameRef.current = location.pathname;
+    const currentStillMatches = sourceSections.some(
+      (p) =>
+        p.id === selectedPillarId &&
+        (location.pathname === p.path ||
+          p.modules.some((m) => location.pathname === m.path || location.pathname.startsWith(`${m.path}/`)))
+    );
+    if (currentStillMatches) return;
     const match = sourceSections.find(
       (p) =>
         location.pathname === p.path ||
@@ -105,7 +117,7 @@ export default function QuickAppBar() {
       setSelectedPillarId(match.id);
       localStorage.setItem('chr-active-remote-pillar', match.id);
     }
-  }, [location.pathname, sourceSections, remoteMode]);
+  }, [location.pathname, sourceSections, remoteMode, selectedPillarId]);
 
   useEffect(() => {
     const onRemoteSelect = (e) => {
@@ -126,7 +138,7 @@ export default function QuickAppBar() {
       ? sourceSections[0]
       : sourceSections.find((g) => g.id === selectedPillarId) || sourceSections[0];
 
-  const handleSelectMajorSection = (pillar, shouldNavigate = true) => {
+  const handleSelectMajorSection = (pillar, shouldNavigate = false) => {
     setSelectedPillarId(pillar.id);
     setCollapsed(false);
     localStorage.setItem('chr-active-remote-pillar', pillar.id);
@@ -135,7 +147,8 @@ export default function QuickAppBar() {
         detail: { pillarId: pillar.id, navMode: remoteMode, pillar },
       })
     );
-    if (shouldNavigate && pillar?.path && location.pathname !== pillar.path) {
+    const canAutoRoute = location.pathname !== '/' || isAuthenticated;
+    if (shouldNavigate && canAutoRoute && pillar?.path && location.pathname !== pillar.path) {
       navigate(pillar.path);
     }
   };
@@ -162,7 +175,7 @@ export default function QuickAppBar() {
   };
 
   return (
-    <div id="main-view-navigator-remote" className="scroll-mt-16 mx-auto w-full max-w-[1440px] px-3 pt-2">
+    <div id="main-view-navigator-remote" className="scroll-mt-64 mx-auto w-full max-w-[1440px] px-3 pt-2">
       <section
         aria-label="Navigator Remote — Main View Section Deck"
         className="preserve-island-theme overflow-hidden rounded-2xl p-[2px] shadow-lg"

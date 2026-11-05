@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import BrandLogoLockup from '@/components/common/BrandLogoLockup';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
+import { useAuth } from '@/lib/AuthContext';
 import {
   LogOut, ArrowRight, LayoutDashboard, ClipboardList,
   Users, ShieldCheck, ShieldAlert, FolderOpen, Megaphone,
@@ -325,13 +326,24 @@ export default function ObsidianSidebarRemote({
 }) {
   const location = useLocation();
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const [navMode, setNavMode] = useState(() => localStorage.getItem('chr-active-remote-mode') || 'os11'); // 'pillars5' | 'os11' | 'all'
   const [selectedPillarId, setSelectedPillarId] = useState(
     () => localStorage.getItem('chr-active-remote-pillar') || 'dashboard-executive'
   );
+  const prevPathnameRef = useRef(location.pathname);
 
   React.useEffect(() => {
+    if (prevPathnameRef.current === location.pathname) return;
+    prevPathnameRef.current = location.pathname;
     const list = navMode === 'pillars5' ? FOCUSED_5_PILLAR_NAV : PRIMARY_11_OS_NAV;
+    const currentStillMatches = list.some(
+      (p) =>
+        p.id === selectedPillarId &&
+        (location.pathname === p.path ||
+          p.children.some((c) => location.pathname === c.path || location.pathname.startsWith(`${c.path}/`)))
+    );
+    if (currentStillMatches) return;
     const match = list.find(
       (p) =>
         location.pathname === p.path ||
@@ -341,7 +353,7 @@ export default function ObsidianSidebarRemote({
       setSelectedPillarId(match.id);
       localStorage.setItem('chr-active-remote-pillar', match.id);
     }
-  }, [location.pathname, navMode]);
+  }, [location.pathname, navMode, selectedPillarId]);
 
   React.useEffect(() => {
     const onPillarSync = (e) => {
@@ -372,7 +384,8 @@ export default function ObsidianSidebarRemote({
         detail: { pillarId: pillar.id, navMode: activeMode, pillar },
       })
     );
-    if (shouldNavigate && pillar?.path && location.pathname !== pillar.path) {
+    const canAutoRoute = location.pathname !== '/' || isAuthenticated;
+    if (shouldNavigate && canAutoRoute && pillar?.path && location.pathname !== pillar.path) {
       navigate(pillar.path);
     }
     scrollWorkspaceToTop();
