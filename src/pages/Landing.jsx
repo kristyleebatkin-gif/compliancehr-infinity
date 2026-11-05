@@ -21,6 +21,7 @@ import EnterpriseBelowFooterSuite from '@/components/landing/EnterpriseBelowFoot
 import FloatingQuickActionBar from '@/components/landing/FloatingQuickActionBar';
 import DemoBookingModal from '@/components/landing/DemoBookingModal';
 import ObsidianSidebarRemote from '@/components/ObsidianSidebarRemote';
+import QuickAppBar from '@/components/QuickAppBar';
 
 export default function Landing() {
   const [demoModalOpen, setDemoModalOpen] = useState(false);
@@ -77,6 +78,9 @@ export default function Landing() {
 
         {/* Enterprise Sovereign Trust & Live Regulatory Pulse Ribbon */}
         <EnterpriseTopTrustRibbon onBookDemo={openDemoModal} />
+
+        {/* Main View Navigator Remote Deck */}
+        <QuickAppBar />
 
         <main className="landing-main relative z-10 mx-auto w-full max-w-[1440px] px-4 py-8 sm:px-6 lg:px-8 space-y-10 sm:space-y-14 pb-20">
         {/* 1. Hero Section (Landscape — Crystal-Clear Positioning Above the Fold) */}

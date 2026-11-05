@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import BrandLogoLockup from '@/components/common/BrandLogoLockup';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import {
-  LogOut, ArrowRight, ChevronDown, ChevronRight, LayoutDashboard, ClipboardList,
+  LogOut, ArrowRight, LayoutDashboard, ClipboardList,
   Users, ShieldCheck, ShieldAlert, FolderOpen, Megaphone,
   BarChart3, Cpu, Settings,
 } from 'lucide-react';
@@ -324,8 +324,10 @@ export default function ObsidianSidebarRemote({
   onLogout,
 }) {
   const location = useLocation();
-  const [navMode, setNavMode] = useState('os11'); // 'pillars5' | 'os11' | 'all'
-  const [expandedPillar, setExpandedPillar] = useState('dashboard-executive');
+  const [navMode, setNavMode] = useState(() => localStorage.getItem('chr-active-remote-mode') || 'os11'); // 'pillars5' | 'os11' | 'all'
+  const [selectedPillarId, setSelectedPillarId] = useState(
+    () => localStorage.getItem('chr-active-remote-pillar') || 'dashboard-executive'
+  );
 
   React.useEffect(() => {
     const list = navMode === 'pillars5' ? FOCUSED_5_PILLAR_NAV : PRIMARY_11_OS_NAV;
@@ -335,9 +337,19 @@ export default function ObsidianSidebarRemote({
         p.children.some((c) => location.pathname === c.path || location.pathname.startsWith(`${c.path}/`))
     );
     if (match) {
-      setExpandedPillar(match.id);
+      setSelectedPillarId(match.id);
+      localStorage.setItem('chr-active-remote-pillar', match.id);
     }
   }, [location.pathname, navMode]);
+
+  React.useEffect(() => {
+    const onPillarSync = (e) => {
+      if (e?.detail?.pillarId) setSelectedPillarId(e.detail.pillarId);
+      if (e?.detail?.navMode) setNavMode(e.detail.navMode);
+    };
+    window.addEventListener('chr-remote-pillar-select', onPillarSync);
+    return () => window.removeEventListener('chr-remote-pillar-select', onPillarSync);
+  }, []);
 
   const scrollWorkspaceToTop = () => {
     const mainEl = document.getElementById('main-workspace-content');
@@ -346,6 +358,24 @@ export default function ObsidianSidebarRemote({
     }
     if (typeof window !== 'undefined' && typeof window.scrollTo === 'function') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const openMajorSectionInMainView = (pillar, modeOverride) => {
+    const activeMode = modeOverride || navMode;
+    setSelectedPillarId(pillar.id);
+    localStorage.setItem('chr-active-remote-pillar', pillar.id);
+    localStorage.setItem('chr-active-remote-mode', activeMode);
+    window.dispatchEvent(
+      new CustomEvent('chr-remote-pillar-select', {
+        detail: { pillarId: pillar.id, navMode: activeMode, pillar },
+      })
+    );
+    const remoteInMain = document.getElementById('main-view-navigator-remote');
+    if (remoteInMain) {
+      remoteInMain.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      scrollWorkspaceToTop();
     }
   };
 
@@ -398,7 +428,7 @@ export default function ObsidianSidebarRemote({
               type="button"
               onClick={() => {
                 setNavMode('pillars5');
-                setExpandedPillar('pillar-today');
+                openMajorSectionInMainView(FOCUSED_5_PILLAR_NAV[0], 'pillars5');
               }}
               className={`min-h-[24px] rounded-[10px] py-0.5 text-[8.5px] font-extrabold transition-all ${
                 navMode === 'pillars5'
@@ -413,7 +443,7 @@ export default function ObsidianSidebarRemote({
               type="button"
               onClick={() => {
                 setNavMode('os11');
-                setExpandedPillar('dashboard-executive');
+                openMajorSectionInMainView(PRIMARY_11_OS_NAV[0], 'os11');
               }}
               className={`min-h-[24px] rounded-[10px] py-0.5 text-[8.5px] font-extrabold transition-all ${
                 navMode === 'os11'
@@ -426,7 +456,15 @@ export default function ObsidianSidebarRemote({
             </button>
             <button
               type="button"
-              onClick={() => setNavMode('all')}
+              onClick={() => {
+                setNavMode('all');
+                localStorage.setItem('chr-active-remote-mode', 'all');
+                window.dispatchEvent(
+                  new CustomEvent('chr-remote-pillar-select', {
+                    detail: { pillarId: selectedPillarId, navMode: 'all' },
+                  })
+                );
+              }}
               className={`min-h-[24px] rounded-[10px] py-0.5 text-[8.5px] font-extrabold transition-all ${
                 navMode === 'all'
                   ? 'bg-[#0A2B6D] text-white shadow-[0_0_12px_rgba(255,46,154,0.6)]'
@@ -453,18 +491,21 @@ export default function ObsidianSidebarRemote({
                 const Icon = pillar.icon;
                 const symColor = APP_DESIGN_COLOURS[pIdx % APP_DESIGN_COLOURS.length];
                 const pillarActive =
+                  selectedPillarId === pillar.id ||
                   isActive(pillar.path) ||
                   pillar.children.some((c) => location.pathname === c.path || location.pathname.startsWith(`${c.path}/`));
-                const isExpanded = expandedPillar === pillar.id;
 
                 return (
-                  <div key={pillar.id} className="space-y-1.5">
-                    {/* Illuminated Modular Remote Button: Top 1/4 White + Bottom 3/4 Dark Blue */}
-                    <div
-                      className={`group rounded-2xl p-[2px] transition-all duration-200 ${
+                  <div key={pillar.id}>
+                    {/* Illuminated Modular Remote Button: Opens Section in Main View on Navigator Remote */}
+                    <button
+                      type="button"
+                      onClick={() => openMajorSectionInMainView(pillar)}
+                      aria-pressed={selectedPillarId === pillar.id}
+                      className={`group block w-full text-left rounded-2xl p-[2px] transition-all duration-200 focus-visible:outline-none ${
                         pillarActive
-                          ? 'shadow-[0_0_20px_rgba(0,198,255,0.8)] scale-[1.01]'
-                          : 'shadow-[0_0_10px_rgba(90,0,214,0.35)] hover:shadow-[0_0_16px_rgba(0,198,255,0.65)]'
+                          ? 'shadow-[0_0_20px_rgba(0,198,255,0.85)] scale-[1.01]'
+                          : 'shadow-[0_0_10px_rgba(90,0,214,0.35)] hover:-translate-y-0.5 hover:shadow-[0_0_16px_rgba(0,198,255,0.65)]'
                       }`}
                       style={{ background: BRAND_GRADIENT }}
                     >
@@ -474,14 +515,7 @@ export default function ObsidianSidebarRemote({
                       >
                         {/* Top 1/4 White Title Bar with App-Design-Colour Symbol */}
                         <div className="flex min-h-[34px] items-center justify-between gap-1.5 bg-white px-2.5 py-1">
-                          <Link
-                            to={pillar.path}
-                            onClick={() => {
-                              setExpandedPillar(pillar.id);
-                              scrollWorkspaceToTop();
-                            }}
-                            className="flex min-w-0 flex-1 items-center gap-1.5"
-                          >
+                          <div className="flex min-w-0 flex-1 items-center gap-1.5">
                             <span
                               className="flex h-5 w-5 shrink-0 items-center justify-center rounded-lg bg-[#F5F0FF] shadow-2xs"
                               style={{ border: `1.5px solid ${symColor}` }}
@@ -497,55 +531,31 @@ export default function ObsidianSidebarRemote({
                             >
                               <span style={{ color: symColor }}>◉</span> {pillar.label}
                             </span>
-                          </Link>
+                          </div>
 
                           {/* Illuminated LED Status Pill */}
-                          <div className="flex shrink-0 items-center gap-1">
+                          <span
+                            className={`inline-flex shrink-0 items-center gap-1 rounded-full px-1.5 py-0.5 text-[7.5px] font-black uppercase tracking-wider ${
+                              pillarActive
+                                ? 'bg-[#0A2B6D] text-[#00C6FF]'
+                                : 'bg-[#F5F0FF] text-[#5A00D6]'
+                            }`}
+                          >
                             <span
-                              className={`inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[7.5px] font-black uppercase tracking-wider ${
-                                pillarActive
-                                  ? 'bg-[#0A2B6D] text-[#00C6FF]'
-                                  : 'bg-[#F5F0FF] text-[#5A00D6]'
-                              }`}
-                            >
-                              <span
-                                className="h-1.5 w-1.5 rounded-full"
-                                style={{
-                                  backgroundColor: pillarActive ? '#00C6FF' : symColor,
-                                  boxShadow: pillarActive
-                                    ? '0 0 8px 2px #00C6FF'
-                                    : `0 0 6px 1px ${symColor}`,
-                                }}
-                              />
-                              {pillarActive ? 'ACTIVE' : pillar.status}
-                            </span>
-
-                            <button
-                              type="button"
-                              aria-label={`Toggle ${pillar.label}`}
-                              onClick={() =>
-                                setExpandedPillar((prev) => (prev === pillar.id ? '' : pillar.id))
-                              }
-                              className="rounded p-0.5 text-[#0A2B6D] hover:bg-slate-100"
-                            >
-                              {isExpanded ? (
-                                <ChevronDown className="h-3.5 w-3.5 text-[#5A00D6]" />
-                              ) : (
-                                <ChevronRight className="h-3.5 w-3.5 text-[#0A2B6D]" />
-                              )}
-                            </button>
-                          </div>
+                              className="h-1.5 w-1.5 rounded-full"
+                              style={{
+                                backgroundColor: pillarActive ? '#00C6FF' : symColor,
+                                boxShadow: pillarActive
+                                  ? '0 0 8px 2px #00C6FF'
+                                  : `0 0 6px 1px ${symColor}`,
+                              }}
+                            />
+                            {pillarActive ? 'IN MAIN VIEW' : pillar.status}
+                          </span>
                         </div>
 
                         {/* Bottom 3/4 Dark Blue Body */}
-                        <Link
-                          to={pillar.path}
-                          onClick={() => {
-                            setExpandedPillar(pillar.id);
-                            scrollWorkspaceToTop();
-                          }}
-                          className="flex items-center justify-between gap-1.5 px-2.5 py-1.5"
-                        >
+                        <div className="flex items-center justify-between gap-1.5 px-2.5 py-1.5">
                           <span
                             className="text-[9px] font-bold leading-snug text-white"
                             style={{ color: '#FFFFFF' }}
@@ -553,87 +563,9 @@ export default function ObsidianSidebarRemote({
                             {pillar.sub}
                           </span>
                           <ArrowRight className="h-3 w-3 shrink-0 transition group-hover:translate-x-0.5" style={{ color: symColor }} />
-                        </Link>
+                        </div>
                       </div>
-                    </div>
-
-                    {/* Level 2 Page Modular Tiles: Each Page Tile Lights Up with Top 1/4 White + Bottom 3/4 Dark Blue & App Design Colour Symbols */}
-                    {isExpanded && (
-                      <div className="pl-2 space-y-1.5 py-0.5">
-                        {pillar.children.map((child, cIdx) => {
-                          const childColor = APP_DESIGN_COLOURS[(pIdx + cIdx + 1) % APP_DESIGN_COLOURS.length];
-                          const subActive =
-                            location.pathname === child.path ||
-                            (child.path !== '/dashboard' && location.pathname.startsWith(`${child.path}/`));
-                          return (
-                            <Link
-                              key={child.path}
-                              to={child.path}
-                              onClick={scrollWorkspaceToTop}
-                              className={`group block rounded-2xl p-[2px] transition-all duration-200 ${
-                                subActive
-                                  ? 'shadow-[0_0_18px_rgba(0,198,255,0.8)] scale-[1.01]'
-                                  : 'shadow-[0_0_10px_rgba(90,0,214,0.3)] hover:-translate-y-0.5 hover:shadow-[0_0_14px_rgba(0,198,255,0.65)]'
-                              }`}
-                              style={{ background: BRAND_GRADIENT }}
-                            >
-                              <div
-                                className="flex min-h-[54px] flex-col justify-between overflow-hidden rounded-[14px]"
-                                style={{ background: DARK_NAVY_CHASSIS }}
-                              >
-                                {/* Top 1/4 White Bar */}
-                                <div className="flex min-h-[28px] items-center justify-between gap-1.5 bg-white px-2.5 py-0.5">
-                                  <div className="flex min-w-0 items-center gap-1.5">
-                                    <span
-                                      className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-md bg-[#F5F0FF]"
-                                      style={{ border: `1.5px solid ${childColor}` }}
-                                    >
-                                      <Icon className="h-2.5 w-2.5 shrink-0" style={{ color: childColor }} />
-                                    </span>
-                                    <span
-                                      className="min-w-0 bg-clip-text text-[10px] font-extrabold leading-tight text-transparent"
-                                      style={{
-                                        backgroundImage:
-                                          'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
-                                      }}
-                                    >
-                                      <span style={{ color: childColor }}>◉</span> {child.label}
-                                    </span>
-                                  </div>
-                                  <span
-                                    className={`inline-flex shrink-0 items-center gap-1 rounded-full px-1.5 py-0 text-[7px] font-black uppercase ${
-                                      subActive ? 'bg-[#0A2B6D] text-[#00C6FF]' : 'bg-[#F5F0FF] text-[#5A00D6]'
-                                    }`}
-                                  >
-                                    <span
-                                      className="h-1.5 w-1.5 rounded-full"
-                                      style={{
-                                        backgroundColor: subActive ? '#00C6FF' : childColor,
-                                        boxShadow: subActive
-                                          ? '0 0 8px 2px #00C6FF'
-                                          : `0 0 5px 1px ${childColor}`,
-                                      }}
-                                    />
-                                    {subActive ? 'ACTIVE' : 'LIVE'}
-                                  </span>
-                                </div>
-
-                                {/* Bottom 3/4 Dark Blue Body */}
-                                <div className="flex items-center justify-between gap-1.5 px-2.5 py-1">
-                                  <span
-                                    className="min-w-0 flex-1 text-[8.5px] font-bold leading-snug text-white"
-                                    style={{ color: '#FFFFFF' }}
-                                  >
-                                    {child.sub || `Open ${child.label}`}
-                                  </span>
-                                  <ArrowRight className="h-2.5 w-2.5 shrink-0 transition group-hover:translate-x-0.5" style={{ color: childColor }} />
-                                </div>
-                              </div>
-                            </Link>
-                          );
-                        })}
-                      </div>
-                    )}
+                    </button>
                   </div>
                 );
               })
