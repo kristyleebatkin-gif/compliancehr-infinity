@@ -31,7 +31,11 @@ rawClient.auth.me = async (...args) => {
   return me;
 };
 
-const scopedEntities = createTenantScopedEntitiesProxy(rawClient.entities, () => activeTenantContext);
+const scopedEntities = createTenantScopedEntitiesProxy(rawClient.entities, () => activeTenantContext, {
+  knownTenantEntities: ['AuditLog', 'BusinessDetails', 'Notification', 'Shift', 'TenantMembership', 'User'],
+  enableReadCache: true,
+  readCacheTtlMs: 15000,
+});
 
 export const base44 = new Proxy(rawClient, {
   get(target, prop) {

@@ -11,11 +11,14 @@ export default function RosterLabourForecast({ shifts = [] }) {
   const [rates, setRates] = useState(null);
   const [holidays, setHolidays] = useState(null);
 
+  const dateBoundsKey = useMemo(() => {
+    const dates = shifts.map((s) => s.date).filter(Boolean).sort();
+    return `${dates[0] || '1970-01-01'}|${dates[dates.length - 1] || '2100-01-01'}`;
+  }, [shifts]);
+
   useEffect(() => {
     let live = true;
-    const dates = shifts.map((s) => s.date).filter(Boolean).sort();
-    const from = dates[0] || '1970-01-01';
-    const to = dates[dates.length - 1] || '2100-01-01';
+    const [from, to] = dateBoundsKey.split('|');
     Promise.all([
       base44.entities.StaffProfile.filter({ status: 'Active' }, { limit: 500, fields: ['full_name', 'hourly_rate'] }),
       base44.entities.RosterPublicHoliday.filter({ active: true, holiday_date: { $gte: from, $lte: to } }, { limit: 100, fields: ['holiday_date'] }),
@@ -27,7 +30,7 @@ export default function RosterLabourForecast({ shifts = [] }) {
       setHolidays(new Set((holidayPage.items || []).map((h) => h.holiday_date)));
     }).catch(() => live && (setRates({}), setHolidays(new Set())));
     return () => { live = false; };
-  }, [shifts]);
+  }, [dateBoundsKey]);
 
   const forecast = useMemo(() => {
     if (!rates || !holidays) return null;

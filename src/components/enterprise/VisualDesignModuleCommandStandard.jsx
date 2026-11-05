@@ -171,7 +171,7 @@ export default function VisualDesignModuleCommandStandard() {
     return () => {
       active = false;
     };
-  }, [location.pathname]);
+  }, []);
 
   const handleUniversalSearch = (event) => {
     event.preventDefault();

@@ -491,7 +491,7 @@ export function normalizeTenantEntitySchema(schema = { name: '', properties: {} 
   };
 }
 
-export function createTenantScopedEntitiesProxy(rawEntities, contextResolver) {
+export function createTenantScopedEntitiesProxy(rawEntities, contextResolver, proxyOptions = {}) {
   const resolveCtx = () => {
     const resolved = typeof contextResolver === 'function' ? contextResolver() : contextResolver;
     if (typeof resolved === 'string') {
@@ -531,6 +531,77 @@ export function createTenantScopedEntitiesProxy(rawEntities, contextResolver) {
   };
 
   const noTenantFieldEntities = new Set();
+  const knownTenantSet = Array.isArray(proxyOptions?.knownTenantEntities)
+    ? new Set(proxyOptions.knownTenantEntities)
+    : null;
+  const enableReadCache = Boolean(proxyOptions?.enableReadCache);
+  const readCacheTtlMs = Number(proxyOptions?.readCacheTtlMs) || 15000;
+  const readCache = new Map();
+  const inFlightReads = new Map();
+
+  const canScopeEntityByTenantField = (entityKey) => {
+    if (noTenantFieldEntities.has(entityKey)) return false;
+    if (knownTenantSet) return knownTenantSet.has(entityKey);
+    return true;
+  };
+
+  const invalidateEntityCache = (entityKey) => {
+    if (!enableReadCache) return;
+    const prefix = `${entityKey}::`;
+    for (const key of readCache.keys()) {
+      if (key.startsWith(prefix)) readCache.delete(key);
+    }
+    for (const key of inFlightReads.keys()) {
+      if (key.startsWith(prefix)) inFlightReads.delete(key);
+    }
+  };
+
+  const withRateLimitRetry = async (fn) => {
+    try {
+      return await fn();
+    } catch (err) {
+      const msg = String(err?.message || err || '');
+      const retryMatch = msg.match(/Rate limit exceeded.*Retry after (\d+)s/i);
+      if (retryMatch) {
+        const waitMs = Math.min(3000, (Number(retryMatch[1]) || 2) * 1000);
+        await new Promise((r) => setTimeout(r, waitMs));
+        return fn();
+      }
+      throw err;
+    }
+  };
+
+  const runCachedRead = (entityKey, prop, args, executor) => {
+    if (!enableReadCache) return executor();
+    const { user, tenantId } = resolveCtx();
+    let serializedArgs = '';
+    try {
+      serializedArgs = JSON.stringify(args);
+    } catch {
+      return executor();
+    }
+    const cacheKey = `${entityKey}::${prop}::${tenantId || ''}::${user?.id || ''}::${user?.role || ''}::${serializedArgs}`;
+    const cached = readCache.get(cacheKey);
+    if (cached && Date.now() - cached.at < readCacheTtlMs) {
+      return Promise.resolve(cached.value);
+    }
+    if (inFlightReads.has(cacheKey)) {
+      return inFlightReads.get(cacheKey);
+    }
+    const promise = withRateLimitRetry(executor)
+      .then((val) => {
+        readCache.set(cacheKey, { at: Date.now(), value: val });
+        inFlightReads.delete(cacheKey);
+        return val;
+      })
+      .catch((err) => {
+        inFlightReads.delete(cacheKey);
+        throw err;
+      });
+    inFlightReads.set(cacheKey, promise);
+    return promise;
+  };
+
   const isMissingTenantFieldError = (err) => {
     const msg = String(err?.message || err || '');
     return /Unknown field ["']?tenant_id["']?|has no field ["']?tenant_id["']?/i.test(msg);
@@ -557,90 +628,95 @@ export function createTenantScopedEntitiesProxy(rawEntities, contextResolver) {
           }
 
           if (prop === 'filter') {
-            return async (query = {}, options = undefined) => {
-              const { tenantId } = resolveCtx();
-              const useScoped = Boolean(tenantId && !noTenantFieldEntities.has(entityKey));
-              const scopedQuery = useScoped ? scopeQueryToTenant(query, tenantId) : query;
-              let res;
-              try {
-                res = options !== undefined
-                  ? await orig.call(daoTarget, scopedQuery, options)
-                  : await orig.call(daoTarget, scopedQuery);
-              } catch (err) {
-                if (useScoped && isMissingTenantFieldError(err)) {
-                  noTenantFieldEntities.add(entityKey);
+            return (query = {}, options = undefined) =>
+              runCachedRead(entityKey, 'filter', [query, options], async () => {
+                const { tenantId } = resolveCtx();
+                const useScoped = Boolean(tenantId && canScopeEntityByTenantField(entityKey));
+                const scopedQuery = useScoped ? scopeQueryToTenant(query, tenantId) : query;
+                let res;
+                try {
                   res = options !== undefined
-                    ? await orig.call(daoTarget, query, options)
-                    : await orig.call(daoTarget, query);
-                } else {
-                  throw err;
+                    ? await orig.call(daoTarget, scopedQuery, options)
+                    : await orig.call(daoTarget, scopedQuery);
+                } catch (err) {
+                  if (useScoped && isMissingTenantFieldError(err)) {
+                    noTenantFieldEntities.add(entityKey);
+                    res = options !== undefined
+                      ? await orig.call(daoTarget, query, options)
+                      : await orig.call(daoTarget, query);
+                  } else {
+                    throw err;
+                  }
                 }
-              }
-              if (!tenantId) return res;
-              if (Array.isArray(res)) {
-                return res.filter((r) => filterRecordByTenant(r, tenantId));
-              }
-              if (res && Array.isArray(res.items)) {
-                return { ...res, items: res.items.filter((r) => filterRecordByTenant(r, tenantId)) };
-              }
-              return res;
-            };
+                if (!tenantId) return res;
+                if (Array.isArray(res)) {
+                  return res.filter((r) => filterRecordByTenant(r, tenantId));
+                }
+                if (res && Array.isArray(res.items)) {
+                  return { ...res, items: res.items.filter((r) => filterRecordByTenant(r, tenantId)) };
+                }
+                return res;
+              });
           }
 
           if (prop === 'list') {
-            return async (...args) => {
-              const { tenantId } = resolveCtx();
-              const res = await orig.apply(daoTarget, args);
-              if (!tenantId) return res;
-              if (Array.isArray(res)) {
-                return res.filter((r) => filterRecordByTenant(r, tenantId));
-              }
-              if (res && Array.isArray(res.items)) {
-                return { ...res, items: res.items.filter((r) => filterRecordByTenant(r, tenantId)) };
-              }
-              return res;
-            };
+            return (...args) =>
+              runCachedRead(entityKey, 'list', args, async () => {
+                const { tenantId } = resolveCtx();
+                const res = await orig.apply(daoTarget, args);
+                if (!tenantId) return res;
+                if (Array.isArray(res)) {
+                  return res.filter((r) => filterRecordByTenant(r, tenantId));
+                }
+                if (res && Array.isArray(res.items)) {
+                  return { ...res, items: res.items.filter((r) => filterRecordByTenant(r, tenantId)) };
+                }
+                return res;
+              });
           }
 
           if (prop === 'count') {
-            return async (query = {}) => {
-              const { tenantId } = resolveCtx();
-              const useScoped = Boolean(tenantId && !noTenantFieldEntities.has(entityKey));
-              const scopedQuery = useScoped ? scopeQueryToTenant(query, tenantId) : query;
-              try {
-                return await orig.call(daoTarget, scopedQuery);
-              } catch (err) {
-                if (useScoped && isMissingTenantFieldError(err)) {
-                  noTenantFieldEntities.add(entityKey);
-                  return orig.call(daoTarget, query);
+            return (query = {}) =>
+              runCachedRead(entityKey, 'count', [query], async () => {
+                const { tenantId } = resolveCtx();
+                const useScoped = Boolean(tenantId && canScopeEntityByTenantField(entityKey));
+                const scopedQuery = useScoped ? scopeQueryToTenant(query, tenantId) : query;
+                try {
+                  return await orig.call(daoTarget, scopedQuery);
+                } catch (err) {
+                  if (useScoped && isMissingTenantFieldError(err)) {
+                    noTenantFieldEntities.add(entityKey);
+                    return orig.call(daoTarget, query);
+                  }
+                  throw err;
                 }
-                throw err;
-              }
-            };
+              });
           }
 
           if (prop === 'aggregate') {
-            return async (params = { query: undefined }) => {
-              const { tenantId } = resolveCtx();
-              const useScoped = Boolean(tenantId && !noTenantFieldEntities.has(entityKey));
-              const baseQuery = params && typeof params === 'object' && 'query' in params ? params.query || {} : {};
-              const scopedParams = useScoped
-                ? { ...params, query: scopeQueryToTenant(baseQuery, tenantId) }
-                : params;
-              try {
-                return await orig.call(daoTarget, scopedParams);
-              } catch (err) {
-                if (useScoped && isMissingTenantFieldError(err)) {
-                  noTenantFieldEntities.add(entityKey);
-                  return orig.call(daoTarget, params);
+            return (params = { query: undefined }) =>
+              runCachedRead(entityKey, 'aggregate', [params], async () => {
+                const { tenantId } = resolveCtx();
+                const useScoped = Boolean(tenantId && canScopeEntityByTenantField(entityKey));
+                const baseQuery = params && typeof params === 'object' && 'query' in params ? params.query || {} : {};
+                const scopedParams = useScoped
+                  ? { ...params, query: scopeQueryToTenant(baseQuery, tenantId) }
+                  : params;
+                try {
+                  return await orig.call(daoTarget, scopedParams);
+                } catch (err) {
+                  if (useScoped && isMissingTenantFieldError(err)) {
+                    noTenantFieldEntities.add(entityKey);
+                    return orig.call(daoTarget, params);
+                  }
+                  throw err;
                 }
-                throw err;
-              }
-            };
+              });
           }
 
           if (prop === 'create') {
             return async (payload = {}) => {
+              invalidateEntityCache(entityKey);
               const { user, tenantId } = resolveCtx();
               const effectiveUser = user || (tenantId ? { id: 'tenant_actor', role: 'Provider Administrator', account_status: 'Active', access_approved: true, tenant_id: tenantId } : null);
               const stamped = effectiveUser ? stampTenantWritePayload(payload, effectiveUser, tenantId) : payload;
@@ -650,6 +726,7 @@ export function createTenantScopedEntitiesProxy(rawEntities, contextResolver) {
 
           if (prop === 'bulkCreate') {
             return async (items = []) => {
+              invalidateEntityCache(entityKey);
               const { user, tenantId } = resolveCtx();
               const effectiveUser = user || (tenantId ? { id: 'tenant_actor', role: 'Provider Administrator', account_status: 'Active', access_approved: true, tenant_id: tenantId } : null);
               const stamped = effectiveUser
@@ -661,6 +738,7 @@ export function createTenantScopedEntitiesProxy(rawEntities, contextResolver) {
 
           if (prop === 'update') {
             return async (id, payload = {}) => {
+              invalidateEntityCache(entityKey);
               const { user, tenantId } = resolveCtx();
               if (tenantId && typeof daoTarget.get === 'function') {
                 const existing = await daoTarget.get(id);
@@ -674,6 +752,7 @@ export function createTenantScopedEntitiesProxy(rawEntities, contextResolver) {
 
           if (prop === 'delete') {
             return async (id) => {
+              invalidateEntityCache(entityKey);
               const { user, tenantId } = resolveCtx();
               if (tenantId && typeof daoTarget.get === 'function') {
                 const existing = await daoTarget.get(id);
@@ -685,8 +764,9 @@ export function createTenantScopedEntitiesProxy(rawEntities, contextResolver) {
 
           if (prop === 'updateMany') {
             return async (query = {}, updateOp = {}) => {
+              invalidateEntityCache(entityKey);
               const { tenantId } = resolveCtx();
-              const useScoped = Boolean(tenantId && !noTenantFieldEntities.has(entityKey));
+              const useScoped = Boolean(tenantId && canScopeEntityByTenantField(entityKey));
               const scopedQuery = useScoped ? scopeQueryToTenant(query, tenantId) : query;
               try {
                 return await orig.call(daoTarget, scopedQuery, updateOp);
@@ -702,8 +782,9 @@ export function createTenantScopedEntitiesProxy(rawEntities, contextResolver) {
 
           if (prop === 'deleteMany') {
             return async (query = {}) => {
+              invalidateEntityCache(entityKey);
               const { tenantId } = resolveCtx();
-              const useScoped = Boolean(tenantId && !noTenantFieldEntities.has(entityKey));
+              const useScoped = Boolean(tenantId && canScopeEntityByTenantField(entityKey));
               const scopedQuery = useScoped ? scopeQueryToTenant(query, tenantId) : query;
               try {
                 return await orig.call(daoTarget, scopedQuery);

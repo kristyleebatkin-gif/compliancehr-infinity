@@ -456,22 +456,28 @@ function Rostering({ profile, profileKind, ourView = false, embedded = false } =
         </ModuleShell>
       </Tabs>
 
-      <ShiftForm open={formOpen} onOpenChange={setFormOpen} shift={editingShift} prefillDate={prefillDate} onSave={saveShift} saving={saving} />
+      {formOpen && (
+        <ShiftForm open={formOpen} onOpenChange={setFormOpen} shift={editingShift} prefillDate={prefillDate} onSave={saveShift} saving={saving} />
+      )}
 
-      <FillShiftDialog
-        open={Boolean(fillShift)}
-        onOpenChange={(o) => { if (!o) setFillShift(null); }}
-        shift={fillShift || {}}
-        shifts={fillData.shifts}
-        availability={fillData.availability}
-        staff={staff}
-        onFilled={refresh}
-      />
+      {Boolean(fillShift) && (
+        <FillShiftDialog
+          open={Boolean(fillShift)}
+          onOpenChange={(o) => { if (!o) setFillShift(null); }}
+          shift={fillShift || {}}
+          shifts={fillData.shifts}
+          availability={fillData.availability}
+          staff={staff}
+          onFilled={refresh}
+        />
+      )}
 
-      <AvailabilityFormDialog open={availOpen} onOpenChange={setAvailOpen} form={availForm} setForm={setAvailForm} onSave={saveAvailability} saving={saving} staff={staff} />
+      {availOpen && (
+        <AvailabilityFormDialog open={availOpen} onOpenChange={setAvailOpen} form={availForm} setForm={setAvailForm} onSave={saveAvailability} saving={saving} staff={staff} />
+      )}
 
-      <CalendarSyncDialog open={syncOpen} onOpenChange={setSyncOpen} />
-      <BulkShiftEditor open={bulkOpen} onOpenChange={setBulkOpen} staff={staff} onChanged={refresh} />
+      {syncOpen && <CalendarSyncDialog open={syncOpen} onOpenChange={setSyncOpen} />}
+      {bulkOpen && <BulkShiftEditor open={bulkOpen} onOpenChange={setBulkOpen} staff={staff} onChanged={refresh} />}
     </div>
   );
 }
