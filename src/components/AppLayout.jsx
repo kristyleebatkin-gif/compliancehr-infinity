@@ -166,7 +166,6 @@ export default function AppLayout() {
     />
   );
 
-  if (role === ROLES.AUDITOR) return <AuditorOnlyLayout />;
   if (role === ROLES.TEAM_LEADER && location.pathname === '/my-payroll') return <Navigate to="/dashboard" replace />;
 
   if (role === 'Archived') {

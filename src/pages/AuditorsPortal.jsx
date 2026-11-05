@@ -9,9 +9,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import StatusBadge from '@/components/StatusBadge';
 import EmptyState from '@/components/EmptyState';
-import { ClipboardCheck, Loader2, Plus, Eye } from 'lucide-react';
+import { ClipboardCheck, Loader2, Plus, Eye, ShieldCheck, AlertTriangle, Sparkles } from 'lucide-react';
 import InfinityControlCentreMasterSuite from '@/components/operations/InfinityControlCentreMasterSuite';
 import AiCopilotTestingChecklistSuite from '@/components/assistant/AiCopilotTestingChecklistSuite';
+import ObsidianSmartRemote from '@/components/common/ObsidianSmartRemote';
 
 const today = new Date().toISOString().slice(0, 10);
 
@@ -29,6 +30,45 @@ export default function AuditorsPortal({ embedded = false } = {}) {
   const [observations, setObservations] = useState([]);
   const [form, setForm] = useState({ observation: '', related_audit: '', category: 'General Note' });
   const [saving, setSaving] = useState(false);
+  const [activeTab, setActiveTab] = useState('master-356');
+
+  const AUDITOR_CHANNELS = [
+    {
+      key: 'master-356',
+      label: '356-Checkpoint & 98-Doc Evidence',
+      sub: 'Full NDIS & Aged Care audit verification matrix',
+      icon: ShieldCheck,
+      status: 'VERIFIED',
+    },
+    {
+      key: 'ai-verification',
+      label: '7-Point Regulatory & AI Checklist',
+      sub: 'Automated governance & compliance gate checks',
+      icon: Sparkles,
+      status: 'LIVE',
+    },
+    {
+      key: 'audits',
+      label: 'Audits Register',
+      sub: 'Scheduled and completed internal & external audits',
+      icon: ClipboardCheck,
+      status: 'READY',
+    },
+    {
+      key: 'actions',
+      label: 'Corrective Actions',
+      sub: 'Open and overdue audit remediation actions',
+      icon: AlertTriangle,
+      status: 'GUARDED',
+    },
+    {
+      key: 'observations',
+      label: 'Auditor Observation Log',
+      sub: 'Submit and review live auditor observations',
+      icon: Eye,
+      status: 'LIVE',
+    },
+  ];
 
   const load = async () => {
     const today2 = today;
@@ -110,7 +150,16 @@ export default function AuditorsPortal({ embedded = false } = {}) {
         <div className="flex justify-center py-16"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>
       ) : (
         <>
-          <Tabs defaultValue="master-356">
+          <ObsidianSmartRemote
+            title="Auditor Portal Navigator Remote"
+            subtitle="Select an audit verification channel below"
+            channels={AUDITOR_CHANNELS}
+            activeKey={activeTab}
+            onSelectChannel={setActiveTab}
+            columnsClass="grid-cols-1 sm:grid-cols-2 lg:grid-cols-5"
+          />
+
+          <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList className="flex flex-wrap h-auto gap-1.5">
               <TabsTrigger value="master-356">356-Checkpoint &amp; 98-Doc Evidence Register</TabsTrigger>
               <TabsTrigger value="ai-verification">7-Point Regulatory &amp; AI Checklist</TabsTrigger>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import BrandLogoLockup from '@/components/common/BrandLogoLockup';
+import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import {
   LogOut, ArrowRight, ChevronDown, ChevronRight, LayoutDashboard, ClipboardList,
   Users, ShieldCheck, ShieldAlert, FolderOpen, Megaphone,
@@ -284,18 +285,31 @@ export const FOCUSED_5_PILLAR_NAV = [
 ];
 
 export default function ObsidianSidebarRemote({
-  visiblePrimary = [],
-  isActive,
-  navLabel,
+  visiblePrimary,
+  isActive: isActiveProp,
+  navLabel: navLabelProp,
   onLogout,
 }) {
   const location = useLocation();
   const [navMode, setNavMode] = useState('os11'); // 'pillars5' | 'os11' | 'all'
   const [expandedPillar, setExpandedPillar] = useState('dashboard-executive');
 
-  const modules = visiblePrimary.filter(
+  const sourceList =
+    Array.isArray(visiblePrimary) && visiblePrimary.length > 0
+      ? visiblePrimary
+      : MODULE_DIRECTORY;
+
+  const isActive =
+    isActiveProp ||
+    ((path) =>
+      location.pathname === path ||
+      (path !== '/' && location.pathname.startsWith(`${path}/`)));
+
+  const navLabel = navLabelProp || ((item) => item.label);
+
+  const modules = sourceList.filter(
     (item) =>
-      !(item.key === 'staff-progress' && visiblePrimary.some((entry) => entry.key === 'staff'))
+      !(item.key === 'staff-progress' && sourceList.some((entry) => entry.key === 'staff'))
   );
 
   return (
