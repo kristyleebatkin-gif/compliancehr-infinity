@@ -52,7 +52,7 @@ export default function AppLayout() {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('ch-theme') === 'dark');
   const [workspaceView, setWorkspaceView] = useState(() => localStorage.getItem('chr-workspace-view-mode') || 'both');
-  const [compactHeader, setCompactHeader] = useState(false);
+  const [compactHeader, setCompactHeader] = useState(true);
   const [onboardingOpen, setOnboardingOpen] = useState(false);
 
   useEffect(() => {

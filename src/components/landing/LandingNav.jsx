@@ -29,11 +29,11 @@ const WORKSPACE_ROUTES = [
   ['Connect AI Agent (MCP)', '/connect'],
 ];
 
-export default function LandingNav({ onBookDemo }) {
+export default function LandingNav({ onBookDemo, showLiveDashboard = true, onToggleLiveDashboard }) {
   const [open, setOpen] = useState(false);
   const [workspaceMenuOpen, setWorkspaceMenuOpen] = useState(false);
-  const [collapsedHeader, setCollapsedHeader] = useState(false);
-  const [manualOverride, setManualOverride] = useState(null);
+  const [collapsedHeader, setCollapsedHeader] = useState(true);
+  const [manualOverride, setManualOverride] = useState(true);
 
   useEffect(() => {
     const onScroll = () => {
@@ -187,6 +187,21 @@ export default function LandingNav({ onBookDemo }) {
                 </>
               )}
             </button>
+            {onToggleLiveDashboard && (
+              <button
+                type="button"
+                onClick={onToggleLiveDashboard}
+                className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-[10px] font-extrabold transition ${
+                  showLiveDashboard
+                    ? 'border-[#00C6FF] bg-[#00C6FF] text-[#0A2B6D] shadow-[0_0_10px_rgba(0,198,255,0.5)]'
+                    : 'border-white/30 bg-white/10 text-white hover:bg-white/20'
+                }`}
+                title="Switch between Live Executive Dashboard and Marketing Overview"
+              >
+                <LayoutGrid className="h-2.5 w-2.5" />
+                <span>{showLiveDashboard ? 'Live Executive Dashboard: ON' : 'Show Live Executive Dashboard'}</span>
+              </button>
+            )}
             <Link
               to="/incidents"
               className="hidden sm:inline-flex items-center gap-1 rounded-full border border-[#FF2E9A]/60 bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D] transition hover:bg-[#F5F0FF]"

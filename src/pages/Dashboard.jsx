@@ -46,7 +46,6 @@ const DASHBOARD_SUITES = [
 export default function Dashboard() {
   const { role } = useRole();
   const isRestrictedRole =
-    !role ||
     role === ROLES.PARTICIPANT ||
     role === ROLES.SUPPORT ||
     role === ROLES.GUEST ||
