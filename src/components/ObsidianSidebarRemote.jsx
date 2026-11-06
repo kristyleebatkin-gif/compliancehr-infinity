@@ -12,9 +12,8 @@ import {
 const BRAND_GRADIENT =
   'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)';
 
-// Exact same dark blue as around the modular tiles in QuickAppBar / Command Centre
-const DARK_NAVY_CHASSIS =
-  'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)';
+// Clean white/neutral studio chassis (colour taken out of back)
+const DARK_NAVY_CHASSIS = '#FFFFFF';
 
 // App design colour palette and App Icon gradients
 const APP_DESIGN_COLOURS = ['#0072FF', '#5A00D6', '#FF2E9A', '#A100FF', '#00C6FF'];
@@ -545,53 +544,56 @@ export default function ObsidianSidebarRemote({
                         <div className="flex min-h-[22px] items-center justify-between gap-1.5 bg-white px-2 py-0.5">
                           <div className="flex min-w-0 flex-1 items-center gap-1.5">
                             <span
-                              className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[5px] shadow-[0_1px_4px_rgba(10,43,109,0.28)]"
+                              className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[5px] bg-white"
                               style={{
-                                background: APP_ICON_GRADIENTS[pIdx % APP_ICON_GRADIENTS.length],
-                                border: '1px solid rgba(255,255,255,0.65)',
+                                border: '1.5px solid #061A44',
+                                boxShadow: `0 0 6px ${symColor}55`,
                               }}
                             >
-                              <Icon className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                              <Icon className="h-3 w-3 shrink-0" style={{ color: '#061A44' }} />
                             </span>
                             <span
-                              className="min-w-0 truncate bg-clip-text text-[10px] font-extrabold leading-tight tracking-tight text-transparent"
-                              style={{
-                                backgroundImage:
-                                  'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
-                              }}
+                              className="min-w-0 truncate text-[10.5px] font-black leading-tight tracking-tight"
+                              style={{ color: '#061A44' }}
                             >
                               {pillar.label}
                             </span>
                           </div>
 
                           <span
-                            className={`inline-flex shrink-0 items-center gap-1 rounded-full px-1.5 py-0.5 text-[7px] font-black uppercase tracking-wider ${
-                              pillarActive
-                                ? 'bg-[#0A2B6D] text-[#00C6FF]'
-                                : 'bg-[#F5F0FF] text-[#5A00D6]'
-                            }`}
+                            className="inline-flex shrink-0 items-center gap-1 rounded-full bg-white px-1.5 py-0.5 text-[7px] font-black uppercase tracking-wider shadow-2xs"
+                            style={{
+                              color: '#061A44',
+                              border: '1px solid #CBD5E1',
+                              boxShadow: pillarActive
+                                ? '0 0 8px rgba(0,198,255,0.55)'
+                                : `0 0 5px ${symColor}44`,
+                            }}
                           >
                             <span
                               className="h-1.5 w-1.5 rounded-full"
                               style={{
                                 backgroundColor: pillarActive ? '#00C6FF' : symColor,
                                 boxShadow: pillarActive
-                                  ? '0 0 5px 1px #00C6FF'
-                                  : `0 0 4px 1px ${symColor}`,
+                                  ? '0 0 6px 2px #00C6FF'
+                                  : `0 0 5px 1.5px ${symColor}`,
                               }}
                             />
                             {pillarActive ? 'OPEN' : pillar.status}
                           </span>
                         </div>
 
-                        <div className="flex min-h-[19px] items-center justify-between gap-1.5 px-2 py-0.5">
+                        <div className="flex min-h-[19px] items-center justify-between gap-1.5 border-t border-slate-100 bg-white px-2 py-0.5">
                           <span
-                            className="truncate text-[8.5px] font-bold leading-tight text-white"
-                            style={{ color: '#FFFFFF' }}
+                            className="truncate text-[8.5px] font-extrabold leading-tight"
+                            style={{ color: '#061A44' }}
                           >
                             {pillar.sub}
                           </span>
-                          <ArrowRight className="h-2.5 w-2.5 shrink-0 transition group-hover:translate-x-0.5" style={{ color: symColor }} />
+                          <ArrowRight
+                            className="h-2.5 w-2.5 shrink-0 transition group-hover:translate-x-0.5"
+                            style={{ color: '#061A44' }}
+                          />
                         </div>
                       </div>
                     </button>
@@ -625,51 +627,54 @@ export default function ObsidianSidebarRemote({
                                 <div className="flex min-h-[22px] items-center justify-between gap-1.5 bg-white px-2 py-0.5">
                                   <div className="flex min-w-0 flex-1 items-center gap-1.5">
                                     <span
-                                      className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[5px] shadow-[0_1px_4px_rgba(10,43,109,0.28)]"
+                                      className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[5px] bg-white"
                                       style={{
-                                        background: APP_ICON_GRADIENTS[(pIdx + cIdx + 1) % APP_ICON_GRADIENTS.length],
-                                        border: '1px solid rgba(255,255,255,0.65)',
+                                        border: '1.5px solid #061A44',
+                                        boxShadow: `0 0 6px ${childColor}55`,
                                       }}
                                     >
-                                      <ChildIcon className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                                      <ChildIcon className="h-3 w-3 shrink-0" style={{ color: '#061A44' }} />
                                     </span>
                                     <span
-                                      className="min-w-0 truncate bg-clip-text text-[10px] font-extrabold leading-tight tracking-tight text-transparent"
-                                      style={{
-                                        backgroundImage:
-                                          'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
-                                      }}
+                                      className="min-w-0 truncate text-[10.5px] font-black leading-tight tracking-tight"
+                                      style={{ color: '#061A44' }}
                                     >
                                       {child.label}
                                     </span>
                                   </div>
                                   <span
-                                    className={`inline-flex shrink-0 items-center gap-1 rounded-full px-1.5 py-0.5 text-[7px] font-black uppercase tracking-wider ${
-                                      childActive
-                                        ? 'bg-[#0A2B6D] text-[#00C6FF]'
-                                        : 'bg-[#F5F0FF] text-[#5A00D6]'
-                                    }`}
+                                    className="inline-flex shrink-0 items-center gap-1 rounded-full bg-white px-1.5 py-0.5 text-[7px] font-black uppercase tracking-wider shadow-2xs"
+                                    style={{
+                                      color: '#061A44',
+                                      border: '1px solid #CBD5E1',
+                                      boxShadow: childActive
+                                        ? '0 0 8px rgba(0,198,255,0.55)'
+                                        : `0 0 5px ${childColor}44`,
+                                    }}
                                   >
                                     <span
                                       className="h-1.5 w-1.5 rounded-full"
                                       style={{
                                         backgroundColor: childActive ? '#00C6FF' : childColor,
                                         boxShadow: childActive
-                                          ? '0 0 5px 1px #00C6FF'
-                                          : `0 0 4px 1px ${childColor}`,
+                                          ? '0 0 6px 2px #00C6FF'
+                                          : `0 0 5px 1.5px ${childColor}`,
                                       }}
                                     />
                                     {childActive ? 'ACTIVE' : 'OPEN'}
                                   </span>
                                 </div>
-                                <div className="flex min-h-[19px] items-center justify-between gap-1.5 px-2 py-0.5">
+                                <div className="flex min-h-[19px] items-center justify-between gap-1.5 border-t border-slate-100 bg-white px-2 py-0.5">
                                   <span
-                                    className="truncate text-[8.5px] font-bold leading-tight text-white"
-                                    style={{ color: '#FFFFFF' }}
+                                    className="truncate text-[8.5px] font-extrabold leading-tight"
+                                    style={{ color: '#061A44' }}
                                   >
                                     {child.sub || `Open ${child.label}`}
                                   </span>
-                                  <ArrowRight className="h-2.5 w-2.5 shrink-0 transition group-hover:translate-x-0.5" style={{ color: childColor }} />
+                                  <ArrowRight
+                                    className="h-2.5 w-2.5 shrink-0 transition group-hover:translate-x-0.5"
+                                    style={{ color: '#061A44' }}
+                                  />
                                 </div>
                               </div>
                             </Link>
@@ -707,48 +712,53 @@ export default function ObsidianSidebarRemote({
                       <div className="flex min-h-[22px] items-center justify-between gap-1.5 bg-white px-2 py-0.5">
                         <div className="flex min-w-0 flex-1 items-center gap-1.5">
                           <span
-                            className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[5px] shadow-[0_1px_4px_rgba(10,43,109,0.28)]"
+                            className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[5px] bg-white"
                             style={{
-                              background: APP_ICON_GRADIENTS[mIdx % APP_ICON_GRADIENTS.length],
-                              border: '1px solid rgba(255,255,255,0.65)',
+                              border: '1.5px solid #061A44',
+                              boxShadow: `0 0 6px ${symColor}55`,
                             }}
                           >
-                            <Icon className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
+                            <Icon className="h-3 w-3 shrink-0" style={{ color: '#061A44' }} />
                           </span>
                           <span
-                            className="min-w-0 truncate bg-clip-text text-[10px] font-extrabold leading-tight tracking-tight text-transparent"
-                            style={{
-                              backgroundImage:
-                                'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
-                            }}
+                            className="min-w-0 truncate text-[10.5px] font-black leading-tight tracking-tight"
+                            style={{ color: '#061A44' }}
                           >
                             {label}
                           </span>
                         </div>
                         <span
-                          className={`inline-flex shrink-0 items-center gap-1 rounded-full px-1.5 py-0.5 text-[7px] font-black uppercase tracking-wider ${
-                            active ? 'bg-[#0A2B6D] text-[#00C6FF]' : 'bg-[#F5F0FF] text-[#5A00D6]'
-                          }`}
+                          className="inline-flex shrink-0 items-center gap-1 rounded-full bg-white px-1.5 py-0.5 text-[7px] font-black uppercase tracking-wider shadow-2xs"
+                          style={{
+                            color: '#061A44',
+                            border: '1px solid #CBD5E1',
+                            boxShadow: active
+                              ? '0 0 8px rgba(0,198,255,0.55)'
+                              : `0 0 5px ${symColor}44`,
+                          }}
                         >
                           <span
                             className="h-1.5 w-1.5 rounded-full"
                             style={{
                               backgroundColor: active ? '#00C6FF' : symColor,
-                              boxShadow: active ? '0 0 5px 1px #00C6FF' : `0 0 4px 1px ${symColor}`,
+                              boxShadow: active ? '0 0 6px 2px #00C6FF' : `0 0 5px 1.5px ${symColor}`,
                             }}
                           />
                           {active ? 'ACTIVE' : 'OPEN'}
                         </span>
                       </div>
 
-                      <div className="flex min-h-[19px] items-center justify-between gap-1.5 px-2 py-0.5">
+                      <div className="flex min-h-[19px] items-center justify-between gap-1.5 border-t border-slate-100 bg-white px-2 py-0.5">
                         <span
-                          className="min-w-0 flex-1 truncate text-[8.5px] font-bold leading-tight text-white"
-                          style={{ color: '#FFFFFF' }}
+                          className="min-w-0 flex-1 truncate text-[8.5px] font-extrabold leading-tight"
+                          style={{ color: '#061A44' }}
                         >
                           {subtitle}
                         </span>
-                        <ArrowRight className="h-2.5 w-2.5 shrink-0 transition group-hover:translate-x-0.5" style={{ color: symColor }} />
+                        <ArrowRight
+                          className="h-2.5 w-2.5 shrink-0 transition group-hover:translate-x-0.5"
+                          style={{ color: '#061A44' }}
+                        />
                       </div>
                     </div>
                   </Link>
