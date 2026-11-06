@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   CheckCircle2, AlertTriangle, TrendingUp, Vote, Database, ArrowRight,
+  PenTool, ShieldCheck, Lock, FileCheck2,
 } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
+import { useAuth } from '@/lib/AuthContext';
+import { logUserAction } from '@/lib/actionLog';
+import { toast } from '@/components/ui/use-toast';
 import {
   PAGE7_CAPA_DATA,
   PAGE8_BENEFITS_WATERFALL,
@@ -11,13 +16,171 @@ import {
   PAGE12_FABRIC_AI_DATA,
 } from '@/lib/careSpherePowerBiData';
 import { PowerBiRadialGauge } from '@/components/enterprise/powerbi/PowerBiPagesOneToSix';
+import BoardResolutionSignOffModal from '@/components/enterprise/powerbi/BoardResolutionSignOffModal';
 
 export default function PowerBiPagesSevenToTwelve({ activePage }) {
+  const { user } = useAuth();
   const [selectedAction, setSelectedAction] = useState(PAGE10_EXECUTIVE_ACTIONS.actions[0]);
   const [decisions, setDecisions] = useState(PAGE11_BOARD_DECISIONS);
+  const [signOffModalState, setSignOffModalState] = useState({
+    open: false,
+    resolution: null,
+    defaultStatus: 'Approved',
+  });
+  const [savingSignOff, setSavingSignOff] = useState(false);
 
-  const handleUpdateDecisionStatus = (id, status) => {
-    setDecisions((prev) => prev.map((d) => (d.id === id ? { ...d, status } : d)));
+  const loadRecordedResolutions = useCallback(async () => {
+    try {
+      const page = await base44.entities.GovernanceObject.filter(
+        { record_type: 'Board Resolution' },
+        { sort: '-created_date', limit: 50 }
+      );
+      const items = page?.items || (Array.isArray(page) ? page : []);
+      if (!items.length) return;
+
+      setDecisions((prev) => {
+        const byCode = new Map(items.map((item) => [item.object_code, item]));
+        return prev.map((d) => {
+          const match = byCode.get(d.id);
+          if (!match) return d;
+          let parsedSig = {};
+          try {
+            parsedSig = match.signatures ? JSON.parse(match.signatures) : {};
+          } catch {
+            parsedSig = {};
+          }
+          return {
+            ...d,
+            governanceObjectId: match.id,
+            status: parsedSig.boardStatus || d.status,
+            signedBy: parsedSig.signedBy || match.business_owner || d.signedBy,
+            signerRole: parsedSig.signerRole || d.signerRole,
+            signedAt: parsedSig.signedAt || match.updated_date || match.created_date || d.signedAt,
+            signatureHash: parsedSig.signatureHash || d.signatureHash,
+            quorumVerified: parsedSig.quorumVerified ?? true,
+            resolutionNotes: match.notes || d.resolutionNotes,
+          };
+        });
+      });
+    } catch (err) {
+      console.error('Could not load recorded board resolutions:', err);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (activePage === 'p11_board_decisions') {
+      loadRecordedResolutions();
+    }
+  }, [activePage, loadRecordedResolutions]);
+
+  const openSignOffModal = (resolution, desiredStatus) => {
+    setSignOffModalState({
+      open: true,
+      resolution,
+      defaultStatus: desiredStatus || resolution.status || 'Approved',
+    });
+  };
+
+  const handleConfirmSignOff = async (payload) => {
+    setSavingSignOff(true);
+    try {
+      const existing = decisions.find((d) => d.id === payload.decisionId);
+      const govStatus =
+        payload.status === 'Approved'
+          ? 'Active'
+          : payload.status === 'Rejected'
+          ? 'Archived'
+          : 'Under Review';
+
+      const signatureMetadata = JSON.stringify({
+        boardStatus: payload.status,
+        signedBy: payload.signedBy,
+        signerRole: payload.signerRole,
+        witnessName: payload.witnessName,
+        signedAt: payload.signedAt,
+        signatureHash: payload.signatureHash,
+        signatureMethod: payload.signatureMethod,
+        quorumVerified: payload.quorumVerified,
+      });
+
+      const recordPayload = {
+        title: payload.decisionTitle,
+        object_code: payload.decisionId,
+        lifecycle_stage: 'Policy',
+        record_type: 'Board Resolution',
+        module: 'SME-GARM Board Decisions',
+        document_category: 'Policy',
+        business_owner: payload.owner,
+        status: govStatus,
+        version: 'v1.0',
+        assigned_to_type: 'Organisation-wide',
+        assigned_to_name: payload.committee,
+        signatures: signatureMetadata,
+        acknowledgements: `Digitally signed by ${payload.signedBy} (${payload.signerRole}) | Witness: ${payload.witnessName} | Seal: ${payload.signatureHash}`,
+        evidence_notes: `Board Resolution ${payload.decisionId} (${payload.status}) — Quorum Verified: ${payload.quorumVerified ? 'Yes' : 'No'}`,
+        notes: payload.resolutionNotes,
+      };
+
+      let savedRecord = null;
+      if (existing?.governanceObjectId) {
+        savedRecord = await base44.entities.GovernanceObject.update(
+          existing.governanceObjectId,
+          recordPayload
+        );
+      } else {
+        savedRecord = await base44.entities.GovernanceObject.create(recordPayload);
+      }
+
+      await logUserAction(
+        payload.status === 'Approved'
+          ? 'Approve'
+          : payload.status === 'Rejected'
+          ? 'Reject'
+          : 'Save',
+        'GovernanceObject',
+        {
+          record_id: savedRecord?.id || payload.decisionId,
+          record_title: `${payload.decisionId}: ${payload.decisionTitle}`,
+          module: 'Board Decisions (SME-GARM)',
+          previous_value: existing?.status || 'Open',
+          new_value: `${payload.status} (Signed by ${payload.signedBy} · ${payload.signatureHash})`,
+          details: `Digital Board Resolution Sign-Off recorded. Signatory: ${payload.signedBy} (${payload.signerRole}), Committee: ${payload.committee}, Seal: ${payload.signatureHash}`,
+        }
+      );
+
+      setDecisions((prev) =>
+        prev.map((d) =>
+          d.id === payload.decisionId
+            ? {
+                ...d,
+                governanceObjectId: savedRecord?.id || d.governanceObjectId,
+                status: payload.status,
+                signedBy: payload.signedBy,
+                signerRole: payload.signerRole,
+                signedAt: payload.signedAt,
+                signatureHash: payload.signatureHash,
+                quorumVerified: payload.quorumVerified,
+                resolutionNotes: payload.resolutionNotes,
+              }
+            : d
+        )
+      );
+
+      toast({
+        title: `Board Resolution ${payload.decisionId} Digitally Signed`,
+        description: `${payload.status} by ${payload.signedBy} (${payload.signatureHash}) and recorded in the Governance Register & Audit Log.`,
+      });
+
+      setSignOffModalState({ open: false, resolution: null, defaultStatus: 'Approved' });
+    } catch (err) {
+      toast({
+        title: 'Could not record digital sign-off',
+        description: err?.message || 'Please check your permissions and try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setSavingSignOff(false);
+    }
   };
 
   // PAGE 7: CORRECTIVE ACTIONS
@@ -299,71 +462,158 @@ export default function PowerBiPagesSevenToTwelve({ activePage }) {
       Rejected: decisions.filter((d) => d.status === 'Rejected').length,
       Open: decisions.filter((d) => d.status === 'Open').length,
     };
+    const signedCount = decisions.filter((d) => Boolean(d.signedBy && d.signatureHash)).length;
+    const unsignedDecision = decisions.find((d) => !d.signedBy || !d.signatureHash) || decisions[0];
 
     return (
       <div className="space-y-4" style={{ fontFamily: "'Segoe UI', sans-serif" }}>
-        {/* Voting Status Cards */}
-        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        {/* Voting Status & Digital Sign-Off KPI Cards */}
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-5">
           {[
-            { label: 'Approved', count: counts.Approved, color: '#22C55E' },
-            { label: 'Deferred', count: counts.Deferred, color: '#FBBF24' },
-            { label: 'Rejected', count: counts.Rejected, color: '#EF4444' },
-            { label: 'Open', count: counts.Open, color: '#39E6FF' },
+            { label: 'Approved', count: counts.Approved, color: '#22C55E', sub: 'Constitutional Quorum Ratified' },
+            { label: 'Deferred', count: counts.Deferred, color: '#FBBF24', sub: 'Scheduled Next Cycle' },
+            { label: 'Rejected', count: counts.Rejected, color: '#EF4444', sub: 'Declined by Board' },
+            { label: 'Open for Vote', count: counts.Open, color: '#39E6FF', sub: 'Awaiting Resolution' },
+            {
+              label: 'Digitally Signed',
+              count: `${signedCount}/${decisions.length}`,
+              color: signedCount === decisions.length ? '#22C55E' : '#39E6FF',
+              sub: 'Recorded in GovernanceObject & AuditLog',
+            },
           ].map((c) => (
             <div key={c.label} className="rounded-xl border p-3.5" style={{ backgroundColor: '#1E293B', borderColor: c.color }}>
-              <div className="text-[12px] text-slate-300">Voting Status: {c.label}</div>
-              <div className="mt-1 text-[32px] font-bold leading-none" style={{ color: c.color }}>{c.count}</div>
+              <div className="text-[12px] text-slate-300">{c.label}</div>
+              <div className="mt-1 text-[30px] font-bold leading-none" style={{ color: c.color }}>{c.count}</div>
+              <div className="mt-1 text-[10px] text-slate-400">{c.sub}</div>
             </div>
           ))}
         </div>
 
-        {/* Decision Register */}
+        {/* Decision Register with Digital Sign-Off Controls */}
         <div className="rounded-xl border p-4" style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.24)' }}>
-          <div className="mb-3 text-[16px] font-semibold text-white">
-            Board Decision Register (Decision ID · Decision · Owner · Committee · Status)
+          <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <div className="text-[16px] font-semibold text-white">
+                Board Decision Register &amp; Mandatory Digital Sign-Off Ledger
+              </div>
+              <div className="text-[11px] text-slate-300">
+                Every resolution determination requires a digital signature and is persisted to GovernanceObject &amp; the immutable system AuditLog.
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => openSignOffModal(unsignedDecision, 'Approved')}
+              className="inline-flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-xs font-black transition"
+              style={{ backgroundColor: '#22C55E', color: '#081018' }}
+            >
+              <PenTool className="h-3.5 w-3.5" />
+              Open Digital Sign-Off Modal ({unsignedDecision.id})
+            </button>
           </div>
+
           <div className="overflow-x-auto">
             <table className="w-full text-left text-[12px] text-white">
               <thead>
                 <tr className="border-b border-slate-700 text-[11px] font-bold uppercase" style={{ color: '#39E6FF' }}>
                   <th className="py-2 pr-3">Decision ID</th>
-                  <th className="py-2 pr-3">Decision</th>
-                  <th className="py-2 pr-3">Owner</th>
-                  <th className="py-2 pr-3">Committee</th>
-                  <th className="py-2 pr-3">Status &amp; Vote</th>
+                  <th className="py-2 pr-3">Resolution &amp; Minute</th>
+                  <th className="py-2 pr-3">Owner &amp; Committee</th>
+                  <th className="py-2 pr-3">Digital Sign-Off Record</th>
+                  <th className="py-2 pr-3">Vote &amp; Digital Seal</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-800">
-                {decisions.map((d) => (
-                  <tr key={d.id}>
-                    <td className="py-2.5 pr-3 font-bold" style={{ color: '#39E6FF' }}>{d.id}</td>
-                    <td className="py-2.5 pr-3 font-bold text-white">{d.decision}</td>
-                    <td className="py-2.5 pr-3 text-slate-300">{d.owner}</td>
-                    <td className="py-2.5 pr-3 text-slate-300">{d.committee}</td>
-                    <td className="py-2.5 pr-3">
-                      <div className="flex flex-wrap gap-1">
-                        {['Approved', 'Deferred', 'Rejected', 'Open'].map((st) => (
+                {decisions.map((d) => {
+                  const isSigned = Boolean(d.signedBy && d.signatureHash);
+                  return (
+                    <tr key={d.id} className="align-top">
+                      <td className="py-3 pr-3 font-mono font-bold" style={{ color: '#39E6FF' }}>
+                        {d.id}
+                      </td>
+                      <td className="py-3 pr-3">
+                        <div className="font-bold text-white">{d.decision}</div>
+                        {d.resolutionNotes && (
+                          <div className="mt-0.5 text-[11px] text-slate-300">{d.resolutionNotes}</div>
+                        )}
+                      </td>
+                      <td className="py-3 pr-3">
+                        <div className="font-bold text-slate-200">{d.owner}</div>
+                        <div className="text-[11px] text-slate-400">{d.committee}</div>
+                      </td>
+                      <td className="py-3 pr-3">
+                        {isSigned ? (
+                          <div className="rounded-lg border px-2.5 py-1.5" style={{ backgroundColor: '#1E293B', borderColor: 'rgba(34,197,94,0.35)' }}>
+                            <div className="flex items-center gap-1 text-[11px] font-bold" style={{ color: '#22C55E' }}>
+                              <ShieldCheck className="h-3.5 w-3.5 shrink-0" />
+                              Digitally Signed · {d.signatureHash}
+                            </div>
+                            <div className="mt-0.5 text-[11px] text-white">
+                              {d.signedBy} ({d.signerRole})
+                            </div>
+                            <div className="text-[10px] text-slate-400">
+                              {d.signedAt ? new Date(d.signedAt).toLocaleString('en-AU') : 'Verified'}
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="rounded-lg border px-2.5 py-1.5" style={{ backgroundColor: 'rgba(251,191,36,0.12)', borderColor: '#FBBF24' }}>
+                            <div className="flex items-center gap-1 text-[11px] font-bold" style={{ color: '#FBBF24' }}>
+                              <AlertTriangle className="h-3.5 w-3.5 shrink-0" />
+                              Signature Required
+                            </div>
+                            <div className="mt-0.5 text-[10px] text-slate-300">
+                              Click Sign-Off to digitally seal &amp; record
+                            </div>
+                          </div>
+                        )}
+                      </td>
+                      <td className="py-3 pr-3">
+                        <div className="flex flex-wrap items-center gap-1">
+                          {['Approved', 'Deferred', 'Rejected', 'Open'].map((st) => (
+                            <button
+                              key={st}
+                              type="button"
+                              onClick={() => openSignOffModal(d, st)}
+                              className="rounded px-2 py-1 text-[10px] font-bold transition"
+                              style={{
+                                backgroundColor: d.status === st ? '#39E6FF' : '#1E293B',
+                                color: d.status === st ? '#081018' : '#FFFFFF',
+                              }}
+                            >
+                              {st}
+                            </button>
+                          ))}
                           <button
-                            key={st}
                             type="button"
-                            onClick={() => handleUpdateDecisionStatus(d.id, st)}
-                            className="rounded px-2 py-0.5 text-[10px] font-bold"
+                            onClick={() => openSignOffModal(d, d.status === 'Open' ? 'Approved' : d.status)}
+                            className="inline-flex items-center gap-1 rounded border px-2.5 py-1 text-[10px] font-black transition"
                             style={{
-                              backgroundColor: d.status === st ? '#39E6FF' : '#1E293B',
-                              color: d.status === st ? '#081018' : '#FFFFFF',
+                              backgroundColor: isSigned ? '#1E293B' : '#22C55E',
+                              color: isSigned ? '#39E6FF' : '#081018',
+                              borderColor: isSigned ? '#39E6FF' : '#22C55E',
                             }}
                           >
-                            {st}
+                            <FileCheck2 className="h-3 w-3" />
+                            {isSigned ? 'Re-Sign / Amend' : 'Digital Sign-Off'}
                           </button>
-                        ))}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
         </div>
+
+        <BoardResolutionSignOffModal
+          open={signOffModalState.open}
+          onClose={() => setSignOffModalState({ open: false, resolution: null, defaultStatus: 'Approved' })}
+          resolution={signOffModalState.resolution}
+          defaultStatus={signOffModalState.defaultStatus}
+          currentUser={user}
+          onConfirmSignOff={handleConfirmSignOff}
+          saving={savingSignOff}
+        />
       </div>
     );
   }
