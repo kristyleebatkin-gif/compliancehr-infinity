@@ -1,14 +1,17 @@
-/* Communication Centre design layer — stylish, artistic, modern, professional.
-   Palette stays on the 45-module tiles + brand gradient + pastels; no new dark tones. */
+/* Communication design layer — dark navy/black command theme (no white background) */
 .comm-centre {
-  background:
-    radial-gradient(circle at 10% 0%, rgba(255, 46, 154, 0.12), transparent 24rem),
-    radial-gradient(circle at 90% 3%, rgba(0, 198, 255, 0.12), transparent 22rem),
-    radial-gradient(circle at 52% 58%, rgba(90, 0, 214, 0.10), transparent 28rem),
-    hsl(var(--background));
+  background: transparent !important;
 }
 
-/* Communication Centre main header uses the app-wide Blue, Purple, Pink gradient */
+/* Remove white background from Communication module header and cards */
+.comm-centre > div > div > .bg-white,
+.comm-centre .module-shell-workspace > .bg-white {
+  background: #081018 !important;
+  border-color: rgba(0, 198, 255, 0.35) !important;
+  color: #FFFFFF !important;
+}
+
+/* Communication main header uses the dark command gradient */
 .comm-centre .app-page-header,
 .app-readable .comm-centre .app-page-header {
   background: var(--header-gradient) !important;
@@ -39,7 +42,7 @@
   pointer-events: none;
 }
 
-/* Bold, crisp typography across Communication Centre */
+/* Bold, crisp typography across Communication */
 .comm-centre h1,
 .comm-centre h2,
 .comm-centre h3,

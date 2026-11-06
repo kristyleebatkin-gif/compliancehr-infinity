@@ -9,7 +9,7 @@ export const BRAND_SLOGAN_TEXT =
 
 /**
  * Canonical ComplianceHR Infinity Brand Lockup:
- * Line 1 (Top): Larger Logo on Black Background, centred
+ * Line 1 (Top): Larger Logo brought down slightly to fit well on Black Background, centred
  * Line 2 (Middle): "ComplianceHR Infinity" on ONE single line
  * Line 3 (Bottom): Slogan on ONE single line
  */
@@ -23,17 +23,17 @@ export default function BrandLogoLockup({
 }) {
   const isCustomName = companyName && companyName !== 'ComplianceHR Infinity';
 
-  // Larger logo size as requested
+  // Increased logo size and brought down slightly to fit well in the header
   const logoSizeClass =
     size === 'xs'
-      ? 'h-[calc(5.25rem+1cm)] w-[calc(12rem+1cm)] sm:h-[calc(5.5rem+1cm)] sm:w-[calc(13rem+1cm)]'
-      : 'h-[calc(7.75rem+1cm)] w-[calc(16.5rem+1cm)] sm:h-[calc(8.25rem+1cm)] sm:w-[calc(18.5rem+1cm)]';
+      ? 'mt-1.5 h-[calc(6rem+1cm)] w-[calc(13.5rem+1cm)] sm:h-[calc(6.25rem+1cm)] sm:w-[calc(14.5rem+1cm)]'
+      : 'mt-2 h-[calc(9.25rem+1cm)] w-[calc(20rem+1cm)] sm:h-[calc(10rem+1cm)] sm:w-[calc(23rem+1cm)]';
 
   // Line 2: Structured heading on ONE single line
   const nameSizeClass =
     size === 'xs'
       ? 'text-[15px] sm:text-base mt-0.5'
-      : 'text-xl sm:text-2xl mt-1';
+      : 'text-xl sm:text-2xl mt-0.5';
 
   // Line 3: Slogan under name
   const sloganSizeClass =
@@ -49,7 +49,7 @@ export default function BrandLogoLockup({
     >
       {/* UNIFIED CONTAINER FOR LOGO, NAME & SLOGAN */}
       <div className="flex w-full flex-col items-center justify-center bg-transparent px-1 py-0.5">
-        {/* LINE 1: LARGER LOGO */}
+        {/* LINE 1: LARGER LOGO BROUGHT DOWN TO FIT WELL */}
         <Image
           src={logoUrl || DEFAULT_BRAND_LOGO}
           alt={companyName || 'ComplianceHR Infinity'}

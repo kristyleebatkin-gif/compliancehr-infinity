@@ -115,12 +115,12 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
           tabs={!(embedded || participantOnly) && (
             <div className="space-y-2">
               {/* Screen 1 (Communications & Mailbox) + Screen 2 (Meeting Centre & Feedback Surveys) Switcher */}
-              <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border-2 border-[#0A2B6D] bg-white p-2.5 shadow-sm">
+              <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border-2 border-[#00C6FF]/50 bg-[#081018] p-2.5 text-white shadow-sm">
                 <div>
-                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#5A00D6]">
+                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
                     Dual-Screen Communication, Meetings &amp; Feedback Hub
                   </span>
-                  <h3 className="text-xs sm:text-sm font-extrabold text-[#0A2B6D]">
+                  <h3 className="text-xs sm:text-sm font-extrabold text-white">
                     Screen 1: Communications Mailbox &amp; Logs · Screen 2: Meeting Centre &amp; Feedback Surveys
                   </h3>
                 </div>
@@ -134,7 +134,11 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
                       key={k}
                       size="sm"
                       variant={commScreen === k ? 'default' : 'outline'}
-                      className="border-2 border-[#0A2B6D] font-extrabold"
+                      className="border-2 border-[#00C6FF] font-extrabold text-white"
+                      style={{
+                        backgroundColor: commScreen === k ? '#FF2E9A' : '#0072FF',
+                        color: '#FFFFFF',
+                      }}
                       onClick={() => setCommScreen(k)}
                     >
                       {lbl}

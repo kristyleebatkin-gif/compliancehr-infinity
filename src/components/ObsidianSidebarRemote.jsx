@@ -10,13 +10,13 @@ import {
 } from 'lucide-react';
 
 const BRAND_GRADIENT =
-  'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)';
+  'linear-gradient(120deg, #00C6FF 0%, #0072FF 40%, #FF2E9A 100%)';
 
-// Clean white/neutral studio chassis (colour taken out of back)
-const DARK_NAVY_CHASSIS = '#FFFFFF';
+// Pure Black Chassis Theme
+const DARK_NAVY_CHASSIS = '#000000';
 
-// App design colour palette and App Icon gradients
-const APP_DESIGN_COLOURS = ['#0072FF', '#5A00D6', '#FF2E9A', '#A100FF', '#00C6FF'];
+// Strict repeating LED light sequence: Purple, Pink, Blue, Purple, Pink, Blue...
+const LED_LIGHT_SEQUENCE = ['#A855F7', '#FF2E9A', '#0072FF'];
 const APP_ICON_GRADIENTS = [
   'linear-gradient(135deg, #00C6FF 0%, #0072FF 55%, #5A00D6 100%)',
   'linear-gradient(135deg, #0072FF 0%, #5A00D6 52%, #FF2E9A 100%)',
@@ -29,13 +29,12 @@ const APP_ICON_GRADIENTS = [
 export const PRIMARY_11_OS_NAV = [
   {
     id: 'dashboard-executive',
-    label: 'Communication',
-    sub: 'Communication, Dashboard, Executive, Operations & AI',
+    label: '1. Communication',
+    sub: 'Merged Communication, Dashboard, Executive & AI',
     path: '/dashboard',
     icon: Megaphone,
     status: 'LIVE',
     children: [
-      { label: 'Communication', path: '/dashboard', sub: 'Merged Communication & Executive Dashboard', icon: Megaphone },
       { label: 'Operations Centre', path: '/operations-centre', sub: 'Master operations & control deck' },
       { label: 'Suggestions Hub', path: '/suggestions', sub: 'Continuous improvement ideas' },
       { label: 'Daily Briefing', path: '/briefing', sub: 'Morning operational briefing' },
@@ -215,13 +214,12 @@ export const PRIMARY_11_OS_NAV = [
 export const FOCUSED_5_PILLAR_NAV = [
   {
     id: 'pillar-today',
-    label: 'Communication',
-    sub: 'Communication, Dashboard, Executive, Operations, Briefing & AI',
+    label: '1. Communication',
+    sub: 'Merged Communication, Dashboard, Executive, Briefing & AI',
     path: '/dashboard',
     icon: Megaphone,
     status: 'LIVE',
     children: [
-      { label: 'Communication', path: '/dashboard', sub: 'Merged Communication & Executive Dashboard', icon: Megaphone },
       { label: 'Operations Centre', path: '/operations-centre', sub: 'Master operations & control deck' },
       { label: 'Suggestions Hub', path: '/suggestions', sub: 'Continuous improvement ideas' },
       { label: 'Daily Briefing', path: '/briefing', sub: 'Morning operational briefing' },
@@ -507,16 +505,25 @@ export default function ObsidianSidebarRemote({
         {/* Continuous App-Design Gradient Divider Line aligned with main header */}
         <div className="h-[2px] w-full shrink-0" style={{ background: BRAND_GRADIENT }} />
 
-        {/* BOTTOM 3/4 DARK BLUE (50% Smaller Modular Remote Buttons) */}
+        {/* BOTTOM 3/4 BLACK REMOTE WITH AQUA SYMBOLS & PURPLE-PINK-BLUE REPEATING LED LIGHTS */}
         <nav
           aria-label="Page navigation"
           className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-1.5 space-y-1"
           style={{ background: DARK_NAVY_CHASSIS }}
         >
-          {navMode === 'os11' || navMode === 'pillars5'
-            ? (navMode === 'pillars5' ? FOCUSED_5_PILLAR_NAV : PRIMARY_11_OS_NAV).map((pillar, pIdx) => {
+          {(() => {
+            let ledCounter = 0;
+            const nextLedColor = () => {
+              const color = LED_LIGHT_SEQUENCE[ledCounter % LED_LIGHT_SEQUENCE.length];
+              ledCounter += 1;
+              return color;
+            };
+
+            if (navMode === 'os11' || navMode === 'pillars5') {
+              const list = navMode === 'pillars5' ? FOCUSED_5_PILLAR_NAV : PRIMARY_11_OS_NAV;
+              return list.map((pillar) => {
                 const Icon = pillar.icon;
-                const symColor = APP_DESIGN_COLOURS[pIdx % APP_DESIGN_COLOURS.length];
+                const ledColor = nextLedColor();
                 const pillarActive =
                   selectedPillarId === pillar.id ||
                   isActive(pillar.path) ||
@@ -524,7 +531,7 @@ export default function ObsidianSidebarRemote({
 
                 return (
                   <div key={pillar.id}>
-                    {/* Section Header Button (42px Uniform): Opens Section in Main View */}
+                    {/* Section Header Button (42px Uniform): Black, Aqua, Blue & Pink Theme */}
                     <button
                       type="button"
                       onClick={() => openMajorSectionInMainView(pillar)}
@@ -532,76 +539,72 @@ export default function ObsidianSidebarRemote({
                       className={`group block w-full text-left rounded-lg p-[1.5px] transition-all duration-150 focus-visible:outline-none ${
                         pillarActive
                           ? 'shadow-[0_0_14px_rgba(0,198,255,0.85)]'
-                          : 'shadow-[0_0_6px_rgba(90,0,214,0.3)] hover:shadow-[0_0_10px_rgba(0,198,255,0.6)]'
+                          : 'shadow-[0_0_6px_rgba(0,114,255,0.35)] hover:shadow-[0_0_10px_rgba(255,46,154,0.65)]'
                       }`}
                       style={{ background: BRAND_GRADIENT }}
                     >
                       <div
                         className="flex min-h-[42px] flex-col justify-between overflow-hidden rounded-[7px]"
-                        style={{ background: DARK_NAVY_CHASSIS }}
+                        style={{ background: '#000000' }}
                       >
-                        <div className="flex min-h-[22px] items-center justify-between gap-1.5 bg-white px-2 py-0.5">
+                        <div className="flex min-h-[22px] items-center justify-between gap-1.5 bg-black px-2 py-0.5">
                           <div className="flex min-w-0 flex-1 items-center gap-1.5">
                             <span
-                              className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[5px] bg-white"
+                              className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[5px] bg-black"
                               style={{
-                                border: '1.5px solid #061A44',
-                                boxShadow: `0 0 6px ${symColor}55`,
+                                border: '1.5px solid #00C6FF',
+                                boxShadow: '0 0 6px rgba(0,198,255,0.55)',
                               }}
                             >
-                              <Icon className="h-3 w-3 shrink-0" style={{ color: '#061A44' }} />
+                              <Icon className="h-3 w-3 shrink-0" style={{ color: '#00C6FF' }} />
                             </span>
                             <span
                               className="min-w-0 truncate text-[10.5px] font-black leading-tight tracking-tight"
-                              style={{ color: '#061A44' }}
+                              style={{ color: '#00C6FF' }}
                             >
                               {pillar.label}
                             </span>
                           </div>
 
                           <span
-                            className="inline-flex shrink-0 items-center gap-1 rounded-full bg-white px-1.5 py-0.5 text-[7px] font-black uppercase tracking-wider shadow-2xs"
+                            className="inline-flex shrink-0 items-center gap-1 rounded-full bg-black px-1.5 py-0.5 text-[7px] font-black uppercase tracking-wider"
                             style={{
-                              color: '#061A44',
-                              border: '1px solid #CBD5E1',
-                              boxShadow: pillarActive
-                                ? '0 0 8px rgba(0,198,255,0.55)'
-                                : `0 0 5px ${symColor}44`,
+                              color: '#FFFFFF',
+                              border: `1px solid ${ledColor}`,
+                              boxShadow: `0 0 8px ${ledColor}66`,
                             }}
                           >
                             <span
-                              className="h-1.5 w-1.5 rounded-full"
+                              className="h-2 w-2 rounded-full"
                               style={{
-                                backgroundColor: pillarActive ? '#00C6FF' : symColor,
-                                boxShadow: pillarActive
-                                  ? '0 0 6px 2px #00C6FF'
-                                  : `0 0 5px 1.5px ${symColor}`,
+                                backgroundColor: ledColor,
+                                boxShadow: `0 0 7px 2px ${ledColor}`,
                               }}
                             />
                             {pillarActive ? 'OPEN' : pillar.status}
                           </span>
                         </div>
 
-                        <div className="flex min-h-[19px] items-center justify-between gap-1.5 border-t border-slate-100 bg-white px-2 py-0.5">
+                        <div className="flex min-h-[19px] items-center justify-between gap-1.5 border-t border-[#0072FF]/35 bg-[#050B16] px-2 py-0.5">
                           <span
                             className="truncate text-[8.5px] font-extrabold leading-tight"
-                            style={{ color: '#061A44' }}
+                            style={{ color: '#FF2E9A' }}
                           >
                             {pillar.sub}
                           </span>
                           <ArrowRight
                             className="h-2.5 w-2.5 shrink-0 transition group-hover:translate-x-0.5"
-                            style={{ color: '#061A44' }}
+                            style={{ color: '#00C6FF' }}
                           />
                         </div>
                       </div>
                     </button>
 
-                    {/* All In-Between Module Buttons Permanently Open Underneath Each Section (Identical 42px Modular Buttons) */}
+                    {/* In-Between Module Buttons Underneath Each Section */}
                     {pillar.children?.length > 0 && (
-                      <div className="mt-1 space-y-1 pl-2 border-l-2 border-[#00C6FF]/60">
+                      <div className="mt-1 space-y-1 pl-2 border-l-2 border-[#00C6FF]/70">
                         {pillar.children.map((child, cIdx) => {
-                          const childColor = APP_DESIGN_COLOURS[cIdx % APP_DESIGN_COLOURS.length];
+                          const childLedColor = nextLedColor();
                           const matchedMod = MODULE_DIRECTORY.find((m) => m.path === child.path);
                           const ChildIcon = child.icon || matchedMod?.icon || Icon;
                           const childActive =
@@ -615,64 +618,60 @@ export default function ObsidianSidebarRemote({
                               className={`group block w-full text-left rounded-lg p-[1.5px] transition-all duration-150 focus-visible:outline-none ${
                                 childActive
                                   ? 'shadow-[0_0_14px_rgba(0,198,255,0.85)]'
-                                  : 'shadow-[0_0_6px_rgba(90,0,214,0.3)] hover:shadow-[0_0_10px_rgba(0,198,255,0.6)]'
+                                  : 'shadow-[0_0_6px_rgba(0,114,255,0.35)] hover:shadow-[0_0_10px_rgba(255,46,154,0.65)]'
                               }`}
                               style={{ background: BRAND_GRADIENT }}
                             >
                               <div
                                 className="flex min-h-[42px] flex-col justify-between overflow-hidden rounded-[7px]"
-                                style={{ background: DARK_NAVY_CHASSIS }}
+                                style={{ background: '#000000' }}
                               >
-                                <div className="flex min-h-[22px] items-center justify-between gap-1.5 bg-white px-2 py-0.5">
+                                <div className="flex min-h-[22px] items-center justify-between gap-1.5 bg-black px-2 py-0.5">
                                   <div className="flex min-w-0 flex-1 items-center gap-1.5">
                                     <span
-                                      className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[5px] bg-white"
+                                      className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[5px] bg-black"
                                       style={{
-                                        border: '1.5px solid #061A44',
-                                        boxShadow: `0 0 6px ${childColor}55`,
+                                        border: '1.5px solid #00C6FF',
+                                        boxShadow: '0 0 6px rgba(0,198,255,0.55)',
                                       }}
                                     >
-                                      <ChildIcon className="h-3 w-3 shrink-0" style={{ color: '#061A44' }} />
+                                      <ChildIcon className="h-3 w-3 shrink-0" style={{ color: '#00C6FF' }} />
                                     </span>
                                     <span
                                       className="min-w-0 truncate text-[10.5px] font-black leading-tight tracking-tight"
-                                      style={{ color: '#061A44' }}
+                                      style={{ color: '#FFFFFF' }}
                                     >
                                       {child.label}
                                     </span>
                                   </div>
                                   <span
-                                    className="inline-flex shrink-0 items-center gap-1 rounded-full bg-white px-1.5 py-0.5 text-[7px] font-black uppercase tracking-wider shadow-2xs"
+                                    className="inline-flex shrink-0 items-center gap-1 rounded-full bg-black px-1.5 py-0.5 text-[7px] font-black uppercase tracking-wider"
                                     style={{
-                                      color: '#061A44',
-                                      border: '1px solid #CBD5E1',
-                                      boxShadow: childActive
-                                        ? '0 0 8px rgba(0,198,255,0.55)'
-                                        : `0 0 5px ${childColor}44`,
+                                      color: '#FFFFFF',
+                                      border: `1px solid ${childLedColor}`,
+                                      boxShadow: `0 0 8px ${childLedColor}66`,
                                     }}
                                   >
                                     <span
-                                      className="h-1.5 w-1.5 rounded-full"
+                                      className="h-2 w-2 rounded-full"
                                       style={{
-                                        backgroundColor: childActive ? '#00C6FF' : childColor,
-                                        boxShadow: childActive
-                                          ? '0 0 6px 2px #00C6FF'
-                                          : `0 0 5px 1.5px ${childColor}`,
+                                        backgroundColor: childLedColor,
+                                        boxShadow: `0 0 7px 2px ${childLedColor}`,
                                       }}
                                     />
                                     {childActive ? 'ACTIVE' : 'OPEN'}
                                   </span>
                                 </div>
-                                <div className="flex min-h-[19px] items-center justify-between gap-1.5 border-t border-slate-100 bg-white px-2 py-0.5">
+                                <div className="flex min-h-[19px] items-center justify-between gap-1.5 border-t border-[#0072FF]/35 bg-[#050B16] px-2 py-0.5">
                                   <span
                                     className="truncate text-[8.5px] font-extrabold leading-tight"
-                                    style={{ color: '#061A44' }}
+                                    style={{ color: '#38BDF8' }}
                                   >
                                     {child.sub || `Open ${child.label}`}
                                   </span>
                                   <ArrowRight
                                     className="h-2.5 w-2.5 shrink-0 transition group-hover:translate-x-0.5"
-                                    style={{ color: '#061A44' }}
+                                    style={{ color: '#00C6FF' }}
                                   />
                                 </div>
                               </div>
@@ -683,98 +682,99 @@ export default function ObsidianSidebarRemote({
                     )}
                   </div>
                 );
-              })
-            : modules.map((item, mIdx) => {
-                const Icon = item.icon;
-                const symColor = APP_DESIGN_COLOURS[mIdx % APP_DESIGN_COLOURS.length];
-                const active = isActive(item.path);
-                const label = navLabel(item);
-                const subtitle = item.blurb || item.group || 'Open workspace';
+              });
+            }
 
-                return (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    onClick={scrollWorkspaceToTop}
-                    title={`${label} — ${subtitle}`}
-                    className={`group block w-full text-left rounded-lg p-[1.5px] transition-all duration-150 focus-visible:outline-none ${
-                      active
-                        ? 'shadow-[0_0_14px_rgba(0,198,255,0.85)]'
-                        : 'shadow-[0_0_6px_rgba(90,0,214,0.3)] hover:shadow-[0_0_10px_rgba(0,198,255,0.6)]'
-                    }`}
-                    style={{ background: BRAND_GRADIENT }}
+            return modules.map((item) => {
+              const Icon = item.icon;
+              const modLedColor = nextLedColor();
+              const active = isActive(item.path);
+              const label = navLabel(item);
+              const subtitle = item.blurb || item.group || 'Open workspace';
+
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  onClick={scrollWorkspaceToTop}
+                  title={`${label} — ${subtitle}`}
+                  className={`group block w-full text-left rounded-lg p-[1.5px] transition-all duration-150 focus-visible:outline-none ${
+                    active
+                      ? 'shadow-[0_0_14px_rgba(0,198,255,0.85)]'
+                      : 'shadow-[0_0_6px_rgba(0,114,255,0.35)] hover:shadow-[0_0_10px_rgba(255,46,154,0.65)]'
+                  }`}
+                  style={{ background: BRAND_GRADIENT }}
+                >
+                  <div
+                    className="flex min-h-[42px] flex-col justify-between overflow-hidden rounded-[7px]"
+                    style={{ background: '#000000' }}
                   >
-                    <div
-                      className="flex min-h-[42px] flex-col justify-between overflow-hidden rounded-[7px]"
-                      style={{ background: DARK_NAVY_CHASSIS }}
-                    >
-                      <div className="flex min-h-[22px] items-center justify-between gap-1.5 bg-white px-2 py-0.5">
-                        <div className="flex min-w-0 flex-1 items-center gap-1.5">
-                          <span
-                            className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[5px] bg-white"
-                            style={{
-                              border: '1.5px solid #061A44',
-                              boxShadow: `0 0 6px ${symColor}55`,
-                            }}
-                          >
-                            <Icon className="h-3 w-3 shrink-0" style={{ color: '#061A44' }} />
-                          </span>
-                          <span
-                            className="min-w-0 truncate text-[10.5px] font-black leading-tight tracking-tight"
-                            style={{ color: '#061A44' }}
-                          >
-                            {label}
-                          </span>
-                        </div>
+                    <div className="flex min-h-[22px] items-center justify-between gap-1.5 bg-black px-2 py-0.5">
+                      <div className="flex min-w-0 flex-1 items-center gap-1.5">
                         <span
-                          className="inline-flex shrink-0 items-center gap-1 rounded-full bg-white px-1.5 py-0.5 text-[7px] font-black uppercase tracking-wider shadow-2xs"
+                          className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[5px] bg-black"
                           style={{
-                            color: '#061A44',
-                            border: '1px solid #CBD5E1',
-                            boxShadow: active
-                              ? '0 0 8px rgba(0,198,255,0.55)'
-                              : `0 0 5px ${symColor}44`,
+                            border: '1.5px solid #00C6FF',
+                            boxShadow: '0 0 6px rgba(0,198,255,0.55)',
                           }}
                         >
-                          <span
-                            className="h-1.5 w-1.5 rounded-full"
-                            style={{
-                              backgroundColor: active ? '#00C6FF' : symColor,
-                              boxShadow: active ? '0 0 6px 2px #00C6FF' : `0 0 5px 1.5px ${symColor}`,
-                            }}
-                          />
-                          {active ? 'ACTIVE' : 'OPEN'}
+                          <Icon className="h-3 w-3 shrink-0" style={{ color: '#00C6FF' }} />
                         </span>
-                      </div>
-
-                      <div className="flex min-h-[19px] items-center justify-between gap-1.5 border-t border-slate-100 bg-white px-2 py-0.5">
                         <span
-                          className="min-w-0 flex-1 truncate text-[8.5px] font-extrabold leading-tight"
-                          style={{ color: '#061A44' }}
+                          className="min-w-0 truncate text-[10.5px] font-black leading-tight tracking-tight"
+                          style={{ color: '#FFFFFF' }}
                         >
-                          {subtitle}
+                          {label}
                         </span>
-                        <ArrowRight
-                          className="h-2.5 w-2.5 shrink-0 transition group-hover:translate-x-0.5"
-                          style={{ color: '#061A44' }}
-                        />
                       </div>
+                      <span
+                        className="inline-flex shrink-0 items-center gap-1 rounded-full bg-black px-1.5 py-0.5 text-[7px] font-black uppercase tracking-wider"
+                        style={{
+                          color: '#FFFFFF',
+                          border: `1px solid ${modLedColor}`,
+                          boxShadow: `0 0 8px ${modLedColor}66`,
+                        }}
+                      >
+                        <span
+                          className="h-2 w-2 rounded-full"
+                          style={{
+                            backgroundColor: modLedColor,
+                            boxShadow: `0 0 7px 2px ${modLedColor}`,
+                          }}
+                        />
+                        {active ? 'ACTIVE' : 'OPEN'}
+                      </span>
                     </div>
-                  </Link>
-                );
-              })}
+
+                    <div className="flex min-h-[19px] items-center justify-between gap-1.5 border-t border-[#0072FF]/35 bg-[#050B16] px-2 py-0.5">
+                      <span
+                        className="min-w-0 flex-1 truncate text-[8.5px] font-extrabold leading-tight"
+                        style={{ color: '#38BDF8' }}
+                      >
+                        {subtitle}
+                      </span>
+                      <ArrowRight
+                        className="h-2.5 w-2.5 shrink-0 transition group-hover:translate-x-0.5"
+                        style={{ color: '#00C6FF' }}
+                      />
+                    </div>
+                  </div>
+                </Link>
+              );
+            });
+          })()}
         </nav>
 
-        {/* Minimal Sign-Out Action (50% Reduced) */}
+        {/* Minimal Sign-Out Action (Black, Aqua & Pink) */}
         {onLogout && (
           <div className="shrink-0 p-1" style={{ background: DARK_NAVY_CHASSIS }}>
             <button
               type="button"
               onClick={onLogout}
-              className="flex min-h-[20px] w-full items-center justify-center gap-1 rounded-md border border-[#0A2B6D] bg-white px-2 py-0.5 text-[8px] font-extrabold text-[#0A2B6D] shadow-2xs transition hover:bg-[#F5F0FF]"
+              className="flex min-h-[22px] w-full items-center justify-center gap-1 rounded-md border border-[#00C6FF] bg-black px-2 py-0.5 text-[8.5px] font-extrabold text-[#00C6FF] shadow-2xs transition hover:border-[#FF2E9A] hover:text-[#FF2E9A]"
             >
               <LogOut className="h-2.5 w-2.5 text-[#FF2E9A]" />
-              <span style={{ color: '#0A2B6D' }}>Sign out</span>
+              <span>Sign out</span>
             </button>
           </div>
         )}

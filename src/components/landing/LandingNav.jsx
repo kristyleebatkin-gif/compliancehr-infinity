@@ -86,36 +86,22 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
             <span style={{ color: '#00C6FF' }}>Compliance</span>
             <span style={{ color: '#FF2E9A' }}>HR Infinity</span>
           </Link>
-          <div className="flex items-center gap-2">
-            {WORKSPACE_VIEWS.map(({ id, label, Icon }) => (
-              <button
-                key={id}
-                type="button"
-                onClick={() => switchWorkspaceView(id)}
-                className="inline-flex min-h-[22px] items-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold text-black shadow-2xs transition"
-                style={{ backgroundColor: '#00C6FF' }}
-              >
-                <Icon className="h-3 w-3 shrink-0" style={{ color: '#FF2E9A' }} />
-                <span>{label}</span>
-              </button>
-            ))}
-            <button
-              type="button"
-              onClick={toggleHeaderCollapse}
-              className="inline-flex min-h-[22px] items-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold text-white shadow-2xs transition"
-              style={{ backgroundColor: '#FF2E9A' }}
-            >
-              <span>Expand Header</span>
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={toggleHeaderCollapse}
+            className="inline-flex h-[24px] items-center gap-1 rounded-md px-3 text-[10px] font-extrabold text-white shadow-2xs transition"
+            style={{ backgroundColor: '#FF2E9A' }}
+          >
+            <span>Expand Header</span>
+          </button>
         </div>
       ) : (
-        <div className="mx-auto flex min-h-[calc(210px+1cm)] max-w-[1440px] flex-col justify-between bg-black px-4 py-1.5 sm:px-6 lg:px-8 md:h-[calc(210px+1cm)] md:flex-row md:items-stretch">
-          {/* Left at the Bottom: Aqua & Blue Buttons (Sign In & Book Demo) */}
-          <div className="order-2 flex shrink-0 items-center justify-center gap-1.5 self-center md:order-1 md:self-end md:pb-1">
+        <div className="mx-auto flex min-h-[calc(220px+1cm)] max-w-[1440px] flex-col justify-between gap-2 bg-black px-4 pt-2 pb-1.5 sm:px-6 lg:px-8 md:h-[calc(220px+1cm)] md:flex-row md:items-end">
+          {/* Left at the Bottom: Fitted Aqua & Blue Buttons (Sign In & Book Demo) */}
+          <div className="order-2 flex shrink-0 items-center justify-center gap-2 self-center md:order-1 md:pb-1">
             <Link
               to="/login"
-              className="inline-flex min-h-[28px] items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-[10.5px] font-extrabold text-black shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90"
+              className="inline-flex h-[30px] min-w-[92px] items-center justify-center whitespace-nowrap rounded-lg border border-white/20 px-3.5 text-[11px] font-extrabold text-black shadow-[0_0_12px_rgba(0,198,255,0.55)] transition hover:opacity-90"
               style={{ backgroundColor: '#00C6FF' }}
             >
               Sign In
@@ -124,16 +110,16 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
             <button
               type="button"
               onClick={() => onBookDemo && onBookDemo('Book a Personal Demo')}
-              className="inline-flex min-h-[28px] items-center gap-1 whitespace-nowrap rounded-md px-3 py-1 text-[10.5px] font-extrabold text-white shadow-[0_0_10px_rgba(0,114,255,0.55)] transition hover:opacity-90"
+              className="inline-flex h-[30px] min-w-[104px] items-center justify-center gap-1.5 whitespace-nowrap rounded-lg border border-[#00C6FF]/50 px-3.5 text-[11px] font-extrabold text-white shadow-[0_0_12px_rgba(0,114,255,0.6)] transition hover:opacity-90"
               style={{ backgroundColor: '#0072FF' }}
             >
-              <Calendar className="h-3 w-3 shrink-0 text-white" />
+              <Calendar className="h-3.5 w-3.5 shrink-0" style={{ color: '#00C6FF' }} />
               <span>Book Demo</span>
             </button>
           </div>
 
-          {/* Centre: Larger Business Logo on Black, Name, Slogan & Both Views Under Slogan at Bottom in the Middle */}
-          <div className="order-1 flex flex-1 flex-col items-center justify-between py-0.5 md:order-2">
+          {/* Centre: Larger Business Logo Brought Down to Fit Well with Name & Slogan */}
+          <div className="order-1 flex flex-1 flex-col items-center justify-end pb-0.5 md:order-2">
             <Link
               to="/"
               className="inline-flex flex-col items-center justify-center text-center"
@@ -141,48 +127,23 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
             >
               <BrandLogoLockup size="md" theme="dark" showSlogan={true} />
             </Link>
-
-            {/* Both Views Under Slogan at the Bottom in the Middle (Blue Button) */}
-            <div className="mt-1 flex items-center gap-1.5 md:mb-0.5">
-              {WORKSPACE_VIEWS.map(({ id, label, Icon }) => {
-                const selected = workspaceView === id;
-                return (
-                  <button
-                    key={id}
-                    type="button"
-                    onClick={() => switchWorkspaceView(id)}
-                    aria-pressed={selected}
-                    title={label}
-                    className="inline-flex min-h-[24px] items-center gap-1.5 rounded-full border px-3 py-0.5 text-[10px] font-extrabold shadow-[0_0_10px_rgba(0,114,255,0.55)] transition-all"
-                    style={{
-                      backgroundColor: '#0072FF',
-                      borderColor: '#00C6FF',
-                      color: '#FFFFFF',
-                    }}
-                  >
-                    <Icon className="h-3 w-3 shrink-0" style={{ color: '#00C6FF' }} />
-                    <span className="whitespace-nowrap">{label}</span>
-                  </button>
-                );
-              })}
-            </div>
           </div>
 
-          {/* Right at the Bottom: Start Free (Pink) + Minimize (Aqua) */}
-          <div className="order-3 flex shrink-0 items-center justify-center gap-1.5 self-center md:self-end md:pb-1">
+          {/* Right at the Bottom: Fitted Start Free (Pink) + Minimize (Aqua) */}
+          <div className="order-3 flex shrink-0 items-center justify-center gap-2 self-center md:pb-1">
             <Link
               to="/register"
-              className="inline-flex min-h-[28px] shrink-0 items-center gap-1 whitespace-nowrap rounded-md px-3 py-1 text-[10.5px] font-extrabold text-white shadow-[0_0_10px_rgba(255,46,154,0.5)] transition hover:opacity-90"
+              className="inline-flex h-[30px] min-w-[98px] shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-lg border border-white/25 px-3.5 text-[11px] font-extrabold text-white shadow-[0_0_12px_rgba(255,46,154,0.6)] transition hover:opacity-90"
               style={{ backgroundColor: '#FF2E9A' }}
             >
               <span>Start Free</span>
-              <ArrowRight className="h-3 w-3 shrink-0 text-white" />
+              <ArrowRight className="h-3.5 w-3.5 shrink-0 text-white" />
             </Link>
 
             <button
               type="button"
               onClick={toggleHeaderCollapse}
-              className="inline-flex min-h-[28px] items-center gap-1 whitespace-nowrap rounded-md px-2.5 py-1 text-[10px] font-extrabold text-black shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90"
+              className="inline-flex h-[30px] min-w-[92px] items-center justify-center gap-1 whitespace-nowrap rounded-lg border border-white/20 px-3 text-[11px] font-extrabold text-black shadow-[0_0_12px_rgba(0,198,255,0.55)] transition hover:opacity-90"
               style={{ backgroundColor: '#00C6FF' }}
             >
               <span>Minimize</span>
@@ -190,18 +151,18 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
 
             <button
               type="button"
-              className="xl:hidden inline-flex items-center justify-center rounded-md border border-[#00C6FF] bg-black p-1.5 text-[#00C6FF]"
+              className="xl:hidden inline-flex items-center justify-center rounded-lg border border-[#00C6FF] bg-black p-1.5 text-[#00C6FF]"
               aria-label={open ? 'Close menu' : 'Open menu'}
               aria-expanded={open}
               onClick={() => setOpen(!open)}
             >
-              {open ? <X className="h-3.5 w-3.5" /> : <Menu className="h-3.5 w-3.5" />}
+              {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </button>
           </div>
         </div>
       )}
 
-      {/* Continuous App-Design Gradient Divider Line aligned with remote white section bottom */}
+      {/* Continuous App-Design Gradient Divider Line aligned with remote */}
       <div
         className="h-[3px] w-full"
         style={{
@@ -209,6 +170,31 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
             'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
         }}
       />
+
+      {/* Both Views Button Placed Just Under the Line & Increased in Length Under ComplianceHR Infinity */}
+      <div className="flex w-full items-center justify-center bg-black py-1.5 px-3">
+        {WORKSPACE_VIEWS.map(({ id, label, Icon }) => {
+          const selected = workspaceView === id;
+          return (
+            <button
+              key={id}
+              type="button"
+              onClick={() => switchWorkspaceView(id)}
+              aria-pressed={selected}
+              title={label}
+              className="inline-flex h-[28px] w-72 sm:w-96 md:w-[440px] items-center justify-center gap-2 rounded-full border-2 px-6 text-[11px] font-extrabold tracking-wide shadow-[0_0_14px_rgba(0,198,255,0.55)] transition-all hover:opacity-95"
+              style={{
+                background: 'linear-gradient(90deg, #00C6FF 0%, #0072FF 50%, #FF2E9A 100%)',
+                borderColor: '#00C6FF',
+                color: '#FFFFFF',
+              }}
+            >
+              <Icon className="h-3.5 w-3.5 shrink-0" style={{ color: '#00C6FF' }} />
+              <span className="whitespace-nowrap uppercase">{label}</span>
+            </button>
+          );
+        })}
+      </div>
 
       {open && (
         <nav

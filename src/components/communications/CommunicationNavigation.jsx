@@ -73,7 +73,7 @@ export default function CommunicationNavigation({ tabs, onCompose }) {
           'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)',
       }}
     >
-      <div className="space-y-2.5 rounded-[16px] bg-white p-3">
+      <div className="space-y-2.5 rounded-[16px] bg-[#081018] p-3 text-white">
       {/* Interactive Sky-Drop Air-Mail Drone, 360° Radar & Live Roster Deck Above Mailbox */}
       <AboveMailboxCommandDeck
         mailAlertCount={totalAlerts}
