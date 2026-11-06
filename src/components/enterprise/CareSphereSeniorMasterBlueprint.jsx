@@ -21,9 +21,10 @@ import {
   WORLD_CLASS_TECH_STACK,
   DEFINITION_OF_DONE_23_CRITERIA,
 } from '@/lib/careSphereMasterBlueprintData';
+import CareSphereOmegaCommandSuite from '@/components/enterprise/CareSphereOmegaCommandSuite';
 
 export default function CareSphereSeniorMasterBlueprint() {
-  const [activeTab, setActiveTab] = useState('capabilities');
+  const [activeTab, setActiveTab] = useState('omega');
   const [selectedCapId, setSelectedCapId] = useState(1);
 
   const selectedCap =
@@ -53,6 +54,7 @@ export default function CareSphereSeniorMasterBlueprint() {
         {/* Section Tabs */}
         <div className="flex flex-wrap gap-1.5">
           {[
+            { id: 'omega', label: 'Omega v10.0 Governing Engine', icon: Sparkles },
             { id: 'capabilities', label: '12 Capabilities (6-Layer Matrix)', icon: Layers },
             { id: 'interaction', label: '6-Question Model & 10-Part Command', icon: HelpCircle },
             { id: 'services', label: '17 Platform Services & Tech Stack', icon: Server },
@@ -104,6 +106,9 @@ export default function CareSphereSeniorMasterBlueprint() {
           ))}
         </div>
       </div>
+
+      {/* TAB 0: CARESPHERE OMEGA ENTERPRISE BUILD PROMPT v10.0 */}
+      {activeTab === 'omega' && <CareSphereOmegaCommandSuite />}
 
       {/* TAB 1: 12 CAPABILITIES × 6 LAYERS */}
       {activeTab === 'capabilities' && (
