@@ -431,9 +431,9 @@ export default function ObsidianSidebarRemote({
             <BrandLogoLockup size="xs" showSlogan={false} className="w-full scale-90" />
           </Link>
 
-          {/* Remote Control Mode Switcher (5 Pillars | 13 Channels | All 46) — 50% Compact */}
+          {/* Remote Control Mode Switcher (5 Pillars | 13 Channels | All 46) */}
           <div
-            className="mt-0.5 grid w-full shrink-0 grid-cols-3 gap-0.5 rounded-lg p-[1px]"
+            className="mt-1 grid w-full shrink-0 grid-cols-3 gap-1 rounded-lg p-[1.5px]"
             style={{ background: BRAND_GRADIENT }}
           >
             <button
@@ -448,7 +448,7 @@ export default function ObsidianSidebarRemote({
                   ) || FOCUSED_5_PILLAR_NAV[0];
                 openMajorSectionInMainView(match, 'pillars5', false);
               }}
-              className={`min-h-[14px] rounded-[6px] py-0 text-[7px] font-extrabold transition-all ${
+              className={`min-h-[22px] rounded-[6px] py-0.5 text-[9px] font-extrabold transition-all ${
                 navMode === 'pillars5'
                   ? 'bg-[#0A2B6D] text-white shadow-[0_0_8px_rgba(0,198,255,0.6)]'
                   : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
@@ -469,7 +469,7 @@ export default function ObsidianSidebarRemote({
                   ) || PRIMARY_11_OS_NAV[0];
                 openMajorSectionInMainView(match, 'os11', false);
               }}
-              className={`min-h-[14px] rounded-[6px] py-0 text-[7px] font-extrabold transition-all ${
+              className={`min-h-[22px] rounded-[6px] py-0.5 text-[9px] font-extrabold transition-all ${
                 navMode === 'os11'
                   ? 'bg-[#0A2B6D] text-white shadow-[0_0_8px_rgba(0,198,255,0.6)]'
                   : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
@@ -489,7 +489,7 @@ export default function ObsidianSidebarRemote({
                   })
                 );
               }}
-              className={`min-h-[14px] rounded-[6px] py-0 text-[7px] font-extrabold transition-all ${
+              className={`min-h-[22px] rounded-[6px] py-0.5 text-[9px] font-extrabold transition-all ${
                 navMode === 'all'
                   ? 'bg-[#0A2B6D] text-white shadow-[0_0_8px_rgba(255,46,154,0.6)]'
                   : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
@@ -521,32 +521,32 @@ export default function ObsidianSidebarRemote({
 
                 return (
                   <div key={pillar.id}>
-                    {/* Uniform Modular Remote Button (32px): Opens Section in Main View */}
+                    {/* Section Header Button (42px Uniform): Opens Section in Main View */}
                     <button
                       type="button"
                       onClick={() => openMajorSectionInMainView(pillar)}
                       aria-pressed={selectedPillarId === pillar.id}
-                      className={`group block w-full text-left rounded-lg p-[1px] transition-all duration-150 focus-visible:outline-none ${
+                      className={`group block w-full text-left rounded-lg p-[1.5px] transition-all duration-150 focus-visible:outline-none ${
                         pillarActive
-                          ? 'shadow-[0_0_12px_rgba(0,198,255,0.85)]'
+                          ? 'shadow-[0_0_14px_rgba(0,198,255,0.85)]'
                           : 'shadow-[0_0_6px_rgba(90,0,214,0.3)] hover:shadow-[0_0_10px_rgba(0,198,255,0.6)]'
                       }`}
                       style={{ background: BRAND_GRADIENT }}
                     >
                       <div
-                        className="flex h-[32px] flex-col justify-between overflow-hidden rounded-[7px]"
+                        className="flex min-h-[42px] flex-col justify-between overflow-hidden rounded-[7px]"
                         style={{ background: DARK_NAVY_CHASSIS }}
                       >
-                        <div className="flex h-[16px] items-center justify-between gap-1 bg-white px-1.5">
-                          <div className="flex min-w-0 flex-1 items-center gap-1">
+                        <div className="flex min-h-[22px] items-center justify-between gap-1.5 bg-white px-2 py-0.5">
+                          <div className="flex min-w-0 flex-1 items-center gap-1.5">
                             <span
-                              className="flex h-3 w-3 shrink-0 items-center justify-center rounded bg-[#F5F0FF]"
+                              className="flex h-4 w-4 shrink-0 items-center justify-center rounded bg-[#F5F0FF]"
                               style={{ border: `1px solid ${symColor}` }}
                             >
-                              <Icon className="h-2 w-2 shrink-0" style={{ color: symColor }} />
+                              <Icon className="h-2.5 w-2.5 shrink-0" style={{ color: symColor }} />
                             </span>
                             <span
-                              className="min-w-0 truncate bg-clip-text text-[8px] font-extrabold leading-none tracking-tight text-transparent"
+                              className="min-w-0 truncate bg-clip-text text-[10px] font-extrabold leading-tight tracking-tight text-transparent"
                               style={{
                                 backgroundImage:
                                   'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
@@ -557,14 +557,14 @@ export default function ObsidianSidebarRemote({
                           </div>
 
                           <span
-                            className={`inline-flex shrink-0 items-center gap-0.5 rounded-full px-1 py-0 text-[5.5px] font-black uppercase tracking-wider ${
+                            className={`inline-flex shrink-0 items-center gap-1 rounded-full px-1.5 py-0.5 text-[7px] font-black uppercase tracking-wider ${
                               pillarActive
                                 ? 'bg-[#0A2B6D] text-[#00C6FF]'
                                 : 'bg-[#F5F0FF] text-[#5A00D6]'
                             }`}
                           >
                             <span
-                              className="h-1 w-1 rounded-full"
+                              className="h-1.5 w-1.5 rounded-full"
                               style={{
                                 backgroundColor: pillarActive ? '#00C6FF' : symColor,
                                 boxShadow: pillarActive
@@ -576,21 +576,21 @@ export default function ObsidianSidebarRemote({
                           </span>
                         </div>
 
-                        <div className="flex h-[15px] items-center justify-between gap-1 px-1.5">
+                        <div className="flex min-h-[19px] items-center justify-between gap-1.5 px-2 py-0.5">
                           <span
-                            className="truncate text-[7px] font-bold leading-none text-white"
+                            className="truncate text-[8.5px] font-bold leading-tight text-white"
                             style={{ color: '#FFFFFF' }}
                           >
                             {pillar.sub}
                           </span>
-                          <ArrowRight className="h-2 w-2 shrink-0 transition group-hover:translate-x-0.5" style={{ color: symColor }} />
+                          <ArrowRight className="h-2.5 w-2.5 shrink-0 transition group-hover:translate-x-0.5" style={{ color: symColor }} />
                         </div>
                       </div>
                     </button>
 
-                    {/* Modules Displayed Underneath When Selected — Identical 32px Modular Buttons */}
-                    {selectedPillarId === pillar.id && pillar.children?.length > 0 && (
-                      <div className="mt-1 space-y-1 pl-1.5 border-l border-[#00C6FF]/60">
+                    {/* All In-Between Module Buttons Permanently Open Underneath Each Section (Identical 42px Modular Buttons) */}
+                    {pillar.children?.length > 0 && (
+                      <div className="mt-1 space-y-1 pl-2 border-l-2 border-[#00C6FF]/60">
                         {pillar.children.map((child, cIdx) => {
                           const childColor = APP_DESIGN_COLOURS[cIdx % APP_DESIGN_COLOURS.length];
                           const childActive =
@@ -601,27 +601,27 @@ export default function ObsidianSidebarRemote({
                               key={`${pillar.id}-${child.path}-${cIdx}`}
                               to={child.path}
                               onClick={scrollWorkspaceToTop}
-                              className={`group block w-full text-left rounded-lg p-[1px] transition-all duration-150 focus-visible:outline-none ${
+                              className={`group block w-full text-left rounded-lg p-[1.5px] transition-all duration-150 focus-visible:outline-none ${
                                 childActive
-                                  ? 'shadow-[0_0_12px_rgba(0,198,255,0.85)]'
+                                  ? 'shadow-[0_0_14px_rgba(0,198,255,0.85)]'
                                   : 'shadow-[0_0_6px_rgba(90,0,214,0.3)] hover:shadow-[0_0_10px_rgba(0,198,255,0.6)]'
                               }`}
                               style={{ background: BRAND_GRADIENT }}
                             >
                               <div
-                                className="flex h-[32px] flex-col justify-between overflow-hidden rounded-[7px]"
+                                className="flex min-h-[42px] flex-col justify-between overflow-hidden rounded-[7px]"
                                 style={{ background: DARK_NAVY_CHASSIS }}
                               >
-                                <div className="flex h-[16px] items-center justify-between gap-1 bg-white px-1.5">
-                                  <div className="flex min-w-0 flex-1 items-center gap-1">
+                                <div className="flex min-h-[22px] items-center justify-between gap-1.5 bg-white px-2 py-0.5">
+                                  <div className="flex min-w-0 flex-1 items-center gap-1.5">
                                     <span
-                                      className="flex h-3 w-3 shrink-0 items-center justify-center rounded bg-[#F5F0FF]"
+                                      className="flex h-4 w-4 shrink-0 items-center justify-center rounded bg-[#F5F0FF]"
                                       style={{ border: `1px solid ${childColor}` }}
                                     >
-                                      <Icon className="h-2 w-2 shrink-0" style={{ color: childColor }} />
+                                      <Icon className="h-2.5 w-2.5 shrink-0" style={{ color: childColor }} />
                                     </span>
                                     <span
-                                      className="min-w-0 truncate bg-clip-text text-[8px] font-extrabold leading-none tracking-tight text-transparent"
+                                      className="min-w-0 truncate bg-clip-text text-[10px] font-extrabold leading-tight tracking-tight text-transparent"
                                       style={{
                                         backgroundImage:
                                           'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
@@ -631,14 +631,14 @@ export default function ObsidianSidebarRemote({
                                     </span>
                                   </div>
                                   <span
-                                    className={`inline-flex shrink-0 items-center gap-0.5 rounded-full px-1 py-0 text-[5.5px] font-black uppercase tracking-wider ${
+                                    className={`inline-flex shrink-0 items-center gap-1 rounded-full px-1.5 py-0.5 text-[7px] font-black uppercase tracking-wider ${
                                       childActive
                                         ? 'bg-[#0A2B6D] text-[#00C6FF]'
                                         : 'bg-[#F5F0FF] text-[#5A00D6]'
                                     }`}
                                   >
                                     <span
-                                      className="h-1 w-1 rounded-full"
+                                      className="h-1.5 w-1.5 rounded-full"
                                       style={{
                                         backgroundColor: childActive ? '#00C6FF' : childColor,
                                         boxShadow: childActive
@@ -649,14 +649,14 @@ export default function ObsidianSidebarRemote({
                                     {childActive ? 'ACTIVE' : 'OPEN'}
                                   </span>
                                 </div>
-                                <div className="flex h-[15px] items-center justify-between gap-1 px-1.5">
+                                <div className="flex min-h-[19px] items-center justify-between gap-1.5 px-2 py-0.5">
                                   <span
-                                    className="truncate text-[7px] font-bold leading-none text-white"
+                                    className="truncate text-[8.5px] font-bold leading-tight text-white"
                                     style={{ color: '#FFFFFF' }}
                                   >
                                     {child.sub || `Open ${child.label}`}
                                   </span>
-                                  <ArrowRight className="h-2 w-2 shrink-0 transition group-hover:translate-x-0.5" style={{ color: childColor }} />
+                                  <ArrowRight className="h-2.5 w-2.5 shrink-0 transition group-hover:translate-x-0.5" style={{ color: childColor }} />
                                 </div>
                               </div>
                             </Link>
@@ -680,27 +680,27 @@ export default function ObsidianSidebarRemote({
                     to={item.path}
                     onClick={scrollWorkspaceToTop}
                     title={`${label} — ${subtitle}`}
-                    className={`group block w-full text-left rounded-lg p-[1px] transition-all duration-150 focus-visible:outline-none ${
+                    className={`group block w-full text-left rounded-lg p-[1.5px] transition-all duration-150 focus-visible:outline-none ${
                       active
-                        ? 'shadow-[0_0_12px_rgba(0,198,255,0.85)]'
+                        ? 'shadow-[0_0_14px_rgba(0,198,255,0.85)]'
                         : 'shadow-[0_0_6px_rgba(90,0,214,0.3)] hover:shadow-[0_0_10px_rgba(0,198,255,0.6)]'
                     }`}
                     style={{ background: BRAND_GRADIENT }}
                   >
                     <div
-                      className="flex h-[32px] flex-col justify-between overflow-hidden rounded-[7px]"
+                      className="flex min-h-[42px] flex-col justify-between overflow-hidden rounded-[7px]"
                       style={{ background: DARK_NAVY_CHASSIS }}
                     >
-                      <div className="flex h-[16px] items-center justify-between gap-1 bg-white px-1.5">
-                        <div className="flex min-w-0 flex-1 items-center gap-1">
+                      <div className="flex min-h-[22px] items-center justify-between gap-1.5 bg-white px-2 py-0.5">
+                        <div className="flex min-w-0 flex-1 items-center gap-1.5">
                           <span
-                            className="flex h-3 w-3 shrink-0 items-center justify-center rounded bg-[#F5F0FF]"
+                            className="flex h-4 w-4 shrink-0 items-center justify-center rounded bg-[#F5F0FF]"
                             style={{ border: `1px solid ${symColor}` }}
                           >
-                            <Icon className="h-2 w-2 shrink-0" style={{ color: symColor }} />
+                            <Icon className="h-2.5 w-2.5 shrink-0" style={{ color: symColor }} />
                           </span>
                           <span
-                            className="min-w-0 truncate bg-clip-text text-[8px] font-extrabold leading-none tracking-tight text-transparent"
+                            className="min-w-0 truncate bg-clip-text text-[10px] font-extrabold leading-tight tracking-tight text-transparent"
                             style={{
                               backgroundImage:
                                 'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
@@ -710,12 +710,12 @@ export default function ObsidianSidebarRemote({
                           </span>
                         </div>
                         <span
-                          className={`inline-flex shrink-0 items-center gap-0.5 rounded-full px-1 py-0 text-[5.5px] font-black uppercase tracking-wider ${
+                          className={`inline-flex shrink-0 items-center gap-1 rounded-full px-1.5 py-0.5 text-[7px] font-black uppercase tracking-wider ${
                             active ? 'bg-[#0A2B6D] text-[#00C6FF]' : 'bg-[#F5F0FF] text-[#5A00D6]'
                           }`}
                         >
                           <span
-                            className="h-1 w-1 rounded-full"
+                            className="h-1.5 w-1.5 rounded-full"
                             style={{
                               backgroundColor: active ? '#00C6FF' : symColor,
                               boxShadow: active ? '0 0 5px 1px #00C6FF' : `0 0 4px 1px ${symColor}`,
@@ -725,14 +725,14 @@ export default function ObsidianSidebarRemote({
                         </span>
                       </div>
 
-                      <div className="flex h-[15px] items-center justify-between gap-1 px-1.5">
+                      <div className="flex min-h-[19px] items-center justify-between gap-1.5 px-2 py-0.5">
                         <span
-                          className="min-w-0 flex-1 truncate text-[7px] font-bold leading-none text-white"
+                          className="min-w-0 flex-1 truncate text-[8.5px] font-bold leading-tight text-white"
                           style={{ color: '#FFFFFF' }}
                         >
                           {subtitle}
                         </span>
-                        <ArrowRight className="h-2 w-2 shrink-0 transition group-hover:translate-x-0.5" style={{ color: symColor }} />
+                        <ArrowRight className="h-2.5 w-2.5 shrink-0 transition group-hover:translate-x-0.5" style={{ color: symColor }} />
                       </div>
                     </div>
                   </Link>

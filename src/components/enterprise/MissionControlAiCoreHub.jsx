@@ -326,9 +326,9 @@ export default function MissionControlAiCoreHub({
         </div>
       )}
 
-      {/* ==================== UNIFORM 32PX NAVIGATION MODULAR BUTTONS MATRIX ==================== */}
+      {/* ==================== UNIFORM 42PX NAVIGATION MODULAR BUTTONS MATRIX ==================== */}
       <div className="relative z-10 mx-auto w-full">
-        <div className="grid grid-cols-2 gap-1 sm:grid-cols-3 lg:grid-cols-9 items-stretch">
+        <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 lg:grid-cols-5 items-stretch">
           {ORBITAL_PODS.map((pod, index) => {
             const Icon = pod.icon;
             const isSelected = selectedPod === pod.id;
@@ -351,27 +351,27 @@ export default function MissionControlAiCoreHub({
                         navigate('/assistant');
                       }
                     }}
-                    className={`group block w-full text-left rounded-lg p-[1px] transition-all duration-150 focus-visible:outline-none ${
+                    className={`group block w-full text-left rounded-lg p-[1.5px] transition-all duration-150 focus-visible:outline-none ${
                       selectedPod === 'ai-core'
-                        ? 'shadow-[0_0_12px_rgba(0,198,255,0.85)]'
+                        ? 'shadow-[0_0_14px_rgba(0,198,255,0.85)]'
                         : 'shadow-[0_0_6px_rgba(90,0,214,0.3)] hover:shadow-[0_0_10px_rgba(0,198,255,0.6)]'
                     }`}
                     style={{ background: POD_RING_GRADIENT }}
                   >
                     <div
-                      className="flex h-[32px] flex-col justify-between overflow-hidden rounded-[7px]"
+                      className="flex min-h-[42px] flex-col justify-between overflow-hidden rounded-[7px]"
                       style={{ background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)' }}
                     >
-                      <div className="flex h-[16px] items-center justify-between gap-1 bg-white px-1.5">
-                        <div className="flex min-w-0 flex-1 items-center gap-1">
+                      <div className="flex min-h-[22px] items-center justify-between gap-1.5 bg-white px-2 py-0.5">
+                        <div className="flex min-w-0 flex-1 items-center gap-1.5">
                           <span
-                            className="flex h-3 w-3 shrink-0 items-center justify-center rounded bg-[#F5F0FF]"
+                            className="flex h-4 w-4 shrink-0 items-center justify-center rounded bg-[#F5F0FF]"
                             style={{ border: '1px solid #0072FF' }}
                           >
-                            <Cpu className="h-2 w-2 shrink-0" style={{ color: '#0072FF' }} />
+                            <Cpu className="h-2.5 w-2.5 shrink-0" style={{ color: '#0072FF' }} />
                           </span>
                           <span
-                            className="min-w-0 truncate bg-clip-text text-[8px] font-extrabold leading-none tracking-tight text-transparent"
+                            className="min-w-0 truncate bg-clip-text text-[10px] font-extrabold leading-tight tracking-tight text-transparent"
                             style={{
                               backgroundImage:
                                 'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
@@ -380,22 +380,22 @@ export default function MissionControlAiCoreHub({
                             <span style={{ color: '#0072FF' }}>◉</span> AI Core
                           </span>
                         </div>
-                        <span className="inline-flex shrink-0 items-center gap-0.5 rounded-full bg-[#0A2B6D] px-1 py-0 text-[5.5px] font-black uppercase tracking-wider text-[#00C6FF]">
+                        <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-[#0A2B6D] px-1.5 py-0.5 text-[7px] font-black uppercase tracking-wider text-[#00C6FF]">
                           <span
-                            className="h-1 w-1 rounded-full"
+                            className="h-1.5 w-1.5 rounded-full"
                             style={{ backgroundColor: '#00C6FF', boxShadow: '0 0 5px 1px #00C6FF' }}
                           />
                           LIVE
                         </span>
                       </div>
-                      <div className="flex h-[15px] items-center justify-between gap-1 px-1.5">
+                      <div className="flex min-h-[19px] items-center justify-between gap-1.5 px-2 py-0.5">
                         <span
-                          className="truncate text-[7px] font-bold leading-none text-white"
+                          className="truncate text-[8.5px] font-bold leading-tight text-white"
                           style={{ color: '#FFFFFF' }}
                         >
                           {liveMetrics.aiRecommendations} insights
                         </span>
-                        <ArrowUpRight className="h-2 w-2 shrink-0 text-[#00C6FF]" />
+                        <ArrowUpRight className="h-2.5 w-2.5 shrink-0 text-[#00C6FF]" />
                       </div>
                     </div>
                   </button>
@@ -404,27 +404,27 @@ export default function MissionControlAiCoreHub({
                 <button
                   type="button"
                   onClick={() => handlePodClick(pod)}
-                  className={`group block w-full text-left rounded-lg p-[1px] transition-all duration-150 focus-visible:outline-none ${
+                  className={`group block w-full text-left rounded-lg p-[1.5px] transition-all duration-150 focus-visible:outline-none ${
                     isSelected
-                      ? 'shadow-[0_0_12px_rgba(0,198,255,0.85)]'
+                      ? 'shadow-[0_0_14px_rgba(0,198,255,0.85)]'
                       : 'shadow-[0_0_6px_rgba(90,0,214,0.3)] hover:shadow-[0_0_10px_rgba(0,198,255,0.6)]'
                   }`}
                   style={{ background: POD_RING_GRADIENT }}
                 >
                   <div
-                    className="flex h-[32px] flex-col justify-between overflow-hidden rounded-[7px]"
+                    className="flex min-h-[42px] flex-col justify-between overflow-hidden rounded-[7px]"
                     style={{ background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)' }}
                   >
-                    <div className="flex h-[16px] items-center justify-between gap-1 bg-white px-1.5">
-                      <div className="flex min-w-0 flex-1 items-center gap-1">
+                    <div className="flex min-h-[22px] items-center justify-between gap-1.5 bg-white px-2 py-0.5">
+                      <div className="flex min-w-0 flex-1 items-center gap-1.5">
                         <span
-                          className="flex h-3 w-3 shrink-0 items-center justify-center rounded bg-[#F5F0FF]"
+                          className="flex h-4 w-4 shrink-0 items-center justify-center rounded bg-[#F5F0FF]"
                           style={{ border: `1px solid ${pod.ringColor}` }}
                         >
-                          <Icon className="h-2 w-2 shrink-0" style={{ color: pod.ringColor }} />
+                          <Icon className="h-2.5 w-2.5 shrink-0" style={{ color: pod.ringColor }} />
                         </span>
                         <span
-                          className="min-w-0 truncate bg-clip-text text-[8px] font-extrabold leading-none tracking-tight text-transparent"
+                          className="min-w-0 truncate bg-clip-text text-[10px] font-extrabold leading-tight tracking-tight text-transparent"
                           style={{
                             backgroundImage:
                               'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
@@ -434,12 +434,12 @@ export default function MissionControlAiCoreHub({
                         </span>
                       </div>
                       <span
-                        className={`inline-flex shrink-0 items-center gap-0.5 rounded-full px-1 py-0 text-[5.5px] font-black uppercase tracking-wider ${
+                        className={`inline-flex shrink-0 items-center gap-1 rounded-full px-1.5 py-0.5 text-[7px] font-black uppercase tracking-wider ${
                           isSelected ? 'bg-[#0A2B6D] text-[#00C6FF]' : 'bg-[#F5F0FF] text-[#5A00D6]'
                         }`}
                       >
                         <span
-                          className="h-1 w-1 rounded-full"
+                          className="h-1.5 w-1.5 rounded-full"
                           style={{
                             backgroundColor: isSelected ? '#00C6FF' : pod.ringColor,
                             boxShadow: isSelected
@@ -451,14 +451,14 @@ export default function MissionControlAiCoreHub({
                       </span>
                     </div>
 
-                    <div className="flex h-[15px] items-center justify-between gap-1 px-1.5">
+                    <div className="flex min-h-[19px] items-center justify-between gap-1.5 px-2 py-0.5">
                       <span
-                        className="truncate text-[7px] font-bold leading-none text-white"
+                        className="truncate text-[8.5px] font-bold leading-tight text-white"
                         style={{ color: '#FFFFFF' }}
                       >
                         {pod.metric}
                       </span>
-                      <ArrowUpRight className="h-2 w-2 shrink-0" style={{ color: pod.ringColor }} />
+                      <ArrowUpRight className="h-2.5 w-2.5 shrink-0" style={{ color: pod.ringColor }} />
                     </div>
                   </div>
                 </button>
@@ -468,10 +468,10 @@ export default function MissionControlAiCoreHub({
         </div>
       </div>
 
-      {/* ==================== BOTTOM SUITE SWITCHER: IDENTICAL 32PX MODULAR BUTTONS ==================== */}
+      {/* ==================== BOTTOM SUITE SWITCHER: IDENTICAL 42PX MODULAR BUTTONS ==================== */}
       {onSelectSuite && (
-        <div className="relative z-10 mt-1.5 border-t border-white/15 pt-1.5">
-          <div className="grid grid-cols-2 gap-1 sm:grid-cols-4 xl:grid-cols-8 items-stretch">
+        <div className="relative z-10 mt-2 border-t border-white/15 pt-2">
+          <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-4 xl:grid-cols-4 items-stretch">
             {SUITE_PODS.map((suite) => {
               const active = activeSuite === suite.id;
               return (
@@ -486,27 +486,27 @@ export default function MissionControlAiCoreHub({
                     }, 60);
                   }}
                   aria-pressed={active}
-                  className={`group block w-full text-left rounded-lg p-[1px] transition-all duration-150 focus-visible:outline-none ${
+                  className={`group block w-full text-left rounded-lg p-[1.5px] transition-all duration-150 focus-visible:outline-none ${
                     active
-                      ? 'shadow-[0_0_12px_rgba(0,198,255,0.85)]'
+                      ? 'shadow-[0_0_14px_rgba(0,198,255,0.85)]'
                       : 'shadow-[0_0_6px_rgba(90,0,214,0.3)] hover:shadow-[0_0_10px_rgba(0,198,255,0.6)]'
                   }`}
                   style={{ background: POD_RING_GRADIENT }}
                 >
                   <div
-                    className="flex h-[32px] flex-col justify-between overflow-hidden rounded-[7px]"
+                    className="flex min-h-[42px] flex-col justify-between overflow-hidden rounded-[7px]"
                     style={{ background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)' }}
                   >
-                    <div className="flex h-[16px] items-center justify-between gap-1 bg-white px-1.5">
-                      <div className="flex min-w-0 flex-1 items-center gap-1">
+                    <div className="flex min-h-[22px] items-center justify-between gap-1.5 bg-white px-2 py-0.5">
+                      <div className="flex min-w-0 flex-1 items-center gap-1.5">
                         <span
-                          className="flex h-3 w-3 shrink-0 items-center justify-center rounded bg-[#F5F0FF]"
+                          className="flex h-4 w-4 shrink-0 items-center justify-center rounded bg-[#F5F0FF]"
                           style={{ border: `1px solid ${suite.color}` }}
                         >
-                          <Cpu className="h-2 w-2 shrink-0" style={{ color: suite.color }} />
+                          <Cpu className="h-2.5 w-2.5 shrink-0" style={{ color: suite.color }} />
                         </span>
                         <span
-                          className="min-w-0 truncate bg-clip-text text-[8px] font-extrabold leading-none tracking-tight text-transparent"
+                          className="min-w-0 truncate bg-clip-text text-[10px] font-extrabold leading-tight tracking-tight text-transparent"
                           style={{
                             backgroundImage:
                               'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
@@ -516,12 +516,12 @@ export default function MissionControlAiCoreHub({
                         </span>
                       </div>
                       <span
-                        className={`inline-flex shrink-0 items-center gap-0.5 rounded-full px-1 py-0 text-[5.5px] font-black uppercase tracking-wider ${
+                        className={`inline-flex shrink-0 items-center gap-1 rounded-full px-1.5 py-0.5 text-[7px] font-black uppercase tracking-wider ${
                           active ? 'bg-[#0A2B6D] text-[#00C6FF]' : 'bg-[#F5F0FF] text-[#5A00D6]'
                         }`}
                       >
                         <span
-                          className="h-1 w-1 rounded-full"
+                          className="h-1.5 w-1.5 rounded-full"
                           style={{
                             backgroundColor: active ? '#00C6FF' : suite.color,
                             boxShadow: active ? '0 0 5px 1px #00C6FF' : `0 0 4px 1px ${suite.color}`,
@@ -531,14 +531,14 @@ export default function MissionControlAiCoreHub({
                       </span>
                     </div>
 
-                    <div className="flex h-[15px] items-center justify-between gap-1 px-1.5">
+                    <div className="flex min-h-[19px] items-center justify-between gap-1.5 px-2 py-0.5">
                       <span
-                        className="truncate text-[7px] font-bold leading-none text-white"
+                        className="truncate text-[8.5px] font-bold leading-tight text-white"
                         style={{ color: '#FFFFFF' }}
                       >
                         {suite.metric}
                       </span>
-                      <ArrowUpRight className="h-2 w-2 shrink-0" style={{ color: suite.color }} />
+                      <ArrowUpRight className="h-2.5 w-2.5 shrink-0" style={{ color: suite.color }} />
                     </div>
                   </div>
                 </button>
