@@ -106,10 +106,10 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <ModuleShell
           embedded={embedded || participantOnly}
-          title="Communication Centre"
+          title="Communication"
           subtitle={employeeSelf
             ? 'Your alerts, shift notes, employee log and email. Results depend on available profile links and stored records; verify each item’s details and status.'
-            : 'Manage alerts, emails, bulk messages, diary notes, shift notes and employee communications. Record storage, delivery status and profile links depend on the tool and selected details; verify each item in its source record.'}
+            : 'Merged Communication & Dashboard: manage alerts, emails, bulk messages, diary notes, shift notes, employee communications and live executive command.'}
           icon={MessagesSquare}
           moduleKey="communications"
           tabs={!(embedded || participantOnly) && (

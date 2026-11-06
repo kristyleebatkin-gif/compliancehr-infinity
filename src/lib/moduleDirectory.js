@@ -10,13 +10,12 @@ import {
 // Single source of truth for every module in the app: the sidebar, bottom nav and
 // the dashboard module hub all read this list so nothing can go missing again.
 export const MODULE_DIRECTORY = [
-  // 1. DASHBOARD & EXECUTIVE COMMAND
-  { key: 'dashboard', label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard, group: '1. Dashboard & Executive Command', blurb: 'Live overview of compliance, safety and work across the organisation.' },
-  { key: 'operations-centre', label: 'Operations Centre', path: '/operations-centre', icon: Sparkles, group: '1. Dashboard & Executive Command', blurb: 'Executive intelligence, executive reports, 1-click operations, Core Engine and 2026 printable templates.' },
-  { key: 'analytics', label: 'Business Analytics', path: '/analytics', icon: BarChart3, group: '1. Dashboard & Executive Command', blurb: 'Business-wide analytics, KPIs, trends, executive reports and growth dashboards.' },
-  { key: 'suggestions-hub', label: 'Suggestions Hub', path: '/suggestions', icon: Sparkles, group: '1. Dashboard & Executive Command', blurb: 'AI review of every module: what to visualise, automate and refine.' },
-  { key: 'daily-briefing', label: 'Daily Briefing', path: '/briefing', icon: Newspaper, group: '1. Dashboard & Executive Command', blurb: 'Daily organisational briefing, operational priorities and executive updates.' },
-  { key: 'assistant', label: 'AI Assistant', path: '/assistant', icon: Bot, group: '1. Dashboard & Executive Command', blurb: 'Talk to the compliance, rostering, receipts and personal AI assistants.' },
+  // 1. COMMUNICATION & EXECUTIVE COMMAND
+  { key: 'dashboard', label: 'Communication', path: '/dashboard', icon: Megaphone, group: '1. Communication & Executive Command', blurb: 'Merged Communication & Dashboard: inbox, diary, shift notes, broadcasts, video calls, AI compose and live executive overview.' },
+  { key: 'operations-centre', label: 'Operations Centre', path: '/operations-centre', icon: Sparkles, group: '1. Communication & Executive Command', blurb: 'Executive intelligence, executive reports, 1-click operations, Core Engine and 2026 printable templates.' },
+  { key: 'suggestions-hub', label: 'Suggestions Hub', path: '/suggestions', icon: Sparkles, group: '1. Communication & Executive Command', blurb: 'AI review of every module: what to visualise, automate and refine.' },
+  { key: 'daily-briefing', label: 'Daily Briefing', path: '/briefing', icon: Newspaper, group: '1. Communication & Executive Command', blurb: 'Daily organisational briefing, operational priorities and executive updates.' },
+  { key: 'assistant', label: 'AI Assistant', path: '/assistant', icon: Bot, group: '1. Communication & Executive Command', blurb: 'Talk to the compliance, rostering, receipts and personal AI assistants.' },
 
   // 2. PEOPLE, INTAKE & PROFILES
   { key: 'my-profile', label: 'My Profile', path: '/my-profile', icon: UserCircle, group: '2. People, Intake & Profiles', blurb: 'Your profile, work, documents, payroll and name tag in one place.' },
@@ -28,15 +27,14 @@ export const MODULE_DIRECTORY = [
   { key: 'volunteering-placements', label: 'Volunteering & Placements', path: '/volunteers', icon: Handshake, group: '2. People, Intake & Profiles', blurb: 'Volunteer and student onboarding, screening and placement records.' },
   { key: 'users', label: 'Users & Permissions', path: '/users', icon: UsersRound, group: '2. People, Intake & Profiles', blurb: 'User accounts, permission matrix, archived users and activity log.' },
 
-  // 3. COMMUNICATIONS & WORKFORCE
-  { key: 'communications', label: 'Communication Centre', path: '/communications', icon: Megaphone, group: '3. Communications & Workforce', blurb: 'Diary, inbox, professional email, broadcasts, video calls and AI compose.' },
-  { key: 'rostering', label: 'Rostering', path: '/rostering', icon: CalendarClock, group: '3. Communications & Workforce', blurb: 'Shift calendar, patterns, availability, approvals, payroll and ICS feeds.' },
-  { key: 'goals', label: 'Goals', path: '/goals', icon: Target, group: '3. Communications & Workforce', blurb: 'Goals, progress notes grouped by goal, insights and AI coaching.' },
-  { key: 'tasks', label: 'Tasks', path: '/tasks', icon: ClipboardList, group: '3. Communications & Workforce', blurb: 'Tasks, board view, reminders, leaderboards and completion records.' },
-  { key: 'meetings', label: 'Meetings', path: '/meetings', icon: CalendarDays, group: '3. Communications & Workforce', blurb: 'Meetings, agenda assistant, templates, minutes and overdue tracking.' },
-  { key: 'programs', label: 'Programs & Events', path: '/programs', icon: Handshake, group: '3. Communications & Workforce', blurb: 'Programs, events, ad builder, invites and survey collection.' },
-  { key: 'frontline-hub', label: 'Frontline Rapid Hub', path: '/frontline-hub', icon: ClipboardCheck, group: '3. Communications & Workforce', blurb: 'Mobile-first My Day dashboard, Finish My Shift 7-gate check, Voice-to-Text and smart checklists.' },
-  { key: 'workforce-presence', label: 'Workforce Presence Centre', path: '/workforce-presence', icon: Siren, group: '3. Communications & Workforce', blurb: 'Unified site attendance, visitor & contractor registers, live occupancy and emergency roll call.' },
+  // 3. SERVICE DELIVERY & WORKFORCE
+  { key: 'rostering', label: 'Rostering', path: '/rostering', icon: CalendarClock, group: '3. Service Delivery & Workforce', blurb: 'Shift calendar, patterns, availability, approvals, payroll and ICS feeds.' },
+  { key: 'goals', label: 'Goals', path: '/goals', icon: Target, group: '3. Service Delivery & Workforce', blurb: 'Goals, progress notes grouped by goal, insights and AI coaching.' },
+  { key: 'tasks', label: 'Tasks', path: '/tasks', icon: ClipboardList, group: '3. Service Delivery & Workforce', blurb: 'Tasks, board view, reminders, leaderboards and completion records.' },
+  { key: 'meetings', label: 'Meetings', path: '/meetings', icon: CalendarDays, group: '3. Service Delivery & Workforce', blurb: 'Meetings, agenda assistant, templates, minutes and overdue tracking.' },
+  { key: 'programs', label: 'Programs & Events', path: '/programs', icon: Handshake, group: '3. Service Delivery & Workforce', blurb: 'Programs, events, ad builder, invites and survey collection.' },
+  { key: 'frontline-hub', label: 'Frontline Rapid Hub', path: '/frontline-hub', icon: ClipboardCheck, group: '3. Service Delivery & Workforce', blurb: 'Mobile-first My Day dashboard, Finish My Shift 7-gate check, Voice-to-Text and smart checklists.' },
+  { key: 'workforce-presence', label: 'Workforce Presence Centre', path: '/workforce-presence', icon: Siren, group: '3. Service Delivery & Workforce', blurb: 'Unified site attendance, visitor & contractor registers, live occupancy and emergency roll call.' },
 
   // 4. INCIDENTS, RISK & SAFETY
   { key: 'incidents', label: 'Incident Clinic', path: '/incidents', icon: AlertTriangle, group: '4. Incidents, Risk & Safety', blurb: 'Incident reporting, investigations, health responses and kanban tracking.' },
@@ -46,7 +44,7 @@ export const MODULE_DIRECTORY = [
   { key: 'equipment-manuals', label: 'Equipment Manuals & MSDS', path: '/equipment-manuals', icon: Wrench, group: '4. Incidents, Risk & Safety', blurb: 'Equipment manuals, operating instructions and chemical MSDS library.' },
 
   // 5. COMPLIANCE, QUALITY & EVIDENCE
-  { key: 'compliance', label: 'Compliance Centre', path: '/compliance', icon: ShieldCheck, group: '5. Compliance, Quality & Evidence', blurb: 'Checklists, audit management, file matrices, expiry scans and full business audit exports.' },
+  { key: 'compliance', label: 'Compliance & Evidence', path: '/compliance', icon: ShieldCheck, group: '5. Compliance, Quality & Evidence', blurb: 'Merged Compliance Centre, Business Analytics, checklists, audit management, file matrices, KPIs and board exports.' },
   { key: 'auditor-portal', label: 'Auditor Portal', path: '/auditor-portal', icon: ClipboardCheck, group: '5. Compliance, Quality & Evidence', blurb: 'Live read-only collaboration view for auditors: evidence, audits, corrective actions and observations.' },
   { key: 'documents', label: 'Document Vault', path: '/documents', icon: FolderOpen, group: '5. Compliance, Quality & Evidence', blurb: 'Document register, central routing, uploads and vault exports.' },
   { key: 'company-safe', label: 'Company Safe', path: '/company-safe', icon: Vault, group: '5. Compliance, Quality & Evidence', blurb: 'Submitted forms, business details, branding and completed documents.' },
@@ -95,16 +93,16 @@ export const MODULE_DIRECTORY = [
 // Permanent 13-Group Architectural Map: every existing module key appears in exactly one permanent home.
 export const NAV_GROUPS = [
   {
-    label: '1. Dashboard & Executive Command',
-    keys: ['dashboard', 'operations-centre', 'analytics', 'suggestions-hub', 'daily-briefing', 'assistant'],
+    label: '1. Communication & Executive Command',
+    keys: ['dashboard', 'operations-centre', 'suggestions-hub', 'daily-briefing', 'assistant'],
   },
   {
     label: '2. People, Intake & Profiles',
     keys: ['my-profile', 'intake', 'our-staff', 'our-participants', 'visual-boards', 'key-contacts', 'volunteering-placements', 'users'],
   },
   {
-    label: '3. Communications & Workforce',
-    keys: ['communications', 'rostering', 'goals', 'tasks', 'meetings', 'programs', 'frontline-hub', 'workforce-presence'],
+    label: '3. Service Delivery & Workforce',
+    keys: ['rostering', 'goals', 'tasks', 'meetings', 'programs', 'frontline-hub', 'workforce-presence'],
   },
   {
     label: '4. Incidents, Risk & Safety',

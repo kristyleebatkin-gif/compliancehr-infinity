@@ -28,11 +28,11 @@ import EnterpriseFloatingWorkspaceDock from '@/components/EnterpriseFloatingWork
 import ProviderOnboardingDrawer from '@/components/enterprise/ProviderOnboardingDrawer';
 
 const BOTTOM_NAV = [
-  { label: 'Home', path: '/dashboard', key: 'dashboard', icon: LayoutDashboard },
+  { label: 'Communication', path: '/dashboard', key: 'dashboard', icon: LayoutDashboard },
   { label: 'Participants', path: '/our-participants', key: 'our-participants', icon: Heart },
   { label: 'Employees', path: '/our-employees', key: 'our-staff', icon: Users },
   { label: 'Training', path: '/training', key: 'training', icon: GraduationCap },
-  { label: 'Compliance', path: '/compliance', key: 'compliance', icon: ShieldCheck },
+  { label: 'Compliance & Evidence', path: '/compliance', key: 'compliance', icon: ShieldCheck },
 ];
 
 const WORKSPACE_VIEWS = [
@@ -278,17 +278,54 @@ export default function AppLayout() {
                 </Link>
               </div>
 
-              {/* Centre: Business Logo (+1cm x +1cm), Name & Slogan Fitted Top-to-Bottom */}
-              <div className="order-1 flex flex-1 items-center justify-center py-0.5 md:order-2">
+              {/* Centre: Business Logo (+1cm x +1cm), Name, Slogan & Both Views Under Slogan at Bottom in the Middle */}
+              <div className="order-1 flex flex-1 flex-col items-center justify-between py-0.5 md:order-2">
                 <Link
                   to="/dashboard"
                   className="inline-flex flex-col items-center justify-center text-center transition"
                 >
                   <BrandLogoLockup size="md" theme="light" showSlogan={true} />
                 </Link>
+
+                {/* Both Views Under Slogan at the Bottom in the Middle */}
+                <div
+                  className="mt-1 rounded-full p-[1.5px] shadow-2xs md:mb-0.5"
+                  style={{
+                    background:
+                      'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+                  }}
+                >
+                  <div className="flex items-center gap-0.5 rounded-full bg-white p-0.5">
+                    {WORKSPACE_VIEWS.map(({ id, label, Icon }) => {
+                      const selected = workspaceView === id;
+                      return (
+                        <button
+                          key={id}
+                          type="button"
+                          onClick={() => switchWorkspaceView(id)}
+                          aria-pressed={selected}
+                          title={label}
+                          className={`inline-flex min-h-[22px] items-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold transition-all ${
+                            selected
+                              ? 'bg-[#F5F0FF] text-[#5A00D6] border border-[#5A00D6]'
+                              : 'text-[#0A2B6D] hover:text-[#0072FF]'
+                          }`}
+                        >
+                          <Icon
+                            className="h-3 w-3 shrink-0"
+                            style={{ color: selected ? '#FF2E9A' : '#0072FF' }}
+                          />
+                          <span className="whitespace-nowrap" style={{ color: '#0A2B6D' }}>
+                            {label}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
 
-              {/* Right at the Bottom: Start Free (Duplicate Demo Removed) */}
+              {/* Right at the Bottom: Start Free + Mobile Menu */}
               <div className="order-3 flex shrink-0 items-center justify-center gap-1.5 self-center md:self-end md:pb-1">
                 <Link
                   to="/register"
@@ -299,6 +336,13 @@ export default function AppLayout() {
                 >
                   Start Free
                 </Link>
+                <button
+                  onClick={() => setMobileOpen(true)}
+                  aria-label="Open menu"
+                  className="shrink-0 rounded-full border-2 border-[#0072FF] bg-white p-1 text-[#0A2B6D] shadow-2xs transition hover:border-[#FF2E9A] md:hidden"
+                >
+                  <Menu className="h-3 w-3" style={{ color: '#0072FF' }} />
+                </button>
               </div>
             </div>
           </div>
@@ -311,76 +355,6 @@ export default function AppLayout() {
                 'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
             }}
           />
-
-          {/* Dark Blue Dashboard Bar: ONLY 1. Both Views & Search Workspace */}
-          <div
-            className="px-3 py-1.5 sm:px-6 lg:px-8"
-            style={{
-              background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #131B4D 100%)',
-            }}
-          >
-            <div className="mx-auto flex max-w-[1440px] w-full flex-wrap items-center justify-between gap-2">
-              <button
-                onClick={() => setMobileOpen(true)}
-                aria-label="Open menu"
-                className="shrink-0 rounded-full border-2 border-[#0072FF] bg-white p-1 text-[#0A2B6D] shadow-2xs transition hover:border-[#FF2E9A] md:hidden"
-              >
-                <Menu className="h-3 w-3" style={{ color: '#0072FF' }} />
-              </button>
-
-              {/* Search Workspace */}
-              <div className="flex flex-1 items-center min-w-[180px] max-w-md">
-                <div
-                  className="w-full rounded-full p-[1.5px] shadow-2xs"
-                  style={{
-                    background:
-                      'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
-                  }}
-                >
-                  <div className="rounded-full bg-white">
-                    <GlobalSearch />
-                  </div>
-                </div>
-              </div>
-
-              {/* Both Views */}
-              <div
-                className="rounded-full p-[1.5px] shadow-2xs"
-                style={{
-                  background:
-                    'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
-                }}
-              >
-                <div className="flex items-center gap-0.5 rounded-full bg-white p-0.5">
-                  {WORKSPACE_VIEWS.map(({ id, label, Icon }) => {
-                    const selected = workspaceView === id;
-                    return (
-                      <button
-                        key={id}
-                        type="button"
-                        onClick={() => switchWorkspaceView(id)}
-                        aria-pressed={selected}
-                        title={label}
-                        className={`inline-flex min-h-[22px] items-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold transition-all ${
-                          selected
-                            ? 'bg-[#F5F0FF] text-[#5A00D6] border border-[#5A00D6]'
-                            : 'text-[#0A2B6D] hover:text-[#0072FF]'
-                        }`}
-                      >
-                        <Icon
-                          className="h-3 w-3 shrink-0"
-                          style={{ color: selected ? '#FF2E9A' : '#0072FF' }}
-                        />
-                        <span className="whitespace-nowrap" style={{ color: '#0A2B6D' }}>
-                          {label}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          </div>
         </header>
 
         <main

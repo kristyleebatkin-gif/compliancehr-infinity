@@ -95,6 +95,7 @@ import AuditorsPortal from '@/pages/AuditorsPortal';
 import ObsidianSmartRemote from '@/components/common/ObsidianSmartRemote';
 import AuditorViewPreFlightBar from '@/components/compliance/AuditorViewPreFlightBar';
 import AiCopilotTestingChecklistSuite from '@/components/assistant/AiCopilotTestingChecklistSuite';
+import MergedBusinessAnalyticsSection from '@/components/compliance/MergedBusinessAnalyticsSection';
 
 const POLICY_CATEGORIES = ['Rights & Responsibilities', 'Privacy', 'Complaints', 'Incident Management', 'Risk Management', 'Medication', 'Human Resources', 'Emergency Management', 'Governance', 'Quality', 'Financial'];
 const POLICY_STATUSES = ['Draft', 'Active', 'Under Review', 'Expired', 'Archived'];
@@ -102,8 +103,8 @@ const REQ_STATUSES = ['Current', 'Review Required', 'Superseded', 'Archived'];
 
 // Organized into clear functional groups so every register and suite is easy to find.
 const TAB_GROUPS = [
-  { id: 'all', label: 'All Compliance Areas' },
-  { id: 'executive', label: 'Executive & AI Suites', keys: ['ai-copilot-checklist', 'enterprise-standard', 'control-centre', 'one-click-operations', 'infinity-core-engine', 'health-intelligence', 'executive-summary'] },
+  { id: 'all', label: 'All Compliance & Evidence Areas' },
+  { id: 'executive', label: 'Business Analytics, Executive & AI', keys: ['business-analytics', 'ai-copilot-checklist', 'enterprise-standard', 'control-centre', 'one-click-operations', 'infinity-core-engine', 'health-intelligence', 'executive-summary'] },
   { id: 'audits', label: 'NDIS Standards & Audits', keys: ['ai-copilot-checklist', 'auditor-portal', 'standards-map', 'master-checklist', 'master-audit-forms', 'screen-audit-2026', 'audits', 'internal-audits', 'audit-report-list', 'weekly-audit-reports'] },
   { id: 'policies', label: 'Policies, Legal & Templates', keys: ['enterprise-standard', 'policies', 'requirements', 'printable-2026-templates', 'form-templates', 'checklists', 'consents'] },
   { id: 'workforce', label: 'Workforce & Screening', keys: ['staff-compliance', 'worker-screening', 'cert-renewals', 'renewal-calendar', 'onboarding-progress', 'staff-bulk-actions'] },
@@ -112,6 +113,7 @@ const TAB_GROUPS = [
 ];
 
 const TABS = [
+  ['business-analytics', 'Business Analytics & KPIs'],
   ['ai-copilot-checklist', '7-Point AI Audit Checklist'],
   ['enterprise-standard', 'Enterprise Build Standard'],
   ['auditor-portal', 'Auditor Portal'],
@@ -191,7 +193,7 @@ const TAB_TONES = {
 };
 
 
-export default function ComplianceHub() {
+export default function ComplianceHub({ initialTab = 'standards-map' } = {}) {
   const [policies, setPolicies] = useState([]);
   const [requirements, setRequirements] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -206,7 +208,7 @@ export default function ComplianceHub() {
   const [selPolicies, setSelPolicies] = useState([]);
   const [applyingPolicies, setApplyingPolicies] = useState(false);
   const [tabGroup, setTabGroup] = useState('all');
-  const [activeTab, setActiveTab] = useState('standards-map');
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [screenView, setScreenView] = useState('screen1');
 
   const togglePolicy = (id, checked) => {
@@ -293,11 +295,10 @@ export default function ComplianceHub() {
     <div className="mx-auto w-full max-w-[1440px] compact-module space-y-3">
       <ModuleShell
         icon={ShieldCheck}
-        title="Compliance & Report Centre"
-        subtitle="Policies, legal obligations and their review cycles."
+        title="Compliance & Evidence"
+        subtitle="Unified Compliance Centre, Business Analytics, policies, legal obligations, evidence and audit readiness."
         moduleKey="compliance"
         insightModule="compliance"
-        search={<ComplianceGlobalSearch />}
         actions={(
           <>
             <AuditPackButton />
@@ -385,10 +386,17 @@ export default function ComplianceHub() {
         </section>
       )}
 
+      {/*Merged Business Analytics & Compliance Intelligence Suite*/}
+      <MergedBusinessAnalyticsSection />
+
       {/* Active Compliance Workspace Content */}
       {screenView !== 'screen2' && (
       <div className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-3 shadow-sm space-y-2.5">
         <Tabs value={activeTab} onValueChange={setActiveTab}>
+
+          <TabsContent value="business-analytics" className="mt-3">
+            <MergedBusinessAnalyticsSection />
+          </TabsContent>
 
           <TabsContent value="ai-copilot-checklist" className="mt-3">
             <AiCopilotTestingChecklistSuite />

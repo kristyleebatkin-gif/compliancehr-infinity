@@ -107,8 +107,8 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
             </button>
           </div>
 
-          {/* Centre: Business Logo (+1cm x +1cm), Name & Slogan Under Name Fitted Top-to-Bottom */}
-          <div className="order-1 flex flex-1 items-center justify-center py-0.5 md:order-2">
+          {/* Centre: Business Logo (+1cm x +1cm), Name, Slogan & Both Views Under Slogan at Bottom in the Middle */}
+          <div className="order-1 flex flex-1 flex-col items-center justify-between py-0.5 md:order-2">
             <Link
               to="/"
               className="inline-flex flex-col items-center justify-center text-center"
@@ -116,6 +116,43 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
             >
               <BrandLogoLockup size="md" theme="light" showSlogan={true} />
             </Link>
+
+            {/* Both Views Under Slogan at the Bottom in the Middle */}
+            <div
+              className="mt-1 rounded-full p-[1.5px] shadow-2xs md:mb-0.5"
+              style={{
+                background:
+                  'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+              }}
+            >
+              <div className="flex items-center gap-0.5 rounded-full bg-white p-0.5">
+                {WORKSPACE_VIEWS.map(({ id, label, Icon }) => {
+                  const selected = workspaceView === id;
+                  return (
+                    <button
+                      key={id}
+                      type="button"
+                      onClick={() => switchWorkspaceView(id)}
+                      aria-pressed={selected}
+                      title={label}
+                      className={`inline-flex min-h-[22px] items-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold transition-all ${
+                        selected
+                          ? 'bg-[#F5F0FF] text-[#5A00D6] border border-[#5A00D6]'
+                          : 'text-[#0A2B6D] hover:text-[#0072FF]'
+                      }`}
+                    >
+                      <Icon
+                        className="h-3 w-3 shrink-0"
+                        style={{ color: selected ? '#FF2E9A' : '#0072FF' }}
+                      />
+                      <span className="whitespace-nowrap" style={{ color: '#0A2B6D' }}>
+                        {label}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
 
           {/* Right at the Bottom: Start Free (Duplicate Demo Removed) */}
@@ -152,68 +189,6 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
             'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
         }}
       />
-
-      {/* Dark Blue Dashboard Bar Below Divider: ONLY Both Views & Search Workspace */}
-      <div
-        className="px-3 py-1.5 sm:px-6"
-        style={{
-          background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
-        }}
-      >
-        <nav aria-label="Main navigation" className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-2">
-          {/* Search Workspace */}
-          <div className="flex flex-1 items-center min-w-[180px] max-w-md">
-            <div
-              className="w-full rounded-full p-[1.5px] shadow-2xs"
-              style={{
-                background:
-                  'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
-              }}
-            >
-              <div className="rounded-full bg-white">
-                <GlobalSearch />
-              </div>
-            </div>
-          </div>
-
-          {/* Both Views */}
-          <div
-            className="rounded-full p-[1.5px] shadow-2xs"
-            style={{
-              background:
-                'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
-            }}
-          >
-            <div className="flex items-center gap-0.5 rounded-full bg-white p-0.5">
-              {WORKSPACE_VIEWS.map(({ id, label, Icon }) => {
-                const selected = workspaceView === id;
-                return (
-                  <button
-                    key={id}
-                    type="button"
-                    onClick={() => switchWorkspaceView(id)}
-                    aria-pressed={selected}
-                    title={label}
-                    className={`inline-flex min-h-[22px] items-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold transition-all ${
-                      selected
-                        ? 'bg-[#F5F0FF] text-[#5A00D6] border border-[#5A00D6]'
-                        : 'text-[#0A2B6D] hover:text-[#0072FF]'
-                    }`}
-                  >
-                    <Icon
-                      className="h-3 w-3 shrink-0"
-                      style={{ color: selected ? '#FF2E9A' : '#0072FF' }}
-                    />
-                    <span className="whitespace-nowrap" style={{ color: '#0A2B6D' }}>
-                      {label}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </nav>
-      </div>
 
       {open && (
         <nav

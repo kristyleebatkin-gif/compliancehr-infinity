@@ -29,15 +29,14 @@ const APP_ICON_GRADIENTS = [
 export const PRIMARY_11_OS_NAV = [
   {
     id: 'dashboard-executive',
-    label: 'Dashboard',
-    sub: 'Dashboard, Executive, Operations, Analytics & AI',
+    label: 'Communication',
+    sub: 'Communication, Dashboard, Executive, Operations & AI',
     path: '/dashboard',
-    icon: LayoutDashboard,
+    icon: Megaphone,
     status: 'LIVE',
     children: [
-      { label: 'Executive', path: '/dashboard', sub: 'Executive overview & live KPIs', icon: Cpu },
+      { label: 'Communication', path: '/dashboard', sub: 'Merged Communication & Executive Dashboard', icon: Megaphone },
       { label: 'Operations Centre', path: '/operations-centre', sub: 'Master operations & control deck' },
-      { label: 'Business Analytics', path: '/analytics', sub: 'Cross-module trends & reports' },
       { label: 'Suggestions Hub', path: '/suggestions', sub: 'Continuous improvement ideas' },
       { label: 'Daily Briefing', path: '/briefing', sub: 'Morning operational briefing' },
       { label: 'AI Assistant', path: '/assistant', sub: '24/7 compliance & HR copilot' },
@@ -64,12 +63,11 @@ export const PRIMARY_11_OS_NAV = [
   {
     id: 'communications-workforce',
     label: '3. Service Delivery & Roster',
-    sub: 'Communications, Rostering, Goals, Tasks & Meetings',
-    path: '/communications',
-    icon: Megaphone,
+    sub: 'Rostering, Goals, Tasks, Meetings & Programs',
+    path: '/rostering',
+    icon: ClipboardList,
     status: 'LIVE',
     children: [
-      { label: 'Communication Centre', path: '/communications', sub: 'Shift notes, inbox & broadcasts' },
       { label: 'Rostering', path: '/rostering', sub: 'Shifts, coverage & availability' },
       { label: 'Goals', path: '/goals', sub: 'Participant & staff goal tracking' },
       { label: 'Tasks', path: '/tasks', sub: 'Shared to-do & sign-off board' },
@@ -97,12 +95,12 @@ export const PRIMARY_11_OS_NAV = [
   {
     id: 'compliance-quality-evidence',
     label: '5. Compliance & Evidence',
-    sub: 'Compliance, Auditor, Vault, Safe, Quality & Evidence',
+    sub: 'Compliance, Business Analytics, Auditor, Vault & Evidence',
     path: '/compliance',
     icon: ShieldCheck,
     status: 'VERIFIED',
     children: [
-      { label: 'Compliance Centre', path: '/compliance', sub: '356 audit checks & readiness' },
+      { label: 'Compliance & Evidence', path: '/compliance', sub: 'Merged Compliance Centre, Business Analytics & 356 checks' },
       { label: 'Auditor Portal', path: '/auditor-portal', sub: 'Read-only external auditor view' },
       { label: 'Document Vault', path: '/documents', sub: 'Controlled policies & renewals' },
       { label: 'Company Safe', path: '/company-safe', sub: 'Executive vault & credentials' },
@@ -217,15 +215,14 @@ export const PRIMARY_11_OS_NAV = [
 export const FOCUSED_5_PILLAR_NAV = [
   {
     id: 'pillar-today',
-    label: 'Dashboard',
-    sub: 'Dashboard, Executive, Operations, Analytics, Briefing & AI',
+    label: 'Communication',
+    sub: 'Communication, Dashboard, Executive, Operations, Briefing & AI',
     path: '/dashboard',
-    icon: LayoutDashboard,
+    icon: Megaphone,
     status: 'LIVE',
     children: [
-      { label: 'Executive', path: '/dashboard', sub: 'Executive overview & live KPIs', icon: Cpu },
+      { label: 'Communication', path: '/dashboard', sub: 'Merged Communication & Executive Dashboard', icon: Megaphone },
       { label: 'Operations Centre', path: '/operations-centre', sub: 'Master operations & control deck' },
-      { label: 'Business Analytics', path: '/analytics', sub: 'Cross-module trends & reports' },
       { label: 'Suggestions Hub', path: '/suggestions', sub: 'Continuous improvement ideas' },
       { label: 'Daily Briefing', path: '/briefing', sub: 'Morning operational briefing' },
       { label: 'AI Assistant', path: '/assistant', sub: 'Compliance & HR intelligence copilot' },
@@ -235,7 +232,7 @@ export const FOCUSED_5_PILLAR_NAV = [
   {
     id: 'pillar-people',
     label: '2. People & Care',
-    sub: 'Participants, Intake, Goals, Roster, Comms & Community',
+    sub: 'Participants, Intake, Goals, Roster & Community',
     path: '/our-participants',
     icon: Users,
     status: 'READY',
@@ -243,7 +240,6 @@ export const FOCUSED_5_PILLAR_NAV = [
       { label: 'Participant Profiles', path: '/our-participants', sub: '360° participant care folders' },
       { label: 'Intake Centre', path: '/intake', sub: 'Participant & staff onboarding' },
       { label: 'Rostering', path: '/rostering', sub: 'Shifts, clearances & coverage' },
-      { label: 'Communication Centre', path: '/communications', sub: 'Shift notes & team messages' },
       { label: 'Goals', path: '/goals', sub: 'Participant & staff goal tracking' },
       { label: 'Visual Boards', path: '/visual-boards', sub: 'Accessible visual routines & AAC' },
       { label: 'Programs & Events', path: '/programs', sub: 'Community programs & calendar' },
@@ -293,12 +289,12 @@ export const FOCUSED_5_PILLAR_NAV = [
   {
     id: 'pillar-audit',
     label: '5. Audit, Governance & Finance',
-    sub: 'Compliance, Vault, Safe, Registers, NDIS & Finance',
+    sub: 'Compliance & Evidence, Business Analytics, Vault, Safe, NDIS & Finance',
     path: '/compliance',
     icon: ShieldCheck,
     status: 'VERIFIED',
     children: [
-      { label: 'Compliance Centre', path: '/compliance', sub: '356 audit checks & readiness' },
+      { label: 'Compliance & Evidence', path: '/compliance', sub: 'Merged Compliance Centre, Business Analytics & 356 checks' },
       { label: 'Auditor Portal', path: '/auditor-portal', sub: 'Consent-verified auditor view' },
       { label: 'Document Vault', path: '/documents', sub: 'Controlled policies & evidence' },
       { label: 'Company Safe', path: '/company-safe', sub: 'Executive vault & credentials' },
