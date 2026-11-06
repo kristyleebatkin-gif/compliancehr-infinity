@@ -198,13 +198,12 @@ export const PRIMARY_11_OS_NAV = [
   {
     id: 'help-knowledge-support',
     label: '13. Help & Documentation',
-    sub: 'Help Centre, User Guides & System Documentation',
+    sub: 'Help Centre & System Support',
     path: '/help',
     icon: Settings,
     status: 'ONLINE',
     children: [
       { label: 'Help Centre', path: '/help', sub: 'AI troubleshooter & support tickets' },
-      { label: 'User Guides', path: '/user-guides', sub: 'Step-by-step platform manuals' },
     ],
   },
 ];
@@ -313,7 +312,6 @@ export const FOCUSED_5_PILLAR_NAV = [
       { label: 'Asset Management', path: '/assets', sub: 'Fleet, equipment & maintenance' },
       { label: 'Projects Hub', path: '/projects', sub: 'Strategic projects & milestones' },
       { label: 'Help Centre', path: '/help', sub: 'AI troubleshooter & support tickets' },
-      { label: 'User Guides', path: '/user-guides', sub: 'Step-by-step platform manuals' },
     ],
   },
 ];

@@ -390,7 +390,6 @@ export const CARESPHERE_12_CAPABILITIES = [
       { label: 'Document Vault', path: '/documents' },
       { label: 'Company Safe', path: '/company-safe' },
       { label: 'Universal Storage Hub', path: '/universal-storage' },
-      { label: 'User Guides', path: '/user-guides' },
     ],
     features: [
       'Documents',

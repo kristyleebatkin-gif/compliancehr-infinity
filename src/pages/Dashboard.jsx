@@ -136,7 +136,7 @@ export default function Dashboard() {
                 <p className="mt-1 text-sm text-slate-600">
                   {role === ROLES.VOLUNTEER
                     ? 'Open your placement details and volunteer records.'
-                    : 'This account can open the Help Centre and User Guides. Contact an administrator if you need a different role.'}
+                    : 'This account can open the Help Centre. Contact an administrator if you need a different role.'}
                 </p>
                 {role === ROLES.VOLUNTEER && (
                   <a

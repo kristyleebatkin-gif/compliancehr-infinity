@@ -90,7 +90,6 @@ export const MODULE_DIRECTORY = [
 
   // 13. HELP, KNOWLEDGE & SUPPORT
   { key: 'help', label: 'Help Centre', path: '/help', icon: LifeBuoy, group: '13. Help, Knowledge & Support', blurb: 'Support centre, AI troubleshooter, system health and support desk.' },
-  { key: 'user-guides', label: 'User Guides', path: '/user-guides', icon: BookOpen, group: '13. Help, Knowledge & Support', blurb: 'Knowledge base, system documentation and complete downloadable user guides for every module.' },
 ];
 
 // Permanent 13-Group Architectural Map: every existing module key appears in exactly one permanent home.
@@ -158,6 +157,6 @@ export const NAV_GROUPS = [
   },
   {
     label: '13. Help, Knowledge & Support',
-    keys: ['help', 'user-guides'],
+    keys: ['help'],
   },
 ];
