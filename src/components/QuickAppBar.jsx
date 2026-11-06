@@ -243,55 +243,55 @@ export default function QuickAppBar() {
             </div>
           </div>
 
-          {/* TOP: Major Section Selector Buttons (Click any section to open and display its modules underneath) */}
+          {/* TOP: Major Section Selector Buttons (50% Smaller Modular Buttons) */}
           {!collapsed && (
             <div
-              className="grid grid-cols-2 gap-1 px-1.5 pb-1 pt-0.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 items-stretch"
+              className="grid grid-cols-2 gap-0.5 px-1 pb-0.5 pt-0.5 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 items-stretch"
               style={{ background: DARK_NAVY_CHASSIS }}
             >
-              {/* AI Core Button: Uniform Small Remote Tile */}
+              {/* AI Core Button: 50% Smaller Uniform Remote Tile */}
               <Link
                 to="/assistant"
                 title="AI Core — 14 live recommendations"
-                className="group flex min-h-[36px] flex-col rounded-lg p-[1.5px] text-left shadow-[0_0_12px_rgba(0,198,255,0.5)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_0_16px_rgba(0,198,255,0.8)]"
+                className="group flex min-h-[18px] flex-col rounded-md p-[1px] text-left shadow-[0_0_8px_rgba(0,198,255,0.45)] transition-all duration-150 hover:shadow-[0_0_12px_rgba(0,198,255,0.75)]"
                 style={{ background: BRAND_GRADIENT }}
               >
                 <div
-                  className="flex flex-1 flex-col justify-between overflow-hidden rounded-[9px]"
+                  className="flex flex-1 flex-col justify-between overflow-hidden rounded-[5px]"
                   style={{ background: DARK_NAVY_CHASSIS }}
                 >
-                  <div className="flex min-h-[18px] items-center justify-between gap-1 bg-white px-1.5 py-0">
-                    <div className="flex min-w-0 items-center gap-1">
+                  <div className="flex min-h-[10px] items-center justify-between gap-0.5 bg-white px-1 py-0">
+                    <div className="flex min-w-0 items-center gap-0.5">
                       <span
-                        className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded bg-[#F5F0FF]"
+                        className="flex h-2.5 w-2.5 shrink-0 items-center justify-center rounded-xs bg-[#F5F0FF]"
                         style={{ border: '1px solid #0072FF' }}
                       >
-                        <Cpu className="h-2 w-2 shrink-0" style={{ color: '#0072FF' }} />
+                        <Cpu className="h-1.5 w-1.5 shrink-0" style={{ color: '#0072FF' }} />
                       </span>
                       <span
-                        className="min-w-0 truncate bg-clip-text text-[8.5px] font-extrabold leading-tight text-transparent"
+                        className="min-w-0 truncate bg-clip-text text-[7px] font-extrabold leading-none text-transparent"
                         style={{ backgroundImage: HEADING_TEXT_GRADIENT }}
                       >
                         ◉ AI Core Hub
                       </span>
                     </div>
-                    <span className="inline-flex shrink-0 items-center gap-0.5 rounded-full bg-[#0A2B6D] px-1 py-0 text-[6px] font-black uppercase text-[#00C6FF]">
+                    <span className="inline-flex shrink-0 items-center gap-0.5 rounded-full bg-[#0A2B6D] px-1 py-0 text-[5px] font-black uppercase text-[#00C6FF]">
                       <span
                         className="h-1 w-1 shrink-0 rounded-full"
-                        style={{ backgroundColor: '#00C6FF', boxShadow: '0 0 5px 1px #00C6FF' }}
+                        style={{ backgroundColor: '#00C6FF', boxShadow: '0 0 4px 1px #00C6FF' }}
                       />
                       LIVE
                     </span>
                   </div>
 
-                  <div className="flex flex-1 items-center justify-between gap-1 px-1.5 py-0.5">
+                  <div className="flex flex-1 items-center justify-between gap-0.5 px-1 py-0">
                     <span
-                      className="truncate text-[7.5px] font-bold leading-tight text-white"
+                      className="truncate text-[6px] font-bold leading-tight text-white"
                       style={{ color: '#FFFFFF' }}
                     >
                       14 live recommendations
                     </span>
-                    <ArrowRight className="h-2 w-2 shrink-0 text-[#00C6FF]" />
+                    <ArrowRight className="h-1.5 w-1.5 shrink-0 text-[#00C6FF]" />
                   </div>
                 </div>
               </Link>
@@ -316,34 +316,34 @@ export default function QuickAppBar() {
                     aria-expanded={isSelectedSection}
                     aria-controls="quick-access-modules"
                     title={`${item.label} — Click to display ${item.modules.length} modules underneath`}
-                    className={`group flex min-h-[36px] flex-col rounded-lg p-[1.5px] text-left transition-all duration-200 focus-visible:outline-none ${
+                    className={`group flex min-h-[18px] flex-col rounded-md p-[1px] text-left transition-all duration-150 focus-visible:outline-none ${
                       isSelectedSection
-                        ? 'shadow-[0_0_16px_rgba(0,198,255,0.95)] scale-[1.02] ring-1 ring-[#00C6FF]'
-                        : 'shadow-[0_0_8px_rgba(90,0,214,0.3)] hover:-translate-y-0.5 hover:shadow-[0_0_12px_rgba(0,198,255,0.65)]'
+                        ? 'shadow-[0_0_12px_rgba(0,198,255,0.9)] ring-1 ring-[#00C6FF]'
+                        : 'shadow-[0_0_6px_rgba(90,0,214,0.25)] hover:shadow-[0_0_10px_rgba(0,198,255,0.6)]'
                     }`}
                     style={{ background: BRAND_GRADIENT }}
                   >
                     <div
-                      className="flex flex-1 flex-col justify-between overflow-hidden rounded-[9px]"
+                      className="flex flex-1 flex-col justify-between overflow-hidden rounded-[5px]"
                       style={{ background: DARK_NAVY_CHASSIS }}
                     >
-                      <div className="flex min-h-[18px] items-center justify-between gap-1 bg-white px-1.5 py-0">
-                        <div className="flex min-w-0 items-center gap-1">
+                      <div className="flex min-h-[10px] items-center justify-between gap-0.5 bg-white px-1 py-0">
+                        <div className="flex min-w-0 items-center gap-0.5">
                           <span
-                            className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded bg-[#F5F0FF]"
+                            className="flex h-2.5 w-2.5 shrink-0 items-center justify-center rounded-xs bg-[#F5F0FF]"
                             style={{ border: `1px solid ${symColor}` }}
                           >
-                            <Icon className="h-2 w-2 shrink-0" style={{ color: symColor }} />
+                            <Icon className="h-1.5 w-1.5 shrink-0" style={{ color: symColor }} />
                           </span>
                           <span
-                            className="min-w-0 truncate bg-clip-text text-[8.5px] font-extrabold leading-tight text-transparent"
+                            className="min-w-0 truncate bg-clip-text text-[7px] font-extrabold leading-none text-transparent"
                             style={{ backgroundImage: HEADING_TEXT_GRADIENT }}
                           >
                             <span style={{ color: symColor }}>◉</span> {item.label}
                           </span>
                         </div>
                         <span
-                          className={`inline-flex shrink-0 items-center gap-0.5 rounded-full px-1 py-0 text-[6px] font-black uppercase ${
+                          className={`inline-flex shrink-0 items-center gap-0.5 rounded-full px-1 py-0 text-[5px] font-black uppercase ${
                             isSelectedSection ? 'bg-[#0A2B6D] text-[#00C6FF]' : 'bg-[#F5F0FF] text-[#5A00D6]'
                           }`}
                         >
@@ -352,22 +352,22 @@ export default function QuickAppBar() {
                             style={{
                               backgroundColor: isSelectedSection ? '#00C6FF' : symColor,
                               boxShadow: isSelectedSection
-                                ? '0 0 5px 1px #00C6FF'
-                                : `0 0 4px 1px ${symColor}`,
+                                ? '0 0 4px 1px #00C6FF'
+                                : `0 0 3px 1px ${symColor}`,
                             }}
                           />
-                          {isSelectedSection ? 'OPEN ▼' : `${item.modules.length} MODS`}
+                          {isSelectedSection ? 'OPEN ▼' : `${item.modules.length}`}
                         </span>
                       </div>
 
-                      <div className="flex flex-1 items-center justify-between gap-1 px-1.5 py-0.5">
+                      <div className="flex flex-1 items-center justify-between gap-0.5 px-1 py-0">
                         <span
-                          className="truncate text-[7.5px] font-bold leading-tight text-white"
+                          className="truncate text-[6px] font-bold leading-tight text-white"
                           style={{ color: '#FFFFFF' }}
                         >
                           {currentSub}
                         </span>
-                        <ChevronDown className={`h-2.5 w-2.5 shrink-0 transition-transform ${isSelectedSection ? 'rotate-180' : ''}`} style={{ color: symColor }} />
+                        <ChevronDown className={`h-2 w-2 shrink-0 transition-transform ${isSelectedSection ? 'rotate-180' : ''}`} style={{ color: symColor }} />
                       </div>
                     </div>
                   </button>
@@ -376,37 +376,37 @@ export default function QuickAppBar() {
             </div>
           )}
 
-          {/* UNDERNEATH: Selected Major Section Modules Opened & Displayed Underneath */}
+          {/* UNDERNEATH: Selected Major Section Modules Opened & Displayed Underneath (50% Smaller Tiles) */}
           {!collapsed && expandedGroup && (
-            <div id="quick-access-modules" className="px-1.5 pb-1.5 pt-1">
+            <div id="quick-access-modules" className="px-1 pb-1 pt-0.5">
               <nav
                 aria-label={expandedGroup.label}
-                className="rounded-xl border-2 border-[#00C6FF] p-2 shadow-[0_0_20px_rgba(0,198,255,0.28)]"
+                className="rounded-lg border border-[#00C6FF] p-1 shadow-[0_0_12px_rgba(0,198,255,0.22)]"
                 style={{ background: DARK_NAVY_CHASSIS }}
               >
-                <div className="mb-1.5 flex flex-wrap items-center justify-between gap-1.5">
+                <div className="mb-1 flex flex-wrap items-center justify-between gap-1">
                   <span
-                    className="inline-flex items-center gap-1.5 rounded-full border border-[#00C6FF] bg-white px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-[#0A2B6D] shadow-2xs"
+                    className="inline-flex items-center gap-1 rounded-full border border-[#00C6FF] bg-white px-2 py-0 text-[7.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]"
                     style={{ color: '#0A2B6D' }}
                   >
-                    <span style={{ color: '#0072FF' }}>▼</span> {expandedGroup.label} — {expandedGroup.modules.length} Modules Displayed Underneath
+                    <span style={{ color: '#0072FF' }}>▼</span> {expandedGroup.label} ({expandedGroup.modules.length} Modules)
                   </span>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1.5">
                     {expandedGroup.path && (
                       <Link
                         to={expandedGroup.path}
-                        className="inline-flex items-center gap-1 rounded-full bg-[#00C6FF] px-2.5 py-0.5 text-[8.5px] font-extrabold text-[#0A2B6D] shadow-2xs transition hover:bg-white"
+                        className="inline-flex items-center gap-1 rounded-full bg-[#00C6FF] px-2 py-0 text-[7px] font-extrabold text-[#0A2B6D] transition hover:bg-white"
                       >
-                        <span>Open {expandedGroup.label.replace(/^\d+\.\s*/, '')} Workspace</span>
-                        <ArrowRight className="h-2.5 w-2.5" />
+                        <span>Open {expandedGroup.label.replace(/^\d+\.\s*/, '')}</span>
+                        <ArrowRight className="h-2 w-2" />
                       </Link>
                     )}
-                    <span className="text-[8px] font-bold text-[#00C6FF]">
-                      Click any module below to launch
+                    <span className="text-[7px] font-bold text-[#00C6FF]">
+                      Click module to launch
                     </span>
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 items-stretch">
+                <div className="grid grid-cols-2 gap-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 items-stretch">
                   {expandedGroup.modules.map((module, mIdx) => {
                     const Icon = module.icon;
                     const modActive = isActive(module.path);
@@ -416,34 +416,34 @@ export default function QuickAppBar() {
                         key={module.key}
                         to={module.path}
                         aria-current={modActive ? 'page' : undefined}
-                        className={`group flex min-h-[42px] flex-col rounded-lg p-[1.5px] text-left transition-all duration-200 ${
+                        className={`group flex min-h-[21px] flex-col rounded-md p-[1px] text-left transition-all duration-150 ${
                           modActive
-                            ? 'shadow-[0_0_14px_rgba(0,198,255,0.85)] scale-[1.01]'
-                            : 'shadow-[0_0_8px_rgba(90,0,214,0.3)] hover:-translate-y-0.5 hover:shadow-[0_0_12px_rgba(0,198,255,0.7)]'
+                            ? 'shadow-[0_0_10px_rgba(0,198,255,0.85)]'
+                            : 'shadow-[0_0_5px_rgba(90,0,214,0.25)] hover:shadow-[0_0_10px_rgba(0,198,255,0.65)]'
                         }`}
                         style={{ background: BRAND_GRADIENT }}
                       >
                         <div
-                          className="flex flex-1 flex-col justify-between overflow-hidden rounded-[9px]"
+                          className="flex flex-1 flex-col justify-between overflow-hidden rounded-[5px]"
                           style={{ background: DARK_NAVY_CHASSIS }}
                         >
-                          <div className="flex min-h-[19px] items-center justify-between gap-1 bg-white px-1.5 py-0.5">
-                            <div className="flex min-w-0 items-center gap-1">
+                          <div className="flex min-h-[10px] items-center justify-between gap-0.5 bg-white px-1 py-0">
+                            <div className="flex min-w-0 items-center gap-0.5">
                               <span
-                                className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded bg-[#F5F0FF]"
+                                className="flex h-2.5 w-2.5 shrink-0 items-center justify-center rounded-xs bg-[#F5F0FF]"
                                 style={{ border: `1px solid ${modColor}` }}
                               >
-                                <Icon className="h-2 w-2 shrink-0" style={{ color: modColor }} />
+                                <Icon className="h-1.5 w-1.5 shrink-0" style={{ color: modColor }} />
                               </span>
                               <span
-                                className="min-w-0 truncate bg-clip-text text-[8.5px] font-extrabold leading-tight text-transparent"
+                                className="min-w-0 truncate bg-clip-text text-[7px] font-extrabold leading-none text-transparent"
                                 style={{ backgroundImage: HEADING_TEXT_GRADIENT }}
                               >
                                 <span style={{ color: modColor }}>◉</span> {module.label}
                               </span>
                             </div>
                             <span
-                              className={`inline-flex shrink-0 items-center gap-0.5 rounded-full px-1 py-0 text-[6px] font-black uppercase ${
+                              className={`inline-flex shrink-0 items-center gap-0.5 rounded-full px-1 py-0 text-[5px] font-black uppercase ${
                                 modActive ? 'bg-[#0A2B6D] text-[#00C6FF]' : 'bg-[#F5F0FF] text-[#5A00D6]'
                               }`}
                             >
@@ -452,22 +452,22 @@ export default function QuickAppBar() {
                                 style={{
                                   backgroundColor: modActive ? '#00C6FF' : modColor,
                                   boxShadow: modActive
-                                    ? '0 0 5px 1px #00C6FF'
-                                    : `0 0 4px 1px ${modColor}`,
+                                    ? '0 0 4px 1px #00C6FF'
+                                    : `0 0 3px 1px ${modColor}`,
                                 }}
                               />
                               {modActive ? 'ACTIVE' : 'OPEN'}
                             </span>
                           </div>
 
-                          <div className="flex flex-1 items-center justify-between gap-1 px-1.5 py-0.5">
+                          <div className="flex flex-1 items-center justify-between gap-0.5 px-1 py-0">
                             <span
-                              className="min-w-0 flex-1 truncate text-[7.5px] font-bold leading-snug text-white"
+                              className="min-w-0 flex-1 truncate text-[6px] font-bold leading-tight text-white"
                               style={{ color: '#FFFFFF' }}
                             >
                               {module.blurb || `Open ${module.label}`}
                             </span>
-                            <ArrowRight className="h-2 w-2 shrink-0 transition group-hover:translate-x-0.5" style={{ color: modColor }} />
+                            <ArrowRight className="h-1.5 w-1.5 shrink-0 transition group-hover:translate-x-0.5" style={{ color: modColor }} />
                           </div>
                         </div>
                       </Link>
