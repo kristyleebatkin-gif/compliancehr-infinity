@@ -82,19 +82,7 @@ export default function Landing() {
           onToggleLiveDashboard={() => setShowLiveDashboard((v) => !v)}
         />
 
-        {/* Enterprise Sovereign Trust & Live Regulatory Pulse Ribbon */}
-        <EnterpriseTopTrustRibbon onBookDemo={openDemoModal} />
-
-        {/* Main View Navigator Remote Deck */}
-        <QuickAppBar />
-
         <main className="landing-main relative z-10 mx-auto w-full max-w-[1440px] px-4 py-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-14 pb-20">
-        {/* Live Executive Dashboard in Main View with New Compact Header */}
-        {showLiveDashboard && (
-          <section id="live-executive-dashboard" className="scroll-mt-24">
-            <Dashboard />
-          </section>
-        )}
 
         {/* 1. Hero Section (Landscape — Crystal-Clear Positioning Above the Fold) */}
         <LandingHero onBookDemo={openDemoModal} />

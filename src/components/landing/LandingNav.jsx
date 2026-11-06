@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, ArrowRight, Calendar, ChevronDown, ChevronUp, LayoutGrid, Minimize2, Maximize2, ShieldAlert } from 'lucide-react';
+import { Menu, X, ArrowRight, Calendar, Layers, Building2, Users } from 'lucide-react';
 import BrandLogoLockup from '@/components/common/BrandLogoLockup';
+import GlobalSearch from '@/components/GlobalSearch';
+
+const WORKSPACE_VIEWS = [
+  { id: 'both', label: 'Both Views', Icon: Layers },
+];
 
 const NAV_LINKS = [
   ['Dashboard', '#showcase'],
@@ -32,8 +37,15 @@ const WORKSPACE_ROUTES = [
 export default function LandingNav({ onBookDemo, showLiveDashboard = true, onToggleLiveDashboard }) {
   const [open, setOpen] = useState(false);
   const [workspaceMenuOpen, setWorkspaceMenuOpen] = useState(false);
-  const [collapsedHeader, setCollapsedHeader] = useState(true);
-  const [manualOverride, setManualOverride] = useState(true);
+  const [collapsedHeader, setCollapsedHeader] = useState(false);
+  const [manualOverride, setManualOverride] = useState(false);
+  const [workspaceView, setWorkspaceView] = useState(() => localStorage.getItem('chr-workspace-view-mode') || 'both');
+
+  const switchWorkspaceView = (mode) => {
+    setWorkspaceView(mode);
+    localStorage.setItem('chr-workspace-view-mode', mode);
+    window.dispatchEvent(new CustomEvent('chr-view-mode-change', { detail: { mode } }));
+  };
 
   useEffect(() => {
     const onScroll = () => {
@@ -106,18 +118,8 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
             </Link>
           </div>
 
-          {/* Right at the Bottom: Demo & Start Free (Slightly Reduced) */}
+          {/* Right at the Bottom: Start Free (Duplicate Demo Removed) */}
           <div className="order-3 flex shrink-0 items-center justify-center gap-1.5 self-center md:self-end md:pb-1">
-            <Link
-              to="/dashboard"
-              className="inline-flex min-h-[27px] items-center gap-1 whitespace-nowrap rounded-md px-2.5 py-1 text-[10.5px] font-extrabold text-white shadow-2xs transition hover:opacity-95"
-              style={{
-                background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #A100FF 100%)',
-              }}
-            >
-              <span>Demo</span>
-            </Link>
-
             <Link
               to="/register"
               className="inline-flex min-h-[27px] shrink-0 items-center gap-1 whitespace-nowrap rounded-md px-2.5 py-1 text-[10.5px] font-extrabold text-white shadow-2xs transition hover:opacity-95"
@@ -151,115 +153,64 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
         }}
       />
 
-      {/* Compact Section Navigation Bar Below Divider */}
+      {/* Dark Blue Dashboard Bar Below Divider: ONLY Both Views & Search Workspace */}
       <div
-        className="px-3 py-1 sm:px-6"
+        className="px-3 py-1.5 sm:px-6"
         style={{
           background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
         }}
       >
-        <nav aria-label="Main navigation" className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <Link
-              to="/"
-              className="inline-flex items-center gap-1.5 rounded-full border border-[#00C6FF]/40 bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D]"
+        <nav aria-label="Main navigation" className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-2">
+          {/* Search Workspace */}
+          <div className="flex flex-1 items-center min-w-[180px] max-w-md">
+            <div
+              className="w-full rounded-full p-[1.5px] shadow-2xs"
+              style={{
+                background:
+                  'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+              }}
             >
-              <span style={{ color: '#0072FF' }}>◉</span>
-              <span>ComplianceHR Infinity</span>
-            </Link>
-            <button
-              type="button"
-              onClick={toggleHeaderCollapse}
-              className="inline-flex items-center gap-1 rounded-full border border-[#00C6FF]/50 bg-white/10 px-2.5 py-0.5 text-[10px] font-extrabold text-white transition hover:bg-white/20"
-              title={collapsedHeader ? 'Expand full brand header' : 'Collapse top banner for maximum screen space'}
-            >
-              {collapsedHeader ? (
-                <>
-                  <Maximize2 className="h-2.5 w-2.5 text-[#00C6FF]" />
-                  <span>Expand Header</span>
-                  <ChevronDown className="h-2.5 w-2.5 text-[#00C6FF]" />
-                </>
-              ) : (
-                <>
-                  <Minimize2 className="h-2.5 w-2.5 text-[#00C6FF]" />
-                  <span>Collapse Header</span>
-                  <ChevronUp className="h-2.5 w-2.5 text-[#00C6FF]" />
-                </>
-              )}
-            </button>
-            {onToggleLiveDashboard && (
-              <button
-                type="button"
-                onClick={onToggleLiveDashboard}
-                className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-[10px] font-extrabold transition ${
-                  showLiveDashboard
-                    ? 'border-[#00C6FF] bg-[#00C6FF] text-[#0A2B6D] shadow-[0_0_10px_rgba(0,198,255,0.5)]'
-                    : 'border-white/30 bg-white/10 text-white hover:bg-white/20'
-                }`}
-                title="Switch between Live Executive Dashboard and Marketing Overview"
-              >
-                <LayoutGrid className="h-2.5 w-2.5" />
-                <span>{showLiveDashboard ? 'Live Executive Dashboard: ON' : 'Show Live Executive Dashboard'}</span>
-              </button>
-            )}
-            <Link
-              to="/incidents"
-              className="hidden sm:inline-flex items-center gap-1 rounded-full border border-[#FF2E9A]/60 bg-white px-2.5 py-0.5 text-[10px] font-extrabold text-[#0A2B6D] transition hover:bg-[#F5F0FF]"
-              title="Open Incident Clinic & 1-Click CAPA/Risk Escalation"
-            >
-              <ShieldAlert className="h-2.5 w-2.5 text-[#FF2E9A]" />
-              <span>1-Click Incident Escalation</span>
-            </Link>
-          </div>
-
-          <div className="hidden xl:flex items-center justify-center gap-5">
-          {NAV_LINKS.map(([label, href]) => (
-            <a
-              key={href}
-              href={href}
-              className="whitespace-nowrap text-[11px] font-semibold text-white/90 transition hover:text-[#00C6FF]"
-            >
-              {label}
-            </a>
-          ))}
-
-          {/* Progressive Disclosure Workspace Launcher */}
-          <div className="relative">
-            <button
-              type="button"
-              onClick={() => setWorkspaceMenuOpen((v) => !v)}
-              aria-expanded={workspaceMenuOpen}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold text-white transition hover:border-[#00C6FF] hover:text-[#00C6FF]"
-            >
-              <LayoutGrid className="h-3.5 w-3.5 text-[#00C6FF]" />
-              <span>Workspaces</span>
-              <ChevronDown className={`h-3.5 w-3.5 transition-transform ${workspaceMenuOpen ? 'rotate-180' : ''}`} />
-            </button>
-
-            {workspaceMenuOpen && (
-              <div
-                onMouseLeave={() => setWorkspaceMenuOpen(false)}
-                className="absolute right-0 mt-2 w-72 rounded-2xl border border-slate-200 bg-white p-2.5 shadow-xl z-50"
-              >
-                <div className="px-2.5 py-1.5 text-xs font-bold uppercase tracking-wider text-[#5A00D6]">
-                  Direct Workspace Routes
-                </div>
-                <div className="mt-1 grid grid-cols-1 gap-1">
-                  {WORKSPACE_ROUTES.map(([label, path]) => (
-                    <Link
-                      key={path}
-                      to={path}
-                      onClick={() => setWorkspaceMenuOpen(false)}
-                      className="flex items-center justify-between rounded-lg px-2.5 py-1.5 text-xs font-semibold text-[#0A2B6D] transition hover:bg-[#F5F0FF] hover:text-[#0072FF]"
-                    >
-                      <span>{label}</span>
-                      <ArrowRight className="h-3 w-3 text-[#5A00D6]" />
-                    </Link>
-                  ))}
-                </div>
+              <div className="rounded-full bg-white">
+                <GlobalSearch />
               </div>
-            )}
+            </div>
           </div>
+
+          {/* Both Views */}
+          <div
+            className="rounded-full p-[1.5px] shadow-2xs"
+            style={{
+              background:
+                'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+            }}
+          >
+            <div className="flex items-center gap-0.5 rounded-full bg-white p-0.5">
+              {WORKSPACE_VIEWS.map(({ id, label, Icon }) => {
+                const selected = workspaceView === id;
+                return (
+                  <button
+                    key={id}
+                    type="button"
+                    onClick={() => switchWorkspaceView(id)}
+                    aria-pressed={selected}
+                    title={label}
+                    className={`inline-flex min-h-[22px] items-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold transition-all ${
+                      selected
+                        ? 'bg-[#F5F0FF] text-[#5A00D6] border border-[#5A00D6]'
+                        : 'text-[#0A2B6D] hover:text-[#0072FF]'
+                    }`}
+                  >
+                    <Icon
+                      className="h-3 w-3 shrink-0"
+                      style={{ color: selected ? '#FF2E9A' : '#0072FF' }}
+                    />
+                    <span className="whitespace-nowrap" style={{ color: '#0A2B6D' }}>
+                      {label}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </nav>
       </div>

@@ -421,14 +421,14 @@ export default function ObsidianSidebarRemote({
         {/* Top App-Design Gradient Strip — aligned flush with main header */}
         <div className="h-1.5 w-full shrink-0" style={{ background: BRAND_GRADIENT }} />
 
-        {/* TOP WHITE SECTION OF REMOTE — Compact 50% Header */}
-        <div className="flex shrink-0 flex-col items-center justify-between bg-white px-1.5 py-1 text-center">
+        {/* TOP WHITE SECTION OF REMOTE — aligned flush with the top white section above the dashboard */}
+        <div className="flex h-[calc(190px+1cm)] shrink-0 flex-col items-center justify-between bg-white px-1.5 py-1.5 text-center">
           <Link
             to="/dashboard"
             aria-label="ComplianceHR Infinity Home"
-            className="flex w-full items-center justify-center py-0.5"
+            className="flex w-full flex-1 items-center justify-center"
           >
-            <BrandLogoLockup size="xs" showSlogan={false} className="w-full scale-90" />
+            <BrandLogoLockup size="xs" showSlogan className="w-full" />
           </Link>
 
           {/* Remote Control Mode Switcher (5 Pillars | 13 Channels | All 46) */}

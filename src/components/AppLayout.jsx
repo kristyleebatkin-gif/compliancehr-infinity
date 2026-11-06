@@ -37,8 +37,6 @@ const BOTTOM_NAV = [
 
 const WORKSPACE_VIEWS = [
   { id: 'both', label: 'Both Views', Icon: Layers },
-  { id: 'office', label: 'Office View', Icon: Building2 },
-  { id: 'profiles', label: 'View Profiles', Icon: Users },
 ];
 
 export default function AppLayout() {
@@ -52,7 +50,7 @@ export default function AppLayout() {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('ch-theme') === 'dark');
   const [workspaceView, setWorkspaceView] = useState(() => localStorage.getItem('chr-workspace-view-mode') || 'both');
-  const [compactHeader, setCompactHeader] = useState(true);
+  const [compactHeader, setCompactHeader] = useState(false);
   const [onboardingOpen, setOnboardingOpen] = useState(false);
 
   useEffect(() => {
@@ -290,17 +288,8 @@ export default function AppLayout() {
                 </Link>
               </div>
 
-              {/* Right at the Bottom: Demo & Start Free (Slightly Reduced) */}
+              {/* Right at the Bottom: Start Free (Duplicate Demo Removed) */}
               <div className="order-3 flex shrink-0 items-center justify-center gap-1.5 self-center md:self-end md:pb-1">
-                <Link
-                  to="/dashboard"
-                  className="inline-flex min-h-[27px] items-center justify-center whitespace-nowrap rounded-md px-2.5 py-1 text-[10.5px] font-extrabold text-white shadow-2xs transition hover:opacity-95"
-                  style={{
-                    background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #A100FF 100%)',
-                  }}
-                >
-                  Demo
-                </Link>
                 <Link
                   to="/register"
                   className="inline-flex min-h-[27px] items-center justify-center whitespace-nowrap rounded-md px-2.5 py-1 text-[10.5px] font-extrabold text-white shadow-2xs transition hover:opacity-95"
@@ -323,40 +312,24 @@ export default function AppLayout() {
             }}
           />
 
-          {/* Dark Blue Command Row Below Top Logo Section */}
+          {/* Dark Blue Dashboard Bar: ONLY 1. Both Views & Search Workspace */}
           <div
-            className="px-3 py-1 sm:px-6 lg:px-8"
+            className="px-3 py-1.5 sm:px-6 lg:px-8"
             style={{
               background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #131B4D 100%)',
             }}
           >
-            <div className="mx-auto flex max-w-[1440px] w-full flex-wrap items-center justify-between gap-1.5">
-              <div className="flex min-w-0 items-center gap-1.5">
-                <button
-                  onClick={() => setMobileOpen(true)}
-                  aria-label="Open menu"
-                  className="shrink-0 rounded-full border-2 border-[#0072FF] bg-white p-1 text-[#0A2B6D] shadow-2xs transition hover:border-[#FF2E9A] md:hidden"
-                >
-                  <Menu className="h-3 w-3" style={{ color: '#0072FF' }} />
-                </button>
+            <div className="mx-auto flex max-w-[1440px] w-full flex-wrap items-center justify-between gap-2">
+              <button
+                onClick={() => setMobileOpen(true)}
+                aria-label="Open menu"
+                className="shrink-0 rounded-full border-2 border-[#0072FF] bg-white p-1 text-[#0A2B6D] shadow-2xs transition hover:border-[#FF2E9A] md:hidden"
+              >
+                <Menu className="h-3 w-3" style={{ color: '#0072FF' }} />
+              </button>
 
-                <span
-                  className="inline-flex rounded-full p-[1.5px] shadow-2xs"
-                  style={{
-                    background:
-                      'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
-                  }}
-                >
-                  <span className="inline-flex min-h-[22px] items-center gap-1 rounded-full bg-white px-2.5 py-0.5 text-[9.5px] font-extrabold text-[#0A2B6D]">
-                    <Sparkles className="h-3 w-3 shrink-0" style={{ color: '#5A00D6' }} />
-                    <span className="whitespace-nowrap" style={{ color: '#0A2B6D' }}>
-                      ◉ {currentLabel}
-                    </span>
-                  </span>
-                </span>
-              </div>
-
-              <div className="flex flex-1 items-center justify-center min-w-[160px] max-w-md">
+              {/* Search Workspace */}
+              <div className="flex flex-1 items-center min-w-[180px] max-w-md">
                 <div
                   className="w-full rounded-full p-[1.5px] shadow-2xs"
                   style={{
@@ -370,188 +343,40 @@ export default function AppLayout() {
                 </div>
               </div>
 
-              <div className="flex shrink-0 items-center gap-1">
-                <button
-                  type="button"
-                  onClick={() => setOnboardingOpen(true)}
-                  className="hidden sm:inline-flex min-h-[24px] items-center gap-1 rounded-full border border-[#00C6FF]/50 bg-white px-2.5 py-0.5 text-[9.5px] font-extrabold text-[#0A2B6D] shadow-2xs transition hover:bg-[#F5F0FF]"
-                  title="Open 5-Step Provider Launch & Audit Readiness Checklist"
-                >
-                  <Sparkles className="h-3 w-3 text-[#5A00D6]" />
-                  <span>Setup Checklist</span>
-                </button>
-                <Link
-                  to="/incidents"
-                  className="hidden lg:inline-flex min-h-[22px] items-center gap-1 rounded-full border border-[#FF2E9A]/60 bg-white px-2 py-0.5 text-[9px] font-extrabold text-[#0A2B6D] shadow-2xs transition hover:bg-[#F5F0FF]"
-                  title="Open Incident Clinic & 1-Click CAPA / Risk Escalation"
-                >
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#FF2E9A]" />
-                  <span>Incident Escalation</span>
-                </Link>
-                <button
-                  type="button"
-                  onClick={() => setCompactHeader((v) => !v)}
-                  className="inline-flex min-h-[22px] items-center gap-1 rounded-full border border-[#00C6FF]/60 bg-white px-2 py-0.5 text-[9px] font-extrabold text-[#0A2B6D] shadow-2xs transition hover:bg-[#F5F0FF]"
-                  title={compactHeader ? 'Expand full workspace header & remote decks' : 'Collapse top banner & decks for maximum register space'}
-                >
-                  <span style={{ color: '#0072FF' }}>{compactHeader ? '▼' : '▲'}</span>
-                  <span>{compactHeader ? 'Expand Header' : 'Collapse Header'}</span>
-                </button>
-                <div
-                  className="rounded-full p-[1.5px] shadow-2xs"
-                  style={{
-                    background:
-                      'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
-                  }}
-                >
-                  <div className="flex items-center gap-0.5 rounded-full bg-white p-0.5">
-                    {WORKSPACE_VIEWS.map(({ id, label, Icon }) => {
-                      const selected = workspaceView === id;
-                      return (
-                        <button
-                          key={id}
-                          type="button"
-                          onClick={() => switchWorkspaceView(id)}
-                          aria-pressed={selected}
-                          title={label}
-                          className={`inline-flex min-h-[20px] items-center gap-1 rounded-full px-2 py-0.5 text-[8.5px] font-extrabold transition-all ${
-                            selected
-                              ? 'bg-[#F5F0FF] text-[#5A00D6] border border-[#5A00D6]'
-                              : 'text-[#0A2B6D] hover:text-[#0072FF]'
-                          }`}
-                        >
-                          <Icon
-                            className="h-2.5 w-2.5 shrink-0"
-                            style={{ color: selected ? '#FF2E9A' : '#0072FF' }}
-                          />
-                          <span className="hidden whitespace-nowrap lg:inline" style={{ color: '#0A2B6D' }}>
-                            {label}
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Notifications Bell */}
-                <div className="relative">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setNotifOpen((v) => !v);
-                      setUserMenuOpen(false);
-                    }}
-                    aria-label="Notifications"
-                    className="relative flex h-7 w-7 items-center justify-center rounded-full border-2 border-[#0072FF] bg-white text-[#0A2B6D] shadow-2xs transition hover:border-[#FF2E9A]"
-                  >
-                    <Bell className="h-3.5 w-3.5 text-[#0072FF]" />
-                    {unread > 0 && (
-                      <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#FF2E9A] px-1 text-[9px] font-bold text-white">
-                        {unread}
-                      </span>
-                    )}
-                  </button>
-                  {notifOpen && (
-                    <div className="absolute right-0 top-10 z-50 w-80 rounded-xl border border-slate-200 bg-white p-3.5 shadow-xl">
-                      <div className="mb-2 flex items-center justify-between border-b border-slate-100 pb-2">
-                        <span className="text-xs font-bold uppercase tracking-wider text-[#0A2B6D]">
-                          Notifications
-                        </span>
-                        {unread > 0 && (
-                          <button
-                            type="button"
-                            onClick={markAllRead}
-                            className="text-xs font-bold text-[#0072FF] hover:underline"
-                          >
-                            Mark all read
-                          </button>
-                        )}
-                      </div>
-                      <div className="max-h-64 space-y-1.5 overflow-y-auto">
-                        {notifications.length === 0 ? (
-                          <p className="py-4 text-center text-xs text-muted-foreground">
-                            All caught up — no unread alerts.
-                          </p>
-                        ) : (
-                          notifications.map((n) => (
-                            <div
-                              key={n.id}
-                              className={`rounded-lg border p-2.5 text-xs ${
-                                n.read
-                                  ? 'border-slate-100 bg-white'
-                                  : 'border-[#0072FF]/30 bg-[#0072FF]/5 font-semibold'
-                              }`}
-                            >
-                              <div className="font-bold text-[#0A2B6D]">{n.title || 'System Alert'}</div>
-                              {n.message && <div className="mt-0.5 text-muted-foreground">{n.message}</div>}
-                            </div>
-                          ))
-                        )}
-                      </div>
-                      <Link
-                        to="/notifications"
-                        className="mt-2.5 block rounded-lg bg-slate-100 py-2 text-center text-xs font-bold text-[#0A2B6D] hover:bg-slate-200"
-                      >
-                        View All Notifications
-                      </Link>
-                    </div>
-                  )}
-                </div>
-
-                {/* User Profile Menu */}
-                <div className="relative">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setUserMenuOpen((v) => !v);
-                      setNotifOpen(false);
-                    }}
-                    aria-label="User account menu"
-                    className="flex h-7 items-center gap-1.5 rounded-full border-2 border-[#5A00D6] bg-white px-2 text-xs font-extrabold text-[#0A2B6D] shadow-2xs transition hover:border-[#FF2E9A]"
-                  >
-                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#0A2B6D] text-[10px] font-black text-white">
-                      {initials}
-                    </span>
-                    <span className="hidden max-w-[110px] truncate text-[10px] font-extrabold text-[#0A2B6D] xl:inline">
-                      {user?.full_name || 'My Account'}
-                    </span>
-                    <ChevronDown className="h-3 w-3 shrink-0 text-[#5A00D6]" />
-                  </button>
-                  {userMenuOpen && (
-                    <div className="absolute right-0 top-10 z-50 w-60 rounded-xl border border-slate-200 bg-white p-3.5 shadow-xl space-y-2">
-                      <div className="border-b border-slate-100 pb-2.5">
-                        <div className="truncate text-sm font-bold text-[#0A2B6D]">
-                          {user?.full_name || 'ComplianceHR User'}
-                        </div>
-                        <div className="truncate text-xs text-muted-foreground">{user?.email || role}</div>
-                        <span className="mt-1.5 inline-block rounded-md bg-[#0072FF]/10 px-2 py-0.5 text-xs font-bold text-[#0072FF]">
-                          {role}
-                        </span>
-                      </div>
-                      <Link
-                        to="/my-profile"
-                        className="flex items-center gap-2 rounded-lg px-2.5 py-2 text-xs font-bold text-[#0A2B6D] hover:bg-slate-50"
-                      >
-                        <User className="h-4 w-4 text-[#0072FF]" />
-                        My Profile &amp; Dossier
-                      </Link>
-                      <Link
-                        to="/connect"
-                        className="flex items-center gap-2 rounded-lg px-2.5 py-2 text-xs font-bold text-[#0A2B6D] hover:bg-slate-50"
-                      >
-                        <Sparkles className="h-4 w-4 text-[#5A00D6]" />
-                        Connect AI Agent (MCP)
-                      </Link>
+              {/* Both Views */}
+              <div
+                className="rounded-full p-[1.5px] shadow-2xs"
+                style={{
+                  background:
+                    'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+                }}
+              >
+                <div className="flex items-center gap-0.5 rounded-full bg-white p-0.5">
+                  {WORKSPACE_VIEWS.map(({ id, label, Icon }) => {
+                    const selected = workspaceView === id;
+                    return (
                       <button
+                        key={id}
                         type="button"
-                        onClick={handleLogout}
-                        className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-xs font-bold text-rose-600 hover:bg-rose-50"
+                        onClick={() => switchWorkspaceView(id)}
+                        aria-pressed={selected}
+                        title={label}
+                        className={`inline-flex min-h-[22px] items-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold transition-all ${
+                          selected
+                            ? 'bg-[#F5F0FF] text-[#5A00D6] border border-[#5A00D6]'
+                            : 'text-[#0A2B6D] hover:text-[#0072FF]'
+                        }`}
                       >
-                        <LogOut className="h-4 w-4" />
-                        Sign out
+                        <Icon
+                          className="h-3 w-3 shrink-0"
+                          style={{ color: selected ? '#FF2E9A' : '#0072FF' }}
+                        />
+                        <span className="whitespace-nowrap" style={{ color: '#0A2B6D' }}>
+                          {label}
+                        </span>
                       </button>
-                    </div>
-                  )}
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -560,31 +385,14 @@ export default function AppLayout() {
 
         <main
           id="main-workspace-content"
-          onScroll={(e) => {
-            const top = e.currentTarget.scrollTop;
-            if (top > 120 && !compactHeader) setCompactHeader(true);
-            else if (top < 20 && compactHeader) setCompactHeader(false);
-          }}
           className="relative z-0 flex-1 overflow-y-auto overflow-x-hidden pb-20 md:pb-6"
           style={{
             background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
           }}
         >
-          <EnterpriseWorkspaceBar
-            currentLabel={currentLabel}
-            role={role}
-            darkMode={darkMode}
-            onToggleDarkMode={() => setDarkMode((d) => !d)}
-            compactHeader={compactHeader}
-            onToggleCompactHeader={() => setCompactHeader((v) => !v)}
-          />
-          <QuickAppBar />
-          {!compactHeader && <VisualDesignModuleCommandStandard />}
           <div className={location.pathname === '/staff' || location.pathname.startsWith('/staff/') ? 'mx-auto max-w-[1440px] px-3' : 'mx-auto max-w-[1440px] px-3 pt-2'}>
             <PendingApprovalNotice />
-            <ModuleGuide />
           </div>
-          <AutoRegisterInsights />
           <div
             className="app-dashboard-canvas mx-auto w-full max-w-[1440px] min-w-0 px-3 py-3"
             style={{ '--module-colour': currentModuleColour }}
