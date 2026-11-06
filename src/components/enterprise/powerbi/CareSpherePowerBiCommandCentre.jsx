@@ -3,6 +3,7 @@ import {
   Shield, Compass, Activity, Cpu, AlertTriangle, CheckCircle2,
   ClipboardCheck, TrendingUp, Layers, ListChecks, Vote, Database,
   RefreshCw, Maximize2, Minimize2, ChevronLeft, ChevronRight,
+  Mic, MessageSquareText, X, CheckSquare,
 } from 'lucide-react';
 import {
   POWER_BI_PAGES,
@@ -41,6 +42,7 @@ export default function CareSpherePowerBiCommandCentre() {
   const [reportingPeriod, setReportingPeriod] = useState('FY27 Q2 (Current)');
   const [lastRefresh, setLastRefresh] = useState('07 Nov 2026 · 04:55 AEST (DirectLake Live)');
   const [isPresentationMode, setIsPresentationMode] = useState(false);
+  const [showSpeakerNotes, setShowSpeakerNotes] = useState(true);
   const containerRef = useRef(null);
 
   const currentIndex = Math.max(0, POWER_BI_PAGES.findIndex((p) => p.id === activePage));
@@ -93,6 +95,8 @@ export default function CareSpherePowerBiCommandCentre() {
         goNextPage();
       } else if (e.key === 'ArrowLeft') {
         goPrevPage();
+      } else if (e.key === 'n' || e.key === 'N') {
+        setShowSpeakerNotes((prev) => !prev);
       }
     };
     window.addEventListener('keydown', onKeyDown);
@@ -203,6 +207,21 @@ export default function CareSpherePowerBiCommandCentre() {
               aria-label="Next Power BI Page"
             >
               <ChevronRight className="h-3.5 w-3.5" style={{ color: '#39E6FF' }} />
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowSpeakerNotes((prev) => !prev)}
+              aria-pressed={showSpeakerNotes}
+              className="inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-[11px] font-bold transition"
+              style={{
+                backgroundColor: showSpeakerNotes ? 'rgba(57,230,255,0.18)' : '#1E293B',
+                borderColor: showSpeakerNotes ? '#39E6FF' : 'rgba(255,255,255,0.16)',
+                color: showSpeakerNotes ? '#39E6FF' : '#FFFFFF',
+              }}
+              title="Toggle Board Meeting Speaker Notes Overlay (Shortcut: N)"
+            >
+              <Mic className="h-3.5 w-3.5" />
+              <span>Speaker Notes {showSpeakerNotes ? 'ON' : 'OFF'}</span>
             </button>
             <button
               type="button"
@@ -338,7 +357,7 @@ export default function CareSpherePowerBiCommandCentre() {
         </nav>
 
         {/* Right Widescreen Report Canvas */}
-        <div className="p-4 lg:col-span-9 xl:col-span-10" style={{ backgroundColor: '#081018' }}>
+        <div className="relative p-4 lg:col-span-9 xl:col-span-10" style={{ backgroundColor: '#081018' }}>
           {currentPageMeta.pageNum <= 6 ? (
             <PowerBiPagesOneToSix
               activePage={activePage}
@@ -346,6 +365,168 @@ export default function CareSpherePowerBiCommandCentre() {
             />
           ) : (
             <PowerBiPagesSevenToTwelve activePage={activePage} />
+          )}
+
+          {/* Board Meeting Speaker Notes Overlay (Active in 16:9 Presentation Mode or when toggled ON) */}
+          {showSpeakerNotes && (
+            <aside
+              aria-label="Board Meeting Speaker Notes Overlay"
+              className="mt-4 rounded-xl border p-4 shadow-2xl"
+              style={{
+                backgroundColor: 'rgba(22, 34, 53, 0.96)',
+                borderColor: '#39E6FF',
+                boxShadow: '0 0 24px rgba(57, 230, 255, 0.2)',
+              }}
+            >
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b pb-2.5" style={{ borderColor: 'rgba(57,230,255,0.24)' }}>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span
+                    className="inline-flex items-center gap-1.5 rounded-md px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider"
+                    style={{ backgroundColor: '#39E6FF', color: '#081018' }}
+                  >
+                    <Mic className="h-3.5 w-3.5" />
+                    Board Speaker Notes · Slide {currentPageMeta.pageNum} of 12
+                  </span>
+                  <span className="text-[13px] font-bold text-white">
+                    {currentPageMeta.shortLabel}
+                  </span>
+                  {currentPageMeta.presenterRole && (
+                    <span
+                      className="rounded border px-2 py-0.5 text-[11px] font-semibold"
+                      style={{ backgroundColor: '#1E293B', borderColor: 'rgba(57,230,255,0.35)', color: '#39E6FF' }}
+                    >
+                      Presenter: {currentPageMeta.presenterRole}
+                    </span>
+                  )}
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setShowSpeakerNotes(false)}
+                  className="inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-[11px] font-bold text-slate-300 hover:border-[#39E6FF] hover:text-white"
+                  style={{ backgroundColor: '#1E293B', borderColor: 'rgba(255,255,255,0.15)' }}
+                >
+                  <X className="h-3 w-3" />
+                  <span>Hide Notes (N)</span>
+                </button>
+              </div>
+
+              <div className="mt-3 grid grid-cols-1 gap-3 lg:grid-cols-12">
+                <div className="space-y-2 lg:col-span-7">
+                  <div className="text-[11px] font-bold uppercase tracking-wider" style={{ color: '#39E6FF' }}>
+                    Executive Narrative (Verbatim Board Script)
+                  </div>
+                  <p className="text-[13px] leading-relaxed text-white">
+                    “{currentPageMeta.speakerNotes}”
+                  </p>
+                  {currentPageMeta.decisionPrompt && (
+                    <div
+                      className="mt-2 flex items-center gap-2 rounded-lg border px-3 py-2 text-[12px] font-bold"
+                      style={{ backgroundColor: '#1E293B', borderColor: '#22C55E', color: '#22C55E' }}
+                    >
+                      <CheckSquare className="h-4 w-4 shrink-0" />
+                      <span>Board Resolution / Action Prompt: {currentPageMeta.decisionPrompt}</span>
+                    </div>
+                  )}
+                </div>
+
+                <div className="rounded-lg border p-3 lg:col-span-5" style={{ backgroundColor: '#1E293B', borderColor: 'rgba(57,230,255,0.22)' }}>
+                  <div className="mb-1.5 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider" style={{ color: '#FBBF24' }}>
+                    <MessageSquareText className="h-3.5 w-3.5" />
+                    Key Board Talking Points
+                  </div>
+                  <ul className="space-y-1.5 text-[12px] text-slate-200">
+                    {(currentPageMeta.boardTalkingPoints || []).map((pt, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full" style={{ backgroundColor: '#39E6FF' }} />
+                        <span>{pt}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </aside>
+          )}
+        </div>
+      </div>
+
+      {/* Dedicated Slide Navigation Bar (Always visible in 16:9 Presentation Mode + Quick Deck Strip) */}
+      <div
+        aria-label="Presentation Slide Navigation Bar"
+        className="flex flex-wrap items-center justify-between gap-2 border-t px-4 py-2.5"
+        style={{ backgroundColor: '#081018', borderColor: 'rgba(57,230,255,0.32)' }}
+      >
+        <div className="flex items-center gap-1.5">
+          <button
+            type="button"
+            onClick={goPrevPage}
+            className="inline-flex items-center gap-1 rounded-lg border px-2.5 py-1 text-[11px] font-bold text-white transition hover:border-[#39E6FF]"
+            style={{ backgroundColor: '#1E293B', borderColor: 'rgba(57,230,255,0.35)' }}
+          >
+            <ChevronLeft className="h-3.5 w-3.5" style={{ color: '#39E6FF' }} />
+            <span>Prev Slide</span>
+          </button>
+          <span className="px-2 text-[11px] font-bold text-slate-300">
+            Slide {currentPageMeta.pageNum} / {POWER_BI_PAGES.length}
+          </span>
+          <button
+            type="button"
+            onClick={goNextPage}
+            className="inline-flex items-center gap-1 rounded-lg border px-2.5 py-1 text-[11px] font-bold text-white transition hover:border-[#39E6FF]"
+            style={{ backgroundColor: '#1E293B', borderColor: 'rgba(57,230,255,0.35)' }}
+          >
+            <span>Next Slide</span>
+            <ChevronRight className="h-3.5 w-3.5" style={{ color: '#39E6FF' }} />
+          </button>
+        </div>
+
+        {/* 12-Slide Interactive Progress Strip */}
+        <div className="flex flex-1 flex-wrap items-center justify-center gap-1">
+          {POWER_BI_PAGES.map((pg) => {
+            const active = pg.id === activePage;
+            return (
+              <button
+                key={pg.id}
+                type="button"
+                onClick={() => setActivePage(pg.id)}
+                title={`Slide ${pg.pageNum}: ${pg.shortLabel}`}
+                className="rounded-md px-2 py-1 text-[10.5px] font-bold transition"
+                style={{
+                  backgroundColor: active ? '#39E6FF' : '#1E293B',
+                  color: active ? '#081018' : '#FFFFFF',
+                  border: active ? '1px solid #39E6FF' : '1px solid rgba(255,255,255,0.1)',
+                }}
+              >
+                {pg.pageNum}. {pg.label}
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="flex items-center gap-1.5">
+          <button
+            type="button"
+            onClick={() => setShowSpeakerNotes((prev) => !prev)}
+            className="inline-flex items-center gap-1 rounded-lg border px-2.5 py-1 text-[11px] font-bold"
+            style={{
+              backgroundColor: showSpeakerNotes ? '#39E6FF' : '#1E293B',
+              borderColor: '#39E6FF',
+              color: showSpeakerNotes ? '#081018' : '#39E6FF',
+            }}
+          >
+            <Mic className="h-3 w-3" />
+            <span>{showSpeakerNotes ? 'Hide Notes' : 'Show Notes'}</span>
+          </button>
+          {isPresentationMode && (
+            <button
+              type="button"
+              onClick={togglePresentationMode}
+              className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-[11px] font-bold text-white"
+              style={{ backgroundColor: '#EF4444' }}
+            >
+              <Minimize2 className="h-3 w-3" />
+              <span>Exit (Esc)</span>
+            </button>
           )}
         </div>
       </div>
