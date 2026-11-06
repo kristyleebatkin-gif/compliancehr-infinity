@@ -23,6 +23,7 @@ import InfinityCoreEngine from '@/components/compliance/InfinityCoreEngine';
 import Universal360ProfileFramework from '@/components/enterprise/Universal360ProfileFramework';
 import OrganisationalOperatingSystemCommand from '@/components/enterprise/OrganisationalOperatingSystemCommand';
 import OrganisationHealthScoreFramework from '@/components/enterprise/OrganisationHealthScoreFramework';
+import CareSphereSeniorMasterBlueprint from '@/components/enterprise/CareSphereSeniorMasterBlueprint';
 
 import MissionControlAiCoreHub from '@/components/enterprise/MissionControlAiCoreHub';
 import AuditReadyTodayCommandStrip from '@/components/dashboard/AuditReadyTodayCommandStrip';
@@ -100,6 +101,7 @@ export default function Dashboard() {
         {/* 1. Executive Overview (Default for Executives / Admins / Compliance) */}
         {isSuiteVisible('os-command') && (
           <div className="space-y-4">
+            <CareSphereSeniorMasterBlueprint />
             <OrganisationHealthScoreFramework />
             <OrganisationalOperatingSystemCommand />
           </div>

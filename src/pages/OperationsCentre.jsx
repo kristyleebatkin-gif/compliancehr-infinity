@@ -11,10 +11,12 @@ import UniversalRegisterManagementHubSuite from '@/components/operations/Univers
 import OrganisationalOperatingSystemCommand from '@/components/enterprise/OrganisationalOperatingSystemCommand';
 import OrganisationHealthScoreFramework from '@/components/enterprise/OrganisationHealthScoreFramework';
 import Universal360ProfileFramework from '@/components/enterprise/Universal360ProfileFramework';
-import { Cpu, Users, Zap, ShieldCheck, FolderOpen } from 'lucide-react';
+import CareSphereSeniorMasterBlueprint from '@/components/enterprise/CareSphereSeniorMasterBlueprint';
+import { Cpu, Users, Zap, ShieldCheck, FolderOpen, Layers } from 'lucide-react';
 
 const EXEC_TABS = [
   { id: 'executive-os', label: 'Operations Dispatch & Roster', icon: Cpu },
+  { id: 'master-blueprint', label: 'CareSphere Master Blueprint (12×6)', icon: Layers },
   { id: 'workforce-frontline', label: 'Frontline & Attendance', icon: ShieldCheck },
   { id: 'automation-closure', label: 'Workflows & Evidence Closure', icon: Zap },
   { id: 'registers-storage', label: 'Master Registers & Storage', icon: FolderOpen },
@@ -74,11 +76,14 @@ export default function OperationsCentre() {
 
       {show('executive-os') && (
         <div className="space-y-4">
+          <CareSphereSeniorMasterBlueprint />
           <ExecutiveOperationsCentre defaultSuite="roster" />
           <OrganisationHealthScoreFramework />
           <OrganisationalOperatingSystemCommand />
         </div>
       )}
+
+      {show('master-blueprint') && <CareSphereSeniorMasterBlueprint />}
 
       {show('profiles-360') && <Universal360ProfileFramework />}
 

@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { BookOpen, Download, Library, Search } from 'lucide-react';
 import ModuleShell from '@/components/module/ModuleShell';
 import GuideReader from '@/components/guides/GuideReader';
+import CareSphereSeniorMasterBlueprint from '@/components/enterprise/CareSphereSeniorMasterBlueprint';
 import { USER_GUIDES } from '@/lib/userGuidesContent';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import { downloadFullLibraryPdf, downloadModuleGuidePdf } from '@/lib/userGuidePdf';
@@ -100,6 +101,8 @@ export default function UserGuides() {
         icon={BookOpen}
         moduleKey="user-guides"
       />
+
+      <CareSphereSeniorMasterBlueprint />
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
         <div className="relative grow">
