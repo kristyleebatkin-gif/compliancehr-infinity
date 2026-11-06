@@ -15,8 +15,8 @@ export const MODULE_DIRECTORY = [
   { key: 'operations-centre', label: 'Operations Centre', path: '/operations-centre', icon: Sparkles, group: '1. Dashboard & Executive Command', blurb: 'Executive intelligence, executive reports, 1-click operations, Core Engine and 2026 printable templates.' },
   { key: 'analytics', label: 'Business Analytics', path: '/analytics', icon: BarChart3, group: '1. Dashboard & Executive Command', blurb: 'Business-wide analytics, KPIs, trends, executive reports and growth dashboards.' },
   { key: 'suggestions-hub', label: 'Suggestions Hub', path: '/suggestions', icon: Sparkles, group: '1. Dashboard & Executive Command', blurb: 'AI review of every module: what to visualise, automate and refine.' },
-  { key: 'assistant', label: 'AI Assistant', path: '/assistant', icon: Bot, group: '1. Dashboard & Executive Command', blurb: 'Talk to the compliance, rostering, receipts and personal AI assistants.' },
   { key: 'daily-briefing', label: 'Daily Briefing', path: '/briefing', icon: Newspaper, group: '1. Dashboard & Executive Command', blurb: 'Daily organisational briefing, operational priorities and executive updates.' },
+  { key: 'assistant', label: 'AI Assistant', path: '/assistant', icon: Bot, group: '1. Dashboard & Executive Command', blurb: 'Talk to the compliance, rostering, receipts and personal AI assistants.' },
 
   // 2. PEOPLE, INTAKE & PROFILES
   { key: 'my-profile', label: 'My Profile', path: '/my-profile', icon: UserCircle, group: '2. People, Intake & Profiles', blurb: 'Your profile, work, documents, payroll and name tag in one place.' },
@@ -96,7 +96,7 @@ export const MODULE_DIRECTORY = [
 export const NAV_GROUPS = [
   {
     label: '1. Dashboard & Executive Command',
-    keys: ['dashboard', 'operations-centre', 'analytics', 'suggestions-hub', 'assistant', 'daily-briefing'],
+    keys: ['dashboard', 'operations-centre', 'analytics', 'suggestions-hub', 'daily-briefing', 'assistant'],
   },
   {
     label: '2. People, Intake & Profiles',

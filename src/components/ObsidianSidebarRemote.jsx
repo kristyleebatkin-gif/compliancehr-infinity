@@ -23,18 +23,18 @@ const APP_DESIGN_COLOURS = ['#0072FF', '#5A00D6', '#FF2E9A', '#A100FF', '#00C6FF
 export const PRIMARY_11_OS_NAV = [
   {
     id: 'dashboard-executive',
-    label: '1. Dashboard & Executive Command',
-    sub: 'Dashboard, Operations, Analytics, Suggestions & AI',
+    label: 'Dashboard',
+    sub: 'Dashboard, Executive, Operations, Analytics & AI',
     path: '/dashboard',
     icon: LayoutDashboard,
     status: 'LIVE',
     children: [
-      { label: 'Dashboard', path: '/dashboard', sub: 'Executive overview & live KPIs' },
+      { label: 'Executive', path: '/dashboard', sub: 'Executive overview & live KPIs' },
       { label: 'Operations Centre', path: '/operations-centre', sub: 'Master operations & control deck' },
       { label: 'Business Analytics', path: '/analytics', sub: 'Cross-module trends & reports' },
       { label: 'Suggestions Hub', path: '/suggestions', sub: 'Continuous improvement ideas' },
-      { label: 'AI Assistant', path: '/assistant', sub: '24/7 compliance & HR copilot' },
       { label: 'Daily Briefing', path: '/briefing', sub: 'Morning operational briefing' },
+      { label: 'AI Assistant', path: '/assistant', sub: '24/7 compliance & HR copilot' },
     ],
   },
   {
@@ -211,19 +211,19 @@ export const PRIMARY_11_OS_NAV = [
 export const FOCUSED_5_PILLAR_NAV = [
   {
     id: 'pillar-today',
-    label: "1. Today's Command",
-    sub: 'Dashboard, Operations, Analytics, Briefing, Tasks & AI',
+    label: 'Dashboard',
+    sub: 'Dashboard, Executive, Operations, Analytics, Briefing & AI',
     path: '/dashboard',
     icon: LayoutDashboard,
     status: 'LIVE',
     children: [
-      { label: 'Dashboard', path: '/dashboard', sub: 'Audit Ready Today & Executive KPIs' },
+      { label: 'Executive', path: '/dashboard', sub: 'Executive overview & live KPIs' },
       { label: 'Operations Centre', path: '/operations-centre', sub: 'Master operations & control deck' },
       { label: 'Business Analytics', path: '/analytics', sub: 'Cross-module trends & reports' },
-      { label: 'Daily Briefing', path: '/briefing', sub: 'Morning operational briefing' },
-      { label: 'Tasks', path: '/tasks', sub: 'Shared to-do & sign-off board' },
       { label: 'Suggestions Hub', path: '/suggestions', sub: 'Continuous improvement ideas' },
+      { label: 'Daily Briefing', path: '/briefing', sub: 'Morning operational briefing' },
       { label: 'AI Assistant', path: '/assistant', sub: 'Compliance & HR intelligence copilot' },
+      { label: 'Tasks', path: '/tasks', sub: 'Shared to-do & sign-off board' },
     ],
   },
   {
@@ -372,7 +372,7 @@ export default function ObsidianSidebarRemote({
     }
   };
 
-  const openMajorSectionInMainView = (pillar, modeOverride, shouldNavigate = false) => {
+  const openMajorSectionInMainView = (pillar, modeOverride, shouldNavigate = true) => {
     const activeMode = modeOverride || navMode;
     setSelectedPillarId(pillar.id);
     localStorage.setItem('chr-active-remote-pillar', pillar.id);

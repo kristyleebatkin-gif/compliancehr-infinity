@@ -401,7 +401,7 @@ export default function AppLayout() {
               <Outlet />
             </ErrorBoundary>
           </div>
-          {location.pathname !== '/our-employees' && <ModuleDocsFooter />}
+          {location.pathname !== '/our-employees' && location.pathname !== '/dashboard' && <ModuleDocsFooter />}
           <UniversalDocumentViewerModal />
           <EnterpriseFloatingWorkspaceDock />
           <ProviderOnboardingDrawer open={onboardingOpen} onClose={() => setOnboardingOpen(false)} />
