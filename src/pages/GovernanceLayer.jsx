@@ -13,21 +13,23 @@ import NdisStandardsMap from '@/components/governance/NdisStandardsMap';
 import EvidenceChainMap from '@/components/governance/EvidenceChainMap';
 import AssuranceRegisters from '@/components/governance/AssuranceRegisters';
 import NdisAuditPack from '@/components/governance/NdisAuditPack';
+import CareSphereSmeGarmSuite from '@/components/enterprise/CareSphereSmeGarmSuite';
 
 export default function GovernanceLayer() {
-  const [tab, setTab] = useState('lifecycle');
+  const [tab, setTab] = useState('sme-garm');
 
   return (
     <div className="mx-auto w-full max-w-[1440px] space-y-4">
       <ModuleShell
         moduleKey="governance"
-        title="Governance Layer"
-        subtitle="One governance engine: every policy, procedure, form, register, record, risk, incident, complaint, training item, consent, acknowledgement and audit evidence item linked — with document control, delegations, standards mapping and a one-click NDIS audit pack."
+        title="CareSphere SME-GARM & Governance Layer"
+        subtitle="Senior Master Enterprise Governance, Assurance & Readiness Management System: Purpose → Ownership → Evidence → Controls → Measurement → Assurance → Benefits → Readiness → Enterprise Value."
         icon={ShieldCheck}
       />
 
       <Tabs value={tab} onValueChange={setTab}>
         <TabsList className="flex h-auto flex-wrap gap-1.5">
+          <TabsTrigger value="sme-garm">SME-GARM Command Suite</TabsTrigger>
           <TabsTrigger value="lifecycle">Lifecycle Chain</TabsTrigger>
           <TabsTrigger value="objects">Universal Objects</TabsTrigger>
           <TabsTrigger value="document-control">Document Control</TabsTrigger>
@@ -40,6 +42,10 @@ export default function GovernanceLayer() {
           <TabsTrigger value="assurance">Assurance Registers</TabsTrigger>
           <TabsTrigger value="audit-pack">Audit Mode &amp; NDIS Pack</TabsTrigger>
         </TabsList>
+
+        <TabsContent value="sme-garm" className="mt-4">
+          <CareSphereSmeGarmSuite />
+        </TabsContent>
 
         <TabsContent value="lifecycle" className="mt-4">
           <LifecycleChain onOpenObjects={() => setTab('objects')} />
