@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Shield, Compass, Activity, Cpu, AlertTriangle, CheckCircle2,
   ClipboardCheck, TrendingUp, Layers, ListChecks, Vote, Database,
-  RefreshCw, Presentation, FileText, Download,
+  RefreshCw, Maximize2, Minimize2, ChevronLeft, ChevronRight,
 } from 'lucide-react';
 import {
   POWER_BI_PAGES,
@@ -40,9 +40,64 @@ export default function CareSpherePowerBiCommandCentre() {
   const [activePage, setActivePage] = useState('p1_command');
   const [reportingPeriod, setReportingPeriod] = useState('FY27 Q2 (Current)');
   const [lastRefresh, setLastRefresh] = useState('07 Nov 2026 · 04:55 AEST (DirectLake Live)');
+  const [isPresentationMode, setIsPresentationMode] = useState(false);
+  const containerRef = useRef(null);
 
-  const currentPageMeta =
-    POWER_BI_PAGES.find((p) => p.id === activePage) || POWER_BI_PAGES[0];
+  const currentIndex = Math.max(0, POWER_BI_PAGES.findIndex((p) => p.id === activePage));
+  const currentPageMeta = POWER_BI_PAGES[currentIndex] || POWER_BI_PAGES[0];
+
+  const goPrevPage = () => {
+    const prevIdx = (currentIndex - 1 + POWER_BI_PAGES.length) % POWER_BI_PAGES.length;
+    setActivePage(POWER_BI_PAGES[prevIdx].id);
+  };
+
+  const goNextPage = () => {
+    const nextIdx = (currentIndex + 1) % POWER_BI_PAGES.length;
+    setActivePage(POWER_BI_PAGES[nextIdx].id);
+  };
+
+  const togglePresentationMode = async () => {
+    const nextState = !isPresentationMode;
+    setIsPresentationMode(nextState);
+    if (nextState && containerRef.current?.requestFullscreen) {
+      try {
+        await containerRef.current.requestFullscreen();
+      } catch {
+        // Fallback to fixed viewport 16:9 presentation overlay when iframe blocks native fullscreen
+      }
+    } else if (!nextState && document.fullscreenElement && document.exitFullscreen) {
+      try {
+        await document.exitFullscreen();
+      } catch {
+        // Ignore
+      }
+    }
+  };
+
+  useEffect(() => {
+    const onFullscreenChange = () => {
+      if (!document.fullscreenElement && isPresentationMode) {
+        // Keep overlay unless Esc was pressed, handled below
+      }
+    };
+    document.addEventListener('fullscreenchange', onFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', onFullscreenChange);
+  }, [isPresentationMode]);
+
+  useEffect(() => {
+    if (!isPresentationMode) return;
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setIsPresentationMode(false);
+      } else if (e.key === 'ArrowRight') {
+        goNextPage();
+      } else if (e.key === 'ArrowLeft') {
+        goPrevPage();
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [isPresentationMode, currentIndex]);
 
   const handleRefresh = () => {
     const now = new Date();
@@ -51,8 +106,13 @@ export default function CareSpherePowerBiCommandCentre() {
 
   return (
     <section
+      ref={containerRef}
       aria-label="CareSphere Power BI Executive Command Centre (12-Page Suite)"
-      className="preserve-island-theme overflow-hidden rounded-2xl border shadow-2xl"
+      className={`preserve-island-theme border shadow-2xl transition-all ${
+        isPresentationMode
+          ? 'fixed inset-0 z-[100] flex flex-col overflow-y-auto rounded-none p-2 sm:p-4'
+          : 'overflow-hidden rounded-2xl'
+      }`}
       style={{
         backgroundColor: '#081018',
         borderColor: '#39E6FF',
@@ -60,6 +120,13 @@ export default function CareSpherePowerBiCommandCentre() {
         fontFamily: "'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif",
       }}
     >
+      <div
+        className={
+          isPresentationMode
+            ? 'mx-auto flex w-full max-w-[1920px] flex-1 flex-col justify-between lg:aspect-video'
+            : 'flex flex-col'
+        }
+      >
       {/* Top Power BI Widescreen Header Bar (Wireframe Header) */}
       <div
         className="flex flex-wrap items-center justify-between gap-3 border-b px-4 py-3"
@@ -114,6 +181,53 @@ export default function CareSpherePowerBiCommandCentre() {
             <span className="h-2 w-2 rounded-full" style={{ backgroundColor: '#22C55E' }} />
             RAG Status: GREEN (Ω∞ READY)
           </span>
+
+          {/* 16:9 Presentation Mode & Page Step Controls */}
+          <div className="flex items-center gap-1">
+            <button
+              type="button"
+              onClick={goPrevPage}
+              className="inline-flex items-center justify-center rounded-lg border p-1.5 text-white transition hover:border-[#39E6FF]"
+              style={{ backgroundColor: '#1E293B', borderColor: 'rgba(57,230,255,0.3)' }}
+              title="Previous Page (←)"
+              aria-label="Previous Power BI Page"
+            >
+              <ChevronLeft className="h-3.5 w-3.5" style={{ color: '#39E6FF' }} />
+            </button>
+            <button
+              type="button"
+              onClick={goNextPage}
+              className="inline-flex items-center justify-center rounded-lg border p-1.5 text-white transition hover:border-[#39E6FF]"
+              style={{ backgroundColor: '#1E293B', borderColor: 'rgba(57,230,255,0.3)' }}
+              title="Next Page (→)"
+              aria-label="Next Power BI Page"
+            >
+              <ChevronRight className="h-3.5 w-3.5" style={{ color: '#39E6FF' }} />
+            </button>
+            <button
+              type="button"
+              onClick={togglePresentationMode}
+              aria-pressed={isPresentationMode}
+              className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1 text-[11px] font-bold transition hover:opacity-95"
+              style={{
+                backgroundColor: isPresentationMode ? '#EF4444' : '#39E6FF',
+                color: isPresentationMode ? '#FFFFFF' : '#081018',
+              }}
+              title="Toggle 16:9 Full-Screen Presentation Mode (Esc to exit)"
+            >
+              {isPresentationMode ? (
+                <>
+                  <Minimize2 className="h-3.5 w-3.5" />
+                  <span>Exit 16:9 Presentation</span>
+                </>
+              ) : (
+                <>
+                  <Maximize2 className="h-3.5 w-3.5" />
+                  <span>16:9 Presentation Mode</span>
+                </>
+              )}
+            </button>
+          </div>
 
           <div className="flex items-center gap-1">
             <button
@@ -245,6 +359,7 @@ export default function CareSpherePowerBiCommandCentre() {
           {CONSTITUTIONAL_PRINCIPLE}
         </span>{' '}
         <span className="text-slate-300">{MANDATORY_CLOSING_STATEMENT}</span>
+      </div>
       </div>
     </section>
   );
