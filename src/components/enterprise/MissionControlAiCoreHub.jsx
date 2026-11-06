@@ -326,140 +326,140 @@ export default function MissionControlAiCoreHub({
         </div>
       )}
 
-      {/* ==================== ORBITAL MISSION CONTROL MATRIX: 8 CIRCULAR PODS AROUND CENTRAL AI CORE (50% COMPACT) ==================== */}
-      <div className="relative z-10 mx-auto max-w-4xl">
-        <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 lg:grid-cols-3 lg:gap-2 items-stretch">
+      {/* ==================== UNIFORM 32PX NAVIGATION MODULAR BUTTONS MATRIX ==================== */}
+      <div className="relative z-10 mx-auto w-full">
+        <div className="grid grid-cols-2 gap-1 sm:grid-cols-3 lg:grid-cols-9 items-stretch">
           {ORBITAL_PODS.map((pod, index) => {
+            const Icon = pod.icon;
             const isSelected = selectedPod === pod.id;
             const renderCenterAiCoreBefore = index === 4;
 
             return (
               <React.Fragment key={pod.id}>
                 {renderCenterAiCoreBefore && (
-                  <div className="col-span-2 sm:col-span-1 lg:col-start-2 lg:row-start-2 flex items-center justify-center">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSelectedPod('ai-core');
-                        if (onSelectSuite) onSelectSuite('os-command');
-                        else navigate('/assistant');
-                      }}
-                      className="group relative flex h-full w-full flex-col items-center justify-center rounded-2xl p-1 text-center transition-all duration-200 hover:scale-[1.01] focus:outline-none"
-                      style={{
-                        background: POD_RING_GRADIENT,
-                        boxShadow:
-                          '0 0 18px rgba(0, 198, 255, 0.7), 0 0 32px rgba(255, 46, 154, 0.35), inset 0 1px 4px rgba(255, 255, 255, 0.6)',
-                      }}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedPod('ai-core');
+                      if (onSelectSuite) {
+                        onSelectSuite('os-command');
+                        setTimeout(() => {
+                          const el = document.getElementById('dashboard-active-suite-section');
+                          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        }, 60);
+                      } else {
+                        navigate('/assistant');
+                      }
+                    }}
+                    className={`group block w-full text-left rounded-lg p-[1px] transition-all duration-150 focus-visible:outline-none ${
+                      selectedPod === 'ai-core'
+                        ? 'shadow-[0_0_12px_rgba(0,198,255,0.85)]'
+                        : 'shadow-[0_0_6px_rgba(90,0,214,0.3)] hover:shadow-[0_0_10px_rgba(0,198,255,0.6)]'
+                    }`}
+                    style={{ background: POD_RING_GRADIENT }}
+                  >
+                    <div
+                      className="flex h-[32px] flex-col justify-between overflow-hidden rounded-[7px]"
+                      style={{ background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)' }}
                     >
-                      <div
-                        className="relative flex h-full w-full flex-col items-center justify-center rounded-[14px] border border-white/40 px-2.5 py-1.5 backdrop-blur-xl"
-                        style={{
-                          background:
-                            'radial-gradient(circle at 32% 24%, rgba(0, 198, 255, 0.42) 0%, rgba(90, 0, 214, 0.90) 55%, #061539 100%)',
-                          boxShadow: 'inset 0 2px 8px rgba(255,255,255,0.4), 0 4px 12px rgba(0,0,0,0.4)',
-                        }}
-                      >
-                        <div className="relative flex h-8 w-8 items-center justify-center">
-                          <svg className="pointer-events-none absolute inset-0 h-full w-full -rotate-90" viewBox="0 0 64 64">
-                            <circle cx="32" cy="32" r="28" fill="none" stroke="rgba(255,255,255,0.22)" strokeWidth="4" />
-                            <circle
-                              cx="32"
-                              cy="32"
-                              r="28"
-                              fill="none"
-                              stroke="#00C6FF"
-                              strokeWidth="4.5"
-                              strokeLinecap="round"
-                              strokeDasharray="176"
-                              strokeDashoffset="14"
-                            />
-                          </svg>
-                          <div className="flex h-5 w-5 items-center justify-center rounded-full bg-white text-[#0A2B6D] shadow-2xs">
-                            <Cpu className="h-2.5 w-2.5 text-[#5A00D6]" />
-                          </div>
+                      <div className="flex h-[16px] items-center justify-between gap-1 bg-white px-1.5">
+                        <div className="flex min-w-0 flex-1 items-center gap-1">
+                          <span
+                            className="flex h-3 w-3 shrink-0 items-center justify-center rounded bg-[#F5F0FF]"
+                            style={{ border: '1px solid #0072FF' }}
+                          >
+                            <Cpu className="h-2 w-2 shrink-0" style={{ color: '#0072FF' }} />
+                          </span>
+                          <span
+                            className="min-w-0 truncate bg-clip-text text-[8px] font-extrabold leading-none tracking-tight text-transparent"
+                            style={{
+                              backgroundImage:
+                                'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
+                            }}
+                          >
+                            <span style={{ color: '#0072FF' }}>◉</span> AI Core
+                          </span>
                         </div>
-
-                        <span className="mt-1 inline-flex items-center gap-0.5 rounded-full bg-white px-2 py-0 text-[7.5px] font-black uppercase tracking-wider text-[#0A2B6D]">
-                          <span className="text-[#0072FF]">◉</span>
-                          <span style={{ color: '#0A2B6D' }}>CENTRAL AI CORE</span>
-                        </span>
-
-                        <div className="mt-0.5 text-xs font-black tracking-tight text-white">
-                          ◉ AI Core ({liveMetrics.aiRecommendations} insights)
-                        </div>
-
-                        <span
-                          className="mt-0.5 text-[8px] font-bold text-white/90"
-                          style={{ color: '#FFFFFF' }}
-                        >
-                          Live Digital Twin · 46 Modules
+                        <span className="inline-flex shrink-0 items-center gap-0.5 rounded-full bg-[#0A2B6D] px-1 py-0 text-[5.5px] font-black uppercase tracking-wider text-[#00C6FF]">
+                          <span
+                            className="h-1 w-1 rounded-full"
+                            style={{ backgroundColor: '#00C6FF', boxShadow: '0 0 5px 1px #00C6FF' }}
+                          />
+                          LIVE
                         </span>
                       </div>
-                    </button>
-                  </div>
+                      <div className="flex h-[15px] items-center justify-between gap-1 px-1.5">
+                        <span
+                          className="truncate text-[7px] font-bold leading-none text-white"
+                          style={{ color: '#FFFFFF' }}
+                        >
+                          {liveMetrics.aiRecommendations} insights
+                        </span>
+                        <ArrowUpRight className="h-2 w-2 shrink-0 text-[#00C6FF]" />
+                      </div>
+                    </div>
+                  </button>
                 )}
 
-                {/* 50% Compact Control Pod */}
                 <button
                   type="button"
                   onClick={() => handlePodClick(pod)}
-                  className={`group relative flex h-full w-full rounded-2xl p-[1.5px] text-center transition-all duration-200 hover:-translate-y-0.5 focus:outline-none ${pod.posClass}`}
-                  style={{
-                    background: POD_RING_GRADIENT,
-                    boxShadow: isSelected
-                      ? `0 0 14px ${pod.glowColor}`
-                      : `0 4px 12px -4px rgba(0,0,0,0.4), 0 0 8px ${pod.glowColor}`,
-                  }}
+                  className={`group block w-full text-left rounded-lg p-[1px] transition-all duration-150 focus-visible:outline-none ${
+                    isSelected
+                      ? 'shadow-[0_0_12px_rgba(0,198,255,0.85)]'
+                      : 'shadow-[0_0_6px_rgba(90,0,214,0.3)] hover:shadow-[0_0_10px_rgba(0,198,255,0.6)]'
+                  }`}
+                  style={{ background: POD_RING_GRADIENT }}
                 >
-                  <div className="flex h-full w-full flex-col items-center justify-between rounded-[14px] bg-white px-2 py-1.5">
-                    <div className="flex items-center gap-1.5">
-                      <GlowingOrbRing
-                        icon={pod.icon}
-                        ringColor={pod.ringColor}
-                        glowColor={pod.glowColor}
-                        ringPct={pod.ringPct}
-                        alertPulse={pod.alertPulse}
-                      />
-
-                      <div className="text-left">
-                        <div
-                          className="inline-flex items-center gap-1 rounded-full bg-white px-2 py-0"
+                  <div
+                    className="flex h-[32px] flex-col justify-between overflow-hidden rounded-[7px]"
+                    style={{ background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)' }}
+                  >
+                    <div className="flex h-[16px] items-center justify-between gap-1 bg-white px-1.5">
+                      <div className="flex min-w-0 flex-1 items-center gap-1">
+                        <span
+                          className="flex h-3 w-3 shrink-0 items-center justify-center rounded bg-[#F5F0FF]"
                           style={{ border: `1px solid ${pod.ringColor}` }}
                         >
-                          <span
-                            className={`text-[8px] leading-none ${pod.alertPulse ? 'animate-ping' : ''}`}
-                            style={{ color: pod.ringColor }}
-                          >
-                            ◉
-                          </span>
-                          <span
-                            className="text-[9.5px] font-extrabold tracking-tight text-[#0A2B6D]"
-                            style={{ color: '#0A2B6D' }}
-                          >
-                            {pod.label}
-                          </span>
-                        </div>
-
-                        <div
-                          className="mt-0.5 rounded-full bg-[#F5F0FF] px-2 py-0 text-[8px] font-black tracking-wide"
+                          <Icon className="h-2 w-2 shrink-0" style={{ color: pod.ringColor }} />
+                        </span>
+                        <span
+                          className="min-w-0 truncate bg-clip-text text-[8px] font-extrabold leading-none tracking-tight text-transparent"
                           style={{
-                            border: `1px solid ${pod.ringColor}`,
-                            color: pod.alertPulse ? '#FF2E9A' : '#5A00D6',
+                            backgroundImage:
+                              'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
                           }}
                         >
-                          {pod.metric}
-                        </div>
+                          <span style={{ color: pod.ringColor }}>◉</span> {pod.label}
+                        </span>
                       </div>
+                      <span
+                        className={`inline-flex shrink-0 items-center gap-0.5 rounded-full px-1 py-0 text-[5.5px] font-black uppercase tracking-wider ${
+                          isSelected ? 'bg-[#0A2B6D] text-[#00C6FF]' : 'bg-[#F5F0FF] text-[#5A00D6]'
+                        }`}
+                      >
+                        <span
+                          className="h-1 w-1 rounded-full"
+                          style={{
+                            backgroundColor: isSelected ? '#00C6FF' : pod.ringColor,
+                            boxShadow: isSelected
+                              ? '0 0 5px 1px #00C6FF'
+                              : `0 0 4px 1px ${pod.ringColor}`,
+                          }}
+                        />
+                        {isSelected ? 'OPEN' : 'LIVE'}
+                      </span>
                     </div>
 
-                    {!compact && (
+                    <div className="flex h-[15px] items-center justify-between gap-1 px-1.5">
                       <span
-                        className="mt-0.5 text-[8px] font-bold leading-tight text-[#0A2B6D]"
-                        style={{ color: '#0A2B6D' }}
+                        className="truncate text-[7px] font-bold leading-none text-white"
+                        style={{ color: '#FFFFFF' }}
                       >
-                        {pod.sub}
+                        {pod.metric}
                       </span>
-                    )}
+                      <ArrowUpRight className="h-2 w-2 shrink-0" style={{ color: pod.ringColor }} />
+                    </div>
                   </div>
                 </button>
               </React.Fragment>
@@ -468,27 +468,10 @@ export default function MissionControlAiCoreHub({
         </div>
       </div>
 
-      {/* ==================== BOTTOM CIRCULAR POD SUITE SWITCHER (50% COMPACT) ==================== */}
+      {/* ==================== BOTTOM SUITE SWITCHER: IDENTICAL 32PX MODULAR BUTTONS ==================== */}
       {onSelectSuite && (
-        <div className="relative z-10 mt-2 border-t border-white/15 pt-1.5">
-          <div className="mb-1 flex flex-wrap items-center justify-between gap-1 px-1">
-            <span
-              className="text-[8px] font-extrabold uppercase tracking-widest text-[#00C6FF]"
-              style={{ color: '#00C6FF' }}
-            >
-              ◉ Mission Control Command Pods — Click to Open Section Underneath
-            </span>
-            <Link
-              to="/operations-centre"
-              className="inline-flex items-center gap-1 text-[9px] font-extrabold text-white hover:text-[#00C6FF]"
-              style={{ color: '#FFFFFF' }}
-            >
-              <span>Full Operations Centre</span>
-              <ArrowUpRight className="h-2.5 w-2.5 text-[#00C6FF]" />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-2 gap-1 sm:grid-cols-4 xl:grid-cols-8">
+        <div className="relative z-10 mt-1.5 border-t border-white/15 pt-1.5">
+          <div className="grid grid-cols-2 gap-1 sm:grid-cols-4 xl:grid-cols-8 items-stretch">
             {SUITE_PODS.map((suite) => {
               const active = activeSuite === suite.id;
               return (
@@ -503,38 +486,61 @@ export default function MissionControlAiCoreHub({
                     }, 60);
                   }}
                   aria-pressed={active}
-                  className={`group flex rounded-full p-[1px] text-left transition-all duration-150 ${
+                  className={`group block w-full text-left rounded-lg p-[1px] transition-all duration-150 focus-visible:outline-none ${
                     active
-                      ? 'shadow-[0_0_12px_rgba(0,198,255,0.85)] scale-[1.01]'
-                      : 'hover:shadow-[0_0_8px_rgba(0,198,255,0.5)]'
+                      ? 'shadow-[0_0_12px_rgba(0,198,255,0.85)]'
+                      : 'shadow-[0_0_6px_rgba(90,0,214,0.3)] hover:shadow-[0_0_10px_rgba(0,198,255,0.6)]'
                   }`}
                   style={{ background: POD_RING_GRADIENT }}
                 >
-                  <span className="flex w-full items-center gap-1 rounded-full bg-white px-1.5 py-0.5">
-                    <span
-                      className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-[#F5F0FF] text-[7px] font-black"
-                      style={{
-                        border: `1px solid ${suite.color}`,
-                        color: suite.color,
-                      }}
-                    >
-                      ◉
-                    </span>
-                    <span className="min-w-0 flex-1">
+                  <div
+                    className="flex h-[32px] flex-col justify-between overflow-hidden rounded-[7px]"
+                    style={{ background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)' }}
+                  >
+                    <div className="flex h-[16px] items-center justify-between gap-1 bg-white px-1.5">
+                      <div className="flex min-w-0 flex-1 items-center gap-1">
+                        <span
+                          className="flex h-3 w-3 shrink-0 items-center justify-center rounded bg-[#F5F0FF]"
+                          style={{ border: `1px solid ${suite.color}` }}
+                        >
+                          <Cpu className="h-2 w-2 shrink-0" style={{ color: suite.color }} />
+                        </span>
+                        <span
+                          className="min-w-0 truncate bg-clip-text text-[8px] font-extrabold leading-none tracking-tight text-transparent"
+                          style={{
+                            backgroundImage:
+                              'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
+                          }}
+                        >
+                          <span style={{ color: suite.color }}>◉</span> {suite.label}
+                        </span>
+                      </div>
                       <span
-                        className="block truncate text-[8px] font-extrabold leading-tight"
-                        style={{ color: '#0A2B6D' }}
+                        className={`inline-flex shrink-0 items-center gap-0.5 rounded-full px-1 py-0 text-[5.5px] font-black uppercase tracking-wider ${
+                          active ? 'bg-[#0A2B6D] text-[#00C6FF]' : 'bg-[#F5F0FF] text-[#5A00D6]'
+                        }`}
                       >
-                        {suite.label}
+                        <span
+                          className="h-1 w-1 rounded-full"
+                          style={{
+                            backgroundColor: active ? '#00C6FF' : suite.color,
+                            boxShadow: active ? '0 0 5px 1px #00C6FF' : `0 0 4px 1px ${suite.color}`,
+                          }}
+                        />
+                        {active ? 'OPEN' : 'LIVE'}
                       </span>
+                    </div>
+
+                    <div className="flex h-[15px] items-center justify-between gap-1 px-1.5">
                       <span
-                        className="block truncate text-[6.5px] font-bold leading-tight"
-                        style={{ color: active ? '#FF2E9A' : '#5A00D6' }}
+                        className="truncate text-[7px] font-bold leading-none text-white"
+                        style={{ color: '#FFFFFF' }}
                       >
                         {suite.metric}
                       </span>
-                    </span>
-                  </span>
+                      <ArrowUpRight className="h-2 w-2 shrink-0" style={{ color: suite.color }} />
+                    </div>
+                  </div>
                 </button>
               );
             })}
