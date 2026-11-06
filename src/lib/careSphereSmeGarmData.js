@@ -7,6 +7,19 @@ export const CONSTITUTIONAL_PRINCIPLE =
 export const MANDATORY_CLOSING_STATEMENT =
   'Purpose Directs. Ownership Commits. Evidence Proves. Controls Govern. Measurement Informs. Assurance Validates. Benefits Deliver Value. Readiness Sustains the Enterprise. These principles form the constitutional foundation of the CareSphere Senior Master Enterprise Governance, Assurance & Readiness Management System and provide the governance standard against which all enterprise decisions, investments, controls, risks, benefits, assurance activities, organisational health assessments, and Ω∞ Readiness outcomes are governed and continuously improved.';
 
+export const MANDATORY_OUTPUT_PILLARS = [
+  'Board Ready',
+  'Executive Grade',
+  'Audit Ready',
+  'Assurance Focused',
+  'Risk Aware',
+  'Benefits Driven',
+  'Microsoft Aligned',
+  'Data Driven',
+  'Decision Oriented',
+  'Visually Structured',
+];
+
 export const MIDNIGHT_COMMAND_THEME = {
   background: '#081018',
   surface: '#162235',

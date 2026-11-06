@@ -12,6 +12,7 @@ import {
 import {
   CONSTITUTIONAL_PRINCIPLE,
   MANDATORY_CLOSING_STATEMENT,
+  MANDATORY_OUTPUT_PILLARS,
 } from '@/lib/careSphereSmeGarmData';
 import {
   exportBoardPackPdf,
@@ -531,15 +532,41 @@ export default function CareSpherePowerBiCommandCentre() {
         </div>
       </div>
 
-      {/* Constitutional Footer */}
+      {/* 10 Mandatory Output Quality Pillars + Constitutional Closing Statement Footer */}
       <div
-        className="border-t px-4 py-2.5 text-[11px]"
-        style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.24)' }}
+        className="space-y-2 border-t px-4 py-3 text-[11px]"
+        style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.28)' }}
       >
-        <span className="font-bold" style={{ color: '#39E6FF' }}>
-          {CONSTITUTIONAL_PRINCIPLE}
-        </span>{' '}
-        <span className="text-slate-300">{MANDATORY_CLOSING_STATEMENT}</span>
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: '#39E6FF' }}>
+            Constitutional Output Standard:
+          </span>
+          {MANDATORY_OUTPUT_PILLARS.map((pillar) => (
+            <span
+              key={pillar}
+              className="rounded border px-2 py-0.5 text-[10px] font-bold"
+              style={{
+                backgroundColor: '#1E293B',
+                borderColor: 'rgba(57,230,255,0.32)',
+                color: '#FFFFFF',
+              }}
+            >
+              ✓ {pillar}
+            </span>
+          ))}
+        </div>
+
+        <div className="rounded-lg border p-2.5 leading-relaxed" style={{ backgroundColor: '#081018', borderColor: 'rgba(57,230,255,0.22)' }}>
+          <div className="text-[11px] font-bold uppercase tracking-wider" style={{ color: '#22C55E' }}>
+            Mandatory Closing Statement
+          </div>
+          <p className="mt-0.5 text-[12px] font-bold" style={{ color: '#39E6FF' }}>
+            {CONSTITUTIONAL_PRINCIPLE}
+          </p>
+          <p className="mt-1 text-[11.5px] text-slate-200">
+            These principles form the constitutional foundation of the CareSphere Senior Master Enterprise Governance, Assurance &amp; Readiness Management System and provide the governance standard against which all enterprise decisions, investments, controls, risks, benefits, assurance activities, organisational health assessments, and Ω∞ Readiness outcomes are governed and continuously improved.
+          </p>
+        </div>
       </div>
       </div>
     </section>

@@ -5,6 +5,7 @@ import { jsPDF } from 'jspdf';
 import {
   CONSTITUTIONAL_PRINCIPLE,
   MANDATORY_CLOSING_STATEMENT,
+  MANDATORY_OUTPUT_PILLARS,
   MANDATORY_EXECUTIVE_KPIS,
   BOARD_PACK_25_SLIDES,
   MICROSOFT_FABRIC_MODEL,
@@ -116,16 +117,19 @@ export function exportBoardPackPdf({
 
     // Mandatory Constitutional Closing Footer on every slide
     doc.setFillColor(22, 34, 53);
-    doc.rect(0, pageHeight - 54, pageWidth, 54, 'F');
+    doc.rect(0, pageHeight - 62, pageWidth, 62, 'F');
     doc.setFont('helvetica', 'bold');
+    doc.setFontSize(7.5);
+    doc.setTextColor(34, 197, 94);
+    doc.text(`OUTPUT STANDARD: ${MANDATORY_OUTPUT_PILLARS.join(' · ')}`, 28, pageHeight - 46);
     doc.setFontSize(8);
     doc.setTextColor(57, 230, 255);
-    doc.text(CONSTITUTIONAL_PRINCIPLE, 28, pageHeight - 32);
+    doc.text(CONSTITUTIONAL_PRINCIPLE, 28, pageHeight - 33);
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(7.5);
+    doc.setFontSize(7.2);
     doc.setTextColor(203, 213, 225);
     const closingLines = doc.splitTextToSize(MANDATORY_CLOSING_STATEMENT, pageWidth - 56);
-    doc.text(closingLines.slice(0, 2), 28, pageHeight - 18);
+    doc.text(closingLines.slice(0, 2), 28, pageHeight - 20);
   });
 
   doc.save('CareSphere_SME_GARM_25_Slide_Board_Pack.pdf');
@@ -158,6 +162,7 @@ export function exportBoardPackWord({
   <div class="banner">
     <h1>CareSphere Senior Master Enterprise Governance, Assurance & Readiness Management System (SME-GARM)</h1>
     <p><strong>Constitutional Principle:</strong> ${CONSTITUTIONAL_PRINCIPLE}</p>
+    <p><strong>Output Standard:</strong> ${MANDATORY_OUTPUT_PILLARS.join(' | ')}</p>
     <p><strong>Live Composite Indices:</strong> GEI: 91.4 | Organisation Health: ${orgHealthIndex} | Ω∞ Readiness: ${omegaReadinessIndex} (Ω∞ Ready) | LQI: ${lqiScore}%</p>
   </div>
 
@@ -248,6 +253,7 @@ export function exportBoardPackPowerPoint({
         </div>
       </div>
       <div class="footer">
+        <strong>${MANDATORY_OUTPUT_PILLARS.join(' · ')}</strong>
         <strong>${CONSTITUTIONAL_PRINCIPLE}</strong>
         ${MANDATORY_CLOSING_STATEMENT}
       </div>
@@ -268,6 +274,7 @@ export function exportPowerBiSemanticModel({
   const payload = {
     version: '1.0',
     platform: 'CareSphere SME-GARM Microsoft Fabric & Power BI DirectLake Semantic Model',
+    outputQualityStandard: MANDATORY_OUTPUT_PILLARS,
     constitutionalPrinciple: CONSTITUTIONAL_PRINCIPLE,
     closingStatement: MANDATORY_CLOSING_STATEMENT,
     generatedAt: new Date().toISOString(),
