@@ -51,6 +51,7 @@ export default function AppLayout() {
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('ch-theme') === 'dark');
   const [workspaceView, setWorkspaceView] = useState(() => localStorage.getItem('chr-workspace-view-mode') || 'both');
   const [compactHeader, setCompactHeader] = useState(false);
+  const [manualCompactOverride, setManualCompactOverride] = useState(null);
   const [onboardingOpen, setOnboardingOpen] = useState(false);
 
   useEffect(() => {
@@ -65,6 +66,30 @@ export default function AppLayout() {
       window.removeEventListener('chr-open-onboarding-checklist', onOpenOnboarding);
     };
   }, []);
+
+  useEffect(() => {
+    const mainEl = document.getElementById('main-workspace-content');
+    const handleScroll = () => {
+      if (manualCompactOverride !== null) return;
+      const y = (mainEl ? mainEl.scrollTop : 0) || window.scrollY || 0;
+      if (y > 60) setCompactHeader(true);
+      else if (y < 20) setCompactHeader(false);
+    };
+    if (mainEl) mainEl.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      if (mainEl) mainEl.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [manualCompactOverride]);
+
+  const toggleCompactHeader = () => {
+    setCompactHeader((prev) => {
+      const next = !prev;
+      setManualCompactOverride(next);
+      return next;
+    });
+  };
 
   const switchWorkspaceView = (mode) => {
     setWorkspaceView(mode);
@@ -253,49 +278,71 @@ export default function AppLayout() {
                 'linear-gradient(120deg, #00C6FF 0%, #0072FF 25%, #5A00D6 55%, #FF2E9A 100%)',
             }}
           />
-          {/* Top Section of White Area — auto-compacts when scrolling down workspace registers */}
-          <div className={`bg-white px-3 sm:px-6 lg:px-8 transition-all duration-200 ${compactHeader ? 'hidden' : 'py-1.5'}`}>
-            <div className="mx-auto flex min-h-[calc(190px+1cm)] max-w-[1440px] flex-col justify-between md:h-[calc(190px+1cm)] md:flex-row md:items-stretch">
-              {/* Left at the Bottom: Sign In & Book Demo (Slightly Reduced) */}
-              <div className="order-2 flex shrink-0 items-center justify-center gap-1.5 self-center md:order-1 md:self-end md:pb-1">
-                <Link
-                  to="/login"
-                  className="inline-flex min-h-[27px] items-center justify-center whitespace-nowrap rounded-md px-2.5 py-1 text-[10.5px] font-extrabold text-white shadow-2xs transition hover:opacity-95"
-                  style={{
-                    background: 'linear-gradient(115deg, #0A2B6D 0%, #0072FF 55%, #5A00D6 100%)',
-                  }}
-                >
-                  Sign In
+          {/* Very Top Section Above Dashboard: Black Background, Larger Logo, Aqua & Pink Buttons, Auto + Click Minimize */}
+          {compactHeader ? (
+            <div className="bg-black px-3 py-1 sm:px-6 lg:px-8">
+              <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-2">
+                <Link to="/dashboard" className="flex items-center gap-2 text-xs font-extrabold">
+                  <span style={{ color: '#00C6FF' }}>Compliance</span>
+                  <span style={{ color: '#FF2E9A' }}>HR Infinity</span>
                 </Link>
-                <Link
-                  to="/?demo=book"
-                  className="inline-flex min-h-[27px] items-center justify-center whitespace-nowrap rounded-md px-2.5 py-1 text-[10.5px] font-extrabold text-white shadow-2xs transition hover:opacity-95"
-                  style={{
-                    background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
-                  }}
-                >
-                  Book Demo
-                </Link>
+                <div className="flex items-center gap-2">
+                  {WORKSPACE_VIEWS.map(({ id, label, Icon }) => (
+                    <button
+                      key={id}
+                      type="button"
+                      onClick={() => switchWorkspaceView(id)}
+                      className="inline-flex min-h-[22px] items-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold text-black shadow-2xs transition"
+                      style={{ backgroundColor: '#00C6FF' }}
+                    >
+                      <Icon className="h-3 w-3 shrink-0 text-black" />
+                      <span>{label}</span>
+                    </button>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={toggleCompactHeader}
+                    className="inline-flex min-h-[22px] items-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold text-white shadow-2xs transition"
+                    style={{ backgroundColor: '#FF2E9A' }}
+                  >
+                    <ChevronDown className="h-3 w-3" />
+                    <span>Expand Header</span>
+                  </button>
+                </div>
               </div>
+            </div>
+          ) : (
+            <div className="bg-black px-3 py-1.5 sm:px-6 lg:px-8 transition-all duration-200">
+              <div className="mx-auto flex min-h-[calc(210px+1cm)] max-w-[1440px] flex-col justify-between md:h-[calc(210px+1cm)] md:flex-row md:items-stretch">
+                {/* Left at the Bottom: Aqua & Blue Buttons (Sign In & Book Demo) */}
+                <div className="order-2 flex shrink-0 items-center justify-center gap-1.5 self-center md:order-1 md:self-end md:pb-1">
+                  <Link
+                    to="/login"
+                    className="inline-flex min-h-[28px] items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-[10.5px] font-extrabold text-black shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90"
+                    style={{ backgroundColor: '#00C6FF' }}
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    to="/?demo=book"
+                    className="inline-flex min-h-[28px] items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-[10.5px] font-extrabold text-white shadow-[0_0_10px_rgba(0,114,255,0.55)] transition hover:opacity-90"
+                    style={{ backgroundColor: '#0072FF' }}
+                  >
+                    Book Demo
+                  </Link>
+                </div>
 
-              {/* Centre: Business Logo (+1cm x +1cm), Name, Slogan & Both Views Under Slogan at Bottom in the Middle */}
-              <div className="order-1 flex flex-1 flex-col items-center justify-between py-0.5 md:order-2">
-                <Link
-                  to="/dashboard"
-                  className="inline-flex flex-col items-center justify-center text-center transition"
-                >
-                  <BrandLogoLockup size="md" theme="light" showSlogan={true} />
-                </Link>
+                {/* Centre: Larger Business Logo on Black, Name, Slogan & Both Views Under Slogan at Bottom in the Middle */}
+                <div className="order-1 flex flex-1 flex-col items-center justify-between py-0.5 md:order-2">
+                  <Link
+                    to="/dashboard"
+                    className="inline-flex flex-col items-center justify-center text-center transition"
+                  >
+                    <BrandLogoLockup size="md" theme="dark" showSlogan={true} />
+                  </Link>
 
-                {/* Both Views Under Slogan at the Bottom in the Middle */}
-                <div
-                  className="mt-1 rounded-full p-[1.5px] shadow-2xs md:mb-0.5"
-                  style={{
-                    background:
-                      'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
-                  }}
-                >
-                  <div className="flex items-center gap-0.5 rounded-full bg-white p-0.5">
+                  {/* Both Views Under Slogan at the Bottom in the Middle (Blue Button with Aqua & Pink Accents) */}
+                  <div className="mt-1 flex items-center gap-1.5 md:mb-0.5">
                     {WORKSPACE_VIEWS.map(({ id, label, Icon }) => {
                       const selected = workspaceView === id;
                       return (
@@ -305,47 +352,51 @@ export default function AppLayout() {
                           onClick={() => switchWorkspaceView(id)}
                           aria-pressed={selected}
                           title={label}
-                          className={`inline-flex min-h-[22px] items-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold transition-all ${
-                            selected
-                              ? 'bg-[#F5F0FF] text-[#5A00D6] border border-[#5A00D6]'
-                              : 'text-[#0A2B6D] hover:text-[#0072FF]'
-                          }`}
+                          className="inline-flex min-h-[24px] items-center gap-1.5 rounded-full border px-3 py-0.5 text-[10px] font-extrabold shadow-[0_0_10px_rgba(0,114,255,0.55)] transition-all"
+                          style={{
+                            backgroundColor: '#0072FF',
+                            borderColor: '#00C6FF',
+                            color: '#FFFFFF',
+                          }}
                         >
-                          <Icon
-                            className="h-3 w-3 shrink-0"
-                            style={{ color: selected ? '#FF2E9A' : '#0072FF' }}
-                          />
-                          <span className="whitespace-nowrap" style={{ color: '#0A2B6D' }}>
-                            {label}
-                          </span>
+                          <Icon className="h-3 w-3 shrink-0" style={{ color: '#00C6FF' }} />
+                          <span className="whitespace-nowrap">{label}</span>
                         </button>
                       );
                     })}
                   </div>
                 </div>
-              </div>
 
-              {/* Right at the Bottom: Start Free + Mobile Menu */}
-              <div className="order-3 flex shrink-0 items-center justify-center gap-1.5 self-center md:self-end md:pb-1">
-                <Link
-                  to="/register"
-                  className="inline-flex min-h-[27px] items-center justify-center whitespace-nowrap rounded-md px-2.5 py-1 text-[10.5px] font-extrabold text-white shadow-2xs transition hover:opacity-95"
-                  style={{
-                    background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
-                  }}
-                >
-                  Start Free
-                </Link>
-                <button
-                  onClick={() => setMobileOpen(true)}
-                  aria-label="Open menu"
-                  className="shrink-0 rounded-full border-2 border-[#0072FF] bg-white p-1 text-[#0A2B6D] shadow-2xs transition hover:border-[#FF2E9A] md:hidden"
-                >
-                  <Menu className="h-3 w-3" style={{ color: '#0072FF' }} />
-                </button>
+                {/* Right at the Bottom: Start Free (Pink) + Minimize Header (Aqua) + Mobile Menu */}
+                <div className="order-3 flex shrink-0 items-center justify-center gap-1.5 self-center md:self-end md:pb-1">
+                  <Link
+                    to="/register"
+                    className="inline-flex min-h-[28px] items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-[10.5px] font-extrabold text-white shadow-[0_0_10px_rgba(255,46,154,0.5)] transition hover:opacity-90"
+                    style={{ backgroundColor: '#FF2E9A' }}
+                  >
+                    Start Free
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={toggleCompactHeader}
+                    title="Minimize top header"
+                    className="inline-flex min-h-[28px] items-center gap-1 whitespace-nowrap rounded-md px-2.5 py-1 text-[10px] font-extrabold text-black shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90"
+                    style={{ backgroundColor: '#00C6FF' }}
+                  >
+                    <ChevronDown className="h-3 w-3 rotate-180" />
+                    <span>Minimize</span>
+                  </button>
+                  <button
+                    onClick={() => setMobileOpen(true)}
+                    aria-label="Open menu"
+                    className="shrink-0 rounded-full border-2 border-[#00C6FF] bg-black p-1 text-[#00C6FF] shadow-2xs transition hover:border-[#FF2E9A] md:hidden"
+                  >
+                    <Menu className="h-3.5 w-3.5" style={{ color: '#00C6FF' }} />
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
           {/* Continuous App-Design Gradient Divider Line aligned with remote white section bottom */}
           <div

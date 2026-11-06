@@ -421,17 +421,17 @@ export default function ObsidianSidebarRemote({
         {/* Top App-Design Gradient Strip — aligned flush with main header */}
         <div className="h-1.5 w-full shrink-0" style={{ background: BRAND_GRADIENT }} />
 
-        {/* TOP WHITE SECTION OF REMOTE — aligned flush with the top white section above the dashboard */}
-        <div className="flex h-[calc(190px+1cm)] shrink-0 flex-col items-center justify-between bg-white px-1.5 py-1.5 text-center">
+        {/* TOP BLACK SECTION OF REMOTE — aligned flush with the top black section above the dashboard */}
+        <div className="flex h-[calc(210px+1cm)] shrink-0 flex-col items-center justify-between bg-black px-1.5 py-1.5 text-center">
           <Link
             to="/dashboard"
             aria-label="ComplianceHR Infinity Home"
             className="flex w-full flex-1 items-center justify-center"
           >
-            <BrandLogoLockup size="xs" showSlogan className="w-full" />
+            <BrandLogoLockup size="xs" theme="dark" showSlogan className="w-full" />
           </Link>
 
-          {/* Remote Control Mode Switcher (5 Pillars | 13 Channels | All 46) */}
+          {/* Remote Control Mode Switcher (Aqua, Blue & Pink Buttons on Black) */}
           <div
             className="mt-1 grid w-full shrink-0 grid-cols-3 gap-1 rounded-lg p-[1.5px]"
             style={{ background: BRAND_GRADIENT }}
@@ -449,11 +449,12 @@ export default function ObsidianSidebarRemote({
                 openMajorSectionInMainView(match, 'pillars5', false);
               }}
               className={`min-h-[22px] rounded-[6px] py-0.5 text-[9px] font-extrabold transition-all ${
-                navMode === 'pillars5'
-                  ? 'bg-[#0A2B6D] text-white shadow-[0_0_8px_rgba(0,198,255,0.6)]'
-                  : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
+                navMode === 'pillars5' ? 'ring-2 ring-white' : 'opacity-90 hover:opacity-100'
               }`}
-              style={{ color: navMode === 'pillars5' ? '#FFFFFF' : '#0A2B6D' }}
+              style={{
+                backgroundColor: '#00C6FF',
+                color: '#000000',
+              }}
             >
               ◉ 5 Pillars
             </button>
@@ -470,11 +471,12 @@ export default function ObsidianSidebarRemote({
                 openMajorSectionInMainView(match, 'os11', false);
               }}
               className={`min-h-[22px] rounded-[6px] py-0.5 text-[9px] font-extrabold transition-all ${
-                navMode === 'os11'
-                  ? 'bg-[#0A2B6D] text-white shadow-[0_0_8px_rgba(0,198,255,0.6)]'
-                  : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
+                navMode === 'os11' ? 'ring-2 ring-white' : 'opacity-90 hover:opacity-100'
               }`}
-              style={{ color: navMode === 'os11' ? '#FFFFFF' : '#0A2B6D' }}
+              style={{
+                backgroundColor: '#0072FF',
+                color: '#FFFFFF',
+              }}
             >
               ◉ 13 Channels
             </button>
@@ -490,11 +492,12 @@ export default function ObsidianSidebarRemote({
                 );
               }}
               className={`min-h-[22px] rounded-[6px] py-0.5 text-[9px] font-extrabold transition-all ${
-                navMode === 'all'
-                  ? 'bg-[#0A2B6D] text-white shadow-[0_0_8px_rgba(255,46,154,0.6)]'
-                  : 'bg-white text-[#0A2B6D] hover:bg-[#F5F0FF]'
+                navMode === 'all' ? 'ring-2 ring-white' : 'opacity-90 hover:opacity-100'
               }`}
-              style={{ color: navMode === 'all' ? '#FFFFFF' : '#0A2B6D' }}
+              style={{
+                backgroundColor: '#FF2E9A',
+                color: '#FFFFFF',
+              }}
             >
               ◉ All 46
             </button>

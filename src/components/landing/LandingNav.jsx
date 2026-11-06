@@ -38,7 +38,7 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
   const [open, setOpen] = useState(false);
   const [workspaceMenuOpen, setWorkspaceMenuOpen] = useState(false);
   const [collapsedHeader, setCollapsedHeader] = useState(false);
-  const [manualOverride, setManualOverride] = useState(false);
+  const [manualOverride, setManualOverride] = useState(null);
   const [workspaceView, setWorkspaceView] = useState(() => localStorage.getItem('chr-workspace-view-mode') || 'both');
 
   const switchWorkspaceView = (mode) => {
@@ -50,8 +50,8 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
   useEffect(() => {
     const onScroll = () => {
       if (manualOverride !== null) return;
-      if (window.scrollY > 140) setCollapsedHeader(true);
-      else if (window.scrollY < 40) setCollapsedHeader(false);
+      if (window.scrollY > 80) setCollapsedHeader(true);
+      else if (window.scrollY < 30) setCollapsedHeader(false);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
@@ -68,7 +68,7 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
   return (
     <header
       id="top-landing"
-      className="sticky top-0 z-40 w-full bg-white shadow-sm transition-all duration-200"
+      className="sticky top-0 z-40 w-full bg-black shadow-sm transition-all duration-200"
     >
       {/* Top App-Design Gradient Strip — aligned flush with navigation remote */}
       <div
@@ -79,17 +79,44 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
         }}
       />
 
-      {/* Collapsible White Header Section Above Dashboard — aligned with navigation remote (+1cm logo height) */}
-      {!collapsedHeader && (
-        <div className="mx-auto flex min-h-[calc(190px+1cm)] max-w-[1440px] flex-col justify-between bg-white px-4 py-1.5 sm:px-6 lg:px-8 md:h-[calc(190px+1cm)] md:flex-row md:items-stretch">
-          {/* Left at the Bottom: Sign In & Book Demo (Slightly Reduced) */}
+      {/* Collapsible Black Header Section Above Dashboard */}
+      {collapsedHeader ? (
+        <div className="mx-auto flex max-w-[1440px] items-center justify-between bg-black px-4 py-1 sm:px-6 lg:px-8">
+          <Link to="/" className="flex items-center gap-1.5 text-xs font-extrabold">
+            <span style={{ color: '#00C6FF' }}>Compliance</span>
+            <span style={{ color: '#FF2E9A' }}>HR Infinity</span>
+          </Link>
+          <div className="flex items-center gap-2">
+            {WORKSPACE_VIEWS.map(({ id, label, Icon }) => (
+              <button
+                key={id}
+                type="button"
+                onClick={() => switchWorkspaceView(id)}
+                className="inline-flex min-h-[22px] items-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold text-black shadow-2xs transition"
+                style={{ backgroundColor: '#00C6FF' }}
+              >
+                <Icon className="h-3 w-3 shrink-0" style={{ color: '#FF2E9A' }} />
+                <span>{label}</span>
+              </button>
+            ))}
+            <button
+              type="button"
+              onClick={toggleHeaderCollapse}
+              className="inline-flex min-h-[22px] items-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold text-white shadow-2xs transition"
+              style={{ backgroundColor: '#FF2E9A' }}
+            >
+              <span>Expand Header</span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="mx-auto flex min-h-[calc(210px+1cm)] max-w-[1440px] flex-col justify-between bg-black px-4 py-1.5 sm:px-6 lg:px-8 md:h-[calc(210px+1cm)] md:flex-row md:items-stretch">
+          {/* Left at the Bottom: Aqua & Blue Buttons (Sign In & Book Demo) */}
           <div className="order-2 flex shrink-0 items-center justify-center gap-1.5 self-center md:order-1 md:self-end md:pb-1">
             <Link
               to="/login"
-              className="inline-flex min-h-[27px] items-center justify-center whitespace-nowrap rounded-md px-2.5 py-1 text-[10.5px] font-extrabold text-white shadow-2xs transition hover:opacity-95"
-              style={{
-                background: 'linear-gradient(115deg, #0A2B6D 0%, #0072FF 55%, #5A00D6 100%)',
-              }}
+              className="inline-flex min-h-[28px] items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-[10.5px] font-extrabold text-black shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90"
+              style={{ backgroundColor: '#00C6FF' }}
             >
               Sign In
             </Link>
@@ -97,72 +124,56 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
             <button
               type="button"
               onClick={() => onBookDemo && onBookDemo('Book a Personal Demo')}
-              className="inline-flex min-h-[27px] items-center gap-1 whitespace-nowrap rounded-md px-2.5 py-1 text-[10.5px] font-extrabold text-white shadow-2xs transition hover:opacity-95"
-              style={{
-                background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
-              }}
+              className="inline-flex min-h-[28px] items-center gap-1 whitespace-nowrap rounded-md px-3 py-1 text-[10.5px] font-extrabold text-white shadow-[0_0_10px_rgba(0,114,255,0.55)] transition hover:opacity-90"
+              style={{ backgroundColor: '#0072FF' }}
             >
               <Calendar className="h-3 w-3 shrink-0 text-white" />
               <span>Book Demo</span>
             </button>
           </div>
 
-          {/* Centre: Business Logo (+1cm x +1cm), Name, Slogan & Both Views Under Slogan at Bottom in the Middle */}
+          {/* Centre: Larger Business Logo on Black, Name, Slogan & Both Views Under Slogan at Bottom in the Middle */}
           <div className="order-1 flex flex-1 flex-col items-center justify-between py-0.5 md:order-2">
             <Link
               to="/"
               className="inline-flex flex-col items-center justify-center text-center"
               aria-label="ComplianceHR Infinity home"
             >
-              <BrandLogoLockup size="md" theme="light" showSlogan={true} />
+              <BrandLogoLockup size="md" theme="dark" showSlogan={true} />
             </Link>
 
-            {/* Both Views Under Slogan at the Bottom in the Middle */}
-            <div
-              className="mt-1 rounded-full p-[1.5px] shadow-2xs md:mb-0.5"
-              style={{
-                background:
-                  'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
-              }}
-            >
-              <div className="flex items-center gap-0.5 rounded-full bg-white p-0.5">
-                {WORKSPACE_VIEWS.map(({ id, label, Icon }) => {
-                  const selected = workspaceView === id;
-                  return (
-                    <button
-                      key={id}
-                      type="button"
-                      onClick={() => switchWorkspaceView(id)}
-                      aria-pressed={selected}
-                      title={label}
-                      className={`inline-flex min-h-[22px] items-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold transition-all ${
-                        selected
-                          ? 'bg-[#F5F0FF] text-[#5A00D6] border border-[#5A00D6]'
-                          : 'text-[#0A2B6D] hover:text-[#0072FF]'
-                      }`}
-                    >
-                      <Icon
-                        className="h-3 w-3 shrink-0"
-                        style={{ color: selected ? '#FF2E9A' : '#0072FF' }}
-                      />
-                      <span className="whitespace-nowrap" style={{ color: '#0A2B6D' }}>
-                        {label}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
+            {/* Both Views Under Slogan at the Bottom in the Middle (Blue Button) */}
+            <div className="mt-1 flex items-center gap-1.5 md:mb-0.5">
+              {WORKSPACE_VIEWS.map(({ id, label, Icon }) => {
+                const selected = workspaceView === id;
+                return (
+                  <button
+                    key={id}
+                    type="button"
+                    onClick={() => switchWorkspaceView(id)}
+                    aria-pressed={selected}
+                    title={label}
+                    className="inline-flex min-h-[24px] items-center gap-1.5 rounded-full border px-3 py-0.5 text-[10px] font-extrabold shadow-[0_0_10px_rgba(0,114,255,0.55)] transition-all"
+                    style={{
+                      backgroundColor: '#0072FF',
+                      borderColor: '#00C6FF',
+                      color: '#FFFFFF',
+                    }}
+                  >
+                    <Icon className="h-3 w-3 shrink-0" style={{ color: '#00C6FF' }} />
+                    <span className="whitespace-nowrap">{label}</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
-          {/* Right at the Bottom: Start Free (Duplicate Demo Removed) */}
+          {/* Right at the Bottom: Start Free (Pink) + Minimize (Aqua) */}
           <div className="order-3 flex shrink-0 items-center justify-center gap-1.5 self-center md:self-end md:pb-1">
             <Link
               to="/register"
-              className="inline-flex min-h-[27px] shrink-0 items-center gap-1 whitespace-nowrap rounded-md px-2.5 py-1 text-[10.5px] font-extrabold text-white shadow-2xs transition hover:opacity-95"
-              style={{
-                background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
-              }}
+              className="inline-flex min-h-[28px] shrink-0 items-center gap-1 whitespace-nowrap rounded-md px-3 py-1 text-[10.5px] font-extrabold text-white shadow-[0_0_10px_rgba(255,46,154,0.5)] transition hover:opacity-90"
+              style={{ backgroundColor: '#FF2E9A' }}
             >
               <span>Start Free</span>
               <ArrowRight className="h-3 w-3 shrink-0 text-white" />
@@ -170,7 +181,16 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
 
             <button
               type="button"
-              className="xl:hidden inline-flex items-center justify-center rounded-md border border-slate-200 bg-white p-1.5 text-[#0A2B6D]"
+              onClick={toggleHeaderCollapse}
+              className="inline-flex min-h-[28px] items-center gap-1 whitespace-nowrap rounded-md px-2.5 py-1 text-[10px] font-extrabold text-black shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90"
+              style={{ backgroundColor: '#00C6FF' }}
+            >
+              <span>Minimize</span>
+            </button>
+
+            <button
+              type="button"
+              className="xl:hidden inline-flex items-center justify-center rounded-md border border-[#00C6FF] bg-black p-1.5 text-[#00C6FF]"
               aria-label={open ? 'Close menu' : 'Open menu'}
               aria-expanded={open}
               onClick={() => setOpen(!open)}
