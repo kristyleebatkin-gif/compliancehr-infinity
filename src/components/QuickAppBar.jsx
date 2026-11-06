@@ -71,11 +71,11 @@ export default function QuickAppBar() {
       const enrichedChildren = pillar.children.map((ch) => {
         const dirMatch = MODULE_DIRECTORY.find((m) => m.path === ch.path);
         return {
-          key: dirMatch?.key || ch.path,
+          key: dirMatch?.key || `${ch.path}-${ch.label}`,
           label: ch.label,
           path: ch.path,
           blurb: ch.sub || dirMatch?.blurb || `Open ${ch.label}`,
-          icon: dirMatch?.icon || pillar.icon,
+          icon: ch.icon || dirMatch?.icon || pillar.icon,
         };
       });
 

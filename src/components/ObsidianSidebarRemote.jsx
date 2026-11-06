@@ -16,8 +16,15 @@ const BRAND_GRADIENT =
 const DARK_NAVY_CHASSIS =
   'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)';
 
-// App design colour palette for symbols and icons
+// App design colour palette and App Icon gradients
 const APP_DESIGN_COLOURS = ['#0072FF', '#5A00D6', '#FF2E9A', '#A100FF', '#00C6FF'];
+const APP_ICON_GRADIENTS = [
+  'linear-gradient(135deg, #00C6FF 0%, #0072FF 55%, #5A00D6 100%)',
+  'linear-gradient(135deg, #0072FF 0%, #5A00D6 52%, #FF2E9A 100%)',
+  'linear-gradient(135deg, #5A00D6 0%, #A100FF 50%, #FF2E9A 100%)',
+  'linear-gradient(135deg, #0A2B6D 0%, #0072FF 55%, #00C6FF 100%)',
+  'linear-gradient(135deg, #FF2E9A 0%, #A100FF 52%, #0072FF 100%)',
+];
 
 // Permanent 13-Group Architectural Map (Single Source of Truth, Zero Duplicates)
 export const PRIMARY_11_OS_NAV = [
@@ -29,7 +36,7 @@ export const PRIMARY_11_OS_NAV = [
     icon: LayoutDashboard,
     status: 'LIVE',
     children: [
-      { label: 'Executive', path: '/dashboard', sub: 'Executive overview & live KPIs' },
+      { label: 'Executive', path: '/dashboard', sub: 'Executive overview & live KPIs', icon: Cpu },
       { label: 'Operations Centre', path: '/operations-centre', sub: 'Master operations & control deck' },
       { label: 'Business Analytics', path: '/analytics', sub: 'Cross-module trends & reports' },
       { label: 'Suggestions Hub', path: '/suggestions', sub: 'Continuous improvement ideas' },
@@ -217,7 +224,7 @@ export const FOCUSED_5_PILLAR_NAV = [
     icon: LayoutDashboard,
     status: 'LIVE',
     children: [
-      { label: 'Executive', path: '/dashboard', sub: 'Executive overview & live KPIs' },
+      { label: 'Executive', path: '/dashboard', sub: 'Executive overview & live KPIs', icon: Cpu },
       { label: 'Operations Centre', path: '/operations-centre', sub: 'Master operations & control deck' },
       { label: 'Business Analytics', path: '/analytics', sub: 'Cross-module trends & reports' },
       { label: 'Suggestions Hub', path: '/suggestions', sub: 'Continuous improvement ideas' },
@@ -538,10 +545,13 @@ export default function ObsidianSidebarRemote({
                         <div className="flex min-h-[22px] items-center justify-between gap-1.5 bg-white px-2 py-0.5">
                           <div className="flex min-w-0 flex-1 items-center gap-1.5">
                             <span
-                              className="flex h-4 w-4 shrink-0 items-center justify-center rounded bg-[#F5F0FF]"
-                              style={{ border: `1px solid ${symColor}` }}
+                              className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[5px] shadow-[0_1px_4px_rgba(10,43,109,0.28)]"
+                              style={{
+                                background: APP_ICON_GRADIENTS[pIdx % APP_ICON_GRADIENTS.length],
+                                border: '1px solid rgba(255,255,255,0.65)',
+                              }}
                             >
-                              <Icon className="h-2.5 w-2.5 shrink-0" style={{ color: symColor }} />
+                              <Icon className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
                             </span>
                             <span
                               className="min-w-0 truncate bg-clip-text text-[10px] font-extrabold leading-tight tracking-tight text-transparent"
@@ -550,7 +560,7 @@ export default function ObsidianSidebarRemote({
                                   'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
                               }}
                             >
-                              <span style={{ color: symColor }}>◉</span> {pillar.label}
+                              {pillar.label}
                             </span>
                           </div>
 
@@ -591,6 +601,8 @@ export default function ObsidianSidebarRemote({
                       <div className="mt-1 space-y-1 pl-2 border-l-2 border-[#00C6FF]/60">
                         {pillar.children.map((child, cIdx) => {
                           const childColor = APP_DESIGN_COLOURS[cIdx % APP_DESIGN_COLOURS.length];
+                          const matchedMod = MODULE_DIRECTORY.find((m) => m.path === child.path);
+                          const ChildIcon = child.icon || matchedMod?.icon || Icon;
                           const childActive =
                             location.pathname === child.path ||
                             location.pathname.startsWith(`${child.path}/`);
@@ -613,10 +625,13 @@ export default function ObsidianSidebarRemote({
                                 <div className="flex min-h-[22px] items-center justify-between gap-1.5 bg-white px-2 py-0.5">
                                   <div className="flex min-w-0 flex-1 items-center gap-1.5">
                                     <span
-                                      className="flex h-4 w-4 shrink-0 items-center justify-center rounded bg-[#F5F0FF]"
-                                      style={{ border: `1px solid ${childColor}` }}
+                                      className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[5px] shadow-[0_1px_4px_rgba(10,43,109,0.28)]"
+                                      style={{
+                                        background: APP_ICON_GRADIENTS[(pIdx + cIdx + 1) % APP_ICON_GRADIENTS.length],
+                                        border: '1px solid rgba(255,255,255,0.65)',
+                                      }}
                                     >
-                                      <Icon className="h-2.5 w-2.5 shrink-0" style={{ color: childColor }} />
+                                      <ChildIcon className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
                                     </span>
                                     <span
                                       className="min-w-0 truncate bg-clip-text text-[10px] font-extrabold leading-tight tracking-tight text-transparent"
@@ -625,7 +640,7 @@ export default function ObsidianSidebarRemote({
                                           'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
                                       }}
                                     >
-                                      <span style={{ color: childColor }}>◉</span> {child.label}
+                                      {child.label}
                                     </span>
                                   </div>
                                   <span
@@ -692,10 +707,13 @@ export default function ObsidianSidebarRemote({
                       <div className="flex min-h-[22px] items-center justify-between gap-1.5 bg-white px-2 py-0.5">
                         <div className="flex min-w-0 flex-1 items-center gap-1.5">
                           <span
-                            className="flex h-4 w-4 shrink-0 items-center justify-center rounded bg-[#F5F0FF]"
-                            style={{ border: `1px solid ${symColor}` }}
+                            className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[5px] shadow-[0_1px_4px_rgba(10,43,109,0.28)]"
+                            style={{
+                              background: APP_ICON_GRADIENTS[mIdx % APP_ICON_GRADIENTS.length],
+                              border: '1px solid rgba(255,255,255,0.65)',
+                            }}
                           >
-                            <Icon className="h-2.5 w-2.5 shrink-0" style={{ color: symColor }} />
+                            <Icon className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
                           </span>
                           <span
                             className="min-w-0 truncate bg-clip-text text-[10px] font-extrabold leading-tight tracking-tight text-transparent"
@@ -704,7 +722,7 @@ export default function ObsidianSidebarRemote({
                                 'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)',
                             }}
                           >
-                            <span style={{ color: symColor }}>◉</span> {label}
+                            {label}
                           </span>
                         </div>
                         <span
