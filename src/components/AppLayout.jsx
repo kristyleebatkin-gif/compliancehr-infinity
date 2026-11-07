@@ -308,7 +308,7 @@ export default function AppLayout() {
                   <BrandLogoLockup size="md" theme="dark" showSlogan={true} />
                 </Link>
 
-                {/* Single Row Under Logo: ONLY Sign In, Book Demo & AI Quick Ask */}
+                {/* Single Row Under Logo: ONLY Sign In & Book Demo */}
                 <div className="flex w-full flex-nowrap items-center justify-center gap-2 py-0.5">
                   <Link
                     to="/login"
@@ -324,9 +324,6 @@ export default function AppLayout() {
                   >
                     Book Demo
                   </Link>
-                  <div className="flex min-w-0 shrink-0 items-center justify-center">
-                    <EnterpriseFloatingWorkspaceDock inline />
-                  </div>
                   <button
                     onClick={() => setMobileOpen(true)}
                     aria-label="Open menu"

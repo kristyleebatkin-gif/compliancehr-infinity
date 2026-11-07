@@ -95,7 +95,7 @@ export const PRIMARY_11_OS_NAV = [
     children: [
       { label: 'Compliance & Evidence', path: '/compliance', sub: 'Merged Compliance Centre, Business Analytics & 356 checks' },
       { label: 'Auditor Portal', path: '/auditor-portal', sub: 'Read-only external auditor view' },
-      { label: 'Document Vault & Safe', path: '/documents', sub: 'Every Document, 45 Master Registers, Storage, Routing & Company Safe' },
+      { label: 'Document Vault', path: '/documents', sub: 'Document Vault, Smart Vault, Company Safe & 45 Master Registers' },
       { label: 'Remote Access & VPN', path: '/remote-access', sub: 'Zero-trust remote access without headaches' },
       { label: 'Quality & Improvement', path: '/quality', sub: 'Continuous improvement & CAPA' },
       { label: 'Checklists', path: '/checklists', sub: 'Operational & audit checklists' },
@@ -285,7 +285,7 @@ export const FOCUSED_5_PILLAR_NAV = [
     children: [
       { label: 'Compliance & Evidence', path: '/compliance', sub: 'Merged Compliance Centre, Business Analytics & 356 checks' },
       { label: 'Auditor Portal', path: '/auditor-portal', sub: 'Consent-verified auditor view' },
-      { label: 'Document Vault & Safe', path: '/documents', sub: 'Every Document, 45 Master Registers, Storage, Routing & Company Safe' },
+      { label: 'Document Vault', path: '/documents', sub: 'Document Vault, Smart Vault, Company Safe & 45 Master Registers' },
       { label: 'Remote Access & VPN', path: '/remote-access', sub: 'Zero-trust remote access without headaches' },
       { label: 'Governance Layer', path: '/governance', sub: 'Delegations, lifecycle & board packs' },
       { label: 'Checklists', path: '/checklists', sub: 'Operational & audit checklists' },

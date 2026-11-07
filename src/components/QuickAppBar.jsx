@@ -4,6 +4,7 @@ import { Zap, ArrowRight, Cpu, LayoutGrid, Heart, Layers } from 'lucide-react';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import { PRIMARY_11_OS_NAV, FOCUSED_5_PILLAR_NAV } from '@/components/ObsidianSidebarRemote';
 import { useAuth } from '@/lib/AuthContext';
+import EnterpriseFloatingWorkspaceDock from '@/components/EnterpriseFloatingWorkspaceDock';
 
 const BRAND_GRADIENT =
   'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)';
@@ -248,6 +249,9 @@ export default function QuickAppBar() {
                   ))}
                 </div>
               </div>
+
+              {/* AI Quick Ask Bar Positioned Directly Beside 13 Channels */}
+              <EnterpriseFloatingWorkspaceDock inline />
 
               {expandedGroup?.path && (
                 <Link

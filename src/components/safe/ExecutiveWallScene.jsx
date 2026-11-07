@@ -459,7 +459,7 @@ function OfficeEquipmentWithInteractiveScreen({
   const feeds = [
     { id: 'overview', label: "Today's Roster", title: "TODAY'S ROSTER", sub: FULL_SLOGAN },
     { id: 'profiles', label: 'Staff & Participants', title: 'PEOPLE PROFILES', sub: 'Employees · Participants · Intake' },
-    { id: 'comms', label: 'Comms & Mailbox', title: 'COMMS & MAILBOX', sub: 'Alerts · Shift Notes · Smart Vault' },
+    { id: 'comms', label: 'Comms & Mailbox', title: 'COMMS & MAILBOX', sub: 'Alerts · Shift Notes · Live Inbox' },
     { id: 'safe', label: 'Company Safe', title: 'COMPANY SAFE VAULT', sub: 'Identity · Badges · NDIS Evidence' },
   ];
   const currentFeed = feeds.find((f) => f.id === selectedMonitorFeed) || feeds[0];

@@ -106,7 +106,7 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
             <BrandLogoLockup size="md" theme="dark" showSlogan={true} />
           </Link>
 
-          {/* Single Row Under Logo: ONLY Sign In, Book Demo & AI Quick Ask */}
+          {/* Single Row Under Logo: ONLY Sign In & Book Demo */}
           <div className="flex w-full flex-nowrap items-center justify-center gap-2 py-0.5">
             <Link
               to="/login"
@@ -125,10 +125,6 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
               <Calendar className="h-3 w-3 shrink-0" style={{ color: '#00C6FF' }} />
               <span>Book Demo</span>
             </button>
-
-            <div className="flex min-w-0 shrink-0 items-center justify-center">
-              <FloatingQuickActionBar onBookDemo={onBookDemo} inline />
-            </div>
 
             <button
               type="button"

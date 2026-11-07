@@ -43,6 +43,8 @@ import DocumentRenewalCalendar from '@/components/compliance/DocumentRenewalCale
 import BusinessDocumentsLibrary from '@/components/documents/BusinessDocumentsLibrary';
 import ReviewSchedulesPanel from '@/components/documents/ReviewSchedulesPanel';
 import StandardsEvidenceGapStrip from '@/components/documents/StandardsEvidenceGapStrip';
+import { SmallSafeVaultBar } from '@/components/safe/ExecutiveWallScene';
+import { CompanySafeMaterialPanel } from '@/components/safe/OfficeInteractiveMaterials';
 
 const DOC_TYPES = ['Resume', 'Contract', 'Police Check', 'Blue Card', 'First Aid Certificate', 'CPR Certificate', 'NDIS Worker Screening', "Driver's License", 'Qualifications', 'Reference Check', 'Other'];
 const CATEGORIES = ['Mandatory', 'Compliance', 'Clinical', 'Professional Development', 'Induction'];
@@ -232,10 +234,11 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
       {!embedded && <ModuleShell
         icon={FolderOpen}
         title="Document Vault"
-        subtitle="Every Document, Real-Time 90/60/30/14-Day Expiry Tracking, Smart Mailroom & Data Control"
+        subtitle="Every Document, Smart Vault, Company Safe, Real-Time 90/60/30/14-Day Expiry Tracking & Data Control"
         moduleKey="documents"
         insightModule={!profile && !isParticipant ? 'documents' : undefined}
       />}
+      {!profile && <SmallSafeVaultBar />}
 
       {isParticipant ? (
         <div className="space-y-4">
@@ -509,7 +512,8 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
           </TabsContent>
         )}
         {!profile && (
-          <TabsContent value="company-safe" className="mt-3">
+          <TabsContent value="company-safe" className="mt-3 space-y-4">
+            <CompanySafeMaterialPanel />
             <CompanySafe embedded />
           </TabsContent>
         )}
