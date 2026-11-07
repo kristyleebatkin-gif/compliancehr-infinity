@@ -201,7 +201,10 @@ export default function ComplianceHub({ initialTab = 'standards-map' } = {}) {
   const [selPolicies, setSelPolicies] = useState([]);
   const [applyingPolicies, setApplyingPolicies] = useState(false);
   const [tabGroup, setTabGroup] = useState('all');
-  const [activeTab, setActiveTab] = useState(initialTab);
+  const [activeTab, setActiveTab] = useState(() => {
+    const requested = window.location.pathname === '/compliance' ? new URLSearchParams(window.location.search).get('tab') : null;
+    return TABS.some(([key]) => key === requested) ? requested : initialTab;
+  });
   const [screenView, setScreenView] = useState('screen1');
 
   const togglePolicy = (id, checked) => {
