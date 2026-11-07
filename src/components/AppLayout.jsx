@@ -19,6 +19,7 @@ import ObsidianSidebarRemote from '@/components/ObsidianSidebarRemote';
 import EnterpriseWorkspaceBar from '@/components/enterprise/EnterpriseWorkspaceBar';
 import VisualDesignModuleCommandStandard from '@/components/enterprise/VisualDesignModuleCommandStandard';
 import BrandLogoLockup from '@/components/common/BrandLogoLockup';
+import BrandSlogan from '@/components/common/BrandSlogan';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import PendingApprovalNotice from '@/components/users/PendingApprovalNotice';
 import ModuleGuide from '@/components/ModuleGuide';
@@ -305,10 +306,20 @@ export default function AppLayout() {
                   to="/dashboard"
                   className="inline-flex flex-col items-center justify-end text-center transition"
                 >
-                  <BrandLogoLockup size="md" theme="dark" showSlogan compactSlogan />
+                  <BrandLogoLockup size="md" theme="dark" showSlogan={false} />
                 </Link>
+                <div className="flex max-w-full flex-wrap items-center justify-center gap-1.5">
+                  <BrandSlogan size="md" compact />
+                  <Link
+                    to="/register"
+                    className="inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/25 px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(255,46,154,0.55)] transition hover:opacity-90"
+                    style={{ backgroundColor: '#FF2E9A' }}
+                  >
+                    Start Free
+                  </Link>
+                </div>
 
-                {/* Single Row Under Logo: Sign In, Book Demo, Participant Profiles, Both Views & Start Free */}
+                {/* Single Row Under Logo: Sign In, Book Demo, Participant Profiles & Both Views */}
                 <div className="flex w-full flex-wrap items-center justify-center gap-1.5 py-0.5">
                   <Link
                     to="/login"
@@ -352,13 +363,6 @@ export default function AppLayout() {
                       </button>
                     );
                   })}
-                  <Link
-                    to="/register"
-                    className="inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/25 px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(255,46,154,0.55)] transition hover:opacity-90"
-                    style={{ backgroundColor: '#FF2E9A' }}
-                  >
-                    Start Free
-                  </Link>
                   <button
                     onClick={() => setMobileOpen(true)}
                     aria-label="Open menu"

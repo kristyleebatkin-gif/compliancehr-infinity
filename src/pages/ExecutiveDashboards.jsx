@@ -50,7 +50,7 @@ export default function ExecutiveDashboards() {
   return (
     <div className="mx-auto w-full max-w-[1440px] space-y-3 pb-6">
       <PageHeader title={current.title} description={current.description} icon={current.icon} />
-      <section className="gradient-brand space-y-4 rounded-xl border border-brand p-4 sm:p-5">
+      <section className="executive-dashboard-metrics gradient-brand space-y-4 rounded-xl border border-brand p-4 sm:p-5">
         <div className="flex flex-wrap gap-2" aria-label="Executive dashboard selection">
           {Object.entries(VIEWS).map(([key, item]) => (
             <button key={key} type="button" onClick={() => setView(key)} aria-pressed={view === key} className={view === key ? 'rounded-lg bg-card px-4 py-2 text-sm font-bold text-card-foreground' : 'rounded-lg border border-header-foreground/40 px-4 py-2 text-sm font-bold text-header-foreground'}>{item.title}</button>

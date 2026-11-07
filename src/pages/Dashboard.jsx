@@ -18,7 +18,7 @@ function DashboardSection({ title, description, icon: Icon, children }) {
         </span>
         <div className="min-w-0">
           <h2 className="text-base font-extrabold text-[#0A2B6D] sm:text-lg">{title}</h2>
-          <p className="text-xs leading-relaxed text-[#45658C]">{description}</p>
+          <p className="text-sm font-semibold leading-relaxed text-workspace-navy">{description}</p>
         </div>
       </div>
       {children}
@@ -31,7 +31,7 @@ export default function Dashboard() {
   const isAdmin = ADMIN_ROLES.includes(role);
 
   return (
-    <div className="app-dashboard-canvas mx-auto w-full max-w-[1600px] space-y-4 px-3 pb-8 sm:px-5">
+    <div className="business-dashboard app-dashboard-canvas mx-auto w-full max-w-[1600px] space-y-4 px-3 pb-8 sm:px-5">
       <PageHeader
         title="Business Command Centre"
         description="Your live operational overview, priorities, module performance and team recognition."
