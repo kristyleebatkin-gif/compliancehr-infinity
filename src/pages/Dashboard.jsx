@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useRole } from '@/lib/useRole';
 import {
   LayoutDashboard, Sparkles, ShieldCheck, Layers, Award,
   ArrowRight, Calendar, MessageSquare, BarChart3, Zap,
@@ -34,6 +35,7 @@ const EXECUTIVE_TRUST_PILLS = [
 ];
 
 export default function Dashboard() {
+  const { can } = useRole();
   const [demoModalOpen, setDemoModalOpen] = useState(false);
   const [demoTopic, setDemoTopic] = useState('Executive Platform & Subscription Demo');
 
@@ -98,6 +100,12 @@ export default function Dashboard() {
                 <Calendar className="h-3 w-3 shrink-0 text-[#00C6FF]" />
                 <span>Book Demo</span>
               </button>
+              {can('analytics') && (
+                <Link to="/executive-dashboards" className="inline-flex min-h-7 items-center gap-1 rounded-full border border-[#00C6FF]/60 bg-[#0A2B6D]/80 px-3 text-[10px] font-extrabold uppercase tracking-wide text-white transition hover:bg-[#0072FF]">
+                  <LayoutDashboard className="h-3 w-3 shrink-0 text-[#00C6FF]" />
+                  <span>Executive Dashboards</span>
+                </Link>
+              )}
               <a
                 href="#live-communication-hub"
                 className="inline-flex h-7 items-center gap-1 rounded-full border border-[#00C6FF]/60 bg-[#0A2B6D]/80 px-2.5 text-[10px] font-extrabold uppercase tracking-wide text-white transition hover:bg-[#0072FF]"
