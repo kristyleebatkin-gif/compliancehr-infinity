@@ -104,44 +104,6 @@ export default function HeroDashboardMockup() {
             <Lock className="h-3 w-3" />
             <span>{activeLens.badge}</span>
           </span>
-          <Link
-            to={activeLensId === 'auditor' ? '/auditor-portal' : '/dashboard'}
-            className="inline-flex items-center gap-1 rounded-md bg-white px-3 py-1 text-xs font-bold text-[#0A2B6D] transition hover:bg-slate-100"
-          >
-            <span style={{ color: '#0A2B6D' }}>Open Live Workspace</span>
-            <ArrowUpRight className="h-3.5 w-3.5 text-[#0072FF]" />
-          </Link>
-        </div>
-      </div>
-
-      {/* Interactive Role Switcher Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 bg-white px-4 py-2">
-        <span className="text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-          Preview Role Experience:
-        </span>
-        <div className="flex flex-wrap items-center gap-1.5">
-          {ROLE_LENSES.map((lens) => {
-            const active = lens.id === activeLensId;
-            return (
-              <button
-                key={lens.id}
-                type="button"
-                onClick={() => setActiveLensId(lens.id)}
-                className={`rounded-lg px-2.5 py-1 text-xs font-extrabold transition ${
-                  active
-                    ? 'text-white shadow-2xs'
-                    : 'border border-slate-200 bg-slate-50 text-[#0A2B6D] hover:border-[#0072FF]'
-                }`}
-                style={
-                  active
-                    ? { background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)' }
-                    : undefined
-                }
-              >
-                {lens.label}
-              </button>
-            );
-          })}
         </div>
       </div>
 
@@ -259,6 +221,42 @@ export default function HeroDashboardMockup() {
             ))}
           </div>
         </div>
+      </div>
+
+      {/* Bottom Bar: Interactive Role Switcher & Open Live Workspace Button */}
+      <div className="flex flex-wrap items-center justify-between gap-2 border-t border-slate-200 bg-white px-4 py-2.5">
+        <div className="flex flex-wrap items-center gap-1.5">
+          {ROLE_LENSES.map((lens) => {
+            const active = lens.id === activeLensId;
+            return (
+              <button
+                key={lens.id}
+                type="button"
+                onClick={() => setActiveLensId(lens.id)}
+                className={`rounded-lg px-2.5 py-1 text-xs font-extrabold transition ${
+                  active
+                    ? 'text-white shadow-2xs'
+                    : 'border border-slate-200 bg-slate-50 text-[#0A2B6D] hover:border-[#0072FF]'
+                }`}
+                style={
+                  active
+                    ? { background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)' }
+                    : undefined
+                }
+              >
+                {lens.label}
+              </button>
+            );
+          })}
+        </div>
+
+        <Link
+          to={activeLensId === 'auditor' ? '/auditor-portal' : '/dashboard'}
+          className="inline-flex items-center gap-1 rounded-lg bg-[#0A2B6D] px-3 py-1.5 text-xs font-bold text-white transition hover:opacity-90"
+        >
+          <span>Open Live Workspace</span>
+          <ArrowUpRight className="h-3.5 w-3.5 text-[#00C6FF]" />
+        </Link>
       </div>
     </div>
   );

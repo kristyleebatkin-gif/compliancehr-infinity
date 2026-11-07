@@ -78,31 +78,6 @@ export default function LandingHero({ onBookDemo }) {
                   Built for NDIS, Aged Care, and Allied Health executives, compliance managers, and auditors. Unify 45 self-maintaining master registers, 356 audit checkpoints, workforce credentials, rostering, and statutory reporting in one system of record.
                 </p>
 
-                {/* Primary & Secondary Enterprise CTAs */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                  <button
-                    type="button"
-                    onClick={() => onBookDemo && onBookDemo('Executive Platform Demo')}
-                    className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-bold text-white shadow-md transition hover:opacity-95"
-                    style={{
-                      background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
-                    }}
-                  >
-                    <Calendar className="h-4 w-4 shrink-0 text-white" />
-                    <span>Book Executive Demo</span>
-                  </button>
-
-                  <Link
-                    to={authed ? '/dashboard' : '/register'}
-                    className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-lg border border-white/35 bg-white px-5 py-2.5 text-sm font-bold text-[#0A2B6D] shadow-sm transition hover:bg-slate-100"
-                  >
-                    <span style={{ color: '#0A2B6D' }}>
-                      {authed ? 'Open Command Centre' : 'Start 14-Day Free Trial'}
-                    </span>
-                    <ArrowRight className="h-4 w-4 shrink-0 text-[#0072FF]" />
-                  </Link>
-                </div>
-
                 {/* 4 Structured Regulatory Checkpoints */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
                   {GOVERNANCE_PILLARS.map((pillar) => (
@@ -141,6 +116,31 @@ export default function LandingHero({ onBookDemo }) {
                     </div>
                   );
                 })}
+              </div>
+
+              {/* Primary & Secondary Enterprise CTAs Moved to Bottom */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => onBookDemo && onBookDemo('Executive Platform Demo')}
+                  className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-bold text-white shadow-md transition hover:opacity-95"
+                  style={{
+                    background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
+                  }}
+                >
+                  <Calendar className="h-4 w-4 shrink-0 text-white" />
+                  <span>Book Executive Demo</span>
+                </button>
+
+                <Link
+                  to={authed ? '/dashboard' : '/register'}
+                  className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-lg border border-white/35 bg-white px-5 py-2.5 text-sm font-bold text-[#0A2B6D] shadow-sm transition hover:bg-slate-100"
+                >
+                  <span style={{ color: '#0A2B6D' }}>
+                    {authed ? 'Open Command Centre' : 'Start 14-Day Free Trial'}
+                  </span>
+                  <ArrowRight className="h-4 w-4 shrink-0 text-[#0072FF]" />
+                </Link>
               </div>
             </div>
 

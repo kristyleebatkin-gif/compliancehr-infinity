@@ -299,27 +299,9 @@ export default function AppLayout() {
             </div>
           ) : (
             <div className="bg-black px-3 pt-2 pb-1.5 sm:px-6 lg:px-8 transition-all duration-200">
-              <div className="mx-auto flex min-h-[calc(220px+1cm)] max-w-[1440px] flex-col justify-between gap-2 md:h-[calc(220px+1cm)] md:flex-row md:items-end">
-                {/* Left at the Bottom: Fitted Aqua & Blue Buttons (Sign In & Book Demo) */}
-                <div className="order-2 flex shrink-0 items-center justify-center gap-2 self-center md:order-1 md:pb-1">
-                  <Link
-                    to="/login"
-                    className="inline-flex h-[30px] min-w-[92px] items-center justify-center whitespace-nowrap rounded-lg border border-white/20 px-3.5 text-[11px] font-extrabold text-black shadow-[0_0_12px_rgba(0,198,255,0.55)] transition hover:opacity-90"
-                    style={{ backgroundColor: '#00C6FF' }}
-                  >
-                    Sign In
-                  </Link>
-                  <Link
-                    to="/?demo=book"
-                    className="inline-flex h-[30px] min-w-[104px] items-center justify-center whitespace-nowrap rounded-lg border border-[#00C6FF]/50 px-3.5 text-[11px] font-extrabold text-white shadow-[0_0_12px_rgba(0,114,255,0.6)] transition hover:opacity-90"
-                    style={{ backgroundColor: '#0072FF' }}
-                  >
-                    Book Demo
-                  </Link>
-                </div>
-
-                {/* Centre: Larger Business Logo Brought Down to Fit Well with Name & Slogan */}
-                <div className="order-1 flex flex-1 flex-col items-center justify-end pb-0.5 md:order-2">
+              <div className="mx-auto flex min-h-[calc(220px+1cm)] max-w-[1440px] flex-col justify-between gap-2 md:h-[calc(220px+1cm)]">
+                {/* Top / Centre: Larger Business Logo */}
+                <div className="flex flex-1 flex-col items-center justify-center">
                   <Link
                     to="/dashboard"
                     className="inline-flex flex-col items-center justify-center text-center transition"
@@ -328,32 +310,51 @@ export default function AppLayout() {
                   </Link>
                 </div>
 
-                {/* Right at the Bottom: Fitted Start Free (Pink) + Minimize (Aqua) + Mobile Menu */}
-                <div className="order-3 flex shrink-0 items-center justify-center gap-2 self-center md:pb-1">
-                  <Link
-                    to="/register"
-                    className="inline-flex h-[30px] min-w-[98px] items-center justify-center whitespace-nowrap rounded-lg border border-white/25 px-3.5 text-[11px] font-extrabold text-white shadow-[0_0_12px_rgba(255,46,154,0.6)] transition hover:opacity-90"
-                    style={{ backgroundColor: '#FF2E9A' }}
-                  >
-                    Start Free
-                  </Link>
-                  <button
-                    type="button"
-                    onClick={toggleCompactHeader}
-                    title="Minimize top header"
-                    className="inline-flex h-[30px] min-w-[92px] items-center justify-center gap-1 whitespace-nowrap rounded-lg border border-white/20 px-3 text-[11px] font-extrabold text-black shadow-[0_0_12px_rgba(0,198,255,0.55)] transition hover:opacity-90"
-                    style={{ backgroundColor: '#00C6FF' }}
-                  >
-                    <ChevronDown className="h-3.5 w-3.5 rotate-180" />
-                    <span>Minimize</span>
-                  </button>
-                  <button
-                    onClick={() => setMobileOpen(true)}
-                    aria-label="Open menu"
-                    className="shrink-0 rounded-lg border-2 border-[#00C6FF] bg-black p-1.5 text-[#00C6FF] shadow-2xs transition hover:border-[#FF2E9A] md:hidden"
-                  >
-                    <Menu className="h-4 w-4" style={{ color: '#00C6FF' }} />
-                  </button>
+                {/* Bottom Line of Top Section: All Action Buttons Anchored at the Bottom */}
+                <div className="mt-auto flex w-full flex-wrap items-center justify-between gap-2 pb-0.5">
+                  <div className="flex shrink-0 items-center gap-2">
+                    <Link
+                      to="/login"
+                      className="inline-flex h-[30px] min-w-[92px] items-center justify-center whitespace-nowrap rounded-lg border border-white/20 px-3.5 text-[11px] font-extrabold text-black shadow-[0_0_12px_rgba(0,198,255,0.55)] transition hover:opacity-90"
+                      style={{ backgroundColor: '#00C6FF' }}
+                    >
+                      Sign In
+                    </Link>
+                    <Link
+                      to="/?demo=book"
+                      className="inline-flex h-[30px] min-w-[104px] items-center justify-center whitespace-nowrap rounded-lg border border-[#00C6FF]/50 px-3.5 text-[11px] font-extrabold text-white shadow-[0_0_12px_rgba(0,114,255,0.6)] transition hover:opacity-90"
+                      style={{ backgroundColor: '#0072FF' }}
+                    >
+                      Book Demo
+                    </Link>
+                  </div>
+
+                  <div className="flex shrink-0 items-center gap-2">
+                    <Link
+                      to="/register"
+                      className="inline-flex h-[30px] min-w-[98px] items-center justify-center whitespace-nowrap rounded-lg border border-white/25 px-3.5 text-[11px] font-extrabold text-white shadow-[0_0_12px_rgba(255,46,154,0.6)] transition hover:opacity-90"
+                      style={{ backgroundColor: '#FF2E9A' }}
+                    >
+                      Start Free
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={toggleCompactHeader}
+                      title="Minimize top header"
+                      className="inline-flex h-[30px] min-w-[92px] items-center justify-center gap-1 whitespace-nowrap rounded-lg border border-white/20 px-3 text-[11px] font-extrabold text-black shadow-[0_0_12px_rgba(0,198,255,0.55)] transition hover:opacity-90"
+                      style={{ backgroundColor: '#00C6FF' }}
+                    >
+                      <ChevronDown className="h-3.5 w-3.5 rotate-180" />
+                      <span>Minimize</span>
+                    </button>
+                    <button
+                      onClick={() => setMobileOpen(true)}
+                      aria-label="Open menu"
+                      className="shrink-0 rounded-lg border-2 border-[#00C6FF] bg-black p-1.5 text-[#00C6FF] shadow-2xs transition hover:border-[#FF2E9A] md:hidden"
+                    >
+                      <Menu className="h-4 w-4" style={{ color: '#00C6FF' }} />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

@@ -34,41 +34,20 @@ export default function RemoteAccessStatusCard() {
       }}
     >
       <div className="rounded-[14px] bg-black p-4 sm:p-5 text-white">
-        <div className="flex flex-col justify-between gap-3 lg:flex-row lg:items-center">
-          <div className="space-y-1">
-            <div className="inline-flex items-center gap-1.5 rounded-full border border-[#00C6FF] bg-[#050B16] px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
-              <span
-                className="h-2 w-2 rounded-full bg-[#A855F7]"
-                style={{ boxShadow: '0 0 6px 1px #A855F7' }}
-              />
-              <span>Live Remote Access &amp; VPN Status</span>
-            </div>
-            <h2 className="text-base sm:text-xl font-black tracking-tight text-white">
-              Remote Access Without the Headaches — Zero-Trust Cloud &amp; VPN Active
-            </h2>
-            <p className="text-xs font-semibold text-slate-300">
-              Instant browser &amp; mobile access for support workers, managers, and auditors — no clunky VPN clients or dropped connections.
-            </p>
+        <div className="space-y-1">
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-[#00C6FF] bg-[#050B16] px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
+            <span
+              className="h-2 w-2 rounded-full bg-[#A855F7]"
+              style={{ boxShadow: '0 0 6px 1px #A855F7' }}
+            />
+            <span>Live Remote Access &amp; VPN Status</span>
           </div>
-
-          <div className="flex flex-wrap items-center gap-2 shrink-0">
-            <button
-              type="button"
-              onClick={() => setVerified(true)}
-              className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-[#00C6FF] bg-[#050B16] px-3 text-[11px] font-extrabold text-[#00C6FF] transition hover:opacity-90"
-            >
-              <CheckCircle2 className="h-3.5 w-3.5 text-[#00C6FF]" />
-              <span>{verified ? `Verified (${stats.latencyMs}ms TLS 1.3)` : 'Test Zero-Trust Link'}</span>
-            </button>
-            <Link
-              to="/remote-access"
-              className="inline-flex h-8 items-center gap-1.5 rounded-lg px-3.5 text-[11px] font-extrabold text-black shadow-[0_0_12px_rgba(0,198,255,0.55)] transition hover:opacity-90"
-              style={{ backgroundColor: '#00C6FF' }}
-            >
-              <span>Open Remote Access &amp; VPN Hub</span>
-              <ArrowRight className="h-3.5 w-3.5 text-black" />
-            </Link>
-          </div>
+          <h2 className="text-base sm:text-xl font-black tracking-tight text-white">
+            Remote Access Without the Headaches — Zero-Trust Cloud &amp; VPN Active
+          </h2>
+          <p className="text-xs font-semibold text-slate-300">
+            Instant browser &amp; mobile access for support workers, managers, and auditors — no clunky VPN clients or dropped connections.
+          </p>
         </div>
 
         <div className="mt-3.5 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
@@ -107,6 +86,26 @@ export default function RemoteAccessStatusCard() {
             <div className="mt-1 text-lg font-black text-white">Scoped</div>
             <div className="text-[10px] font-semibold text-slate-300">Consent-verified only</div>
           </div>
+        </div>
+
+        {/* Action Buttons Anchored at the Bottom */}
+        <div className="mt-3.5 flex flex-wrap items-center justify-end gap-2 border-t border-white/10 pt-3">
+          <button
+            type="button"
+            onClick={() => setVerified(true)}
+            className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-[#00C6FF] bg-[#050B16] px-3 text-[11px] font-extrabold text-[#00C6FF] transition hover:opacity-90"
+          >
+            <CheckCircle2 className="h-3.5 w-3.5 text-[#00C6FF]" />
+            <span>{verified ? `Verified (${stats.latencyMs}ms TLS 1.3)` : 'Test Zero-Trust Link'}</span>
+          </button>
+          <Link
+            to="/remote-access"
+            className="inline-flex h-8 items-center gap-1.5 rounded-lg px-3.5 text-[11px] font-extrabold text-black shadow-[0_0_12px_rgba(0,198,255,0.55)] transition hover:opacity-90"
+            style={{ backgroundColor: '#00C6FF' }}
+          >
+            <span>Open Remote Access &amp; VPN Hub</span>
+            <ArrowRight className="h-3.5 w-3.5 text-black" />
+          </Link>
         </div>
       </div>
     </section>
