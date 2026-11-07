@@ -1,4 +1,4 @@
-/* Enterprise OS Landing Page Styles — Microsoft Purview / ServiceNow GRC / Salesforce Lightning Standard */
+/* Enterprise OS Landing Page Styles — Vivid Module, Section & Card Borders */
 .landing-page {
   background-color: #F8FAFC;
   color: #0A2B6D;
@@ -28,16 +28,48 @@
   outline-offset: 2px;
 }
 
-/* Restrained enterprise border and surface tokens */
-.landing-page .enterprise-surface {
+/* Vivid 2.5px Multi-Stop Brand Gradient Border on Every Enterprise Surface Module */
+.landing-page .enterprise-surface,
+.bright-dashboard .enterprise-surface {
   background-color: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  box-shadow: 0 1px 3px rgba(6, 26, 68, 0.05), 0 4px 12px -2px rgba(6, 26, 68, 0.04);
+  border: 2.5px solid transparent !important;
+  background-image:
+    linear-gradient(#FFFFFF, #FFFFFF),
+    linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #A855F7 62%, #FF2E9A 100%) !important;
+  background-origin: border-box !important;
+  background-clip: padding-box, border-box !important;
+  box-shadow: 0 4px 16px -2px rgba(0, 114, 255, 0.14), 0 2px 6px rgba(10, 43, 109, 0.08);
+}
+
+/* Make all inner card, tile, and divider borders inside modules crisp and unmistakable */
+.landing-page .enterprise-surface :is(.border, .border-slate-200, .border-slate-100, .border-sky-200),
+.bright-dashboard .enterprise-surface :is(.border, .border-slate-200, .border-slate-100, .border-sky-200) {
+  border-color: #38BDF8 !important;
+  border-width: 1.5px;
+}
+
+.landing-page .enterprise-surface :is(.border-b, .border-b.border-slate-200, .border-b.border-slate-100),
+.bright-dashboard .enterprise-surface :is(.border-b, .border-b.border-slate-200, .border-b.border-slate-100) {
+  border-bottom-color: #38BDF8 !important;
+  border-bottom-width: 1.5px !important;
+}
+
+.landing-page .enterprise-surface :is(.border-t, .border-t.border-slate-200, .border-t.border-slate-100),
+.bright-dashboard .enterprise-surface :is(.border-t, .border-t.border-slate-200, .border-t.border-slate-100) {
+  border-top-color: #38BDF8 !important;
+  border-top-width: 1.5px !important;
+}
+
+/* Crisp Cyan/Purple borders on dark-chassis cards and dividers so no border disappears on dark blue/black */
+.landing-page :is(.border-white\/15, .border-white\/10, .border-white\/20),
+.bright-dashboard :is(.border-white\/15, .border-white\/10, .border-white\/20) {
+  border-color: rgba(0, 198, 255, 0.6) !important;
 }
 
 .landing-page .enterprise-chassis {
   background: linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%);
   color: #FFFFFF;
+  border: 2px solid #00C6FF !important;
 }
 
 .landing-page .enterprise-primary-btn {
