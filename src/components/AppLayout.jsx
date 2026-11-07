@@ -300,98 +300,40 @@ export default function AppLayout() {
           ) : (
             <div className="bg-black px-2 pt-1 pb-0.5 sm:px-4 lg:px-6 transition-all duration-200">
               <div className="mx-auto flex max-w-[1440px] flex-col items-center justify-end gap-0.5">
-                {/* Top / Centre: Larger Business Logo + Name + Slogan + Centred Participant Profiles Bar & Both Views Under Slogan */}
-                <div className="flex flex-col items-center justify-end gap-1">
+                {/* Top / Centre: Larger Business Logo + Name + Slogan */}
+                <Link
+                  to="/dashboard"
+                  className="inline-flex flex-col items-center justify-end text-center transition"
+                >
+                  <BrandLogoLockup size="md" theme="dark" showSlogan={true} />
+                </Link>
+
+                {/* Single Row Under Logo: ONLY Sign In, Book Demo & AI Quick Ask */}
+                <div className="flex w-full flex-nowrap items-center justify-center gap-2 py-0.5">
                   <Link
-                    to="/dashboard"
-                    className="inline-flex flex-col items-center justify-end text-center transition"
+                    to="/login"
+                    className="inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/20 px-2.5 text-[10px] font-extrabold text-black shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90"
+                    style={{ backgroundColor: '#00C6FF' }}
                   >
-                    <BrandLogoLockup size="md" theme="dark" showSlogan={true} />
+                    Sign In
                   </Link>
-
-                  {/* Centred Under Slogan: Participants Profile Bar on Left Side of Both Views Button */}
-                  <div className="flex flex-wrap items-center justify-center gap-2 py-0.5">
-                    <Link
-                      to="/our-participants"
-                      className="inline-flex h-[24px] items-center justify-center gap-1.5 rounded-full border border-[#00C6FF] bg-[#0072FF] px-3.5 text-[10px] font-extrabold uppercase tracking-wide text-white shadow-[0_0_10px_rgba(0,114,255,0.5)] transition hover:opacity-95"
-                    >
-                      <Heart className="h-3 w-3 shrink-0 text-[#00C6FF]" />
-                      <span className="whitespace-nowrap">Participant Profiles</span>
-                    </Link>
-                    {WORKSPACE_VIEWS.map(({ id, label, Icon }) => {
-                      const selected = workspaceView === id;
-                      return (
-                        <button
-                          key={id}
-                          type="button"
-                          onClick={() => switchWorkspaceView(id)}
-                          aria-pressed={selected}
-                          title={label}
-                          className="inline-flex h-[24px] items-center justify-center gap-1.5 rounded-full border px-4 text-[10px] font-extrabold tracking-wide shadow-[0_0_10px_rgba(0,198,255,0.5)] transition-all hover:opacity-95"
-                          style={{
-                            background: 'linear-gradient(90deg, #00C6FF 0%, #0072FF 50%, #FF2E9A 100%)',
-                            borderColor: '#00C6FF',
-                            color: '#FFFFFF',
-                          }}
-                        >
-                          <Icon className="h-3 w-3 shrink-0" style={{ color: '#00C6FF' }} />
-                          <span className="whitespace-nowrap uppercase">{label}</span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Single Non-Wrapping Row Directly On Top Of The Divider Line: Left Buttons + Centred AI Quick Bar + Right Buttons */}
-                <div className="flex w-full flex-nowrap items-center justify-between gap-1.5">
-                  <div className="flex shrink-0 items-center gap-1">
-                    <Link
-                      to="/login"
-                      className="inline-flex h-[26px] items-center justify-center whitespace-nowrap rounded-lg border border-white/20 px-2.5 text-[10.5px] font-extrabold text-black shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90"
-                      style={{ backgroundColor: '#00C6FF' }}
-                    >
-                      Sign In
-                    </Link>
-                    <Link
-                      to="/?demo=book"
-                      className="inline-flex h-[26px] items-center justify-center whitespace-nowrap rounded-lg border border-[#00C6FF]/50 px-2.5 text-[10.5px] font-extrabold text-white shadow-[0_0_10px_rgba(0,114,255,0.55)] transition hover:opacity-90"
-                      style={{ backgroundColor: '#0072FF' }}
-                    >
-                      Book Demo
-                    </Link>
-                  </div>
-
-                  {/* Centred AI Quick Bar Directly On Top Of The Divider Line */}
-                  <div className="mx-auto flex min-w-0 shrink-0 items-center justify-center">
+                  <Link
+                    to="/?demo=book"
+                    className="inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-[#00C6FF]/50 px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(0,114,255,0.55)] transition hover:opacity-90"
+                    style={{ backgroundColor: '#0072FF' }}
+                  >
+                    Book Demo
+                  </Link>
+                  <div className="flex min-w-0 shrink-0 items-center justify-center">
                     <EnterpriseFloatingWorkspaceDock inline />
                   </div>
-
-                  <div className="flex shrink-0 items-center gap-1">
-                    <Link
-                      to="/register"
-                      className="inline-flex h-[26px] items-center justify-center whitespace-nowrap rounded-lg border border-white/25 px-2.5 text-[10.5px] font-extrabold text-white shadow-[0_0_10px_rgba(255,46,154,0.55)] transition hover:opacity-90"
-                      style={{ backgroundColor: '#FF2E9A' }}
-                    >
-                      Start Free
-                    </Link>
-                    <button
-                      type="button"
-                      onClick={toggleCompactHeader}
-                      title="Minimize top header"
-                      className="inline-flex h-[26px] items-center justify-center gap-1 whitespace-nowrap rounded-lg border border-white/20 px-2.5 text-[10.5px] font-extrabold text-black shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90"
-                      style={{ backgroundColor: '#00C6FF' }}
-                    >
-                      <ChevronDown className="h-3 w-3 rotate-180" />
-                      <span>Minimize</span>
-                    </button>
-                    <button
-                      onClick={() => setMobileOpen(true)}
-                      aria-label="Open menu"
-                      className="shrink-0 rounded-lg border-2 border-[#00C6FF] bg-black p-1.5 text-[#00C6FF] shadow-2xs transition hover:border-[#FF2E9A] md:hidden"
-                    >
-                      <Menu className="h-4 w-4" style={{ color: '#00C6FF' }} />
-                    </button>
-                  </div>
+                  <button
+                    onClick={() => setMobileOpen(true)}
+                    aria-label="Open menu"
+                    className="shrink-0 rounded-lg border-2 border-[#00C6FF] bg-black p-1 text-[#00C6FF] shadow-2xs transition hover:border-[#FF2E9A] md:hidden"
+                  >
+                    <Menu className="h-3.5 w-3.5" style={{ color: '#00C6FF' }} />
+                  </button>
                 </div>
               </div>
             </div>
