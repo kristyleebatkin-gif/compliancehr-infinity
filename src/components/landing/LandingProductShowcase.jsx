@@ -265,7 +265,7 @@ export default function LandingProductShowcase() {
           </div>
 
           {/* All 9 Word/Metric Tiles Together Directly Under Executive & Row 1 */}
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-9">
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-9">
             {EXECUTIVE_KPI_ROW.map((kpi) => (
               <Link
                 key={kpi.id}
@@ -311,9 +311,9 @@ export default function LandingProductShowcase() {
           </div>
 
           {/* ROW 3 — Compact Operational Performance, Trends & Register Telemetry */}
-          <div className="grid grid-cols-1 gap-3 lg:grid-cols-12 items-stretch">
+          <div className="grid grid-cols-1 gap-3 xl:grid-cols-12 items-stretch">
             {/* Panel 1: Active Domain Readiness Summary */}
-            <div className="lg:col-span-4 flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-3 text-left">
+            <div className="xl:col-span-4 flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-3 text-left">
               <div>
                 <h4 className="text-sm sm:text-base font-black text-[#0A2B6D]">
                   {activePanel.title}
@@ -344,7 +344,7 @@ export default function LandingProductShowcase() {
             </div>
 
             {/* Panel 2: Executive Trajectory Chart */}
-            <div className="lg:col-span-4 flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-3 text-left">
+            <div className="xl:col-span-4 flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-3 text-left">
               <div className="flex items-center justify-between gap-2 border-b border-slate-100 pb-1.5">
                 <h4 className="text-xs sm:text-sm font-black text-[#0A2B6D]">
                   Audit Readiness &amp; Claims Trajectory (%)
@@ -370,7 +370,7 @@ export default function LandingProductShowcase() {
             </div>
 
             {/* Panel 3: Department Benchmarks Chart */}
-            <div className="lg:col-span-4 flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-3 text-left">
+            <div className="xl:col-span-4 flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-3 text-left">
               <div className="flex items-center justify-between gap-2 border-b border-slate-100 pb-1.5">
                 <h4 className="text-xs sm:text-sm font-black text-[#0A2B6D]">
                   6-Pillar Domain Readiness (%)

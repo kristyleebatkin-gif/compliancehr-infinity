@@ -61,7 +61,7 @@ export default function Inbox() {
       ) : loadError ? (
         <div role="alert" className="rounded-xl border border-destructive/30 bg-destructive/5 p-4 text-sm text-destructive">{loadError} <Button type="button" variant="outline" size="sm" className="ml-2" onClick={load}>Retry</Button></div>
       ) : list.length === 0 ? (
-        <p className="rounded-xl border border-white/15 bg-[#162235] py-6 px-4 text-center text-xs sm:text-sm font-bold text-slate-200">
+        <p className="rounded-xl border border-white/15 bg-[#0A2B6D] py-6 px-4 text-center text-xs sm:text-sm font-bold text-slate-200">
           {box === 'received' ? 'No messages addressed to you yet — bulk messages, emails, replies and shift note copies sent to you will appear here.' : 'Nothing sent yet.'}
         </p>
       ) : (
@@ -70,7 +70,7 @@ export default function Inbox() {
             const attachments = parseJson(entry.attachments_json);
             const recipients = parseJson(entry.recipients_json);
             return (
-              <div key={entry.id} className="rounded-xl border border-white/15 bg-[#162235] p-3.5 text-white">
+              <div key={entry.id} className="rounded-xl border border-white/15 bg-[#0A2B6D] p-3.5 text-white">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div className="flex flex-wrap items-center gap-1.5">
                     <Badge className="bg-[#0072FF] text-white border-none">{entry.entry_kind}</Badge>
@@ -78,7 +78,7 @@ export default function Inbox() {
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-xs font-semibold text-slate-300">{[entry.sender_name, entry.entry_date].filter(Boolean).join(' · ')}</span>
-                    <Button variant="outline" size="sm" className="h-7 border-[#00C6FF]/50 bg-[#081018] text-white hover:bg-[#0072FF]" onClick={() => setReplyTarget(entry)}><Reply className="h-3.5 w-3.5" />Reply</Button>
+                    <Button variant="outline" size="sm" className="h-7 border-[#00C6FF]/50 bg-[#0A2B6D] text-white hover:bg-[#0072FF]" onClick={() => setReplyTarget(entry)}><Reply className="h-3.5 w-3.5" />Reply</Button>
                   </div>
                 </div>
                 {recipients.length > 0 && (
@@ -90,7 +90,7 @@ export default function Inbox() {
                 {attachments.length > 0 && (
                   <div className="mt-2 flex flex-wrap gap-2">
                     {attachments.map((a, i) => (
-                      <Button key={i} variant="outline" size="sm" className="border-white/25 bg-[#081018] text-white" onClick={() => openAttachment(a)}><Paperclip className="h-3 w-3" />{a.name}</Button>
+                      <Button key={i} variant="outline" size="sm" className="border-white/25 bg-[#0A2B6D] text-white" onClick={() => openAttachment(a)}><Paperclip className="h-3 w-3" />{a.name}</Button>
                     ))}
                   </div>
                 )}

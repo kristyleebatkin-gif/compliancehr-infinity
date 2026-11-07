@@ -64,7 +64,7 @@ export default function AboveMailboxCommandDeck({ onDropExpressMail, mailAlertCo
             color: '#FFFFFF',
           }}
         >
-          <span className="inline-flex items-center gap-1 text-[8px] font-extrabold uppercase tracking-wider text-white">
+          <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider text-white">
             <span
               className="h-2 w-2 shrink-0 rounded-full border border-white bg-white"
               style={{ boxShadow: '0 0 8px 3px #FFFFFF, 0 0 12px 2px #00C6FF' }}
@@ -72,7 +72,7 @@ export default function AboveMailboxCommandDeck({ onDropExpressMail, mailAlertCo
             <Sparkles className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
             <span style={{ color: '#FFFFFF' }}>Sky-Drop &amp; Radar Command Above Mailbox</span>
           </span>
-          <span className="inline-flex items-center gap-1 rounded-full bg-[#0A2B6D]/70 px-1.5 py-0 text-[6.5px] font-extrabold text-white">
+          <span className="inline-flex items-center gap-1 rounded-full bg-[#0A2B6D]/70 px-1.5 py-0 text-[10px] font-extrabold text-white">
             <Radio className="h-2 w-2 text-white animate-pulse" style={{ color: '#FFFFFF' }} />
             <span style={{ color: '#FFFFFF' }}>LIVE ✦</span>
           </span>
@@ -92,7 +92,7 @@ export default function AboveMailboxCommandDeck({ onDropExpressMail, mailAlertCo
                 <button
                   type="button"
                   onClick={() => setActiveMode(m.id)}
-                  className={`flex h-[20px] w-full items-center justify-center gap-1 rounded-full px-1.5 text-[7px] font-extrabold transition-all ${
+                  className={`flex min-h-8 w-full items-center justify-center gap-1 rounded-full px-2 py-1 text-[10px] font-extrabold transition-all ${
                     isAct ? 'ring-1 ring-[#FF2E9A]' : ''
                   }`}
                   style={{
@@ -173,13 +173,13 @@ export default function AboveMailboxCommandDeck({ onDropExpressMail, mailAlertCo
                   </g>
                 </svg>
                 <div className="flex w-full items-center justify-between gap-1">
-                  <span className="text-[7.5px] font-extrabold text-white truncate">
+                  <span className="text-[10px] font-extrabold text-white truncate">
                     Express Air-Drop → Mailbox ({mailAlertCount} Ready)
                   </span>
                   <button
                     type="button"
                     onClick={handleLaunchDrop}
-                    className="gradient-brand inline-flex shrink-0 items-center gap-1 rounded-full border border-white/40 px-2 py-0.5 text-[7px] font-extrabold text-white shadow-2xs"
+                    className="gradient-brand inline-flex shrink-0 items-center gap-1 rounded-full border border-white/40 px-2 py-0.5 text-[10px] font-extrabold text-white shadow-2xs"
                     style={{ background: getHeaderView(4), color: '#FFFFFF' }}
                   >
                     <Zap className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
@@ -214,20 +214,20 @@ export default function AboveMailboxCommandDeck({ onDropExpressMail, mailAlertCo
                   <circle cx="32" cy="32" r="3.5" fill="#FFFFFF" />
                 </svg>
                 <div className="flex flex-1 flex-col items-start text-left space-y-0.5">
-                  <div className="inline-flex items-center gap-1 text-[8px] font-extrabold text-[#00C6FF]">
+                  <div className="inline-flex items-center gap-1 text-[10px] font-extrabold text-[#00C6FF]">
                     <ShieldCheck className="h-3 w-3 shrink-0 text-[#00C6FF]" />
                     <span>360° NDIS &amp; WHS Radar Sweep</span>
                   </div>
-                  <p className="text-[7px] font-extrabold leading-tight text-white">
+                  <p className="text-[10px] font-extrabold leading-tight text-white">
                     {statusTicker[pulseStep]}
                   </p>
                   <div className="flex items-center gap-1 pt-0.5">
-                    <span className="rounded-full border border-[#00C6FF]/40 bg-[#16468A]/80 px-1.5 py-0 text-[6.5px] font-extrabold text-white">
+                    <span className="rounded-full border border-[#00C6FF]/40 bg-[#16468A]/80 px-1.5 py-0 text-[10px] font-extrabold text-white">
                       98.4% Score
                     </span>
                     <Link
                       to="/compliance"
-                      className="gradient-brand rounded-full px-2 py-0 text-[6.5px] font-extrabold text-white"
+                      className="gradient-brand rounded-full px-2 py-0 text-[10px] font-extrabold text-white"
                       style={{ background: getHeaderView(1), color: '#FFFFFF' }}
                     >
                       Audit Hub →
@@ -240,13 +240,13 @@ export default function AboveMailboxCommandDeck({ onDropExpressMail, mailAlertCo
             {activeMode === 'roster' && (
               <div className="flex w-full flex-col gap-1 py-0.5">
                 <div className="flex items-center justify-between gap-1">
-                  <span className="inline-flex items-center gap-1 text-[7.5px] font-extrabold text-[#00C6FF]">
+                  <span className="inline-flex items-center gap-1 text-[10px] font-extrabold text-[#00C6FF]">
                     <Award className="h-3 w-3 text-[#00C6FF]" />
                     <span>3 Shifts Active · 100% Screened</span>
                   </span>
                   <Link
                     to="/roster"
-                    className="gradient-brand rounded-full px-2 py-0 text-[6.5px] font-extrabold text-white"
+                    className="gradient-brand rounded-full px-2 py-0 text-[10px] font-extrabold text-white"
                     style={{ background: getHeaderView(0), color: '#FFFFFF' }}
                   >
                     Open Roster →
@@ -260,7 +260,7 @@ export default function AboveMailboxCommandDeck({ onDropExpressMail, mailAlertCo
                   ].map((s, sIdx) => (
                     <div
                       key={s.who}
-                      className="rounded border bg-[#16468A]/80 px-1 py-0.5 text-[6.5px] font-extrabold text-white"
+                      className="rounded border bg-[#16468A]/80 px-1 py-0.5 text-[10px] font-extrabold text-white"
                       style={{ borderColor: getAppBorderView(sIdx) }}
                     >
                       <div className="truncate font-black text-white">{s.who}</div>

@@ -130,7 +130,7 @@ export default function MiniCommunicationCentrePanel({
             </span>
           </span>
           <div className="flex items-center gap-1.5">
-            <span className="rounded-full bg-[#0A2B6D]/70 px-2 py-0.5 text-[7.5px] font-extrabold text-white">
+            <span className="rounded-full bg-[#0A2B6D]/70 px-2 py-0.5 text-[10px] font-extrabold text-white">
               Last 7 days
             </span>
 
@@ -179,11 +179,11 @@ export default function MiniCommunicationCentrePanel({
             className="flex min-w-0 items-center justify-between gap-1 rounded-md border border-[#0A2B6D] px-2 py-1 text-white"
             style={{ background: 'linear-gradient(125deg, #FF2E9A 0%, #dc2626 55%, #A100FF 100%)' }}
           >
-            <span className="inline-flex min-w-0 items-center gap-1 text-[7.5px] font-extrabold leading-tight text-white break-words">
+            <span className="inline-flex min-w-0 items-center gap-1 text-[10px] font-extrabold leading-tight text-white break-words">
               <Mail className="h-2.5 w-2.5 shrink-0 text-white" />
               <span>Alert Mailbox</span>
             </span>
-            <span className="shrink-0 rounded-full bg-white px-1.5 py-0 text-[7px] font-extrabold text-[#0A2B6D]">
+            <span className="shrink-0 rounded-full bg-white px-1.5 py-0 text-[10px] font-extrabold text-[#0A2B6D]">
               {alertCount}
             </span>
           </button>
@@ -191,7 +191,7 @@ export default function MiniCommunicationCentrePanel({
           {(!tabs.length || tabs.some(([value]) => value === 'alerts')) && <button
             type="button"
             onClick={() => selectCommMethod('alerts')}
-            className="flex min-w-0 items-center justify-between gap-1 rounded-md border border-[#FF2E9A]/50 bg-[#0A2B6D]/90 backdrop-blur-sm px-2 py-1 text-[7.5px] font-extrabold leading-tight text-white transition hover:border-[#00C6FF]"
+            className="flex min-w-0 items-center justify-between gap-1 rounded-md border border-[#FF2E9A]/50 bg-[#0A2B6D]/90 backdrop-blur-sm px-2 py-1 text-[10px] font-extrabold leading-tight text-white transition hover:border-[#00C6FF]"
           >
             <span className="inline-flex min-w-0 items-center gap-1 break-words">
               <span className="h-2 w-2 shrink-0 rounded-full bg-[#EF4444]" style={{ boxShadow: '0 0 5px #EF4444' }} />
@@ -203,7 +203,7 @@ export default function MiniCommunicationCentrePanel({
           {(!tabs.length || tabs.some(([value]) => value === 'logs')) && <button
             type="button"
             onClick={() => selectCommMethod('logs')}
-            className="flex min-w-0 items-center justify-between gap-1 rounded-md border border-[#00C6FF]/50 bg-[#0A2B6D]/90 backdrop-blur-sm px-2 py-1 text-[7.5px] font-extrabold leading-tight text-white transition hover:border-[#FF2E9A]"
+            className="flex min-w-0 items-center justify-between gap-1 rounded-md border border-[#00C6FF]/50 bg-[#0A2B6D]/90 backdrop-blur-sm px-2 py-1 text-[10px] font-extrabold leading-tight text-white transition hover:border-[#FF2E9A]"
           >
             <span className="inline-flex min-w-0 items-center gap-1 break-words">
               <span className="h-2 w-2 shrink-0 rounded-full bg-[#10B981]" style={{ boxShadow: '0 0 5px #10B981' }} />
@@ -214,14 +214,14 @@ export default function MiniCommunicationCentrePanel({
         </div>
 
         {/* 4. Merged Mini Comms Live Stream + 10 Quick-Press Communication Channels */}
-        <div className="grid grid-cols-1 gap-2 lg:grid-cols-12">
+        <div className="grid grid-cols-1 gap-2 xl:grid-cols-12">
           {/* Left: Merged Mini Comms Live Feed */}
-          <div className="lg:col-span-4 flex flex-col rounded-lg border border-white/15 bg-[#0A2B6D]/90 backdrop-blur-sm p-2 text-left">
+          <div className="xl:col-span-4 flex flex-col rounded-lg border border-white/15 bg-[#0A2B6D]/90 backdrop-blur-sm p-2 text-left">
             <div className="mb-1 flex items-center justify-between px-1">
               <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
                 Mini Comms Live Stream
               </span>
-              <span className="text-[7px] font-bold text-slate-300">Click to open</span>
+              <span className="text-[10px] font-bold text-slate-300">Click to open</span>
             </div>
             <div className="space-y-1">
               {recentComms.length > 0 ? (
@@ -232,9 +232,9 @@ export default function MiniCommunicationCentrePanel({
                       key={msg.id}
                       type="button"
                       onClick={() => selectCommMethod(targetTab)}
-                      className="flex w-full items-center justify-between gap-1.5 rounded border border-white/15 bg-[#16468A]/80 px-1.5 py-1 text-left text-[8px] font-extrabold text-white transition hover:border-[#00C6FF]"
+                      className="flex w-full items-center justify-between gap-1.5 rounded border border-white/15 bg-[#16468A]/80 px-1.5 py-1 text-left text-[11px] font-extrabold text-white transition hover:border-[#00C6FF]"
                     >
-                      <span className="shrink-0 rounded-full bg-[#0072FF] px-1.5 py-0 text-[6.5px] text-white">
+                      <span className="shrink-0 rounded-full bg-[#0072FF] px-1.5 py-0 text-[10px] text-white">
                         {msg.entry_kind || 'Comms'}
                       </span>
                       <span className="min-w-0 flex-1 leading-tight text-right text-white break-words">
@@ -247,9 +247,9 @@ export default function MiniCommunicationCentrePanel({
                 <button
                   type="button"
                   onClick={() => selectCommMethod('inbox')}
-                  className="flex w-full items-center justify-between gap-1.5 rounded border border-white/15 bg-[#16468A]/80 px-1.5 py-1.5 text-left text-[8px] font-extrabold text-white transition hover:border-[#00C6FF]"
+                  className="flex w-full items-center justify-between gap-1.5 rounded border border-white/15 bg-[#16468A]/80 px-1.5 py-1.5 text-left text-[11px] font-extrabold text-white transition hover:border-[#00C6FF]"
                 >
-                  <span className="shrink-0 rounded-full bg-[#0072FF] px-1.5 py-0 text-[6.5px] text-white">
+                  <span className="shrink-0 rounded-full bg-[#0072FF] px-1.5 py-0 text-[10px] text-white">
                     Live Inbox
                   </span>
                   <span className="min-w-0 flex-1 leading-tight text-right text-white break-words">
@@ -261,14 +261,14 @@ export default function MiniCommunicationCentrePanel({
           </div>
 
           {/* Right: Unified Communication Method Channels */}
-          <div className="lg:col-span-8 rounded-lg border border-white/15 bg-[#0A2B6D]/90 backdrop-blur-sm p-2">
+          <div className="xl:col-span-8 rounded-lg border border-white/15 bg-[#0A2B6D]/90 backdrop-blur-sm p-2">
             <div className="mb-1 flex items-center justify-between px-1">
               <span className="text-[10px] font-extrabold uppercase tracking-wider text-white">
                 Unified Communication Channels
               </span>
-              <span className="text-[7px] font-extrabold text-[#00C6FF]">{channelItems.length} Channels</span>
+              <span className="text-[10px] font-extrabold text-[#00C6FF]">{channelItems.length} Channels</span>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-1.5">
+            <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-1.5">
               {channelItems.map((sq, idx) => {
                 const SqIcon = sq.icon;
                 const seqColors = ['#0072FF', '#A855F7', '#FF2E9A'];
