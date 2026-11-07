@@ -229,66 +229,75 @@ export default function LandingProductShowcase() {
     <section id="showcase" className="w-full scroll-mt-20">
       <Reveal>
         <div className="enterprise-surface rounded-2xl p-6 sm:p-8 lg:p-10 space-y-6">
-          <LandingSectionHeader
-            badge="Enterprise Command Architecture"
-            tone="navy"
-            icon={LayoutDashboard}
-            title="Executive Governance & Operational Telemetry"
-            description="Structured around the three-tier enterprise GRC standard: Row 1 Executive KPIs, Row 2 Attention Required SLA Monitors, and Row 3 Operational Performance & Register Analytics."
-          />
-
-          {/* Domain View Switcher (Salesforce Lightning / Microsoft Purview Tab Bar) */}
-          <div
-            role="tablist"
-            aria-label="Executive dashboard showcase views"
-            className="flex flex-wrap items-center gap-2 border-b border-slate-200 pb-4"
-          >
-            {SHOWCASE_PANELS.map((panel) => {
-              const Icon = panel.icon;
-              const isActive = panel.id === selectedId;
-              return (
-                <button
-                  key={panel.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={isActive}
-                  onClick={() => setSelectedId(panel.id)}
-                  className={`inline-flex items-center gap-2 rounded-lg border px-3.5 py-2 text-xs font-bold transition ${
-                    isActive
-                      ? 'border-[#0A2B6D] bg-[#0A2B6D] text-white shadow-xs'
-                      : 'border-slate-200 bg-slate-50 text-[#0A2B6D] hover:border-[#0072FF] hover:bg-white'
-                  }`}
-                >
-                  <Icon className="h-4 w-4 shrink-0" style={{ color: isActive ? '#00C6FF' : panel.color }} />
-                  <span>{panel.shortLabel}</span>
-                  <span
-                    className={`rounded px-1.5 py-0.5 text-xs font-extrabold ${
-                      isActive ? 'bg-white/15 text-[#00C6FF]' : 'bg-white text-[#5A00D6]'
-                    }`}
-                  >
-                    {panel.metricValue}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* ROW 1 — Executive KPIs (Organisation Health, Compliance Score, Risk Score, Workforce Score, Quality Score) */}
-          <div className="space-y-2.5">
-            <div className="flex items-center justify-between">
-              <h3 className="text-sm font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                Row 1 · Executive KPIs
-              </h3>
-              <span className="text-xs font-semibold text-[#5A00D6]">
-                5 Core Governance Indices
+          {/* Top Two Lines: Line 1 Badge + Heading + Summary · Line 2 Domain View Switcher */}
+          <div className="space-y-2.5 border-b border-slate-200 pb-3.5 text-left">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <div className="flex flex-wrap items-center gap-2.5">
+                <span className="inline-flex items-center gap-1.5 rounded-md border border-[#0A2B6D]/25 bg-[#0A2B6D]/10 px-2.5 py-1 text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                  <LayoutDashboard className="h-3.5 w-3.5 text-[#0072FF]" />
+                  <span>Enterprise Command Architecture</span>
+                </span>
+                <h2 className="font-editorial text-xl sm:text-2xl font-extrabold tracking-tight text-[#0A2B6D]">
+                  Executive Governance &amp; Operational Telemetry
+                </h2>
+              </div>
+              <span className="text-xs font-semibold text-[#0A2B6D]/80">
+                Row 1 Executive KPIs · Attention Required SLA Monitors · Operational Performance
               </span>
             </div>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
+
+            <div
+              role="tablist"
+              aria-label="Executive dashboard showcase views"
+              className="flex flex-wrap items-center gap-1.5"
+            >
+              {SHOWCASE_PANELS.map((panel) => {
+                const Icon = panel.icon;
+                const isActive = panel.id === selectedId;
+                return (
+                  <button
+                    key={panel.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    onClick={() => setSelectedId(panel.id)}
+                    className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-bold transition ${
+                      isActive
+                        ? 'border-[#0A2B6D] bg-[#0A2B6D] text-white shadow-xs'
+                        : 'border-slate-200 bg-slate-50 text-[#0A2B6D] hover:border-[#0072FF] hover:bg-white'
+                    }`}
+                  >
+                    <Icon className="h-3.5 w-3.5 shrink-0" style={{ color: isActive ? '#00C6FF' : panel.color }} />
+                    <span>{panel.shortLabel}</span>
+                    <span
+                      className={`rounded px-1.5 py-0.5 text-[11px] font-extrabold ${
+                        isActive ? 'bg-white/15 text-[#00C6FF]' : 'bg-white text-[#5A00D6]'
+                      }`}
+                    >
+                      {panel.metricValue}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* All 9 Word/Metric Tiles Together Directly Under Executive & Row 1 */}
+          <div className="space-y-2.5">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <h3 className="text-sm font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+                Row 1 · Executive &amp; Governance Command (All 9 Core Telemetry Tiles)
+              </h3>
+              <span className="text-xs font-semibold text-[#5A00D6]">
+                5 Executive KPIs + 4 Statutory SLA Monitors Unified
+              </span>
+            </div>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
               {EXECUTIVE_KPI_ROW.map((kpi) => (
                 <Link
                   key={kpi.id}
                   to={kpi.path}
-                  className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-slate-200 bg-white p-4 text-left shadow-2xs transition hover:border-[#0072FF] hover:shadow-md"
+                  className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-slate-200 bg-white p-3.5 text-left shadow-2xs transition hover:border-[#0072FF] hover:shadow-md"
                 >
                   <span
                     className="absolute inset-x-0 top-0 h-1"
@@ -299,60 +308,46 @@ export default function LandingProductShowcase() {
                       {kpi.label}
                     </span>
                     <span
-                      className="rounded px-2 py-0.5 text-xs font-bold"
+                      className="rounded px-2 py-0.5 text-[11px] font-bold"
                       style={{ backgroundColor: `${kpi.accent}12`, color: kpi.accent }}
                     >
                       {kpi.status}
                     </span>
                   </div>
-                  <div className="mt-3 font-editorial text-2xl sm:text-3xl font-extrabold text-[#0A2B6D] leading-none">
+                  <div className="mt-2 font-editorial text-2xl font-extrabold text-[#0A2B6D] leading-none">
                     {kpi.score}
                   </div>
-                  <div className="mt-2 border-t border-slate-100 pt-2 text-xs font-medium text-[#0A2B6D]/75">
+                  <div className="mt-2 border-t border-slate-100 pt-1.5 text-xs font-medium text-[#0A2B6D]/75">
                     {kpi.target}
                   </div>
                 </Link>
               ))}
-            </div>
-          </div>
-
-          {/* ROW 2 — Attention Required (Critical incidents, High risks, Overdue actions, Expiring credentials, Compliance gaps) */}
-          <div className="space-y-2.5">
-            <div className="flex items-center justify-between">
-              <h3 className="text-sm font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                Row 2 · Attention Required
-              </h3>
-              <span className="text-xs font-semibold text-[#0072FF]">
-                Real-Time Statutory &amp; Credential Escalation Watch
-              </span>
-            </div>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
-              {ATTENTION_REQUIRED_ROW.map((item) => (
+              {ATTENTION_REQUIRED_ROW.slice(0, 4).map((item) => (
                 <Link
                   key={item.id}
                   to={item.path}
-                  className="flex flex-col justify-between rounded-xl border border-slate-200 bg-[#F8FAFC] p-4 text-left transition hover:border-[#0072FF] hover:bg-white"
+                  className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-slate-200 bg-white p-3.5 text-left shadow-2xs transition hover:border-[#0072FF] hover:shadow-md"
                 >
-                  <div>
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="text-xs font-bold text-[#0A2B6D]">
-                        {item.title}
-                      </span>
-                      <span
-                        className="h-2.5 w-2.5 shrink-0 rounded-full"
-                        style={{ backgroundColor: item.color }}
-                      />
-                    </div>
-                    <div className="mt-2 font-editorial text-xl font-extrabold text-[#0A2B6D]">
-                      {item.count}
-                    </div>
-                    <p className="mt-1 text-xs font-normal text-[#0A2B6D]/75 leading-relaxed">
-                      {item.sla}
-                    </p>
+                  <span
+                    className="absolute inset-x-0 top-0 h-1"
+                    style={{ backgroundColor: item.color }}
+                  />
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-xs font-bold text-[#0A2B6D]">
+                      {item.title}
+                    </span>
+                    <span
+                      className="rounded px-2 py-0.5 text-[11px] font-bold"
+                      style={{ backgroundColor: `${item.color}12`, color: item.color }}
+                    >
+                      {item.severity}
+                    </span>
                   </div>
-                  <div className="mt-3 border-t border-slate-200/70 pt-2 flex items-center justify-between text-xs font-semibold" style={{ color: item.color }}>
-                    <span>{item.severity}</span>
-                    <ArrowUpRight className="h-3.5 w-3.5" />
+                  <div className="mt-2 font-editorial text-2xl font-extrabold text-[#0A2B6D] leading-none">
+                    {item.count}
+                  </div>
+                  <div className="mt-2 border-t border-slate-100 pt-1.5 text-xs font-medium text-[#0A2B6D]/75">
+                    {item.sla}
                   </div>
                 </Link>
               ))}

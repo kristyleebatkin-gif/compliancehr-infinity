@@ -20,26 +20,28 @@ export default function LandingSectionHeader({
   return (
     <div
       id={id}
-      className="flex flex-col gap-3 border-b border-slate-200 pb-6 text-left lg:flex-row lg:items-end lg:justify-between"
+      className="space-y-1.5 border-b border-slate-200 pb-3.5 text-left"
     >
-      <div className="min-w-0 max-w-3xl">
-        <span
-          className="inline-flex items-center gap-2 rounded-md border px-3 py-1 text-xs font-bold uppercase tracking-wider"
-          style={{
-            backgroundColor: palette.tint,
-            borderColor: palette.border,
-            color: palette.text,
-          }}
-        >
-          {Icon ? <Icon className="h-3.5 w-3.5 shrink-0" style={{ color: palette.text }} /> : null}
-          <span>{badge}</span>
-        </span>
-        <h2 className="mt-3 font-editorial text-2xl font-extrabold tracking-tight text-[#0A2B6D] sm:text-[28px] lg:text-[32px] leading-tight">
-          {title}
-        </h2>
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="flex flex-wrap items-center gap-2.5 min-w-0">
+          <span
+            className="inline-flex shrink-0 items-center gap-1.5 rounded-md border px-2.5 py-1 text-xs font-bold uppercase tracking-wider"
+            style={{
+              backgroundColor: palette.tint,
+              borderColor: palette.border,
+              color: palette.text,
+            }}
+          >
+            {Icon ? <Icon className="h-3.5 w-3.5 shrink-0" style={{ color: palette.text }} /> : null}
+            <span>{badge}</span>
+          </span>
+          <h2 className="font-editorial text-xl font-extrabold tracking-tight text-[#0A2B6D] sm:text-2xl leading-tight">
+            {title}
+          </h2>
+        </div>
       </div>
       {description ? (
-        <p className="max-w-xl text-sm font-normal leading-relaxed text-[#0A2B6D]/80 sm:text-base">
+        <p className="text-xs sm:text-sm font-semibold leading-snug text-[#0A2B6D]/80">
           {description}
         </p>
       ) : null}

@@ -460,32 +460,57 @@ export default function LandingLaunchVideosSection() {
   return (
     <section
       aria-label="ComplianceHR Infinity Launch Transformation Videos"
-      className="space-y-8"
+      className="overflow-hidden rounded-3xl p-[3px] shadow-2xl"
+      style={{
+        background: 'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+      }}
     >
-      {/* Transformation Header Banner */}
-      <div
-        className="rounded-3xl p-5 sm:p-7 text-white shadow-xl"
-        style={{
-          background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
-        }}
-      >
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 lg:items-center">
-          <div className="lg:col-span-5 space-y-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-[#00C6FF]">
-              <HeartHandshake className="h-3.5 w-3.5" />
-              The Transformation Story
-            </span>
-            <h2 className="text-xl font-extrabold tracking-tight text-white sm:text-2xl">
-              People Don&apos;t Buy Features — They Buy Transformation
-            </h2>
-            <p className="text-xs font-semibold leading-relaxed text-white/85">
-              Our purpose was never compliance. Our purpose has always been helping people achieve their goals.
-            </p>
+      <div className="rounded-[21px] bg-white p-5 sm:p-7 space-y-6">
+        {/* Unified Top Header on the Single Master Tile: Kristy Whelan + Transformation Story + See ComplianceHR Infinity in Action */}
+        <div
+          className="rounded-2xl p-4 sm:p-6 text-white shadow-lg space-y-4"
+          style={{
+            background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+          }}
+        >
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between border-b border-white/15 pb-4">
+            <div className="flex items-center gap-3.5">
+              <div
+                className="h-16 w-16 shrink-0 overflow-hidden rounded-2xl p-[2px] shadow-md"
+                style={{
+                  background: 'linear-gradient(120deg, #00C6FF 0%, #0072FF 45%, #FF2E9A 100%)',
+                }}
+              >
+                <Image
+                  src={FOUNDER_PORTRAIT_URL}
+                  alt="Kristy Whelan — Founder & Director Portrait"
+                  className="h-full w-full rounded-[14px] object-cover"
+                  fittingType="fill"
+                />
+              </div>
+              <div className="space-y-1">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-0.5 text-[11px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
+                    <HeartHandshake className="h-3.5 w-3.5" />
+                    Kristy Whelan · Founder &amp; Director Transformation Suite
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-[#00C6FF]/40 bg-[#0072FF]/25 px-3 py-0.5 text-[11px] font-extrabold uppercase tracking-wider text-white">
+                    <ShieldCheck className="h-3.5 w-3.5 text-[#00C6FF]" />
+                    See ComplianceHR Infinity in Action
+                  </span>
+                </div>
+                <h2 className="text-xl font-extrabold tracking-tight text-white sm:text-2xl">
+                  People Don&apos;t Buy Features — They Buy Transformation &amp; The Future of Compliance
+                </h2>
+                <p className="text-xs font-semibold leading-relaxed text-white/85">
+                  Built from experience. Designed for excellence. Created to give people their time back — because our purpose has always been helping people achieve their goals.
+                </p>
+              </div>
+            </div>
           </div>
 
-          <div className="lg:col-span-7 grid grid-cols-1 gap-3 sm:grid-cols-2">
-            {/* What people don't wake up wanting */}
-            <div className="rounded-2xl border border-white/15 bg-white/5 p-3.5 space-y-2">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div className="rounded-xl border border-white/15 bg-white/5 p-3 space-y-1.5">
               <div className="text-[11px] font-extrabold uppercase tracking-wider text-rose-300">
                 People don&apos;t wake up wanting:
               </div>
@@ -493,7 +518,7 @@ export default function LandingLaunchVideosSection() {
                 {NOT_WHAT_PEOPLE_WAKE_UP_WANTING.map((item) => (
                   <span
                     key={item}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-bold text-white/85"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-bold text-white/90"
                   >
                     <XCircle className="h-3.5 w-3.5 text-rose-300 shrink-0" />
                     {item}
@@ -502,10 +527,9 @@ export default function LandingLaunchVideosSection() {
               </div>
             </div>
 
-            {/* What they truly want */}
-            <div className="rounded-2xl border border-[#00C6FF]/40 bg-white p-3.5 space-y-2">
+            <div className="rounded-xl border border-[#00C6FF]/40 bg-white p-3 space-y-1.5">
               <div className="text-[11px] font-extrabold uppercase tracking-wider text-[#0072FF]">
-                They want:
+                They want transformation:
               </div>
               <div className="flex flex-wrap gap-1.5">
                 {TRANSFORMATION_OUTCOMES.map((item) => (
@@ -521,63 +545,49 @@ export default function LandingLaunchVideosSection() {
             </div>
           </div>
         </div>
-      </div>
 
-      {/* VIDEO 1 — "MY STORY" (with Uploaded Cartoon Character Reference) */}
-      <StoryVideoCard
-        badge='VIDEO 1 · "MY STORY"'
-        title='KRISTY WHELAN — "Why I Created ComplianceHR Infinity"'
-        subtitle="Supporting people, organisations and teams to focus on people, not paperwork."
-        durationLabel="Founder Story Voiceover"
-        videoUrl={VIDEO_1_URL}
-        lines={VIDEO_1_LINES}
-        aiPrompt={VIDEO_1_PROMPT}
-        referenceLabel="Use your uploaded cartoon image as the character reference."
-        portraitUrl={FOUNDER_PORTRAIT_URL}
-        accentColor="#0072FF"
-        endingCard={{
-          tag: 'Founder Vision',
-          headline: 'KRISTY WHELAN',
-          role: 'Case Manager · Compliance Manager · Business Owner · Director',
-          company: 'ComplianceHR Infinity',
-          quote: 'Because our purpose was never compliance. Our purpose has always been helping people achieve their goals.',
-        }}
-      />
+        {/* Both Videos Neatly Together Inside the Same Single Tile */}
+        <div className="grid grid-cols-1 gap-6 xl:grid-cols-2 items-stretch">
+          <StoryVideoCard
+            badge='VIDEO 1 · "MY STORY"'
+            title='KRISTY WHELAN — "Why I Created ComplianceHR Infinity"'
+            subtitle="Supporting people, organisations and teams to focus on people, not paperwork."
+            durationLabel="Founder Story Voiceover"
+            videoUrl={VIDEO_1_URL}
+            lines={VIDEO_1_LINES}
+            aiPrompt={VIDEO_1_PROMPT}
+            referenceLabel="Use your uploaded cartoon image as the character reference."
+            portraitUrl={FOUNDER_PORTRAIT_URL}
+            accentColor="#0072FF"
+            endingCard={{
+              tag: 'Founder Vision',
+              headline: 'KRISTY WHELAN',
+              role: 'Case Manager · Compliance Manager · Business Owner · Director',
+              company: 'ComplianceHR Infinity',
+              quote: 'Because our purpose was never compliance. Our purpose has always been helping people achieve their goals.',
+            }}
+          />
 
-      {/* Immediately Underneath: "See ComplianceHR Infinity in action" + VIDEO 2 */}
-      <div className="space-y-4 pt-2">
-        <div className="flex flex-col items-center justify-center text-center space-y-2">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-sky-200 bg-[#F0F7FF] px-4 py-1 text-xs font-extrabold uppercase tracking-wider text-[#0072FF]">
-            <ShieldCheck className="h-4 w-4 text-[#0072FF]" />
-            One Source of Truth · One Connected Ecosystem
-          </span>
-          <h2 className="text-2xl font-black tracking-tight text-[#0A2B6D] sm:text-3xl">
-            See ComplianceHR Infinity in action
-          </h2>
-          <p className="max-w-2xl text-sm font-semibold text-[#0A2B6D]/75">
-            Built from experience. Designed for excellence. Created to give people their time back.
-          </p>
+          <StoryVideoCard
+            badge='VIDEO 2 · "THE FUTURE OF COMPLIANCE"'
+            title='THE FUTURE OF COMPLIANCE — Enterprise Operating System'
+            subtitle="Visibility, accountability, traceability and confidence across every level of your organisation."
+            durationLabel="App Vision Voiceover"
+            videoUrl={VIDEO_2_URL}
+            lines={VIDEO_2_LINES}
+            aiPrompt={VIDEO_2_PROMPT}
+            referenceLabel="Use screenshots from your app."
+            accentColor="#5A00D6"
+            endingCard={{
+              tag: 'Final Tagline',
+              headline: 'ComplianceHR Infinity',
+              role: 'Built from experience.',
+              company: 'Designed for excellence.',
+              extraLine: 'Created to give people their time back.',
+              quote: 'ComplianceHR Infinity. Audit Ready. Every Day.',
+            }}
+          />
         </div>
-
-        <StoryVideoCard
-          badge='VIDEO 2 · "THE FUTURE OF COMPLIANCE"'
-          title='THE FUTURE OF COMPLIANCE — Enterprise Operating System'
-          subtitle="Visibility, accountability, traceability and confidence across every level of your organisation."
-          durationLabel="App Vision Voiceover"
-          videoUrl={VIDEO_2_URL}
-          lines={VIDEO_2_LINES}
-          aiPrompt={VIDEO_2_PROMPT}
-          referenceLabel="Use screenshots from your app."
-          accentColor="#5A00D6"
-          endingCard={{
-            tag: 'Final Tagline',
-            headline: 'ComplianceHR Infinity',
-            role: 'Built from experience.',
-            company: 'Designed for excellence.',
-            extraLine: 'Created to give people their time back.',
-            quote: 'ComplianceHR Infinity. Audit Ready. Every Day.',
-          }}
-        />
       </div>
     </section>
   );

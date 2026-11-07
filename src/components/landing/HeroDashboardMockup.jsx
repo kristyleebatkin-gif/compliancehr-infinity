@@ -82,144 +82,106 @@ export default function HeroDashboardMockup() {
 
   return (
     <div className="w-full rounded-xl border border-white/20 bg-white shadow-2xl overflow-hidden text-[#0A2B6D]">
-      {/* Top Window Chrome (Microsoft Purview / ServiceNow GRC Standard) */}
+      {/* Top Two Lines: Line 1 Window Chrome + Badge · Line 2 Role Lenses + Row 1 Label */}
       <div
-        className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 text-white"
+        className="space-y-2 px-4 py-3 text-white"
         style={{
           background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
         }}
       >
-        <div className="flex items-center gap-2.5 min-w-0">
-          <div className="flex shrink-0 items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-[#FF2E9A]" />
-            <span className="h-2.5 w-2.5 rounded-full bg-[#00C6FF]" />
-            <span className="h-2.5 w-2.5 rounded-full bg-[#0072FF]" />
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="flex shrink-0 items-center gap-1.5">
+              <span className="h-2.5 w-2.5 rounded-full bg-[#FF2E9A]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[#00C6FF]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[#0072FF]" />
+            </div>
+            <span className="text-xs font-bold tracking-wide text-white">
+              Executive &amp; Governance · Row 1 Interactive Role Preview
+            </span>
           </div>
-          <span className="text-xs font-bold tracking-wide text-white">
-            ComplianceHR Infinity · Interactive Role Preview
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center gap-1 rounded-md border border-white/20 bg-white/10 px-2.5 py-0.5 text-xs font-semibold text-[#00C6FF]">
+              <Lock className="h-3 w-3" />
+              <span>{activeLens.badge}</span>
+            </span>
+          </div>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="inline-flex items-center gap-1 rounded-md border border-white/20 bg-white/10 px-2.5 py-1 text-xs font-semibold text-[#00C6FF]">
-            <Lock className="h-3 w-3" />
-            <span>{activeLens.badge}</span>
+
+        <div className="flex flex-wrap items-center justify-between gap-1.5 border-t border-white/15 pt-2">
+          <div className="flex flex-wrap items-center gap-1">
+            {ROLE_LENSES.map((lens) => {
+              const active = lens.id === activeLensId;
+              return (
+                <button
+                  key={lens.id}
+                  type="button"
+                  onClick={() => setActiveLensId(lens.id)}
+                  className={`rounded-md px-2.5 py-1 text-[11px] font-extrabold transition ${
+                    active
+                      ? 'bg-[#00C6FF] text-black shadow-2xs'
+                      : 'border border-white/20 bg-white/10 text-white hover:bg-white/20'
+                  }`}
+                >
+                  {lens.label}
+                </button>
+              );
+            })}
+          </div>
+          <span className="text-[11px] font-bold text-[#00C6FF]">
+            Row 1 · {activeLens.label} (9 Unified Tiles)
           </span>
         </div>
       </div>
 
-      {/* Main 3-Row Enterprise Dashboard Body */}
-      <div className="p-4 sm:p-5 space-y-4 bg-[#F8FAFC]">
-        {/* ROW 1: Executive KPIs */}
-        <div>
-          <div className="mb-2 flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#0A2B6D]">
-              Row 1 · {activeLens.label} KPIs
-            </span>
-            <span className="text-xs font-semibold text-[#5A00D6]">
-              Live Organisational Telemetry
-            </span>
-          </div>
-          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-5">
-            {activeLens.kpis.map((kpi) => (
-              <Link
-                key={kpi.label}
-                to={kpi.path}
-                className="group flex flex-col justify-between rounded-lg border border-slate-200 bg-white p-3 text-left shadow-2xs transition hover:border-[#0072FF]"
-              >
-                <div className="text-xs font-semibold text-[#0A2B6D]/80 leading-snug">
-                  {kpi.label}
-                </div>
-                <div className="mt-1.5 font-editorial text-xl font-extrabold text-[#0A2B6D] leading-none">
-                  {kpi.score}
-                </div>
-                <div className="mt-2 flex items-center justify-between gap-1 border-t border-slate-100 pt-1.5">
-                  <span className="text-xs font-semibold" style={{ color: kpi.accent }}>
-                    {kpi.status}
-                  </span>
-                  <span className="text-xs font-medium text-[#0A2B6D]/65">
-                    {kpi.delta}
-                  </span>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        {/* ROW 2: Attention Required */}
-        <div>
-          <div className="mb-2 flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#0A2B6D]">
-              Row 2 · Attention Required &amp; SLA Monitors
-            </span>
-            <span className="inline-flex items-center gap-1 text-xs font-semibold text-[#0072FF]">
-              <Clock className="h-3.5 w-3.5" />
-              <span>24h / 5d Statutory Watch</span>
-            </span>
-          </div>
-          <div className="grid grid-cols-1 gap-2 sm:grid-cols-5">
-            {ROW_2_ATTENTION_REQUIRED.map((item) => (
-              <Link
-                key={item.label}
-                to={item.path}
-                className="flex flex-col justify-between rounded-lg border border-slate-200 bg-white p-3 text-left transition hover:border-[#0072FF]"
-              >
-                <div className="flex items-center justify-between gap-1">
-                  <span className="text-xs font-semibold text-[#0A2B6D]/80 leading-snug">
-                    {item.label}
-                  </span>
-                  <span
-                    className="h-2 w-2 shrink-0 rounded-full"
-                    style={{ backgroundColor: item.tone }}
-                  />
-                </div>
-                <div className="mt-1 text-sm font-extrabold text-[#0A2B6D]">
-                  {item.value}
-                </div>
-                <div className="mt-1 text-xs font-normal text-[#0A2B6D]/70 leading-snug">
-                  {item.detail}
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        {/* ROW 3: Operational Performance */}
-        <div>
-          <div className="mb-2 flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#0A2B6D]">
-              Row 3 · Operational Performance &amp; Evidence Registers
-            </span>
-            <Link to="/registers" className="text-xs font-bold text-[#0072FF] hover:underline">
-              View All 45 Registers →
+      {/* Unified 9 Tiles Directly Under Executive & Row 1 */}
+      <div className="p-4 sm:p-5 space-y-3 bg-[#F8FAFC]">
+        <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-3">
+          {activeLens.kpis.map((kpi) => (
+            <Link
+              key={kpi.label}
+              to={kpi.path}
+              className="group flex flex-col justify-between rounded-lg border border-slate-200 bg-white p-3 text-left shadow-2xs transition hover:border-[#0072FF]"
+            >
+              <div className="text-xs font-bold text-[#0A2B6D] leading-snug">
+                {kpi.label}
+              </div>
+              <div className="mt-1 font-editorial text-xl font-extrabold text-[#0A2B6D] leading-none">
+                {kpi.score}
+              </div>
+              <div className="mt-1.5 flex items-center justify-between gap-1 border-t border-slate-100 pt-1">
+                <span className="text-[11px] font-bold" style={{ color: kpi.accent }}>
+                  {kpi.status}
+                </span>
+                <span className="text-[11px] font-medium text-[#0A2B6D]/65">
+                  {kpi.delta}
+                </span>
+              </div>
             </Link>
-          </div>
-          <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-            {ROW_3_OPERATIONAL_PERFORMANCE.map((op) => (
-              <Link
-                key={op.domain}
-                to={op.path}
-                className="flex items-center justify-between gap-3 rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-left transition hover:border-[#0072FF]"
-              >
-                <div className="min-w-0">
-                  <div className="text-xs font-bold text-[#0A2B6D]">
-                    {op.domain}
-                  </div>
-                  <div className="mt-0.5 text-xs font-normal text-[#0A2B6D]/75">
-                    {op.sub}
-                  </div>
-                </div>
-                <div className="shrink-0 text-right">
-                  <div className="text-xs font-extrabold text-[#0072FF]">
-                    {op.metric}
-                  </div>
-                  <div className="mt-0.5 inline-flex items-center gap-1 text-xs font-semibold text-[#5A00D6]">
-                    <CheckCircle2 className="h-3 w-3 text-[#0072FF]" />
-                    <span>{op.status}</span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+          ))}
+          {ROW_3_OPERATIONAL_PERFORMANCE.map((op) => (
+            <Link
+              key={op.domain}
+              to={op.path}
+              className="group flex flex-col justify-between rounded-lg border border-slate-200 bg-white p-3 text-left shadow-2xs transition hover:border-[#0072FF]"
+            >
+              <div className="text-xs font-bold text-[#0A2B6D] leading-snug">
+                {op.domain}
+              </div>
+              <div className="mt-1 font-editorial text-lg font-extrabold text-[#0072FF] leading-none">
+                {op.metric}
+              </div>
+              <div className="mt-1.5 flex items-center justify-between gap-1 border-t border-slate-100 pt-1">
+                <span className="text-[11px] font-semibold text-[#0A2B6D]/75 truncate">
+                  {op.sub}
+                </span>
+                <span className="inline-flex shrink-0 items-center gap-0.5 text-[11px] font-bold text-[#5A00D6]">
+                  <CheckCircle2 className="h-3 w-3 text-[#0072FF]" />
+                  <span>{op.status}</span>
+                </span>
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
 

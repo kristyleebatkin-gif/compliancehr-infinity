@@ -59,14 +59,26 @@ export default function LandingFaqSection() {
 
   return (
     <section id="faq" className="w-full scroll-mt-20">
-      <Reveal className="enterprise-surface rounded-2xl p-6 sm:p-8 lg:p-10 space-y-6">
-        <LandingSectionHeader
-          badge="Governance & Security FAQ"
-          tone="blue"
-          icon={HelpCircle}
-          title="Frequently Asked Questions"
-          description="Key architectural, regulatory, and security answers for executives, compliance managers, and IT administrators."
-        />
+      <Reveal className="enterprise-surface rounded-2xl p-6 sm:p-8 lg:p-10 space-y-5">
+        <div className="space-y-1.5 border-b border-slate-200 pb-3.5 text-left">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="flex flex-wrap items-center gap-2.5">
+              <span className="inline-flex items-center gap-1.5 rounded-md border border-[#0072FF]/30 bg-[#0072FF]/10 px-2.5 py-1 text-xs font-extrabold uppercase tracking-wider text-[#0072FF]">
+                <HelpCircle className="h-3.5 w-3.5 text-[#0072FF]" />
+                <span>Governance &amp; Security FAQ</span>
+              </span>
+              <h2 className="font-editorial text-xl sm:text-2xl font-extrabold tracking-tight text-[#0A2B6D]">
+                Frequently Asked Questions
+              </h2>
+            </div>
+            <span className="rounded-full border border-slate-200 bg-[#F8FAFC] px-3 py-0.5 text-xs font-extrabold text-[#5A00D6]">
+              8 Core Governance &amp; Security Answers
+            </span>
+          </div>
+          <p className="text-xs sm:text-sm font-semibold leading-snug text-[#0A2B6D]/80">
+            Key architectural, regulatory, and security answers for executives, compliance managers, and IT administrators.
+          </p>
+        </div>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 items-start">
           {FAQS.map((faq, idx) => {

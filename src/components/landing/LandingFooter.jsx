@@ -7,25 +7,26 @@ export default function LandingFooter({ onBookDemo }) {
   return (
     <footer className="border-t border-slate-200 bg-white text-[#0A2B6D]">
       <div className="mx-auto max-w-[1440px] px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 items-start">
-          {/* Brand Column */}
-          <div className="lg:col-span-4 flex flex-col items-start text-left space-y-4">
-            <Link to="/" className="inline-flex items-center">
-              <BrandLogoLockup size="sm" theme="light" showSlogan={true} />
-            </Link>
+        {/* Full-Width Brand Banner & Summary Above Navigation Columns */}
+        <div className="mb-8 flex flex-col items-center justify-between gap-5 rounded-2xl border border-slate-200 bg-[#F8FAFC] p-5 sm:p-6 lg:flex-row">
+          <Link to="/" className="inline-flex shrink-0 items-center justify-center">
+            <BrandLogoLockup size="sm" theme="light" showSlogan={true} />
+          </Link>
 
-            <p className="max-w-md text-sm font-normal leading-relaxed text-[#0A2B6D]/80">
+          <div className="flex flex-1 flex-col items-center lg:items-end text-center lg:text-right space-y-2">
+            <p className="max-w-2xl text-sm font-semibold leading-relaxed text-[#0A2B6D]">
               Enterprise compliance, clinical governance, workforce screening, and operations management platform built for NDIS, Aged Care, and Allied Health providers.
             </p>
-
-            <div className="inline-flex items-center gap-2 rounded-md border border-slate-200 bg-[#F8FAFC] px-3 py-1.5 text-xs font-semibold text-[#0A2B6D]">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#0072FF]/30 bg-white px-3.5 py-1 text-xs font-extrabold text-[#0A2B6D] shadow-2xs">
               <ShieldCheck className="h-4 w-4 shrink-0 text-[#0072FF]" />
               <span>46 Modules · 45 Master Registers · 356 Checkpoints</span>
             </div>
           </div>
+        </div>
 
+        <div className="grid grid-cols-1 gap-8 items-start">
           {/* Structured Enterprise Navigation Columns */}
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-3 lg:col-span-8 text-left">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-3 text-left">
             <div>
               <h3 className="text-xs font-bold uppercase tracking-wider text-[#0A2B6D]">
                 Architectural Pillars
