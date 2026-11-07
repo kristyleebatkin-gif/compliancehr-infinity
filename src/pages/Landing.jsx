@@ -88,9 +88,6 @@ export default function Landing() {
         {/* 1. Hero Section (Landscape — Crystal-Clear Positioning Above the Fold) */}
         <LandingHero onBookDemo={openDemoModal} />
 
-        {/* Live Remote Access & VPN Security Status Card */}
-        <RemoteAccessStatusCard />
-
         {/* 2. Launch Story Videos: Video 1 (Kristy's Story) + "See ComplianceHR Infinity in action" Video 2 */}
         <LandingLaunchVideosSection />
 
@@ -126,6 +123,9 @@ export default function Landing() {
 
         {/* FAQ Section */}
         <LandingFaqSection />
+
+        {/* Live Remote Access & VPN Security Status Card (Second from the bottom) */}
+        <RemoteAccessStatusCard />
 
         {/* 10. Final CTA Section (Landscape) */}
         <LandingCTA onBookDemo={openDemoModal} />
