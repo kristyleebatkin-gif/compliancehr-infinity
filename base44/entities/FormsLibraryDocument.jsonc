@@ -20,6 +20,21 @@
             },
             {
               "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
                 "role": "Human Resources Manager"
               }
             },
@@ -53,7 +68,10 @@
       "type": "string",
       "title": "File Name"
     },
-    "file_url": { "type": "string", "title": "Attached master file URL" },
+    "file_url": {
+      "type": "string",
+      "title": "Attached master file URL"
+    },
     "file_uri": {
       "type": "string",
       "title": "File URI"
@@ -99,6 +117,16 @@
         {
           "user_condition": {
             "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Quality & Improvement Manager"
           }
         },
         {
@@ -173,7 +201,27 @@
         },
         {
           "user_condition": {
+            "role": "Management"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Administrator"
+          }
+        },
+        {
+          "user_condition": {
             "role": "Human Resources Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Quality & Improvement Manager"
           }
         },
         {
@@ -243,7 +291,27 @@
         },
         {
           "user_condition": {
+            "role": "Management"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Administrator"
+          }
+        },
+        {
+          "user_condition": {
             "role": "Human Resources Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Quality & Improvement Manager"
           }
         },
         {
@@ -292,6 +360,21 @@
         {
           "user_condition": {
             "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Management"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Administrator"
           }
         },
         {
