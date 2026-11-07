@@ -66,12 +66,27 @@
         },
         {
           "user_condition": {
+            "role": "Management"
+          }
+        },
+        {
+          "user_condition": {
             "role": "Compliance Manager"
           }
         },
         {
           "user_condition": {
+            "role": "Compliance Administrator"
+          }
+        },
+        {
+          "user_condition": {
             "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Team Leader"
           }
         },
         {
@@ -100,6 +115,21 @@
         },
         {
           "user_condition": {
+            "role": "Management"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Administrator"
+          }
+        },
+        {
+          "user_condition": {
             "role": "Administration"
           }
         }
@@ -119,6 +149,21 @@
         },
         {
           "user_condition": {
+            "role": "Management"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Administrator"
+          }
+        },
+        {
+          "user_condition": {
             "role": "Administration"
           }
         }
@@ -134,6 +179,21 @@
         {
           "user_condition": {
             "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Management"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Administrator"
           }
         }
       ]
