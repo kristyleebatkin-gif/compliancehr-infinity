@@ -400,16 +400,16 @@ export default function ObsidianSidebarRemote({
 
   return (
     <div
-      className="preserve-island-theme flex h-full w-full min-w-0 min-h-0 flex-col overflow-hidden select-none"
+      className="preserve-island-theme flex w-full min-w-0 flex-col select-none"
       style={{ background: DARK_NAVY_CHASSIS }}
     >
       <section
-        className="flex h-full min-h-0 flex-col overflow-hidden shadow-2xl"
+        className="flex flex-col shadow-2xl"
         style={{ background: DARK_NAVY_CHASSIS }}
       >
         <div className="h-1.5 w-full shrink-0" style={{ background: BRAND_GRADIENT }} />
 
-        <div className="flex min-h-[205px] shrink-0 flex-col items-center justify-end gap-1 bg-black px-1.5 pt-1 pb-0.5 text-center">
+        <div className="flex shrink-0 flex-col items-center justify-end gap-1 bg-black px-1.5 pt-1 pb-1 text-center">
           <Link
             to="/dashboard"
             aria-label="ComplianceHR Infinity Home"
@@ -496,7 +496,7 @@ export default function ObsidianSidebarRemote({
         {/* Navigation Router Buttons: White Writing, Blue-Purple-Pink Symbols, Square Indicator Button Without Text */}
         <nav
           aria-label="Page navigation"
-          className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-1.5 space-y-1"
+          className="flex-1 p-1.5 space-y-1"
           style={{ background: DARK_NAVY_CHASSIS }}
         >
           {(() => {

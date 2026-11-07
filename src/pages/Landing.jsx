@@ -50,11 +50,11 @@ export default function Landing() {
       {/* Docked Navigator Router Remote on Screen */}
       <aside
         aria-label="Navigator Router Remote"
-        className="hidden md:flex w-64 shrink-0 flex-col bg-white sticky top-0 h-dvh z-40"
+        className="hidden md:flex w-64 shrink-0 flex-col bg-black z-40"
         style={{
           borderRight: '3px solid transparent',
           backgroundImage:
-            'linear-gradient(#ffffff, #ffffff), linear-gradient(180deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+            'linear-gradient(#000000, #000000), linear-gradient(180deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
           backgroundOrigin: 'border-box',
           backgroundClip: 'padding-box, border-box',
         }}
@@ -84,6 +84,9 @@ export default function Landing() {
         />
 
         <main className="landing-main relative z-10 mx-auto w-full max-w-[1440px] px-4 py-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-14 pb-20">
+
+        {/* Full Navigator Router Main View */}
+        <QuickAppBar />
 
         {/* 1. Hero Section (Landscape — Crystal-Clear Positioning Above the Fold) */}
         <LandingHero onBookDemo={openDemoModal} />

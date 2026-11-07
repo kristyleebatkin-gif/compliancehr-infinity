@@ -85,26 +85,26 @@ export default function EnterpriseBelowFooterSuite({ onBookDemo }) {
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2.5">
+          <div className="flex flex-col items-start lg:items-end gap-2">
+            <button
+              type="button"
+              onClick={scrollToTop}
+              className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-white/25 bg-white/10 px-4 py-2 text-xs font-bold text-white transition hover:bg-white/20"
+            >
+              <ArrowUp className="h-4 w-4 text-[#00C6FF]" />
+              <span>Back to Top</span>
+            </button>
+
             <button
               type="button"
               onClick={() => onBookDemo && onBookDemo('Enterprise Architecture Walkthrough')}
-              className="inline-flex items-center gap-2 rounded-lg px-4 py-2.5 text-xs font-extrabold text-white shadow-md transition hover:opacity-95"
+              className="inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-xs font-extrabold text-white shadow-md transition hover:opacity-95"
               style={{
                 background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
               }}
             >
               <Activity className="h-4 w-4" />
               <span>Request Architecture Walkthrough</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={scrollToTop}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-white/25 bg-white/10 px-3.5 py-2.5 text-xs font-bold text-white transition hover:bg-white/20"
-            >
-              <ArrowUp className="h-4 w-4 text-[#00C6FF]" />
-              <span>Back to Top</span>
             </button>
           </div>
         </div>

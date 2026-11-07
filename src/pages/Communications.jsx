@@ -136,11 +136,18 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
                       All communication dashboards, mailbox alerts, and team to-do lists merged in one place.
                     </p>
                   </div>
-                  <div className="flex flex-wrap gap-1.5">
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <Button
+                      asChild
+                      size="sm"
+                      className="h-7 border border-[#00C6FF] bg-[#0072FF] px-2.5 text-[11px] font-extrabold text-white"
+                    >
+                      <Link to="/our-participants">Participant Profiles</Link>
+                    </Button>
                     {[
+                      ['both', 'Both Views'],
                       ['screen1', 'Communications, Mailbox & To-Do'],
                       ['screen2', 'Meetings & Feedback'],
-                      ['both', 'Both Views'],
                     ].map(([k, lbl]) => (
                       <Button
                         key={k}

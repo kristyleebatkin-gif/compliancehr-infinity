@@ -1,7 +1,6 @@
 import React, { Suspense, lazy, useState } from 'react';
-import { Heart, TrendingUp, Building2, MessagesSquare } from 'lucide-react';
+import { Heart, TrendingUp, Building2, MessagesSquare, Layers } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
-import ParticipantDirectoryDashboard from '@/components/profile/ParticipantDirectoryDashboard';
 import ExecutiveWallScene from '@/components/safe/ExecutiveWallScene';
 import Communications from '@/pages/Communications';
 import '@/components/profile/employeeDirectory.css';
@@ -22,10 +21,10 @@ export default function OurParticipantProfiles({ basePath = '/our-participants',
   const [params, setParams] = useSearchParams();
   const progressAllowed = can('staff-progress');
   const rawTab = params.get('participantTab');
-  const tab = rawTab === 'office' ? 'office' : rawTab === 'communications' ? 'communications' : (progressAllowed && rawTab === 'progress' ? 'progress' : 'profiles');
+  const tab = rawTab === 'office' ? 'office' : rawTab === 'both' ? 'both' : rawTab === 'communications' ? 'communications' : (progressAllowed && rawTab === 'progress' ? 'progress' : 'profiles');
   const selectTab = (value) => {
     const next = new URLSearchParams(params);
-    if (value === 'progress' || value === 'office' || value === 'communications') next.set('participantTab', value); else next.delete('participantTab');
+    if (value === 'progress' || value === 'office' || value === 'both' || value === 'communications') next.set('participantTab', value); else next.delete('participantTab');
     setParams(next, { replace: true });
   };
   return (
@@ -38,6 +37,7 @@ export default function OurParticipantProfiles({ basePath = '/our-participants',
           tabs={<div className="flex flex-wrap items-center gap-2">
             <TabsList className="w-auto shrink-0">
               <TabsTrigger value="profiles">Participant profiles</TabsTrigger>
+              <TabsTrigger value="both"><Layers className="mr-1.5 h-3.5 w-3.5" />Both Views</TabsTrigger>
               <TabsTrigger value="communications"><MessagesSquare className="mr-1.5 h-3.5 w-3.5" />Communication &amp; Mailbox</TabsTrigger>
               <TabsTrigger value="office"><Building2 className="mr-1.5 h-3.5 w-3.5" />Office View</TabsTrigger>
               {progressAllowed && <TabsTrigger value="progress"><TrendingUp className="mr-1.5 h-3.5 w-3.5" />Staff progress</TabsTrigger>}
@@ -47,8 +47,13 @@ export default function OurParticipantProfiles({ basePath = '/our-participants',
           search={<ModuleSearchBar value={search} onChange={setSearch} placeholder="Search participants…" />}
           insightModule="participants"
         >
-          <div className="px-2 pb-2"><ParticipantDirectoryDashboard scoped={scoped} selected={status} onSelect={setStatus} /></div>
           <TabsContent value="profiles"><div className="mt-4"><OurProfilesTab kind="participant" basePath={basePath} scoped={scoped} directory searchValue={search} groupValue={status} onGroupChange={setStatus} /></div></TabsContent>
+          <TabsContent value="both">
+            <div className="mt-4 space-y-4">
+              <OurProfilesTab kind="participant" basePath={basePath} scoped={scoped} directory searchValue={search} groupValue={status} onGroupChange={setStatus} />
+              <ExecutiveWallScene defaultViewMode="both" />
+            </div>
+          </TabsContent>
           <TabsContent value="communications"><div className="mt-4"><Communications embedded /></div></TabsContent>
           <TabsContent value="office"><div className="mt-4"><ExecutiveWallScene defaultViewMode="office" /></div></TabsContent>
           {progressAllowed && <TabsContent value="progress"><Suspense fallback={<p role="status" className="py-8 text-sm text-muted-foreground">Loading staff progress...</p>}><StaffProgressDashboard embedded search={search} /></Suspense></TabsContent>}
