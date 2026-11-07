@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, ArrowRight, Calendar, Layers, Building2, Users } from 'lucide-react';
 import BrandLogoLockup from '@/components/common/BrandLogoLockup';
-import GlobalSearch from '@/components/GlobalSearch';
+import FloatingQuickActionBar from '@/components/landing/FloatingQuickActionBar';
 
 const WORKSPACE_VIEWS = [
   { id: 'both', label: 'Both Views', Icon: Layers },
@@ -172,8 +172,8 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
         }}
       />
 
-      {/* Both Views Button Placed Just Under the Line & Increased in Length Under ComplianceHR Infinity */}
-      <div className="flex w-full items-center justify-center bg-black py-1.5 px-3">
+      {/* Centred, Slightly Reduced Both Views Button + AI Quick Bar Directly Underneath */}
+      <div className="flex w-full flex-col items-center justify-center gap-1 bg-black pt-1 pb-0.5 px-3">
         {WORKSPACE_VIEWS.map(({ id, label, Icon }) => {
           const selected = workspaceView === id;
           return (
@@ -183,18 +183,19 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
               onClick={() => switchWorkspaceView(id)}
               aria-pressed={selected}
               title={label}
-              className="inline-flex h-[28px] w-72 sm:w-96 md:w-[440px] items-center justify-center gap-2 rounded-full border-2 px-6 text-[11px] font-extrabold tracking-wide shadow-[0_0_14px_rgba(0,198,255,0.55)] transition-all hover:opacity-95"
+              className="mx-auto inline-flex h-[24px] w-48 sm:w-56 md:w-64 items-center justify-center gap-1.5 rounded-full border px-4 text-[10px] font-extrabold tracking-wide shadow-[0_0_10px_rgba(0,198,255,0.5)] transition-all hover:opacity-95"
               style={{
                 background: 'linear-gradient(90deg, #00C6FF 0%, #0072FF 50%, #FF2E9A 100%)',
                 borderColor: '#00C6FF',
                 color: '#FFFFFF',
               }}
             >
-              <Icon className="h-3.5 w-3.5 shrink-0" style={{ color: '#00C6FF' }} />
+              <Icon className="h-3 w-3 shrink-0" style={{ color: '#00C6FF' }} />
               <span className="whitespace-nowrap uppercase">{label}</span>
             </button>
           );
         })}
+        <FloatingQuickActionBar onBookDemo={onBookDemo} inline />
       </div>
 
       {open && (
