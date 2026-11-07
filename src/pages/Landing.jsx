@@ -3,6 +3,7 @@ import './landing-layout.css';
 import LandingNav from '@/components/landing/LandingNav';
 import LandingLaunchVideosSection from '@/components/landing/LandingLaunchVideosSection';
 import LandingHero from '@/components/landing/LandingHero';
+import RemoteAccessStatusCard from '@/components/landing/RemoteAccessStatusCard';
 import LandingEvidenceStandardSection from '@/components/landing/LandingEvidenceStandardSection';
 import LandingRegisterEngineSection from '@/components/landing/LandingRegisterEngineSection';
 import LandingProductShowcase from '@/components/landing/LandingProductShowcase';
@@ -86,6 +87,9 @@ export default function Landing() {
 
         {/* 1. Hero Section (Landscape — Crystal-Clear Positioning Above the Fold) */}
         <LandingHero onBookDemo={openDemoModal} />
+
+        {/* Live Remote Access & VPN Security Status Card */}
+        <RemoteAccessStatusCard />
 
         {/* 2. Launch Story Videos: Video 1 (Kristy's Story) + "See ComplianceHR Infinity in action" Video 2 */}
         <LandingLaunchVideosSection />
