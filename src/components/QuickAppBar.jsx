@@ -175,9 +175,9 @@ export default function QuickAppBar() {
           className="overflow-hidden rounded-[10px] p-1.5 space-y-1"
           style={{ background: DARK_NAVY_CHASSIS }}
         >
-          {/* LINE 1: Quick Access Bar Title + Moved Header Controls (Participant Profiles, Both Views, Start Free) + Mode Switcher */}
+          {/* LINE 1: Quick Access Bar Title + AI Quick Ask & 4 Buttons Next To It + Mode Switcher */}
           <div className="flex flex-wrap items-center justify-between gap-1">
-            <div className="flex flex-wrap items-center gap-1">
+            <div className="flex flex-wrap items-center gap-1.5">
               <div
                 className="inline-flex items-center rounded-full p-[1px]"
                 style={{ background: BRAND_GRADIENT }}
@@ -193,34 +193,8 @@ export default function QuickAppBar() {
                 </div>
               </div>
 
-              <Link
-                to="/our-participants"
-                className="inline-flex h-[20px] items-center justify-center gap-1 rounded-full border border-[#00C6FF] bg-[#0072FF] px-2.5 text-[9px] font-extrabold uppercase tracking-wide text-white transition hover:opacity-95"
-              >
-                <Heart className="h-2.5 w-2.5 shrink-0 text-[#00C6FF]" />
-                <span className="whitespace-nowrap">Participant Profiles</span>
-              </Link>
-
-              <button
-                type="button"
-                onClick={() => switchWorkspaceView('both')}
-                aria-pressed={workspaceView === 'both'}
-                className="inline-flex h-[20px] items-center justify-center gap-1 rounded-full border border-[#00C6FF] px-2.5 text-[9px] font-extrabold uppercase tracking-wide text-white transition hover:opacity-95"
-                style={{
-                  background: 'linear-gradient(90deg, #00C6FF 0%, #0072FF 50%, #FF2E9A 100%)',
-                  color: '#FFFFFF',
-                }}
-              >
-                <Layers className="h-2.5 w-2.5 shrink-0 text-[#00C6FF]" />
-                <span className="whitespace-nowrap">Both Views</span>
-              </button>
-
-              <Link
-                to="/register"
-                className="inline-flex h-[20px] items-center justify-center gap-1 rounded-full border border-white/25 bg-[#FF2E9A] px-2.5 text-[9px] font-extrabold uppercase tracking-wide text-white transition hover:opacity-95"
-              >
-                <span className="whitespace-nowrap">Start Free</span>
-              </Link>
+              {/* AI Quick Ask + 4 Buttons Directly Next To Quick Access Bar */}
+              <EnterpriseFloatingWorkspaceDock inline />
             </div>
 
             <div className="flex flex-wrap items-center gap-1">
@@ -249,9 +223,6 @@ export default function QuickAppBar() {
                   ))}
                 </div>
               </div>
-
-              {/* AI Quick Ask Bar Positioned Directly Beside 13 Channels */}
-              <EnterpriseFloatingWorkspaceDock inline />
 
               {expandedGroup?.path && (
                 <Link

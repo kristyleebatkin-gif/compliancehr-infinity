@@ -308,8 +308,8 @@ export default function AppLayout() {
                   <BrandLogoLockup size="md" theme="dark" showSlogan={true} />
                 </Link>
 
-                {/* Single Row Under Logo: ONLY Sign In & Book Demo */}
-                <div className="flex w-full flex-nowrap items-center justify-center gap-2 py-0.5">
+                {/* Single Row Under Logo: Sign In, Book Demo, Participant Profiles, Both Views & Start Free */}
+                <div className="flex w-full flex-wrap items-center justify-center gap-1.5 py-0.5">
                   <Link
                     to="/login"
                     className="inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/20 px-2.5 text-[10px] font-extrabold text-black shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90"
@@ -323,6 +323,41 @@ export default function AppLayout() {
                     style={{ backgroundColor: '#0072FF' }}
                   >
                     Book Demo
+                  </Link>
+                  <Link
+                    to="/our-participants"
+                    className="inline-flex h-[24px] shrink-0 items-center justify-center gap-1 rounded-full border border-[#00C6FF] bg-[#0072FF] px-3 text-[10px] font-extrabold uppercase tracking-wide text-white shadow-[0_0_10px_rgba(0,114,255,0.5)] transition hover:opacity-95"
+                  >
+                    <Heart className="h-3 w-3 shrink-0 text-[#00C6FF]" />
+                    <span className="whitespace-nowrap">Participant Profiles</span>
+                  </Link>
+                  {WORKSPACE_VIEWS.map(({ id, label, Icon }) => {
+                    const selected = workspaceView === id;
+                    return (
+                      <button
+                        key={id}
+                        type="button"
+                        onClick={() => switchWorkspaceView(id)}
+                        aria-pressed={selected}
+                        title={label}
+                        className="inline-flex h-[24px] shrink-0 items-center justify-center gap-1 rounded-full border px-3 text-[10px] font-extrabold tracking-wide shadow-[0_0_10px_rgba(0,198,255,0.5)] transition-all hover:opacity-95"
+                        style={{
+                          background: 'linear-gradient(90deg, #00C6FF 0%, #0072FF 50%, #FF2E9A 100%)',
+                          borderColor: '#00C6FF',
+                          color: '#FFFFFF',
+                        }}
+                      >
+                        <Icon className="h-3 w-3 shrink-0" style={{ color: '#00C6FF' }} />
+                        <span className="whitespace-nowrap uppercase">{label}</span>
+                      </button>
+                    );
+                  })}
+                  <Link
+                    to="/register"
+                    className="inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/25 px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(255,46,154,0.55)] transition hover:opacity-90"
+                    style={{ backgroundColor: '#FF2E9A' }}
+                  >
+                    Start Free
                   </Link>
                   <button
                     onClick={() => setMobileOpen(true)}

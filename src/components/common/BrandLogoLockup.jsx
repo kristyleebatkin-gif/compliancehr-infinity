@@ -23,11 +23,11 @@ export default function BrandLogoLockup({
 }) {
   const isCustomName = companyName && companyName !== 'ComplianceHR Infinity';
 
-  // Balanced logo size to fit cleanly with title, slogan, and bottom buttons
+  // Tightened logo frame to trim excess white border around the emblem
   const logoSizeClass =
     size === 'xs'
-      ? 'mt-1 h-24 w-48 sm:h-28 sm:w-52'
-      : 'mt-1 h-32 w-72 sm:h-36 sm:w-80';
+      ? 'mt-0.5 h-16 w-32 sm:h-20 sm:w-36'
+      : 'mt-0.5 h-24 w-44 sm:h-28 sm:w-52';
 
   // Line 2: Structured heading on ONE single line
   const nameSizeClass =
@@ -49,13 +49,13 @@ export default function BrandLogoLockup({
     >
       {/* UNIFIED CONTAINER FOR LOGO, NAME & SLOGAN */}
       <div className="flex w-full flex-col items-center justify-center bg-transparent px-1 py-0.5">
-        {/* LINE 1: LARGER LOGO WITH REDUCED WHITE BORDER */}
-        <div className={`${logoSizeClass} shrink-0 overflow-hidden rounded-xl`}>
+        {/* LINE 1: LOGO WITH REDUCED WHITE BORDER AREA */}
+        <div className={`${logoSizeClass} shrink-0 overflow-hidden rounded-xl border border-[#00C6FF]/40 bg-black`}>
           <Image
             src={logoUrl || DEFAULT_BRAND_LOGO}
             alt={companyName || 'ComplianceHR Infinity'}
             fittingType="fill"
-            className="h-full w-full scale-[1.12] object-cover"
+            className="h-full w-full scale-[1.28] object-cover"
           />
         </div>
 
