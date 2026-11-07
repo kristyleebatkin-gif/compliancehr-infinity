@@ -49,13 +49,13 @@ export default function BrandLogoLockup({
     >
       {/* UNIFIED CONTAINER FOR LOGO, NAME & SLOGAN */}
       <div className="flex w-full flex-col items-center justify-center bg-transparent px-1 py-0.5">
-        {/* LINE 1: LOGO WITH REDUCED WHITE BORDER AREA */}
-        <div className={`${logoSizeClass} shrink-0 overflow-hidden rounded-xl border border-[#00C6FF]/40 bg-black`}>
+        {/* LINE 1: FULL UNCLIPPED LOGO AT CURRENT SIZE */}
+        <div className={`${logoSizeClass} flex shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[#00C6FF]/40 bg-white p-0.5`}>
           <Image
             src={logoUrl || DEFAULT_BRAND_LOGO}
             alt={companyName || 'ComplianceHR Infinity'}
-            fittingType="fill"
-            className="h-full w-full scale-[1.28] object-cover"
+            fittingType="fit"
+            className="h-full w-full object-contain"
           />
         </div>
 
