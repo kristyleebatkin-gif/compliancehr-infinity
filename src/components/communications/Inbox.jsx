@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Loader2, Paperclip, Reply } from 'lucide-react';
 import { openAttachment } from '@/lib/commTypes';
 import ReplyDialog from './ReplyDialog';
-import { SmallSafeVaultBar } from '@/components/safe/ExecutiveWallScene';
 import { fetchAllRecords } from '@/lib/csvExport';
 
 const parseJson = (value, fallback = []) => { try { return JSON.parse(value || '') || fallback; } catch { return fallback; } };
@@ -62,36 +61,36 @@ export default function Inbox() {
       ) : loadError ? (
         <div role="alert" className="rounded-xl border border-destructive/30 bg-destructive/5 p-4 text-sm text-destructive">{loadError} <Button type="button" variant="outline" size="sm" className="ml-2" onClick={load}>Retry</Button></div>
       ) : list.length === 0 ? (
-        <p className="py-8 text-center text-sm text-muted-foreground">
-          {box === 'received' ? 'No messages addressed to you yet - bulk messages, emails, replies and shift note copies sent to you will appear here.' : 'Nothing sent yet.'}
+        <p className="rounded-xl border border-white/15 bg-[#162235] py-6 px-4 text-center text-xs sm:text-sm font-bold text-slate-200">
+          {box === 'received' ? 'No messages addressed to you yet — bulk messages, emails, replies and shift note copies sent to you will appear here.' : 'Nothing sent yet.'}
         </p>
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-2.5">
           {list.map((entry) => {
             const attachments = parseJson(entry.attachments_json);
             const recipients = parseJson(entry.recipients_json);
             return (
-              <div key={entry.id} className="rounded-xl border border-border/60 p-3.5">
+              <div key={entry.id} className="rounded-xl border border-white/15 bg-[#162235] p-3.5 text-white">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div className="flex flex-wrap items-center gap-1.5">
-                    <Badge variant="outline">{entry.entry_kind}</Badge>
-                    <span className="text-sm font-semibold">{entry.subject || entry.note_type || entry.entry_kind}</span>
+                    <Badge className="bg-[#0072FF] text-white border-none">{entry.entry_kind}</Badge>
+                    <span className="text-sm font-bold text-white">{entry.subject || entry.note_type || entry.entry_kind}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs text-muted-foreground">{[entry.sender_name, entry.entry_date].filter(Boolean).join(' · ')}</span>
-                    <Button variant="ghost" size="sm" onClick={() => setReplyTarget(entry)}><Reply className="h-3.5 w-3.5" />Reply</Button>
+                    <span className="text-xs font-semibold text-slate-300">{[entry.sender_name, entry.entry_date].filter(Boolean).join(' · ')}</span>
+                    <Button variant="outline" size="sm" className="h-7 border-[#00C6FF]/50 bg-[#081018] text-white hover:bg-[#0072FF]" onClick={() => setReplyTarget(entry)}><Reply className="h-3.5 w-3.5" />Reply</Button>
                   </div>
                 </div>
                 {recipients.length > 0 && (
-                  <p className="mt-1 text-xs text-muted-foreground">
+                  <p className="mt-1 text-xs font-medium text-slate-300">
                     {box === 'received' ? 'From' : 'To'}: {recipients.slice(0, 6).map((r) => r.name || r.email).join(', ')}{recipients.length > 6 ? ` +${recipients.length - 6} more` : ''}
                   </p>
                 )}
-                {entry.body && <p className="mt-1.5 whitespace-pre-wrap text-sm text-foreground/80">{entry.body}</p>}
+                {entry.body && <p className="mt-1.5 whitespace-pre-wrap text-sm text-slate-100">{entry.body}</p>}
                 {attachments.length > 0 && (
                   <div className="mt-2 flex flex-wrap gap-2">
                     {attachments.map((a, i) => (
-                      <Button key={i} variant="outline" size="sm" onClick={() => openAttachment(a)}><Paperclip className="h-3 w-3" />{a.name}</Button>
+                      <Button key={i} variant="outline" size="sm" className="border-white/25 bg-[#081018] text-white" onClick={() => openAttachment(a)}><Paperclip className="h-3 w-3" />{a.name}</Button>
                     ))}
                   </div>
                 )}
@@ -100,8 +99,6 @@ export default function Inbox() {
           })}
         </div>
       )}
-      {/* Small Vault at Bottom Under Inbox */}
-      <SmallSafeVaultBar />
 
       {replyTarget && (
         <ReplyDialog entry={replyTarget} open={Boolean(replyTarget)} onOpenChange={(o) => !o && setReplyTarget(null)} onSaved={load} />

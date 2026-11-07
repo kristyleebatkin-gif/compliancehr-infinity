@@ -308,32 +308,8 @@ export function CommunicationAndMailboxTabs({ onSelectTab, activeTab, tabs } = {
   return (
     <WallHangingPictureFrame title="Merged Communication, Mailbox & Live Channels">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-2.5 bg-[#081018] text-white items-stretch">
-        {/* Left Column: Live Roster Strip + Express Mail Command Deck + Red Letterbox */}
-        <div className="lg:col-span-4 flex flex-col justify-between gap-1.5">
-          <div
-            className="rounded-xl p-[2px] shadow-2xs"
-            style={{ background: TOP_BORDER_GRADIENT }}
-          >
-            <div className="flex items-center justify-between gap-1.5 rounded-[8px] bg-white px-2 py-1">
-              <span
-                className="gradient-brand inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[7px] font-extrabold uppercase text-white whitespace-nowrap"
-                style={{ background: getHeaderView(2), color: '#FFFFFF' }}
-              >
-                <CalendarClock className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
-                <span style={{ color: '#FFFFFF' }}>Live Roster</span>
-              </span>
-              <span className="min-w-0 rounded border border-[#0A2B6D]/20 bg-white px-1.5 py-0 text-[7px] font-extrabold text-[#0A2B6D] break-words">
-                3 Shifts Active · 100% Screened
-              </span>
-              <Link
-                to="/roster"
-                className="shrink-0 rounded-full bg-[#0A2B6D] px-2 py-0.5 text-[6.5px] font-extrabold text-white"
-              >
-                Roster →
-              </Link>
-            </div>
-          </div>
-
+        {/* Left Column: Express Mail Command Deck + Red Letterbox */}
+        <div className="lg:col-span-4 flex flex-col justify-between gap-2">
           <AboveMailboxCommandDeck
             mailAlertCount={mailAlertCount}
             onDropExpressMail={() => {

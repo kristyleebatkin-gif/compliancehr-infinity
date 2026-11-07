@@ -267,7 +267,7 @@ export default function MiniCommunicationCentrePanel({
           <button
             type="button"
             onClick={() => selectCommMethod('alerts')}
-            className="flex min-w-0 items-center justify-between gap-1 rounded-md border border-[#0A2B6D]/30 bg-white px-2 py-1 text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]"
+            className="flex min-w-0 items-center justify-between gap-1 rounded-md border border-[#FF2E9A]/50 bg-[#081018] px-2 py-1 text-[7.5px] font-extrabold leading-tight text-white transition hover:border-[#00C6FF]"
           >
             <span className="inline-flex min-w-0 items-center gap-1 break-words">
               <span className="h-2 w-2 shrink-0 rounded-full bg-[#EF4444]" style={{ boxShadow: '0 0 5px #EF4444' }} />
@@ -279,13 +279,13 @@ export default function MiniCommunicationCentrePanel({
           <button
             type="button"
             onClick={() => selectCommMethod('logs')}
-            className="flex min-w-0 items-center justify-between gap-1 rounded-md border border-[#0A2B6D]/30 bg-white px-2 py-1 text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]"
+            className="flex min-w-0 items-center justify-between gap-1 rounded-md border border-[#00C6FF]/50 bg-[#081018] px-2 py-1 text-[7.5px] font-extrabold leading-tight text-white transition hover:border-[#FF2E9A]"
           >
             <span className="inline-flex min-w-0 items-center gap-1 break-words">
               <span className="h-2 w-2 shrink-0 rounded-full bg-[#10B981]" style={{ boxShadow: '0 0 5px #10B981' }} />
               <span>Auto Logs</span>
             </span>
-            <CheckCircle2 className="h-2.5 w-2.5 shrink-0 text-[#0072FF]" />
+            <CheckCircle2 className="h-2.5 w-2.5 shrink-0 text-[#00C6FF]" />
           </button>
         </div>
 
@@ -418,7 +418,7 @@ export default function MiniCommunicationCentrePanel({
                 if (e.key === 'Enter') handleAddSmallTodo();
               }}
               placeholder="Quick add shared to-do…"
-              className="min-w-0 flex-1 rounded border border-[#0A2B6D]/30 bg-white px-1.5 py-0.5 text-[7.5px] font-extrabold text-[#0A2B6D] placeholder:text-[#0A2B6D]/60 focus:outline-none"
+              className="min-w-0 flex-1 rounded border border-white/25 bg-[#162235] px-1.5 py-0.5 text-[7.5px] font-extrabold text-white placeholder:text-slate-400 focus:border-[#00C6FF] focus:outline-none"
             />
             <button
               type="button"
