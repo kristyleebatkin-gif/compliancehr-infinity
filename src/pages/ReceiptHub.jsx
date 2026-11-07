@@ -132,8 +132,11 @@ export default function ReceiptHub({ profile } = {}) {
         moduleKey="receipts"
         insightModule="receipts"
         actions={<>
-          <Button variant="outline" className="border-border bg-white text-black" onClick={exportCsv} disabled={loading || receipts.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>
-          <Button variant="outline" className="border-border bg-white text-black" onClick={exportAccess}><History className="mr-2 h-4 w-4" />Access log</Button>
+          <Button onClick={() => setScanOpen(true)}><ScanLine className="mr-1.5 h-4 w-4" />Scan Receipt</Button>
+          <Button variant="secondary" onClick={() => setPdfOpen(true)}><FileText className="mr-1.5 h-4 w-4" />Scan to PDF</Button>
+          <Button onClick={() => setOpen(true)}><Plus className="mr-1.5 h-4 w-4" />Log Receipt</Button>
+          <Button variant="outline" className="border-border bg-white text-black" onClick={exportCsv} disabled={loading || receipts.length === 0}><Download className="mr-1.5 h-4 w-4" />Export Register</Button>
+          <Button variant="outline" className="border-border bg-white text-black" onClick={exportAccess}><History className="mr-1.5 h-4 w-4" />Access Log</Button>
         </>}
         search={<ReceiptFilters filters={filters} setFilters={setFilters} count={shownReceipts.length} total={receipts.length} />}
         small={[
@@ -144,12 +147,6 @@ export default function ReceiptHub({ profile } = {}) {
           <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{value}</p></div>
         ))}
       />
-
-      <div className="flex flex-wrap items-center gap-2">
-        <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={() => setScanOpen(true)}><ScanLine className="mr-2 h-4 w-4" />Scan receipt</Button>
-        <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={() => setPdfOpen(true)}><FileText className="mr-2 h-4 w-4" />Scan to PDF</Button>
-        <Button className="border border-brand/30 bg-brand/10 text-brand hover:bg-brand/15" onClick={() => setOpen(true)}><Plus className="mr-2 h-4 w-4" />Log receipt</Button>
-      </div>
 
       {loadError && <div role="alert" className="flex items-center justify-between gap-3 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">Receipt records could not be confirmed; totals and lists are unavailable.<Button size="sm" variant="outline" onClick={load}>Retry</Button></div>}
       <ReceiptScanner open={scanOpen} onOpenChange={setScanOpen} onSaved={load} />

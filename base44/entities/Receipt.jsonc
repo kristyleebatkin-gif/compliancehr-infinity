@@ -121,12 +121,52 @@
         },
         {
           "user_condition": {
+            "role": "Management"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Administrator"
+          }
+        },
+        {
+          "user_condition": {
             "role": "Finance & Accounts Officer"
           }
         },
         {
           "user_condition": {
             "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Team Leader"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Human Resources Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Quality & Improvement Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Employee"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Support Worker"
           }
         },
         {
@@ -148,12 +188,37 @@
         },
         {
           "user_condition": {
+            "role": "Management"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Administrator"
+          }
+        },
+        {
+          "user_condition": {
             "role": "Finance & Accounts Officer"
           }
         },
         {
           "user_condition": {
             "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Team Leader"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Employee"
           }
         },
         {
@@ -177,12 +242,32 @@
         },
         {
           "user_condition": {
+            "role": "Management"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Administrator"
+          }
+        },
+        {
+          "user_condition": {
             "role": "Finance & Accounts Officer"
           }
         },
         {
           "user_condition": {
             "role": "Administration"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Team Leader"
           }
         },
         {
@@ -200,6 +285,21 @@
         {
           "user_condition": {
             "role": "Provider Administrator"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Management"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Manager"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "Compliance Administrator"
           }
         },
         {
