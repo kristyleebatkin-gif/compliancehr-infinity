@@ -247,11 +247,11 @@ export default function AppLayout() {
         Skip to main content
       </a>
       <aside
-        className="hidden w-64 shrink-0 flex-col bg-black md:flex"
+        className="hidden w-64 shrink-0 flex-col bg-workspace-navy md:flex"
         style={{
           borderRight: '3px solid transparent',
           backgroundImage:
-            'linear-gradient(#000000, #000000), linear-gradient(180deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+            'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%), linear-gradient(180deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
           backgroundOrigin: 'border-box',
           backgroundClip: 'padding-box, border-box',
         }}
@@ -278,9 +278,9 @@ export default function AppLayout() {
                 'linear-gradient(120deg, #00C6FF 0%, #0072FF 25%, #5A00D6 55%, #FF2E9A 100%)',
             }}
           />
-          {/* Very Top Section Above Dashboard: Black Background, Larger Logo Brought Down, Fitted Action Buttons */}
+          {/* Top section above the dashboard */}
           {compactHeader ? (
-            <div className="bg-black px-3 py-1 sm:px-6 lg:px-8">
+            <div className="bg-workspace-navy px-3 py-1 sm:px-6 lg:px-8">
               <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-2">
                 <Link to="/dashboard" className="flex items-center gap-1.5 text-xs font-extrabold">
                   <span style={{ color: '#00C6FF' }}>Compliance</span>
@@ -298,21 +298,21 @@ export default function AppLayout() {
               </div>
             </div>
           ) : (
-            <div className="bg-black px-2 pt-1 pb-0.5 sm:px-4 lg:px-6 transition-all duration-200">
+            <div className="bg-workspace-navy px-2 pt-1 pb-0.5 sm:px-4 lg:px-6 transition-all duration-200">
               <div className="mx-auto flex max-w-[1440px] flex-col items-center justify-end gap-0.5">
                 {/* Top / Centre: Larger Business Logo + Name + Slogan */}
                 <Link
                   to="/dashboard"
                   className="inline-flex flex-col items-center justify-end text-center transition"
                 >
-                  <BrandLogoLockup size="md" theme="dark" showSlogan={true} />
+                  <BrandLogoLockup size="md" theme="dark" showSlogan compactSlogan />
                 </Link>
 
                 {/* Single Row Under Logo: Sign In, Book Demo, Participant Profiles, Both Views & Start Free */}
                 <div className="flex w-full flex-wrap items-center justify-center gap-1.5 py-0.5">
                   <Link
                     to="/login"
-                    className="inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/20 px-2.5 text-[10px] font-extrabold text-black shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90"
+                    className="inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/20 px-2.5 text-[10px] font-extrabold text-workspace-navy shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90"
                     style={{ backgroundColor: '#00C6FF' }}
                   >
                     Sign In
@@ -362,7 +362,7 @@ export default function AppLayout() {
                   <button
                     onClick={() => setMobileOpen(true)}
                     aria-label="Open menu"
-                    className="shrink-0 rounded-lg border-2 border-[#00C6FF] bg-black p-1 text-[#00C6FF] shadow-2xs transition hover:border-[#FF2E9A] md:hidden"
+                    className="shrink-0 rounded-lg border-2 border-[#00C6FF] bg-workspace-navy p-1 text-[#00C6FF] shadow-2xs transition hover:border-[#FF2E9A] md:hidden"
                   >
                     <Menu className="h-3.5 w-3.5" style={{ color: '#00C6FF' }} />
                   </button>

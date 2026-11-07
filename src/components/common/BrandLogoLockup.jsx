@@ -20,6 +20,7 @@ export default function BrandLogoLockup({
   theme = 'dark',
   className = '',
   showSlogan = true,
+  compactSlogan = false,
 }) {
   const isCustomName = companyName && companyName !== 'ComplianceHR Infinity';
 
@@ -40,8 +41,11 @@ export default function BrandLogoLockup({
       : 'text-lg sm:text-xl mt-1';
 
   // Line 3: Slogan under name
-  const sloganSizeClass =
-    size === 'xs'
+  const sloganSizeClass = compactSlogan
+    ? size === 'xs'
+      ? 'text-[9px] tracking-[-0.04em] gap-x-0.5 mt-0.5'
+      : 'text-[10px] sm:text-[11px] tracking-tight gap-x-1 mt-0.5'
+    : size === 'xs'
       ? 'text-[9px] sm:text-[10px] tracking-tight gap-x-1.5 mt-0.5'
       : 'text-xs sm:text-[13px] tracking-wide gap-x-2 mt-0.5';
 
@@ -100,8 +104,8 @@ export default function BrandLogoLockup({
           <div
             className={`flex max-w-full items-center justify-center text-center ${sloganSizeClass} font-extrabold leading-tight whitespace-nowrap`}
           >
-            <span style={{ color: '#00C6FF' }}>Complete Control.</span>
-            <span style={{ color: '#A855F7' }}>Greater Confidence.</span>
+            <span style={{ color: '#00C6FF' }}>Complete Control.</span>{' '}
+            <span style={{ color: '#A855F7' }}>Greater Confidence.</span>{' '}
             <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
           </div>
         )}

@@ -143,8 +143,7 @@ export default function ShorelineCommandCenter() {
           </h3>
         </div>
         <p
-          className="mx-auto max-w-3xl text-center text-xs font-extrabold text-black"
-          style={{ color: '#000000' }}
+          className="mx-auto max-w-3xl text-center text-xs font-extrabold text-workspace-navy"
         >
           Tap any sand-to-ocean readiness square to advance staff compliance to 100% Deep Teal &amp; send live beach kudos cheers to your team!
         </p>
@@ -240,7 +239,7 @@ export default function ShorelineCommandCenter() {
                     <span className="text-[10.5px] font-extrabold leading-tight">
                       {sq.area}
                     </span>
-                    <span className="rounded-full border border-current/30 bg-black/15 px-2 py-0.5 text-[10px] font-black leading-none">
+                    <span className="rounded-full border border-current/30 bg-workspace-navy/15 px-2 py-0.5 text-[10px] font-black leading-none">
                       {sq.pct}%
                     </span>
                   </button>

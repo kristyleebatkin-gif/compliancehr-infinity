@@ -119,11 +119,11 @@ export default function AuditReadyTodayCommandStrip() {
   return (
     <section
       aria-label="Audit Ready Today Compact Strip"
-      className="overflow-hidden rounded-xl border border-[#0072FF]/60 bg-[#081018] px-3 py-2 text-white shadow-sm"
+      className="overflow-hidden rounded-xl border border-[#0072FF]/60 bg-workspace-navy px-3 py-2 text-white shadow-sm"
     >
       <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-[#0072FF] bg-[#162235] px-2.5 py-0.5 text-[10px] font-black uppercase text-white">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-[#0072FF] bg-workspace-navy px-2.5 py-0.5 text-[10px] font-black uppercase text-white">
             <ShieldCheck className="h-3 w-3 text-[#0072FF]" />
             Audit Ready: {metrics.readinessScore}%
           </span>
@@ -135,21 +135,21 @@ export default function AuditReadyTodayCommandStrip() {
         <div className="flex flex-wrap items-center gap-1.5 text-[11px]">
           <Link
             to="/incidents"
-            className="inline-flex items-center gap-1 rounded-lg border border-white/15 bg-[#162235] px-2 py-1 font-bold text-white hover:border-[#0072FF]"
+            className="inline-flex items-center gap-1 rounded-lg border border-white/15 bg-workspace-navy px-2 py-1 font-bold text-white hover:border-[#0072FF]"
           >
             <Clock className="h-3 w-3 text-[#0072FF]" />
             <span>24h/5d: {metrics.statutoryDueCount}</span>
           </Link>
           <Link
             to="/compliance"
-            className="inline-flex items-center gap-1 rounded-lg border border-white/15 bg-[#162235] px-2 py-1 font-bold text-white hover:border-[#A855F7]"
+            className="inline-flex items-center gap-1 rounded-lg border border-white/15 bg-workspace-navy px-2 py-1 font-bold text-white hover:border-[#A855F7]"
           >
             <Users className="h-3 w-3 text-[#A855F7]" />
             <span>Clearances: {metrics.expiringClearancesCount}</span>
           </Link>
           <Link
             to="/documents"
-            className="inline-flex items-center gap-1 rounded-lg border border-white/15 bg-[#162235] px-2 py-1 font-bold text-white hover:border-[#FF2E9A]"
+            className="inline-flex items-center gap-1 rounded-lg border border-white/15 bg-workspace-navy px-2 py-1 font-bold text-white hover:border-[#FF2E9A]"
           >
             <FileCheck2 className="h-3 w-3 text-[#FF2E9A]" />
             <span>Reviews: {metrics.overduePoliciesCount}</span>
@@ -182,7 +182,7 @@ export default function AuditReadyTodayCommandStrip() {
                 <Link
                   key={item.id}
                   to={item.to}
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-white/15 bg-[#162235] px-2.5 py-1 font-bold text-white hover:border-[#FF2E9A]"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-white/15 bg-workspace-navy px-2.5 py-1 font-bold text-white hover:border-[#FF2E9A]"
                 >
                   <span className="truncate max-w-xs">{item.title}</span>
                   <ArrowRight className="h-3 w-3 text-[#FF2E9A]" />

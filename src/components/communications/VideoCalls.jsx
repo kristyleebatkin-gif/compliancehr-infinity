@@ -103,7 +103,7 @@ export default function VideoCalls() {
                 <Button size="sm" variant="outline" className="text-danger" onClick={() => endCall(activeRoom)}><PhoneOff className="mr-2 h-4 w-4" />Leave</Button>
               </div>
             </div>
-            <div className="overflow-hidden rounded-xl border border-border bg-black">
+            <div className="overflow-hidden rounded-xl border border-border bg-workspace-navy">
               <iframe
                 title="Video call"
                 src={activeRoom}

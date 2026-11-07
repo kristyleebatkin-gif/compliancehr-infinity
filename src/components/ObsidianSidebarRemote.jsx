@@ -417,7 +417,7 @@ export default function ObsidianSidebarRemote({
             aria-label="ComplianceHR Infinity Home"
             className="flex w-full items-center justify-center"
           >
-            <BrandLogoLockup size="xs" theme="dark" showSlogan className="w-full" />
+            <BrandLogoLockup size="xs" theme="dark" showSlogan compactSlogan className="w-full" />
           </Link>
 
           {/* Remote Control Mode Switcher (Blue, Purple, Pink with White Writing) */}

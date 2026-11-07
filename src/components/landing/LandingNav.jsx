@@ -103,7 +103,7 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
             className="inline-flex max-w-full shrink-0 flex-col items-center justify-end text-center"
             aria-label="ComplianceHR Infinity home"
           >
-            <BrandLogoLockup size="md" theme="dark" showSlogan={true} />
+            <BrandLogoLockup size="md" theme="dark" showSlogan compactSlogan />
           </Link>
 
           {/* Single Row Under Logo: Sign In, Book Demo, Participant Profiles, Both Views & Start Free */}
@@ -120,7 +120,7 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
               </button>
               <Link
                 to="/login"
-                className="inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/20 px-2.5 text-[10px] font-extrabold text-black shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90"
+                className="inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/20 px-2.5 text-[10px] font-extrabold text-workspace-navy shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90"
                 style={{ backgroundColor: '#00C6FF' }}
               >
                 Sign In

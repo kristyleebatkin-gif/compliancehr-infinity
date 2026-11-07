@@ -89,10 +89,10 @@ export default function AuditorLinkGeneratorCard({ onCreated }) {
         background: 'linear-gradient(120deg, #00C6FF 0%, #A855F7 50%, #FF2E9A 100%)',
       }}
     >
-      <div className="rounded-[14px] bg-black p-4 sm:p-5">
+      <div className="rounded-[14px] bg-workspace-navy p-4 sm:p-5">
         <div className="flex flex-col justify-between gap-3 lg:flex-row lg:items-center">
           <div className="space-y-1">
-            <div className="inline-flex items-center gap-1.5 rounded-full border border-[#00C6FF] bg-[#081018] px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider text-[#00C6FF]">
+            <div className="inline-flex items-center gap-1.5 rounded-full border border-[#00C6FF] bg-workspace-navy px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider text-[#00C6FF]">
               <Sparkles className="h-3 w-3 text-[#00C6FF]" />
               <span>1-Click External Auditor Access</span>
             </div>
@@ -109,13 +109,13 @@ export default function AuditorLinkGeneratorCard({ onCreated }) {
               value={auditorName}
               onChange={(e) => setAuditorName(e.target.value)}
               placeholder="Auditor / Agency (optional)"
-              className="h-9 w-full sm:w-56 border-[#0072FF] bg-[#081018] text-xs font-semibold text-white placeholder:text-slate-400"
+              className="h-9 w-full sm:w-56 border-[#0072FF] bg-workspace-navy text-xs font-semibold text-white placeholder:text-slate-400"
             />
             <select
               value={expiryDays}
               onChange={(e) => setExpiryDays(Number(e.target.value))}
               aria-label="Auditor link expiry duration"
-              className="h-9 rounded-lg border border-[#A855F7] bg-[#081018] px-3 text-xs font-extrabold text-white"
+              className="h-9 rounded-lg border border-[#A855F7] bg-workspace-navy px-3 text-xs font-extrabold text-white"
             >
               {EXPIRY_PRESETS.map((preset) => (
                 <option key={preset.days} value={preset.days}>
@@ -127,17 +127,17 @@ export default function AuditorLinkGeneratorCard({ onCreated }) {
               type="button"
               onClick={handleGenerateOneClick}
               disabled={generating}
-              className="h-9 shrink-0 rounded-lg px-4 text-xs font-black text-black shadow-[0_0_12px_rgba(0,198,255,0.55)]"
+              className="h-9 shrink-0 rounded-lg px-4 text-xs font-black text-workspace-navy shadow-[0_0_12px_rgba(0,198,255,0.55)]"
               style={{ backgroundColor: '#00C6FF' }}
             >
-              <Link2 className="mr-1.5 h-4 w-4 text-black" />
+              <Link2 className="mr-1.5 h-4 w-4 text-workspace-navy" />
               {generating ? 'Generating...' : 'Generate 1-Click Auditor Link'}
             </Button>
           </div>
         </div>
 
         {generatedLink && (
-          <div className="mt-3.5 flex flex-col justify-between gap-2.5 rounded-xl border border-[#00C6FF]/60 bg-[#081018] p-3 sm:flex-row sm:items-center">
+          <div className="mt-3.5 flex flex-col justify-between gap-2.5 rounded-xl border border-[#00C6FF]/60 bg-workspace-navy p-3 sm:flex-row sm:items-center">
             <div className="min-w-0 space-y-0.5">
               <div className="flex items-center gap-1.5 text-[11px] font-extrabold text-[#00C6FF]">
                 <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-[#00C6FF]" />
@@ -152,15 +152,15 @@ export default function AuditorLinkGeneratorCard({ onCreated }) {
               <button
                 type="button"
                 onClick={handleCopy}
-                className="inline-flex h-8 items-center gap-1.5 rounded-lg px-3 text-xs font-extrabold text-black transition hover:opacity-90"
+                className="inline-flex h-8 items-center gap-1.5 rounded-lg px-3 text-xs font-extrabold text-workspace-navy transition hover:opacity-90"
                 style={{ backgroundColor: '#00C6FF' }}
               >
-                {copied ? <Check className="h-3.5 w-3.5 text-black" /> : <Copy className="h-3.5 w-3.5 text-black" />}
+                {copied ? <Check className="h-3.5 w-3.5 text-workspace-navy" /> : <Copy className="h-3.5 w-3.5 text-workspace-navy" />}
                 <span>{copied ? 'Copied' : 'Copy Link'}</span>
               </button>
               <Link
                 to="/auditor-portal"
-                className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-[#FF2E9A] bg-black px-3 text-xs font-extrabold text-white transition hover:bg-[#FF2E9A]"
+                className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-[#FF2E9A] bg-workspace-navy px-3 text-xs font-extrabold text-white transition hover:bg-[#FF2E9A]"
               >
                 <ExternalLink className="h-3.5 w-3.5 text-[#00C6FF]" />
                 <span>Open Auditor Portal</span>
