@@ -1,17 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
 import {
   Mail, NotebookPen, Briefcase, Inbox, MessagesSquare, Video,
-  Sparkles, ListTodo, BookMarked, Radio, LayoutDashboard, Lightbulb,
+  Sparkles, ListTodo, BookMarked, Radio, Lightbulb,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import EmployeeCommunicationContent from '@/components/employee/EmployeeCommunicationContent';
 import CommWeatherBar from '@/components/communications/CommWeatherBar';
-import CommTaskDash from '@/components/communications/CommTaskDash';
 import RosterMiniOverview from '@/components/communications/RosterMiniOverview';
-import TaskLeaderboard from '@/components/communications/TaskLeaderboard';
-import CommSharedTodo from '@/components/communications/CommSharedTodo';
 import { CommunicationAndMailboxTabs } from '@/components/safe/ExecutiveWallScene';
 import '@/components/communications/commCentreTheme.css';
 
@@ -21,8 +16,7 @@ const BRAND_GRADIENT =
 const TABS = [
   ['inbox', Inbox, 'Mailbox & Inbox'],
   ['feed', Radio, 'Team Feed'],
-  ['todo', ListTodo, 'To-Do Board'],
-  ['task-dashboard', LayoutDashboard, 'Tasks'],
+  ['todo', ListTodo, 'Tasks'],
   ['shift-notes', NotebookPen, 'Shift Notes'],
   ['diary', MessagesSquare, 'Diary'],
   ['email', Mail, 'Send Email'],
@@ -65,7 +59,7 @@ export default function EmployeeCommunications({ embedded = false }) {
                       Communication &amp; Mailbox Hub
                     </h1>
                     <p className="text-[11px] font-semibold leading-snug text-slate-300">
-                      Unified Communication, Mailbox, Live Roster, Merged Tasks &amp; Shared To-Do Lists in one command view.
+                      Communication, mail and live roster together in one dashboard.
                     </p>
                   </div>
                 </div>
@@ -96,43 +90,6 @@ export default function EmployeeCommunications({ embedded = false }) {
           </TabsContent>
         </div>
 
-        {/* 5. Unified Tasks, Shared To-Do List & Task Leaderboard */}
-        {!embedded && (
-          <div className="rounded-xl border border-[#0072FF]/60 bg-[#081018] p-3 space-y-2.5 text-white">
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2">
-              <div>
-                <h3 className="text-xs sm:text-sm font-extrabold text-white">
-                  Unified Tasks, Shared To-Do List &amp; Task Leaderboard
-                </h3>
-                <p className="text-[11px] text-slate-300">
-                  All personal, team, shared to-do lists, and task leaderboards grouped together.
-                </p>
-              </div>
-              <div className="flex flex-wrap items-center gap-1.5">
-                <Button
-                  size="sm"
-                  onClick={() => setView('todo')}
-                  className="h-7 bg-[#0072FF] text-[11px] font-extrabold text-white"
-                >
-                  Open Full To-Do Board
-                </Button>
-                <Button
-                  asChild
-                  size="sm"
-                  variant="outline"
-                  className="h-7 border-[#00C6FF]/60 bg-[#081018] text-[11px] font-extrabold text-white hover:bg-[#0072FF]"
-                >
-                  <Link to="/tasks">Open Tasks Hub</Link>
-                </Button>
-              </div>
-            </div>
-            <div className="grid grid-cols-1 gap-2.5 xl:grid-cols-3">
-              <CommTaskDash />
-              <CommSharedTodo />
-              <TaskLeaderboard compact />
-            </div>
-          </div>
-        )}
       </Tabs>
     </div>
   );

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import EmployeeAlerts from '@/components/employee/EmployeeAlerts';
 import EmployeeCommunicationList from '@/components/employee/EmployeeCommunicationList';
 import EmployeeCommunicationInbox from '@/components/employee/EmployeeCommunicationInbox';
@@ -7,7 +8,6 @@ import EmployeeVideoCalls from '@/components/employee/EmployeeVideoCalls';
 import EmployeeCommunicationNotes from '@/components/employee/EmployeeCommunicationNotes';
 import EmployeeTeamMessages from '@/components/employee/EmployeeTeamMessages';
 import EmployeeComplaints from '@/components/employee/EmployeeComplaints';
-import EmployeePersonalRecords from '@/components/employee/EmployeePersonalRecords';
 import TemplateLibrary from '@/components/communications/TemplateLibrary';
 import AiCompose from '@/components/communications/AiCompose';
 import CommGuide from '@/components/communications/CommGuide';
@@ -24,7 +24,7 @@ export default function EmployeeCommunicationContent({ view }) {
   if (view === 'shoutouts') return <EmployeeTeamMessages shoutout />;
   if (view === 'feed') return <div className="space-y-4"><h3 className="text-sm font-semibold">Team announcements</h3><EmployeeCommunicationList view="feed" /><h3 className="text-sm font-semibold">Team shoutouts</h3><EmployeeCommunicationList view="shoutouts" /></div>;
   if (view === 'complaints') return <EmployeeComplaints />;
-  if (view === 'todo' || view === 'task-dashboard') return <EmployeePersonalRecords view="tasks" />;
+  if (view === 'todo' || view === 'task-dashboard') return <Link to="/tasks" className="inline-flex rounded-lg border border-border bg-card px-3 py-2 text-sm font-semibold text-card-foreground">Open Tasks Dashboard</Link>;
   if (view === 'guide') return <CommGuide />;
   if (view === 'shift-notes') return <EmployeeCommunicationNotes />;
   if (view === 'employee-log') return <EmployeeCommunicationNotes employeeLog />;

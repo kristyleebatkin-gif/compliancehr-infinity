@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { statusTone } from '@/lib/statusStyles';
 import { downloadCsv } from '@/lib/csvExport';
 import LeaderboardSettingsDialog from '@/components/staff/LeaderboardSettingsDialog';
+import TaskLeaderboard from '@/components/communications/TaskLeaderboard';
 import { Trophy, Award, Download, ShieldCheck, Users, BadgeCheck, Star } from 'lucide-react';
 
 const PODIUM = [
@@ -118,6 +119,7 @@ export default function StaffRecognition() {
 
   return (
     <div className="space-y-4">
+      <TaskLeaderboard compact={false} />
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {stats.map(({ icon: Icon, label, value }) => (
           <Card key={label}><CardContent className="flex items-center gap-3 p-4">

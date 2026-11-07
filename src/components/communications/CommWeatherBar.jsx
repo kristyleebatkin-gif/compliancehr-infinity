@@ -92,7 +92,7 @@ export default function CommWeatherBar() {
           className="rounded-lg p-[1.5px]"
           style={{ background: 'linear-gradient(135deg, #00C6FF 0%, #0072FF 100%)' }}
         >
-          <div className="flex h-full items-center justify-between gap-2 rounded-[7px] bg-black px-2.5 py-2 text-white">
+          <div className="flex h-full items-center justify-between gap-1.5 rounded-[7px] bg-gradient-to-br from-[#081018] to-[#0A2B6D] px-2 py-2 text-white shadow-inner ring-1 ring-inset ring-[#00C6FF]/30">
             <div className="flex min-w-0 items-center gap-2">
               <span
                 className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#081018]"
@@ -104,7 +104,7 @@ export default function CommWeatherBar() {
                 <div className="flex items-center gap-1.5">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#00C6FF] animate-pulse" />
                   <p className="text-[9px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
-                    Live Time (AEST)
+                    Live Time (Sydney)
                   </p>
                 </div>
                 <p className="font-mono text-sm sm:text-base font-black leading-tight text-white">
@@ -113,9 +113,7 @@ export default function CommWeatherBar() {
                 <p className="text-[9px] font-bold text-slate-300">24/7 Operations Clock Active</p>
               </div>
             </div>
-            <span className="shrink-0 rounded-md border border-[#00C6FF]/50 bg-[#0072FF]/30 px-1.5 py-0.5 text-[8px] font-extrabold uppercase text-white">
-              SYNCED
-            </span>
+
           </div>
         </div>
 
@@ -124,7 +122,7 @@ export default function CommWeatherBar() {
           className="rounded-lg p-[1.5px]"
           style={{ background: 'linear-gradient(135deg, #0072FF 0%, #A855F7 100%)' }}
         >
-          <div className="flex h-full items-center justify-between gap-2 rounded-[7px] bg-black px-2.5 py-2 text-white">
+          <div className="flex h-full items-center justify-between gap-1.5 rounded-[7px] bg-gradient-to-br from-[#081018] to-[#0A2B6D] px-2 py-2 text-white shadow-inner ring-1 ring-inset ring-[#00C6FF]/30">
             <div className="flex min-w-0 items-center gap-2">
               <span
                 className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#081018]"
@@ -145,9 +143,7 @@ export default function CommWeatherBar() {
                 <p className="text-[9px] font-bold text-slate-300">Audit &amp; Shift Cycle Day</p>
               </div>
             </div>
-            <span className="shrink-0 rounded-md border border-[#A855F7]/50 bg-[#A855F7]/25 px-1.5 py-0.5 text-[8px] font-extrabold uppercase text-white">
-              TODAY
-            </span>
+
           </div>
         </div>
 
@@ -156,7 +152,7 @@ export default function CommWeatherBar() {
           className="rounded-lg p-[1.5px]"
           style={{ background: 'linear-gradient(135deg, #A855F7 0%, #FF2E9A 100%)' }}
         >
-          <div className="flex h-full items-center justify-between gap-2 rounded-[7px] bg-black px-2.5 py-2 text-white">
+          <div className="flex h-full items-center justify-between gap-1.5 rounded-[7px] bg-gradient-to-br from-[#081018] to-[#0A2B6D] px-2 py-2 text-white shadow-inner ring-1 ring-inset ring-[#00C6FF]/30">
             <div className="flex min-w-0 items-center gap-2">
               <span
                 className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#081018]"
@@ -181,9 +177,7 @@ export default function CommWeatherBar() {
                 </p>
               </div>
             </div>
-            <span className="shrink-0 rounded-md border border-[#FF2E9A]/50 bg-[#FF2E9A]/25 px-1.5 py-0.5 text-[8px] font-extrabold uppercase text-white">
-              SAFE
-            </span>
+
           </div>
         </div>
 
@@ -192,7 +186,7 @@ export default function CommWeatherBar() {
           className="rounded-lg p-[1.5px]"
           style={{ background: 'linear-gradient(135deg, #00C6FF 0%, #FF2E9A 100%)' }}
         >
-          <div className="flex h-full flex-col justify-between gap-1 rounded-[7px] bg-black px-2.5 py-1.5 text-white">
+          <div className="flex h-full flex-col justify-between gap-1 rounded-[7px] bg-gradient-to-br from-[#081018] to-[#0A2B6D] px-2 py-1.5 text-white shadow-inner ring-1 ring-inset ring-[#00C6FF]/30">
             <div className="flex items-center justify-between gap-1">
               <span className="inline-flex items-center gap-1 text-[9px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
                 <ShieldCheck className="h-3 w-3 text-[#00C6FF]" />

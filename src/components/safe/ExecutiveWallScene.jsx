@@ -307,9 +307,9 @@ export function CommunicationAndMailboxTabs({ onSelectTab, activeTab, tabs } = {
 
   return (
     <WallHangingPictureFrame title="Merged Communication, Mailbox & Live Channels">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-2.5 bg-[#081018] text-white items-stretch">
-        {/* Left Column: Express Mail Command Deck + Red Letterbox */}
-        <div className="lg:col-span-4 flex flex-col justify-between gap-2">
+      <div className="grid grid-cols-1 gap-2 bg-[#081018] text-white">
+        {/* Mailboxes sit together beneath the communication board. */}
+        <div className="order-2 grid grid-cols-1 gap-2 sm:grid-cols-2 items-start">
           <AboveMailboxCommandDeck
             mailAlertCount={mailAlertCount}
             onDropExpressMail={() => {
@@ -410,8 +410,8 @@ export function CommunicationAndMailboxTabs({ onSelectTab, activeTab, tabs } = {
           </div>
         </div>
 
-        {/* Right Column: Merged Mini Comms + Mini Communication Centre + 7-Day Live Communication Methods */}
-        <div className="lg:col-span-8">
+        {/* Communication board spans the full dashboard width. */}
+        <div className="order-1 min-w-0">
           <MiniCommunicationCentrePanel
             alertCount={mailAlertCount}
             recentComms={recentComms}

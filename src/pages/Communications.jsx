@@ -21,10 +21,6 @@ import AlertsCentre from '@/components/communications/AlertsCentre';
 import CommunicationDiary from '@/components/communications/CommunicationDiary';
 import Inbox from '@/components/communications/Inbox';
 import TeamBanter from '@/components/communications/TeamBanter';
-import CommTaskDash from '@/components/communications/CommTaskDash';
-import CommSharedTodo from '@/components/communications/CommSharedTodo';
-import TodoBoard from '@/components/communications/TodoBoard';
-import TaskLeaderboard from '@/components/communications/TaskLeaderboard';
 import ProfessionalEmail from '@/components/communications/ProfessionalEmail';
 import BulkMessage from '@/components/communications/BulkMessage';
 import ShiftNotes from '@/components/communications/ShiftNotes';
@@ -136,7 +132,7 @@ function Communications({ profile, profileKind } = {}) {
                   Communication &amp; Mailbox Hub
                 </h1>
                 <p className="text-[11px] font-semibold leading-snug text-slate-300">
-                  Unified Communication, Mailbox, Live Roster, Merged Tasks &amp; Shared To-Do Lists in one command view.
+                  Communication, mail and live roster together in one dashboard.
                 </p>
               </div>
             </div>
@@ -150,16 +146,13 @@ function Communications({ profile, profileKind } = {}) {
         <RosterMiniOverview />
 
         {/* 4. Unified Communication & Mailbox Dashboard */}
-        <div className="rounded-xl border border-[#0072FF]/60 bg-[#081018] p-2.5 text-white">
+        <div className="space-y-2 rounded-xl border border-[#0072FF]/60 bg-[#081018] p-2 text-white">
           <CommunicationAndMailboxTabs
             onSelectTab={setActiveTab}
             activeTab={activeTab}
             tabs={shown}
           />
-        </div>
-
-        {/* Active Selected Communication Channel Workspace */}
-        <div className="rounded-xl border border-[#0072FF]/50 bg-[#081018] p-2.5 text-white">
+          <div className="rounded-lg border border-[#0072FF]/50 bg-[#081018] p-2 text-white">
           <TabsContent value="alerts" className="mt-0"><AlertsCentre selfOnly={employeeSelf} /></TabsContent>
           <TabsContent value="meetings" className="mt-0"><MeetingCentre embedded /></TabsContent>
           <TabsContent value="feedback" className="mt-0"><Feedback embedded /></TabsContent>
@@ -184,56 +177,13 @@ function Communications({ profile, profileKind } = {}) {
           <TabsContent value="feed" className="mt-0"><TeamFeed /></TabsContent>
           <TabsContent value="complaints" className="mt-0"><ComplaintsFeed /></TabsContent>
           <TabsContent value="todo" className="mt-0">
-            {effProfile ? (
-              <ProfileTodoList person={effProfile} />
-            ) : (
-              <div className="space-y-3">
-                <CommTaskDash />
-                <CommSharedTodo />
-                <TodoBoard />
-              </div>
-            )}
+            {effProfile ? <ProfileTodoList person={effProfile} /> : <Button asChild size="sm"><Link to="/tasks?tab=shared-todo">Open Tasks Dashboard</Link></Button>}
           </TabsContent>
           <TabsContent value="guide" className="mt-0"><CommGuide /></TabsContent>
           <TabsContent value="video" className="mt-0"><VideoCalls /></TabsContent>
           <TabsContent value="ai" className="mt-0"><AiCompose /></TabsContent>
           <TabsContent value="shift-notes" className="mt-0">{employeeSelf ? <ShiftNotes selfOnly /> : <ShiftNotes />}</TabsContent>
           <TabsContent value="employee-log" className="mt-0">{employeeSelf ? <EmployeeCommLog selfOnly /> : <EmployeeCommLog />}</TabsContent>
-        </div>
-
-        {/* 5. Unified Tasks, Shared To-Do List & Task Leaderboard */}
-        <div className="rounded-xl border border-[#0072FF]/60 bg-[#081018] p-3 space-y-2.5 text-white">
-          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2">
-            <div>
-              <h3 className="text-xs sm:text-sm font-extrabold text-white">
-                Unified Tasks, Shared To-Do List &amp; Task Leaderboard
-              </h3>
-              <p className="text-[11px] text-slate-300">
-                All personal, team, shared to-do lists, and task leaderboards grouped together.
-              </p>
-            </div>
-            <div className="flex flex-wrap items-center gap-1.5">
-              <Button
-                size="sm"
-                onClick={() => setActiveTab('todo')}
-                className="h-7 bg-[#0072FF] text-[11px] font-extrabold text-white"
-              >
-                Open Full To-Do Board
-              </Button>
-              <Button
-                asChild
-                size="sm"
-                variant="outline"
-                className="h-7 border-[#00C6FF]/60 bg-[#081018] text-[11px] font-extrabold text-white hover:bg-[#0072FF]"
-              >
-                <Link to="/tasks">Open Tasks Hub</Link>
-              </Button>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 gap-2.5 xl:grid-cols-3">
-            <CommTaskDash />
-            <CommSharedTodo />
-            <TaskLeaderboard compact />
           </div>
         </div>
       </Tabs>

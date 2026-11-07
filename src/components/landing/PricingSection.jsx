@@ -249,13 +249,6 @@ export default function PricingSection({ onContactSales }) {
                   <span>Transparent All-In-One NDIS &amp; Aged Care Pricing</span>
                 </span>
 
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-[#5A00D6]/50 bg-[#F5F0FF] px-2.5 py-0.5 text-[11px] font-extrabold text-[#5A00D6]">
-                  <span
-                    className="h-2 w-2 rounded-full bg-white"
-                    style={{ boxShadow: '0 0 6px 2px #FFFFFF, 0 0 8px #5A00D6' }}
-                  />
-                  <span>14-Day Free Trial Included</span>
-                </span>
               </div>
 
               {/* Compact Billing Switcher */}
