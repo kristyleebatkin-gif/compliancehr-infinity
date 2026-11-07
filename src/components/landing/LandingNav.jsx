@@ -96,7 +96,7 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
           </button>
         </div>
       ) : (
-        <div className="mx-auto flex max-w-[1440px] flex-col items-center justify-end gap-0.5 bg-[#0A2B6D]/95 px-2 pt-1 pb-0.5 sm:px-4 lg:px-6">
+        <div className="mx-auto flex max-w-[1440px] flex-col items-center justify-center gap-0.5 bg-[#0A2B6D]/95 px-2 pt-1 pb-0.5 sm:px-4 md:flex-row md:items-end md:gap-3 lg:px-6">
           {/* Top / Centre: Larger Business Logo + Name + Slogan */}
           <Link
             to="/"
@@ -107,7 +107,7 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
           </Link>
 
           {/* Single Row Under Logo: Sign In, Book Demo, Participant Profiles, Both Views & Start Free */}
-          <div className="flex w-full flex-wrap items-end justify-center gap-1.5 py-0.5">
+          <div className="flex w-full flex-wrap items-end justify-center gap-1.5 py-0.5 md:w-auto">
             <div className="flex shrink-0 flex-col items-center gap-1">
               <button
                 type="button"

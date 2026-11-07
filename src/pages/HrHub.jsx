@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import ModuleShell from '@/components/module/ModuleShell';
 import ModuleSearchBar from '@/components/module/ModuleSearchBar';
@@ -27,7 +28,10 @@ const fmt = (d) => (d ? String(d).slice(0, 10) : '');
 const MANAGER_ROLES = ['admin', 'Provider Administrator', 'Management', 'Compliance Manager', 'Administration', 'Team Leader', 'Human Resources Manager', 'Rostering Coordinator'];
 
 export default function HrHub({ profile, embedded = false } = {}) {
-  const [tab, setTab] = useState('leave');
+  const { pathname, search } = useLocation();
+  const requestedTab = !embedded && pathname === '/hr' ? new URLSearchParams(search).get('tab') : null;
+  const [tab, setTab] = useState(() => ['leave', 'reviews'].includes(requestedTab) ? requestedTab : 'leave');
+  useEffect(() => { if (['leave', 'reviews'].includes(requestedTab)) setTab(requestedTab); }, [requestedTab]);
   const [leaves, setLeaves] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);

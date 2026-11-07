@@ -176,16 +176,16 @@ export default function QuickAppBar() {
           style={{ background: DARK_NAVY_CHASSIS }}
         >
           {/* LINE 1: Quick Access Bar Title + AI Quick Ask & 4 Buttons Next To It + Mode Switcher */}
-          <div className="flex flex-wrap items-center justify-between gap-1">
-            <div className="flex flex-wrap items-center gap-1.5">
+          <div className="flex flex-wrap items-center justify-start gap-1.5">
+            <div className="flex min-w-0 flex-wrap items-center gap-1.5 md:flex-nowrap">
               <div
-                className="inline-flex items-center rounded-full p-[1px]"
+                className="inline-flex min-w-0 items-center rounded-full p-[1px]"
                 style={{ background: BRAND_GRADIENT }}
               >
-                <div className="inline-flex items-center gap-1 rounded-full bg-white px-2 py-0.5">
+                <div className="inline-flex min-w-0 items-center gap-1 rounded-full bg-white px-2 py-0.5">
                   <Zap className="h-2.5 w-2.5 shrink-0" style={{ color: '#0072FF' }} />
                   <span
-                    className="bg-clip-text text-[9.5px] font-extrabold tracking-tight text-transparent"
+                    className="min-w-0 truncate bg-clip-text text-[9.5px] font-extrabold tracking-tight text-transparent"
                     style={{ backgroundImage: HEADING_TEXT_GRADIENT }}
                   >
                     Quick Access Bar · {expandedGroup ? expandedGroup.label : 'Command Centre'}
@@ -193,11 +193,7 @@ export default function QuickAppBar() {
                 </div>
               </div>
 
-              {/* AI Quick Ask + 4 Buttons Directly Next To Quick Access Bar */}
-              <EnterpriseFloatingWorkspaceDock inline />
-            </div>
-
-            <div className="flex flex-wrap items-center gap-1">
+              <div className="flex shrink-0 flex-nowrap items-center gap-1">
               <div
                 className="inline-flex items-center rounded-full p-[1px]"
                 style={{ background: BRAND_GRADIENT }}
@@ -212,7 +208,7 @@ export default function QuickAppBar() {
                       key={m.id}
                       type="button"
                       onClick={() => switchRemoteMode(m.id)}
-                      className={`rounded-full px-1.5 py-0 text-[8px] font-extrabold transition ${
+                      className={`whitespace-nowrap rounded-full px-1.5 py-0 text-[8px] font-extrabold transition ${
                         remoteMode === m.id
                           ? 'bg-[#0A2B6D] text-white'
                           : 'text-[#0A2B6D] hover:bg-[#F5F0FF]'
@@ -227,13 +223,15 @@ export default function QuickAppBar() {
               {expandedGroup?.path && (
                 <Link
                   to={expandedGroup.path}
-                  className="inline-flex h-[20px] items-center gap-1 rounded-full bg-white px-2 text-[8px] font-extrabold text-[#0A2B6D] transition hover:bg-[#F5F0FF]"
+                  className="inline-flex h-[20px] max-w-[180px] items-center gap-1 rounded-full bg-white px-2 text-[8px] font-extrabold text-[#0A2B6D] transition hover:bg-[#F5F0FF]"
                 >
-                  <span style={{ color: '#0A2B6D' }}>Open {expandedGroup.label.replace(/^\d+\.\s*/, '')}</span>
+                  <span className="truncate" style={{ color: '#0A2B6D' }}>Open {expandedGroup.label.replace(/^\d+\.\s*/, '')}</span>
                   <ArrowRight className="h-2 w-2 text-[#0072FF]" />
                 </Link>
               )}
+              </div>
             </div>
+            <EnterpriseFloatingWorkspaceDock inline />
           </div>
 
           {/* LINE 2: 50%-Reduced Compact Section Modulars (Tight Grid Without Gaps) */}
