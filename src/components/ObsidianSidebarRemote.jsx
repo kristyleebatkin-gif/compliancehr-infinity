@@ -437,7 +437,7 @@ export default function ObsidianSidebarRemote({
                   ) || FOCUSED_5_PILLAR_NAV[0];
                 openMajorSectionInMainView(match, 'pillars5', false);
               }}
-              className={`min-h-[22px] rounded-[6px] py-0.5 text-[9px] font-extrabold text-white transition-all ${
+              className={`min-h-[26px] rounded-[6px] py-0.5 text-[11px] font-extrabold text-white transition-all ${
                 navMode === 'pillars5' ? 'ring-2 ring-white' : 'opacity-90 hover:opacity-100'
               }`}
               style={{
@@ -459,7 +459,7 @@ export default function ObsidianSidebarRemote({
                   ) || PRIMARY_11_OS_NAV[0];
                 openMajorSectionInMainView(match, 'os11', false);
               }}
-              className={`min-h-[22px] rounded-[6px] py-0.5 text-[9px] font-extrabold text-white transition-all ${
+              className={`min-h-[26px] rounded-[6px] py-0.5 text-[11px] font-extrabold text-white transition-all ${
                 navMode === 'os11' ? 'ring-2 ring-white' : 'opacity-90 hover:opacity-100'
               }`}
               style={{
@@ -480,7 +480,7 @@ export default function ObsidianSidebarRemote({
                   })
                 );
               }}
-              className={`min-h-[22px] rounded-[6px] py-0.5 text-[9px] font-extrabold text-white transition-all ${
+              className={`min-h-[26px] rounded-[6px] py-0.5 text-[11px] font-extrabold text-white transition-all ${
                 navMode === 'all' ? 'ring-2 ring-white' : 'opacity-90 hover:opacity-100'
               }`}
               style={{
@@ -534,21 +534,21 @@ export default function ObsidianSidebarRemote({
                       style={{ background: BRAND_GRADIENT }}
                     >
                       <div
-                        className="flex h-[32px] items-center justify-between gap-1.5 overflow-hidden rounded-[7px] bg-black px-2"
+                        className="flex h-[38px] items-center justify-between gap-1.5 overflow-hidden rounded-[7px] bg-black px-2"
                         style={{ background: '#000000' }}
                       >
-                        <div className="flex min-w-0 flex-1 items-center gap-1.5">
+                        <div className="flex min-w-0 flex-1 items-center gap-2">
                           <span
-                            className="flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-[4px] bg-black"
+                            className="flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-[4px] bg-black"
                             style={{
                               border: `1.5px solid ${symColor}`,
                               boxShadow: `0 0 6px ${symColor}66`,
                             }}
                           >
-                            <Icon className="h-3 w-3 shrink-0" style={{ color: symColor }} />
+                            <Icon className="h-3.5 w-3.5 shrink-0" style={{ color: symColor }} />
                           </span>
                           <span
-                            className="min-w-0 truncate text-[10.5px] font-black leading-tight tracking-tight text-white"
+                            className="min-w-0 truncate text-[13.5px] font-black leading-tight tracking-tight text-white"
                             style={{ color: '#FFFFFF' }}
                           >
                             {pillar.label}
@@ -598,21 +598,21 @@ export default function ObsidianSidebarRemote({
                               style={{ background: BRAND_GRADIENT }}
                             >
                               <div
-                                className="flex h-[30px] items-center justify-between gap-1.5 overflow-hidden rounded-[7px] bg-black px-2"
+                                className="flex h-[36px] items-center justify-between gap-1.5 overflow-hidden rounded-[7px] bg-black px-2"
                                 style={{ background: '#000000' }}
                               >
-                                <div className="flex min-w-0 flex-1 items-center gap-1.5">
+                                <div className="flex min-w-0 flex-1 items-center gap-2">
                                   <span
-                                    className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[4px] bg-black"
+                                    className="flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-[4px] bg-black"
                                     style={{
                                       border: `1.5px solid ${childSymColor}`,
                                       boxShadow: `0 0 6px ${childSymColor}66`,
                                     }}
                                   >
-                                    <ChildIcon className="h-3 w-3 shrink-0" style={{ color: childSymColor }} />
+                                    <ChildIcon className="h-3.5 w-3.5 shrink-0" style={{ color: childSymColor }} />
                                   </span>
                                   <span
-                                    className="min-w-0 truncate text-[10px] font-black leading-tight tracking-tight text-white"
+                                    className="min-w-0 truncate text-[13px] font-black leading-tight tracking-tight text-white"
                                     style={{ color: '#FFFFFF' }}
                                   >
                                     {child.label}
@@ -667,21 +667,21 @@ export default function ObsidianSidebarRemote({
                   style={{ background: BRAND_GRADIENT }}
                 >
                   <div
-                    className="flex h-[30px] items-center justify-between gap-1.5 overflow-hidden rounded-[7px] bg-black px-2"
+                    className="flex h-[36px] items-center justify-between gap-1.5 overflow-hidden rounded-[7px] bg-black px-2"
                     style={{ background: '#000000' }}
                   >
-                    <div className="flex min-w-0 flex-1 items-center gap-1.5">
+                    <div className="flex min-w-0 flex-1 items-center gap-2">
                       <span
-                        className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[4px] bg-black"
+                        className="flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-[4px] bg-black"
                         style={{
                           border: `1.5px solid ${modSymColor}`,
                           boxShadow: `0 0 6px ${modSymColor}66`,
                         }}
                       >
-                        <Icon className="h-3 w-3 shrink-0" style={{ color: modSymColor }} />
+                        <Icon className="h-3.5 w-3.5 shrink-0" style={{ color: modSymColor }} />
                       </span>
                       <span
-                        className="min-w-0 truncate text-[10px] font-black leading-tight tracking-tight text-white"
+                        className="min-w-0 truncate text-[13px] font-black leading-tight tracking-tight text-white"
                         style={{ color: '#FFFFFF' }}
                       >
                         {label}
@@ -717,9 +717,9 @@ export default function ObsidianSidebarRemote({
             <button
               type="button"
               onClick={onLogout}
-              className="flex min-h-[22px] w-full items-center justify-center gap-1 rounded-md border border-[#0072FF] bg-black px-2 py-0.5 text-[8.5px] font-extrabold text-white shadow-2xs transition hover:border-[#FF2E9A]"
+              className="flex min-h-[30px] w-full items-center justify-center gap-1.5 rounded-md border border-[#0072FF] bg-black px-2 py-1 text-xs font-extrabold text-white shadow-2xs transition hover:border-[#FF2E9A]"
             >
-              <LogOut className="h-2.5 w-2.5 text-[#FF2E9A]" />
+              <LogOut className="h-3.5 w-3.5 text-[#FF2E9A]" />
               <span>Sign out</span>
             </button>
           </div>

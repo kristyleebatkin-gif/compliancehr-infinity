@@ -278,7 +278,7 @@ export default function QuickAppBar() {
                         <Cpu className="h-3 w-3 shrink-0" style={{ color: '#0072FF' }} />
                       </span>
                       <span
-                        className="min-w-0 truncate text-[10.5px] font-black leading-tight tracking-tight text-white"
+                        className="min-w-0 truncate text-[13px] font-black leading-tight tracking-tight text-white"
                         style={{ color: '#FFFFFF' }}
                       >
                         AI Core Hub
@@ -344,7 +344,7 @@ export default function QuickAppBar() {
                             <Icon className="h-3 w-3 shrink-0" style={{ color: symColor }} />
                           </span>
                           <span
-                            className="min-w-0 truncate text-[10.5px] font-black leading-tight tracking-tight text-white"
+                            className="min-w-0 truncate text-[13px] font-black leading-tight tracking-tight text-white"
                             style={{ color: '#FFFFFF' }}
                           >
                             {item.label}
@@ -434,7 +434,7 @@ export default function QuickAppBar() {
                                   <Icon className="h-3 w-3 shrink-0" style={{ color: modColor }} />
                                 </span>
                                 <span
-                                  className="min-w-0 truncate text-[10.5px] font-black leading-tight tracking-tight text-white"
+                                  className="min-w-0 truncate text-[13px] font-black leading-tight tracking-tight text-white"
                                   style={{ color: '#FFFFFF' }}
                                 >
                                   {module.label}
