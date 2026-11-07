@@ -10,14 +10,15 @@ import {
 // Single source of truth for every module in the app: the sidebar, bottom nav and
 // the dashboard module hub all read this list so nothing can go missing again.
 export const MODULE_DIRECTORY = [
-  // 1. COMMUNICATION & EXECUTIVE COMMAND
-  { key: 'dashboard', label: 'Communication', path: '/dashboard', icon: Megaphone, group: '1. Communication & Executive Command', blurb: 'Merged Communication, Mailbox, Dashboard, Notifications, Briefings, Meetings, Feedback & Shared To-Do in one hub.' },
-  { key: 'daily-briefing', label: 'Daily Briefing', path: '/briefing', icon: Newspaper, group: '1. Communication & Executive Command', blurb: 'Daily organisational briefing, operational priorities and executive updates.' },
-  { key: 'meetings', label: 'Meetings', path: '/meetings', icon: CalendarDays, group: '1. Communication & Executive Command', blurb: 'Meetings, agenda assistant, templates, minutes and action item tracking.' },
-  { key: 'feedback', label: 'Feedback & Surveys', path: '/feedback', icon: MessageSquare, group: '1. Communication & Executive Command', blurb: 'Feedback register, complaint routing and branded surveys.' },
-  { key: 'operations-centre', label: 'Operations Centre', path: '/operations-centre', icon: Sparkles, group: '1. Communication & Executive Command', blurb: 'Executive intelligence, executive reports, 1-click operations, Core Engine and 2026 printable templates.' },
-  { key: 'suggestions-hub', label: 'Suggestions Hub', path: '/suggestions', icon: Sparkles, group: '1. Communication & Executive Command', blurb: 'AI review of every module: what to visualise, automate and refine.' },
-  { key: 'assistant', label: 'AI Assistant', path: '/assistant', icon: Bot, group: '1. Communication & Executive Command', blurb: 'Talk to the compliance, rostering, receipts and personal AI assistants.' },
+  // 1. DASHBOARD & COMMUNICATION COMMAND
+  { key: 'dashboard', label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard, group: '1. Dashboard & Communication', blurb: 'Executive Dashboard, Subscriptions, Communication, Mailbox, Live Roster, Briefings, Meetings, Feedback & Shared To-Do in one hub.' },
+  { key: 'communications', label: 'Communication', path: '/communications', icon: Megaphone, group: '1. Dashboard & Communication', blurb: 'Unified Communication, Mailbox, Live Roster, Merged Tasks & Shared To-Do Lists.' },
+  { key: 'daily-briefing', label: 'Daily Briefing', path: '/briefing', icon: Newspaper, group: '1. Dashboard & Communication', blurb: 'Daily organisational briefing, operational priorities and executive updates.' },
+  { key: 'meetings', label: 'Meetings', path: '/meetings', icon: CalendarDays, group: '1. Dashboard & Communication', blurb: 'Meetings, agenda assistant, templates, minutes and action item tracking.' },
+  { key: 'feedback', label: 'Feedback & Surveys', path: '/feedback', icon: MessageSquare, group: '1. Dashboard & Communication', blurb: 'Feedback register, complaint routing and branded surveys.' },
+  { key: 'operations-centre', label: 'Operations Centre', path: '/operations-centre', icon: Sparkles, group: '1. Dashboard & Communication', blurb: 'Executive intelligence, executive reports, 1-click operations, Core Engine and 2026 printable templates.' },
+  { key: 'suggestions-hub', label: 'Suggestions Hub', path: '/suggestions', icon: Sparkles, group: '1. Dashboard & Communication', blurb: 'AI review of every module: what to visualise, automate and refine.' },
+  { key: 'assistant', label: 'AI Assistant', path: '/assistant', icon: Bot, group: '1. Dashboard & Communication', blurb: 'Talk to the compliance, rostering, receipts and personal AI assistants.' },
 
   // 2. PEOPLE, INTAKE & PROFILES
   { key: 'my-profile', label: 'My Profile', path: '/my-profile', icon: UserCircle, group: '2. People, Intake & Profiles', blurb: 'Your profile, work, documents, payroll and name tag in one place.' },
@@ -90,8 +91,8 @@ export const MODULE_DIRECTORY = [
 // Permanent 13-Group Architectural Map: every existing module key appears in exactly one permanent home.
 export const NAV_GROUPS = [
   {
-    label: '1. Communication & Executive Command',
-    keys: ['dashboard', 'daily-briefing', 'meetings', 'feedback', 'operations-centre', 'suggestions-hub', 'assistant'],
+    label: '1. Dashboard & Communication',
+    keys: ['dashboard', 'communications', 'daily-briefing', 'meetings', 'feedback', 'operations-centre', 'suggestions-hub', 'assistant'],
   },
   {
     label: '2. People, Intake & Profiles',

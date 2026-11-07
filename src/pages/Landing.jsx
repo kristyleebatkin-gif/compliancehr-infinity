@@ -1,23 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './landing-layout.css';
 import LandingNav from '@/components/landing/LandingNav';
-import LandingLaunchVideosSection from '@/components/landing/LandingLaunchVideosSection';
-import LandingHero from '@/components/landing/LandingHero';
-import RemoteAccessStatusCard from '@/components/landing/RemoteAccessStatusCard';
-import LandingEvidenceStandardSection from '@/components/landing/LandingEvidenceStandardSection';
-import LandingRegisterEngineSection from '@/components/landing/LandingRegisterEngineSection';
-import LandingProductShowcase from '@/components/landing/LandingProductShowcase';
-import LandingSolutionSection from '@/components/landing/LandingSolutionSection';
-import LandingStatsSection from '@/components/landing/LandingStatsSection';
-import BenefitsSection from '@/components/landing/BenefitsSection';
-import LandingHowItWorks from '@/components/landing/LandingHowItWorks';
-import LandingTestimonialsSection from '@/components/landing/LandingTestimonialsSection';
-import PricingSection from '@/components/landing/PricingSection';
-import BlueprintPreviewSection from '@/components/landing/BlueprintPreviewSection';
-import LandingFaqSection from '@/components/landing/LandingFaqSection';
-import LandingCTA from '@/components/landing/LandingCTA';
 import LandingFooter from '@/components/landing/LandingFooter';
-import EnterpriseTopTrustRibbon from '@/components/landing/EnterpriseTopTrustRibbon';
 import EnterpriseBelowFooterSuite from '@/components/landing/EnterpriseBelowFooterSuite';
 import FloatingQuickActionBar from '@/components/landing/FloatingQuickActionBar';
 import DemoBookingModal from '@/components/landing/DemoBookingModal';
@@ -83,56 +67,12 @@ export default function Landing() {
           onToggleLiveDashboard={() => setShowLiveDashboard((v) => !v)}
         />
 
-        <main className="landing-main relative z-10 mx-auto w-full max-w-[1440px] px-4 py-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-14 pb-20">
-
-        {/* Full Navigator Router Main View */}
         <QuickAppBar />
 
-        {/* 1. Hero Section (Landscape — Crystal-Clear Positioning Above the Fold) */}
-        <LandingHero onBookDemo={openDemoModal} />
-
-        {/* 2. Launch Story Videos: Video 1 (Kristy's Story) + "See ComplianceHR Infinity in action" Video 2 */}
-        <LandingLaunchVideosSection />
-
-        {/* Evidence-First Operating Standard */}
-        <LandingEvidenceStandardSection />
-
-        {/* Universal Register Engine Standard */}
-        <LandingRegisterEngineSection />
-
-        {/* 2. Dashboard Showcase Section (Landscape) */}
-        <LandingProductShowcase />
-
-        {/* 3. Feature Pillars Section (Landscape) */}
-        <LandingSolutionSection />
-
-        {/* 4. Statistics Section (Landscape) */}
-        <LandingStatsSection />
-
-        {/* 5. Why Choose Us Section (Landscape) */}
-        <BenefitsSection />
-
-        {/* 6. How It Works Section (Landscape) */}
-        <LandingHowItWorks />
-
-        {/* 7. Testimonials Section (Landscape) */}
-        <LandingTestimonialsSection />
-
-        {/* 8. Pricing Section (Landscape — Exact Existing Pricing Preserved) */}
-        <PricingSection onContactSales={openDemoModal} />
-
-        {/* 9. Module Explorer Section (Landscape — 46 Connected Modules Architecture Map) */}
-        <BlueprintPreviewSection />
-
-        {/* FAQ Section */}
-        <LandingFaqSection />
-
-        {/* Live Remote Access & VPN Security Status Card (Second from the bottom) */}
-        <RemoteAccessStatusCard />
-
-        {/* 10. Final CTA Section (Landscape) */}
-        <LandingCTA onBookDemo={openDemoModal} />
-      </main>
+        <main className="landing-main relative z-10 mx-auto w-full max-w-[1440px] px-3 py-2.5 sm:px-4 space-y-5 pb-16">
+          {/* Unified Executive Dashboard, Communication & Subscription Suite */}
+          <Dashboard />
+        </main>
 
         {/* Enterprise Multi-Column Footer */}
         <LandingFooter onBookDemo={openDemoModal} />

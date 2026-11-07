@@ -21,12 +21,14 @@ const SYMBOL_COLOR_SEQUENCE = ['#0072FF', '#A855F7', '#FF2E9A'];
 export const PRIMARY_11_OS_NAV = [
   {
     id: 'dashboard-executive',
-    label: '1. Communication',
-    sub: 'Merged Communication, Mailbox, Meetings, Feedback & Briefing',
+    label: '1. Dashboard',
+    sub: 'Executive Dashboard, Subscriptions, Communication, Mailbox & Live Roster',
     path: '/dashboard',
-    icon: Megaphone,
+    icon: LayoutDashboard,
     status: 'LIVE',
     children: [
+      { label: 'Dashboard', path: '/dashboard', sub: 'Executive Dashboard, Subscriptions & Command', icon: LayoutDashboard },
+      { label: 'Communication', path: '/communications', sub: 'Unified Communication, Mailbox & Roster', icon: Megaphone },
       { label: 'Daily Briefing', path: '/briefing', sub: 'Morning operational briefing' },
       { label: 'Meetings', path: '/meetings', sub: 'Agendas, minutes & action items' },
       { label: 'Feedback & Surveys', path: '/feedback', sub: 'Complaints, compliments & surveys' },
@@ -204,12 +206,14 @@ export const PRIMARY_11_OS_NAV = [
 export const FOCUSED_5_PILLAR_NAV = [
   {
     id: 'pillar-today',
-    label: '1. Communication',
-    sub: 'Merged Communication, Mailbox, Meetings, Feedback & Briefing',
+    label: '1. Dashboard',
+    sub: 'Executive Dashboard, Subscriptions, Communication, Mailbox & Live Roster',
     path: '/dashboard',
-    icon: Megaphone,
+    icon: LayoutDashboard,
     status: 'LIVE',
     children: [
+      { label: 'Dashboard', path: '/dashboard', sub: 'Executive Dashboard, Subscriptions & Command', icon: LayoutDashboard },
+      { label: 'Communication', path: '/communications', sub: 'Unified Communication, Mailbox & Roster', icon: Megaphone },
       { label: 'Daily Briefing', path: '/briefing', sub: 'Morning operational briefing' },
       { label: 'Meetings', path: '/meetings', sub: 'Agendas, minutes & action items' },
       { label: 'Feedback & Surveys', path: '/feedback', sub: 'Complaints, compliments & surveys' },

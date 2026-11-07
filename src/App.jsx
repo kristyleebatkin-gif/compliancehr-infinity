@@ -182,7 +182,7 @@ const AuthenticatedApp = () => {
           <Route path="/registers" element={<Navigate to="/documents?tab=registers-hub" replace />} />
           <Route path="/governance" element={<RoleGate navKey="governance"><GovernanceLayer /></RoleGate>} />
           <Route path="/programs" element={<RoleGate navKey="programs"><ProgramsEvents /></RoleGate>} />
-          <Route path="/communications" element={<RoleGate navKey="dashboard"><Dashboard /></RoleGate>} />
+          <Route path="/communications" element={<RoleGate navKey="communications"><Communications /></RoleGate>} />
           <Route path="/audit" element={<RoleGate navKey="audit-log"><Navigate to="/compliance" replace /></RoleGate>} />
           <Route path="/intake" element={<RoleGate navKey="intake"><IntakeCentre /></RoleGate>} />
           <Route path="/intake/participant" element={<RoleGate navKey="intake"><ParticipantIntake /></RoleGate>} />
