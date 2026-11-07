@@ -4,33 +4,25 @@ import BrandLogoLockup from '@/components/common/BrandLogoLockup';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import { useAuth } from '@/lib/AuthContext';
 import {
-  LogOut, ArrowRight, LayoutDashboard, ClipboardList,
+  LogOut, LayoutDashboard, ClipboardList,
   Users, ShieldCheck, ShieldAlert, FolderOpen, Megaphone,
   BarChart3, Cpu, Settings,
 } from 'lucide-react';
 
 const BRAND_GRADIENT =
-  'linear-gradient(120deg, #00C6FF 0%, #0072FF 40%, #FF2E9A 100%)';
+  'linear-gradient(120deg, #0072FF 0%, #A855F7 50%, #FF2E9A 100%)';
 
-// Pure Black Chassis Theme
 const DARK_NAVY_CHASSIS = '#000000';
 
-// Strict repeating LED light sequence: Purple, Pink, Blue, Purple, Pink, Blue...
-const LED_LIGHT_SEQUENCE = ['#A855F7', '#FF2E9A', '#0072FF'];
-const APP_ICON_GRADIENTS = [
-  'linear-gradient(135deg, #00C6FF 0%, #0072FF 55%, #5A00D6 100%)',
-  'linear-gradient(135deg, #0072FF 0%, #5A00D6 52%, #FF2E9A 100%)',
-  'linear-gradient(135deg, #5A00D6 0%, #A100FF 50%, #FF2E9A 100%)',
-  'linear-gradient(135deg, #0A2B6D 0%, #0072FF 55%, #00C6FF 100%)',
-  'linear-gradient(135deg, #FF2E9A 0%, #A100FF 52%, #0072FF 100%)',
-];
+// Strict repeating symbol & square indicator sequence: Blue, Purple, Pink, Blue, Purple, Pink...
+const SYMBOL_COLOR_SEQUENCE = ['#0072FF', '#A855F7', '#FF2E9A'];
 
 // Permanent 13-Group Architectural Map (Single Source of Truth, Zero Duplicates)
 export const PRIMARY_11_OS_NAV = [
   {
     id: 'dashboard-executive',
     label: '1. Communication',
-    sub: 'Merged Communication, Dashboard, Executive & AI',
+    sub: 'Merged Communication, Mailbox, Dashboard & To-Do',
     path: '/dashboard',
     icon: Megaphone,
     status: 'LIVE',
@@ -69,7 +61,7 @@ export const PRIMARY_11_OS_NAV = [
     children: [
       { label: 'Rostering', path: '/rostering', sub: 'Shifts, coverage & availability' },
       { label: 'Goals', path: '/goals', sub: 'Participant & staff goal tracking' },
-      { label: 'Tasks', path: '/tasks', sub: 'Shared to-do & sign-off board' },
+      { label: 'Tasks & To-Do', path: '/tasks', sub: 'Merged shared to-do & sign-off board' },
       { label: 'Meetings', path: '/meetings', sub: 'Agendas, minutes & action items' },
       { label: 'Programs & Events', path: '/programs', sub: 'Community programs & calendar' },
       { label: 'Frontline Rapid Hub', path: '/frontline-hub', sub: '60-second mobile field actions' },
@@ -94,15 +86,14 @@ export const PRIMARY_11_OS_NAV = [
   {
     id: 'compliance-quality-evidence',
     label: '5. Compliance & Evidence',
-    sub: 'Compliance, Business Analytics, Auditor, Vault & Evidence',
+    sub: 'Compliance, Analytics, Auditor, Vault & Company Safe',
     path: '/compliance',
     icon: ShieldCheck,
     status: 'VERIFIED',
     children: [
       { label: 'Compliance & Evidence', path: '/compliance', sub: 'Merged Compliance Centre, Business Analytics & 356 checks' },
       { label: 'Auditor Portal', path: '/auditor-portal', sub: 'Read-only external auditor view' },
-      { label: 'Document Vault', path: '/documents', sub: 'Controlled policies & renewals' },
-      { label: 'Company Safe', path: '/company-safe', sub: 'Executive vault & credentials' },
+      { label: 'Document Vault & Safe', path: '/documents', sub: 'Controlled policies, renewals & Company Safe' },
       { label: 'Remote Access & VPN', path: '/remote-access', sub: 'Zero-trust remote access without headaches' },
       { label: 'Quality & Improvement', path: '/quality', sub: 'Continuous improvement & CAPA' },
       { label: 'Feedback & Surveys', path: '/feedback', sub: 'Complaints, compliments & surveys' },
@@ -216,7 +207,7 @@ export const FOCUSED_5_PILLAR_NAV = [
   {
     id: 'pillar-today',
     label: '1. Communication',
-    sub: 'Merged Communication, Dashboard, Executive, Briefing & AI',
+    sub: 'Merged Communication, Mailbox, Dashboard & To-Do',
     path: '/dashboard',
     icon: Megaphone,
     status: 'LIVE',
@@ -225,7 +216,7 @@ export const FOCUSED_5_PILLAR_NAV = [
       { label: 'Suggestions Hub', path: '/suggestions', sub: 'Continuous improvement ideas' },
       { label: 'Daily Briefing', path: '/briefing', sub: 'Morning operational briefing' },
       { label: 'AI Assistant', path: '/assistant', sub: 'Compliance & HR intelligence copilot' },
-      { label: 'Tasks', path: '/tasks', sub: 'Shared to-do & sign-off board' },
+      { label: 'Tasks & To-Do', path: '/tasks', sub: 'Merged shared to-do & sign-off board' },
     ],
   },
   {
@@ -288,15 +279,14 @@ export const FOCUSED_5_PILLAR_NAV = [
   {
     id: 'pillar-audit',
     label: '5. Audit, Governance & Finance',
-    sub: 'Compliance & Evidence, Business Analytics, Vault, Safe, NDIS & Finance',
+    sub: 'Compliance, Analytics, Vault & Safe, NDIS & Finance',
     path: '/compliance',
     icon: ShieldCheck,
     status: 'VERIFIED',
     children: [
       { label: 'Compliance & Evidence', path: '/compliance', sub: 'Merged Compliance Centre, Business Analytics & 356 checks' },
       { label: 'Auditor Portal', path: '/auditor-portal', sub: 'Consent-verified auditor view' },
-      { label: 'Document Vault', path: '/documents', sub: 'Controlled policies & evidence' },
-      { label: 'Company Safe', path: '/company-safe', sub: 'Executive vault & credentials' },
+      { label: 'Document Vault & Safe', path: '/documents', sub: 'Controlled policies, evidence & Company Safe' },
       { label: 'Remote Access & VPN', path: '/remote-access', sub: 'Zero-trust remote access without headaches' },
       { label: 'Governance Layer', path: '/governance', sub: 'Delegations, lifecycle & board packs' },
       { label: 'Universal Register Hub', path: '/registers', sub: '45 connected master registers' },
@@ -327,7 +317,7 @@ export default function ObsidianSidebarRemote({
   const location = useLocation();
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
-  const [navMode, setNavMode] = useState(() => localStorage.getItem('chr-active-remote-mode') || 'os11'); // 'pillars5' | 'os11' | 'all'
+  const [navMode, setNavMode] = useState(() => localStorage.getItem('chr-active-remote-mode') || 'os11');
   const [selectedPillarId, setSelectedPillarId] = useState(
     () => localStorage.getItem('chr-active-remote-pillar') || 'dashboard-executive'
   );
@@ -406,7 +396,8 @@ export default function ObsidianSidebarRemote({
 
   const modules = sourceList.filter(
     (item) =>
-      !(item.key === 'staff-progress' && sourceList.some((entry) => entry.key === 'staff'))
+      !(item.key === 'staff-progress' && sourceList.some((entry) => entry.key === 'staff')) &&
+      item.key !== 'company-safe'
   );
 
   return (
@@ -418,10 +409,8 @@ export default function ObsidianSidebarRemote({
         className="flex h-full min-h-0 flex-col overflow-hidden shadow-2xl"
         style={{ background: DARK_NAVY_CHASSIS }}
       >
-        {/* Top App-Design Gradient Strip — aligned flush with main header */}
         <div className="h-1.5 w-full shrink-0" style={{ background: BRAND_GRADIENT }} />
 
-        {/* TOP BLACK SECTION OF REMOTE — aligned flush with the top black section above the dashboard */}
         <div className="flex h-[calc(210px+1cm)] shrink-0 flex-col items-center justify-between bg-black px-1.5 py-1.5 text-center">
           <Link
             to="/dashboard"
@@ -431,7 +420,7 @@ export default function ObsidianSidebarRemote({
             <BrandLogoLockup size="xs" theme="dark" showSlogan className="w-full" />
           </Link>
 
-          {/* Remote Control Mode Switcher (Aqua, Blue & Pink Buttons on Black) */}
+          {/* Remote Control Mode Switcher (Blue, Purple, Pink with White Writing) */}
           <div
             className="mt-1 grid w-full shrink-0 grid-cols-3 gap-1 rounded-lg p-[1.5px]"
             style={{ background: BRAND_GRADIENT }}
@@ -448,12 +437,12 @@ export default function ObsidianSidebarRemote({
                   ) || FOCUSED_5_PILLAR_NAV[0];
                 openMajorSectionInMainView(match, 'pillars5', false);
               }}
-              className={`min-h-[22px] rounded-[6px] py-0.5 text-[9px] font-extrabold transition-all ${
+              className={`min-h-[22px] rounded-[6px] py-0.5 text-[9px] font-extrabold text-white transition-all ${
                 navMode === 'pillars5' ? 'ring-2 ring-white' : 'opacity-90 hover:opacity-100'
               }`}
               style={{
-                backgroundColor: '#00C6FF',
-                color: '#000000',
+                backgroundColor: '#0072FF',
+                color: '#FFFFFF',
               }}
             >
               ◉ 5 Pillars
@@ -470,11 +459,11 @@ export default function ObsidianSidebarRemote({
                   ) || PRIMARY_11_OS_NAV[0];
                 openMajorSectionInMainView(match, 'os11', false);
               }}
-              className={`min-h-[22px] rounded-[6px] py-0.5 text-[9px] font-extrabold transition-all ${
+              className={`min-h-[22px] rounded-[6px] py-0.5 text-[9px] font-extrabold text-white transition-all ${
                 navMode === 'os11' ? 'ring-2 ring-white' : 'opacity-90 hover:opacity-100'
               }`}
               style={{
-                backgroundColor: '#0072FF',
+                backgroundColor: '#A855F7',
                 color: '#FFFFFF',
               }}
             >
@@ -491,7 +480,7 @@ export default function ObsidianSidebarRemote({
                   })
                 );
               }}
-              className={`min-h-[22px] rounded-[6px] py-0.5 text-[9px] font-extrabold transition-all ${
+              className={`min-h-[22px] rounded-[6px] py-0.5 text-[9px] font-extrabold text-white transition-all ${
                 navMode === 'all' ? 'ring-2 ring-white' : 'opacity-90 hover:opacity-100'
               }`}
               style={{
@@ -499,25 +488,24 @@ export default function ObsidianSidebarRemote({
                 color: '#FFFFFF',
               }}
             >
-              ◉ All 46
+              ◉ All 45
             </button>
           </div>
         </div>
 
-        {/* Continuous App-Design Gradient Divider Line aligned with main header */}
         <div className="h-[2px] w-full shrink-0" style={{ background: BRAND_GRADIENT }} />
 
-        {/* BOTTOM 3/4 BLACK REMOTE WITH AQUA SYMBOLS & PURPLE-PINK-BLUE REPEATING LED LIGHTS */}
+        {/* Navigation Router Buttons: White Writing, Blue-Purple-Pink Symbols, Square Indicator Button Without Text */}
         <nav
           aria-label="Page navigation"
           className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-1.5 space-y-1"
           style={{ background: DARK_NAVY_CHASSIS }}
         >
           {(() => {
-            let ledCounter = 0;
-            const nextLedColor = () => {
-              const color = LED_LIGHT_SEQUENCE[ledCounter % LED_LIGHT_SEQUENCE.length];
-              ledCounter += 1;
+            let colorCounter = 0;
+            const nextSymbolColor = () => {
+              const color = SYMBOL_COLOR_SEQUENCE[colorCounter % SYMBOL_COLOR_SEQUENCE.length];
+              colorCounter += 1;
               return color;
             };
 
@@ -525,7 +513,7 @@ export default function ObsidianSidebarRemote({
               const list = navMode === 'pillars5' ? FOCUSED_5_PILLAR_NAV : PRIMARY_11_OS_NAV;
               return list.map((pillar) => {
                 const Icon = pillar.icon;
-                const ledColor = nextLedColor();
+                const symColor = nextSymbolColor();
                 const pillarActive =
                   selectedPillarId === pillar.id ||
                   isActive(pillar.path) ||
@@ -533,80 +521,64 @@ export default function ObsidianSidebarRemote({
 
                 return (
                   <div key={pillar.id}>
-                    {/* Section Header Button (42px Uniform): Black, Aqua, Blue & Pink Theme */}
                     <button
                       type="button"
                       onClick={() => openMajorSectionInMainView(pillar)}
                       aria-pressed={selectedPillarId === pillar.id}
+                      title={pillar.label}
                       className={`group block w-full text-left rounded-lg p-[1.5px] transition-all duration-150 focus-visible:outline-none ${
                         pillarActive
-                          ? 'shadow-[0_0_14px_rgba(0,198,255,0.85)]'
-                          : 'shadow-[0_0_6px_rgba(0,114,255,0.35)] hover:shadow-[0_0_10px_rgba(255,46,154,0.65)]'
+                          ? 'shadow-[0_0_12px_rgba(0,114,255,0.85)]'
+                          : 'shadow-[0_0_5px_rgba(168,85,247,0.35)] hover:shadow-[0_0_10px_rgba(255,46,154,0.65)]'
                       }`}
                       style={{ background: BRAND_GRADIENT }}
                     >
                       <div
-                        className="flex min-h-[42px] flex-col justify-between overflow-hidden rounded-[7px]"
+                        className="flex h-[32px] items-center justify-between gap-1.5 overflow-hidden rounded-[7px] bg-black px-2"
                         style={{ background: '#000000' }}
                       >
-                        <div className="flex min-h-[22px] items-center justify-between gap-1.5 bg-black px-2 py-0.5">
-                          <div className="flex min-w-0 flex-1 items-center gap-1.5">
-                            <span
-                              className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[5px] bg-black"
-                              style={{
-                                border: '1.5px solid #00C6FF',
-                                boxShadow: '0 0 6px rgba(0,198,255,0.55)',
-                              }}
-                            >
-                              <Icon className="h-3 w-3 shrink-0" style={{ color: '#00C6FF' }} />
-                            </span>
-                            <span
-                              className="min-w-0 truncate text-[10.5px] font-black leading-tight tracking-tight"
-                              style={{ color: '#00C6FF' }}
-                            >
-                              {pillar.label}
-                            </span>
-                          </div>
-
+                        <div className="flex min-w-0 flex-1 items-center gap-1.5">
                           <span
-                            className="inline-flex shrink-0 items-center gap-1 rounded-full bg-black px-1.5 py-0.5 text-[7px] font-black uppercase tracking-wider"
+                            className="flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-[4px] bg-black"
                             style={{
-                              color: '#FFFFFF',
-                              border: `1px solid ${ledColor}`,
-                              boxShadow: `0 0 8px ${ledColor}66`,
+                              border: `1.5px solid ${symColor}`,
+                              boxShadow: `0 0 6px ${symColor}66`,
                             }}
                           >
-                            <span
-                              className="h-2 w-2 rounded-full"
-                              style={{
-                                backgroundColor: ledColor,
-                                boxShadow: `0 0 7px 2px ${ledColor}`,
-                              }}
-                            />
-                            {pillarActive ? 'OPEN' : pillar.status}
+                            <Icon className="h-3 w-3 shrink-0" style={{ color: symColor }} />
+                          </span>
+                          <span
+                            className="min-w-0 truncate text-[10.5px] font-black leading-tight tracking-tight text-white"
+                            style={{ color: '#FFFFFF' }}
+                          >
+                            {pillar.label}
                           </span>
                         </div>
 
-                        <div className="flex min-h-[19px] items-center justify-between gap-1.5 border-t border-[#0072FF]/35 bg-[#050B16] px-2 py-0.5">
+                        {/* Square Indicator Button (No Text) */}
+                        <span
+                          aria-hidden="true"
+                          className="flex h-4 w-4 shrink-0 items-center justify-center rounded-[3px] bg-black"
+                          style={{
+                            border: `1.5px solid ${symColor}`,
+                            boxShadow: `0 0 7px ${symColor}88`,
+                          }}
+                        >
                           <span
-                            className="truncate text-[8.5px] font-extrabold leading-tight"
-                            style={{ color: '#FF2E9A' }}
-                          >
-                            {pillar.sub}
-                          </span>
-                          <ArrowRight
-                            className="h-2.5 w-2.5 shrink-0 transition group-hover:translate-x-0.5"
-                            style={{ color: '#00C6FF' }}
+                            className="h-2 w-2 rounded-[2px]"
+                            style={{
+                              backgroundColor: symColor,
+                              boxShadow: `0 0 6px 1px ${symColor}`,
+                            }}
                           />
-                        </div>
+                        </span>
                       </div>
                     </button>
 
-                    {/* In-Between Module Buttons Underneath Each Section */}
                     {pillar.children?.length > 0 && (
-                      <div className="mt-1 space-y-1 pl-2 border-l-2 border-[#00C6FF]/70">
+                      <div className="mt-1 space-y-1 pl-2 border-l-2 border-[#A855F7]/70">
                         {pillar.children.map((child, cIdx) => {
-                          const childLedColor = nextLedColor();
+                          const childSymColor = nextSymbolColor();
                           const matchedMod = MODULE_DIRECTORY.find((m) => m.path === child.path);
                           const ChildIcon = child.icon || matchedMod?.icon || Icon;
                           const childActive =
@@ -617,65 +589,53 @@ export default function ObsidianSidebarRemote({
                               key={`${pillar.id}-${child.path}-${cIdx}`}
                               to={child.path}
                               onClick={scrollWorkspaceToTop}
+                              title={child.label}
                               className={`group block w-full text-left rounded-lg p-[1.5px] transition-all duration-150 focus-visible:outline-none ${
                                 childActive
-                                  ? 'shadow-[0_0_14px_rgba(0,198,255,0.85)]'
-                                  : 'shadow-[0_0_6px_rgba(0,114,255,0.35)] hover:shadow-[0_0_10px_rgba(255,46,154,0.65)]'
+                                  ? 'shadow-[0_0_12px_rgba(0,114,255,0.85)]'
+                                  : 'shadow-[0_0_5px_rgba(168,85,247,0.35)] hover:shadow-[0_0_10px_rgba(255,46,154,0.65)]'
                               }`}
                               style={{ background: BRAND_GRADIENT }}
                             >
                               <div
-                                className="flex min-h-[42px] flex-col justify-between overflow-hidden rounded-[7px]"
+                                className="flex h-[30px] items-center justify-between gap-1.5 overflow-hidden rounded-[7px] bg-black px-2"
                                 style={{ background: '#000000' }}
                               >
-                                <div className="flex min-h-[22px] items-center justify-between gap-1.5 bg-black px-2 py-0.5">
-                                  <div className="flex min-w-0 flex-1 items-center gap-1.5">
-                                    <span
-                                      className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[5px] bg-black"
-                                      style={{
-                                        border: '1.5px solid #00C6FF',
-                                        boxShadow: '0 0 6px rgba(0,198,255,0.55)',
-                                      }}
-                                    >
-                                      <ChildIcon className="h-3 w-3 shrink-0" style={{ color: '#00C6FF' }} />
-                                    </span>
-                                    <span
-                                      className="min-w-0 truncate text-[10.5px] font-black leading-tight tracking-tight"
-                                      style={{ color: '#FFFFFF' }}
-                                    >
-                                      {child.label}
-                                    </span>
-                                  </div>
+                                <div className="flex min-w-0 flex-1 items-center gap-1.5">
                                   <span
-                                    className="inline-flex shrink-0 items-center gap-1 rounded-full bg-black px-1.5 py-0.5 text-[7px] font-black uppercase tracking-wider"
+                                    className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[4px] bg-black"
                                     style={{
-                                      color: '#FFFFFF',
-                                      border: `1px solid ${childLedColor}`,
-                                      boxShadow: `0 0 8px ${childLedColor}66`,
+                                      border: `1.5px solid ${childSymColor}`,
+                                      boxShadow: `0 0 6px ${childSymColor}66`,
                                     }}
                                   >
-                                    <span
-                                      className="h-2 w-2 rounded-full"
-                                      style={{
-                                        backgroundColor: childLedColor,
-                                        boxShadow: `0 0 7px 2px ${childLedColor}`,
-                                      }}
-                                    />
-                                    {childActive ? 'ACTIVE' : 'OPEN'}
+                                    <ChildIcon className="h-3 w-3 shrink-0" style={{ color: childSymColor }} />
                                   </span>
-                                </div>
-                                <div className="flex min-h-[19px] items-center justify-between gap-1.5 border-t border-[#0072FF]/35 bg-[#050B16] px-2 py-0.5">
                                   <span
-                                    className="truncate text-[8.5px] font-extrabold leading-tight"
-                                    style={{ color: '#38BDF8' }}
+                                    className="min-w-0 truncate text-[10px] font-black leading-tight tracking-tight text-white"
+                                    style={{ color: '#FFFFFF' }}
                                   >
-                                    {child.sub || `Open ${child.label}`}
+                                    {child.label}
                                   </span>
-                                  <ArrowRight
-                                    className="h-2.5 w-2.5 shrink-0 transition group-hover:translate-x-0.5"
-                                    style={{ color: '#00C6FF' }}
-                                  />
                                 </div>
+
+                                {/* Square Indicator Button (No Text) */}
+                                <span
+                                  aria-hidden="true"
+                                  className="flex h-4 w-4 shrink-0 items-center justify-center rounded-[3px] bg-black"
+                                  style={{
+                                    border: `1.5px solid ${childSymColor}`,
+                                    boxShadow: `0 0 7px ${childSymColor}88`,
+                                  }}
+                                >
+                                  <span
+                                    className="h-2 w-2 rounded-[2px]"
+                                    style={{
+                                      backgroundColor: childSymColor,
+                                      boxShadow: `0 0 6px 1px ${childSymColor}`,
+                                    }}
+                                  />
+                                </span>
                               </div>
                             </Link>
                           );
@@ -689,77 +649,62 @@ export default function ObsidianSidebarRemote({
 
             return modules.map((item) => {
               const Icon = item.icon;
-              const modLedColor = nextLedColor();
+              const modSymColor = nextSymbolColor();
               const active = isActive(item.path);
               const label = navLabel(item);
-              const subtitle = item.blurb || item.group || 'Open workspace';
 
               return (
                 <Link
                   key={item.path}
                   to={item.path}
                   onClick={scrollWorkspaceToTop}
-                  title={`${label} — ${subtitle}`}
+                  title={label}
                   className={`group block w-full text-left rounded-lg p-[1.5px] transition-all duration-150 focus-visible:outline-none ${
                     active
-                      ? 'shadow-[0_0_14px_rgba(0,198,255,0.85)]'
-                      : 'shadow-[0_0_6px_rgba(0,114,255,0.35)] hover:shadow-[0_0_10px_rgba(255,46,154,0.65)]'
+                      ? 'shadow-[0_0_12px_rgba(0,114,255,0.85)]'
+                      : 'shadow-[0_0_5px_rgba(168,85,247,0.35)] hover:shadow-[0_0_10px_rgba(255,46,154,0.65)]'
                   }`}
                   style={{ background: BRAND_GRADIENT }}
                 >
                   <div
-                    className="flex min-h-[42px] flex-col justify-between overflow-hidden rounded-[7px]"
+                    className="flex h-[30px] items-center justify-between gap-1.5 overflow-hidden rounded-[7px] bg-black px-2"
                     style={{ background: '#000000' }}
                   >
-                    <div className="flex min-h-[22px] items-center justify-between gap-1.5 bg-black px-2 py-0.5">
-                      <div className="flex min-w-0 flex-1 items-center gap-1.5">
-                        <span
-                          className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[5px] bg-black"
-                          style={{
-                            border: '1.5px solid #00C6FF',
-                            boxShadow: '0 0 6px rgba(0,198,255,0.55)',
-                          }}
-                        >
-                          <Icon className="h-3 w-3 shrink-0" style={{ color: '#00C6FF' }} />
-                        </span>
-                        <span
-                          className="min-w-0 truncate text-[10.5px] font-black leading-tight tracking-tight"
-                          style={{ color: '#FFFFFF' }}
-                        >
-                          {label}
-                        </span>
-                      </div>
+                    <div className="flex min-w-0 flex-1 items-center gap-1.5">
                       <span
-                        className="inline-flex shrink-0 items-center gap-1 rounded-full bg-black px-1.5 py-0.5 text-[7px] font-black uppercase tracking-wider"
+                        className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[4px] bg-black"
                         style={{
-                          color: '#FFFFFF',
-                          border: `1px solid ${modLedColor}`,
-                          boxShadow: `0 0 8px ${modLedColor}66`,
+                          border: `1.5px solid ${modSymColor}`,
+                          boxShadow: `0 0 6px ${modSymColor}66`,
                         }}
                       >
-                        <span
-                          className="h-2 w-2 rounded-full"
-                          style={{
-                            backgroundColor: modLedColor,
-                            boxShadow: `0 0 7px 2px ${modLedColor}`,
-                          }}
-                        />
-                        {active ? 'ACTIVE' : 'OPEN'}
+                        <Icon className="h-3 w-3 shrink-0" style={{ color: modSymColor }} />
+                      </span>
+                      <span
+                        className="min-w-0 truncate text-[10px] font-black leading-tight tracking-tight text-white"
+                        style={{ color: '#FFFFFF' }}
+                      >
+                        {label}
                       </span>
                     </div>
 
-                    <div className="flex min-h-[19px] items-center justify-between gap-1.5 border-t border-[#0072FF]/35 bg-[#050B16] px-2 py-0.5">
+                    {/* Square Indicator Button (No Text) */}
+                    <span
+                      aria-hidden="true"
+                      className="flex h-4 w-4 shrink-0 items-center justify-center rounded-[3px] bg-black"
+                      style={{
+                        border: `1.5px solid ${modSymColor}`,
+                        boxShadow: `0 0 7px ${modSymColor}88`,
+                      }}
+                    >
                       <span
-                        className="min-w-0 flex-1 truncate text-[8.5px] font-extrabold leading-tight"
-                        style={{ color: '#38BDF8' }}
-                      >
-                        {subtitle}
-                      </span>
-                      <ArrowRight
-                        className="h-2.5 w-2.5 shrink-0 transition group-hover:translate-x-0.5"
-                        style={{ color: '#00C6FF' }}
+                        className="h-2 w-2 rounded-[2px]"
+                        style={{
+                          backgroundColor: modSymColor,
+                          boxShadow: `0 0 6px 1px ${modSymColor}`,
+                        }}
                       />
-                    </div>
+                    </span>
                   </div>
                 </Link>
               );
@@ -767,13 +712,12 @@ export default function ObsidianSidebarRemote({
           })()}
         </nav>
 
-        {/* Minimal Sign-Out Action (Black, Aqua & Pink) */}
         {onLogout && (
           <div className="shrink-0 p-1" style={{ background: DARK_NAVY_CHASSIS }}>
             <button
               type="button"
               onClick={onLogout}
-              className="flex min-h-[22px] w-full items-center justify-center gap-1 rounded-md border border-[#00C6FF] bg-black px-2 py-0.5 text-[8.5px] font-extrabold text-[#00C6FF] shadow-2xs transition hover:border-[#FF2E9A] hover:text-[#FF2E9A]"
+              className="flex min-h-[22px] w-full items-center justify-center gap-1 rounded-md border border-[#0072FF] bg-black px-2 py-0.5 text-[8.5px] font-extrabold text-white shadow-2xs transition hover:border-[#FF2E9A]"
             >
               <LogOut className="h-2.5 w-2.5 text-[#FF2E9A]" />
               <span>Sign out</span>

@@ -13,88 +13,49 @@ import UniversalDataStorageRetentionExportSuite from '@/components/compliance/Un
 import { SQUISHED_GRADIENT } from '@/components/safe/ExecutiveWallScene';
 
 const SAFE_MODULES = [
-  {
-    key: 'identity',
-    icon: Sparkles,
-    color: '#2563eb',
-    title: 'Business Identity',
-    shared: ['Logo, Name & Slogan', 'ComplianceHR Infinity', 'Complete Control. Greater Confidence.'],
-  },
-  {
-    key: 'evidence',
-    icon: ShieldCheck,
-    color: '#7c3aed',
-    title: 'Live Security Evidence',
-    shared: ['Status-Trail Entries', 'Platform Audit-Log', 'Controlled User Accounts'],
-  },
-  {
-    key: 'badges',
-    icon: IdCard,
-    color: '#0d9488',
-    title: 'Staff Badge Creator',
-    shared: ['Official Photo & Logo Badges', 'Save to Profile & Safe', 'Download or Email PDF'],
-  },
-  {
-    key: 'registrations',
-    icon: Award,
-    color: '#db2777',
-    title: 'Registrations & Insurances',
-    shared: ['NDIS Registration Certificate', 'Public Liability Insurance', 'Download & Upload Templates'],
-  },
-  {
-    key: 'documents',
-    icon: FolderLock,
-    color: '#ea580c',
-    title: 'Compliance Documents',
-    shared: ['18 Statutory Safe Subjects', 'Certificates & Registers', 'Filed to Document Vault'],
-  },
-  {
-    key: 'posture',
-    icon: FileCheck2,
-    color: '#16a34a',
-    title: 'Security & Trust Posture',
-    shared: ['Encryption & Role Access', 'Immutable Audit Trail', 'OAIC Breach Workflow'],
-  },
+  { key: 'identity', icon: Sparkles, color: '#0072FF', title: 'Business Identity' },
+  { key: 'evidence', icon: ShieldCheck, color: '#A855F7', title: 'Live Security Evidence' },
+  { key: 'badges', icon: IdCard, color: '#FF2E9A', title: 'Staff Badge Creator' },
+  { key: 'registrations', icon: Award, color: '#0072FF', title: 'Registrations & Insurances' },
+  { key: 'documents', icon: FolderLock, color: '#A855F7', title: 'Compliance Documents' },
+  { key: 'posture', icon: FileCheck2, color: '#FF2E9A', title: 'Security & Trust Posture' },
 ];
 
-export default function CompanySafe() {
+export default function CompanySafe({ embedded = false }) {
   const [openArea, setOpenArea] = useState({
     identity: true,
-    evidence: true,
-    badges: true,
+    evidence: false,
+    badges: false,
     registrations: true,
-    documents: true,
-    posture: true,
+    documents: false,
+    posture: false,
   });
   const toggle = (k) => setOpenArea((prev) => ({ ...prev, [k]: !prev[k] }));
 
   return (
-    <div className="space-y-4">
-      <ModuleShell
-        icon={Lock}
-        moduleKey="company-safe"
-        title="Company Safe"
-        subtitle="Business identity, business documents and important business information, secured in one safe."
-      />
+    <div className="space-y-3 bg-transparent text-white">
+      {!embedded && (
+        <ModuleShell
+          icon={Lock}
+          moduleKey="company-safe"
+          title="Company Safe (Inside Document Vault)"
+          subtitle="Business identity, credentials, registrations, and executive safe documents."
+        />
+      )}
 
-      {/* Top-Left Picture Frame (Logo, Name, Slogan + Front-Left Chair Back) & Twice-Size Top-Right Colour Area */}
-      <SoftwareAndSafeBanner />
+      <SoftwareAndSafeBanner compact={embedded} />
 
-      {/* Very Small Modular Icon Tiles for Core Company Safe Areas — Sharing All Under Name */}
       <div className="space-y-2">
         <div
-          className="comm-panel-bar flex items-center justify-between rounded-xl px-3.5 py-2 text-white shadow-sm"
+          className="flex items-center justify-between rounded-xl px-3.5 py-2 text-white shadow-sm"
           style={{ background: SQUISHED_GRADIENT }}
         >
-          <span className="text-xs font-extrabold">
-            Company Safe Modular Areas (Small Icon Tiles — Shared Under Name)
-          </span>
-          <span className="text-[10px] font-extrabold uppercase tracking-wider text-white/95">
-            Click any tile to open below
+          <span className="text-xs font-extrabold text-white">
+            Company Safe Modular Areas (Click any tile to toggle)
           </span>
         </div>
 
-        <div className="grid grid-cols-3 gap-1.5 sm:grid-cols-6">
+        <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 lg:grid-cols-6">
           {SAFE_MODULES.map((m) => {
             const Icon = m.icon;
             const isOpen = !!openArea[m.key];
@@ -103,20 +64,19 @@ export default function CompanySafe() {
                 key={m.key}
                 type="button"
                 onClick={() => toggle(m.key)}
-                className="group relative flex min-w-0 items-center gap-1.5 overflow-hidden rounded-lg border px-2 py-1.5 text-left transition-all hover:-translate-y-0.5 hover:shadow-sm"
+                className="group relative flex min-w-0 items-center gap-1.5 overflow-hidden rounded-lg border px-2.5 py-1.5 text-left text-white transition-all"
                 style={{
-                  borderColor: isOpen ? m.color : `${m.color}55`,
-                  background: `linear-gradient(165deg, ${m.color}24 0%, ${m.color}0d 48%, #ffffff 90%)`,
+                  borderColor: isOpen ? m.color : 'rgba(255,255,255,0.2)',
+                  backgroundColor: '#081018',
                 }}
               >
-                <span className="absolute inset-x-0 top-0 h-0.5" style={{ background: m.color }} />
                 <span
-                  className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md text-white shadow-sm"
+                  className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md text-white"
                   style={{ background: m.color }}
                 >
-                  <Icon className="h-3 w-3" />
+                  <Icon className="h-3 w-3 text-white" />
                 </span>
-                <span className="min-w-0 flex-1 truncate text-[10px] font-extrabold text-foreground">
+                <span className="min-w-0 flex-1 truncate text-[10px] font-extrabold text-white">
                   {m.title}
                 </span>
               </button>
@@ -139,14 +99,9 @@ export default function CompanySafe() {
         {openArea.posture && <SecurityPosture defaultOpen />}
       </div>
 
-      {/* Universal Data Storage, Retention, Traceability & Export Standard */}
-      <UniversalDataStorageRetentionExportSuite />
-
-      {/* Protected Master Copy, Working Copy, Version / Review / Approval / Change History & 11-Section Controlled Forms */}
-      <EnterpriseStandardQualityGateSuite />
-
-      {/* All 10 Business Safe Subjects as Very Small Modular Icon Tiles with Shared Details Under Name */}
       <BusinessDetailsCard />
+      {!embedded && <UniversalDataStorageRetentionExportSuite />}
+      {!embedded && <EnterpriseStandardQualityGateSuite />}
     </div>
   );
 }

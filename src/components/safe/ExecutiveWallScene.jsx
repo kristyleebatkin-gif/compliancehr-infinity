@@ -39,7 +39,7 @@ function WallHangingPictureFrame({ title, children, className = '', frameAccent 
             <span className="text-center">{title}</span>
           </div>
         )}
-        <div className="flex-1 w-full overflow-hidden rounded-[9px] bg-white p-2.5">
+        <div className="flex-1 w-full overflow-hidden rounded-[9px] bg-[#081018] p-2.5 text-white">
           {children}
         </div>
       </div>
@@ -275,7 +275,7 @@ function TodaysRosterPictureCard() {
 /**
  * 3. Communication Tab & 4. Mailbox Tab (Modulars Grid Removed)
  */
-function CommunicationAndMailboxTabs() {
+export function CommunicationAndMailboxTabs() {
   const [hasAlertMail, setHasAlertMail] = useState(false);
   const [mailAlertCount, setMailAlertCount] = useState(0);
   const [recentComms, setRecentComms] = useState([]);
@@ -306,8 +306,8 @@ function CommunicationAndMailboxTabs() {
   }, []);
 
   return (
-    <WallHangingPictureFrame title="Messages & shared actions">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 bg-white items-stretch">
+    <WallHangingPictureFrame title="Communication & Mailbox">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 bg-[#081018] text-white items-stretch">
         {/* Left Column: Mini Comms Placed Directly Above the Red Little Box (Letterbox) */}
         <div className="flex flex-col justify-between gap-1.5">
           {/* Top Above Red Little Box: Mini Comms — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
@@ -315,7 +315,7 @@ function CommunicationAndMailboxTabs() {
             className="rounded-xl p-[2.5px] shadow-2xs"
             style={{ background: TOP_BORDER_GRADIENT }}
           >
-            <div className="flex flex-col items-center justify-between gap-1 rounded-[9px] bg-white p-1.5 text-center">
+            <div className="flex flex-col items-center justify-between gap-1 rounded-[9px] bg-[#162235] p-1.5 text-center text-white">
               <div
                 className="gradient-brand flex w-full items-center justify-between gap-1 rounded-lg px-2 py-0.5 text-white"
                 style={{ background: getHeaderView(0), color: '#FFFFFF' }}
@@ -333,23 +333,23 @@ function CommunicationAndMailboxTabs() {
                 </span>
               </div>
 
-              <div className="w-full space-y-0.5 rounded-lg bg-white text-left">
+              <div className="w-full space-y-0.5 rounded-lg bg-[#081018] text-left">
                 {recentComms.length > 0 ? recentComms.map((msg) => (
                   <div
                     key={msg.id}
-                    className="flex items-center justify-between gap-1 rounded border border-[#0A2B6D]/20 bg-white px-1.5 py-0.5 text-[7.5px] font-extrabold text-[#0A2B6D]"
+                    className="flex items-center justify-between gap-1 rounded border border-white/15 bg-[#081018] px-1.5 py-0.5 text-[7.5px] font-extrabold text-white"
                   >
-                    <span className="shrink-0 rounded-full bg-[#0A2B6D] px-1.5 py-0 text-[6.5px] text-white">
+                    <span className="shrink-0 rounded-full bg-[#0072FF] px-1.5 py-0 text-[6.5px] text-white">
                       {msg.entry_kind || 'Comms'}
                     </span>
-                    <span className="flex-1 truncate text-right text-[#0A2B6D]">{msg.subject || msg.body || 'New communication'}</span>
+                    <span className="flex-1 truncate text-right text-white">{msg.subject || msg.body || 'New communication'}</span>
                   </div>
                 )) : (
-                  <div className="flex items-center justify-between gap-1 rounded border border-[#0A2B6D]/20 bg-white px-1.5 py-1 text-[7.5px] font-extrabold text-[#0A2B6D]">
-                    <span className="shrink-0 rounded-full bg-[#0A2B6D] px-1.5 py-0 text-[6.5px] text-white">
+                  <div className="flex items-center justify-between gap-1 rounded border border-white/15 bg-[#081018] px-1.5 py-1 text-[7.5px] font-extrabold text-white">
+                    <span className="shrink-0 rounded-full bg-[#0072FF] px-1.5 py-0 text-[6.5px] text-white">
                       Live Inbox
                     </span>
-                    <span className="flex-1 text-right text-[#0A2B6D]">No unread communications · 8:30 AM daily summary active</span>
+                    <span className="flex-1 text-right text-white">No unread communications · 8:30 AM daily summary active</span>
                   </div>
                 )}
               </div>
@@ -399,8 +399,8 @@ function CommunicationAndMailboxTabs() {
                 : undefined,
             }}
           >
-            <div className="flex flex-col items-center justify-between gap-1 rounded-[8px] bg-white p-1.5 text-center">
-              <div className="flex w-full items-center justify-between gap-1 rounded-md border border-[#0A2B6D]/20 bg-white px-2 py-0.5 text-[8.5px] font-extrabold text-[#0A2B6D]">
+            <div className="flex flex-col items-center justify-between gap-1 rounded-[8px] bg-[#162235] p-1.5 text-center text-white">
+              <div className="flex w-full items-center justify-between gap-1 rounded-md border border-white/15 bg-[#081018] px-2 py-0.5 text-[8.5px] font-extrabold text-white">
                 <div className="flex items-center gap-1">
                   <span
                     className="h-2 w-2 shrink-0 rounded-full border border-white"
@@ -424,7 +424,7 @@ function CommunicationAndMailboxTabs() {
                 </button>
               </div>
 
-              <div className="flex w-full flex-col items-center justify-center rounded-md border border-[#0A2B6D]/20 bg-white px-1.5 py-0.5 text-center">
+              <div className="flex w-full flex-col items-center justify-center rounded-md border border-white/15 bg-[#081018] px-1.5 py-0.5 text-center">
                 <svg
                   viewBox="0 0 220 68"
                   className="h-10 w-full max-w-[165px]"
@@ -726,13 +726,13 @@ export default function ExecutiveWallScene({
   };
 
   return (
-    <div className="relative overflow-hidden rounded-xl bg-white p-1.5 sm:p-2 space-y-2">
+    <div className="relative overflow-hidden rounded-xl bg-transparent p-1.5 sm:p-2 space-y-2">
       {/* Top Section: Logo on One Side on Left · Dual Executive Header & Sign, Office, Both & Roster Tabs on Right Section */}
       <div
         className="w-full rounded-xl p-[2.5px] shadow-2xs"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
-        <div className="grid grid-cols-1 sm:grid-cols-12 gap-2 items-stretch rounded-[9px] bg-white p-2">
+        <div className="grid grid-cols-1 sm:grid-cols-12 gap-2 items-stretch rounded-[9px] bg-[#081018] p-2">
           {/* Left Side: Fixed Logo & Brand Slogan */}
           <div className="sm:col-span-4 lg:col-span-3 flex flex-col">
             <ComplianceHrPhotoFrame logoUrl={frameSrc} />
@@ -825,7 +825,7 @@ export default function ExecutiveWallScene({
         className="w-full rounded-xl p-[2.5px] shadow-2xs"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
-        <div className="rounded-[9px] bg-white p-2 space-y-2">
+        <div className="rounded-[9px] bg-[#081018] p-2 space-y-2">
           {/* Top Row: (2) Today's Overview & Flat Screen Live Roster + (3/4) Mini Comms Above Red Letterbox & Mini Communication Centre */}
           <div className="grid grid-cols-1 md:grid-cols-12 gap-2 items-stretch">
             <div className="md:col-span-5 flex flex-col">

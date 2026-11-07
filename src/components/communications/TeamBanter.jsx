@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
 import { Loader2, MessagesSquare, Send } from 'lucide-react';
 
 const KIND = 'Team Banter';
@@ -22,7 +20,7 @@ export default function TeamBanter() {
       try {
         const [user, page] = await Promise.all([
           base44.auth.me().catch(() => null),
-          base44.entities.CommunicationEntry.filter({ entry_kind: KIND }, { sort: '-created_date', limit: 50 }),
+          base44.entities.CommunicationEntry.filter({ entry_kind: KIND }, { sort: '-created_date', limit: 25 }),
         ]);
         if (!alive) return;
         setMe(user);
@@ -35,15 +33,11 @@ export default function TeamBanter() {
       if (event.data?.entry_kind !== KIND) return;
       setItems((prev) => {
         if (prev.some((e) => e.id === event.data.id)) return prev;
-        return [event.data, ...prev].sort((a, b) => (a.created_date < b.created_date ? 1 : -1)).slice(0, 50);
+        return [event.data, ...prev].sort((a, b) => (a.created_date < b.created_date ? 1 : -1)).slice(0, 25);
       });
     });
     return () => { alive = false; unsubscribe(); };
   }, []);
-
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
-  }, [items]);
 
   const post = async () => {
     const body = text.trim();
@@ -71,49 +65,61 @@ export default function TeamBanter() {
   };
 
   return (
-    <div className="flex flex-col rounded-2xl border border-border/60 bg-card p-3 shadow-panel">
-      <div className="mb-2 flex items-center gap-2 text-sm font-bold">
-        <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-pink-500 to-rose-500 text-white shadow-md">
-          <MessagesSquare className="h-3.5 w-3.5" />
-        </span>
-        Team Banter
-        <span className="rounded-full bg-pink-100 px-2 py-0.5 text-[11px] font-semibold text-pink-800 dark:bg-pink-950/40 dark:text-pink-300">team chat</span>
-      </div>
-
-      {loading ? (
-        <div className="flex justify-center py-4"><Loader2 className="h-5 w-5 animate-spin text-muted-foreground" /></div>
-      ) : items.length === 0 ? (
-        <p className="py-3 text-center text-xs text-muted-foreground">No banter yet - start a friendly conversation below. Every message is saved to the communication diary.</p>
-      ) : (
-        <div className="mb-1.5 max-h-[4rem] space-y-1 overflow-y-auto pr-1">
-          {[...items].reverse().map((e) => {
-            const mine = me?.email && String(e.sender_email || '').toLowerCase() === String(me.email).toLowerCase();
-            return (
-              <div key={e.id} className={`max-w-[85%] rounded-2xl px-3 py-2 text-xs shadow-sm ${mine ? 'ml-auto rounded-br-md bg-gradient-to-br from-brand to-fuchsia-500 text-white' : 'rounded-bl-md bg-muted/70 text-foreground'}`}>
-                <div className={`mb-0.5 text-[10px] font-bold ${mine ? 'text-white/80' : 'text-foreground/50'}`}>{e.sender_name || 'Team member'}</div>
-                <div className="whitespace-pre-wrap break-words leading-snug">{e.body}</div>
-                <div className={`mt-1 text-[9px] ${mine ? 'text-white/70' : 'text-foreground/40'}`}>{[e.entry_date, e.entry_time].filter(Boolean).join(' · ')}</div>
-              </div>
-            );
-          })}
-          <div ref={bottomRef} />
+    <section className="flex flex-col justify-between overflow-hidden rounded-xl border border-[#0072FF]/60 bg-[#081018] p-2.5 text-white shadow-md">
+      <div className="flex items-center justify-between gap-2 border-b border-white/10 pb-1.5">
+        <div className="flex items-center gap-1.5">
+          <span className="flex h-5 w-5 items-center justify-center rounded bg-[#0072FF] text-white">
+            <MessagesSquare className="h-3 w-3 text-white" />
+          </span>
+          <h3 className="text-xs font-extrabold text-white">Team Banter</h3>
         </div>
-      )}
-
-      <div className="mt-auto flex items-end gap-2 border-t border-border/60 pt-2">
-        <Textarea
-          rows={1}
-          placeholder="Say something to the team…"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); post(); } }}
-          className="resize-none"
-        />
-        <Button onClick={post} disabled={posting || !text.trim()} className="shrink-0" aria-label="Post message">
-          {posting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
-          Post
-        </Button>
+        <span className="rounded bg-[#162235] border border-white/15 px-1.5 py-0.5 text-[9px] font-bold text-white">
+          Team Chat
+        </span>
       </div>
-    </div>
+
+      <div className="mt-2 space-y-1.5">
+        {loading ? (
+          <div className="flex justify-center py-2"><Loader2 className="h-3.5 w-3.5 animate-spin text-[#0072FF]" /></div>
+        ) : items.length === 0 ? (
+          <p className="rounded-lg border border-white/10 bg-[#162235] px-2.5 py-1.5 text-[11px] text-slate-300">
+            No banter yet — post a friendly message to the team below.
+          </p>
+        ) : (
+          <div className="max-h-24 space-y-1 overflow-y-auto pr-1">
+            {[...items].reverse().map((e) => (
+              <div
+                key={e.id}
+                className="rounded-lg border border-white/15 bg-[#162235] px-2 py-1 text-[11px] text-white"
+              >
+                <span className="font-extrabold text-[#39E6FF]">{e.sender_name || 'Team'}: </span>
+                <span className="text-white">{e.body}</span>
+              </div>
+            ))}
+            <div ref={bottomRef} />
+          </div>
+        )}
+
+        <div className="flex items-center gap-1.5 pt-1">
+          <input
+            type="text"
+            placeholder="Say something to the team…"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); post(); } }}
+            className="h-6 min-w-0 flex-1 rounded border border-white/20 bg-[#162235] px-2 text-[11px] text-white placeholder:text-slate-400 focus:outline-none"
+          />
+          <button
+            type="button"
+            onClick={post}
+            disabled={posting || !text.trim()}
+            className="inline-flex h-6 shrink-0 items-center gap-1 rounded bg-[#FF2E9A] px-2.5 text-[10px] font-extrabold text-white disabled:opacity-50"
+          >
+            {posting ? <Loader2 className="h-3 w-3 animate-spin" /> : <Send className="h-3 w-3" />}
+            Post
+          </button>
+        </div>
+      </div>
+    </section>
   );
 }

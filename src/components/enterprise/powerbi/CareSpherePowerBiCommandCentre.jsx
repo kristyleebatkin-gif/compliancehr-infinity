@@ -132,157 +132,87 @@ export default function CareSpherePowerBiCommandCentre() {
             : 'flex flex-col'
         }
       >
-      {/* Top Power BI Widescreen Header Bar (Wireframe Header) */}
+      {/* Top Power BI Widescreen Header Bar: Concise 2-Line Text + Document Types on Bottom Line */}
       <div
-        className="flex flex-wrap items-center justify-between gap-3 border-b px-4 py-3"
+        className="space-y-2 border-b px-4 py-2.5"
         style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.28)' }}
       >
-        <div>
-          <div className="flex flex-wrap items-center gap-2">
-            <span
-              className="rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider"
-              style={{ backgroundColor: 'rgba(57,230,255,0.16)', color: '#39E6FF', border: '1px solid #39E6FF' }}
-            >
-              Power BI 16:9 Widescreen (1920×1080) · Midnight Command
-            </span>
-            <span className="text-[12px] text-slate-300">
-              Page {currentPageMeta.pageNum} of 12 · {currentPageMeta.shortLabel}
-            </span>
-          </div>
-          <h1 className="mt-0.5 text-[24px] font-semibold leading-tight text-white">
-            CareSphere Executive Command Centre
-          </h1>
-        </div>
-
-        {/* Reporting Period | Last Refresh | RAG Status + Export Controls */}
-        <div className="flex flex-wrap items-center gap-2 text-[12px]">
-          <div className="rounded-lg border px-2.5 py-1" style={{ backgroundColor: '#1E293B', borderColor: 'rgba(255,255,255,0.12)' }}>
-            <span className="text-slate-400">Reporting Period: </span>
-            <select
-              value={reportingPeriod}
-              onChange={(e) => setReportingPeriod(e.target.value)}
-              className="bg-transparent font-bold text-white focus:outline-none"
-            >
-              <option value="FY27 Q2 (Current)" className="bg-slate-900">FY27 Q2 (Current)</option>
-              <option value="FY27 Q1" className="bg-slate-900">FY27 Q1</option>
-              <option value="FY26 Full Year" className="bg-slate-900">FY26 Full Year</option>
-            </select>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h1 className="text-base sm:text-lg font-extrabold leading-tight text-white">
+              CareSphere Executive Command Centre · Page {currentPageMeta.pageNum} of 12 ({currentPageMeta.shortLabel})
+            </h1>
+            <p className="text-xs font-semibold text-slate-300 line-clamp-1">
+              Power BI 16:9 Widescreen · {reportingPeriod} · Last Refresh: {lastRefresh} · RAG: GREEN (Ω∞ READY)
+            </p>
           </div>
 
-          <button
-            type="button"
-            onClick={handleRefresh}
-            className="inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1 font-semibold text-slate-200 hover:border-[#39E6FF]"
-            style={{ backgroundColor: '#1E293B', borderColor: 'rgba(255,255,255,0.12)' }}
-          >
-            <RefreshCw className="h-3.5 w-3.5" style={{ color: '#39E6FF' }} />
-            <span>Last Refresh: {lastRefresh}</span>
-          </button>
-
-          <span
-            className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1 font-bold"
-            style={{ backgroundColor: 'rgba(34,197,94,0.18)', color: '#22C55E', border: '1px solid #22C55E' }}
-          >
-            <span className="h-2 w-2 rounded-full" style={{ backgroundColor: '#22C55E' }} />
-            RAG Status: GREEN (Ω∞ READY)
-          </span>
-
-          {/* 16:9 Presentation Mode & Page Step Controls */}
-          <div className="flex items-center gap-1">
+          <div className="flex flex-wrap items-center gap-1.5 text-[11px]">
             <button
               type="button"
-              onClick={goPrevPage}
-              className="inline-flex items-center justify-center rounded-lg border p-1.5 text-white transition hover:border-[#39E6FF]"
-              style={{ backgroundColor: '#1E293B', borderColor: 'rgba(57,230,255,0.3)' }}
-              title="Previous Page (←)"
-              aria-label="Previous Power BI Page"
+              onClick={handleRefresh}
+              className="inline-flex items-center gap-1 rounded-lg border px-2 py-1 font-semibold text-white"
+              style={{ backgroundColor: '#1E293B', borderColor: 'rgba(255,255,255,0.15)' }}
             >
-              <ChevronLeft className="h-3.5 w-3.5" style={{ color: '#39E6FF' }} />
-            </button>
-            <button
-              type="button"
-              onClick={goNextPage}
-              className="inline-flex items-center justify-center rounded-lg border p-1.5 text-white transition hover:border-[#39E6FF]"
-              style={{ backgroundColor: '#1E293B', borderColor: 'rgba(57,230,255,0.3)' }}
-              title="Next Page (→)"
-              aria-label="Next Power BI Page"
-            >
-              <ChevronRight className="h-3.5 w-3.5" style={{ color: '#39E6FF' }} />
+              <RefreshCw className="h-3 w-3 text-[#39E6FF]" />
+              <span>Refresh</span>
             </button>
             <button
               type="button"
               onClick={() => setShowSpeakerNotes((prev) => !prev)}
-              aria-pressed={showSpeakerNotes}
-              className="inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-[11px] font-bold transition"
-              style={{
-                backgroundColor: showSpeakerNotes ? 'rgba(57,230,255,0.18)' : '#1E293B',
-                borderColor: showSpeakerNotes ? '#39E6FF' : 'rgba(255,255,255,0.16)',
-                color: showSpeakerNotes ? '#39E6FF' : '#FFFFFF',
-              }}
-              title="Toggle Board Meeting Speaker Notes Overlay (Shortcut: N)"
+              className="inline-flex items-center gap-1 rounded-lg border px-2 py-1 font-bold text-white"
+              style={{ backgroundColor: '#1E293B', borderColor: '#39E6FF' }}
             >
-              <Mic className="h-3.5 w-3.5" />
-              <span>Speaker Notes {showSpeakerNotes ? 'ON' : 'OFF'}</span>
+              <Mic className="h-3 w-3" />
+              <span>Notes {showSpeakerNotes ? 'ON' : 'OFF'}</span>
             </button>
             <button
               type="button"
               onClick={togglePresentationMode}
-              aria-pressed={isPresentationMode}
-              className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1 text-[11px] font-bold transition hover:opacity-95"
-              style={{
-                backgroundColor: isPresentationMode ? '#EF4444' : '#39E6FF',
-                color: isPresentationMode ? '#FFFFFF' : '#081018',
-              }}
-              title="Toggle 16:9 Full-Screen Presentation Mode (Esc to exit)"
+              className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1 font-bold text-white"
+              style={{ backgroundColor: isPresentationMode ? '#EF4444' : '#0072FF' }}
             >
-              {isPresentationMode ? (
-                <>
-                  <Minimize2 className="h-3.5 w-3.5" />
-                  <span>Exit 16:9 Presentation</span>
-                </>
-              ) : (
-                <>
-                  <Maximize2 className="h-3.5 w-3.5" />
-                  <span>16:9 Presentation Mode</span>
-                </>
-              )}
+              {isPresentationMode ? <Minimize2 className="h-3 w-3" /> : <Maximize2 className="h-3 w-3" />}
+              <span>{isPresentationMode ? 'Exit 16:9' : '16:9 Mode'}</span>
             </button>
           </div>
+        </div>
 
-          <div className="flex items-center gap-1">
+        {/* Bottom Line in Header Section: All Document Types (PPTX, DOCX, PDF, PBIDS) */}
+        <div className="flex flex-wrap items-center justify-between gap-2 border-t border-slate-700/70 pt-1.5">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-white">
+            Document &amp; Model Exports:
+          </span>
+          <div className="flex flex-wrap items-center gap-1.5">
             <button
               type="button"
               onClick={() => exportBoardPackPowerPoint({ orgHealthIndex: 87, omegaReadinessIndex: 82, lqiScore: 92 })}
-              className="rounded px-2 py-1 text-[11px] font-bold"
-              style={{ backgroundColor: '#39E6FF', color: '#081018' }}
-              title="Export PowerPoint"
+              className="rounded px-2.5 py-0.5 text-[11px] font-bold text-white"
+              style={{ backgroundColor: '#0072FF' }}
             >
               PPTX
             </button>
             <button
               type="button"
               onClick={() => exportBoardPackWord({ orgHealthIndex: 87, omegaReadinessIndex: 82, lqiScore: 92 })}
-              className="rounded px-2 py-1 text-[11px] font-bold"
-              style={{ backgroundColor: '#22C55E', color: '#081018' }}
-              title="Export Word"
+              className="rounded px-2.5 py-0.5 text-[11px] font-bold text-white"
+              style={{ backgroundColor: '#A855F7' }}
             >
               DOCX
             </button>
             <button
               type="button"
               onClick={() => exportBoardPackPdf({ orgHealthIndex: 87, omegaReadinessIndex: 82, lqiScore: 92 })}
-              className="rounded px-2 py-1 text-[11px] font-bold"
-              style={{ backgroundColor: '#FBBF24', color: '#081018' }}
-              title="Export PDF"
+              className="rounded px-2.5 py-0.5 text-[11px] font-bold text-white"
+              style={{ backgroundColor: '#FF2E9A' }}
             >
               PDF
             </button>
             <button
               type="button"
               onClick={() => exportPowerBiSemanticModel({ orgHealthIndex: 87, omegaReadinessIndex: 82, lqiScore: 92 })}
-              className="rounded border px-2 py-1 text-[11px] font-bold text-white"
+              className="rounded border px-2.5 py-0.5 text-[11px] font-bold text-white"
               style={{ backgroundColor: '#1E293B', borderColor: '#39E6FF' }}
-              title="Export Power BI Semantic Model"
             >
               PBIDS
             </button>
@@ -532,41 +462,14 @@ export default function CareSpherePowerBiCommandCentre() {
         </div>
       </div>
 
-      {/* 10 Mandatory Output Quality Pillars + Constitutional Closing Statement Footer */}
+      {/* Concise 2-3 Line Constitutional Summary Footer */}
       <div
-        className="space-y-2 border-t px-4 py-3 text-[11px]"
+        className="border-t px-4 py-2 text-[11px]"
         style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.28)' }}
       >
-        <div className="flex flex-wrap items-center gap-1.5">
-          <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: '#39E6FF' }}>
-            Constitutional Output Standard:
-          </span>
-          {MANDATORY_OUTPUT_PILLARS.map((pillar) => (
-            <span
-              key={pillar}
-              className="rounded border px-2 py-0.5 text-[10px] font-bold"
-              style={{
-                backgroundColor: '#1E293B',
-                borderColor: 'rgba(57,230,255,0.32)',
-                color: '#FFFFFF',
-              }}
-            >
-              ✓ {pillar}
-            </span>
-          ))}
-        </div>
-
-        <div className="rounded-lg border p-2.5 leading-relaxed" style={{ backgroundColor: '#081018', borderColor: 'rgba(57,230,255,0.22)' }}>
-          <div className="text-[11px] font-bold uppercase tracking-wider" style={{ color: '#22C55E' }}>
-            Mandatory Closing Statement
-          </div>
-          <p className="mt-0.5 text-[12px] font-bold" style={{ color: '#39E6FF' }}>
-            {CONSTITUTIONAL_PRINCIPLE}
-          </p>
-          <p className="mt-1 text-[11.5px] text-slate-200">
-            These principles form the constitutional foundation of the CareSphere Senior Master Enterprise Governance, Assurance &amp; Readiness Management System and provide the governance standard against which all enterprise decisions, investments, controls, risks, benefits, assurance activities, organisational health assessments, and Ω∞ Readiness outcomes are governed and continuously improved.
-          </p>
-        </div>
+        <p className="font-bold text-white line-clamp-2">
+          {CONSTITUTIONAL_PRINCIPLE} — {MANDATORY_OUTPUT_PILLARS.join(' · ')}
+        </p>
       </div>
       </div>
     </section>

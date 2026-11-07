@@ -3,7 +3,11 @@ import withEmployeeView from '@/components/withEmployeeView';
 import EmployeeCommunications from '@/components/employee/EmployeeCommunications';
 export default withEmployeeView(Communications, EmployeeCommunications);
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Megaphone, Mail, NotebookPen, Briefcase, Inbox as InboxIcon, MessagesSquare, Video, Sparkles, Siren, ListTodo, BookMarked, History, Radio, LayoutDashboard, Lightbulb, CalendarDays, MessageSquare } from 'lucide-react';
+import {
+  Megaphone, Mail, NotebookPen, Briefcase, Inbox as InboxIcon,
+  MessagesSquare, Video, Sparkles, Siren, ListTodo, BookMarked,
+  History, Radio, Lightbulb, CalendarDays, MessageSquare,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import MeetingCentre from '@/pages/MeetingCentre';
 import Feedback from '@/pages/Feedback';
@@ -15,7 +19,6 @@ import AlertsCentre from '@/components/communications/AlertsCentre';
 import CommunicationDiary from '@/components/communications/CommunicationDiary';
 import Inbox from '@/components/communications/Inbox';
 import TeamBanter from '@/components/communications/TeamBanter';
-import CommDailyInsight from '@/components/communications/CommDailyInsight';
 import CommTaskDash from '@/components/communications/CommTaskDash';
 import CommSharedTodo from '@/components/communications/CommSharedTodo';
 import CommTeamDash from '@/components/communications/CommTeamDash';
@@ -36,40 +39,36 @@ import StaffCommPanel from '@/components/communications/StaffCommPanel';
 import ProfileCommDiary from '@/components/communications/ProfileCommDiary';
 import ProfileTodoList from '@/components/communications/ProfileTodoList';
 import CommunicationNavigation from '@/components/communications/CommunicationNavigation';
-import CommGuide, { CommHintsTips } from '@/components/communications/CommGuide';
-import CommunicateWell from '@/components/communications/CommunicateWell';
-import CommAuditBar from '@/components/communications/CommAuditBar';
+import CommGuide from '@/components/communications/CommGuide';
 import CommWeatherBar from '@/components/communications/CommWeatherBar';
-import ExecutiveWallScene, { SmallSafeVaultBar } from '@/components/safe/ExecutiveWallScene';
+import { CommunicationAndMailboxTabs } from '@/components/safe/ExecutiveWallScene';
 import EnterpriseStandardQualityGateSuite from '@/components/compliance/EnterpriseStandardQualityGateSuite';
-import UniversalRecordIntelligenceRoutingSuite from '@/components/operations/UniversalRecordIntelligenceRoutingSuite';
-import LivingOrganisationalEcosystemSuite from '@/components/enterprise/LivingOrganisationalEcosystemSuite';
 import '@/components/communications/commCentreTheme.css';
 
+// Merged Communication & To-Do Tabs (All To-Do Lists & Dashboards Consolidated)
 const TABS = [
+  ['inbox', InboxIcon, 'Mailbox & Inbox'],
   ['alerts', Siren, 'Alerts'],
-  ['logs', History, 'System Logs'],
+  ['todo', ListTodo, 'Merged To-Do & Tasks'],
+  ['email', Mail, 'Send Email'],
   ['bulk', Megaphone, 'Bulk Messages'],
-  ['task-dashboard', LayoutDashboard, 'Tasks'],
-  ['todo', ListTodo, 'To-Do Board'],
-  ['guide', Lightbulb, 'Tips & Teamwork'],
-  ['templates', BookMarked, 'Templates'],
+  ['diary', MessagesSquare, 'Diary'],
+  ['shift-notes', NotebookPen, 'Shift Notes'],
+  ['employee-log', Briefcase, 'Employee Log'],
   ['banter', MessagesSquare, 'Team Banter'],
   ['feed', Radio, 'Team Feed'],
   ['shoutouts', Sparkles, 'Shoutouts'],
   ['video', Video, 'Video Calls'],
   ['complaints', MessagesSquare, 'Complaints'],
   ['ai', Sparkles, 'AI Compose'],
-  ['diary', MessagesSquare, 'Diary'],
-  ['inbox', InboxIcon, 'Inbox'],
-  ['email', Mail, 'Send Email'],
-  ['shift-notes', NotebookPen, 'Shift Notes'],
-  ['employee-log', Briefcase, 'Employee Log'],
+  ['templates', BookMarked, 'Templates'],
+  ['guide', Lightbulb, 'Tips & Teamwork'],
+  ['logs', History, 'System Logs'],
   ['meetings', CalendarDays, 'Meetings'],
   ['feedback', MessageSquare, 'Feedback'],
 ];
 
-const SELF_TABS = ['alerts', 'diary', 'email', 'shift-notes', 'employee-log'];
+const SELF_TABS = ['alerts', 'diary', 'email', 'shift-notes', 'employee-log', 'todo'];
 
 function Communications({ profile, profileKind, embedded = false } = {}) {
   const { role, user } = useRole();
@@ -79,7 +78,10 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
   const [selfProfile, setSelfProfile] = useState(null);
   const [commScreen, setCommScreen] = useState('screen1');
   const [activeTab, setActiveTab] = useState(participantOnly ? 'diary' : employeeSelf ? 'alerts' : 'inbox');
-  useEffect(() => { setActiveTab(participantOnly ? 'diary' : employeeSelf ? 'alerts' : 'inbox'); }, [participantOnly, employeeSelf]);
+
+  useEffect(() => {
+    setActiveTab(participantOnly ? 'diary' : employeeSelf ? 'alerts' : 'inbox');
+  }, [participantOnly, employeeSelf]);
 
   useEffect(() => {
     if (!restricted || profile) return;
@@ -90,170 +92,184 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
           ? await base44.entities.ParticipantProfile.filter({ email: user?.email || '' }, { limit: 1 })
           : await base44.entities.StaffProfile.filter({ email: user?.email || '' }, { limit: 1 });
         if (active) setSelfProfile(page.items?.[0] || null);
-      } catch { if (active) setSelfProfile(null); }
+      } catch {
+        if (active) setSelfProfile(null);
+      }
     })();
-    return () => { active = false; };
+    return () => {
+      active = false;
+    };
   }, [restricted, participantOnly, profile, user?.email]);
 
   const effProfile = profile || selfProfile;
   const effKind = profileKind || (participantOnly ? 'participant' : 'staff');
-  const shown = participantOnly ? TABS.filter(([value]) => value === 'diary')
-    : employeeSelf ? TABS.filter(([value]) => SELF_TABS.includes(value))
-    : TABS;
+  const shown = participantOnly
+    ? TABS.filter(([value]) => value === 'diary')
+    : employeeSelf
+      ? TABS.filter(([value]) => SELF_TABS.includes(value))
+      : TABS;
 
   return (
-    <div className="comm-centre space-y-1">
+    <div className="comm-centre space-y-2">
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <ModuleShell
           embedded={embedded || participantOnly}
-          title="Communication"
-          subtitle={employeeSelf
-            ? 'Your alerts, shift notes, employee log and email. Results depend on available profile links and stored records; verify each item’s details and status.'
-            : 'Merged Communication & Dashboard: manage alerts, emails, bulk messages, diary notes, shift notes, employee communications and live executive command.'}
+          title="Communication & Mailbox Hub"
+          subtitle="Unified Communication, Mailbox, Merged Dashboards & Shared To-Do Lists in one command view."
           icon={MessagesSquare}
           moduleKey="communications"
-          tabs={!(embedded || participantOnly) && (
-            <div className="space-y-2">
-              {/* Screen 1 (Communications & Mailbox) + Screen 2 (Meeting Centre & Feedback Surveys) Switcher */}
-              <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border-2 border-[#00C6FF]/50 bg-[#081018] p-2.5 text-white shadow-sm">
-                <div>
-                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
-                    Dual-Screen Communication, Meetings &amp; Feedback Hub
-                  </span>
-                  <h3 className="text-xs sm:text-sm font-extrabold text-white">
-                    Screen 1: Communications Mailbox &amp; Logs · Screen 2: Meeting Centre &amp; Feedback Surveys
-                  </h3>
+          tabs={
+            !(embedded || participantOnly) && (
+              <div className="space-y-2.5">
+                {/* Concise 2-Line Switcher Header */}
+                <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-[#0072FF]/60 bg-[#081018] px-3 py-2 text-white">
+                  <div className="space-y-0.5">
+                    <h3 className="text-xs sm:text-sm font-extrabold text-white">
+                      Unified Communication, Mailbox, Meetings &amp; Merged To-Do Command
+                    </h3>
+                    <p className="text-[11px] font-semibold text-slate-300">
+                      All communication dashboards, mailbox alerts, and team to-do lists merged in one place.
+                    </p>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {[
+                      ['screen1', 'Communications, Mailbox & To-Do'],
+                      ['screen2', 'Meetings & Feedback'],
+                      ['both', 'Both Views'],
+                    ].map(([k, lbl]) => (
+                      <Button
+                        key={k}
+                        size="sm"
+                        className="h-7 border border-[#00C6FF] px-2.5 text-[11px] font-extrabold text-white"
+                        style={{
+                          backgroundColor: commScreen === k ? '#FF2E9A' : '#0072FF',
+                          color: '#FFFFFF',
+                        }}
+                        onClick={() => setCommScreen(k)}
+                      >
+                        {lbl}
+                      </Button>
+                    ))}
+                  </div>
                 </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {[
-                    ['both', 'Screen 1 + Screen 2 (Meetings & Feedback)'],
-                    ['screen1', 'Screen 1: Communications & Mailbox'],
-                    ['screen2', 'Screen 2: Meeting Centre & Feedback'],
-                  ].map(([k, lbl]) => (
-                    <Button
-                      key={k}
-                      size="sm"
-                      variant={commScreen === k ? 'default' : 'outline'}
-                      className="border-2 border-[#00C6FF] font-extrabold text-white"
-                      style={{
-                        backgroundColor: commScreen === k ? '#FF2E9A' : '#0072FF',
-                        color: '#FFFFFF',
-                      }}
-                      onClick={() => setCommScreen(k)}
-                    >
-                      {lbl}
-                    </Button>
-                  ))}
-                </div>
-              </div>
 
-              <CommWeatherBar />
-              <CommunicationNavigation tabs={shown} onCompose={() => setActiveTab('email')} />
+                <CommWeatherBar />
 
-              {/* SCREEN 2 IN COMMUNICATION CENTRE: MEETING CENTRE & FEEDBACK SURVEYS */}
-              {(commScreen === 'screen2' || commScreen === 'both') && (
-                <div className="grid grid-cols-1 gap-3 xl:grid-cols-2">
-                  <section className="overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white shadow-md">
-                    <div
-                      className="flex items-center justify-between border-b-2 border-[#0A2B6D] px-4 py-2 text-white"
-                      style={{ background: 'var(--header-gradient)' }}
-                    >
-                      <span className="text-xs font-extrabold text-white">
-                        Screen 2A · Meeting Centre (Agendas, Minutes &amp; Actions)
-                      </span>
-                      <span className="rounded-full bg-[#00C6FF] px-2 py-0.5 text-[9.5px] font-extrabold text-[#0A2B6D]">
-                        Screen 2
-                      </span>
-                    </div>
-                    <div className="p-2.5">
+                {/* Unified Communication Navigation & Mailbox */}
+                <CommunicationNavigation tabs={shown} onCompose={() => setActiveTab('email')} />
+
+                {(commScreen === 'screen2' || commScreen === 'both') && (
+                  <div className="grid grid-cols-1 gap-3 xl:grid-cols-2">
+                    <section className="overflow-hidden rounded-xl border border-[#0072FF]/60 bg-[#081018] p-2.5 text-white">
                       <MeetingCentre embedded />
-                    </div>
-                  </section>
-
-                  <section className="overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-white shadow-md">
-                    <div
-                      className="flex items-center justify-between border-b-2 border-[#0A2B6D] px-4 py-2 text-white"
-                      style={{ background: 'var(--header-gradient)' }}
-                    >
-                      <span className="text-xs font-extrabold text-white">
-                        Screen 2B · Feedback &amp; Surveys Register
-                      </span>
-                      <span className="rounded-full bg-[#FF2E9A] px-2 py-0.5 text-[9.5px] font-extrabold text-white">
-                        Screen 2
-                      </span>
-                    </div>
-                    <div className="p-2.5">
+                    </section>
+                    <section className="overflow-hidden rounded-xl border border-[#FF2E9A]/60 bg-[#081018] p-2.5 text-white">
                       <Feedback embedded />
-                    </div>
-                  </section>
-                </div>
-              )}
+                    </section>
+                  </div>
+                )}
 
-              {commScreen !== 'screen2' && (
-                <>
-                  <LivingOrganisationalEcosystemSuite initialTab="comm-alerts" />
-                  <UniversalRecordIntelligenceRoutingSuite />
-                  <ExecutiveWallScene showAllModulesMinimised={true} showRosterAbove={true} />
-                  <CommDailyInsight />
-                  <CommAuditBar />
-                  <CommHintsTips />
-                  <CommunicateWell />
-                  <CommTaskDash />
-                  <CommTeamDash />
-                  <CommSharedTodo />
-                </>
-              )}
-            </div>
-          )}
+                {commScreen !== 'screen2' && (
+                  <div className="space-y-2.5">
+                    {/* Merged Communication Dashboards + Communication & Mailbox Together */}
+                    <div className="grid grid-cols-1 gap-2.5 lg:grid-cols-12">
+                      <div className="lg:col-span-6">
+                        <CommunicationAndMailboxTabs />
+                      </div>
+                      <div className="lg:col-span-6">
+                        <CommTeamDash />
+                      </div>
+                    </div>
+
+                    {/* Merged All To-Do Lists & Task Dashboards in One Unified Section */}
+                    <div className="rounded-xl border border-[#0072FF]/60 bg-[#081018] p-3 space-y-2.5 text-white">
+                      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2">
+                        <div>
+                          <h3 className="text-xs sm:text-sm font-extrabold text-white">
+                            Merged Shared To-Do List &amp; Task Dashboard
+                          </h3>
+                          <p className="text-[11px] text-slate-300">
+                            All personal, team, and shared to-do lists combined into a single live board.
+                          </p>
+                        </div>
+                        <Button
+                          size="sm"
+                          onClick={() => setActiveTab('todo')}
+                          className="h-7 bg-[#0072FF] text-[11px] font-extrabold text-white"
+                        >
+                          Open Full To-Do Board
+                        </Button>
+                      </div>
+                      <div className="grid grid-cols-1 gap-2.5 xl:grid-cols-2">
+                        <CommTaskDash />
+                        <CommSharedTodo />
+                      </div>
+                    </div>
+
+                    {/* Compact, Reasonable-Size Dark Row: Team Banter, Staff Leaderboard & Automated Alert Log */}
+                    <div className="grid grid-cols-1 gap-2.5 lg:grid-cols-3">
+                      <TeamBanter />
+                      <TaskLeaderboard compact />
+                      <AutomatedAlertSystem selfOnly={employeeSelf} />
+                    </div>
+                  </div>
+                )}
+              </div>
+            )
+          }
         >
-        {(embedded || participantOnly) && (
-          <TabsList aria-label="Communication tools">
-            {shown.map(([value, Icon, label]) => (
-              <TabsTrigger key={value} value={value} className="min-h-[44px] gap-2">
-                <Icon aria-hidden="true" className="h-4 w-4" />{label}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-        )}
-        <TabsContent value="alerts"><AlertsCentre selfOnly={employeeSelf} /></TabsContent>
-        <TabsContent value="meetings"><MeetingCentre embedded /></TabsContent>
-        <TabsContent value="feedback"><Feedback embedded /></TabsContent>
-        <TabsContent value="logs"><AutomatedLogs /></TabsContent>
-        <TabsContent value="diary">
-          {effProfile ? (effKind === 'participant' ? <ProfileCommDiary participant={effProfile} /> : <StaffCommPanel staff={effProfile} />)
-            : restricted
-              ? <EmptyState title="Your profile is not linked yet" message="Once your profile is linked to your login email, your own communication diary appears here." />
-              : <CommunicationDiary />}
-        </TabsContent>
-        <TabsContent value="inbox"><Inbox /></TabsContent>
-        <TabsContent value="templates">
-          <div className="space-y-4">
-            {!restricted && <EnterpriseStandardQualityGateSuite />}
-            <TemplateLibrary />
-          </div>
-        </TabsContent>
-        <TabsContent value="email"><ProfessionalEmail /></TabsContent>
-        <TabsContent value="bulk"><BulkMessage /></TabsContent>
-        <TabsContent value="banter"><TeamBanter /></TabsContent>
-        <TabsContent value="shoutouts"><ShoutoutFeed /></TabsContent>
-        <TabsContent value="feed"><TeamFeed /></TabsContent>
-        <TabsContent value="complaints"><ComplaintsFeed /></TabsContent>
-        <TabsContent value="todo">
-          {effProfile ? <ProfileTodoList person={effProfile} /> : <TodoBoard />}
-        </TabsContent>
-        <TabsContent value="task-dashboard">
-          {effProfile ? <ProfileTodoList person={effProfile} /> : <div className="space-y-4"><CommTaskDash /><CommTeamDash /><TodoBoard compact /></div>}
-        </TabsContent>
-        <TabsContent value="guide"><CommGuide /></TabsContent>
-        <TabsContent value="video"><VideoCalls /></TabsContent>
-        <TabsContent value="ai"><AiCompose /></TabsContent>
-        <TabsContent value="shift-notes">{employeeSelf ? <ShiftNotes selfOnly /> : <ShiftNotes />}</TabsContent>
-        <TabsContent value="employee-log">{employeeSelf ? <EmployeeCommLog selfOnly /> : <EmployeeCommLog />}</TabsContent>
-        <TabsContent value="smart-vault"><SmallSafeVaultBar /></TabsContent>
-        {!(embedded || participantOnly) && <SmallSafeVaultBar />}
-        {!(embedded || participantOnly) && <TeamBanter />}
-        {!(embedded || participantOnly) && <TaskLeaderboard compact />}
-        {!(embedded || participantOnly) && <AutomatedAlertSystem selfOnly={employeeSelf} />}
+          {(embedded || participantOnly) && (
+            <TabsList aria-label="Communication tools">
+              {shown.map(([value, Icon, label]) => (
+                <TabsTrigger key={value} value={value} className="min-h-[38px] gap-1.5">
+                  <Icon aria-hidden="true" className="h-3.5 w-3.5" />
+                  {label}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          )}
+          <TabsContent value="alerts"><AlertsCentre selfOnly={employeeSelf} /></TabsContent>
+          <TabsContent value="meetings"><MeetingCentre embedded /></TabsContent>
+          <TabsContent value="feedback"><Feedback embedded /></TabsContent>
+          <TabsContent value="logs"><AutomatedLogs /></TabsContent>
+          <TabsContent value="diary">
+            {effProfile ? (
+              effKind === 'participant' ? <ProfileCommDiary participant={effProfile} /> : <StaffCommPanel staff={effProfile} />
+            ) : restricted ? (
+              <EmptyState title="Your profile is not linked yet" message="Once your profile is linked to your login email, your own communication diary appears here." />
+            ) : (
+              <CommunicationDiary />
+            )}
+          </TabsContent>
+          <TabsContent value="inbox"><Inbox /></TabsContent>
+          <TabsContent value="templates">
+            <div className="space-y-3">
+              {!restricted && <EnterpriseStandardQualityGateSuite />}
+              <TemplateLibrary />
+            </div>
+          </TabsContent>
+          <TabsContent value="email"><ProfessionalEmail /></TabsContent>
+          <TabsContent value="bulk"><BulkMessage /></TabsContent>
+          <TabsContent value="banter"><TeamBanter /></TabsContent>
+          <TabsContent value="shoutouts"><ShoutoutFeed /></TabsContent>
+          <TabsContent value="feed"><TeamFeed /></TabsContent>
+          <TabsContent value="complaints"><ComplaintsFeed /></TabsContent>
+          <TabsContent value="todo">
+            {effProfile ? (
+              <ProfileTodoList person={effProfile} />
+            ) : (
+              <div className="space-y-3">
+                <CommTaskDash />
+                <CommSharedTodo />
+                <TodoBoard />
+              </div>
+            )}
+          </TabsContent>
+          <TabsContent value="guide"><CommGuide /></TabsContent>
+          <TabsContent value="video"><VideoCalls /></TabsContent>
+          <TabsContent value="ai"><AiCompose /></TabsContent>
+          <TabsContent value="shift-notes">{employeeSelf ? <ShiftNotes selfOnly /> : <ShiftNotes />}</TabsContent>
+          <TabsContent value="employee-log">{employeeSelf ? <EmployeeCommLog selfOnly /> : <EmployeeCommLog />}</TabsContent>
         </ModuleShell>
       </Tabs>
     </div>

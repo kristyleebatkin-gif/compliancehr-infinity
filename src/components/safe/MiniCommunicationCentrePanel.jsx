@@ -112,7 +112,7 @@ export default function MiniCommunicationCentrePanel({ alertCount = 0 }) {
       className="h-full rounded-xl p-[3px] shadow-sm"
       style={{ background: TOP_BORDER_GRADIENT }}
     >
-      <div className="flex h-full flex-col justify-between gap-1.5 rounded-[9px] bg-white p-1.5 text-center">
+      <div className="flex h-full flex-col justify-between gap-1.5 rounded-[9px] bg-[#162235] p-1.5 text-center text-white">
         {/* 1. Mini Communication Centre App-Coloured Header */}
         <div
           className="gradient-brand flex items-center justify-between gap-1 rounded-lg px-2 py-1 text-white"
@@ -174,31 +174,33 @@ export default function MiniCommunicationCentrePanel({ alertCount = 0 }) {
           </Link>
         </div>
 
-        {/* 3. Mini Quick-Press Communication Function Squares — Pure White Inside Text Boxes */}
-        <div className="w-full rounded-lg border border-[#0A2B6D]/25 bg-white p-1">
+        {/* 3. Mini Quick-Press Communication Function Squares — Dark Command Surface */}
+        <div className="w-full rounded-lg border border-white/15 bg-[#081018] p-1">
           <div className="mb-0.5 flex items-center justify-between px-1">
-            <span className="text-[6.5px] font-extrabold uppercase tracking-wider text-[#0A2B6D]">
+            <span className="text-[6.5px] font-extrabold uppercase tracking-wider text-white">
               Communication Function Squares
             </span>
-            <span className="text-[6.5px] font-extrabold text-[#0A2B6D]">10 Channels</span>
+            <span className="text-[6.5px] font-extrabold text-white">10 Channels</span>
           </div>
           <div className="grid grid-cols-5 gap-1">
-            {MINI_COMM_SQUARES.map((sq) => {
+            {MINI_COMM_SQUARES.map((sq, idx) => {
               const SqIcon = sq.icon;
+              const seqColors = ['#0072FF', '#A855F7', '#FF2E9A'];
+              const symColor = seqColors[idx % seqColors.length];
               return (
                 <Link
                   key={sq.key}
                   to="/communications"
-                  className="flex flex-col items-center justify-center gap-0.5 rounded border border-[#0A2B6D]/30 bg-white p-0.5 text-center transition-transform hover:-translate-y-0.5"
-                  style={{ borderTopWidth: '2.5px', borderTopColor: sq.color }}
+                  className="flex flex-col items-center justify-center gap-0.5 rounded border border-white/15 bg-[#162235] p-0.5 text-center transition-transform hover:-translate-y-0.5"
+                  style={{ borderTopWidth: '2.5px', borderTopColor: symColor }}
                 >
                   <span
                     className="flex h-3.5 w-3.5 items-center justify-center rounded text-white"
-                    style={{ background: sq.color }}
+                    style={{ background: symColor }}
                   >
                     <SqIcon className="h-2 w-2 text-white" style={{ color: '#FFFFFF' }} />
                   </span>
-                  <span className="text-[6.5px] font-extrabold leading-none text-[#0A2B6D]">
+                  <span className="text-[6.5px] font-extrabold leading-none text-white">
                     {sq.label}
                   </span>
                 </Link>
@@ -207,8 +209,8 @@ export default function MiniCommunicationCentrePanel({ alertCount = 0 }) {
           </div>
         </div>
 
-        {/* 4. Small Shared To-Do List Inside Mini Communication Centre — Pure White Inside Text Boxes */}
-        <div className="flex w-full flex-1 flex-col justify-between gap-1 rounded-lg border border-[#0A2B6D]/25 bg-white p-1.5 text-left">
+        {/* 4. Small Shared To-Do List Inside Mini Communication Centre — Dark Surface */}
+        <div className="flex w-full flex-1 flex-col justify-between gap-1 rounded-lg border border-white/15 bg-[#081018] p-1.5 text-left text-white">
           <div
             className="gradient-brand flex items-center justify-between gap-1 rounded px-2 py-0.5 text-white"
             style={{ background: getHeaderView(4), color: '#FFFFFF' }}
@@ -251,24 +253,24 @@ export default function MiniCommunicationCentrePanel({ alertCount = 0 }) {
           {/* Compact Shared To-Do Items */}
           <div className="space-y-0.5">
             {todos.length === 0 && (
-              <div className="rounded border border-[#0A2B6D]/20 bg-white px-1.5 py-1 text-[7.5px] font-extrabold text-[#0A2B6D]">
+              <div className="rounded border border-white/15 bg-[#162235] px-1.5 py-1 text-[7.5px] font-extrabold text-white">
                 No open shared to-do tasks — add a task above to dispatch in real time.
               </div>
             )}
             {todos.slice(0, 3).map((item, idx) => (
               <div
                 key={item.id}
-                className="flex items-center justify-between gap-1 rounded border border-[#0A2B6D]/20 bg-white px-1.5 py-0.5 text-[7.5px] font-extrabold text-[#0A2B6D]"
+                className="flex items-center justify-between gap-1 rounded border border-white/15 bg-[#162235] px-1.5 py-0.5 text-[7.5px] font-extrabold text-white"
               >
                 <button
                   type="button"
                   onClick={() => handleCompleteTodo(item)}
                   title="Mark shared task done"
-                  className="flex h-3 w-3 shrink-0 items-center justify-center rounded-full border border-[#0A2B6D] bg-white text-[#0072FF] hover:bg-[#0072FF] hover:text-white"
+                  className="flex h-3 w-3 shrink-0 items-center justify-center rounded-full border border-white/40 bg-[#081018] text-[#00C6FF] hover:bg-[#0072FF] hover:text-white"
                 >
                   <CheckCircle2 className="h-2 w-2" />
                 </button>
-                <span className="min-w-0 flex-1 truncate text-left text-[#0A2B6D]">
+                <span className="min-w-0 flex-1 truncate text-left text-white">
                   {item.title}
                 </span>
                 <span

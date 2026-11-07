@@ -1,8 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ShieldCheck, Sparkles, Presentation, FileText, Download, Database,
-  Lock, ArrowRight, CheckCircle2, Layers, LayoutDashboard,
+  ShieldCheck, Presentation, Lock, Layers, LayoutDashboard,
 } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import {
@@ -31,7 +30,7 @@ import SmeGarmBoardPackStudioModal from '@/components/enterprise/smeGarm/SmeGarm
 
 export default function CareSphereSmeGarmSuite() {
   const { toast } = useToast();
-  const [activeView, setActiveView] = useState('dashboard'); // 'dashboard' | 'modules'
+  const [activeView, setActiveView] = useState('dashboard');
   const [activeModule, setActiveModule] = useState('m1_governance');
   const [activeRole, setActiveRole] = useState('Board Member');
   const [boardPackOpen, setBoardPackOpen] = useState(false);
@@ -111,7 +110,6 @@ export default function CareSphereSmeGarmSuite() {
     setActiveView('modules');
   };
 
-  // Merge live calculated OHI, Omega Readiness, and LQI into the 9 Mandatory Executive KPIs
   const liveExecutiveKpis = useMemo(
     () =>
       MANDATORY_EXECUTIVE_KPIS.map((k) => {
@@ -129,54 +127,35 @@ export default function CareSphereSmeGarmSuite() {
       className="preserve-island-theme overflow-hidden rounded-2xl border shadow-2xl"
       style={{ backgroundColor: '#081018', borderColor: '#39E6FF', color: '#FFFFFF' }}
     >
-      {/* Top Cyan Constitutional Accent Bar */}
       <div
         className="h-1.5 w-full"
-        style={{ background: 'linear-gradient(90deg, #39E6FF 0%, #22C55E 50%, #FBBF24 100%)' }}
+        style={{ background: 'linear-gradient(90deg, #0072FF 0%, #A855F7 50%, #FF2E9A 100%)' }}
       />
 
-      <div className="space-y-4 p-4 sm:p-5">
-        {/* CONSTITUTIONAL HEADER & ENTRA ID RBAC BAR */}
+      <div className="space-y-3 p-3.5 sm:p-4">
+        {/* CONSTITUTIONAL HEADER: All Words in One Section (2-3 Lines Max), Entra Role + 25-Slide on Left Above View All Dashboards, Document Types on Bottom Line */}
         <div
-          className="rounded-xl border p-4"
+          className="rounded-xl border p-3.5 space-y-2.5"
           style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.32)' }}
         >
-          <div className="flex flex-wrap items-start justify-between gap-3">
-            <div className="space-y-1">
-              <div className="flex flex-wrap items-center gap-2">
-                <span
-                  className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider"
-                  style={{ backgroundColor: 'rgba(57,230,255,0.16)', color: '#39E6FF', border: '1px solid #39E6FF' }}
-                >
-                  <ShieldCheck className="h-3 w-3" /> CareSphere SME-GARM Constitutional Engine
-                </span>
-                <span
-                  className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-black uppercase"
-                  style={{ backgroundColor: omegaBand.badgeBg, color: omegaBand.color, border: `1px solid ${omegaBand.color}` }}
-                >
-                  Ω∞ Status: {omegaBand.label} ({omegaReadinessIndex})
-                </span>
-                <span
-                  className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-black uppercase"
-                  style={{ backgroundColor: 'rgba(34,197,94,0.16)', color: '#22C55E', border: '1px solid #22C55E' }}
-                >
-                  <Lock className="h-3 w-3" /> Microsoft Entra ID RBAC
-                </span>
-              </div>
+          {/* Single 2-3 Line Text Block */}
+          <div className="space-y-0.5">
+            <h2 className="text-sm sm:text-base font-black tracking-tight text-white line-clamp-1">
+              CareSphere SME-GARM — Senior Master Enterprise Governance, Assurance &amp; Readiness · Ω∞ {omegaBand.label} ({omegaReadinessIndex}) · Entra ID RBAC
+            </h2>
+            <p className="text-xs font-bold leading-snug text-white/90 line-clamp-2">
+              {CONSTITUTIONAL_PRINCIPLE} · { currentRoleSpec.entraGroup } ({ currentRoleSpec.clearance })
+            </p>
+          </div>
 
-              <h2 className="text-lg font-black tracking-tight text-white sm:text-xl">
-                CareSphere — Senior Master Enterprise Governance, Assurance &amp; Readiness Management System
-              </h2>
-
-              <p className="text-xs font-extrabold" style={{ color: '#39E6FF' }}>
-                {CONSTITUTIONAL_PRINCIPLE}
-              </p>
-            </div>
-
-            {/* Entra ID Role Selector & Export Bar */}
+          {/* Left Side Above View All Dashboards: Entra Role & 25-Slide Board Pack */}
+          <div className="flex flex-col items-start gap-2 border-t border-slate-700/70 pt-2">
             <div className="flex flex-wrap items-center gap-2">
-              <label className="flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-xs font-bold" style={{ backgroundColor: '#1E293B', borderColor: 'rgba(57,230,255,0.35)' }}>
-                <span style={{ color: '#39E6FF' }}>Entra Role:</span>
+              <label
+                className="flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-xs font-bold text-white"
+                style={{ backgroundColor: '#1E293B', borderColor: '#0072FF' }}
+              >
+                <span className="text-white">Entra Role:</span>
                 <select
                   value={activeRole}
                   onChange={(e) => setActiveRole(e.target.value)}
@@ -193,99 +172,92 @@ export default function CareSphereSmeGarmSuite() {
               <button
                 type="button"
                 onClick={() => setBoardPackOpen(true)}
-                className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-black transition hover:opacity-95"
-                style={{ backgroundColor: '#39E6FF', color: '#081018' }}
+                className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1 text-xs font-black text-white transition hover:opacity-95"
+                style={{ backgroundColor: '#A855F7' }}
               >
-                <Presentation className="h-3.5 w-3.5" /> 25-Slide Board Pack
-              </button>
-              <button
-                type="button"
-                onClick={handleExportPpt}
-                className="rounded-lg border px-2.5 py-1.5 text-[11px] font-black text-white hover:opacity-90"
-                style={{ backgroundColor: '#1E293B', borderColor: '#39E6FF' }}
-              >
-                PPTX
-              </button>
-              <button
-                type="button"
-                onClick={handleExportWord}
-                className="rounded-lg border px-2.5 py-1.5 text-[11px] font-black text-white hover:opacity-90"
-                style={{ backgroundColor: '#1E293B', borderColor: '#22C55E' }}
-              >
-                DOCX
-              </button>
-              <button
-                type="button"
-                onClick={handleExportPdf}
-                className="rounded-lg border px-2.5 py-1.5 text-[11px] font-black text-white hover:opacity-90"
-                style={{ backgroundColor: '#1E293B', borderColor: '#FBBF24' }}
-              >
-                PDF
-              </button>
-              <button
-                type="button"
-                onClick={handleExportPowerBi}
-                className="rounded-lg border px-2.5 py-1.5 text-[11px] font-black text-white hover:opacity-90"
-                style={{ backgroundColor: '#1E293B', borderColor: '#39E6FF' }}
-              >
-                Power BI
+                <Presentation className="h-3.5 w-3.5 text-white" /> 25-Slide Board Pack
               </button>
             </div>
-          </div>
 
-          {/* Active Role Clearance & Permissions Strip */}
-          <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-slate-700/70 pt-2.5 text-[11px]">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="font-mono font-bold" style={{ color: '#39E6FF' }}>
-                {currentRoleSpec.entraGroup}
-              </span>
-              <span className="text-slate-300">· {currentRoleSpec.clearance}</span>
-            </div>
+            {/* View All Dashboards & Role Permissions Row Directly Underneath on Left */}
             <div className="flex flex-wrap gap-1.5">
               {currentRoleSpec.permissions.map((perm) => (
                 <span
                   key={perm}
-                  className="rounded px-2 py-0.5 text-[10px] font-bold"
-                  style={{ backgroundColor: '#1E293B', color: '#22C55E' }}
+                  className="rounded px-2 py-0.5 text-[10px] font-bold text-white"
+                  style={{ backgroundColor: '#1E293B', border: '1px solid rgba(57,230,255,0.3)' }}
                 >
                   ✓ {perm}
                 </span>
               ))}
             </div>
           </div>
+
+          {/* Bottom Line in Section: All Document Types (PPTX, DOCX, PDF, Power BI) */}
+          <div className="flex flex-wrap items-center justify-between gap-2 border-t border-slate-700/70 pt-2">
+            <span className="text-[10px] font-black uppercase tracking-wider text-white">
+              Board &amp; Audit Export Formats:
+            </span>
+            <div className="flex flex-wrap items-center gap-1.5">
+              <button
+                type="button"
+                onClick={handleExportPpt}
+                className="rounded-lg border px-2.5 py-1 text-[11px] font-black text-white hover:opacity-90"
+                style={{ backgroundColor: '#0072FF', borderColor: '#39E6FF' }}
+              >
+                PPTX
+              </button>
+              <button
+                type="button"
+                onClick={handleExportWord}
+                className="rounded-lg border px-2.5 py-1 text-[11px] font-black text-white hover:opacity-90"
+                style={{ backgroundColor: '#A855F7', borderColor: '#C084FC' }}
+              >
+                DOCX
+              </button>
+              <button
+                type="button"
+                onClick={handleExportPdf}
+                className="rounded-lg border px-2.5 py-1 text-[11px] font-black text-white hover:opacity-90"
+                style={{ backgroundColor: '#FF2E9A', borderColor: '#F472B6' }}
+              >
+                PDF
+              </button>
+              <button
+                type="button"
+                onClick={handleExportPowerBi}
+                className="rounded-lg border px-2.5 py-1 text-[11px] font-black text-white hover:opacity-90"
+                style={{ backgroundColor: '#1E293B', borderColor: '#39E6FF' }}
+              >
+                Power BI (PBIDS)
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* 9-STEP GOVERNANCE OPERATING CHAIN (NO PROCESS MAY BYPASS THIS CHAIN) */}
+        {/* 9-STEP GOVERNANCE OPERATING CHAIN */}
         <div
-          className="rounded-xl border p-3.5"
+          className="rounded-xl border p-3"
           style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.24)' }}
         >
           <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-            <span className="text-[10px] font-black uppercase tracking-wider" style={{ color: '#39E6FF' }}>
-              Mandatory 9-Step Constitutional Governance Operating Chain · Zero-Bypass Enforcement
-            </span>
-            <span className="text-[10px] font-bold" style={{ color: '#22C55E' }}>
-              Purpose → Ownership → Evidence → Controls → Measurement → Assurance → Benefits → Readiness → Enterprise Value
+            <span className="text-[10px] font-black uppercase tracking-wider text-white">
+              9-Step Constitutional Governance Chain · Purpose → Ownership → Evidence → Controls → Measurement → Assurance → Benefits → Readiness → Value
             </span>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-9">
+          <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 lg:grid-cols-9">
             {GOVERNANCE_OPERATING_CHAIN.map((node) => (
               <Link
                 key={node.key}
                 to={node.path}
-                className="group flex flex-col justify-between rounded-lg border p-2.5 transition hover:scale-[1.01]"
+                className="group flex flex-col justify-between rounded-lg border p-2 transition hover:scale-[1.01]"
                 style={{ backgroundColor: '#1E293B', borderColor: 'rgba(57,230,255,0.28)' }}
               >
-                <div>
-                  <div className="flex items-center justify-between text-[9px] font-black uppercase" style={{ color: '#39E6FF' }}>
-                    <span>Step {node.step}</span>
-                    <span>{node.verb}</span>
-                  </div>
-                  <div className="mt-0.5 text-xs font-black text-white">{node.label}</div>
-                  <div className="mt-0.5 text-[10px] text-slate-300">{node.question}</div>
+                <div className="text-[10px] font-black text-white">
+                  {node.step}. {node.label}
                 </div>
-                <div className="mt-2 border-t border-slate-700/70 pt-1 text-[9.5px] font-extrabold" style={{ color: '#22C55E' }}>
+                <div className="mt-1 text-[9px] font-bold text-slate-300 line-clamp-1">
                   {node.metric}
                 </div>
               </Link>
@@ -295,84 +267,56 @@ export default function CareSphereSmeGarmSuite() {
 
         {/* 9 MANDATORY EXECUTIVE KPIS SCORECARD */}
         <div
-          className="rounded-xl border p-3.5"
+          className="rounded-xl border p-3"
           style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.24)' }}
         >
-          <div className="mb-2.5 flex flex-wrap items-center justify-between gap-2">
-            <span className="text-[10px] font-black uppercase tracking-wider" style={{ color: '#39E6FF' }}>
-              Mandatory Executive KPI Framework (All 9 Constitutional KPIs vs Targets)
+          <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+            <span className="text-[10px] font-black uppercase tracking-wider text-white">
+              Mandatory Executive KPI Framework (9 Constitutional KPIs)
             </span>
             <div className="flex gap-1.5">
               <button
                 type="button"
                 onClick={() => setActiveView('dashboard')}
-                className="inline-flex items-center gap-1 rounded-lg px-3 py-1 text-xs font-black"
+                className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-black text-white"
                 style={{
-                  backgroundColor: activeView === 'dashboard' ? '#39E6FF' : '#1E293B',
-                  color: activeView === 'dashboard' ? '#081018' : '#FFFFFF',
+                  backgroundColor: activeView === 'dashboard' ? '#0072FF' : '#1E293B',
                 }}
               >
-                <LayoutDashboard className="h-3.5 w-3.5" /> Dashboard Suite (4 Views)
+                <LayoutDashboard className="h-3.5 w-3.5" /> Dashboard Suite
               </button>
               <button
                 type="button"
                 onClick={() => setActiveView('modules')}
-                className="inline-flex items-center gap-1 rounded-lg px-3 py-1 text-xs font-black"
+                className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-black text-white"
                 style={{
-                  backgroundColor: activeView === 'modules' ? '#39E6FF' : '#1E293B',
-                  color: activeView === 'modules' ? '#081018' : '#FFFFFF',
+                  backgroundColor: activeView === 'modules' ? '#A855F7' : '#1E293B',
                 }}
               >
-                <Layers className="h-3.5 w-3.5" /> 9 Core Modules &amp; Fabric Engine
+                <Layers className="h-3.5 w-3.5" /> 9 Core Modules
               </button>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-9">
-            {liveExecutiveKpis.map((kpi) => {
-              const passes = Number(kpi.value) >= Number(kpi.target);
-              return (
-                <div
-                  key={kpi.key}
-                  className="flex flex-col justify-between rounded-xl border p-2.5"
-                  style={{
-                    backgroundColor: '#1E293B',
-                    borderColor: passes ? 'rgba(34,197,94,0.4)' : 'rgba(251,191,36,0.5)',
-                  }}
-                >
-                  <div>
-                    <div className="flex items-center justify-between gap-1">
-                      <span className="text-[9px] font-black uppercase" style={{ color: '#39E6FF' }}>
-                        Target {kpi.targetDisplay}
-                      </span>
-                      <span
-                        className="rounded px-1.5 py-0.5 text-[8.5px] font-black"
-                        style={{
-                          backgroundColor: passes ? 'rgba(34,197,94,0.2)' : 'rgba(251,191,36,0.2)',
-                          color: passes ? '#22C55E' : '#FBBF24',
-                        }}
-                      >
-                        {kpi.trend}
-                      </span>
-                    </div>
-                    <div className="mt-1 text-lg font-black text-white">
-                      {kpi.value}
-                      {kpi.unit === '%' ? '%' : ''}
-                    </div>
-                    <div className="text-[10.5px] font-extrabold leading-snug text-white">
-                      {kpi.label}
-                    </div>
-                  </div>
-                  <div className="mt-1.5 border-t border-slate-700/70 pt-1 text-[9px] text-slate-300">
-                    {kpi.owner}
-                  </div>
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-9">
+            {liveExecutiveKpis.map((kpi) => (
+              <div
+                key={kpi.key}
+                className="flex flex-col justify-between rounded-xl border p-2"
+                style={{ backgroundColor: '#1E293B', borderColor: 'rgba(57,230,255,0.3)' }}
+              >
+                <div className="text-base font-black text-white">
+                  {kpi.value}
+                  {kpi.unit === '%' ? '%' : ''}
                 </div>
-              );
-            })}
+                <div className="text-[10px] font-bold leading-tight text-white line-clamp-2">
+                  {kpi.label}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* ACTIVE WORKSPACE: DASHBOARD SUITE OR 9 CORE APPLICATION MODULES */}
         {activeView === 'dashboard' ? (
           <SmeGarmBoardDashboardTab
             orgHealthIndex={orgHealthIndex}
@@ -402,21 +346,17 @@ export default function CareSphereSmeGarmSuite() {
           />
         )}
 
-        {/* MANDATORY CONSTITUTIONAL CLOSING STATEMENT */}
+        {/* MANDATORY CONSTITUTIONAL CLOSING STATEMENT (Compact 2-3 Lines) */}
         <footer
-          className="rounded-xl border p-4"
+          className="rounded-xl border p-3"
           style={{ backgroundColor: '#162235', borderColor: '#39E6FF' }}
         >
-          <div className="text-[10px] font-black uppercase tracking-wider" style={{ color: '#39E6FF' }}>
-            Mandatory Constitutional Closing Statement · CareSphere SME-GARM Standard
-          </div>
-          <p className="mt-1 text-xs font-extrabold leading-relaxed text-white">
+          <p className="text-xs font-bold leading-snug text-white line-clamp-3">
             {MANDATORY_CLOSING_STATEMENT}
           </p>
         </footer>
       </div>
 
-      {/* 25-Slide Board Pack Studio Modal */}
       <SmeGarmBoardPackStudioModal
         open={boardPackOpen}
         onClose={() => setBoardPackOpen(false)}

@@ -11,8 +11,9 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Trash2, Pencil, FolderOpen, Eye, CalendarDays, Sparkles, UploadCloud, ShieldCheck } from 'lucide-react';
+import { Trash2, Pencil, FolderOpen, Eye, CalendarDays, Sparkles, UploadCloud, ShieldCheck, Lock } from 'lucide-react';
 import EmptyState from '@/components/EmptyState';
+import CompanySafe from '@/pages/CompanySafe';
 import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import DataControlPanel from '@/components/documents/DataControlPanel';
 import StaffDocumentToolbar from '@/components/documents/StaffDocumentToolbar';
@@ -270,6 +271,12 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
               15-Category Vault &amp; Controlled Forms
             </TabsTrigger>
           )}
+          {!profile && (
+            <TabsTrigger value="company-safe" data-hint="Business Identity, Credentials & Company Safe">
+              <Lock className="h-3.5 w-3.5" />
+              Company Safe
+            </TabsTrigger>
+          )}
         </TabsList>
 
         <TabsContent value="documents" className="mt-3 space-y-3">
@@ -415,6 +422,11 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
         {!profile && (
           <TabsContent value="controlled-forms-vault" className="mt-3">
             <EnterpriseStandardQualityGateSuite />
+          </TabsContent>
+        )}
+        {!profile && (
+          <TabsContent value="company-safe" className="mt-3">
+            <CompanySafe embedded />
           </TabsContent>
         )}
       </Tabs>

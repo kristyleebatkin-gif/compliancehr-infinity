@@ -2,18 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { ClipboardList, Loader2, PlayCircle, CheckCircle2, AlertTriangle } from 'lucide-react';
 
-const priorityTone = {
-  Low: 'bg-[#00C6FF]/15 text-[#0072FF]',
-  Medium: 'bg-[#C084FC]/20 text-[#0A2B6D]',
-  High: 'bg-[#A100FF]/15 text-[#5A00D6]',
-  Urgent: 'bg-[#FF2E9A]/15 text-[#FF2E9A]',
-};
-
 const tiles = [
-  { key: 'open', label: 'Open', from: '#0072FF', to: '#0A2B6D', Icon: ClipboardList, statuses: ['Pending', 'Open', 'Pending Approval'] },
-  { key: 'progress', label: 'In Progress', from: '#5A00D6', to: '#A100FF', Icon: PlayCircle, statuses: ['In Progress'] },
-  { key: 'overdue', label: 'Overdue', from: '#FF2E9A', to: '#FF6EDB', Icon: AlertTriangle, statuses: null },
-  { key: 'done', label: 'Completed', from: '#00C6FF', to: '#0072FF', Icon: CheckCircle2, statuses: ['Completed'] },
+  { key: 'open', label: 'Open', color: '#0072FF', Icon: ClipboardList },
+  { key: 'progress', label: 'In Progress', color: '#A855F7', Icon: PlayCircle },
+  { key: 'overdue', label: 'Overdue', color: '#FF2E9A', Icon: AlertTriangle },
+  { key: 'done', label: 'Completed', color: '#0072FF', Icon: CheckCircle2 },
 ];
 
 export default function CommTaskDash() {
@@ -31,8 +24,8 @@ export default function CommTaskDash() {
         base44.entities.TodoTask.count({ status: 'Completed' }),
         base44.entities.TodoTask.filter(
           { status: { $in: ['Pending', 'Open', 'In Progress', 'Pending Approval'] }, due_date: { $ne: null } },
-          { sort: 'due_date', limit: 4 }
-        ).then((p) => p.items.filter((t) => t.due_date >= today).slice(0, 3)),
+          { sort: 'due_date', limit: 3 }
+        ).then((p) => (p.items || []).slice(0, 2)),
       ]);
       if (!alive) return;
       setStats({ open, progress, overdue, done });
@@ -42,52 +35,39 @@ export default function CommTaskDash() {
   }, []);
 
   return (
-    <section className="overflow-hidden rounded-2xl border border-border/60 bg-card shadow-panel">
-      <div className="comm-panel-bar relative flex items-center gap-2.5 px-4 py-2.5" style={{ '--comm-bar-bg': 'var(--header-gradient)', color: '#fff' }}>
-        <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/15 ring-1 ring-white/30">
-          <ClipboardList className="h-4 w-4 text-white" />
-        </span>
-        <div>
-          <h3 className="text-base font-extrabold">Task Dashboard</h3>
-          <p className="text-xs font-bold text-white/95">Live team to-do status at a glance</p>
-        </div>
+    <section className="overflow-hidden rounded-xl border border-[#0072FF]/50 bg-[#162235] p-2.5 text-white">
+      <div className="mb-2 flex items-center justify-between">
+        <span className="text-xs font-extrabold text-white">Task Status Summary</span>
       </div>
 
       {!stats ? (
-        <div className="flex items-center justify-center gap-2 py-4 text-xs font-semibold text-muted-foreground">
-          <Loader2 className="h-4 w-4 animate-spin" /> Loading tasks…
+        <div className="flex items-center justify-center gap-2 py-2 text-xs text-slate-300">
+          <Loader2 className="h-3.5 w-3.5 animate-spin" /> Loading…
         </div>
       ) : (
-        <div className="space-y-2.5 p-3.5">
-          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
-            {tiles.map(({ key, label, from, to, Icon }) => (
-              <div key={key} className="overflow-hidden rounded-xl border bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md">
-                <div className="h-1.5" style={{ background: `linear-gradient(90deg, ${from}, ${to})` }} />
-                <div className="flex items-center gap-2.5 p-2.5">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-white shadow" style={{ background: `linear-gradient(135deg, ${from}, ${to})` }}>
-                    <Icon className="h-4 w-4" />
-                  </span>
-                  <div>
-                    <p className="text-base sm:text-lg font-extrabold leading-5">{stats[key]}</p>
-                    <p className="text-xs font-semibold text-muted-foreground">{label}</p>
-                  </div>
+        <div className="space-y-2">
+          <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-4">
+            {tiles.map(({ key, label, color, Icon }) => (
+              <div key={key} className="flex items-center gap-2 rounded-lg border border-white/15 bg-[#081018] p-2">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded text-white" style={{ backgroundColor: color }}>
+                  <Icon className="h-3.5 w-3.5 text-white" />
+                </span>
+                <div>
+                  <p className="text-sm font-extrabold leading-4 text-white">{stats[key]}</p>
+                  <p className="text-[10px] font-bold text-slate-300">{label}</p>
                 </div>
               </div>
             ))}
           </div>
 
           {upNext.length > 0 && (
-            <div className="rounded-xl border bg-white p-3">
-              <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">Up next</p>
-              <div className="space-y-1.5">
-                {upNext.map((t) => (
-                  <div key={t.id} className="flex items-center gap-2 rounded-lg border px-2.5 py-2">
-                    <span className={`rounded-md px-2 py-0.5 text-xs font-bold ${priorityTone[t.priority] || 'bg-slate-100'}`}>{t.priority}</span>
-                    <p className="flex-1 truncate text-xs sm:text-sm font-semibold">{t.title}</p>
-                    <span className="text-xs font-semibold text-muted-foreground">{t.due_date}</span>
-                  </div>
-                ))}
-              </div>
+            <div className="space-y-1">
+              {upNext.map((t) => (
+                <div key={t.id} className="flex items-center justify-between gap-2 rounded-lg border border-white/10 bg-[#081018] px-2.5 py-1 text-[11px] text-white">
+                  <span className="truncate font-bold">{t.title}</span>
+                  <span className="shrink-0 text-[10px] text-slate-300">{t.due_date}</span>
+                </div>
+              ))}
             </div>
           )}
         </div>
