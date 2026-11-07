@@ -26,6 +26,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
+import AuditorLinkGeneratorCard from '@/components/remoteAccess/AuditorLinkGeneratorCard';
 
 const ACCESS_MODES = [
   'Zero-Trust Cloud (No VPN)',
@@ -298,6 +299,9 @@ export default function RemoteAccessVpnHub() {
           </div>
         </div>
       </div>
+
+      {/* One-Click Auditor Link Generator */}
+      <AuditorLinkGeneratorCard onCreated={loadData} />
 
       {/* Filter & Search Bar */}
       <div className="flex flex-col gap-2.5 rounded-xl border border-[#00C6FF]/40 bg-black p-3.5 sm:flex-row sm:items-center sm:justify-between">
