@@ -47,7 +47,10 @@ export default function QualityImprovement() {
   const [editing, setEditing] = useState(null);
   const [sending, setSending] = useState('');
   const [defaultType, setDefaultType] = useState('Improvement');
-  const [activeTab, setActiveTab] = useState('Improvement');
+  const [activeTab, setActiveTab] = useState(() => {
+    const requested = new URLSearchParams(window.location.search).get('tab');
+    return TABS.some((tab) => tab.value === requested) ? requested : 'Improvement';
+  });
 
   const load = useCallback(async () => {
     setLoading(true);

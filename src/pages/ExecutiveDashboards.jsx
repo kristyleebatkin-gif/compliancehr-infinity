@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LayoutDashboard, ShieldAlert, Landmark, ShieldCheck } from 'lucide-react';
+import { LayoutDashboard, ShieldAlert, Landmark, ShieldCheck, ClipboardCheck, FolderOpen } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
 import ExecutiveMetricCard from '@/components/executive/ExecutiveMetricCard';
 import useExecutiveDashboardMetrics from '@/components/executive/useExecutiveDashboardMetrics';
@@ -28,6 +28,18 @@ const VIEWS = {
     ['expiredPolicies', 'Expired policies', 'Policies with an expired status.', '/compliance?tab=policies'],
     ['auditFollowups', 'Audit follow-ups required', 'Audit records marked follow-up required.', '/compliance?tab=audits'],
     ['tasks', 'Overdue tasks', 'Unfinished tasks with a due date before today in Sydney.', '/tasks'],
+  ] },
+  quality: { title: 'Quality Command Dashboard', description: 'Monitor improvement, corrective and preventive actions across the quality register.', icon: ClipboardCheck, metrics: [
+    ['openImprovements', 'Open improvement ideas', 'Improvement and idea records marked new or in progress.', '/quality?tab=Improvement'],
+    ['openCorrective', 'Open corrective actions', 'Corrective actions marked new or in progress.', '/quality?tab=Corrective%20Action'],
+    ['overdueCorrective', 'Overdue corrective actions', 'New or in-progress corrective actions with a target date before today in Sydney.', '/quality?tab=Corrective%20Action'],
+    ['openPreventive', 'Open preventive actions', 'Preventive actions marked new or in progress.', '/quality?tab=Preventive%20Action'],
+  ] },
+  documents: { title: 'Document Command Centre', description: 'Track controlled-document review, draft and version status.', icon: FolderOpen, metrics: [
+    ['documentReviews', 'Document reviews past due', 'Draft, review or approved documents with a review date before today in Sydney.', '/governance?tab=document-control'],
+    ['documentsInReview', 'Documents in review', 'Controlled documents marked review.', '/governance?tab=document-control'],
+    ['draftDocuments', 'Draft documents', 'Controlled documents marked draft.', '/governance?tab=document-control'],
+    ['supersededDocuments', 'Superseded documents', 'Controlled documents marked superseded.', '/governance?tab=document-control'],
   ] },
 };
 
