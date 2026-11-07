@@ -48,13 +48,13 @@ export default function CommTeamDash() {
       ) : (
         <div className="mt-2.5 grid grid-cols-2 gap-2 sm:grid-cols-4">
           {tiles.map(({ key, label, color, Icon }) => (
-            <div key={key} className="flex items-center gap-2 rounded-lg border border-white/15 bg-[#162235] p-2.5">
+            <div key={key} className="flex min-w-0 items-center gap-2 rounded-lg border border-white/15 bg-[#162235] p-2.5">
               <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-white" style={{ backgroundColor: color }}>
                 <Icon className="h-3.5 w-3.5 text-white" />
               </span>
-              <div>
+              <div className="min-w-0">
                 <p className="text-sm font-extrabold leading-4 text-white">{stats[key]}</p>
-                <p className="text-[10px] font-bold text-slate-300">{label}</p>
+                <p className="text-[10px] font-bold leading-tight text-slate-300 break-words">{label}</p>
               </div>
             </div>
           ))}

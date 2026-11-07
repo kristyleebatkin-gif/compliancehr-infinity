@@ -32,10 +32,10 @@ export function PowerBiRadialGauge({ title, value, target, status, color = '#39E
       }`}
       style={{ backgroundColor: '#1E293B', borderColor: 'rgba(57,230,255,0.24)' }}
     >
-      <div className="space-y-1">
-        <div className="text-[12px] font-semibold text-slate-300">{title}</div>
-        <div className="text-[32px] font-bold leading-none text-white">{value}</div>
-        <div className="flex items-center gap-2 pt-1 text-[11px]">
+      <div className="min-w-0 flex-1 space-y-1">
+        <div className="text-[12px] font-semibold leading-snug text-slate-300 break-words">{title}</div>
+        <div className="text-2xl font-bold leading-none text-white">{value}</div>
+        <div className="flex flex-wrap items-center gap-1.5 pt-1 text-[11px]">
           {target && <span className="text-slate-300">Target: {target}</span>}
           <span
             className="rounded px-2 py-0.5 text-[10px] font-bold uppercase"
@@ -138,28 +138,28 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
     return (
       <div className="space-y-3.5" style={{ fontFamily: "'Segoe UI', sans-serif" }}>
         {/* WIREFRAME ROW 1: GEI | OHI | ORI | BRI | ACS | LQI */}
-        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 xl:grid-cols-6">
           {PAGE1_TOP_KPIS.map((kpi) => (
             <button
               key={kpi.code}
               type="button"
               onClick={() => onNavigatePage(kpi.targetPage)}
-              className="group rounded-xl border p-3 text-left transition hover:border-[#39E6FF]"
+              className="group flex min-w-0 flex-col justify-between rounded-xl border p-2.5 text-left transition hover:border-[#39E6FF]"
               style={{ backgroundColor: '#1E293B', borderColor: 'rgba(57,230,255,0.22)' }}
             >
-              <div className="flex items-center justify-between">
+              <div className="flex flex-wrap items-center justify-between gap-1">
                 <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: '#39E6FF' }}>
                   {kpi.code}
                 </span>
                 <span
-                  className="rounded px-1.5 py-0.5 text-[9.5px] font-bold"
+                  className="rounded px-1.5 py-0.5 text-[9px] font-bold"
                   style={{ backgroundColor: `${kpi.color}22`, color: kpi.color }}
                 >
                   Target {kpi.target}
                 </span>
               </div>
-              <div className="mt-1 text-[32px] font-bold leading-none text-white">{kpi.value}</div>
-              <div className="mt-1 truncate text-[12px] text-slate-300">{kpi.label}</div>
+              <div className="mt-1 text-2xl font-bold leading-none text-white">{kpi.value}</div>
+              <div className="mt-1 text-[11px] font-semibold leading-snug text-slate-300 break-words">{kpi.label}</div>
             </button>
           ))}
         </div>
@@ -264,7 +264,7 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
                   style={{ backgroundColor: '#1E293B' }}
                 >
                   <div className="min-w-0 flex-1">
-                    <div className="truncate font-bold text-white">{r.title}</div>
+                    <div className="font-bold leading-snug text-white break-words">{r.title}</div>
                     <div className="text-[11px] text-slate-300">Owner: {r.owner} · Due: {r.dueDate}</div>
                   </div>
                   <span
@@ -299,15 +299,15 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
                 Open Page 8 <ArrowUpRight className="h-3 w-3" />
               </button>
             </div>
-            <div className="grid grid-cols-2 gap-2 sm:grid-cols-6">
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-6">
               {PAGE8_BENEFITS_WATERFALL.steps.map((st) => (
                 <div
                   key={st.step}
-                  className="flex flex-col justify-between rounded-lg border p-2.5"
+                  className="flex min-w-0 flex-col justify-between rounded-lg border p-2.5"
                   style={{ backgroundColor: '#1E293B', borderColor: st.color }}
                 >
-                  <div className="text-[10px] font-bold text-slate-300">{st.step}</div>
-                  <div className="mt-2 text-sm font-black" style={{ color: st.color }}>{st.display}</div>
+                  <div className="text-[10px] font-bold leading-snug text-slate-300 break-words">{st.step}</div>
+                  <div className="mt-2 text-sm font-black leading-tight" style={{ color: st.color }}>{st.display}</div>
                 </div>
               ))}
             </div>
@@ -366,7 +366,7 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
                   style={{ backgroundColor: '#1E293B' }}
                 >
                   <div className="min-w-0 flex-1">
-                    <div className="truncate font-bold text-white">{act.action}</div>
+                    <div className="font-bold leading-snug text-white break-words">{act.action}</div>
                     <div className="text-[11px] text-slate-300">{act.owner} · Due {act.dueDate}</div>
                   </div>
                   <span
@@ -406,7 +406,7 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
                   style={{ backgroundColor: '#1E293B' }}
                 >
                   <div className="min-w-0 flex-1">
-                    <div className="truncate font-bold text-white">
+                    <div className="font-bold leading-snug text-white break-words">
                       <span style={{ color: '#39E6FF' }}>{dec.id}</span> · {dec.decision}
                     </div>
                     <div className="text-[11px] text-slate-300">{dec.committee} · {dec.owner}</div>

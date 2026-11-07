@@ -249,23 +249,44 @@ export default function SmeGarmBoardDashboardTab({
           className="rounded-xl border p-4 lg:col-span-5"
           style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.22)' }}
         >
-          <div className="mb-3 flex items-center justify-between gap-2">
-            <div>
-              <div className="text-[10px] font-black uppercase tracking-wider" style={{ color: '#22C55E' }}>
-                Module 3 · (Current − Baseline) ÷ (Target − Baseline)
-              </div>
+          <div className="mb-2.5 space-y-1.5">
+            <div className="flex flex-wrap items-center justify-between gap-1.5">
               <h3 className="text-sm font-black text-white">
                 Benefits Waterfall ($4.82M Realised · 3.4x ROI)
               </h3>
+              <span className="text-[10px] font-black uppercase tracking-wider" style={{ color: '#22C55E' }}>
+                Module 3 · (Current − Baseline) ÷ (Target − Baseline)
+              </span>
             </div>
-            <button
-              type="button"
-              onClick={() => onSelectModule('benefits')}
-              className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-[10px] font-black"
-              style={{ backgroundColor: '#1E293B', color: '#39E6FF' }}
-            >
-              Open Module 3 <ArrowUpRight className="h-3 w-3" />
-            </button>
+            {/* Board & Audit Controls Positioned Directly Above B1 on One Line */}
+            <div className="flex flex-wrap items-center justify-between gap-1.5 border-t border-slate-700/60 pt-1.5">
+              <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => setSubDashboard('board')}
+                  className="rounded px-2 py-0.5 text-[10px] font-black text-white"
+                  style={{ backgroundColor: subDashboard === 'board' ? '#0072FF' : '#1E293B' }}
+                >
+                  Board
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSubDashboard('audit_risk')}
+                  className="rounded px-2 py-0.5 text-[10px] font-black text-white"
+                  style={{ backgroundColor: subDashboard === 'audit_risk' ? '#A855F7' : '#1E293B' }}
+                >
+                  Audit &amp; Risk
+                </button>
+              </div>
+              <button
+                type="button"
+                onClick={() => onSelectModule('benefits')}
+                className="inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[10px] font-black"
+                style={{ backgroundColor: '#1E293B', color: '#39E6FF' }}
+              >
+                Open Module 3 <ArrowUpRight className="h-3 w-3" />
+              </button>
+            </div>
           </div>
 
           <div className="space-y-2.5">

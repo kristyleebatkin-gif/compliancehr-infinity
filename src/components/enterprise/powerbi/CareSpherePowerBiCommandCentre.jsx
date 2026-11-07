@@ -132,26 +132,27 @@ export default function CareSpherePowerBiCommandCentre() {
             : 'flex flex-col'
         }
       >
-      {/* Top Power BI Widescreen Header Bar: Concise 2-Line Text + Document Types on Bottom Line */}
+      {/* Top Power BI Widescreen Header Bar: Concise Text + All Action & Export Buttons on One Single Line */}
       <div
-        className="space-y-2 border-b px-4 py-2.5"
+        className="space-y-1.5 border-b px-4 py-2.5"
         style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.28)' }}
       >
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <div>
-            <h1 className="text-base sm:text-lg font-extrabold leading-tight text-white">
-              CareSphere Executive Command Centre · Page {currentPageMeta.pageNum} of 12 ({currentPageMeta.shortLabel})
-            </h1>
-            <p className="text-xs font-semibold text-slate-300 line-clamp-1">
-              Power BI 16:9 Widescreen · {reportingPeriod} · Last Refresh: {lastRefresh} · RAG: GREEN (Ω∞ READY)
-            </p>
-          </div>
+          <h1 className="text-base sm:text-lg font-extrabold leading-snug text-white break-words">
+            CareSphere Executive Command Centre · Page {currentPageMeta.pageNum} of 12 ({currentPageMeta.shortLabel})
+          </h1>
+          <span className="text-[11px] font-bold text-[#39E6FF] break-words">
+            Power BI 16:9 Widescreen · {reportingPeriod} · Last Refresh: {lastRefresh} · RAG: GREEN (Ω∞ READY)
+          </span>
+        </div>
 
-          <div className="flex flex-wrap items-center gap-1.5 text-[11px]">
+        {/* Single Bottom Line: All Controls & Document Export Buttons Together */}
+        <div className="flex flex-wrap items-center justify-between gap-1.5 border-t border-slate-700/70 pt-1.5 text-[11px]">
+          <div className="flex flex-wrap items-center gap-1.5">
             <button
               type="button"
               onClick={handleRefresh}
-              className="inline-flex items-center gap-1 rounded-lg border px-2 py-1 font-semibold text-white"
+              className="inline-flex h-7 items-center gap-1 whitespace-nowrap rounded-lg border px-2.5 font-semibold text-white"
               style={{ backgroundColor: '#1E293B', borderColor: 'rgba(255,255,255,0.15)' }}
             >
               <RefreshCw className="h-3 w-3 text-[#39E6FF]" />
@@ -160,7 +161,7 @@ export default function CareSpherePowerBiCommandCentre() {
             <button
               type="button"
               onClick={() => setShowSpeakerNotes((prev) => !prev)}
-              className="inline-flex items-center gap-1 rounded-lg border px-2 py-1 font-bold text-white"
+              className="inline-flex h-7 items-center gap-1 whitespace-nowrap rounded-lg border px-2.5 font-bold text-white"
               style={{ backgroundColor: '#1E293B', borderColor: '#39E6FF' }}
             >
               <Mic className="h-3 w-3" />
@@ -169,25 +170,22 @@ export default function CareSpherePowerBiCommandCentre() {
             <button
               type="button"
               onClick={togglePresentationMode}
-              className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1 font-bold text-white"
+              className="inline-flex h-7 items-center gap-1 whitespace-nowrap rounded-lg px-2.5 font-bold text-white"
               style={{ backgroundColor: isPresentationMode ? '#EF4444' : '#0072FF' }}
             >
               {isPresentationMode ? <Minimize2 className="h-3 w-3" /> : <Maximize2 className="h-3 w-3" />}
               <span>{isPresentationMode ? 'Exit 16:9' : '16:9 Mode'}</span>
             </button>
           </div>
-        </div>
 
-        {/* Bottom Line in Header Section: All Document Types (PPTX, DOCX, PDF, PBIDS) */}
-        <div className="flex flex-wrap items-center justify-between gap-2 border-t border-slate-700/70 pt-1.5">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-white">
-            Document &amp; Model Exports:
-          </span>
           <div className="flex flex-wrap items-center gap-1.5">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-white whitespace-nowrap">
+              Document &amp; Model Exports:
+            </span>
             <button
               type="button"
               onClick={() => exportBoardPackPowerPoint({ orgHealthIndex: 87, omegaReadinessIndex: 82, lqiScore: 92 })}
-              className="rounded px-2.5 py-0.5 text-[11px] font-bold text-white"
+              className="inline-flex h-7 items-center whitespace-nowrap rounded px-2.5 text-[11px] font-bold text-white"
               style={{ backgroundColor: '#0072FF' }}
             >
               PPTX
@@ -195,7 +193,7 @@ export default function CareSpherePowerBiCommandCentre() {
             <button
               type="button"
               onClick={() => exportBoardPackWord({ orgHealthIndex: 87, omegaReadinessIndex: 82, lqiScore: 92 })}
-              className="rounded px-2.5 py-0.5 text-[11px] font-bold text-white"
+              className="inline-flex h-7 items-center whitespace-nowrap rounded px-2.5 text-[11px] font-bold text-white"
               style={{ backgroundColor: '#A855F7' }}
             >
               DOCX
@@ -203,7 +201,7 @@ export default function CareSpherePowerBiCommandCentre() {
             <button
               type="button"
               onClick={() => exportBoardPackPdf({ orgHealthIndex: 87, omegaReadinessIndex: 82, lqiScore: 92 })}
-              className="rounded px-2.5 py-0.5 text-[11px] font-bold text-white"
+              className="inline-flex h-7 items-center whitespace-nowrap rounded px-2.5 text-[11px] font-bold text-white"
               style={{ backgroundColor: '#FF2E9A' }}
             >
               PDF
@@ -211,7 +209,7 @@ export default function CareSpherePowerBiCommandCentre() {
             <button
               type="button"
               onClick={() => exportPowerBiSemanticModel({ orgHealthIndex: 87, omegaReadinessIndex: 82, lqiScore: 92 })}
-              className="rounded border px-2.5 py-0.5 text-[11px] font-bold text-white"
+              className="inline-flex h-7 items-center whitespace-nowrap rounded border px-2.5 text-[11px] font-bold text-white"
               style={{ backgroundColor: '#1E293B', borderColor: '#39E6FF' }}
             >
               PBIDS
@@ -278,7 +276,7 @@ export default function CareSpherePowerBiCommandCentre() {
                     className="h-3.5 w-3.5 shrink-0"
                     style={{ color: isSelected ? '#081018' : '#39E6FF' }}
                   />
-                  <span className="truncate">
+                  <span className="min-w-0 leading-snug break-words">
                     {pg.pageNum}. {pg.label}
                   </span>
                 </button>
@@ -467,7 +465,7 @@ export default function CareSpherePowerBiCommandCentre() {
         className="border-t px-4 py-2 text-[11px]"
         style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.28)' }}
       >
-        <p className="font-bold text-white line-clamp-2">
+        <p className="font-bold leading-snug text-white break-words">
           {CONSTITUTIONAL_PRINCIPLE} — {MANDATORY_OUTPUT_PILLARS.join(' · ')}
         </p>
       </div>

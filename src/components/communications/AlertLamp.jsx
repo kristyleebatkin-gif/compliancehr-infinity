@@ -90,7 +90,7 @@ export default function AlertLamp({ kind, className = undefined }) {
       >
         <Icon aria-hidden="true" className="h-3.5 w-3.5 text-white" />
       </span>
-      <span className="relative min-w-0 flex-1 truncate leading-tight">
+      <span className="relative min-w-0 flex-1 leading-tight break-words">
         <span className="text-xs font-extrabold text-white">{label}</span>
         <span className="ml-1.5 text-[10px] font-bold text-white/90">
           ({count === null ? '…' : lit ? `${count} active` : 'All clear'})

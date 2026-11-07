@@ -48,13 +48,13 @@ export default function CommTaskDash() {
         <div className="space-y-2">
           <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-4">
             {tiles.map(({ key, label, color, Icon }) => (
-              <div key={key} className="flex items-center gap-2 rounded-lg border border-white/15 bg-[#081018] p-2">
+              <div key={key} className="flex min-w-0 items-center gap-2 rounded-lg border border-white/15 bg-[#081018] p-2">
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded text-white" style={{ backgroundColor: color }}>
                   <Icon className="h-3.5 w-3.5 text-white" />
                 </span>
-                <div>
+                <div className="min-w-0">
                   <p className="text-sm font-extrabold leading-4 text-white">{stats[key]}</p>
-                  <p className="text-[10px] font-bold text-slate-300">{label}</p>
+                  <p className="text-[10px] font-bold leading-tight text-slate-300 break-words">{label}</p>
                 </div>
               </div>
             ))}
