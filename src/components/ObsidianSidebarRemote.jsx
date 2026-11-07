@@ -93,16 +93,13 @@ export const PRIMARY_11_OS_NAV = [
     children: [
       { label: 'Compliance & Evidence', path: '/compliance', sub: 'Merged Compliance Centre, Business Analytics & 356 checks' },
       { label: 'Auditor Portal', path: '/auditor-portal', sub: 'Read-only external auditor view' },
-      { label: 'Document Vault & Safe', path: '/documents', sub: 'Controlled policies, renewals & Company Safe' },
+      { label: 'Document Vault & Safe', path: '/documents', sub: 'Every Document, 45 Master Registers, Storage, Routing & Company Safe' },
       { label: 'Remote Access & VPN', path: '/remote-access', sub: 'Zero-trust remote access without headaches' },
       { label: 'Quality & Improvement', path: '/quality', sub: 'Continuous improvement & CAPA' },
       { label: 'Feedback & Surveys', path: '/feedback', sub: 'Complaints, compliments & surveys' },
       { label: 'Checklists', path: '/checklists', sub: 'Operational & audit checklists' },
       { label: 'Review Due Board', path: '/review-due', sub: 'Upcoming scheduled reviews' },
-      { label: 'Universal Storage & Export Hub', path: '/universal-storage', sub: 'Retention, backup & PDF packs' },
-      { label: 'Universal Register Hub', path: '/registers', sub: '45 connected master registers' },
       { label: 'Evidence & User Success Hub', path: '/user-success', sub: 'Evidence-first verification' },
-      { label: 'Record Intelligence & Routing', path: '/record-intelligence', sub: 'Automated cross-module routing' },
     ],
   },
   {
@@ -286,15 +283,12 @@ export const FOCUSED_5_PILLAR_NAV = [
     children: [
       { label: 'Compliance & Evidence', path: '/compliance', sub: 'Merged Compliance Centre, Business Analytics & 356 checks' },
       { label: 'Auditor Portal', path: '/auditor-portal', sub: 'Consent-verified auditor view' },
-      { label: 'Document Vault & Safe', path: '/documents', sub: 'Controlled policies, evidence & Company Safe' },
+      { label: 'Document Vault & Safe', path: '/documents', sub: 'Every Document, 45 Master Registers, Storage, Routing & Company Safe' },
       { label: 'Remote Access & VPN', path: '/remote-access', sub: 'Zero-trust remote access without headaches' },
       { label: 'Governance Layer', path: '/governance', sub: 'Delegations, lifecycle & board packs' },
-      { label: 'Universal Register Hub', path: '/registers', sub: '45 connected master registers' },
       { label: 'Checklists', path: '/checklists', sub: 'Operational & audit checklists' },
       { label: 'Review Due Board', path: '/review-due', sub: 'Upcoming scheduled reviews' },
-      { label: 'Universal Storage & Export Hub', path: '/universal-storage', sub: 'Retention, backup & PDF packs' },
       { label: 'Evidence & User Success Hub', path: '/user-success', sub: 'Evidence-first verification' },
-      { label: 'Record Intelligence & Routing', path: '/record-intelligence', sub: 'Automated cross-module routing' },
       { label: 'NDIS Provider Portal', path: '/ndis-portal', sub: 'Registration groups & KPIs' },
       { label: 'NDIS Updates & News', path: '/ndis-updates', sub: 'Price guide & regulatory alerts' },
       { label: 'Invoicing & Finance', path: '/invoicing', sub: 'NDIS claims & financial controls' },
@@ -397,7 +391,7 @@ export default function ObsidianSidebarRemote({
   const modules = sourceList.filter(
     (item) =>
       !(item.key === 'staff-progress' && sourceList.some((entry) => entry.key === 'staff')) &&
-      item.key !== 'company-safe'
+      !['company-safe', 'universal-storage', 'registers', 'record-intelligence'].includes(item.key)
   );
 
   return (

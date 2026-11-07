@@ -13,9 +13,9 @@ import { companySafeBusinessQuery as safeUploadQuery } from '@/lib/companySafeVa
  */
 const SUBJECTS = [
   { key: 'staff', title: 'Staff Documents', icon: Users, colour: '#2563eb', soft: '#eff6ff', blurb: 'Employee contracts, checks, badges and compliance files', entity: 'EmployeeDocument', anchor: 'staff-docs' },
-  { key: 'participants', title: 'Participants', icon: Heart, colour: '#db2777', soft: '#fdf2f8', blurb: 'Participant documents, plans and uploaded records', entity: 'ParticipantDocument', link: '/participants' },
+  { key: 'participants', title: 'Participants', icon: Heart, colour: '#db2777', soft: '#fdf2f8', blurb: 'Participant documents, plans and uploaded records', entity: 'ParticipantDocument', anchor: 'participant-docs' },
   { key: 'goals', title: 'Goal Progress', icon: Target, colour: '#0d9488', soft: '#f0fdfa', blurb: 'Participant goals, progress notes and reports', entity: 'Goal', link: '/goals' },
-  { key: 'business-doc', title: 'Business Documents', icon: Briefcase, colour: '#0891b2', soft: '#ecfeff', blurb: 'Company safe documents, certificates and registrations', entity: 'CompanyDocument', link: '/company-safe' },
+  { key: 'business-doc', title: 'Business Documents', icon: Briefcase, colour: '#0891b2', soft: '#ecfeff', blurb: 'Company safe documents, certificates and registrations', entity: 'CompanyDocument', anchor: 'vault-subject-business-doc' },
   { key: 'business', title: 'Business Plans', icon: Building2, colour: '#0369a1', soft: '#eff6ff', blurb: 'Business, strategic and operational plan templates', anchor: 'vault-business' },
   { key: 'policies', title: 'Policies & Procedures', icon: ScrollText, colour: '#4f46e5', soft: '#eef2ff', blurb: 'NDIS policy and procedure manual, every volume', anchor: 'vault-business' },
   { key: 'registers', title: 'Registers', icon: Layers, colour: '#7c3aed', soft: '#faf5ff', blurb: 'Blank register templates for every compliance log', anchor: 'vault-business' },

@@ -239,10 +239,7 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
           </TabsContent>
           <TabsContent value="inbox"><Inbox /></TabsContent>
           <TabsContent value="templates">
-            <div className="space-y-3">
-              {!restricted && <EnterpriseStandardQualityGateSuite />}
-              <TemplateLibrary />
-            </div>
+            <TemplateLibrary />
           </TabsContent>
           <TabsContent value="email"><ProfessionalEmail /></TabsContent>
           <TabsContent value="bulk"><BulkMessage /></TabsContent>

@@ -32,7 +32,16 @@ import ExpiryCalendar from '@/components/documents/ExpiryCalendar';
 import SmartMailroomHub from '@/components/documents/SmartMailroomHub';
 import EnterpriseStandardQualityGateSuite from '@/components/compliance/EnterpriseStandardQualityGateSuite';
 import UniversalDataStorageRetentionExportSuite from '@/components/compliance/UniversalDataStorageRetentionExportSuite';
+import FiveLayerEnterpriseAcceptanceSuite from '@/components/compliance/FiveLayerEnterpriseAcceptanceSuite';
 import UniversalRegisterManagementHubSuite from '@/components/operations/UniversalRegisterManagementHubSuite';
+import CanonicalRegisterDeduplicationBar from '@/components/operations/CanonicalRegisterDeduplicationBar';
+import AlliedHealthAndNursingOsSuite from '@/components/enterprise/AlliedHealthAndNursingOsSuite';
+import UniversalRecordIntelligenceRoutingSuite from '@/components/operations/UniversalRecordIntelligenceRoutingSuite';
+import Standard2026PrintableTemplatesSuite from '@/components/compliance/Standard2026PrintableTemplatesSuite';
+import ReviewFormTemplates from '@/components/compliance/ReviewFormTemplates';
+import DocumentRenewalCalendar from '@/components/compliance/DocumentRenewalCalendar';
+import BusinessDocumentsLibrary from '@/components/documents/BusinessDocumentsLibrary';
+import ReviewSchedulesPanel from '@/components/documents/ReviewSchedulesPanel';
 import StandardsEvidenceGapStrip from '@/components/documents/StandardsEvidenceGapStrip';
 
 const DOC_TYPES = ['Resume', 'Contract', 'Police Check', 'Blue Card', 'First Aid Certificate', 'CPR Certificate', 'NDIS Worker Screening', "Driver's License", 'Qualifications', 'Reference Check', 'Other'];
@@ -48,8 +57,10 @@ const expiryTone = (expiry) => {
 
 function Documents({ profile, profileKind, embedded = false } = {}) {
   const { search } = useLocation();
-  const focus = new URLSearchParams(search).get('focus');
-  const documentType = new URLSearchParams(search).get('document_type') || '';
+  const searchParams = new URLSearchParams(search);
+  const focus = searchParams.get('focus');
+  const requestedTab = searchParams.get('tab');
+  const documentType = searchParams.get('document_type') || '';
   const [docs, setDocs] = useState([]);
   const [myDocs, setMyDocs] = useState([]);
   const [me, setMe] = useState(null);
@@ -65,7 +76,11 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
   const [scanMsg, setScanMsg] = useState('');
   const [selected, setSelected] = useState([]);
   const [applying, setApplying] = useState(false);
-  const [tab, setTab] = useState('documents');
+  const [tab, setTab] = useState(() => requestedTab || 'documents');
+
+  useEffect(() => {
+    if (requestedTab) setTab(requestedTab);
+  }, [requestedTab]);
   const [onlyGaps, setOnlyGaps] = useState(false);
   const canViewUploads = isVaultManager(me?.role);
   const canViewDataControl = isVaultProvider(me?.role);
@@ -233,14 +248,26 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
 
       <Tabs value={tab} onValueChange={setTab}>
         <TabsList className="vault-document-tabs">
-          <TabsTrigger value="documents" data-hint="Employee, Participant & Compliance Files">
+          <TabsTrigger value="documents" data-hint="Employee, Participant, Business & Compliance Files">
             <FolderOpen className="h-3.5 w-3.5" />
             Every Document
           </TabsTrigger>
           {!profile && (
-            <TabsTrigger value="registers-hub" data-hint="45 Auto-Updated Master Registers & Register Health">
+            <TabsTrigger value="registers-hub" data-hint="45 Auto-Updated Master Registers, Allied Health Catalogue & Health">
               <Sparkles className="h-3.5 w-3.5" />
-              45 Master Registers &amp; Health
+              45 Master Registers &amp; Catalogue
+            </TabsTrigger>
+          )}
+          {!profile && (
+            <TabsTrigger value="universal-storage" data-hint="6-Destination Storage, Retention, Traceability & 4-Format Export">
+              <FolderOpen className="h-3.5 w-3.5" />
+              Universal Storage &amp; Export
+            </TabsTrigger>
+          )}
+          {!profile && (
+            <TabsTrigger value="record-intelligence" data-hint="Automated Classification, Cross-Module Linking & Routing">
+              <Sparkles className="h-3.5 w-3.5" />
+              Record Intelligence &amp; Routing
             </TabsTrigger>
           )}
           {!profile && (
@@ -251,10 +278,10 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
           )}
           <TabsTrigger value="expiry-calendar" data-hint="90 / 60 / 30 / 14-Day Renewal Schedule">
             <CalendarDays className="h-3.5 w-3.5" />
-            Expiry Calendar
+            Expiry &amp; Renewal Calendar
           </TabsTrigger>
           {!profile && canViewUploads && (
-            <TabsTrigger value="vault-uploads" data-hint="Bulk Upload & Official Templates">
+            <TabsTrigger value="vault-uploads" data-hint="Bulk Upload, Form Templates & Official Libraries">
               <UploadCloud className="h-3.5 w-3.5" />
               Vault Uploads &amp; Templates
             </TabsTrigger>
@@ -266,9 +293,9 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
             </TabsTrigger>
           )}
           {!profile && (
-            <TabsTrigger value="controlled-forms-vault" data-hint="15 Vault Categories, 11-Section Forms & Reports">
+            <TabsTrigger value="controlled-forms-vault" data-hint="15 Vault Categories, 11-Section Forms & 2026 Printable Templates">
               <FolderOpen className="h-3.5 w-3.5" />
-              15-Category Vault &amp; Controlled Forms
+              15-Category Vault &amp; 2026 Templates
             </TabsTrigger>
           )}
           {!profile && (
@@ -388,11 +415,65 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
         </>
       )}
 
+          {!profile && pdocs.length > 0 && (
+            <div id="participant-docs" className="scroll-mt-24 space-y-2 rounded-xl border border-border bg-card p-3">
+              <div className="flex items-center justify-between gap-2">
+                <h3 className="text-sm font-bold text-[#0A2B6D]">Participant Documents in Vault ({pdocs.length})</h3>
+              </div>
+              <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                {pdocs.slice(0, 18).map((pd) => (
+                  <Card key={pd.id} className="border-border/60">
+                    <CardContent className="px-3 py-2">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0">
+                          <button
+                            type="button"
+                            onClick={() => viewDoc(pd)}
+                            className="truncate text-left font-semibold text-[#0A2B6D] hover:text-[#0072FF] hover:underline"
+                          >
+                            {pd.title || pd.document_type}
+                          </button>
+                          <p className="text-xs text-muted-foreground">{pd.participant_name || 'Participant'} · {pd.document_type}</p>
+                        </div>
+                        <Badge className={expiryTone(pd.expiry_date || pd.review_date)}>{pd.status || 'Received'}</Badge>
+                      </div>
+                      <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground">
+                        <span>{pd.review_date ? `Review ${format(new Date(pd.review_date), 'd MMM yyyy')}` : pd.uploaded_date || ''}</span>
+                        <Button variant="outline" size="sm" className="h-7 px-2 text-xs" onClick={() => viewDoc(pd)}>
+                          <Eye className="mr-1 h-3.5 w-3.5" /> Open
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {!profile && (
+            <div className="space-y-4 pt-2">
+              <BusinessDocumentsLibrary />
+              <ReviewSchedulesPanel />
+            </div>
+          )}
         </TabsContent>
 
         {!profile && (
-          <TabsContent value="registers-hub" className="mt-3">
+          <TabsContent value="registers-hub" className="mt-3 space-y-4">
+            <CanonicalRegisterDeduplicationBar />
+            <AlliedHealthAndNursingOsSuite />
             <UniversalRegisterManagementHubSuite />
+          </TabsContent>
+        )}
+        {!profile && (
+          <TabsContent value="universal-storage" className="mt-3 space-y-4">
+            <UniversalDataStorageRetentionExportSuite />
+            <FiveLayerEnterpriseAcceptanceSuite />
+          </TabsContent>
+        )}
+        {!profile && (
+          <TabsContent value="record-intelligence" className="mt-3 space-y-4">
+            <UniversalRecordIntelligenceRoutingSuite />
           </TabsContent>
         )}
         {!profile && (
@@ -401,15 +482,17 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
           </TabsContent>
         )}
 
-        <TabsContent value="expiry-calendar" className="mt-4">
+        <TabsContent value="expiry-calendar" className="mt-4 space-y-4">
           <ExpiryCalendar docs={docs} pdocs={pdocs} certs={certs} viewDoc={viewDoc} editable={canManageAll} onReschedule={load} />
+          {!profile && <DocumentRenewalCalendar />}
         </TabsContent>
 
         {!profile && canViewUploads && (
-          <TabsContent value="vault-uploads" className="mt-3">
+          <TabsContent value="vault-uploads" className="mt-3 space-y-4">
             <div id="vault-vault" className="scroll-mt-24">
               <VaultUploads />
             </div>
+            <ReviewFormTemplates />
           </TabsContent>
         )}
 
@@ -420,8 +503,9 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
         )}
 
         {!profile && (
-          <TabsContent value="controlled-forms-vault" className="mt-3">
+          <TabsContent value="controlled-forms-vault" className="mt-3 space-y-4">
             <EnterpriseStandardQualityGateSuite />
+            <Standard2026PrintableTemplatesSuite />
           </TabsContent>
         )}
         {!profile && (

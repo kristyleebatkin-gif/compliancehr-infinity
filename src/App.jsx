@@ -150,7 +150,7 @@ const AuthenticatedApp = () => {
           <Route path="/auditor-portal" element={<RoleGate navKey="auditor-portal"><AuditorsPortal /></RoleGate>} />
           <Route path="/briefing" element={<RoleGate navKey="daily-briefing"><DailyBriefing /></RoleGate>} />
           <Route path="/documents" element={<RoleGate navKey="documents"><Documents /></RoleGate>} />
-          <Route path="/universal-storage" element={<RoleGate navKey="universal-storage"><UniversalStorageHub /></RoleGate>} />
+          <Route path="/universal-storage" element={<Navigate to="/documents?tab=universal-storage" replace />} />
           <Route path="/training" element={<RoleGate navKey="training"><Training /></RoleGate>} />
           <Route path="/tasks" element={<RoleGate navKey="tasks"><Tasks /></RoleGate>} />
           <Route path="/shared-to-do" element={<RoleGate navKey="tasks"><SharedTodoDashboard /></RoleGate>} />
@@ -177,9 +177,9 @@ const AuthenticatedApp = () => {
           <Route path="/emergency-response" element={<RoleGate navKey="emergency-response"><EmergencyResponse /></RoleGate>} />
           <Route path="/workforce-presence" element={<RoleGate navKey="workforce-presence"><WorkforcePresenceCentre /></RoleGate>} />
           <Route path="/frontline-hub" element={<RoleGate navKey="frontline-hub"><FrontlineRapidHub /></RoleGate>} />
-          <Route path="/record-intelligence" element={<RoleGate navKey="record-intelligence"><UniversalRecordIntelligenceHub /></RoleGate>} />
+          <Route path="/record-intelligence" element={<Navigate to="/documents?tab=record-intelligence" replace />} />
           <Route path="/user-success" element={<RoleGate navKey="user-success"><UniversalUserSuccessHub /></RoleGate>} />
-          <Route path="/registers" element={<RoleGate navKey="registers"><UniversalRegisterHub /></RoleGate>} />
+          <Route path="/registers" element={<Navigate to="/documents?tab=registers-hub" replace />} />
           <Route path="/governance" element={<RoleGate navKey="governance"><GovernanceLayer /></RoleGate>} />
           <Route path="/programs" element={<RoleGate navKey="programs"><ProgramsEvents /></RoleGate>} />
           <Route path="/communications" element={<RoleGate navKey="dashboard"><Dashboard /></RoleGate>} />
@@ -194,7 +194,7 @@ const AuthenticatedApp = () => {
           <Route path="/volunteers" element={<RoleGate navKey="volunteering-placements"><Volunteers /></RoleGate>} />
           <Route path="/roster" element={<RoleGate navKey="rostering"><Rostering /></RoleGate>} />
           <Route path="/visual-boards" element={<RoleGate navKey="visual-boards"><VisualBoards /></RoleGate>} />
-          <Route path="/company-safe" element={<RoleGate navKey="company-safe"><CompanySafe /></RoleGate>} />
+          <Route path="/company-safe" element={<Navigate to="/documents?tab=company-safe" replace />} />
           <Route path="/remote-access" element={<RoleGate navKey="remote-access"><RemoteAccessVpnHub /></RoleGate>} />
           <Route path="/equipment-manuals" element={<RoleGate navKey="equipment-manuals"><EquipmentMsds /></RoleGate>} />
           <Route path="/msds" element={<Navigate to="/equipment-manuals" replace />} />

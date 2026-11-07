@@ -1,25 +1,21 @@
 import React, { useState } from 'react';
 
 import ExecutiveOperationsCentre from '@/components/operations/ExecutiveOperationsCentre';
-import UniversalDataStorageRetentionExportSuite from '@/components/compliance/UniversalDataStorageRetentionExportSuite';
 import EnterpriseOperationsAttendancePayrollFramework from '@/components/operations/EnterpriseOperationsAttendancePayrollFramework';
 import FrontlineWorkerMobileRapidSuite from '@/components/operations/FrontlineWorkerMobileRapidSuite';
-import UniversalRecordIntelligenceRoutingSuite from '@/components/operations/UniversalRecordIntelligenceRoutingSuite';
 import UniversalUserSuccessEvidenceFirstSuite from '@/components/operations/UniversalUserSuccessEvidenceFirstSuite';
 import AutomaticTaskCompletionEvidenceClosureEngine from '@/components/operations/AutomaticTaskCompletionEvidenceClosureEngine';
-import UniversalRegisterManagementHubSuite from '@/components/operations/UniversalRegisterManagementHubSuite';
 import OrganisationalOperatingSystemCommand from '@/components/enterprise/OrganisationalOperatingSystemCommand';
 import OrganisationHealthScoreFramework from '@/components/enterprise/OrganisationHealthScoreFramework';
 import Universal360ProfileFramework from '@/components/enterprise/Universal360ProfileFramework';
 import CareSphereSeniorMasterBlueprint from '@/components/enterprise/CareSphereSeniorMasterBlueprint';
-import { Cpu, Users, Zap, ShieldCheck, FolderOpen, Layers } from 'lucide-react';
+import { Cpu, Users, Zap, ShieldCheck, Layers } from 'lucide-react';
 
 const EXEC_TABS = [
   { id: 'executive-os', label: 'Operations Dispatch & Roster', icon: Cpu },
   { id: 'master-blueprint', label: 'CareSphere Master Blueprint (12×6)', icon: Layers },
   { id: 'workforce-frontline', label: 'Frontline & Attendance', icon: ShieldCheck },
   { id: 'automation-closure', label: 'Workflows & Evidence Closure', icon: Zap },
-  { id: 'registers-storage', label: 'Master Registers & Storage', icon: FolderOpen },
   { id: 'profiles-360', label: '360° Person Dossiers', icon: Users },
 ];
 
@@ -90,15 +86,7 @@ export default function OperationsCentre() {
       {show('automation-closure') && (
         <div className="space-y-4">
           <AutomaticTaskCompletionEvidenceClosureEngine />
-          <UniversalRecordIntelligenceRoutingSuite />
           <UniversalUserSuccessEvidenceFirstSuite />
-        </div>
-      )}
-
-      {show('registers-storage') && (
-        <div className="space-y-4">
-          <UniversalRegisterManagementHubSuite />
-          <UniversalDataStorageRetentionExportSuite />
         </div>
       )}
 

@@ -104,10 +104,10 @@ const REQ_STATUSES = ['Current', 'Review Required', 'Superseded', 'Archived'];
 // Organized into clear functional groups so every register and suite is easy to find.
 const TAB_GROUPS = [
   { id: 'all', label: 'All Compliance & Evidence Areas' },
-  { id: 'executive', label: 'Business Analytics, Executive & AI', keys: ['business-analytics', 'ai-copilot-checklist', 'enterprise-standard', 'control-centre', 'one-click-operations', 'infinity-core-engine', 'health-intelligence', 'executive-summary'] },
+  { id: 'executive', label: 'Business Analytics, Executive & AI', keys: ['business-analytics', 'ai-copilot-checklist', 'control-centre', 'one-click-operations', 'infinity-core-engine', 'health-intelligence', 'executive-summary'] },
   { id: 'audits', label: 'NDIS Standards & Audits', keys: ['ai-copilot-checklist', 'auditor-portal', 'standards-map', 'master-checklist', 'master-audit-forms', 'screen-audit-2026', 'audits', 'internal-audits', 'audit-report-list', 'weekly-audit-reports'] },
-  { id: 'policies', label: 'Policies, Legal & Templates', keys: ['enterprise-standard', 'policies', 'requirements', 'printable-2026-templates', 'form-templates', 'checklists', 'consents'] },
-  { id: 'workforce', label: 'Workforce & Screening', keys: ['staff-compliance', 'worker-screening', 'cert-renewals', 'renewal-calendar', 'onboarding-progress', 'staff-bulk-actions'] },
+  { id: 'policies', label: 'Policies & Legal', keys: ['policies', 'requirements', 'checklists', 'consents'] },
+  { id: 'workforce', label: 'Workforce & Screening', keys: ['staff-compliance', 'worker-screening', 'cert-renewals', 'onboarding-progress', 'staff-bulk-actions'] },
   { id: 'risk-safety', label: 'Risk, Safety & Reviews', keys: ['issues', 'readiness', 'risk-status', 'risk-heatmap', 'trend-charts', 'participant-reviews', 'kits-drills', 'visitors'] },
   { id: 'tasks', label: 'Tasks & Activity', keys: ['quick-tasks', 'task-kanban', 'activity-feed'] },
 ];
@@ -115,7 +115,6 @@ const TAB_GROUPS = [
 const TABS = [
   ['business-analytics', 'Business Analytics & KPIs'],
   ['ai-copilot-checklist', '7-Point AI Audit Checklist'],
-  ['enterprise-standard', 'Enterprise Build Standard'],
   ['auditor-portal', 'Auditor Portal'],
   ['standards-map', 'NDIS Standards Map'],
   ['policies', 'Policies Register'],
@@ -126,7 +125,6 @@ const TABS = [
   ['health-intelligence', 'Health & Readiness'],
   ['master-checklist', 'Master Checklist'],
   ['master-audit-forms', 'Master Audit Forms'],
-  ['printable-2026-templates', '2026 Printable Templates'],
   ['screen-audit-2026', '46-Screen Smart Audit'],
   ['audits', 'External Audits'],
   ['internal-audits', 'Internal Audits'],
@@ -137,12 +135,10 @@ const TABS = [
   ['readiness', 'Readiness Dashboard'],
   ['checklists', 'Working Checklists'],
   ['consents', 'Consent Register'],
-  ['form-templates', 'Form Templates'],
   ['participant-reviews', 'Participant Reviews'],
   ['staff-compliance', 'Staff Compliance'],
   ['worker-screening', 'Worker Screening'],
   ['cert-renewals', 'Cert Renewals'],
-  ['renewal-calendar', 'Renewal Calendar'],
   ['onboarding-progress', 'Onboarding Tracker'],
   ['staff-bulk-actions', 'Staff Bulk Actions'],
   ['risk-status', 'Risk & Status'],

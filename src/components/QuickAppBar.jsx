@@ -46,7 +46,9 @@ export default function QuickAppBar() {
   const allAccessibleModules = useMemo(
     () =>
       MODULE_DIRECTORY.filter(
-        (m) => !(m.key === 'staff-progress' && MODULE_DIRECTORY.some((e) => e.key === 'staff'))
+        (m) =>
+          !(m.key === 'staff-progress' && MODULE_DIRECTORY.some((e) => e.key === 'staff')) &&
+          !['company-safe', 'universal-storage', 'registers', 'record-intelligence'].includes(m.key)
       ),
     []
   );
