@@ -260,8 +260,8 @@ export default function PricingSection({ onContactSales }) {
                   }`}
                   style={{
                     background: isFeatured
-                      ? 'linear-gradient(120deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)'
-                      : 'linear-gradient(120deg, #cbd5e1 0%, #94a3b8 100%)',
+                      ? 'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)'
+                      : 'linear-gradient(120deg, #00C6FF 0%, #0072FF 40%, #A855F7 80%, #FF2E9A 100%)',
                   }}
                 >
                   <div className="flex h-full flex-col justify-between rounded-[10px] bg-white p-3">
@@ -349,7 +349,7 @@ export default function PricingSection({ onContactSales }) {
               return (
                 <div
                   key={b.title}
-                  className="flex items-start gap-2.5 rounded-xl border border-sky-200/80 bg-[#F0F7FF] p-2.5 text-left"
+                  className="flex items-start gap-2.5 rounded-xl border-2 border-[#0072FF]/50 bg-[#F0F7FF] p-2.5 text-left"
                 >
                   <div
                     className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#0A2B6D] text-white"
@@ -371,7 +371,7 @@ export default function PricingSection({ onContactSales }) {
           </div>
 
           {/* Compact Collapsible Feature Comparison Bar */}
-          <div className="rounded-xl border border-slate-200 bg-[#F8FAFC] px-3 py-2 space-y-2">
+          <div className="rounded-xl border-2 border-[#0072FF]/50 bg-[#F8FAFC] px-3 py-2 space-y-2">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="text-left">
                 <h3 className="font-editorial text-sm sm:text-base font-black text-[#0A2B6D]">
