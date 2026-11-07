@@ -60,7 +60,17 @@ export default function MiniCommunicationCentrePanel({
   recentComms = [],
   onSelectTab,
   activeTab,
+  tabs = [],
 }) {
+  const channelItems =
+    Array.isArray(tabs) && tabs.length > 0
+      ? tabs.map(([value, Icon, label]) => ({
+          key: value,
+          label,
+          tab: value,
+          icon: Icon || MessagesSquare,
+        }))
+      : MINI_COMM_SQUARES;
   const navigate = useNavigate();
   const [todos, setTodos] = useState([]);
   const [newTodoText, setNewTodoText] = useState('');
@@ -326,16 +336,16 @@ export default function MiniCommunicationCentrePanel({
             </div>
           </div>
 
-          {/* Right: 10 Quick-Press Communication Method Squares */}
+          {/* Right: Unified Communication Method Channels */}
           <div className="xl:col-span-7 rounded-lg border border-white/15 bg-[#081018] p-1.5">
             <div className="mb-1 flex items-center justify-between px-1">
               <span className="text-[7px] font-extrabold uppercase tracking-wider text-white">
-                Communication Method Channels
+                Unified Communication Channels
               </span>
-              <span className="text-[7px] font-extrabold text-[#00C6FF]">10 Methods</span>
+              <span className="text-[7px] font-extrabold text-[#00C6FF]">{channelItems.length} Channels</span>
             </div>
-            <div className="grid grid-cols-5 gap-1">
-              {MINI_COMM_SQUARES.map((sq, idx) => {
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-1">
+              {channelItems.map((sq, idx) => {
                 const SqIcon = sq.icon;
                 const seqColors = ['#0072FF', '#A855F7', '#FF2E9A'];
                 const symColor = seqColors[idx % seqColors.length];

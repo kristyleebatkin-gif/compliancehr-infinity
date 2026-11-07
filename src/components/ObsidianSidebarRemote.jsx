@@ -27,7 +27,6 @@ export const PRIMARY_11_OS_NAV = [
     icon: Megaphone,
     status: 'LIVE',
     children: [
-      { label: 'Communication & Mailbox Hub', path: '/communications', sub: 'Unified inbox, diary, shift notes, email & alerts' },
       { label: 'Daily Briefing', path: '/briefing', sub: 'Morning operational briefing' },
       { label: 'Meetings', path: '/meetings', sub: 'Agendas, minutes & action items' },
       { label: 'Feedback & Surveys', path: '/feedback', sub: 'Complaints, compliments & surveys' },
@@ -211,7 +210,6 @@ export const FOCUSED_5_PILLAR_NAV = [
     icon: Megaphone,
     status: 'LIVE',
     children: [
-      { label: 'Communication & Mailbox Hub', path: '/communications', sub: 'Unified inbox, diary, shift notes, email & alerts' },
       { label: 'Daily Briefing', path: '/briefing', sub: 'Morning operational briefing' },
       { label: 'Meetings', path: '/meetings', sub: 'Agendas, minutes & action items' },
       { label: 'Feedback & Surveys', path: '/feedback', sub: 'Complaints, compliments & surveys' },

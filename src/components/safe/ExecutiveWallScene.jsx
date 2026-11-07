@@ -275,7 +275,7 @@ function TodaysRosterPictureCard() {
 /**
  * 3. Communication Tab & 4. Mailbox Tab (Modulars Grid Removed)
  */
-export function CommunicationAndMailboxTabs({ onSelectTab, activeTab } = {}) {
+export function CommunicationAndMailboxTabs({ onSelectTab, activeTab, tabs } = {}) {
   const [hasAlertMail, setHasAlertMail] = useState(false);
   const [mailAlertCount, setMailAlertCount] = useState(0);
   const [recentComms, setRecentComms] = useState([]);
@@ -441,6 +441,7 @@ export function CommunicationAndMailboxTabs({ onSelectTab, activeTab } = {}) {
             recentComms={recentComms}
             onSelectTab={onSelectTab}
             activeTab={activeTab}
+            tabs={tabs}
           />
         </div>
       </div>

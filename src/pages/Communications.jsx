@@ -180,13 +180,13 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
 
                 {commScreen !== 'screen2' && (
                   <div className="space-y-2.5">
-                    {/* Unified Communication, Mailbox, Alert Lamps & All Communication Channels Together */}
-                    <div className="rounded-xl border border-[#0072FF]/60 bg-[#081018] p-2.5 space-y-2.5 text-white">
+                    {/* Single Merged Communication, Mailbox, Alert Lamps & All Communication Channels Panel */}
+                    <div className="rounded-xl border border-[#0072FF]/60 bg-[#081018] p-2.5 text-white">
                       <CommunicationAndMailboxTabs
                         onSelectTab={setActiveTab}
                         activeTab={activeTab}
+                        tabs={shown}
                       />
-                      <CommunicationNavigation tabs={shown} onCompose={() => setActiveTab('email')} />
                     </div>
 
                     {/* Merged All To-Do Lists, Task Dashboards & Task Leaderboard in One Unified Section */}
