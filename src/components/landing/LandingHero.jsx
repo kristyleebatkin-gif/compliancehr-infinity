@@ -106,11 +106,11 @@ export default function LandingHero({ onBookDemo }) {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 items-start gap-3 lg:grid-cols-12">
+            <div className="grid grid-cols-1 items-start gap-3 lg:grid-cols-12 lg:items-stretch">
               {/* Left Column: Compact Checkpoints & 3 Executive Assurance Cards */}
-              <div className="flex flex-col justify-between lg:col-span-5 text-left text-white space-y-2.5">
+              <div className="flex flex-col lg:h-full lg:col-span-5 text-left text-white space-y-2.5">
                 {/* 4 Structured Regulatory Checkpoints with White Lights */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 lg:flex-1 lg:auto-rows-fr">
                   {GOVERNANCE_PILLARS.map((pillar) => (
                     <div
                       key={pillar}
@@ -128,13 +128,13 @@ export default function LandingHero({ onBookDemo }) {
                 </div>
 
                 {/* 3 Executive Assurance Cards with White Lights */}
-                <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-3 lg:flex-1">
                   {EXECUTIVE_METRICS.map((kpi) => {
                     const Icon = kpi.icon;
                     return (
                       <div
                         key={kpi.label}
-                        className="rounded-xl border border-[#00C6FF]/60 bg-[#081018]/90 p-2.5 text-left"
+                        className="rounded-xl border border-[#00C6FF]/60 bg-[#081018]/90 p-2.5 text-left lg:flex lg:flex-col lg:justify-center"
                       >
                         <div className="flex items-center justify-between gap-1.5">
                           <span className="text-[11px] font-bold text-[#00C6FF]">
