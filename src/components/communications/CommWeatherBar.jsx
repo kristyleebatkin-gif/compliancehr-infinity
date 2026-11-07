@@ -86,7 +86,7 @@ export default function CommWeatherBar() {
       className="overflow-hidden rounded-xl p-[1.5px] shadow-lg"
       style={{ background: BRAND_GRADIENT }}
     >
-      <div className="grid grid-cols-1 gap-1.5 rounded-[10px] bg-[#0A2B6D]/95 backdrop-blur-sm p-2 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-1.5 rounded-[10px] bg-[#0A2B6D]/95 backdrop-blur-sm p-2 sm:grid-cols-2 xl:grid-cols-4">
         {/* DASHBOARD 1: LIVE ATOMIC TIME */}
         <div
           className="rounded-lg p-[1.5px]"
@@ -103,14 +103,14 @@ export default function CommWeatherBar() {
               <div className="min-w-0">
                 <div className="flex items-center gap-1.5">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#00C6FF] animate-pulse" />
-                  <p className="text-[9px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
+                  <p className="text-[11px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
                     Live Time (Sydney)
                   </p>
                 </div>
                 <p className="font-mono text-sm sm:text-base font-black leading-tight text-white">
                   {timeFmt.format(now)}
                 </p>
-                <p className="text-[9px] font-bold text-slate-300">24/7 Operations Clock Active</p>
+                <p className="text-[11px] font-bold text-slate-300">24/7 Operations Clock Active</p>
               </div>
             </div>
 
@@ -133,14 +133,14 @@ export default function CommWeatherBar() {
               <div className="min-w-0">
                 <div className="flex items-center gap-1.5">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#A855F7]" />
-                  <p className="text-[9px] font-extrabold uppercase tracking-wider text-[#C084FC]">
+                  <p className="text-[11px] font-extrabold uppercase tracking-wider text-[#C084FC]">
                     Today&apos;s Date
                   </p>
                 </div>
                 <p className="text-xs sm:text-sm font-black leading-tight text-white">
                   {dateFmt.format(now)}
                 </p>
-                <p className="text-[9px] font-bold text-slate-300">Audit &amp; Shift Cycle Day</p>
+                <p className="text-[11px] font-bold text-slate-300">Audit &amp; Shift Cycle Day</p>
               </div>
             </div>
 
@@ -163,14 +163,14 @@ export default function CommWeatherBar() {
               <div className="min-w-0">
                 <div className="flex items-center gap-1.5">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#FF2E9A]" />
-                  <p className="text-[9px] font-extrabold uppercase tracking-wider text-[#FF6EDB]">
+                  <p className="text-[11px] font-extrabold uppercase tracking-wider text-[#FF6EDB]">
                     Live Weather Radar
                   </p>
                 </div>
                 <p className="text-xs sm:text-sm font-black leading-tight text-white">
                   {w ? `${Math.round(w.temperature_2m)}°C · ${label}` : label}
                 </p>
-                <p className="text-[9px] font-bold text-slate-300">
+                <p className="text-[11px] font-bold text-slate-300">
                   {weather?.daily
                     ? `High ${Math.round(weather.daily.temperature_2m_max[0])}°C · Low ${Math.round(weather.daily.temperature_2m_min[0])}°C`
                     : 'Field Conditions Optimal'}
@@ -188,7 +188,7 @@ export default function CommWeatherBar() {
         >
           <div className="flex h-full flex-col justify-between gap-1 rounded-[7px] bg-gradient-to-br from-[#0A2B6D] to-[#16468A] px-2 py-1.5 text-white shadow-inner ring-1 ring-inset ring-[#00C6FF]/30">
             <div className="flex items-center justify-between gap-1">
-              <span className="inline-flex items-center gap-1 text-[9px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
+              <span className="inline-flex items-center gap-1 text-[11px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
                 <ShieldCheck className="h-3 w-3 text-[#00C6FF]" />
                 <span>Active Care Services</span>
               </span>
@@ -203,7 +203,7 @@ export default function CommWeatherBar() {
                   <Link
                     key={srv.label}
                     to={srv.path}
-                    className="inline-flex items-center gap-1 rounded border border-[#00C6FF]/50 bg-[#0A2B6D]/95 backdrop-blur-sm px-1.5 py-0.5 text-[8.5px] font-extrabold text-white transition hover:border-[#FF2E9A] hover:bg-[#0072FF]"
+                    className="inline-flex items-center gap-1 rounded border border-[#00C6FF]/50 bg-[#0A2B6D]/95 backdrop-blur-sm px-1.5 py-0.5 text-[10px] font-extrabold text-white transition hover:border-[#FF2E9A] hover:bg-[#0072FF]"
                   >
                     <SrvIcon className="h-2.5 w-2.5 text-[#00C6FF]" />
                     <span>{srv.label}</span>

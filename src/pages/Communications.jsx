@@ -110,13 +110,13 @@ function Communications({ profile, profileKind } = {}) {
 
   return (
     <div className="comm-centre space-y-2.5">
-      <Tabs value={activeTab} onValueChange={setActiveTab}>
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-2.5">
         {/* 1. Extracted Communication Title Header & Sentence Underneath (Formatted to Match & Fit with Symbol) */}
         <header
           className="overflow-hidden rounded-xl p-[1.5px] shadow-lg"
           style={{ background: BRAND_GRADIENT }}
         >
-          <div className="flex flex-wrap items-center justify-between gap-2 rounded-[10px] bg-[#0A2B6D]/95 backdrop-blur-sm px-3 py-2 text-white">
+          <div className="flex flex-wrap items-center justify-between gap-3 rounded-[10px] bg-[#0A2B6D]/95 backdrop-blur-sm px-4 py-3 text-white">
             <div className="flex min-w-0 items-center gap-2.5">
               <span
                 className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#0A2B6D]/80"
@@ -128,10 +128,10 @@ function Communications({ profile, profileKind } = {}) {
                 <MessagesSquare className="h-4 w-4 text-[#00C6FF]" />
               </span>
               <div className="min-w-0">
-                <h1 className="text-sm sm:text-base font-black leading-tight tracking-tight text-white">
+                <h1 className="text-base sm:text-lg font-black leading-tight tracking-tight text-white">
                   Communication &amp; Mailbox Hub
                 </h1>
-                <p className="text-[11px] font-semibold leading-snug text-slate-300">
+                <p className="mt-1 text-xs font-semibold leading-relaxed text-slate-200">
                   Communication, mail and live roster together in one dashboard.
                 </p>
               </div>
@@ -146,7 +146,7 @@ function Communications({ profile, profileKind } = {}) {
         <RosterMiniOverview />
 
         {/* 4. Unified Communication & Mailbox Dashboard */}
-        <div className="space-y-2 rounded-xl border border-[#0072FF]/60 bg-[#0A2B6D]/95 backdrop-blur-sm p-2 text-white">
+        <div className="space-y-2.5 rounded-xl border border-[#0072FF]/60 bg-[#0A2B6D]/95 backdrop-blur-sm p-2.5 sm:p-3 text-white">
           <CommunicationAndMailboxTabs
             onSelectTab={setActiveTab}
             activeTab={activeTab}

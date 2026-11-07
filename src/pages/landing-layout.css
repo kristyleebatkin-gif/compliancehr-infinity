@@ -26,7 +26,7 @@
 /* Keep the narrower desktop workspace compact beside the navigator. */
 @media (min-width: 1024px) and (max-width: 1279px) {
   .landing-page .bright-dashboard > * + * {
-    margin-top: 0.5rem;
+    margin-top: 0.75rem;
   }
   .landing-page .powerbi-workspace {
     display: block;

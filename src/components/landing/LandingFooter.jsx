@@ -11,7 +11,7 @@ export default function LandingFooter({ onBookDemo }) {
         <div className="enterprise-surface rounded-2xl px-4 py-3 space-y-2.5">
           {/* Header First, One Straight Sentence, Slightly Bigger -> Sentence -> Blue/Purple Badge After */}
           <div className="space-y-0.5 border-b border-sky-300 pb-2 text-left">
-            <h2 className="font-editorial text-base sm:text-lg font-black tracking-tight text-[#0A2B6D] lg:whitespace-nowrap">
+            <h2 className="font-editorial text-base sm:text-lg font-black tracking-tight text-[#0A2B6D]">
               Enterprise Architectural Pillars, Core Workspaces &amp; Direct Support Directory
             </h2>
             <p className="text-xs font-semibold text-[#0A2B6D]/80">

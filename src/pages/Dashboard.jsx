@@ -66,7 +66,7 @@ export default function Dashboard() {
                 <LayoutDashboard className="h-4 w-4 text-white" style={{ filter: 'drop-shadow(0 0 4px #FFFFFF)' }} />
               </span>
               <div className="min-w-0">
-                <h1 className="text-base sm:text-lg lg:text-xl font-black leading-tight tracking-tight text-white lg:whitespace-nowrap">
+                <h1 className="text-base sm:text-lg lg:text-xl font-black leading-tight tracking-tight text-white">
                   1. Executive Dashboard, Live Communication &amp; Subscription Showcase
                 </h1>
                 <p className="text-xs font-semibold leading-snug text-slate-300">
@@ -129,7 +129,7 @@ export default function Dashboard() {
                   }}
                 >
                   <Icon className="h-3.5 w-3.5 shrink-0 text-white" style={{ filter: 'drop-shadow(0 0 3px #FFFFFF)' }} />
-                  <span className="truncate text-[10px] font-extrabold text-white">
+                  <span className="min-w-0 text-[11px] font-extrabold leading-snug text-white">
                     {pill.label}
                   </span>
                 </div>

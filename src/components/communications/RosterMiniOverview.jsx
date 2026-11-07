@@ -62,14 +62,14 @@ export default function RosterMiniOverview() {
           <div className="flex flex-wrap items-center gap-1.5">
             <Link
               to="/rostering"
-              className="inline-flex h-6 items-center gap-1 rounded-full border border-[#00C6FF] bg-[#0072FF] px-2.5 text-[9.5px] font-extrabold text-white transition hover:bg-[#FF2E9A]"
+              className="inline-flex h-6 items-center gap-1 rounded-full border border-[#00C6FF] bg-[#0072FF] px-2.5 text-[11px] font-extrabold text-white transition hover:bg-[#FF2E9A]"
             >
               <span>Open Full Roster</span>
               <ArrowRight className="h-2.5 w-2.5 text-[#00C6FF]" />
             </Link>
             <Link
               to="/workforce-presence"
-              className="inline-flex h-6 items-center gap-1 rounded-full border border-[#A855F7] bg-[#0A2B6D]/80 px-2.5 text-[9.5px] font-extrabold text-white transition hover:border-[#00C6FF]"
+              className="inline-flex h-6 items-center gap-1 rounded-full border border-[#A855F7] bg-[#0A2B6D]/80 px-2.5 text-[11px] font-extrabold text-white transition hover:border-[#00C6FF]"
             >
               <span>Workforce Presence</span>
             </Link>
@@ -82,28 +82,28 @@ export default function RosterMiniOverview() {
             <Clock className="h-4 w-4 shrink-0 text-[#00C6FF]" />
             <div>
               <p className="text-xs font-black text-white">{roster ? totalShifts : '—'}</p>
-              <p className="text-[9px] font-bold text-slate-300">Today&apos;s Shifts</p>
+              <p className="text-[11px] font-bold text-slate-300">Today&apos;s Shifts</p>
             </div>
           </div>
           <div className="flex items-center gap-2 rounded-lg border border-[#0072FF]/40 bg-[#0A2B6D]/80 px-2.5 py-1.5">
             <Users className="h-4 w-4 shrink-0 text-[#0072FF]" />
             <div>
               <p className="text-xs font-black text-white">{roster ? activeShifts : '—'}</p>
-              <p className="text-[9px] font-bold text-slate-300">Scheduled / Active</p>
+              <p className="text-[11px] font-bold text-slate-300">Scheduled / Active</p>
             </div>
           </div>
           <div className="flex items-center gap-2 rounded-lg border border-[#A855F7]/40 bg-[#0A2B6D]/80 px-2.5 py-1.5">
             <CheckCircle2 className="h-4 w-4 shrink-0 text-[#A855F7]" />
             <div>
               <p className="text-xs font-black text-white">{roster ? completedShifts : '—'}</p>
-              <p className="text-[9px] font-bold text-slate-300">Completed Today</p>
+              <p className="text-[11px] font-bold text-slate-300">Completed Today</p>
             </div>
           </div>
           <div className="flex items-center gap-2 rounded-lg border border-[#FF2E9A]/40 bg-[#0A2B6D]/80 px-2.5 py-1.5">
             <ShieldCheck className="h-4 w-4 shrink-0 text-[#FF2E9A]" />
             <div>
               <p className="text-xs font-black text-white">100% Verified</p>
-              <p className="text-[9px] font-bold text-slate-300">NDIS Screening</p>
+              <p className="text-[11px] font-bold text-slate-300">NDIS Screening</p>
             </div>
           </div>
         </div>
@@ -114,7 +114,7 @@ export default function RosterMiniOverview() {
               <Link
                 key={s.id}
                 to="/rostering"
-                className="inline-flex items-center gap-1.5 rounded-md border border-[#00C6FF]/40 bg-[#0A2B6D]/80 px-2 py-1 text-[9.5px] font-extrabold text-white transition hover:border-[#FF2E9A]"
+                className="inline-flex items-center gap-1.5 rounded-md border border-[#00C6FF]/40 bg-[#0A2B6D]/80 px-2 py-1 text-[11px] font-extrabold text-white transition hover:border-[#FF2E9A]"
               >
                 <Clock className="h-2.5 w-2.5 shrink-0 text-[#00C6FF]" />
                 <span className="truncate max-w-[160px] text-white">

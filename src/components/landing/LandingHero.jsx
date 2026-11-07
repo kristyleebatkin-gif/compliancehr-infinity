@@ -59,7 +59,7 @@ export default function LandingHero({ onBookDemo }) {
             {/* 1. Header Always First (One Straight Sentence, Slightly Bigger) -> Sentence -> Blue/Purple Badges After */}
             <div className="space-y-1 border-b border-[#00C6FF]/50 pb-2.5 text-left">
               <h1
-                className="font-editorial text-lg sm:text-xl lg:text-2xl font-black tracking-tight text-white leading-tight lg:whitespace-nowrap"
+                className="font-editorial text-lg sm:text-xl lg:text-2xl font-black tracking-tight text-white leading-tight"
                 style={{ color: '#FFFFFF' }}
               >
                 The Complete Compliance &amp; Workforce Operating System

@@ -30,7 +30,7 @@ export default function LandingSectionHeader({
       className="space-y-1 border-b border-slate-200 pb-2.5 text-left"
     >
       {/* 1. HEADER ALWAYS FIRST — ONE STRAIGHT LINE & SLIGHTLY BIGGER */}
-      <h2 className="font-editorial text-lg sm:text-xl lg:text-[22px] font-black tracking-tight text-[#0A2B6D] leading-tight lg:whitespace-nowrap">
+      <h2 className="font-editorial text-lg sm:text-xl lg:text-[22px] font-black tracking-tight text-[#0A2B6D] leading-tight">
         {title}
       </h2>
 

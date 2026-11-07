@@ -42,6 +42,15 @@
   pointer-events: none;
 }
 
+/* Keep long navigation labels and dashboard content readable beside the sidebar. */
+.comm-centre [role="tabpanel"] {
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+.comm-centre :is(button, a) {
+  line-height: 1.3;
+}
+
 /* Bold, crisp typography across Communication */
 .comm-centre h1,
 .comm-centre h2,
