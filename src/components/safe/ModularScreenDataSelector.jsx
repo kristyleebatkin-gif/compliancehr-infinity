@@ -402,7 +402,7 @@ export default function ModularScreenDataSelector({
         style={{ background: SQUISHED_GRADIENT }}
       >
         <div className="flex items-center gap-1.5 min-w-0">
-          <div className="flex h-5 w-5 shrink-0 items-center justify-center overflow-hidden rounded bg-white p-0.5">
+          <div className="flex aspect-[13/7] w-10 shrink-0 items-center justify-center overflow-hidden rounded bg-white p-0.5">
             <Image src={logoUrl || DEFAULT_LOGO} alt="Logo" fittingType="fit" className="h-full w-full object-contain" />
           </div>
           <div className="min-w-0">

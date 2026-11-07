@@ -190,7 +190,7 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
         >
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="flex items-center gap-3 min-w-0">
-              <div className="flex h-12 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border-2 border-white bg-white p-1 shadow-md">
+              <div className="flex aspect-[13/7] w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl border-2 border-white bg-white p-0.5 shadow-md">
                 <Image
                   src={CHR_LOGO}
                   alt="ComplianceHR Infinity"
@@ -316,7 +316,7 @@ export default function ExecutiveOperationsCentre({ defaultSuite = 'one-click' }
                     src={CHR_LOGO}
                     alt="ComplianceHR Infinity"
                     fittingType="fit"
-                    className="h-20 w-56 sm:h-24 sm:w-68 shrink-0 object-contain"
+                    className="aspect-[13/7] w-52 max-w-full shrink-0 rounded-xl border border-white bg-white p-0.5 sm:w-60"
                   />
                   <span className="mt-1 font-editorial text-lg sm:text-xl font-extrabold leading-tight tracking-tight text-[#0A2B6D]" style={{ color: '#0A2B6D' }}>
                     Compliance

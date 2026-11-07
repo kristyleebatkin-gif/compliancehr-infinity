@@ -231,7 +231,7 @@ export default function DailyBriefing() {
             src={CHR_LOGO}
             alt="ComplianceHR Infinity"
             fittingType="fit"
-            className="h-5 w-14 rounded-md border border-slate-200 bg-white px-1 py-0.5 shadow-2xs"
+            className="aspect-[13/7] w-20 rounded-xl border border-slate-200 bg-white p-0.5 shadow-2xs"
           />
           <span className="mt-0.5 font-editorial text-[12px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]">
             Compliance

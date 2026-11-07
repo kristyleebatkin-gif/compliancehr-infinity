@@ -23,13 +23,13 @@ export default function BrandLogoLockup({
 }) {
   const isCustomName = companyName && companyName !== 'ComplianceHR Infinity';
 
-  // Increased logo + white area size (~1cm larger) while keeping tight minimal white border around the emblem
+  // Keep the same frame proportions at each size while fitting narrower layouts.
   const logoSizeClass =
     size === 'xs'
-      ? 'mt-0.5 h-20 w-36 sm:h-24 sm:w-44'
+      ? 'mt-0.5 w-36 sm:w-44'
       : size === 'lg'
-      ? 'mt-0.5 h-28 w-52 sm:h-32 sm:w-60'
-      : 'mt-0.5 h-24 w-44 sm:h-28 sm:w-52';
+      ? 'mt-0.5 w-52 sm:w-60'
+      : 'mt-0.5 w-44 sm:w-52';
 
   // Line 2: Structured heading on ONE single line
   const nameSizeClass =
@@ -55,13 +55,13 @@ export default function BrandLogoLockup({
       <div className="flex w-full flex-col items-center justify-center bg-transparent px-1 py-0.5">
         {/* LINE 1: ENLARGED (+1CM) UNCLIPPED LOGO & WHITE AREA WITH SLIGHTLY REDUCED WHITE MARGIN */}
         <div
-          className={`${logoSizeClass} flex shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[#00C6FF]/60 bg-white p-0.5 shadow-[0_0_12px_rgba(255,255,255,0.45)]`}
+          className={`${logoSizeClass} aspect-[13/7] max-w-full shrink-0 overflow-hidden rounded-xl border border-[#00C6FF]/60 bg-white p-0.5 shadow-[0_0_12px_rgba(255,255,255,0.45)]`}
         >
           <Image
             src={logoUrl || DEFAULT_BRAND_LOGO}
             alt={companyName || 'ComplianceHR Infinity'}
             fittingType="fit"
-            className="h-full w-full scale-[1.22] object-contain"
+            className="h-full w-full object-contain"
           />
         </div>
 

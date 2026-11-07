@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, ArrowLeft, ShieldCheck } from 'lucide-react';
+import { Image } from '@/components/ui/image';
 import { COMPANY_LOGO_URL, COMPANY_NAME, COMPANY_SLOGAN } from '@/lib/companyBranding';
 
 // Branded public page shell — matches the landing page gradient frame, typography and footer.
@@ -17,10 +18,11 @@ export default function PublicPageShell({ children }) {
         {/* Brand Lockup Bar */}
         <div className="mb-4 flex items-center justify-between gap-3 rounded-2xl border border-white/25 bg-white/15 px-4 py-3 shadow-lg backdrop-blur-md">
           <Link to="/" className="flex items-center gap-3 min-w-0">
-            <img
+            <Image
               src={COMPANY_LOGO_URL}
               alt={COMPANY_NAME}
-              className="h-11 w-11 shrink-0 rounded-xl border border-white/40 bg-white object-contain p-1"
+              fittingType="fit"
+              className="aspect-[13/7] w-20 shrink-0 rounded-xl border border-white/40 bg-white p-0.5"
             />
             <div className="min-w-0">
               <div className="font-editorial text-base sm:text-lg font-extrabold tracking-tight text-white leading-none whitespace-nowrap">

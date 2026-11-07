@@ -96,18 +96,18 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
           </button>
         </div>
       ) : (
-        <div className="mx-auto flex max-w-[1440px] flex-col items-center justify-center gap-0.5 bg-[#0A2B6D]/95 px-2 pt-1 pb-0.5 sm:px-4 md:flex-row md:items-end md:gap-3 lg:px-6">
+        <div className="mx-auto flex max-w-[1440px] flex-col items-center justify-center gap-0.5 bg-[#0A2B6D]/95 px-2 pt-1 pb-0.5 sm:px-4 md:flex-row md:flex-wrap md:items-end md:gap-3 lg:px-6">
           {/* Top / Centre: Larger Business Logo + Name + Slogan */}
           <Link
             to="/"
-            className="inline-flex flex-col items-center justify-end text-center"
+            className="inline-flex max-w-full shrink-0 flex-col items-center justify-end text-center"
             aria-label="ComplianceHR Infinity home"
           >
             <BrandLogoLockup size="md" theme="dark" showSlogan={true} />
           </Link>
 
           {/* Single Row Under Logo: Sign In, Book Demo, Participant Profiles, Both Views & Start Free */}
-          <div className="flex w-full flex-wrap items-end justify-center gap-1.5 py-0.5 md:w-auto">
+          <div className="flex w-full max-w-full flex-wrap items-end justify-center gap-1.5 py-0.5 md:w-auto md:shrink-0">
             <div className="flex shrink-0 flex-col items-center gap-1">
               <button
                 type="button"
