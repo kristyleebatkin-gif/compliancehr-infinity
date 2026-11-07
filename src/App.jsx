@@ -82,6 +82,7 @@ import ProjectsHub from '@/pages/ProjectsHub';
 import SuggestionsHub from '@/pages/SuggestionsHub';
 
 import UsersPermissionsHub from '@/pages/UsersPermissionsHub';
+import RemoteAccessVpnHub from '@/pages/RemoteAccessVpnHub';
 import MyProfile from '@/pages/MyProfile';
 import MyPayrollPage from '@/pages/MyPayrollPage';
 import OurEmployeeProfiles from '@/pages/OurEmployeeProfiles';
@@ -194,6 +195,7 @@ const AuthenticatedApp = () => {
           <Route path="/roster" element={<RoleGate navKey="rostering"><Rostering /></RoleGate>} />
           <Route path="/visual-boards" element={<RoleGate navKey="visual-boards"><VisualBoards /></RoleGate>} />
           <Route path="/company-safe" element={<RoleGate navKey="company-safe"><CompanySafe /></RoleGate>} />
+          <Route path="/remote-access" element={<RoleGate navKey="remote-access"><RemoteAccessVpnHub /></RoleGate>} />
           <Route path="/equipment-manuals" element={<RoleGate navKey="equipment-manuals"><EquipmentMsds /></RoleGate>} />
           <Route path="/msds" element={<Navigate to="/equipment-manuals" replace />} />
           <Route path="/community-council" element={<RoleGate navKey="community-council"><CommunityCouncil /></RoleGate>} />

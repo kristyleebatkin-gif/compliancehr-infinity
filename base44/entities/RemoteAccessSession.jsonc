@@ -1,0 +1,111 @@
+{
+  "name": "RemoteAccessSession",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Tenant ID"
+    },
+    "title": {
+      "type": "string",
+      "title": "Access Endpoint / Policy Name"
+    },
+    "access_mode": {
+      "type": "string",
+      "enum": [
+        "Zero-Trust Cloud (No VPN)",
+        "Identity-Aware Proxy",
+        "Managed VPN Tunnel",
+        "Auditor Scoped Link",
+        "Mobile Field Access"
+      ],
+      "enumColors": [
+        "green",
+        "blue",
+        "purple",
+        "yellow",
+        "pink"
+      ],
+      "default": "Zero-Trust Cloud (No VPN)",
+      "title": "Access Mode"
+    },
+    "user_name": {
+      "type": "string",
+      "title": "Assigned User / Team"
+    },
+    "user_role": {
+      "type": "string",
+      "title": "Assigned Role",
+      "default": "Provider Administrator"
+    },
+    "device_type": {
+      "type": "string",
+      "enum": [
+        "Desktop / Laptop",
+        "iOS / Android Mobile",
+        "Tablet / Kiosk",
+        "External Auditor Workstation"
+      ],
+      "enumColors": [
+        "blue",
+        "green",
+        "purple",
+        "yellow"
+      ],
+      "default": "Desktop / Laptop",
+      "title": "Device Type"
+    },
+    "location_region": {
+      "type": "string",
+      "title": "Location / Region"
+    },
+    "mfa_verified": {
+      "type": "boolean",
+      "default": true,
+      "title": "MFA Enforced"
+    },
+    "encryption_standard": {
+      "type": "string",
+      "default": "TLS 1.3 + AES-256 Zero-Trust",
+      "title": "Encryption Standard"
+    },
+    "ip_allowlist_rule": {
+      "type": "string",
+      "title": "IP Allowlist / Gateway Rule",
+      "default": "Dynamic Identity-Verified (Any Network)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Active",
+        "Trusted",
+        "Pending Approval",
+        "Revoked",
+        "Expired"
+      ],
+      "enumColors": [
+        "green",
+        "blue",
+        "yellow",
+        "red",
+        "gray"
+      ],
+      "default": "Active",
+      "title": "Status"
+    },
+    "session_expiry": {
+      "type": "string",
+      "format": "date",
+      "title": "Policy / Session Review Date"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Security & Access Notes"
+    }
+  },
+  "required": [
+    "title",
+    "access_mode",
+    "status"
+  ]
+}

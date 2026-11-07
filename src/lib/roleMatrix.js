@@ -146,6 +146,7 @@ export const NAV_PERMISSIONS = {
   'universal-storage': PERSONAL,
   documents: PERSONAL,
   'company-safe': FULL_ACCESS,
+  'remote-access': PERSONAL,
   certificates: OPERATIONS,
   'audit-log': OPERATIONS,
   'auditor-portal': [...FULL_ACCESS, ROLES.AUDITOR],
