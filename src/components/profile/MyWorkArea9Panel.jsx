@@ -21,8 +21,7 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 
 export const MY_WORK_11_STREAMS = [
-  { id: 'tasks', label: 'My Tasks', icon: CheckSquare, href: '/tasks' },
-  { id: 'actions', label: 'My Actions', icon: CheckSquare, href: '/quality' },
+  { id: 'tasks', label: 'My Tasks & Actions', icon: CheckSquare, href: '/tasks' },
   { id: 'reviews', label: 'My Reviews', icon: CalendarClock, href: '/review-due' },
   { id: 'approvals', label: 'My Approvals', icon: ShieldCheck, href: '/compliance' },
   { id: 'communications', label: 'My Communications', icon: MessageSquare, href: '/communications' },

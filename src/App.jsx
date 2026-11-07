@@ -153,7 +153,7 @@ const AuthenticatedApp = () => {
           <Route path="/universal-storage" element={<Navigate to="/documents?tab=universal-storage" replace />} />
           <Route path="/training" element={<RoleGate navKey="training"><Training /></RoleGate>} />
           <Route path="/tasks" element={<RoleGate navKey="tasks"><Tasks /></RoleGate>} />
-          <Route path="/shared-to-do" element={<RoleGate navKey="tasks"><SharedTodoDashboard /></RoleGate>} />
+          <Route path="/shared-to-do" element={<Navigate to="/tasks?tab=shared-todo" replace />} />
           <Route path="/incidents" element={<RoleGate navKey="incidents"><Incidents /></RoleGate>} />
           <Route path="/incidents/submit" element={<RoleGate navKey="incidents"><StaffIncidentPortal /></RoleGate>} />
           <Route path="/risks/submit" element={<RoleGate navKey="risks"><RiskSubmitPortal /></RoleGate>} />

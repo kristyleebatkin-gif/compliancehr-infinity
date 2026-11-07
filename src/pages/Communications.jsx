@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import withEmployeeView from '@/components/withEmployeeView';
 import EmployeeCommunications from '@/components/employee/EmployeeCommunications';
 export default withEmployeeView(Communications, EmployeeCommunications);
@@ -177,35 +178,45 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
                       activeTab={activeTab}
                     />
 
-                    {/* Merged All To-Do Lists & Task Dashboards in One Unified Section */}
+                    {/* Merged All To-Do Lists, Task Dashboards & Task Leaderboard in One Unified Section */}
                     <div className="rounded-xl border border-[#0072FF]/60 bg-[#081018] p-3 space-y-2.5 text-white">
                       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2">
                         <div>
                           <h3 className="text-xs sm:text-sm font-extrabold text-white">
-                            Merged Shared To-Do List &amp; Task Dashboard
+                            Unified Tasks, Shared To-Do List &amp; Task Leaderboard
                           </h3>
                           <p className="text-[11px] text-slate-300">
-                            All personal, team, and shared to-do lists combined into a single live board.
+                            All personal, team, shared to-do lists, and task leaderboards grouped together.
                           </p>
                         </div>
-                        <Button
-                          size="sm"
-                          onClick={() => setActiveTab('todo')}
-                          className="h-7 bg-[#0072FF] text-[11px] font-extrabold text-white"
-                        >
-                          Open Full To-Do Board
-                        </Button>
+                        <div className="flex flex-wrap items-center gap-1.5">
+                          <Button
+                            size="sm"
+                            onClick={() => setActiveTab('todo')}
+                            className="h-7 bg-[#0072FF] text-[11px] font-extrabold text-white"
+                          >
+                            Open Full To-Do Board
+                          </Button>
+                          <Button
+                            asChild
+                            size="sm"
+                            variant="outline"
+                            className="h-7 border-[#00C6FF]/60 bg-[#081018] text-[11px] font-extrabold text-white hover:bg-[#0072FF]"
+                          >
+                            <Link to="/tasks">Open Tasks Hub</Link>
+                          </Button>
+                        </div>
                       </div>
-                      <div className="grid grid-cols-1 gap-2.5 xl:grid-cols-2">
+                      <div className="grid grid-cols-1 gap-2.5 xl:grid-cols-3">
                         <CommTaskDash />
                         <CommSharedTodo />
+                        <TaskLeaderboard compact />
                       </div>
                     </div>
 
-                    {/* Compact, Reasonable-Size Dark Row: Team Banter, Staff Leaderboard & Automated Alert Log */}
-                    <div className="grid grid-cols-1 gap-2.5 lg:grid-cols-3">
+                    {/* Compact Dark Row: Team Banter & Automated Alert Log */}
+                    <div className="grid grid-cols-1 gap-2.5 lg:grid-cols-2">
                       <TeamBanter />
-                      <TaskLeaderboard compact />
                       <AutomatedAlertSystem selfOnly={employeeSelf} />
                     </div>
                   </div>

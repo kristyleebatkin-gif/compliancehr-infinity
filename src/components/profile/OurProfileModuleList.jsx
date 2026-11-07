@@ -18,6 +18,7 @@ import Training from '@/pages/Training';
 import Feedback from '@/pages/Feedback';
 import DocumentationChecklist from '@/components/profile/DocumentationChecklist';
 import ProfileCommDiary from '@/components/communications/ProfileCommDiary';
+import ProfileTodoList from '@/components/communications/ProfileTodoList';
 import IntakeCaseWorkflow from '@/components/intake/IntakeCaseWorkflow';
 import ParticipantDocumentRegister from '@/components/documents/ParticipantDocumentRegister';
 
@@ -39,6 +40,7 @@ export default function OurProfileModuleList({ kind, profile, details, approvedP
     { key: 'intake', label: 'Intake Centre', Icon: ClipboardList, content: employee ? <IntakeCentre {...props} /> : <IntakeCaseWorkflow intakeType="Participant" profile={profile} profileView="documents" /> },
     { key: 'visual', label: 'Visual Boards', Icon: LayoutGrid, content: <VisualBoards {...props} /> },
     { key: 'goals', label: 'Goal Progress', Icon: Target, content: <GoalProgress {...ourProps} /> },
+    { key: 'tasks', label: 'Tasks & To-Do', Icon: ClipboardList, content: <ProfileTodoList person={profile} /> },
     ...(!employee ? [
       { key: 'progress-notes', label: 'Progress Notes', Icon: ClipboardList, content: <ParticipantDocumentRegister participant={profile} documentType="Progress Notes" /> },
       { key: 'progress-reports', label: 'Progress Reports', Icon: ClipboardList, content: <ParticipantDocumentRegister participant={profile} documentType="Progress Reports" /> },

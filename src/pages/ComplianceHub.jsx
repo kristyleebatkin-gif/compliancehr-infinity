@@ -108,8 +108,7 @@ const TAB_GROUPS = [
   { id: 'audits', label: 'NDIS Standards & Audits', keys: ['ai-copilot-checklist', 'auditor-portal', 'standards-map', 'master-checklist', 'master-audit-forms', 'screen-audit-2026', 'audits', 'internal-audits', 'audit-report-list', 'weekly-audit-reports'] },
   { id: 'policies', label: 'Policies & Legal', keys: ['policies', 'requirements', 'checklists', 'consents'] },
   { id: 'workforce', label: 'Workforce & Screening', keys: ['staff-compliance', 'worker-screening', 'cert-renewals', 'onboarding-progress', 'staff-bulk-actions'] },
-  { id: 'risk-safety', label: 'Risk, Safety & Reviews', keys: ['issues', 'readiness', 'risk-status', 'risk-heatmap', 'trend-charts', 'participant-reviews', 'kits-drills', 'visitors'] },
-  { id: 'tasks', label: 'Tasks & Activity', keys: ['quick-tasks', 'task-kanban', 'activity-feed'] },
+  { id: 'risk-safety', label: 'Risk, Safety, Reviews & Activity', keys: ['issues', 'readiness', 'risk-status', 'risk-heatmap', 'trend-charts', 'participant-reviews', 'kits-drills', 'visitors', 'activity-feed'] },
 ];
 
 const TABS = [
@@ -146,8 +145,6 @@ const TABS = [
   ['trend-charts', 'Safety Trend Charts'],
   ['kits-drills', 'Kits & Drills'],
   ['visitors', 'Visitor Sign In/Out'],
-  ['quick-tasks', 'Quick Tasks'],
-  ['task-kanban', 'Task Kanban'],
   ['activity-feed', 'Activity Feed'],
 ];
 

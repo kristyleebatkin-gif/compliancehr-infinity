@@ -22,6 +22,13 @@ import TaskStatusBoard from '@/components/tasks/TaskStatusBoard';
 import TaskCalendar from '@/components/tasks/TaskCalendar';
 import TaskSendDialog from '@/components/tasks/TaskSendDialog';
 import TaskLeaderboard from '@/components/communications/TaskLeaderboard';
+import TaskCompletionReports from '@/components/tasks/TaskCompletionReports';
+import TodoBoard from '@/components/communications/TodoBoard';
+import CommTaskDash from '@/components/communications/CommTaskDash';
+import CommSharedTodo from '@/components/communications/CommSharedTodo';
+import ComplianceTaskActions from '@/components/compliance/ComplianceTaskActions';
+import TaskKanban from '@/components/compliance/TaskKanban';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import '@/components/tasks/taskDashboardLayout.css';
 import '@/components/dashboard/brightActions.css';
 import { Archive, X } from 'lucide-react';
@@ -38,6 +45,8 @@ function Tasks() {
   const { toast } = useToast();
   const [params] = useSearchParams();
   const taskId = params.get('task');
+  const requestedTab = params.get('tab');
+  const [activeTab, setActiveTab] = useState(() => requestedTab || 'all-tasks');
   const [list, setList] = useState([]);
   const [taskTotals, setTaskTotals] = useState([]);
   const [taskMetrics, setTaskMetrics] = useState({ dueToday: 0, overdue: 0, averageMinutes: 0 });
@@ -53,6 +62,10 @@ function Tasks() {
   const [focusIdx, setFocusIdx] = useState(-1);
   const [view, setView] = useState('list');
   const [meEmail, setMeEmail] = useState('');
+
+  useEffect(() => {
+    if (requestedTab) setActiveTab(requestedTab);
+  }, [requestedTab]);
 
   // Management roles see the full register; everyone else sees only their own tasks.
   const MANAGEMENT_ROLES = ['admin', 'Provider Administrator', 'Administration', 'Compliance Manager', 'Team Leader', 'Finance & Accounts Officer', 'Human Resources Manager', 'Rostering Coordinator', 'Quality & Improvement Manager', 'CRM & Marketing Officer', 'Intake Officer'];
@@ -214,29 +227,52 @@ function Tasks() {
   return (
     <div className="compact-module tasks-workspace mx-auto max-w-5xl space-y-2 p-2 md:p-3">
       <ModuleShell
-        title="Automatic Task Completion & Evidence Closure Engine"
-        subtitle="Staff complete the real work. The system completes administrative tasks, updates registers, and stamps audit evidence automatically."
+        title="Unified Tasks, Shared To-Do, Kanban & Evidence Closure Hub"
+        subtitle="All personal, team, compliance, kanban, and shared sign-off tasks consolidated in one place."
         icon={ListTodo}
         moduleKey="tasks"
         insightModule="tasks"
-        tabs={<TaskToolbar navigationOnly />}
-        actions={<TaskToolbar view={view} onView={(nextView) => { setView(nextView); requestAnimationFrame(() => document.getElementById('task-register-view')?.scrollIntoView({ block: 'start' })); }} onExport={exportTasks} onRun={runAutomations} onNew={openNew} loading={loading} empty={list.length === 0} running={running} />}
+        actions={<TaskToolbar view={view} onView={(nextView) => { setActiveTab('all-tasks'); setView(nextView); requestAnimationFrame(() => document.getElementById('task-register-view')?.scrollIntoView({ block: 'start' })); }} onExport={exportTasks} onRun={runAutomations} onNew={openNew} loading={loading} empty={list.length === 0} running={running} />}
       />
 
-      <AutomaticTaskCompletionEvidenceClosureEngine compact />
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-3">
+        <TabsList className="flex flex-wrap gap-1.5">
+          <TabsTrigger value="all-tasks">All Tasks, Register &amp; Status Board</TabsTrigger>
+          <TabsTrigger value="shared-todo">Shared To-Do &amp; Sign-Off Board</TabsTrigger>
+          <TabsTrigger value="kanban-quick">Task Kanban &amp; Quick Compliance Tasks</TabsTrigger>
+          <TabsTrigger value="reports-leaderboard">Completion Reports &amp; Leaderboard</TabsTrigger>
+        </TabsList>
 
-      {taskId && <Button asChild variant="outline" size="sm"><Link to="/tasks">View all tasks</Link></Button>}
-      <TaskSummaryCards totals={taskTotals} metrics={taskMetrics} loading={loading} />
+        <TabsContent value="all-tasks" className="space-y-3">
+          <AutomaticTaskCompletionEvidenceClosureEngine compact />
+          {taskId && <Button asChild variant="outline" size="sm"><Link to="/tasks">View all tasks</Link></Button>}
+          <TaskSummaryCards totals={taskTotals} metrics={taskMetrics} loading={loading} />
+          <TaskDashboard tasks={list} onOpen={openEdit} />
+          <section id="task-register-view" aria-label={view === 'calendar' ? 'Task calendar' : 'Task list'}>
+            {view === 'calendar' ? <TaskCalendar tasks={list} onOpen={openEdit} /> : <TaskList tasks={filtered} loading={loading} filter={filter} onFilter={setFilter} selected={selected} focusIdx={focusIdx} allChecked={allChecked} onSelectAll={toggleSelectAll} onSelect={toggleSelect} onToggle={toggle} onStatus={setStatus} onSend={setSending} onAlert={alertAssignee} onEdit={openEdit} onDelete={remove} />}
+          </section>
+          <TaskProgressChart tasks={list} users={users} />
+          {loading ? <p role="status" className="text-sm text-muted-foreground">Loading task status board...</p> : <TaskStatusBoard tasks={list} onOpen={openEdit} setStatus={setStatus} />}
+        </TabsContent>
 
-      <TaskDashboard tasks={list} onOpen={openEdit} />
+        <TabsContent value="shared-todo" className="space-y-3">
+          <div className="grid grid-cols-1 gap-3 xl:grid-cols-2">
+            <CommTaskDash />
+            <CommSharedTodo />
+          </div>
+          <TodoBoard compact presentation="review" />
+        </TabsContent>
 
-      <section id="task-register-view" aria-label={view === 'calendar' ? 'Task calendar' : 'Task list'}>
-        {view === 'calendar' ? <TaskCalendar tasks={list} onOpen={openEdit} /> : <TaskList tasks={filtered} loading={loading} filter={filter} onFilter={setFilter} selected={selected} focusIdx={focusIdx} allChecked={allChecked} onSelectAll={toggleSelectAll} onSelect={toggleSelect} onToggle={toggle} onStatus={setStatus} onSend={setSending} onAlert={alertAssignee} onEdit={openEdit} onDelete={remove} />}
-      </section>
+        <TabsContent value="kanban-quick" className="space-y-4">
+          <ComplianceTaskActions />
+          <TaskKanban />
+        </TabsContent>
 
-      <TaskProgressChart tasks={list} users={users} />
-
-      {loading ? <p role="status" className="text-sm text-muted-foreground">Loading task status board...</p> : <TaskStatusBoard tasks={list} onOpen={openEdit} setStatus={setStatus} />}
+        <TabsContent value="reports-leaderboard" className="space-y-4">
+          <TaskCompletionReports />
+          <TaskLeaderboard />
+        </TabsContent>
+      </Tabs>
 
       {selected.length > 0 && (
         <div className="sticky bottom-4 z-40 flex flex-wrap items-center gap-2 rounded-xl border border-brand/40 bg-card p-3 shadow-xl shadow-brand/10">
@@ -292,8 +328,6 @@ function Tasks() {
       )}
 
       <TaskSendDialog open={Boolean(sending)} onOpenChange={(v) => !v && setSending(null)} task={sending} onSaved={load} />
-
-      <TaskLeaderboard />
     </div>
   );
 }
