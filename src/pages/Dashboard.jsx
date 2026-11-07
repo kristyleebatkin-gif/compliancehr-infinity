@@ -29,8 +29,8 @@ const BRAND_GRADIENT =
 const EXECUTIVE_TRUST_PILLS = [
   { label: '46 Connected Modules', color: '#00C6FF', icon: Layers },
   { label: '17 Categories · 356 Checkpoints', color: '#0072FF', icon: ShieldCheck },
-  { label: '100+ Tailored Business Docs', color: '#A855F7', icon: Sparkles },
-  { label: '$160/mo Elite Tokens Included', color: '#FF2E9A', icon: Award },
+  { label: '100+ Docs ($999 or $125/mo)', color: '#A855F7', icon: Sparkles },
+  { label: 'Plans $760–$1,220/mo (+$160 Elite)', color: '#FF2E9A', icon: Award },
 ];
 
 export default function Dashboard() {
@@ -47,8 +47,11 @@ export default function Dashboard() {
       {/* 1. FIRST-CLASS EXECUTIVE DASHBOARD & SUBSCRIPTION COMMAND STRIP */}
       <section
         aria-label="Executive Dashboard and Subscription Command Strip"
-        className="overflow-hidden rounded-2xl p-[1.5px] shadow-xl"
-        style={{ background: BRAND_GRADIENT }}
+        className="overflow-hidden rounded-2xl p-[2.5px] shadow-xl"
+        style={{
+          background: BRAND_GRADIENT,
+          boxShadow: '0 0 14px 2px rgba(255,255,255,0.9), 0 0 24px 4px rgba(0,198,255,0.45)',
+        }}
       >
         <div className="rounded-[14px] bg-[#081018] px-4 py-2.5 text-white space-y-2">
           <div className="flex flex-wrap items-center justify-between gap-2">
@@ -57,7 +60,7 @@ export default function Dashboard() {
                 className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-black"
                 style={{
                   border: '1.5px solid #FFFFFF',
-                  boxShadow: '0 0 10px rgba(255,255,255,0.85), 0 0 14px rgba(0,198,255,0.55)',
+                  boxShadow: '0 0 10px 2px rgba(255,255,255,0.95), 0 0 16px rgba(0,198,255,0.65)',
                 }}
               >
                 <LayoutDashboard className="h-4 w-4 text-white" style={{ filter: 'drop-shadow(0 0 4px #FFFFFF)' }} />
@@ -67,7 +70,7 @@ export default function Dashboard() {
                   1. Executive Dashboard, Live Communication &amp; Subscription Showcase
                 </h1>
                 <p className="text-xs font-semibold leading-snug text-slate-300">
-                  Unified Communication &amp; Mailbox Hub, Live Roster &amp; Weather, 12-Page Power BI Command Centre, and Smart Enhanced All-In-One Subscriptions.
+                  Unified Communication &amp; Mailbox Hub, Live Roster &amp; Weather, 12-Page Power BI Command Centre, and Smart Enhanced All-In-One Subscriptions ($760–$1,220/mo).
                 </p>
               </div>
             </div>
@@ -75,14 +78,14 @@ export default function Dashboard() {
             <div className="flex flex-wrap items-center gap-1.5">
               <a
                 href="#pricing"
-                className="inline-flex h-7 items-center gap-1 rounded-full border border-white/25 bg-[#FF2E9A] px-3 text-[10px] font-extrabold uppercase tracking-wide text-white shadow-[0_0_10px_rgba(255,46,154,0.55)] transition hover:opacity-95"
+                className="inline-flex h-7 items-center gap-1 rounded-full border border-white/60 bg-[#FF2E9A] px-3 text-[10px] font-extrabold uppercase tracking-wide text-white shadow-[0_0_12px_rgba(255,255,255,0.75)] transition hover:opacity-95"
               >
                 <Zap className="h-3 w-3 shrink-0 text-white" />
                 <span>View Subscriptions ($760–$1,220/mo)</span>
               </a>
               <Link
                 to="/register"
-                className="inline-flex h-7 items-center gap-1 rounded-full border border-[#00C6FF] bg-[#0072FF] px-3 text-[10px] font-extrabold uppercase tracking-wide text-white shadow-[0_0_10px_rgba(0,114,255,0.5)] transition hover:opacity-95"
+                className="inline-flex h-7 items-center gap-1 rounded-full border border-white/60 bg-[#0072FF] px-3 text-[10px] font-extrabold uppercase tracking-wide text-white shadow-[0_0_10px_rgba(255,255,255,0.65)] transition hover:opacity-95"
               >
                 <span>Start 14-Day Free Trial</span>
                 <ArrowRight className="h-3 w-3 shrink-0 text-[#00C6FF]" />
@@ -120,9 +123,12 @@ export default function Dashboard() {
                 <div
                   key={pill.label}
                   className="flex items-center gap-2 rounded-lg bg-black px-2.5 py-1.5"
-                  style={{ border: `1px solid ${pill.color}66` }}
+                  style={{
+                    border: `1.5px solid ${pill.color}`,
+                    boxShadow: '0 0 8px rgba(255,255,255,0.45)',
+                  }}
                 >
-                  <Icon className="h-3.5 w-3.5 shrink-0" style={{ color: pill.color }} />
+                  <Icon className="h-3.5 w-3.5 shrink-0 text-white" style={{ filter: 'drop-shadow(0 0 3px #FFFFFF)' }} />
                   <span className="truncate text-[10px] font-extrabold text-white">
                     {pill.label}
                   </span>
@@ -141,33 +147,33 @@ export default function Dashboard() {
       {/* 3. EXECUTIVE HERO & INTERACTIVE 3-ROW ROLE PREVIEW */}
       <LandingHero onBookDemo={openDemoModal} />
 
-      {/* 4. SMART ENHANCED ALL-IN-ONE ELITE SUBSCRIPTION PACKAGES */}
-      <PricingSection onContactSales={openDemoModal} />
-
-      {/* 5. CARESPHERE 12-PAGE POWER BI EXECUTIVE COMMAND CENTRE */}
+      {/* 4. CARESPHERE 12-PAGE POWER BI EXECUTIVE COMMAND CENTRE */}
       <div id="powerbi-command-centre" className="scroll-mt-32">
         <CareSpherePowerBiCommandCentre />
       </div>
 
-      {/* 6. UNIFIED LAUNCH SHOWCASE & FOUNDER STORY VIDEOS */}
+      {/* 5. UNIFIED LAUNCH SHOWCASE & FOUNDER STORY VIDEOS */}
       <LandingLaunchVideosSection />
 
-      {/* 7. EVIDENCE-FIRST OPERATING STANDARD & 45 MASTER REGISTERS */}
+      {/* 6. EVIDENCE-FIRST OPERATING STANDARD & 45 MASTER REGISTERS */}
       <LandingEvidenceStandardSection />
       <LandingRegisterEngineSection />
 
-      {/* 8. PRODUCT SHOWCASE, FEATURE PILLARS, STATS & BENEFITS */}
+      {/* 7. PRODUCT SHOWCASE, FEATURE PILLARS, STATS & BENEFITS */}
       <LandingProductShowcase />
       <LandingSolutionSection />
       <LandingStatsSection />
       <BenefitsSection />
 
-      {/* 9. HOW IT WORKS, VERIFIED TESTIMONIALS & 46-MODULE ARCHITECTURE MAP */}
+      {/* 8. HOW IT WORKS & VERIFIED TESTIMONIALS */}
       <LandingHowItWorks />
       <LandingTestimonialsSection />
-      <BlueprintPreviewSection />
 
-      {/* 10. EXECUTIVE FAQS, DEPLOY OPERATING SYSTEM CTA & ZERO-TRUST REMOTE ACCESS AFTER DEPLOY */}
+      {/* 9. SMART ENHANCED ALL-IN-ONE ELITE SUBSCRIPTION PACKAGES (CLASSIC LANDING POSITION WITH GLOWING LIGHTS) */}
+      <PricingSection onContactSales={openDemoModal} />
+
+      {/* 10. 46-MODULE ARCHITECTURE MAP, EXECUTIVE FAQS, DEPLOY CTA & ZERO-TRUST REMOTE ACCESS */}
+      <BlueprintPreviewSection />
       <LandingFaqSection />
       <LandingCTA onBookDemo={openDemoModal} />
       <RemoteAccessStatusCard />

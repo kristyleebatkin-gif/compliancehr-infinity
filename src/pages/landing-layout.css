@@ -1,4 +1,4 @@
-/* Enterprise OS Landing Page Styles — Vivid Module, Section & Card Borders */
+/* Enterprise OS Landing Page Styles — Vivid Module, Section & Card Borders with Glowing Lights */
 .landing-page {
   background-color: #F8FAFC;
   color: #0A2B6D;
@@ -28,7 +28,7 @@
   outline-offset: 2px;
 }
 
-/* Vivid 2.5px Multi-Stop Brand Gradient Border on Every Enterprise Surface Module */
+/* Vivid 2.5px Multi-Stop Brand Gradient Border + Glowing White & Cyan Halo on Every Enterprise Surface Module */
 .landing-page .enterprise-surface,
 .bright-dashboard .enterprise-surface {
   background-color: #FFFFFF;
@@ -38,38 +38,44 @@
     linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #A855F7 62%, #FF2E9A 100%) !important;
   background-origin: border-box !important;
   background-clip: padding-box, border-box !important;
-  box-shadow: 0 4px 16px -2px rgba(0, 114, 255, 0.14), 0 2px 6px rgba(10, 43, 109, 0.08);
+  box-shadow:
+    0 0 12px 2px rgba(255, 255, 255, 0.9),
+    0 0 22px 3px rgba(0, 198, 255, 0.35),
+    0 4px 16px -2px rgba(0, 114, 255, 0.18) !important;
 }
 
-/* Make all inner card, tile, and divider borders inside modules crisp and unmistakable */
+/* Make all inner card, tile, and divider borders inside modules crisp with subtle glowing light */
 .landing-page .enterprise-surface :is(.border, .border-slate-200, .border-slate-100, .border-sky-200),
 .bright-dashboard .enterprise-surface :is(.border, .border-slate-200, .border-slate-100, .border-sky-200) {
-  border-color: #38BDF8 !important;
+  border-color: #0072FF !important;
   border-width: 1.5px;
+  box-shadow: 0 0 8px 1px rgba(255, 255, 255, 0.8), 0 0 10px rgba(0, 198, 255, 0.2);
 }
 
 .landing-page .enterprise-surface :is(.border-b, .border-b.border-slate-200, .border-b.border-slate-100),
 .bright-dashboard .enterprise-surface :is(.border-b, .border-b.border-slate-200, .border-b.border-slate-100) {
-  border-bottom-color: #38BDF8 !important;
+  border-bottom-color: #0072FF !important;
   border-bottom-width: 1.5px !important;
 }
 
 .landing-page .enterprise-surface :is(.border-t, .border-t.border-slate-200, .border-t.border-slate-100),
 .bright-dashboard .enterprise-surface :is(.border-t, .border-t.border-slate-200, .border-t.border-slate-100) {
-  border-top-color: #38BDF8 !important;
+  border-top-color: #0072FF !important;
   border-top-width: 1.5px !important;
 }
 
-/* Crisp Cyan/Purple borders on dark-chassis cards and dividers so no border disappears on dark blue/black */
+/* Crisp Cyan/White glowing borders on dark-chassis cards and dividers */
 .landing-page :is(.border-white\/15, .border-white\/10, .border-white\/20),
 .bright-dashboard :is(.border-white\/15, .border-white\/10, .border-white\/20) {
-  border-color: rgba(0, 198, 255, 0.6) !important;
+  border-color: rgba(0, 198, 255, 0.75) !important;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.35);
 }
 
 .landing-page .enterprise-chassis {
   background: linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%);
   color: #FFFFFF;
   border: 2px solid #00C6FF !important;
+  box-shadow: 0 0 12px 2px rgba(255, 255, 255, 0.8), 0 0 20px rgba(0, 198, 255, 0.45);
 }
 
 .landing-page .enterprise-primary-btn {
