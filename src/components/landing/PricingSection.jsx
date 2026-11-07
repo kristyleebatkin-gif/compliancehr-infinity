@@ -195,7 +195,7 @@ export default function PricingSection({ onContactSales }) {
         }}
       >
         {/* Top Perimeter Glowing White Light Strip */}
-        <div className="flex items-center justify-between px-4 py-1 bg-[#081018] rounded-t-[13px] border-b border-[#00C6FF]/60">
+        <div className="flex items-center justify-between px-4 py-1 bg-[#0A2B6D]/95 backdrop-blur-sm rounded-t-[13px] border-b border-[#00C6FF]/60">
           <div className="flex items-center gap-2">
             {[0, 1, 2, 3, 4].map((dot) => (
               <span
@@ -404,7 +404,7 @@ export default function PricingSection({ onContactSales }) {
               boxShadow: '0 0 12px 2px rgba(255,255,255,0.9), 0 0 18px rgba(0,198,255,0.45)',
             }}
           >
-            <div className="flex flex-wrap items-center justify-between gap-2 rounded-[10px] bg-[#081018] px-3.5 py-2.5 text-white">
+            <div className="flex flex-wrap items-center justify-between gap-2 rounded-[10px] bg-[#0A2B6D]/95 backdrop-blur-sm px-3.5 py-2.5 text-white">
               <div className="flex items-center gap-2.5 min-w-0">
                 <span
                   className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/70 bg-[#0072FF]/35"

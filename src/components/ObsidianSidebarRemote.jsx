@@ -12,7 +12,7 @@ import {
 const BRAND_GRADIENT =
   'linear-gradient(120deg, #0072FF 0%, #A855F7 50%, #FF2E9A 100%)';
 
-const DARK_NAVY_CHASSIS = '#000000';
+const DARK_NAVY_CHASSIS = 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)';
 
 // Strict repeating symbol & square indicator sequence: Blue, Purple, Pink, Blue, Purple, Pink...
 const SYMBOL_COLOR_SEQUENCE = ['#0072FF', '#A855F7', '#FF2E9A'];
@@ -411,7 +411,7 @@ export default function ObsidianSidebarRemote({
       >
         <div className="h-1.5 w-full shrink-0" style={{ background: BRAND_GRADIENT }} />
 
-        <div className="flex shrink-0 flex-col items-center justify-end gap-1 bg-black px-1.5 pt-1 pb-1 text-center">
+        <div className="flex shrink-0 flex-col items-center justify-end gap-1 bg-[#0A2B6D]/90 px-1.5 pt-1 pb-1 text-center">
           <Link
             to="/dashboard"
             aria-label="ComplianceHR Infinity Home"
@@ -534,12 +534,12 @@ export default function ObsidianSidebarRemote({
                       style={{ background: BRAND_GRADIENT }}
                     >
                       <div
-                        className="flex h-[38px] items-center justify-between gap-1.5 overflow-hidden rounded-[7px] bg-black px-2"
-                        style={{ background: '#000000' }}
+                        className="flex h-[38px] items-center justify-between gap-1.5 overflow-hidden rounded-[7px] bg-[#0A2B6D]/90 px-2"
+                        style={{ background: 'linear-gradient(135deg, #0A2B6D, #16468A)' }}
                       >
                         <div className="flex min-w-0 flex-1 items-center gap-2">
                           <span
-                            className="flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-[4px] bg-black"
+                            className="flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-[4px] bg-[#0A2B6D]/90"
                             style={{
                               border: `1.5px solid ${symColor}`,
                               boxShadow: `0 0 6px ${symColor}66`,
@@ -558,7 +558,7 @@ export default function ObsidianSidebarRemote({
                         {/* Square Indicator Button (No Text) */}
                         <span
                           aria-hidden="true"
-                          className="flex h-4 w-4 shrink-0 items-center justify-center rounded-[3px] bg-black"
+                          className="flex h-4 w-4 shrink-0 items-center justify-center rounded-[3px] bg-[#0A2B6D]/90"
                           style={{
                             border: `1.5px solid ${symColor}`,
                             boxShadow: `0 0 7px ${symColor}88`,
@@ -598,12 +598,12 @@ export default function ObsidianSidebarRemote({
                               style={{ background: BRAND_GRADIENT }}
                             >
                               <div
-                                className="flex h-[36px] items-center justify-between gap-1.5 overflow-hidden rounded-[7px] bg-black px-2"
-                                style={{ background: '#000000' }}
+                                className="flex h-[36px] items-center justify-between gap-1.5 overflow-hidden rounded-[7px] bg-[#0A2B6D]/90 px-2"
+                                style={{ background: 'linear-gradient(135deg, #0A2B6D, #16468A)' }}
                               >
                                 <div className="flex min-w-0 flex-1 items-center gap-2">
                                   <span
-                                    className="flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-[4px] bg-black"
+                                    className="flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-[4px] bg-[#0A2B6D]/90"
                                     style={{
                                       border: `1.5px solid ${childSymColor}`,
                                       boxShadow: `0 0 6px ${childSymColor}66`,
@@ -622,7 +622,7 @@ export default function ObsidianSidebarRemote({
                                 {/* Square Indicator Button (No Text) */}
                                 <span
                                   aria-hidden="true"
-                                  className="flex h-4 w-4 shrink-0 items-center justify-center rounded-[3px] bg-black"
+                                  className="flex h-4 w-4 shrink-0 items-center justify-center rounded-[3px] bg-[#0A2B6D]/90"
                                   style={{
                                     border: `1.5px solid ${childSymColor}`,
                                     boxShadow: `0 0 7px ${childSymColor}88`,
@@ -667,12 +667,12 @@ export default function ObsidianSidebarRemote({
                   style={{ background: BRAND_GRADIENT }}
                 >
                   <div
-                    className="flex h-[36px] items-center justify-between gap-1.5 overflow-hidden rounded-[7px] bg-black px-2"
-                    style={{ background: '#000000' }}
+                    className="flex h-[36px] items-center justify-between gap-1.5 overflow-hidden rounded-[7px] bg-[#0A2B6D]/90 px-2"
+                    style={{ background: 'linear-gradient(135deg, #0A2B6D, #16468A)' }}
                   >
                     <div className="flex min-w-0 flex-1 items-center gap-2">
                       <span
-                        className="flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-[4px] bg-black"
+                        className="flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-[4px] bg-[#0A2B6D]/90"
                         style={{
                           border: `1.5px solid ${modSymColor}`,
                           boxShadow: `0 0 6px ${modSymColor}66`,
@@ -691,7 +691,7 @@ export default function ObsidianSidebarRemote({
                     {/* Square Indicator Button (No Text) */}
                     <span
                       aria-hidden="true"
-                      className="flex h-4 w-4 shrink-0 items-center justify-center rounded-[3px] bg-black"
+                      className="flex h-4 w-4 shrink-0 items-center justify-center rounded-[3px] bg-[#0A2B6D]/90"
                       style={{
                         border: `1.5px solid ${modSymColor}`,
                         boxShadow: `0 0 7px ${modSymColor}88`,
@@ -717,7 +717,7 @@ export default function ObsidianSidebarRemote({
             <button
               type="button"
               onClick={onLogout}
-              className="flex min-h-[30px] w-full items-center justify-center gap-1.5 rounded-md border border-[#0072FF] bg-black px-2 py-1 text-xs font-extrabold text-white shadow-2xs transition hover:border-[#FF2E9A]"
+              className="flex min-h-[30px] w-full items-center justify-center gap-1.5 rounded-md border border-[#0072FF] bg-[#0A2B6D]/90 px-2 py-1 text-xs font-extrabold text-white shadow-2xs transition hover:border-[#FF2E9A]"
             >
               <LogOut className="h-3.5 w-3.5 text-[#FF2E9A]" />
               <span>Sign out</span>

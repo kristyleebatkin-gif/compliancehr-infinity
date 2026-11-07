@@ -55,7 +55,7 @@ export default function AboveMailboxCommandDeck({ onDropExpressMail, mailAlertCo
       style={{ background: TOP_BORDER_GRADIENT }}
     >
       {/* Dark Command Area Inside the Mailbox Deck */}
-      <div className="flex flex-col justify-between gap-1.5 rounded-[9px] bg-[#162235] p-1.5 text-center text-white">
+      <div className="flex flex-col justify-between gap-1.5 rounded-[9px] bg-[#16468A]/80 p-1.5 text-center text-white">
         {/* Top App-Coloured Header Bar With Glowing White Lights */}
         <div
           className="gradient-brand flex w-full items-center justify-between gap-1 rounded-lg px-2 py-0.5 text-white"
@@ -72,7 +72,7 @@ export default function AboveMailboxCommandDeck({ onDropExpressMail, mailAlertCo
             <Sparkles className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
             <span style={{ color: '#FFFFFF' }}>Sky-Drop &amp; Radar Command Above Mailbox</span>
           </span>
-          <span className="inline-flex items-center gap-1 rounded-full bg-black/35 px-1.5 py-0 text-[6.5px] font-extrabold text-white">
+          <span className="inline-flex items-center gap-1 rounded-full bg-[#0A2B6D]/70 px-1.5 py-0 text-[6.5px] font-extrabold text-white">
             <Radio className="h-2 w-2 text-white animate-pulse" style={{ color: '#FFFFFF' }} />
             <span style={{ color: '#FFFFFF' }}>LIVE ✦</span>
           </span>
@@ -96,7 +96,7 @@ export default function AboveMailboxCommandDeck({ onDropExpressMail, mailAlertCo
                     isAct ? 'ring-1 ring-[#FF2E9A]' : ''
                   }`}
                   style={{
-                    background: isAct ? getHeaderView(idx) : '#081018',
+                    background: isAct ? getHeaderView(idx) : '#0A2B6D',
                     color: '#FFFFFF',
                   }}
                 >
@@ -112,8 +112,8 @@ export default function AboveMailboxCommandDeck({ onDropExpressMail, mailAlertCo
         </div>
 
         {/* Interactive Visual Stage — Dark Command Surface */}
-        <div className="w-full rounded-lg border border-white/15 bg-[#081018]">
-          <div className="flex flex-col items-center justify-between gap-1 rounded-[6px] bg-[#081018] px-2 py-1 text-center text-white">
+        <div className="w-full rounded-lg border border-white/15 bg-[#0A2B6D]/90 backdrop-blur-sm">
+          <div className="flex flex-col items-center justify-between gap-1 rounded-[6px] bg-[#0A2B6D]/90 backdrop-blur-sm px-2 py-1 text-center text-white">
             {activeMode === 'drone' && (
               <div className="flex w-full flex-col items-center gap-0.5">
                 <svg
@@ -222,7 +222,7 @@ export default function AboveMailboxCommandDeck({ onDropExpressMail, mailAlertCo
                     {statusTicker[pulseStep]}
                   </p>
                   <div className="flex items-center gap-1 pt-0.5">
-                    <span className="rounded-full border border-[#00C6FF]/40 bg-[#162235] px-1.5 py-0 text-[6.5px] font-extrabold text-white">
+                    <span className="rounded-full border border-[#00C6FF]/40 bg-[#16468A]/80 px-1.5 py-0 text-[6.5px] font-extrabold text-white">
                       98.4% Score
                     </span>
                     <Link
@@ -260,7 +260,7 @@ export default function AboveMailboxCommandDeck({ onDropExpressMail, mailAlertCo
                   ].map((s, sIdx) => (
                     <div
                       key={s.who}
-                      className="rounded border bg-[#162235] px-1 py-0.5 text-[6.5px] font-extrabold text-white"
+                      className="rounded border bg-[#16468A]/80 px-1 py-0.5 text-[6.5px] font-extrabold text-white"
                       style={{ borderColor: getAppBorderView(sIdx) }}
                     >
                       <div className="truncate font-black text-white">{s.who}</div>

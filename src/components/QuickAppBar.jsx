@@ -9,7 +9,7 @@ import EnterpriseFloatingWorkspaceDock from '@/components/EnterpriseFloatingWork
 const BRAND_GRADIENT =
   'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)';
 
-const DARK_NAVY_CHASSIS = '#000000';
+const DARK_NAVY_CHASSIS = 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)';
 
 const APP_DESIGN_COLOURS = ['#0072FF', '#A855F7', '#FF2E9A'];
 
@@ -247,10 +247,10 @@ export default function QuickAppBar() {
               className="group block w-full text-left rounded-md p-[1px] transition-all duration-150"
               style={{ background: BRAND_GRADIENT }}
             >
-              <div className="flex h-[22px] items-center justify-between gap-1 rounded-[5px] bg-black px-1.5">
+              <div className="flex h-[22px] items-center justify-between gap-1 rounded-[5px] bg-[#0A2B6D]/90 px-1.5">
                 <div className="flex min-w-0 flex-1 items-center gap-1">
                   <span
-                    className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-[3px] bg-black"
+                    className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-[3px] bg-[#0A2B6D]/90"
                     style={{ border: '1px solid #0072FF' }}
                   >
                     <Cpu className="h-2 w-2 shrink-0" style={{ color: '#0072FF' }} />
@@ -261,7 +261,7 @@ export default function QuickAppBar() {
                 </div>
                 <span
                   aria-hidden="true"
-                  className="flex h-2.5 w-2.5 shrink-0 items-center justify-center rounded-[2px] bg-black"
+                  className="flex h-2.5 w-2.5 shrink-0 items-center justify-center rounded-[2px] bg-[#0A2B6D]/90"
                   style={{ border: '1px solid #0072FF' }}
                 >
                   <span className="h-1 w-1 rounded-[1px]" style={{ backgroundColor: '#0072FF' }} />
@@ -286,10 +286,10 @@ export default function QuickAppBar() {
                   }`}
                   style={{ background: BRAND_GRADIENT }}
                 >
-                  <div className="flex h-[22px] items-center justify-between gap-1 rounded-[5px] bg-black px-1.5">
+                  <div className="flex h-[22px] items-center justify-between gap-1 rounded-[5px] bg-[#0A2B6D]/90 px-1.5">
                     <div className="flex min-w-0 flex-1 items-center gap-1">
                       <span
-                        className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-[3px] bg-black"
+                        className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-[3px] bg-[#0A2B6D]/90"
                         style={{ border: `1px solid ${symColor}` }}
                       >
                         <Icon className="h-2 w-2 shrink-0" style={{ color: symColor }} />
@@ -300,7 +300,7 @@ export default function QuickAppBar() {
                     </div>
                     <span
                       aria-hidden="true"
-                      className="flex h-2.5 w-2.5 shrink-0 items-center justify-center rounded-[2px] bg-black"
+                      className="flex h-2.5 w-2.5 shrink-0 items-center justify-center rounded-[2px] bg-[#0A2B6D]/90"
                       style={{ border: `1px solid ${symColor}` }}
                     >
                       <span className="h-1 w-1 rounded-[1px]" style={{ backgroundColor: symColor }} />
@@ -329,10 +329,10 @@ export default function QuickAppBar() {
                     }`}
                     style={{ background: BRAND_GRADIENT }}
                   >
-                    <div className="flex h-[22px] items-center justify-between gap-1 rounded-[5px] bg-black px-1.5">
+                    <div className="flex h-[22px] items-center justify-between gap-1 rounded-[5px] bg-[#0A2B6D]/90 px-1.5">
                       <div className="flex min-w-0 flex-1 items-center gap-1">
                         <span
-                          className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-[3px] bg-black"
+                          className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-[3px] bg-[#0A2B6D]/90"
                           style={{ border: `1px solid ${modColor}` }}
                         >
                           <Icon className="h-2 w-2 shrink-0" style={{ color: modColor }} />
@@ -343,7 +343,7 @@ export default function QuickAppBar() {
                       </div>
                       <span
                         aria-hidden="true"
-                        className="flex h-2.5 w-2.5 shrink-0 items-center justify-center rounded-[2px] bg-black"
+                        className="flex h-2.5 w-2.5 shrink-0 items-center justify-center rounded-[2px] bg-[#0A2B6D]/90"
                         style={{ border: `1px solid ${modColor}` }}
                       >
                         <span className="h-1 w-1 rounded-[1px]" style={{ backgroundColor: modColor }} />

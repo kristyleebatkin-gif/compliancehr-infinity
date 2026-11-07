@@ -114,7 +114,7 @@ export default function LandingHero({ onBookDemo }) {
                   {GOVERNANCE_PILLARS.map((pillar) => (
                     <div
                       key={pillar}
-                      className="flex items-center gap-2 rounded-lg border border-[#00C6FF]/60 bg-[#081018]/85 px-2.5 py-2 text-[11px] font-bold text-white"
+                      className="flex items-center gap-2 rounded-lg border border-[#00C6FF]/60 bg-[#16468A]/75 backdrop-blur-sm px-2.5 py-2 text-[11px] font-bold text-white"
                     >
                       <span
                         className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-md border border-white/60 bg-[#0072FF]/35"
@@ -134,7 +134,7 @@ export default function LandingHero({ onBookDemo }) {
                     return (
                       <div
                         key={kpi.label}
-                        className="rounded-xl border border-[#00C6FF]/60 bg-[#081018]/90 p-2.5 text-left lg:flex lg:flex-col lg:justify-center"
+                        className="rounded-xl border border-[#00C6FF]/60 bg-[#16468A]/80 backdrop-blur-sm p-2.5 text-left lg:flex lg:flex-col lg:justify-center"
                       >
                         <div className="flex items-center justify-between gap-1.5">
                           <span className="text-[11px] font-bold text-[#00C6FF]">

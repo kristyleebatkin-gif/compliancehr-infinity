@@ -137,7 +137,7 @@ export default function LandingFooter({ onBookDemo }) {
             background: 'linear-gradient(120deg, #00C6FF 0%, #0072FF 30%, #A855F7 65%, #FF2E9A 100%)',
           }}
         >
-          <div className="flex flex-col items-center justify-center gap-1.5 rounded-[14px] bg-[#081018] px-4 py-3.5 text-center text-white">
+          <div className="flex flex-col items-center justify-center gap-1.5 rounded-[14px] bg-[#0A2B6D]/95 backdrop-blur-sm px-4 py-3.5 text-center text-white">
             <Link to="/" className="inline-flex items-center justify-center">
               <BrandLogoLockup size="lg" theme="dark" showSlogan={true} />
             </Link>

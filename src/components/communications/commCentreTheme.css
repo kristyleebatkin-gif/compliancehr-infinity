@@ -1,4 +1,4 @@
-/* Communication design layer — dark navy/black command theme (no white background) */
+/* Communication design layer — dark blue glass command theme */
 .comm-centre {
   background: transparent !important;
 }
@@ -6,7 +6,7 @@
 /* Remove white background from Communication module header and cards */
 .comm-centre > div > div > .bg-white,
 .comm-centre .module-shell-workspace > .bg-white {
-  background: #081018 !important;
+  background: linear-gradient(135deg, #0A2B6D, #16468A) !important;
   border-color: rgba(0, 198, 255, 0.35) !important;
   color: #FFFFFF !important;
 }

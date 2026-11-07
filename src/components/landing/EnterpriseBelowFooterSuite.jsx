@@ -138,7 +138,7 @@ export default function EnterpriseBelowFooterSuite({ onBookDemo }) {
               return (
                 <div
                   key={item.title}
-                  className="flex items-start gap-2.5 rounded-xl border border-[#00C6FF]/60 bg-[#081018]/75 p-2.5 transition hover:border-[#00C6FF]"
+                  className="flex items-start gap-2.5 rounded-xl border border-[#00C6FF]/60 bg-[#16468A]/75 backdrop-blur-sm p-2.5 transition hover:border-[#00C6FF]"
                 >
                   <div
                     className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/60 bg-[#0072FF]/30"
@@ -167,7 +167,7 @@ export default function EnterpriseBelowFooterSuite({ onBookDemo }) {
           </div>
 
           {/* Row 3: Bottom Section — Line 1: Australian Privacy Info on One Line + Small Space + Instant Module Launch + Export Neatly Above · Lines 2 & 3: 8 Instant Module Names on Two Bottom Lines */}
-          <div className="rounded-xl border border-[#00C6FF]/60 bg-[#081018]/75 p-3 space-y-2">
+          <div className="rounded-xl border border-[#00C6FF]/60 bg-[#16468A]/75 backdrop-blur-sm p-3 space-y-2">
             <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#00C6FF]/45 pb-2">
               <div className="flex flex-wrap items-center gap-3 min-w-0">
                 <span className="text-[11px] font-semibold text-white/90 whitespace-nowrap">

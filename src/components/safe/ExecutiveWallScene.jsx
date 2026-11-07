@@ -39,7 +39,7 @@ function WallHangingPictureFrame({ title, children, className = '', frameAccent 
             <span className="text-center">{title}</span>
           </div>
         )}
-        <div className="flex-1 w-full overflow-hidden rounded-[9px] bg-[#081018] p-2.5 text-white">
+        <div className="flex-1 w-full overflow-hidden rounded-[9px] bg-[#0A2B6D]/95 backdrop-blur-sm p-2.5 text-white">
           {children}
         </div>
       </div>
@@ -307,7 +307,7 @@ export function CommunicationAndMailboxTabs({ onSelectTab, activeTab, tabs } = {
 
   return (
     <WallHangingPictureFrame title="Merged Communication, Mailbox & Live Channels">
-      <div className="grid grid-cols-1 gap-2 bg-[#081018] text-white">
+      <div className="grid grid-cols-1 gap-2 bg-[#0A2B6D]/95 backdrop-blur-sm text-white">
         {/* Mailboxes sit together beneath the communication board. */}
         <div className="order-2 grid grid-cols-1 gap-2 sm:grid-cols-2 items-start">
           <AboveMailboxCommandDeck
@@ -328,8 +328,8 @@ export function CommunicationAndMailboxTabs({ onSelectTab, activeTab, tabs } = {
                 : undefined,
             }}
           >
-            <div className="flex flex-col items-center justify-between gap-1 rounded-[8px] bg-[#162235] p-1.5 text-center text-white">
-              <div className="flex w-full items-center justify-between gap-1 rounded-md border border-white/15 bg-[#081018] px-2 py-0.5 text-[8.5px] font-extrabold text-white">
+            <div className="flex flex-col items-center justify-between gap-1 rounded-[8px] bg-[#16468A]/80 p-1.5 text-center text-white">
+              <div className="flex w-full items-center justify-between gap-1 rounded-md border border-white/15 bg-[#0A2B6D]/95 backdrop-blur-sm px-2 py-0.5 text-[8.5px] font-extrabold text-white">
                 <div className="flex items-center gap-1">
                   <span
                     className="h-2 w-2 shrink-0 rounded-full border border-white"
@@ -353,7 +353,7 @@ export function CommunicationAndMailboxTabs({ onSelectTab, activeTab, tabs } = {
                 </button>
               </div>
 
-              <div className="flex w-full flex-col items-center justify-center rounded-md border border-white/15 bg-[#081018] px-1.5 py-0.5 text-center">
+              <div className="flex w-full flex-col items-center justify-center rounded-md border border-white/15 bg-[#0A2B6D]/95 backdrop-blur-sm px-1.5 py-0.5 text-center">
                 <svg
                   viewBox="0 0 220 68"
                   className="h-10 w-full max-w-[165px]"
@@ -669,7 +669,7 @@ export default function ExecutiveWallScene({
         className="w-full rounded-xl p-[2.5px] shadow-2xs"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
-        <div className="grid grid-cols-1 sm:grid-cols-12 gap-2 items-stretch rounded-[9px] bg-[#081018] p-2">
+        <div className="grid grid-cols-1 sm:grid-cols-12 gap-2 items-stretch rounded-[9px] bg-[#0A2B6D]/95 backdrop-blur-sm p-2">
           {/* Left Side: Fixed Logo & Brand Slogan */}
           <div className="sm:col-span-4 lg:col-span-3 flex flex-col">
             <ComplianceHrPhotoFrame logoUrl={frameSrc} />
@@ -762,7 +762,7 @@ export default function ExecutiveWallScene({
         className="w-full rounded-xl p-[2.5px] shadow-2xs"
         style={{ background: TOP_BORDER_GRADIENT }}
       >
-        <div className="rounded-[9px] bg-[#081018] p-2 space-y-2">
+        <div className="rounded-[9px] bg-[#0A2B6D]/95 backdrop-blur-sm p-2 space-y-2">
           {/* Top Row: (2) Today's Overview & Flat Screen Live Roster + (3/4) Mini Comms Above Red Letterbox & Mini Communication Centre */}
           <div className="grid grid-cols-1 md:grid-cols-12 gap-2 items-stretch">
             <div className="md:col-span-5 flex flex-col">

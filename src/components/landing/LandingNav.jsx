@@ -68,7 +68,7 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
   return (
     <header
       id="top-landing"
-      className="sticky top-0 z-40 w-full bg-black shadow-sm transition-all duration-200"
+      className="sticky top-0 z-40 w-full bg-[#0A2B6D]/95 shadow-sm transition-all duration-200"
     >
       {/* Top App-Design Gradient Strip — aligned flush with navigation remote */}
       <div
@@ -79,9 +79,9 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
         }}
       />
 
-      {/* Collapsible Black Header Section Above Dashboard */}
+      {/* Collapsible Dark Blue Header Section Above Dashboard */}
       {collapsedHeader ? (
-        <div className="mx-auto flex max-w-[1440px] items-center justify-between bg-black px-4 py-1 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-[1440px] items-center justify-between bg-[#0A2B6D]/95 px-4 py-1 sm:px-6 lg:px-8">
           <Link to="/" className="flex items-center gap-1.5 text-xs font-extrabold">
             <span style={{ color: '#00C6FF' }}>Compliance</span>
             <span style={{ color: '#FF2E9A' }}>HR Infinity</span>
@@ -96,7 +96,7 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
           </button>
         </div>
       ) : (
-        <div className="mx-auto flex max-w-[1440px] flex-col items-center justify-end gap-0.5 bg-black px-2 pt-1 pb-0.5 sm:px-4 lg:px-6">
+        <div className="mx-auto flex max-w-[1440px] flex-col items-center justify-end gap-0.5 bg-[#0A2B6D]/95 px-2 pt-1 pb-0.5 sm:px-4 lg:px-6">
           {/* Top / Centre: Larger Business Logo + Name + Slogan */}
           <Link
             to="/"
@@ -167,7 +167,7 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
 
             <button
               type="button"
-              className="xl:hidden inline-flex items-center justify-center rounded-lg border border-[#00C6FF] bg-black p-1 text-[#00C6FF]"
+              className="xl:hidden inline-flex items-center justify-center rounded-lg border border-[#00C6FF] bg-[#0A2B6D]/95 p-1 text-[#00C6FF]"
               aria-label={open ? 'Close menu' : 'Open menu'}
               aria-expanded={open}
               onClick={() => setOpen(!open)}

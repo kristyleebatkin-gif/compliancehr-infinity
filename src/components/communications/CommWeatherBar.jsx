@@ -86,16 +86,16 @@ export default function CommWeatherBar() {
       className="overflow-hidden rounded-xl p-[1.5px] shadow-lg"
       style={{ background: BRAND_GRADIENT }}
     >
-      <div className="grid grid-cols-1 gap-1.5 rounded-[10px] bg-[#081018] p-2 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-1.5 rounded-[10px] bg-[#0A2B6D]/95 backdrop-blur-sm p-2 sm:grid-cols-2 lg:grid-cols-4">
         {/* DASHBOARD 1: LIVE ATOMIC TIME */}
         <div
           className="rounded-lg p-[1.5px]"
           style={{ background: 'linear-gradient(135deg, #00C6FF 0%, #0072FF 100%)' }}
         >
-          <div className="flex h-full items-center justify-between gap-1.5 rounded-[7px] bg-gradient-to-br from-[#081018] to-[#0A2B6D] px-2 py-2 text-white shadow-inner ring-1 ring-inset ring-[#00C6FF]/30">
+          <div className="flex h-full items-center justify-between gap-1.5 rounded-[7px] bg-gradient-to-br from-[#0A2B6D] to-[#16468A] px-2 py-2 text-white shadow-inner ring-1 ring-inset ring-[#00C6FF]/30">
             <div className="flex min-w-0 items-center gap-2">
               <span
-                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#081018]"
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#0A2B6D]/95 backdrop-blur-sm"
                 style={{ border: '1.5px solid #00C6FF', boxShadow: '0 0 10px rgba(0,198,255,0.45)' }}
               >
                 <Clock className="h-4 w-4 text-[#00C6FF]" />
@@ -122,10 +122,10 @@ export default function CommWeatherBar() {
           className="rounded-lg p-[1.5px]"
           style={{ background: 'linear-gradient(135deg, #0072FF 0%, #A855F7 100%)' }}
         >
-          <div className="flex h-full items-center justify-between gap-1.5 rounded-[7px] bg-gradient-to-br from-[#081018] to-[#0A2B6D] px-2 py-2 text-white shadow-inner ring-1 ring-inset ring-[#00C6FF]/30">
+          <div className="flex h-full items-center justify-between gap-1.5 rounded-[7px] bg-gradient-to-br from-[#0A2B6D] to-[#16468A] px-2 py-2 text-white shadow-inner ring-1 ring-inset ring-[#00C6FF]/30">
             <div className="flex min-w-0 items-center gap-2">
               <span
-                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#081018]"
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#0A2B6D]/95 backdrop-blur-sm"
                 style={{ border: '1.5px solid #A855F7', boxShadow: '0 0 10px rgba(168,85,247,0.45)' }}
               >
                 <CalendarDays className="h-4 w-4 text-[#A855F7]" />
@@ -152,10 +152,10 @@ export default function CommWeatherBar() {
           className="rounded-lg p-[1.5px]"
           style={{ background: 'linear-gradient(135deg, #A855F7 0%, #FF2E9A 100%)' }}
         >
-          <div className="flex h-full items-center justify-between gap-1.5 rounded-[7px] bg-gradient-to-br from-[#081018] to-[#0A2B6D] px-2 py-2 text-white shadow-inner ring-1 ring-inset ring-[#00C6FF]/30">
+          <div className="flex h-full items-center justify-between gap-1.5 rounded-[7px] bg-gradient-to-br from-[#0A2B6D] to-[#16468A] px-2 py-2 text-white shadow-inner ring-1 ring-inset ring-[#00C6FF]/30">
             <div className="flex min-w-0 items-center gap-2">
               <span
-                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#081018]"
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#0A2B6D]/95 backdrop-blur-sm"
                 style={{ border: '1.5px solid #FF2E9A', boxShadow: '0 0 10px rgba(255,46,154,0.45)' }}
               >
                 <Icon className="h-4 w-4 text-[#FF2E9A]" />
@@ -186,7 +186,7 @@ export default function CommWeatherBar() {
           className="rounded-lg p-[1.5px]"
           style={{ background: 'linear-gradient(135deg, #00C6FF 0%, #FF2E9A 100%)' }}
         >
-          <div className="flex h-full flex-col justify-between gap-1 rounded-[7px] bg-gradient-to-br from-[#081018] to-[#0A2B6D] px-2 py-1.5 text-white shadow-inner ring-1 ring-inset ring-[#00C6FF]/30">
+          <div className="flex h-full flex-col justify-between gap-1 rounded-[7px] bg-gradient-to-br from-[#0A2B6D] to-[#16468A] px-2 py-1.5 text-white shadow-inner ring-1 ring-inset ring-[#00C6FF]/30">
             <div className="flex items-center justify-between gap-1">
               <span className="inline-flex items-center gap-1 text-[9px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
                 <ShieldCheck className="h-3 w-3 text-[#00C6FF]" />
@@ -203,7 +203,7 @@ export default function CommWeatherBar() {
                   <Link
                     key={srv.label}
                     to={srv.path}
-                    className="inline-flex items-center gap-1 rounded border border-[#00C6FF]/50 bg-[#081018] px-1.5 py-0.5 text-[8.5px] font-extrabold text-white transition hover:border-[#FF2E9A] hover:bg-[#0072FF]"
+                    className="inline-flex items-center gap-1 rounded border border-[#00C6FF]/50 bg-[#0A2B6D]/95 backdrop-blur-sm px-1.5 py-0.5 text-[8.5px] font-extrabold text-white transition hover:border-[#FF2E9A] hover:bg-[#0072FF]"
                   >
                     <SrvIcon className="h-2.5 w-2.5 text-[#00C6FF]" />
                     <span>{srv.label}</span>

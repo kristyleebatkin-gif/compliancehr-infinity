@@ -62,7 +62,7 @@ export default function LandingCTA({ onBookDemo }) {
               {APP_STATED_FACTS.map((fact, idx) => (
                 <div
                   key={fact}
-                  className="flex items-center gap-2 rounded-xl border border-white/15 bg-[#081018]/85 px-3 py-2.5"
+                  className="flex items-center gap-2 rounded-xl border border-white/15 bg-[#16468A]/75 backdrop-blur-sm px-3 py-2.5"
                 >
                   <span
                     className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-white/50 bg-[#0072FF]/35"
@@ -86,7 +86,7 @@ export default function LandingCTA({ onBookDemo }) {
             </div>
 
             {/* Right: Squished Book Executive Demo & Start 14-Day Free Trial Tile Next to the 3 Facts */}
-            <div className="lg:col-span-5 flex flex-wrap sm:flex-nowrap items-center justify-between gap-2 rounded-xl border border-white/20 bg-[#081018]/90 px-3 py-2">
+            <div className="lg:col-span-5 flex flex-wrap sm:flex-nowrap items-center justify-between gap-2 rounded-xl border border-white/20 bg-[#16468A]/80 backdrop-blur-sm px-3 py-2">
               <button
                 type="button"
                 onClick={() => onBookDemo && onBookDemo('Executive Platform Demo')}

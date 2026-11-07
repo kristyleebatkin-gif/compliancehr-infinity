@@ -119,7 +119,7 @@ export default function CareSpherePowerBiCommandCentre() {
           : 'overflow-hidden rounded-2xl'
       }`}
       style={{
-        backgroundColor: '#081018',
+        backgroundColor: '#0A2B6D',
         borderColor: '#39E6FF',
         color: '#FFFFFF',
         fontFamily: "'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif",
@@ -135,7 +135,7 @@ export default function CareSpherePowerBiCommandCentre() {
       {/* Top Power BI Widescreen Header Bar: Concise Text + All Action & Export Buttons on One Single Line */}
       <div
         className="space-y-1.5 border-b px-4 py-2.5"
-        style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.28)' }}
+        style={{ backgroundColor: '#16468A', borderColor: 'rgba(57,230,255,0.28)' }}
       >
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h1 className="text-base sm:text-lg font-extrabold leading-snug text-white break-words">
@@ -153,7 +153,7 @@ export default function CareSpherePowerBiCommandCentre() {
               type="button"
               onClick={handleRefresh}
               className="inline-flex h-7 items-center gap-1 whitespace-nowrap rounded-lg border px-2.5 font-semibold text-white"
-              style={{ backgroundColor: '#1E293B', borderColor: 'rgba(255,255,255,0.15)' }}
+              style={{ backgroundColor: '#0A2B6D', borderColor: 'rgba(255,255,255,0.15)' }}
             >
               <RefreshCw className="h-3 w-3 text-[#39E6FF]" />
               <span>Refresh</span>
@@ -162,7 +162,7 @@ export default function CareSpherePowerBiCommandCentre() {
               type="button"
               onClick={() => setShowSpeakerNotes((prev) => !prev)}
               className="inline-flex h-7 items-center gap-1 whitespace-nowrap rounded-lg border px-2.5 font-bold text-white"
-              style={{ backgroundColor: '#1E293B', borderColor: '#39E6FF' }}
+              style={{ backgroundColor: '#0A2B6D', borderColor: '#39E6FF' }}
             >
               <Mic className="h-3 w-3" />
               <span>Notes {showSpeakerNotes ? 'ON' : 'OFF'}</span>
@@ -210,7 +210,7 @@ export default function CareSpherePowerBiCommandCentre() {
               type="button"
               onClick={() => exportPowerBiSemanticModel({ orgHealthIndex: 87, omegaReadinessIndex: 82, lqiScore: 92 })}
               className="inline-flex h-7 items-center whitespace-nowrap rounded border px-2.5 text-[11px] font-bold text-white"
-              style={{ backgroundColor: '#1E293B', borderColor: '#39E6FF' }}
+              style={{ backgroundColor: '#0A2B6D', borderColor: '#39E6FF' }}
             >
               PBIDS
             </button>
@@ -221,7 +221,7 @@ export default function CareSpherePowerBiCommandCentre() {
       {/* Role-Based Drill-Through Strip (Recommended Landing Page Pathways) */}
       <div
         className="flex flex-wrap items-center justify-between gap-2 border-b px-4 py-2 text-[12px]"
-        style={{ backgroundColor: '#081018', borderColor: 'rgba(57,230,255,0.18)' }}
+        style={{ backgroundColor: '#0A2B6D', borderColor: 'rgba(57,230,255,0.18)' }}
       >
         <span className="font-semibold text-slate-300">
           Role-Based Drill-Through Pathways:
@@ -234,7 +234,7 @@ export default function CareSpherePowerBiCommandCentre() {
               onClick={() => setActivePage(p.targetPage)}
               className="rounded-md border px-2.5 py-0.5 text-[11px] font-bold transition hover:opacity-90"
               style={{
-                backgroundColor: '#162235',
+                backgroundColor: '#16468A',
                 borderColor: p.color,
                 color: p.color,
               }}
@@ -251,7 +251,7 @@ export default function CareSpherePowerBiCommandCentre() {
         <nav
           aria-label="Power BI 12-Page Navigation Menu"
           className="border-b p-2.5 lg:col-span-3 xl:col-span-2 lg:border-b-0 lg:border-r"
-          style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.22)' }}
+          style={{ backgroundColor: '#16468A', borderColor: 'rgba(57,230,255,0.22)' }}
         >
           <div className="mb-2 px-1 text-[10px] font-bold uppercase tracking-wider" style={{ color: '#39E6FF' }}>
             Power BI Report Pages (12)
@@ -267,7 +267,7 @@ export default function CareSpherePowerBiCommandCentre() {
                   onClick={() => setActivePage(pg.id)}
                   className="flex items-center gap-2 rounded-lg px-2.5 py-2 text-left text-[12px] font-semibold transition"
                   style={{
-                    backgroundColor: isSelected ? '#39E6FF' : '#1E293B',
+                    backgroundColor: isSelected ? '#39E6FF' : '#0A2B6D',
                     color: isSelected ? '#081018' : '#FFFFFF',
                     border: isSelected ? '1px solid #39E6FF' : '1px solid rgba(255,255,255,0.06)',
                   }}
@@ -286,7 +286,7 @@ export default function CareSpherePowerBiCommandCentre() {
         </nav>
 
         {/* Right Widescreen Report Canvas */}
-        <div className="relative p-4 lg:col-span-9 xl:col-span-10" style={{ backgroundColor: '#081018' }}>
+        <div className="relative p-4 lg:col-span-9 xl:col-span-10" style={{ backgroundColor: '#0A2B6D' }}>
           {currentPageMeta.pageNum <= 6 ? (
             <PowerBiPagesOneToSix
               activePage={activePage}
@@ -302,7 +302,7 @@ export default function CareSpherePowerBiCommandCentre() {
               aria-label="Board Meeting Speaker Notes Overlay"
               className="mt-4 rounded-xl border p-4 shadow-2xl"
               style={{
-                backgroundColor: 'rgba(22, 34, 53, 0.96)',
+                backgroundColor: 'rgba(10, 43, 109, 0.96)',
                 borderColor: '#39E6FF',
                 boxShadow: '0 0 24px rgba(57, 230, 255, 0.2)',
               }}
@@ -322,7 +322,7 @@ export default function CareSpherePowerBiCommandCentre() {
                   {currentPageMeta.presenterRole && (
                     <span
                       className="rounded border px-2 py-0.5 text-[11px] font-semibold"
-                      style={{ backgroundColor: '#1E293B', borderColor: 'rgba(57,230,255,0.35)', color: '#39E6FF' }}
+                      style={{ backgroundColor: '#0A2B6D', borderColor: 'rgba(57,230,255,0.35)', color: '#39E6FF' }}
                     >
                       Presenter: {currentPageMeta.presenterRole}
                     </span>
@@ -333,7 +333,7 @@ export default function CareSpherePowerBiCommandCentre() {
                   type="button"
                   onClick={() => setShowSpeakerNotes(false)}
                   className="inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-[11px] font-bold text-slate-300 hover:border-[#39E6FF] hover:text-white"
-                  style={{ backgroundColor: '#1E293B', borderColor: 'rgba(255,255,255,0.15)' }}
+                  style={{ backgroundColor: '#0A2B6D', borderColor: 'rgba(255,255,255,0.15)' }}
                 >
                   <X className="h-3 w-3" />
                   <span>Hide Notes (N)</span>
@@ -351,7 +351,7 @@ export default function CareSpherePowerBiCommandCentre() {
                   {currentPageMeta.decisionPrompt && (
                     <div
                       className="mt-2 flex items-center gap-2 rounded-lg border px-3 py-2 text-[12px] font-bold"
-                      style={{ backgroundColor: '#1E293B', borderColor: '#22C55E', color: '#22C55E' }}
+                      style={{ backgroundColor: '#0A2B6D', borderColor: '#22C55E', color: '#22C55E' }}
                     >
                       <CheckSquare className="h-4 w-4 shrink-0" />
                       <span>Board Resolution / Action Prompt: {currentPageMeta.decisionPrompt}</span>
@@ -359,7 +359,7 @@ export default function CareSpherePowerBiCommandCentre() {
                   )}
                 </div>
 
-                <div className="rounded-lg border p-3 lg:col-span-5" style={{ backgroundColor: '#1E293B', borderColor: 'rgba(57,230,255,0.22)' }}>
+                <div className="rounded-lg border p-3 lg:col-span-5" style={{ backgroundColor: '#0A2B6D', borderColor: 'rgba(57,230,255,0.22)' }}>
                   <div className="mb-1.5 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider" style={{ color: '#FBBF24' }}>
                     <MessageSquareText className="h-3.5 w-3.5" />
                     Key Board Talking Points
@@ -383,14 +383,14 @@ export default function CareSpherePowerBiCommandCentre() {
       <div
         aria-label="Presentation Slide Navigation Bar"
         className="flex flex-wrap items-center justify-between gap-2 border-t px-4 py-2.5"
-        style={{ backgroundColor: '#081018', borderColor: 'rgba(57,230,255,0.32)' }}
+        style={{ backgroundColor: '#0A2B6D', borderColor: 'rgba(57,230,255,0.32)' }}
       >
         <div className="flex items-center gap-1.5">
           <button
             type="button"
             onClick={goPrevPage}
             className="inline-flex items-center gap-1 rounded-lg border px-2.5 py-1 text-[11px] font-bold text-white transition hover:border-[#39E6FF]"
-            style={{ backgroundColor: '#1E293B', borderColor: 'rgba(57,230,255,0.35)' }}
+            style={{ backgroundColor: '#0A2B6D', borderColor: 'rgba(57,230,255,0.35)' }}
           >
             <ChevronLeft className="h-3.5 w-3.5" style={{ color: '#39E6FF' }} />
             <span>Prev Slide</span>
@@ -402,7 +402,7 @@ export default function CareSpherePowerBiCommandCentre() {
             type="button"
             onClick={goNextPage}
             className="inline-flex items-center gap-1 rounded-lg border px-2.5 py-1 text-[11px] font-bold text-white transition hover:border-[#39E6FF]"
-            style={{ backgroundColor: '#1E293B', borderColor: 'rgba(57,230,255,0.35)' }}
+            style={{ backgroundColor: '#0A2B6D', borderColor: 'rgba(57,230,255,0.35)' }}
           >
             <span>Next Slide</span>
             <ChevronRight className="h-3.5 w-3.5" style={{ color: '#39E6FF' }} />
@@ -421,7 +421,7 @@ export default function CareSpherePowerBiCommandCentre() {
                 title={`Slide ${pg.pageNum}: ${pg.shortLabel}`}
                 className="rounded-md px-2 py-1 text-[10.5px] font-bold transition"
                 style={{
-                  backgroundColor: active ? '#39E6FF' : '#1E293B',
+                  backgroundColor: active ? '#39E6FF' : '#0A2B6D',
                   color: active ? '#081018' : '#FFFFFF',
                   border: active ? '1px solid #39E6FF' : '1px solid rgba(255,255,255,0.1)',
                 }}
@@ -438,7 +438,7 @@ export default function CareSpherePowerBiCommandCentre() {
             onClick={() => setShowSpeakerNotes((prev) => !prev)}
             className="inline-flex items-center gap-1 rounded-lg border px-2.5 py-1 text-[11px] font-bold"
             style={{
-              backgroundColor: showSpeakerNotes ? '#39E6FF' : '#1E293B',
+              backgroundColor: showSpeakerNotes ? '#39E6FF' : '#0A2B6D',
               borderColor: '#39E6FF',
               color: showSpeakerNotes ? '#081018' : '#39E6FF',
             }}
@@ -463,7 +463,7 @@ export default function CareSpherePowerBiCommandCentre() {
       {/* Concise 2-3 Line Constitutional Summary Footer */}
       <div
         className="border-t px-4 py-2 text-[11px]"
-        style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.28)' }}
+        style={{ backgroundColor: '#16468A', borderColor: 'rgba(57,230,255,0.28)' }}
       >
         <p className="font-bold leading-snug text-white break-words">
           {CONSTITUTIONAL_PRINCIPLE} — {MANDATORY_OUTPUT_PILLARS.join(' · ')}

@@ -43,10 +43,10 @@ export default function EmployeeCommunications({ embedded = false }) {
               className="overflow-hidden rounded-xl p-[1.5px] shadow-lg"
               style={{ background: BRAND_GRADIENT }}
             >
-              <div className="flex flex-wrap items-center justify-between gap-2 rounded-[10px] bg-[#081018] px-3 py-2 text-white">
+              <div className="flex flex-wrap items-center justify-between gap-2 rounded-[10px] bg-[#0A2B6D]/95 backdrop-blur-sm px-3 py-2 text-white">
                 <div className="flex min-w-0 items-center gap-2.5">
                   <span
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-black"
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#0A2B6D]/80"
                     style={{
                       border: '1.5px solid #00C6FF',
                       boxShadow: '0 0 10px rgba(0,198,255,0.55)',
@@ -73,7 +73,7 @@ export default function EmployeeCommunications({ embedded = false }) {
             <RosterMiniOverview />
 
             {/* 4. Unified Communication & Mailbox Dashboard */}
-            <div className="rounded-xl border border-[#0072FF]/60 bg-[#081018] p-2.5 text-white">
+            <div className="rounded-xl border border-[#0072FF]/60 bg-[#0A2B6D]/95 backdrop-blur-sm p-2.5 text-white">
               <CommunicationAndMailboxTabs
                 onSelectTab={setView}
                 activeTab={view}
@@ -84,7 +84,7 @@ export default function EmployeeCommunications({ embedded = false }) {
         )}
 
         {/* Active Selected Communication Channel Workspace */}
-        <div className="rounded-xl border border-[#0072FF]/50 bg-[#081018] p-2.5 text-white">
+        <div className="rounded-xl border border-[#0072FF]/50 bg-[#0A2B6D]/95 backdrop-blur-sm p-2.5 text-white">
           <TabsContent key={view} value={view} className="mt-0">
             <EmployeeCommunicationContent view={view} />
           </TabsContent>

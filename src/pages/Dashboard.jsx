@@ -53,11 +53,11 @@ export default function Dashboard() {
           boxShadow: '0 0 14px 2px rgba(255,255,255,0.9), 0 0 24px 4px rgba(0,198,255,0.45)',
         }}
       >
-        <div className="rounded-[14px] bg-[#081018] px-4 py-2.5 text-white space-y-2">
+        <div className="rounded-[14px] bg-[#0A2B6D]/95 backdrop-blur-sm px-4 py-2.5 text-white space-y-2">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="flex min-w-0 items-center gap-2.5">
               <span
-                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-black"
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[#0A2B6D]/80"
                 style={{
                   border: '1.5px solid #FFFFFF',
                   boxShadow: '0 0 10px 2px rgba(255,255,255,0.95), 0 0 16px rgba(0,198,255,0.65)',
@@ -93,21 +93,21 @@ export default function Dashboard() {
               <button
                 type="button"
                 onClick={() => openDemoModal('Book Executive Subscription Demo')}
-                className="inline-flex h-7 items-center gap-1 rounded-full border border-[#A855F7] bg-black px-3 text-[10px] font-extrabold uppercase tracking-wide text-white transition hover:border-[#00C6FF]"
+                className="inline-flex h-7 items-center gap-1 rounded-full border border-[#A855F7] bg-[#0A2B6D]/80 px-3 text-[10px] font-extrabold uppercase tracking-wide text-white transition hover:border-[#00C6FF]"
               >
                 <Calendar className="h-3 w-3 shrink-0 text-[#00C6FF]" />
                 <span>Book Demo</span>
               </button>
               <a
                 href="#live-communication-hub"
-                className="inline-flex h-7 items-center gap-1 rounded-full border border-[#00C6FF]/60 bg-black px-2.5 text-[10px] font-extrabold uppercase tracking-wide text-white transition hover:bg-[#0072FF]"
+                className="inline-flex h-7 items-center gap-1 rounded-full border border-[#00C6FF]/60 bg-[#0A2B6D]/80 px-2.5 text-[10px] font-extrabold uppercase tracking-wide text-white transition hover:bg-[#0072FF]"
               >
                 <MessageSquare className="h-3 w-3 shrink-0 text-[#00C6FF]" />
                 <span>Communication Hub</span>
               </a>
               <a
                 href="#powerbi-command-centre"
-                className="inline-flex h-7 items-center gap-1 rounded-full border border-[#A855F7]/60 bg-black px-2.5 text-[10px] font-extrabold uppercase tracking-wide text-white transition hover:bg-[#5A00D6]"
+                className="inline-flex h-7 items-center gap-1 rounded-full border border-[#A855F7]/60 bg-[#0A2B6D]/80 px-2.5 text-[10px] font-extrabold uppercase tracking-wide text-white transition hover:bg-[#5A00D6]"
               >
                 <BarChart3 className="h-3 w-3 shrink-0 text-[#A855F7]" />
                 <span>Power BI Command</span>
@@ -122,7 +122,7 @@ export default function Dashboard() {
               return (
                 <div
                   key={pill.label}
-                  className="flex items-center gap-2 rounded-lg bg-black px-2.5 py-1.5"
+                  className="flex items-center gap-2 rounded-lg bg-[#0A2B6D]/80 px-2.5 py-1.5"
                   style={{
                     border: `1.5px solid ${pill.color}`,
                     boxShadow: '0 0 8px rgba(255,255,255,0.45)',

@@ -27,7 +27,7 @@ export default function FloatingQuickActionBar({ inline = false }) {
           background: 'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
         }}
       >
-        <div className="flex flex-nowrap items-center justify-center gap-1 rounded-full bg-black px-2 py-0.5 text-white whitespace-nowrap">
+        <div className="flex flex-nowrap items-center justify-center gap-1 rounded-full bg-[#0A2B6D]/90 px-2 py-0.5 text-white whitespace-nowrap">
           {/* Primary Action: Inline AI Quick-Ask Popup Toggle */}
           <button
             type="button"
