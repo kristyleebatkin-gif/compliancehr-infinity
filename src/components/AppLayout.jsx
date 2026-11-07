@@ -239,7 +239,7 @@ export default function AppLayout() {
   }
 
   return (
-    <div className="app-readable flex h-dvh overflow-hidden bg-background text-foreground">
+    <div className="app-readable flex min-h-dvh bg-background text-foreground">
       <a
         href="#main-workspace-content"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-xl focus:bg-[#0A2B6D] focus:px-4 focus:py-2 focus:text-xs focus:font-extrabold focus:text-white focus:shadow-lg"
@@ -247,7 +247,7 @@ export default function AppLayout() {
         Skip to main content
       </a>
       <aside
-        className="hidden w-64 shrink-0 overflow-y-auto bg-black md:flex"
+        className="hidden w-64 shrink-0 flex-col bg-black md:flex"
         style={{
           borderRight: '3px solid transparent',
           backgroundImage:
@@ -262,13 +262,13 @@ export default function AppLayout() {
       {mobileOpen && (
         <div className="fixed inset-0 z-50 md:hidden">
           <div className="absolute inset-0 bg-foreground/40" onClick={() => setMobileOpen(false)} />
-          <aside className="absolute left-0 top-0 h-full w-64 bg-sidebar shadow-xl">
+          <aside className="absolute left-0 top-0 h-full w-64 overflow-y-auto bg-sidebar shadow-xl">
             {sidebarContent}
           </aside>
         </div>
       )}
 
-      <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
+      <div className="flex min-w-0 flex-1 flex-col">
         <header className="preserve-island-theme sticky top-0 z-40 shrink-0 shadow-md">
           {/* Top App-Design Gradient Strip — matches remote top strip */}
           <div
@@ -409,11 +409,12 @@ export default function AppLayout() {
 
         <main
           id="main-workspace-content"
-          className="relative z-0 flex-1 overflow-y-auto overflow-x-hidden pb-20 md:pb-6"
+          className="relative z-0 flex-1 overflow-x-hidden pb-20 md:pb-6"
           style={{
             background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
           }}
         >
+          <QuickAppBar />
           <div className={location.pathname === '/staff' || location.pathname.startsWith('/staff/') ? 'mx-auto max-w-[1440px] px-3' : 'mx-auto max-w-[1440px] px-3 pt-2'}>
             <PendingApprovalNotice />
           </div>

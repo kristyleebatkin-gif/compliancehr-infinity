@@ -237,22 +237,11 @@ export default function QuickAppBar() {
                   <ArrowRight className="h-2.5 w-2.5 text-[#0072FF]" />
                 </Link>
               )}
-              <button
-                type="button"
-                onClick={() => setCollapsed((c) => !c)}
-                className="inline-flex items-center gap-1 rounded-full p-[1.5px] transition hover:scale-[1.02]"
-                style={{ background: BRAND_GRADIENT }}
-              >
-                <span className="inline-flex items-center gap-1 rounded-full bg-white px-2 py-0.5 text-[8.5px] font-extrabold text-[#0A2B6D]">
-                  {collapsed ? <ChevronDown className="h-3 w-3 text-[#0072FF]" /> : <ChevronUp className="h-3 w-3 text-[#5A00D6]" />}
-                  <span style={{ color: '#0A2B6D' }}>{collapsed ? 'Expand Remote View' : 'Collapse Remote View'}</span>
-                </span>
-              </button>
             </div>
           </div>
 
           {/* TOP: Major Section Selector Buttons (Uniform 42px Modular Buttons) */}
-          {!collapsed && (
+          {(true) && (
             <div
               className="grid grid-cols-2 gap-1.5 px-2 pb-1.5 pt-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 items-stretch"
               style={{ background: DARK_NAVY_CHASSIS }}
@@ -377,7 +366,7 @@ export default function QuickAppBar() {
           )}
 
           {/* UNDERNEATH: All Sections & Their In-Between Module Buttons Displayed Underneath (Identical 42px Modular Buttons) */}
-          {!collapsed && (
+          {(true) && (
             <div id="quick-access-modules" className="px-2 pb-2 pt-0.5 space-y-2">
               {(remoteMode === 'all' ? sourceSections : expandedGroup ? [expandedGroup, ...sourceSections.filter((s) => s.id !== expandedGroup.id)] : sourceSections).map((group) => (
                 <nav
