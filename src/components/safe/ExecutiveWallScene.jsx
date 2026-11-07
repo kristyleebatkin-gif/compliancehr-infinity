@@ -275,7 +275,7 @@ function TodaysRosterPictureCard() {
 /**
  * 3. Communication Tab & 4. Mailbox Tab (Modulars Grid Removed)
  */
-export function CommunicationAndMailboxTabs() {
+export function CommunicationAndMailboxTabs({ onSelectTab, activeTab } = {}) {
   const [hasAlertMail, setHasAlertMail] = useState(false);
   const [mailAlertCount, setMailAlertCount] = useState(0);
   const [recentComms, setRecentComms] = useState([]);
@@ -306,62 +306,15 @@ export function CommunicationAndMailboxTabs() {
   }, []);
 
   return (
-    <WallHangingPictureFrame title="Communication & Mailbox">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 bg-[#081018] text-white items-stretch">
-        {/* Left Column: Mini Comms Placed Directly Above the Red Little Box (Letterbox) */}
-        <div className="flex flex-col justify-between gap-1.5">
-          {/* Top Above Red Little Box: Mini Comms — White Outside Border & Pink/Blue/Purple Spray With Dark Blue Writing Inside */}
-          <div
-            className="rounded-xl p-[2.5px] shadow-2xs"
-            style={{ background: TOP_BORDER_GRADIENT }}
-          >
-            <div className="flex flex-col items-center justify-between gap-1 rounded-[9px] bg-[#162235] p-1.5 text-center text-white">
-              <div
-                className="gradient-brand flex w-full items-center justify-between gap-1 rounded-lg px-2 py-0.5 text-white"
-                style={{ background: getHeaderView(0), color: '#FFFFFF' }}
-              >
-                <span className="inline-flex items-center gap-1 text-[8px] font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
-                  <span
-                    className="h-2 w-2 rounded-full bg-white"
-                    style={{ boxShadow: '0 0 8px 2px #FFFFFF' }}
-                  />
-                  <MessagesSquare className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-                  <span style={{ color: '#FFFFFF' }}>Mini Comms</span>
-                </span>
-                <span className="text-[7px] font-extrabold text-white" style={{ color: '#FFFFFF' }}>
-                  27 Oct · 24°C
-                </span>
-              </div>
-
-              <div className="w-full space-y-0.5 rounded-lg bg-[#081018] text-left">
-                {recentComms.length > 0 ? recentComms.map((msg) => (
-                  <div
-                    key={msg.id}
-                    className="flex items-center justify-between gap-1 rounded border border-white/15 bg-[#081018] px-1.5 py-0.5 text-[7.5px] font-extrabold text-white"
-                  >
-                    <span className="shrink-0 rounded-full bg-[#0072FF] px-1.5 py-0 text-[6.5px] text-white">
-                      {msg.entry_kind || 'Comms'}
-                    </span>
-                    <span className="flex-1 truncate text-right text-white">{msg.subject || msg.body || 'New communication'}</span>
-                  </div>
-                )) : (
-                  <div className="flex items-center justify-between gap-1 rounded border border-white/15 bg-[#081018] px-1.5 py-1 text-[7.5px] font-extrabold text-white">
-                    <span className="shrink-0 rounded-full bg-[#0072FF] px-1.5 py-0 text-[6.5px] text-white">
-                      Live Inbox
-                    </span>
-                    <span className="flex-1 text-right text-white">No unread communications · 8:30 AM daily summary active</span>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Between Mini Comms and Mailbox: Live Roster Strip + Sky-Drop Command Deck */}
+    <WallHangingPictureFrame title="Merged Communication, Mailbox & Live Channels">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-2.5 bg-[#081018] text-white items-stretch">
+        {/* Left Column: Live Roster Strip + Express Mail Command Deck + Red Letterbox */}
+        <div className="lg:col-span-4 flex flex-col justify-between gap-1.5">
           <div
             className="rounded-xl p-[2px] shadow-2xs"
             style={{ background: TOP_BORDER_GRADIENT }}
           >
-            <div className="flex items-center justify-between gap-1.5 rounded-[8px] bg-white px-2 py-0.5">
+            <div className="flex items-center justify-between gap-1.5 rounded-[8px] bg-white px-2 py-1">
               <span
                 className="gradient-brand inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[7px] font-extrabold uppercase text-white whitespace-nowrap"
                 style={{ background: getHeaderView(2), color: '#FFFFFF' }}
@@ -369,12 +322,12 @@ export function CommunicationAndMailboxTabs() {
                 <CalendarClock className="h-2.5 w-2.5 text-white" style={{ color: '#FFFFFF' }} />
                 <span style={{ color: '#FFFFFF' }}>Live Roster</span>
               </span>
-              <span className="truncate rounded border border-[#0A2B6D]/20 bg-white px-1.5 py-0 text-[7px] font-extrabold text-[#0A2B6D]">
+              <span className="min-w-0 rounded border border-[#0A2B6D]/20 bg-white px-1.5 py-0 text-[7px] font-extrabold text-[#0A2B6D] break-words">
                 3 Shifts Active · 100% Screened
               </span>
               <Link
                 to="/roster"
-                className="shrink-0 rounded-full bg-[#0A2B6D] px-2 py-0 text-[6.5px] font-extrabold text-white"
+                className="shrink-0 rounded-full bg-[#0A2B6D] px-2 py-0.5 text-[6.5px] font-extrabold text-white"
               >
                 Roster →
               </Link>
@@ -389,7 +342,7 @@ export function CommunicationAndMailboxTabs() {
             }}
           />
 
-          {/* Underneath Mini Comms & Roster: Red Little Box (Letterbox That Lights Up in Bright RED When It Has Mail) */}
+          {/* Red Little Box (Letterbox That Lights Up in Bright RED When It Has Mail) */}
           <div
             className="rounded-xl p-[3px] transition-all duration-300"
             style={{
@@ -481,8 +434,15 @@ export function CommunicationAndMailboxTabs() {
           </div>
         </div>
 
-        {/* Right Column (Where Mini Comms Was): Mini Communication Centre + Small Shared To-Do List */}
-        <MiniCommunicationCentrePanel alertCount={mailAlertCount} />
+        {/* Right Column: Merged Mini Comms + Mini Communication Centre + 7-Day Live Communication Methods */}
+        <div className="lg:col-span-8">
+          <MiniCommunicationCentrePanel
+            alertCount={mailAlertCount}
+            recentComms={recentComms}
+            onSelectTab={onSelectTab}
+            activeTab={activeTab}
+          />
+        </div>
       </div>
     </WallHangingPictureFrame>
   );

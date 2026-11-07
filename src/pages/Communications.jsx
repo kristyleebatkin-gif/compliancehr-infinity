@@ -171,15 +171,11 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
 
                 {commScreen !== 'screen2' && (
                   <div className="space-y-2.5">
-                    {/* Merged Communication Dashboards + Communication & Mailbox Together */}
-                    <div className="grid grid-cols-1 gap-2.5 lg:grid-cols-12">
-                      <div className="lg:col-span-6">
-                        <CommunicationAndMailboxTabs />
-                      </div>
-                      <div className="lg:col-span-6">
-                        <CommTeamDash />
-                      </div>
-                    </div>
+                    {/* Merged Mini Comms, Mini Communication Centre, Mailbox & Right-Side Communication Methods Together */}
+                    <CommunicationAndMailboxTabs
+                      onSelectTab={setActiveTab}
+                      activeTab={activeTab}
+                    />
 
                     {/* Merged All To-Do Lists & Task Dashboards in One Unified Section */}
                     <div className="rounded-xl border border-[#0072FF]/60 bg-[#081018] p-3 space-y-2.5 text-white">

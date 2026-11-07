@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   MessagesSquare,
   Mail,
@@ -15,6 +15,10 @@ import {
   CheckCircle2,
   Plus,
   ArrowRight,
+  MessageSquare,
+  StickyNote,
+  PartyPopper,
+  Megaphone,
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { getHeaderView } from '@/lib/fullColourTiles';
@@ -22,25 +26,78 @@ import { getHeaderView } from '@/lib/fullColourTiles';
 const TOP_BORDER_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
 
-const UNIFORM_SPRAY_BG =
-  'radial-gradient(circle at 14% 18%, rgba(255, 133, 224, 0.65) 0%, transparent 48%), radial-gradient(circle at 86% 24%, rgba(56, 189, 248, 0.65) 0%, transparent 48%), radial-gradient(circle at 50% 86%, rgba(192, 132, 252, 0.65) 0%, transparent 52%), #FFFFFF';
-
-const MINI_COMM_SQUARES = [
-  { key: 'tasks', label: 'Tasks', icon: LayoutDashboard, color: '#0072FF' },
-  { key: 'todo', label: 'To-Do', icon: ListTodo, color: '#0A2B6D' },
-  { key: 'feed', label: 'Feed', icon: Radio, color: '#A100FF' },
-  { key: 'banter', label: 'Banter', icon: MessagesSquare, color: '#FF2E9A' },
-  { key: 'shoutouts', label: 'Shoutouts', icon: Sparkles, color: '#5A00D6' },
-  { key: 'video', label: 'Video', icon: Video, color: '#0072FF' },
-  { key: 'inbox', label: 'Inbox', icon: InboxIcon, color: '#A100FF' },
-  { key: 'email', label: 'Email', icon: Mail, color: '#FF2E9A' },
-  { key: 'notes', label: 'Shift Notes', icon: NotebookPen, color: '#5A00D6' },
-  { key: 'log', label: 'Staff Log', icon: Briefcase, color: '#0A2B6D' },
+const LIVE_METHOD_TILES = [
+  { key: 'messages', label: 'Messages', tab: 'inbox', color: '#0072FF', Icon: MessageSquare, kind: 'Message' },
+  { key: 'notes', label: 'Shift Notes', tab: 'shift-notes', color: '#A855F7', Icon: StickyNote, kind: 'Shift Note' },
+  { key: 'banter', label: 'Team Banter', tab: 'banter', color: '#FF2E9A', Icon: PartyPopper, kind: 'Team Banter' },
+  { key: 'broadcasts', label: 'Broadcasts', tab: 'bulk', color: '#0072FF', Icon: Megaphone, kind: 'Broadcast' },
 ];
 
-export default function MiniCommunicationCentrePanel({ alertCount = 0 }) {
+const MINI_COMM_SQUARES = [
+  { key: 'tasks', label: 'Tasks', tab: 'todo', icon: LayoutDashboard, color: '#0072FF' },
+  { key: 'todo', label: 'To-Do', tab: 'todo', icon: ListTodo, color: '#0A2B6D' },
+  { key: 'feed', label: 'Feed', tab: 'feed', icon: Radio, color: '#A100FF' },
+  { key: 'banter', label: 'Banter', tab: 'banter', icon: MessagesSquare, color: '#FF2E9A' },
+  { key: 'shoutouts', label: 'Shoutouts', tab: 'shoutouts', icon: Sparkles, color: '#5A00D6' },
+  { key: 'video', label: 'Video', tab: 'video', icon: Video, color: '#0072FF' },
+  { key: 'inbox', label: 'Inbox', tab: 'inbox', icon: InboxIcon, color: '#A100FF' },
+  { key: 'email', label: 'Email', tab: 'email', icon: Mail, color: '#FF2E9A' },
+  { key: 'notes', label: 'Shift Notes', tab: 'shift-notes', icon: NotebookPen, color: '#5A00D6' },
+  { key: 'log', label: 'Staff Log', tab: 'employee-log', icon: Briefcase, color: '#0A2B6D' },
+];
+
+function resolveEntryTab(entryKind = '') {
+  const lower = String(entryKind).toLowerCase();
+  if (lower.includes('shift')) return 'shift-notes';
+  if (lower.includes('banter')) return 'banter';
+  if (lower.includes('broadcast') || lower.includes('bulk')) return 'bulk';
+  if (lower.includes('email')) return 'email';
+  return 'inbox';
+}
+
+export default function MiniCommunicationCentrePanel({
+  alertCount = 0,
+  recentComms = [],
+  onSelectTab,
+  activeTab,
+}) {
+  const navigate = useNavigate();
   const [todos, setTodos] = useState([]);
   const [newTodoText, setNewTodoText] = useState('');
+  const [methodStats, setMethodStats] = useState({
+    messages: 0,
+    notes: 0,
+    banter: 0,
+    broadcasts: 0,
+  });
+
+  const selectCommMethod = (tabKey) => {
+    if (typeof onSelectTab === 'function') {
+      onSelectTab(tabKey);
+    } else {
+      navigate('/communications');
+    }
+  };
+
+  useEffect(() => {
+    let active = true;
+    const weekAgo = new Date(Date.now() - 7 * 864e5).toISOString().slice(0, 10);
+    Promise.all(
+      LIVE_METHOD_TILES.map(({ kind }) =>
+        base44.entities.CommunicationEntry.count({ entry_kind: kind, entry_date: { $gte: weekAgo } }).catch(() => 0)
+      )
+    ).then((counts) => {
+      if (!active) return;
+      const next = {};
+      LIVE_METHOD_TILES.forEach(({ key }, i) => {
+        next[key] = counts[i] || 0;
+      });
+      setMethodStats(next);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   useEffect(() => {
     let active = true;
@@ -112,122 +169,236 @@ export default function MiniCommunicationCentrePanel({ alertCount = 0 }) {
       className="h-full rounded-xl p-[3px] shadow-sm"
       style={{ background: TOP_BORDER_GRADIENT }}
     >
-      <div className="flex h-full flex-col justify-between gap-1.5 rounded-[9px] bg-[#162235] p-1.5 text-center text-white">
-        {/* 1. Mini Communication Centre App-Coloured Header */}
+      <div className="flex h-full flex-col justify-between gap-2 rounded-[9px] bg-[#162235] p-2 text-center text-white">
+        {/* 1. Merged Mini Comms + Mini Communication Centre + Live Methods Header */}
         <div
-          className="gradient-brand flex items-center justify-between gap-1 rounded-lg px-2 py-1 text-white"
+          className="gradient-brand flex flex-wrap items-center justify-between gap-1.5 rounded-lg px-2.5 py-1 text-white"
           style={{ background: getHeaderView(1), color: '#FFFFFF' }}
         >
-          <span className="inline-flex items-center gap-1 text-[8.5px] font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
+          <span
+            className="inline-flex items-center gap-1.5 text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-white"
+            style={{ color: '#FFFFFF' }}
+          >
             <span
               className="h-2 w-2 shrink-0 rounded-full bg-white"
               style={{ boxShadow: '0 0 8px 2px #FFFFFF' }}
             />
             <MessagesSquare className="h-3 w-3 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-            <span style={{ color: '#FFFFFF' }}>Mini Communication Centre</span>
+            <span style={{ color: '#FFFFFF' }}>
+              Merged Mini Comms &amp; Communication Centre
+            </span>
           </span>
-          <Link
-            to="/communications"
-            className="inline-flex items-center gap-0.5 rounded-full bg-white px-1.5 py-0 text-[7px] font-extrabold text-[#0A2B6D]"
-          >
-            <span>Open Hub</span>
-            <ArrowRight className="h-2 w-2 text-[#0A2B6D]" />
-          </Link>
+          <div className="flex items-center gap-1.5">
+            <span className="rounded-full bg-black/30 px-2 py-0.5 text-[7.5px] font-extrabold text-white">
+              27 Oct · 24°C · 7-Day Live
+            </span>
+            <button
+              type="button"
+              onClick={() => selectCommMethod('inbox')}
+              className="inline-flex items-center gap-0.5 rounded-full bg-white px-2 py-0.5 text-[7.5px] font-extrabold text-[#0A2B6D]"
+            >
+              <span>Open Inbox</span>
+              <ArrowRight className="h-2 w-2 text-[#0A2B6D]" />
+            </button>
+          </div>
         </div>
 
-        {/* 2. Mini Alert Mailbox & Alert Lamps Row — Pink/Blue/Purple Spray & Dark Blue Writing Inside */}
-        <div className="grid grid-cols-3 gap-1">
-          <Link
-            to="/communications"
-            className="flex items-center justify-between gap-1 rounded-md border border-[#0A2B6D] px-1.5 py-1 text-white"
+        {/* 2. Merged 7-Day Live Communication Method Counters (Messages, Shift Notes, Team Banter, Broadcasts) */}
+        <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-4">
+          {LIVE_METHOD_TILES.map(({ key, label, tab, color, Icon }) => {
+            const isSelected = activeTab === tab;
+            return (
+              <button
+                key={key}
+                type="button"
+                onClick={() => selectCommMethod(tab)}
+                className={`flex min-w-0 items-center gap-2 rounded-lg border p-2 text-left transition hover:-translate-y-0.5 ${
+                  isSelected
+                    ? 'border-[#00C6FF] bg-[#081018] ring-1 ring-[#00C6FF]'
+                    : 'border-white/15 bg-[#081018] hover:border-[#00C6FF]/60'
+                }`}
+              >
+                <span
+                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-white"
+                  style={{ backgroundColor: color }}
+                >
+                  <Icon className="h-3.5 w-3.5 text-white" />
+                </span>
+                <div className="min-w-0">
+                  <p className="text-xs sm:text-sm font-extrabold leading-tight text-white">
+                    {methodStats[key]}
+                  </p>
+                  <p className="text-[9.5px] font-bold leading-tight text-slate-300 break-words">
+                    {label}
+                  </p>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* 3. Alert Mailbox, Unread Alerts & Auto Logs Row — Linked to Active Communication Method */}
+        <div className="grid grid-cols-3 gap-1.5">
+          <button
+            type="button"
+            onClick={() => selectCommMethod('inbox')}
+            className="flex min-w-0 items-center justify-between gap-1 rounded-md border border-[#0A2B6D] px-2 py-1 text-white"
             style={{ background: 'linear-gradient(125deg, #FF2E9A 0%, #dc2626 55%, #A100FF 100%)' }}
           >
-            <span className="inline-flex items-center gap-1 text-[7px] font-extrabold text-white" style={{ color: '#FFFFFF' }}>
-              <Mail className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
-              <span style={{ color: '#FFFFFF' }}>Alert Mailbox</span>
+            <span className="inline-flex min-w-0 items-center gap-1 text-[7.5px] font-extrabold leading-tight text-white break-words">
+              <Mail className="h-2.5 w-2.5 shrink-0 text-white" />
+              <span>Alert Mailbox</span>
             </span>
-            <span className="rounded-full bg-white px-1 py-0 text-[6.5px] font-extrabold text-[#0A2B6D]">
+            <span className="shrink-0 rounded-full bg-white px-1.5 py-0 text-[7px] font-extrabold text-[#0A2B6D]">
               {alertCount}
             </span>
-          </Link>
+          </button>
 
-          <Link
-            to="/communications"
-            className="flex items-center justify-between gap-1 rounded-md border border-[#0A2B6D]/30 bg-white px-1.5 py-1 text-[7px] font-extrabold text-[#0A2B6D]"
+          <button
+            type="button"
+            onClick={() => selectCommMethod('alerts')}
+            className="flex min-w-0 items-center justify-between gap-1 rounded-md border border-[#0A2B6D]/30 bg-white px-2 py-1 text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]"
           >
-            <span className="inline-flex items-center gap-1">
-              <span className="h-2 w-2 rounded-full bg-[#EF4444]" style={{ boxShadow: '0 0 5px #EF4444' }} />
+            <span className="inline-flex min-w-0 items-center gap-1 break-words">
+              <span className="h-2 w-2 shrink-0 rounded-full bg-[#EF4444]" style={{ boxShadow: '0 0 5px #EF4444' }} />
               <span>Unread Alerts</span>
             </span>
-            <BellRing className="h-2.5 w-2.5 text-[#FF2E9A]" />
-          </Link>
+            <BellRing className="h-2.5 w-2.5 shrink-0 text-[#FF2E9A]" />
+          </button>
 
-          <Link
-            to="/communications"
-            className="flex items-center justify-between gap-1 rounded-md border border-[#0A2B6D]/30 bg-white px-1.5 py-1 text-[7px] font-extrabold text-[#0A2B6D]"
+          <button
+            type="button"
+            onClick={() => selectCommMethod('logs')}
+            className="flex min-w-0 items-center justify-between gap-1 rounded-md border border-[#0A2B6D]/30 bg-white px-2 py-1 text-[7.5px] font-extrabold leading-tight text-[#0A2B6D]"
           >
-            <span className="inline-flex items-center gap-1">
-              <span className="h-2 w-2 rounded-full bg-[#10B981]" style={{ boxShadow: '0 0 5px #10B981' }} />
+            <span className="inline-flex min-w-0 items-center gap-1 break-words">
+              <span className="h-2 w-2 shrink-0 rounded-full bg-[#10B981]" style={{ boxShadow: '0 0 5px #10B981' }} />
               <span>Auto Logs</span>
             </span>
-            <CheckCircle2 className="h-2.5 w-2.5 text-[#0072FF]" />
-          </Link>
+            <CheckCircle2 className="h-2.5 w-2.5 shrink-0 text-[#0072FF]" />
+          </button>
         </div>
 
-        {/* 3. Mini Quick-Press Communication Function Squares — Dark Command Surface */}
-        <div className="w-full rounded-lg border border-white/15 bg-[#081018] p-1">
-          <div className="mb-0.5 flex items-center justify-between px-1">
-            <span className="text-[6.5px] font-extrabold uppercase tracking-wider text-white">
-              Communication Function Squares
-            </span>
-            <span className="text-[6.5px] font-extrabold text-white">10 Channels</span>
-          </div>
-          <div className="grid grid-cols-5 gap-1">
-            {MINI_COMM_SQUARES.map((sq, idx) => {
-              const SqIcon = sq.icon;
-              const seqColors = ['#0072FF', '#A855F7', '#FF2E9A'];
-              const symColor = seqColors[idx % seqColors.length];
-              return (
-                <Link
-                  key={sq.key}
-                  to="/communications"
-                  className="flex flex-col items-center justify-center gap-0.5 rounded border border-white/15 bg-[#162235] p-0.5 text-center transition-transform hover:-translate-y-0.5"
-                  style={{ borderTopWidth: '2.5px', borderTopColor: symColor }}
+        {/* 4. Merged Mini Comms Live Stream + 10 Quick-Press Communication Channels */}
+        <div className="grid grid-cols-1 gap-1.5 xl:grid-cols-12">
+          {/* Left: Merged Mini Comms Live Feed */}
+          <div className="xl:col-span-5 flex flex-col justify-between rounded-lg border border-white/15 bg-[#081018] p-1.5 text-left">
+            <div className="mb-1 flex items-center justify-between px-1">
+              <span className="text-[7px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
+                Mini Comms Live Stream
+              </span>
+              <span className="text-[7px] font-bold text-slate-300">Click to open</span>
+            </div>
+            <div className="space-y-1">
+              {recentComms.length > 0 ? (
+                recentComms.slice(0, 3).map((msg) => {
+                  const targetTab = resolveEntryTab(msg.entry_kind);
+                  return (
+                    <button
+                      key={msg.id}
+                      type="button"
+                      onClick={() => selectCommMethod(targetTab)}
+                      className="flex w-full items-center justify-between gap-1.5 rounded border border-white/15 bg-[#162235] px-1.5 py-1 text-left text-[8px] font-extrabold text-white transition hover:border-[#00C6FF]"
+                    >
+                      <span className="shrink-0 rounded-full bg-[#0072FF] px-1.5 py-0 text-[6.5px] text-white">
+                        {msg.entry_kind || 'Comms'}
+                      </span>
+                      <span className="min-w-0 flex-1 leading-tight text-right text-white break-words">
+                        {msg.subject || msg.body || 'New communication'}
+                      </span>
+                    </button>
+                  );
+                })
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => selectCommMethod('inbox')}
+                  className="flex w-full items-center justify-between gap-1.5 rounded border border-white/15 bg-[#162235] px-1.5 py-1.5 text-left text-[8px] font-extrabold text-white transition hover:border-[#00C6FF]"
                 >
-                  <span
-                    className="flex h-3.5 w-3.5 items-center justify-center rounded text-white"
-                    style={{ background: symColor }}
+                  <span className="shrink-0 rounded-full bg-[#0072FF] px-1.5 py-0 text-[6.5px] text-white">
+                    Live Inbox
+                  </span>
+                  <span className="min-w-0 flex-1 leading-tight text-right text-white break-words">
+                    No unread communications · 8:30 AM daily summary active
+                  </span>
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Right: 10 Quick-Press Communication Method Squares */}
+          <div className="xl:col-span-7 rounded-lg border border-white/15 bg-[#081018] p-1.5">
+            <div className="mb-1 flex items-center justify-between px-1">
+              <span className="text-[7px] font-extrabold uppercase tracking-wider text-white">
+                Communication Method Channels
+              </span>
+              <span className="text-[7px] font-extrabold text-[#00C6FF]">10 Methods</span>
+            </div>
+            <div className="grid grid-cols-5 gap-1">
+              {MINI_COMM_SQUARES.map((sq, idx) => {
+                const SqIcon = sq.icon;
+                const seqColors = ['#0072FF', '#A855F7', '#FF2E9A'];
+                const symColor = seqColors[idx % seqColors.length];
+                const isSelected = activeTab === sq.tab;
+                return (
+                  <button
+                    key={sq.key}
+                    type="button"
+                    onClick={() => selectCommMethod(sq.tab)}
+                    className={`flex min-w-0 flex-col items-center justify-center gap-0.5 rounded border p-1 text-center transition-transform hover:-translate-y-0.5 ${
+                      isSelected
+                        ? 'border-[#00C6FF] bg-[#0A2B6D]/60 ring-1 ring-[#00C6FF]'
+                        : 'border-white/15 bg-[#162235]'
+                    }`}
+                    style={{ borderTopWidth: '2.5px', borderTopColor: symColor }}
                   >
-                    <SqIcon className="h-2 w-2 text-white" style={{ color: '#FFFFFF' }} />
-                  </span>
-                  <span className="text-[6.5px] font-extrabold leading-none text-white">
-                    {sq.label}
-                  </span>
-                </Link>
-              );
-            })}
+                    <span
+                      className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded text-white"
+                      style={{ background: symColor }}
+                    >
+                      <SqIcon className="h-2 w-2 text-white" style={{ color: '#FFFFFF' }} />
+                    </span>
+                    <span className="text-[7px] font-extrabold leading-tight text-white break-words">
+                      {sq.label}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
 
-        {/* 4. Small Shared To-Do List Inside Mini Communication Centre — Dark Surface */}
-        <div className="flex w-full flex-1 flex-col justify-between gap-1 rounded-lg border border-white/15 bg-[#081018] p-1.5 text-left text-white">
+        {/* 5. Small Shared To-Do List Inside Merged Communication Centre */}
+        <div className="flex w-full flex-col justify-between gap-1 rounded-lg border border-white/15 bg-[#081018] p-1.5 text-left text-white">
           <div
             className="gradient-brand flex items-center justify-between gap-1 rounded px-2 py-0.5 text-white"
             style={{ background: getHeaderView(4), color: '#FFFFFF' }}
           >
-            <span className="inline-flex items-center gap-1 text-[7.5px] font-extrabold uppercase tracking-wider text-white" style={{ color: '#FFFFFF' }}>
+            <span
+              className="inline-flex items-center gap-1 text-[7.5px] font-extrabold uppercase tracking-wider text-white"
+              style={{ color: '#FFFFFF' }}
+            >
               <ListTodo className="h-2.5 w-2.5 shrink-0 text-white" style={{ color: '#FFFFFF' }} />
               <span style={{ color: '#FFFFFF' }}>Small Shared To-Do List</span>
             </span>
-            <Link
-              to="/shared-to-do"
-              className="rounded-full bg-white px-1.5 py-0 text-[6.5px] font-extrabold text-[#0A2B6D]"
-            >
-              Full Board →
-            </Link>
+            {typeof onSelectTab === 'function' ? (
+              <button
+                type="button"
+                onClick={() => selectCommMethod('todo')}
+                className="rounded-full bg-white px-1.5 py-0 text-[6.5px] font-extrabold text-[#0A2B6D]"
+              >
+                Full Board →
+              </button>
+            ) : (
+              <Link
+                to="/shared-to-do"
+                className="rounded-full bg-white px-1.5 py-0 text-[6.5px] font-extrabold text-[#0A2B6D]"
+              >
+                Full Board →
+              </Link>
+            )}
           </div>
 
-          {/* Compact Quick-Add Shared To-Do Input */}
           <div className="flex items-center gap-1">
             <input
               type="text"
@@ -250,7 +421,6 @@ export default function MiniCommunicationCentrePanel({ alertCount = 0 }) {
             </button>
           </div>
 
-          {/* Compact Shared To-Do Items */}
           <div className="space-y-0.5">
             {todos.length === 0 && (
               <div className="rounded border border-white/15 bg-[#162235] px-1.5 py-1 text-[7.5px] font-extrabold text-white">
@@ -270,7 +440,7 @@ export default function MiniCommunicationCentrePanel({ alertCount = 0 }) {
                 >
                   <CheckCircle2 className="h-2 w-2" />
                 </button>
-                <span className="min-w-0 flex-1 truncate text-left text-white">
+                <span className="min-w-0 flex-1 leading-tight text-left text-white break-words">
                   {item.title}
                 </span>
                 <span
