@@ -43,26 +43,29 @@ export default function PageHeader({
           }}
         />
         <div className="p-4 sm:p-5 space-y-3.5">
-          <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-            <div className="flex min-w-0 items-start gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#0A2B6D] text-white shadow-2xs">
-                <Icon className="h-5 w-5 shrink-0 text-[#00C6FF]" />
-              </div>
-              <div className="min-w-0">
-                <h1 className="font-editorial text-xl sm:text-2xl font-extrabold leading-tight tracking-tight text-[#0A2B6D]">
-                  {title}
-                </h1>
-                {description && (
-                  <p className="mt-1 text-sm font-normal leading-relaxed text-[#0A2B6D]/75">
-                    {description}
-                  </p>
-                )}
-              </div>
+          <div className="flex min-w-0 items-start gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#0A2B6D] text-white shadow-2xs">
+              <Icon className="h-5 w-5 shrink-0 text-[#00C6FF]" />
             </div>
+            <div className="min-w-0">
+              <h1 className="font-editorial text-xl sm:text-2xl font-extrabold leading-tight tracking-tight text-[#0A2B6D]">
+                {title}
+              </h1>
+              {description && (
+                <p className="mt-1 text-sm font-normal leading-relaxed text-[#0A2B6D]/75">
+                  {description}
+                </p>
+              )}
+            </div>
+          </div>
 
+          <div className="border-t border-slate-100 pt-3 space-y-2.5">
+            <ModuleComplianceStrip path={seg} />
+
+            {/* Action Buttons Anchored at the Bottom of the Header Section */}
             <div
               className={cn(
-                'flex flex-wrap items-center',
+                'flex flex-wrap items-center justify-end border-t border-slate-100 pt-2.5',
                 compactActions ? 'module-action-bar gap-2' : 'gap-2.5'
               )}
             >
@@ -84,10 +87,6 @@ export default function PageHeader({
                 </div>
               )}
             </div>
-          </div>
-
-          <div className="border-t border-slate-100 pt-3">
-            <ModuleComplianceStrip path={seg} />
           </div>
         </div>
       </div>

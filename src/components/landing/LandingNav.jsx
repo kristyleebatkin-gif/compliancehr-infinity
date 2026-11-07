@@ -96,9 +96,9 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
           </button>
         </div>
       ) : (
-        <div className="mx-auto flex min-h-[calc(220px+1cm)] max-w-[1440px] flex-col justify-between gap-2 bg-black px-4 pt-2 pb-1.5 sm:px-6 lg:px-8 md:h-[calc(220px+1cm)]">
-          {/* Top / Centre: Larger Business Logo */}
-          <div className="flex flex-1 flex-col items-center justify-center">
+        <div className="mx-auto flex max-w-[1440px] flex-col items-center justify-between gap-2 bg-black px-4 pt-2 pb-2 sm:px-6 lg:px-8">
+          {/* Top / Centre: Larger Business Logo + Name + Slogan */}
+          <div className="flex flex-col items-center justify-center">
             <Link
               to="/"
               className="inline-flex flex-col items-center justify-center text-center"
@@ -108,12 +108,12 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
             </Link>
           </div>
 
-          {/* Bottom Line of Top Section: All Action Buttons Anchored at the Bottom */}
-          <div className="mt-auto flex w-full flex-wrap items-center justify-between gap-2 pb-0.5">
-            <div className="flex shrink-0 items-center gap-2">
+          {/* Unified Bottom Row Under Slogan & Above Divider Line: Left Buttons + Centred AI Quick Bar + Right Buttons */}
+          <div className="flex w-full flex-wrap items-center justify-between gap-2 pt-0.5">
+            <div className="flex shrink-0 items-center gap-1.5">
               <Link
                 to="/login"
-                className="inline-flex h-[30px] min-w-[92px] items-center justify-center whitespace-nowrap rounded-lg border border-white/20 px-3.5 text-[11px] font-extrabold text-black shadow-[0_0_12px_rgba(0,198,255,0.55)] transition hover:opacity-90"
+                className="inline-flex h-[28px] min-w-[84px] items-center justify-center whitespace-nowrap rounded-lg border border-white/20 px-3 text-[11px] font-extrabold text-black shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90"
                 style={{ backgroundColor: '#00C6FF' }}
               >
                 Sign In
@@ -122,28 +122,33 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
               <button
                 type="button"
                 onClick={() => onBookDemo && onBookDemo('Book a Personal Demo')}
-                className="inline-flex h-[30px] min-w-[104px] items-center justify-center gap-1.5 whitespace-nowrap rounded-lg border border-[#00C6FF]/50 px-3.5 text-[11px] font-extrabold text-white shadow-[0_0_12px_rgba(0,114,255,0.6)] transition hover:opacity-90"
+                className="inline-flex h-[28px] min-w-[96px] items-center justify-center gap-1 whitespace-nowrap rounded-lg border border-[#00C6FF]/50 px-3 text-[11px] font-extrabold text-white shadow-[0_0_10px_rgba(0,114,255,0.55)] transition hover:opacity-90"
                 style={{ backgroundColor: '#0072FF' }}
               >
-                <Calendar className="h-3.5 w-3.5 shrink-0" style={{ color: '#00C6FF' }} />
+                <Calendar className="h-3 w-3 shrink-0" style={{ color: '#00C6FF' }} />
                 <span>Book Demo</span>
               </button>
             </div>
 
-            <div className="flex shrink-0 items-center gap-2">
+            {/* Centred AI Quick Bar Directly Under Slogan, Above Divider Line */}
+            <div className="mx-auto flex items-center justify-center">
+              <FloatingQuickActionBar onBookDemo={onBookDemo} inline />
+            </div>
+
+            <div className="flex shrink-0 items-center gap-1.5">
               <Link
                 to="/register"
-                className="inline-flex h-[30px] min-w-[98px] shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-lg border border-white/25 px-3.5 text-[11px] font-extrabold text-white shadow-[0_0_12px_rgba(255,46,154,0.6)] transition hover:opacity-90"
+                className="inline-flex h-[28px] min-w-[92px] shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-lg border border-white/25 px-3 text-[11px] font-extrabold text-white shadow-[0_0_10px_rgba(255,46,154,0.55)] transition hover:opacity-90"
                 style={{ backgroundColor: '#FF2E9A' }}
               >
                 <span>Start Free</span>
-                <ArrowRight className="h-3.5 w-3.5 shrink-0 text-white" />
+                <ArrowRight className="h-3 w-3 shrink-0 text-white" />
               </Link>
 
               <button
                 type="button"
                 onClick={toggleHeaderCollapse}
-                className="inline-flex h-[30px] min-w-[92px] items-center justify-center gap-1 whitespace-nowrap rounded-lg border border-white/20 px-3 text-[11px] font-extrabold text-black shadow-[0_0_12px_rgba(0,198,255,0.55)] transition hover:opacity-90"
+                className="inline-flex h-[28px] min-w-[84px] items-center justify-center gap-1 whitespace-nowrap rounded-lg border border-white/20 px-3 text-[11px] font-extrabold text-black shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90"
                 style={{ backgroundColor: '#00C6FF' }}
               >
                 <span>Minimize</span>
@@ -172,8 +177,8 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
         }}
       />
 
-      {/* Centred, Slightly Reduced Both Views Button + AI Quick Bar Directly Underneath */}
-      <div className="flex w-full flex-col items-center justify-center gap-1 bg-black pt-1 pb-0.5 px-3">
+      {/* Centred, Slightly Reduced Both Views Button */}
+      <div className="flex w-full items-center justify-center bg-black py-1 px-3">
         {WORKSPACE_VIEWS.map(({ id, label, Icon }) => {
           const selected = workspaceView === id;
           return (
@@ -195,7 +200,6 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
             </button>
           );
         })}
-        <FloatingQuickActionBar onBookDemo={onBookDemo} inline />
       </div>
 
       {open && (

@@ -411,7 +411,7 @@ export default function ObsidianSidebarRemote({
       >
         <div className="h-1.5 w-full shrink-0" style={{ background: BRAND_GRADIENT }} />
 
-        <div className="flex h-[calc(210px+1cm)] shrink-0 flex-col items-center justify-between bg-black px-1.5 py-1.5 text-center">
+        <div className="flex min-h-[215px] shrink-0 flex-col items-center justify-between gap-1.5 bg-black px-1.5 py-2 text-center">
           <Link
             to="/dashboard"
             aria-label="ComplianceHR Infinity Home"

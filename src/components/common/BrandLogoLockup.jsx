@@ -23,23 +23,23 @@ export default function BrandLogoLockup({
 }) {
   const isCustomName = companyName && companyName !== 'ComplianceHR Infinity';
 
-  // Increased logo size and brought down slightly to fit well in the header
+  // Balanced logo size to fit cleanly with title, slogan, and bottom buttons
   const logoSizeClass =
     size === 'xs'
-      ? 'mt-1.5 h-[calc(6rem+1cm)] w-[calc(13.5rem+1cm)] sm:h-[calc(6.25rem+1cm)] sm:w-[calc(14.5rem+1cm)]'
-      : 'mt-2 h-[calc(9.25rem+1cm)] w-[calc(20rem+1cm)] sm:h-[calc(10rem+1cm)] sm:w-[calc(23rem+1cm)]';
+      ? 'mt-1 h-24 w-48 sm:h-28 sm:w-52'
+      : 'mt-1 h-32 w-72 sm:h-36 sm:w-80';
 
   // Line 2: Structured heading on ONE single line
   const nameSizeClass =
     size === 'xs'
-      ? 'text-[15px] sm:text-base mt-0.5'
-      : 'text-xl sm:text-2xl mt-0.5';
+      ? 'text-[15px] sm:text-base mt-1'
+      : 'text-xl sm:text-2xl mt-1';
 
   // Line 3: Slogan under name
   const sloganSizeClass =
     size === 'xs'
-      ? 'text-[7.5px] tracking-[-0.01em] gap-x-1 mt-0.5'
-      : 'text-[11px] sm:text-xs tracking-[0.01em] gap-x-1.5 mt-0.5';
+      ? 'text-[8px] tracking-tight gap-x-1 mt-0.5'
+      : 'text-xs sm:text-[13px] tracking-wide gap-x-2 mt-1';
 
   const isDark = theme === 'dark';
 
