@@ -81,7 +81,7 @@ export default function BrandLogoLockup({
             </span>
           ) : (
             <>
-              <span style={{ color: isDark ? '#00C6FF' : '#0A2B6D' }}>Compliance</span>
+              <span style={{ color: isDark ? '#00C6FF' : '#0A2B6D' }}>Compliance{' '}</span>
               <span
                 className="bg-clip-text text-transparent"
                 style={{
