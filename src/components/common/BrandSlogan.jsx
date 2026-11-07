@@ -1,6 +1,7 @@
 import React from 'react';
+import { cn } from '@/lib/utils';
 
-export default function BrandSlogan({ size = 'md', compact = false }) {
+export default function BrandSlogan({ size = 'md', compact = false, className = '' }) {
   const sizing = compact
     ? size === 'xs'
       ? 'text-[9px] tracking-[-0.04em] gap-x-0.5 mt-0.5'
@@ -10,7 +11,7 @@ export default function BrandSlogan({ size = 'md', compact = false }) {
       : 'text-xs sm:text-[13px] tracking-wide gap-x-2 mt-0.5';
 
   return (
-    <div className={`flex max-w-full items-center justify-center whitespace-nowrap text-center font-extrabold leading-tight ${sizing}`}>
+    <div className={cn('flex max-w-full items-center justify-center whitespace-nowrap text-center font-extrabold leading-tight', sizing, className)}>
       <span style={{ color: '#00C6FF' }}>Complete Control.</span>{' '}
       <span style={{ color: '#A855F7' }}>Greater Confidence.</span>{' '}
       <span style={{ color: '#FF2E9A' }}>Brighter Success.</span>
