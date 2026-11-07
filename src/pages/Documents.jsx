@@ -101,10 +101,16 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
         setMyProfile(profilePage.status === 'fulfilled' ? (profilePage.value.items || [])[0] || null : null);
         return;
       }
-      if (meUser.role === 'Support Worker') {
-        // Support staff manage their own documents only
+      if (['Support Worker', 'Employee', 'user'].includes(meUser.role)) {
+        // Support & employee staff manage their own documents only
         const page = await base44.entities.EmployeeDocument.filter(
-          { employee_name: meUser.full_name, status: { $ne: 'Archived' } },
+          {
+            $or: [
+              ...(meUser.full_name ? [{ employee_name: meUser.full_name }] : []),
+              ...(meUser.email ? [{ employee_email: meUser.email }] : []),
+            ],
+            status: { $ne: 'Archived' },
+          },
           { sort: 'expiry_date', limit: 50 },
         );
         setDocs(page.items || []);
