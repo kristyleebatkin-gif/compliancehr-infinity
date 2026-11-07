@@ -246,7 +246,7 @@ export default function CareSpherePowerBiCommandCentre() {
       </div>
 
       {/* Main 16:9 Power BI Workspace: Left-Side 12-Page Navigation Menu + Right Visual Canvas */}
-      <div className="grid grid-cols-1 lg:grid-cols-12">
+      <div className="powerbi-workspace grid grid-cols-1 lg:grid-cols-12">
         {/* Left-Side Navigation Panel (All 12 Pages) */}
         <nav
           aria-label="Power BI 12-Page Navigation Menu"
@@ -256,7 +256,7 @@ export default function CareSpherePowerBiCommandCentre() {
           <div className="mb-2 px-1 text-[10px] font-bold uppercase tracking-wider" style={{ color: '#39E6FF' }}>
             Power BI Report Pages (12)
           </div>
-          <div className="grid grid-cols-2 gap-1 sm:grid-cols-3 lg:grid-cols-1">
+          <div className="powerbi-page-navigation grid grid-cols-2 gap-1 sm:grid-cols-3 lg:grid-cols-1">
             {POWER_BI_PAGES.map((pg) => {
               const Icon = ICON_MAP[pg.icon] || Shield;
               const isSelected = activePage === pg.id;

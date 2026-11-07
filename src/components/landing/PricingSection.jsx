@@ -229,7 +229,7 @@ export default function PricingSection({ onContactSales }) {
         <div className="rounded-b-[13px] bg-white p-3.5 sm:p-4 space-y-3">
           {/* 1. Header Always First (One Straight Sentence, Slightly Bigger) -> Sentence -> Blue/Purple Badge & Toggle After */}
           <div className="space-y-1 border-b-2 border-[#0072FF]/40 pb-2.5 text-left">
-            <h2 className="font-editorial text-lg sm:text-xl lg:text-2xl font-black tracking-tight text-[#0A2B6D] leading-tight lg:whitespace-nowrap">
+            <h2 className="font-editorial text-lg sm:text-xl lg:text-2xl font-black tracking-tight text-[#0A2B6D] leading-tight">
               Smart Enhanced All-In-One Elite Packages ($760–$1,220/mo) &amp; 100+ Tailored Documents ($999 Outright or $125/mo)
             </h2>
 
@@ -287,7 +287,7 @@ export default function PricingSection({ onContactSales }) {
           </div>
 
           {/* 6 Smart Enhanced Subscription Cards Grid — Glowing White Lights Around Every Card */}
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 items-stretch">
+          <div className="pricing-card-grid grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 items-stretch">
             {COMPLIANCE_HR_PACKAGES.map((pkg) => {
               const isFeatured = Boolean(pkg.featured);
               return (
