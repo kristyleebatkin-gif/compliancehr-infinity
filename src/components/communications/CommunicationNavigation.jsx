@@ -74,12 +74,6 @@ export default function CommunicationNavigation({ tabs, onCompose }) {
       }}
     >
       <div className="space-y-2.5 rounded-[16px] bg-[#081018] p-3 text-white">
-      {/* Interactive Sky-Drop Air-Mail Drone, 360° Radar & Live Roster Deck Above Mailbox */}
-      <AboveMailboxCommandDeck
-        mailAlertCount={totalAlerts}
-        onDropExpressMail={onCompose}
-      />
-
       {/* Top Alert Lamps + Colour-Changing Alert Mailbox */}
       <div className="grid grid-cols-1 gap-2 lg:grid-cols-12 items-stretch">
         {/* Interactive Mailbox That Changes Colour When There Are Alerts */}
@@ -159,10 +153,6 @@ export default function CommunicationNavigation({ tabs, onCompose }) {
             {label}
           </TabsTrigger>
         ))}
-        <TabsTrigger value="smart-vault" data-hint="Smart Mailroom & Vault">
-          <Vault className="h-3.5 w-3.5" />
-          Smart Vault
-        </TabsTrigger>
       </TabsList>
       </div>
     </div>

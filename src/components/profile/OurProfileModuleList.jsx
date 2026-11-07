@@ -38,7 +38,22 @@ export default function OurProfileModuleList({ kind, profile, details, approvedP
     { key: 'personnel', label: 'Key Personnel', Icon: Contact, content: <KeyContacts {...contactProps} /> },
     ...(employee ? [{ key: 'hr', label: 'HR Hub', Icon: BriefcaseBusiness, content: <HrHub {...props} /> }] : []),
     { key: 'intake', label: 'Intake Centre', Icon: ClipboardList, content: employee ? <IntakeCentre {...props} /> : <IntakeCaseWorkflow intakeType="Participant" profile={profile} profileView="documents" /> },
-    { key: 'visual', label: 'Visual Boards', Icon: LayoutGrid, content: <VisualBoards {...props} /> },
+    {
+      key: 'communications',
+      label: 'Communications & Diary',
+      Icon: MessagesSquare,
+      content: employee ? (
+        <Communications {...props} />
+      ) : (
+        <div className="space-y-4">
+          <ProfileCommDiary participant={profile} />
+          <Communications {...props} />
+        </div>
+      ),
+    },
+    { key: 'feedback', label: 'Feedback & Surveys', Icon: ThumbsUp, content: <Feedback {...props} /> },
+    { key: 'visual', label: 'Visual & Communication Boards', Icon: LayoutGrid, content: <VisualBoards {...props} /> },
+    { key: 'ndis', label: 'NDIS Updates', Icon: Newspaper, content: <NdisUpdates {...props} /> },
     { key: 'goals', label: 'Goal Progress', Icon: Target, content: <GoalProgress {...ourProps} /> },
     { key: 'tasks', label: 'Tasks & To-Do', Icon: ClipboardList, content: <ProfileTodoList person={profile} /> },
     ...(!employee ? [
@@ -51,11 +66,8 @@ export default function OurProfileModuleList({ kind, profile, details, approvedP
     { key: 'incidents', label: 'Incidents', Icon: AlertTriangle, content: <Incidents {...props} /> },
     { key: 'risks', label: 'Risks', Icon: ShieldAlert, content: <Risks {...props} /> },
     { key: 'emergency', label: 'Emergency Response', Icon: Siren, content: <EmergencyResponse {...props} /> },
-    { key: 'ndis', label: 'NDIS Updates', Icon: Newspaper, content: <NdisUpdates {...props} /> },
     ...(employee ? [{ key: 'receipts', label: 'Receipt Hub', Icon: Receipt, content: <ReceiptHub {...props} /> }] : []),
-    { key: 'communications', label: employee ? 'Communication Centre' : 'Communication Log', Icon: MessagesSquare, content: employee ? <Communications {...props} /> : <ProfileCommDiary participant={profile} /> },
     ...(employee ? [{ key: 'training', label: 'Training Centre', Icon: GraduationCap, content: <Training {...props} /> }] : []),
-    { key: 'feedback', label: 'Feedback', Icon: ThumbsUp, content: <Feedback {...props} /> },
     ...(employee ? [{ key: 'name-tag', label: 'Staff Name Tag', Icon: IdCard, content: <NameTags {...props} /> }] : []),
     { key: 'documentation', label: 'Documentation', Icon: FolderCheck, content: <DocumentationChecklist kind={kind} profile={profile} /> },
   ];

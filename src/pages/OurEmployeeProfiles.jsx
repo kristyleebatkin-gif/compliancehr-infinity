@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { TrendingUp, Users, Building2 } from 'lucide-react';
+import { TrendingUp, Users, Building2, MessagesSquare } from 'lucide-react';
 import EmployeeDirectorySummary from '@/components/profile/EmployeeDirectorySummary';
 import ExecutiveWallScene from '@/components/safe/ExecutiveWallScene';
+import Communications from '@/pages/Communications';
 import EmployeeCategoryTiles from '@/components/profile/EmployeeCategoryTiles';
 import useEmployeeDirectorySummary from '@/components/profile/useEmployeeDirectorySummary';
 import '@/components/profile/employeeDirectory.css';
@@ -23,10 +24,10 @@ export default function OurEmployeeProfiles({ basePath = '/our-employees', scope
   const [params, setParams] = useSearchParams();
   const progressAllowed = can('staff-progress');
   const rawTab = params.get('staffTab');
-  const tab = rawTab === 'office' ? 'office' : (progressAllowed && rawTab === 'progress' ? 'progress' : 'profiles');
+  const tab = rawTab === 'office' ? 'office' : rawTab === 'communications' ? 'communications' : (progressAllowed && rawTab === 'progress' ? 'progress' : 'profiles');
   const selectTab = (value) => {
     const next = new URLSearchParams(params);
-    if (value === 'progress' || value === 'office') next.set('staffTab', value); else next.delete('staffTab');
+    if (value === 'progress' || value === 'office' || value === 'communications') next.set('staffTab', value); else next.delete('staffTab');
     setParams(next, { replace: true });
   };
   return (
@@ -38,6 +39,7 @@ export default function OurEmployeeProfiles({ basePath = '/our-employees', scope
           moduleKey="our-staff"
           tabs={<div className="flex flex-wrap items-center gap-1.5">
             <TabsList className="w-auto"><TabsTrigger value="profiles">Employee profiles</TabsTrigger></TabsList>
+            <TabsList className="w-auto"><TabsTrigger value="communications"><MessagesSquare />Communication &amp; Mailbox</TabsTrigger></TabsList>
             <TabsList className="w-auto"><TabsTrigger value="office"><Building2 />Office View</TabsTrigger></TabsList>
             <MyProfileTabLink />
             {progressAllowed && <TabsList className="w-auto"><TabsTrigger value="progress"><TrendingUp />Staff progress</TabsTrigger></TabsList>}
@@ -48,6 +50,7 @@ export default function OurEmployeeProfiles({ basePath = '/our-employees', scope
           <div className="px-2 py-2"><EmployeeDirectorySummary summary={summary.data} loading={summary.isPending} error={summary.error} onRetry={summary.refetch} /></div>
           {tab === 'profiles' && <div className="px-2 py-2"><EmployeeCategoryTiles categories={summary.data?.categories || []} selected={category} onSelect={setCategory} total={summary.data?.total} /></div>}
           <TabsContent value="profiles"><div className="mt-[1cm]"><OurProfilesTab kind="staff" basePath={basePath} scoped={scoped} directory searchValue={search} groupValue={category} onGroupChange={setCategory} categories={summary.data?.categories || []} total={summary.data?.total} /></div></TabsContent>
+          <TabsContent value="communications"><div className="mt-4"><Communications embedded /></div></TabsContent>
           <TabsContent value="office"><div className="mt-4"><ExecutiveWallScene defaultViewMode="office" /></div></TabsContent>
           {progressAllowed && <TabsContent value="progress"><Suspense fallback={<p role="status" className="py-8 text-sm text-muted-foreground">Loading staff progress...</p>}><StaffProgressDashboard embedded search={search} /></Suspense></TabsContent>}
         </ModuleShell>

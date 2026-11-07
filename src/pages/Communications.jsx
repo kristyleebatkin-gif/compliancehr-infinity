@@ -7,11 +7,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   Megaphone, Mail, NotebookPen, Briefcase, Inbox as InboxIcon,
   MessagesSquare, Video, Sparkles, Siren, ListTodo, BookMarked,
-  History, Radio, Lightbulb, CalendarDays, MessageSquare,
+  History, Radio, Lightbulb, CalendarDays, MessageSquare, Newspaper, Bell,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import MeetingCentre from '@/pages/MeetingCentre';
 import Feedback from '@/pages/Feedback';
+import DailyBriefing from '@/pages/DailyBriefing';
+import Notifications from '@/pages/Notifications';
 import { base44 } from '@/api/base44Client';
 import ModuleShell from '@/components/module/ModuleShell';
 import EmptyState from '@/components/EmptyState';
@@ -67,9 +69,11 @@ const TABS = [
   ['logs', History, 'System Logs'],
   ['meetings', CalendarDays, 'Meetings'],
   ['feedback', MessageSquare, 'Feedback'],
+  ['briefing', Newspaper, 'Daily Briefing'],
+  ['notifications', Bell, 'Notifications'],
 ];
 
-const SELF_TABS = ['alerts', 'diary', 'email', 'shift-notes', 'employee-log', 'todo'];
+const SELF_TABS = ['alerts', 'diary', 'email', 'shift-notes', 'employee-log', 'todo', 'notifications'];
 
 function Communications({ profile, profileKind, embedded = false } = {}) {
   const { role, user } = useRole();
@@ -156,9 +160,6 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
 
                 <CommWeatherBar />
 
-                {/* Unified Communication Navigation & Mailbox */}
-                <CommunicationNavigation tabs={shown} onCompose={() => setActiveTab('email')} />
-
                 {(commScreen === 'screen2' || commScreen === 'both') && (
                   <div className="grid grid-cols-1 gap-3 xl:grid-cols-2">
                     <section className="overflow-hidden rounded-xl border border-[#0072FF]/60 bg-[#081018] p-2.5 text-white">
@@ -172,11 +173,14 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
 
                 {commScreen !== 'screen2' && (
                   <div className="space-y-2.5">
-                    {/* Merged Mini Comms, Mini Communication Centre, Mailbox & Right-Side Communication Methods Together */}
-                    <CommunicationAndMailboxTabs
-                      onSelectTab={setActiveTab}
-                      activeTab={activeTab}
-                    />
+                    {/* Unified Communication, Mailbox, Alert Lamps & All Communication Channels Together */}
+                    <div className="rounded-xl border border-[#0072FF]/60 bg-[#081018] p-2.5 space-y-2.5 text-white">
+                      <CommunicationAndMailboxTabs
+                        onSelectTab={setActiveTab}
+                        activeTab={activeTab}
+                      />
+                      <CommunicationNavigation tabs={shown} onCompose={() => setActiveTab('email')} />
+                    </div>
 
                     {/* Merged All To-Do Lists, Task Dashboards & Task Leaderboard in One Unified Section */}
                     <div className="rounded-xl border border-[#0072FF]/60 bg-[#081018] p-3 space-y-2.5 text-white">
@@ -238,6 +242,8 @@ function Communications({ profile, profileKind, embedded = false } = {}) {
           <TabsContent value="alerts"><AlertsCentre selfOnly={employeeSelf} /></TabsContent>
           <TabsContent value="meetings"><MeetingCentre embedded /></TabsContent>
           <TabsContent value="feedback"><Feedback embedded /></TabsContent>
+          <TabsContent value="briefing"><DailyBriefing /></TabsContent>
+          <TabsContent value="notifications"><Notifications /></TabsContent>
           <TabsContent value="logs"><AutomatedLogs /></TabsContent>
           <TabsContent value="diary">
             {effProfile ? (

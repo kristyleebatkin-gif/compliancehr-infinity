@@ -50,23 +50,31 @@ export default function EmployeeCommunications({ embedded = false }) {
           tabs={!embedded && (
             <div className="space-y-2.5">
               <CommWeatherBar />
-              <CommDailyInsight />
+              <CommunicationNavigation tabs={TABS} />
+              <div className="rounded-xl border border-[#0072FF]/60 bg-[#081018] p-3 space-y-2.5 text-white">
+                <div className="grid grid-cols-1 gap-2.5 xl:grid-cols-3">
+                  <CommTaskDash />
+                  <CommSharedTodo />
+                  <TaskLeaderboard compact />
+                </div>
+                <div className="grid grid-cols-1 gap-2.5 lg:grid-cols-2">
+                  <TeamBanter />
+                  <AutomatedAlertSystem selfOnly />
+                </div>
+              </div>
+              <div className="grid grid-cols-1 gap-2.5 lg:grid-cols-3">
+                <CommDailyInsight />
+                <CommTeamDash />
+                <RosterMiniOverview />
+              </div>
               <CommAuditBar />
               <AboutCommunication />
               <CommHintsTips />
               <CommunicateWell />
-              <CommTaskDash />
-              <CommTeamDash />
-              <RosterMiniOverview />
-              <CommSharedTodo />
-              <CommunicationNavigation tabs={TABS} />
             </div>
           )}
         >
           <TabsContent key={view} value={view}><EmployeeCommunicationContent view={view} /></TabsContent>
-          {!embedded && <TeamBanter />}
-          {!embedded && <TaskLeaderboard compact />}
-          {!embedded && <AutomatedAlertSystem selfOnly />}
         </ModuleShell>
       </Tabs>
     </div>
