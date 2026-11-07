@@ -13,10 +13,7 @@ const DARK_NAVY_CHASSIS = 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141
 
 const APP_DESIGN_COLOURS = ['#0072FF', '#A855F7', '#FF2E9A'];
 
-const HEADING_TEXT_GRADIENT =
-  'linear-gradient(90deg, #0A2B6D 0%, #0A2B6D 38%, #0072FF 62%, #5A00D6 82%, #FF2E9A 100%)';
-
-export default function QuickAppBar() {
+export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
   const location = useLocation();
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
@@ -26,16 +23,7 @@ export default function QuickAppBar() {
   const [selectedPillarId, setSelectedPillarId] = useState(
     () => localStorage.getItem('chr-active-remote-pillar') || 'dashboard-executive'
   );
-  const [workspaceView, setWorkspaceView] = useState(
-    () => localStorage.getItem('chr-workspace-view-mode') || 'both'
-  );
   const prevPathnameRef = useRef(location.pathname);
-
-  const switchWorkspaceView = (mode) => {
-    setWorkspaceView(mode);
-    localStorage.setItem('chr-workspace-view-mode', mode);
-    window.dispatchEvent(new CustomEvent('chr-view-mode-change', { detail: { mode } }));
-  };
 
   const isActive = (path) =>
     path === '/'
@@ -165,7 +153,7 @@ export default function QuickAppBar() {
   };
 
   return (
-    <div id="main-view-navigator-remote" className="scroll-mt-48 mx-auto w-full max-w-[1440px] px-3 pt-1.5">
+    <div id="main-view-navigator-remote" className="scroll-mt-48 mx-auto w-full max-w-[1440px] bg-workspace-navy px-3 pt-1.5">
       <section
         aria-label="Quick Access Bar"
         className="preserve-island-theme overflow-hidden rounded-xl p-[1.5px] shadow-md"
@@ -182,12 +170,9 @@ export default function QuickAppBar() {
                 className="inline-flex min-w-0 items-center rounded-full p-[1px]"
                 style={{ background: BRAND_GRADIENT }}
               >
-                <div className="inline-flex min-w-0 items-center gap-1 rounded-full bg-white px-2 py-0.5">
-                  <Zap className="h-2.5 w-2.5 shrink-0" style={{ color: '#0072FF' }} />
-                  <span
-                    className="min-w-0 truncate bg-clip-text text-[9.5px] font-extrabold tracking-tight text-transparent"
-                    style={{ backgroundImage: HEADING_TEXT_GRADIENT }}
-                  >
+                <div className="inline-flex min-w-0 items-center gap-1 rounded-full bg-workspace-navy px-2 py-0.5">
+                  <Zap className="h-2.5 w-2.5 shrink-0" style={{ color: '#00C6FF' }} />
+                  <span className="min-w-0 truncate text-[9.5px] font-extrabold tracking-tight text-white">
                     Quick Access Bar · {expandedGroup ? expandedGroup.label : 'Command Centre'}
                   </span>
                 </div>
@@ -350,6 +335,28 @@ export default function QuickAppBar() {
                   </Link>
                 );
               })}
+            </div>
+          )}
+          {onSwitchWorkspaceView && (
+            <div className="flex flex-wrap items-center justify-center gap-1.5 border-t border-white/10 pt-1">
+              <Link
+                to="/our-participants"
+                className="inline-flex h-[24px] shrink-0 items-center justify-center gap-1 rounded-full border border-[#00C6FF] bg-[#0072FF] px-3 text-[10px] font-extrabold uppercase tracking-wide text-white shadow-[0_0_10px_rgba(0,114,255,0.5)] transition hover:opacity-95"
+              >
+                <Heart className="h-3 w-3 shrink-0 text-[#00C6FF]" />
+                <span className="whitespace-nowrap">Participant Profiles</span>
+              </Link>
+              <button
+                type="button"
+                onClick={() => onSwitchWorkspaceView('both')}
+                aria-pressed={workspaceView === 'both'}
+                title="Both Views"
+                className="inline-flex h-[24px] shrink-0 items-center justify-center gap-1 rounded-full border px-3 text-[10px] font-extrabold tracking-wide shadow-[0_0_10px_rgba(0,198,255,0.5)] transition-all hover:opacity-95"
+                style={{ background: 'linear-gradient(90deg, #00C6FF 0%, #0072FF 50%, #FF2E9A 100%)', borderColor: '#00C6FF', color: '#FFFFFF' }}
+              >
+                <Layers className="h-3 w-3 shrink-0" style={{ color: '#00C6FF' }} />
+                <span className="whitespace-nowrap uppercase">Both Views</span>
+              </button>
             </div>
           )}
         </div>
