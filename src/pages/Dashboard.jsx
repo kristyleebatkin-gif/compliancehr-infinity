@@ -43,35 +43,30 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="bright-dashboard mx-auto w-full max-w-[1440px] space-y-5 pb-12">
+    <div className="bright-dashboard mx-auto w-full max-w-[1440px] space-y-3 pb-4">
       {/* 1. FIRST-CLASS EXECUTIVE DASHBOARD & SUBSCRIPTION COMMAND STRIP */}
       <section
         aria-label="Executive Dashboard and Subscription Command Strip"
         className="overflow-hidden rounded-2xl p-[1.5px] shadow-xl"
         style={{ background: BRAND_GRADIENT }}
       >
-        <div className="rounded-[14px] bg-[#081018] px-4 py-3 text-white space-y-2.5">
+        <div className="rounded-[14px] bg-[#081018] px-4 py-2.5 text-white space-y-2">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="flex min-w-0 items-center gap-2.5">
               <span
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-black"
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-black"
                 style={{
-                  border: '1.5px solid #00C6FF',
-                  boxShadow: '0 0 12px rgba(0,198,255,0.55)',
+                  border: '1.5px solid #FFFFFF',
+                  boxShadow: '0 0 10px rgba(255,255,255,0.85), 0 0 14px rgba(0,198,255,0.55)',
                 }}
               >
-                <LayoutDashboard className="h-4.5 w-4.5 text-[#00C6FF]" />
+                <LayoutDashboard className="h-4 w-4 text-white" style={{ filter: 'drop-shadow(0 0 4px #FFFFFF)' }} />
               </span>
               <div className="min-w-0">
-                <div className="flex flex-wrap items-center gap-2">
-                  <h1 className="text-sm sm:text-base font-black leading-tight tracking-tight text-white">
-                    1. Executive Dashboard, Live Communication &amp; Subscription Showcase
-                  </h1>
-                  <span className="rounded-full border border-[#00C6FF]/50 bg-[#0072FF] px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-white">
-                    14-Day Free Trial Live
-                  </span>
-                </div>
-                <p className="text-[11px] font-semibold leading-snug text-slate-300">
+                <h1 className="text-base sm:text-lg lg:text-xl font-black leading-tight tracking-tight text-white lg:whitespace-nowrap">
+                  1. Executive Dashboard, Live Communication &amp; Subscription Showcase
+                </h1>
+                <p className="text-xs font-semibold leading-snug text-slate-300">
                   Unified Communication &amp; Mailbox Hub, Live Roster &amp; Weather, 12-Page Power BI Command Centre, and Smart Enhanced All-In-One Subscriptions.
                 </p>
               </div>
@@ -172,10 +167,10 @@ export default function Dashboard() {
       <LandingTestimonialsSection />
       <BlueprintPreviewSection />
 
-      {/* 10. EXECUTIVE FAQS, ZERO-TRUST REMOTE ACCESS (2ND FROM BOTTOM) & FINAL CTA */}
+      {/* 10. EXECUTIVE FAQS, DEPLOY OPERATING SYSTEM CTA & ZERO-TRUST REMOTE ACCESS AFTER DEPLOY */}
       <LandingFaqSection />
-      <RemoteAccessStatusCard />
       <LandingCTA onBookDemo={openDemoModal} />
+      <RemoteAccessStatusCard />
 
       <DemoBookingModal
         open={demoModalOpen}

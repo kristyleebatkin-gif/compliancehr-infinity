@@ -65,53 +65,60 @@ const BENEFITS = [
 export default function BenefitsSection() {
   return (
     <section id="why-choose" className="w-full scroll-mt-20">
-      <div className="enterprise-surface rounded-2xl p-6 sm:p-8 lg:p-10 space-y-6">
+      <div className="enterprise-surface rounded-2xl p-3.5 sm:p-4 space-y-3">
         <LandingSectionHeader
           badge="Enterprise Assurance"
           tone="purple"
           icon={Award}
           title="Built for Regulated Care, Clinical Governance & Audit Integrity"
           description="Six foundational controls that eliminate spreadsheet drift and keep your organisation inspection-ready every day."
+          rightTag="6 Core Governance Controls"
         />
 
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
           {BENEFITS.map((card, idx) => {
             const Icon = card.icon;
             return (
               <Reveal
                 key={card.title}
-                delay={idx * 0.04}
-                className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-6 text-left transition hover:border-[#0072FF] hover:shadow-md"
+                delay={idx * 0.03}
+                className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-3 text-left transition hover:border-[#0072FF]"
               >
                 <div>
-                  <div className="flex items-center justify-between gap-3">
+                  {/* Header First -> Sentence -> Blue/Purple Badge & White-Lit Symbol After */}
+                  <div className="flex items-center justify-between gap-2">
+                    <h3 className="font-editorial text-sm sm:text-base font-black text-[#0A2B6D]">
+                      {card.title}
+                    </h3>
                     <div
-                      className="flex h-10 w-10 items-center justify-center rounded-lg text-white"
-                      style={{ backgroundColor: card.accent }}
+                      className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-white"
+                      style={{
+                        backgroundColor: card.accent,
+                        boxShadow: '0 0 8px 1px rgba(255,255,255,0.85)',
+                      }}
                     >
-                      <Icon className="h-5 w-5 text-white" />
+                      <Icon className="h-3.5 w-3.5 text-white" style={{ filter: 'drop-shadow(0 0 3px #FFFFFF)' }} />
                     </div>
+                  </div>
+
+                  <p className="mt-1 text-xs font-medium leading-snug text-[#0A2B6D]/80">
+                    {card.description}
+                  </p>
+
+                  <div className="mt-2">
                     <span
-                      className="rounded-md px-2.5 py-1 text-xs font-bold uppercase tracking-wider"
-                      style={{ backgroundColor: `${card.accent}12`, color: card.accent }}
+                      className="inline-block rounded px-2 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wider"
+                      style={{ backgroundColor: `${card.accent}14`, color: card.accent }}
                     >
                       {card.badge}
                     </span>
                   </div>
-
-                  <h3 className="mt-4 font-editorial text-xl font-extrabold text-[#0A2B6D]">
-                    {card.title}
-                  </h3>
-
-                  <p className="mt-2 text-sm font-normal leading-relaxed text-[#0A2B6D]/80">
-                    {card.description}
-                  </p>
                 </div>
 
-                <ul className="mt-5 space-y-2 border-t border-slate-100 pt-4">
+                <ul className="mt-2.5 space-y-1 border-t border-slate-100 pt-2">
                   {card.points.map((pt) => (
-                    <li key={pt} className="flex items-center gap-2 text-xs font-bold text-[#0A2B6D]">
-                      <CheckCircle2 className="h-4 w-4 shrink-0 text-[#0072FF]" />
+                    <li key={pt} className="flex items-center gap-1.5 text-[11px] font-bold text-[#0A2B6D]">
+                      <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-[#0072FF]" />
                       <span>{pt}</span>
                     </li>
                   ))}

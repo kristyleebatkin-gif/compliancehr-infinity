@@ -51,96 +51,113 @@ export default function LandingHero({ onBookDemo }) {
       >
         {/* Top Executive Accent Bar */}
         <div
-          className="h-1.5 w-full"
+          className="h-1 w-full"
           style={{
             background: 'linear-gradient(90deg, #00C6FF 0%, #0072FF 35%, #5A00D6 70%, #FF2E9A 100%)',
           }}
         />
 
-        <div className="relative z-10 px-6 py-8 sm:px-8 sm:py-10 lg:px-10 lg:py-12">
-          <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
-            {/* Left Column: Executive Governance Copy & Core Metrics */}
-            <div className="flex flex-col justify-between lg:col-span-5 text-left text-white space-y-6">
-              <div className="space-y-4">
-                <div className="inline-flex items-center gap-2 rounded-md border border-[#00C6FF]/40 bg-[#0072FF]/20 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#00C6FF]">
-                  <Building2 className="h-3.5 w-3.5 shrink-0 text-[#00C6FF]" />
-                  <span>Enterprise Compliance, Governance &amp; Clinical Risk OS</span>
-                </div>
+        <div className="relative z-10 p-3.5 sm:p-4 text-white space-y-3">
+          {/* 1. Header Always First (One Straight Sentence, Slightly Bigger) -> Sentence -> Blue/Purple Badges After */}
+          <div className="space-y-1 border-b border-white/15 pb-2.5 text-left">
+            <h1
+              className="font-editorial text-lg sm:text-xl lg:text-2xl font-black tracking-tight text-white leading-tight lg:whitespace-nowrap"
+              style={{ color: '#FFFFFF' }}
+            >
+              The Complete Compliance &amp; Workforce Operating System
+            </h1>
 
-                <h1
-                  className="font-editorial text-[32px] sm:text-[36px] lg:text-[40px] font-extrabold tracking-tight text-white leading-[1.15]"
-                  style={{ color: '#FFFFFF' }}
+            <p className="text-xs sm:text-[13px] font-semibold leading-snug text-white/90">
+              Built for NDIS, Aged Care, and Allied Health executives, compliance managers, and auditors — unifying 45 self-maintaining master registers, 356 audit checkpoints, workforce credentials, rostering, and statutory reporting in one system of record.
+            </p>
+
+            <div className="flex flex-wrap items-center justify-between gap-2 pt-0.5">
+              <div className="inline-flex items-center gap-1.5 rounded-md border border-[#00C6FF]/40 bg-[#0072FF]/25 px-2.5 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
+                <span
+                  className="flex h-4 w-4 items-center justify-center rounded-full bg-white/15"
+                  style={{ boxShadow: '0 0 8px 1px rgba(255,255,255,0.9)' }}
                 >
-                  The Complete Compliance &amp; Workforce Operating System
-                </h1>
-
-                <p className="text-sm sm:text-base font-normal leading-relaxed text-white/90">
-                  Built for NDIS, Aged Care, and Allied Health executives, compliance managers, and auditors. Unify 45 self-maintaining master registers, 356 audit checkpoints, workforce credentials, rostering, and statutory reporting in one system of record.
-                </p>
-
-                {/* 4 Structured Regulatory Checkpoints */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
-                  {GOVERNANCE_PILLARS.map((pillar) => (
-                    <div
-                      key={pillar}
-                      className="flex items-center gap-2 rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-xs font-medium text-white"
-                    >
-                      <Check className="h-3.5 w-3.5 shrink-0 text-[#00C6FF]" />
-                      <span>{pillar}</span>
-                    </div>
-                  ))}
-                </div>
+                  <Building2 className="h-2.5 w-2.5 text-white" />
+                </span>
+                <span>Enterprise Compliance, Governance &amp; Clinical Risk OS</span>
               </div>
 
-              {/* 3 Executive Assurance Cards */}
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 border-t border-white/15 pt-5">
-                {EXECUTIVE_METRICS.map((kpi) => {
-                  const Icon = kpi.icon;
-                  return (
-                    <div
-                      key={kpi.label}
-                      className="rounded-xl border border-white/15 bg-white/5 p-3.5 text-left"
-                    >
-                      <div className="flex items-center justify-between gap-1.5">
-                        <span className="text-xs font-semibold text-white/80">
-                          {kpi.label}
-                        </span>
-                        <Icon className="h-4 w-4 shrink-0 text-[#00C6FF]" />
-                      </div>
-                      <div className="mt-1.5 font-editorial text-xl font-extrabold text-white leading-none">
-                        {kpi.value}
-                      </div>
-                      <div className="mt-1.5 text-xs font-normal text-white/75 leading-snug">
-                        {kpi.detail}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/* Primary & Secondary Enterprise CTAs Moved to Bottom */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              <div className="flex flex-wrap items-center gap-1.5">
                 <button
                   type="button"
                   onClick={() => onBookDemo && onBookDemo('Executive Platform Demo')}
-                  className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-bold text-white shadow-md transition hover:opacity-95"
+                  className="inline-flex h-7 items-center justify-center gap-1.5 rounded-lg px-3 text-[11px] font-extrabold text-white shadow-md transition hover:opacity-95"
                   style={{
                     background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
                   }}
                 >
-                  <Calendar className="h-4 w-4 shrink-0 text-white" />
+                  <Calendar className="h-3.5 w-3.5 shrink-0 text-white" style={{ filter: 'drop-shadow(0 0 3px #FFFFFF)' }} />
                   <span>Book Executive Demo</span>
                 </button>
 
                 <Link
                   to={authed ? '/dashboard' : '/register'}
-                  className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-lg border border-white/35 bg-white px-5 py-2.5 text-sm font-bold text-[#0A2B6D] shadow-sm transition hover:bg-slate-100"
+                  className="inline-flex h-7 items-center justify-center gap-1.5 rounded-lg border border-white/35 bg-white px-3 text-[11px] font-extrabold text-[#0A2B6D] shadow-sm transition hover:bg-slate-100"
                 >
                   <span style={{ color: '#0A2B6D' }}>
                     {authed ? 'Open Command Centre' : 'Start 14-Day Free Trial'}
                   </span>
-                  <ArrowRight className="h-4 w-4 shrink-0 text-[#0072FF]" />
+                  <ArrowRight className="h-3.5 w-3.5 shrink-0 text-[#0072FF]" />
                 </Link>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 items-start gap-3 lg:grid-cols-12">
+            {/* Left Column: Compact Checkpoints & 3 Executive Assurance Cards */}
+            <div className="flex flex-col justify-between lg:col-span-5 text-left text-white space-y-2.5">
+              {/* 4 Structured Regulatory Checkpoints with White Lights */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                {GOVERNANCE_PILLARS.map((pillar) => (
+                  <div
+                    key={pillar}
+                    className="flex items-center gap-2 rounded-lg border border-white/15 bg-[#081018]/80 px-2.5 py-2 text-[11px] font-bold text-white"
+                  >
+                    <span
+                      className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-md border border-white/50 bg-[#0072FF]/35"
+                      style={{ boxShadow: '0 0 7px rgba(255,255,255,0.85)' }}
+                    >
+                      <Check className="h-3 w-3 text-white" style={{ filter: 'drop-shadow(0 0 3px #FFFFFF)' }} />
+                    </span>
+                    <span className="leading-snug">{pillar}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* 3 Executive Assurance Cards with White Lights */}
+              <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+                {EXECUTIVE_METRICS.map((kpi) => {
+                  const Icon = kpi.icon;
+                  return (
+                    <div
+                      key={kpi.label}
+                      className="rounded-xl border border-white/15 bg-[#081018]/85 p-2.5 text-left"
+                    >
+                      <div className="flex items-center justify-between gap-1.5">
+                        <span className="text-[11px] font-bold text-[#00C6FF]">
+                          {kpi.label}
+                        </span>
+                        <span
+                          className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-white/50 bg-[#0072FF]/30"
+                          style={{ boxShadow: '0 0 7px rgba(255,255,255,0.85)' }}
+                        >
+                          <Icon className="h-3 w-3 text-white" style={{ filter: 'drop-shadow(0 0 3px #FFFFFF)' }} />
+                        </span>
+                      </div>
+                      <div className="mt-1 font-editorial text-lg font-black text-white leading-none">
+                        {kpi.value}
+                      </div>
+                      <div className="mt-1 text-[10.5px] font-semibold text-white/80 leading-snug">
+                        {kpi.detail}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 

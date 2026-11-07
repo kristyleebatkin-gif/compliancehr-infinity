@@ -1,5 +1,6 @@
 import React from 'react';
 import { Layers, ShieldCheck, ClipboardCheck, Sparkles } from 'lucide-react';
+import LandingSectionHeader from '@/components/landing/LandingSectionHeader';
 
 const STATS = [
   {
@@ -39,14 +40,23 @@ const STATS = [
 export default function LandingStatsSection() {
   return (
     <section aria-label="Platform key statistics" className="w-full">
-      <div className="enterprise-surface rounded-2xl p-6 sm:p-8">
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 items-stretch">
+      <div className="enterprise-surface rounded-2xl p-3.5 sm:p-4 space-y-3">
+        <LandingSectionHeader
+          badge="Enterprise Scale & Verification"
+          tone="blue"
+          icon={ShieldCheck}
+          title="Verified Platform Scale Across Modules, Checkpoints, Registers & Security"
+          description="Every operational module, statutory register, and audit checkpoint operates on a single governed data model."
+          rightTag="100% Connected Architecture"
+        />
+
+        <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-4 items-stretch">
           {STATS.map((item) => {
             const Icon = item.icon;
             return (
               <div
                 key={item.title}
-                className="relative flex h-full flex-col justify-between overflow-hidden rounded-xl border border-slate-200 bg-white p-6 text-left transition hover:border-[#0072FF]"
+                className="relative flex h-full flex-col justify-between overflow-hidden rounded-xl border border-slate-200 bg-white p-3 text-left transition hover:border-[#0072FF]"
               >
                 <div
                   className="absolute inset-x-0 top-0 h-1"
@@ -54,32 +64,37 @@ export default function LandingStatsSection() {
                 />
 
                 <div>
+                  {/* Header First -> Sentence -> Blue/Purple Badge & White-Lit Symbol After */}
                   <div className="flex items-center justify-between gap-2">
+                    <h3 className="text-xs sm:text-sm font-black text-[#0A2B6D]">
+                      {item.title}
+                    </h3>
+                    <span className="font-editorial text-xl sm:text-2xl font-black text-[#0A2B6D] leading-none">
+                      {item.value}
+                    </span>
+                  </div>
+
+                  <p className="mt-1 text-xs font-medium leading-snug text-[#0A2B6D]/80">
+                    {item.subtitle}
+                  </p>
+
+                  <div className="mt-2 flex items-center justify-between gap-2 pt-1 border-t border-slate-100">
                     <span
-                      className="inline-flex items-center rounded-md px-2.5 py-1 text-xs font-bold uppercase tracking-wider"
-                      style={{ backgroundColor: `${item.accent}12`, color: item.accent }}
+                      className="inline-flex items-center rounded px-2 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wider"
+                      style={{ backgroundColor: `${item.accent}14`, color: item.accent }}
                     >
                       {item.badge}
                     </span>
                     <div
-                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-white"
-                      style={{ backgroundColor: item.accent }}
+                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-white"
+                      style={{
+                        backgroundColor: item.accent,
+                        boxShadow: '0 0 8px 1px rgba(255,255,255,0.85)',
+                      }}
                     >
-                      <Icon className="h-4 w-4 text-white" />
+                      <Icon className="h-3.5 w-3.5 text-white" style={{ filter: 'drop-shadow(0 0 3px #FFFFFF)' }} />
                     </div>
                   </div>
-
-                  <div className="mt-4 font-editorial text-4xl font-extrabold tracking-tight text-[#0A2B6D] leading-none">
-                    {item.value}
-                  </div>
-
-                  <h3 className="mt-3 text-lg font-extrabold text-[#0A2B6D]">
-                    {item.title}
-                  </h3>
-
-                  <p className="mt-1.5 text-sm font-normal leading-relaxed text-[#0A2B6D]/75">
-                    {item.subtitle}
-                  </p>
                 </div>
               </div>
             );

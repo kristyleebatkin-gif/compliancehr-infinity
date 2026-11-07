@@ -59,28 +59,17 @@ export default function LandingFaqSection() {
 
   return (
     <section id="faq" className="w-full scroll-mt-20">
-      <Reveal className="enterprise-surface rounded-2xl p-6 sm:p-8 lg:p-10 space-y-5">
-        <div className="space-y-1.5 border-b border-slate-200 pb-3.5 text-left">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <div className="flex flex-wrap items-center gap-2.5">
-              <span className="inline-flex items-center gap-1.5 rounded-md border border-[#0072FF]/30 bg-[#0072FF]/10 px-2.5 py-1 text-xs font-extrabold uppercase tracking-wider text-[#0072FF]">
-                <HelpCircle className="h-3.5 w-3.5 text-[#0072FF]" />
-                <span>Governance &amp; Security FAQ</span>
-              </span>
-              <h2 className="font-editorial text-xl sm:text-2xl font-extrabold tracking-tight text-[#0A2B6D]">
-                Frequently Asked Questions
-              </h2>
-            </div>
-            <span className="rounded-full border border-slate-200 bg-[#F8FAFC] px-3 py-0.5 text-xs font-extrabold text-[#5A00D6]">
-              8 Core Governance &amp; Security Answers
-            </span>
-          </div>
-          <p className="text-xs sm:text-sm font-semibold leading-snug text-[#0A2B6D]/80">
-            Key architectural, regulatory, and security answers for executives, compliance managers, and IT administrators.
-          </p>
-        </div>
+      <Reveal className="enterprise-surface rounded-2xl p-3.5 sm:p-4 space-y-3">
+        <LandingSectionHeader
+          badge="Governance & Security FAQ"
+          tone="blue"
+          icon={HelpCircle}
+          title="Frequently Asked Questions"
+          description="Key architectural, regulatory, and security answers for executives, compliance managers, and IT administrators."
+          rightTag="8 Core Governance & Security Answers"
+        />
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 items-start">
+        <div className="grid grid-cols-1 gap-2 md:grid-cols-2 items-start">
           {FAQS.map((faq, idx) => {
             const isOpen = openIndex === idx;
             return (
@@ -88,7 +77,7 @@ export default function LandingFaqSection() {
                 key={faq.topic}
                 className={`rounded-xl border transition-all ${
                   isOpen
-                    ? 'border-[#0A2B6D] bg-[#F8FAFC] shadow-xs'
+                    ? 'border-[#0A2B6D] bg-[#F8FAFC] shadow-2xs'
                     : 'border-slate-200 bg-white hover:border-[#0072FF]'
                 }`}
               >
@@ -97,18 +86,19 @@ export default function LandingFaqSection() {
                   onClick={() => setOpenIndex(isOpen ? -1 : idx)}
                   aria-expanded={isOpen}
                   aria-controls={`faq-answer-${idx}`}
-                  className="flex w-full items-start justify-between gap-3 p-5 text-left"
+                  className="flex w-full items-start justify-between gap-2.5 p-3 text-left"
                 >
                   <div>
-                    <span className="inline-block rounded-md bg-[#0072FF]/10 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-[#0072FF]">
-                      {faq.topic}
-                    </span>
-                    <h3 className="mt-2 text-lg font-extrabold text-[#0A2B6D] leading-snug">
+                    {/* Header Question First -> Blue Topic Badge After */}
+                    <h3 className="text-xs sm:text-sm font-black text-[#0A2B6D] leading-snug">
                       {faq.question}
                     </h3>
+                    <span className="mt-1 inline-block rounded bg-[#0072FF]/10 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#0072FF]">
+                      {faq.topic}
+                    </span>
                   </div>
                   <ChevronDown
-                    className={`mt-1 h-5 w-5 shrink-0 text-[#0A2B6D] transition-transform ${
+                    className={`mt-0.5 h-4 w-4 shrink-0 text-[#0A2B6D] transition-transform ${
                       isOpen ? 'rotate-180' : ''
                     }`}
                   />
@@ -116,7 +106,7 @@ export default function LandingFaqSection() {
                 <div
                   id={`faq-answer-${idx}`}
                   hidden={!isOpen}
-                  className="border-t border-slate-200/80 px-5 pb-5 pt-3.5 text-left text-sm font-normal leading-relaxed text-[#0A2B6D]/85"
+                  className="border-t border-slate-200/80 px-3 pb-3 pt-2 text-left text-xs font-medium leading-snug text-[#0A2B6D]/85"
                 >
                   {faq.answer}
                 </div>

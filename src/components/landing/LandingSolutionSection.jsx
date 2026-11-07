@@ -68,74 +68,80 @@ const PILLARS = [
 export default function LandingSolutionSection() {
   return (
     <section id="solution" className="w-full scroll-mt-20">
-      <div className="enterprise-surface rounded-2xl p-6 sm:p-8 lg:p-10 space-y-6">
+      <div className="enterprise-surface rounded-2xl p-3.5 sm:p-4 space-y-3">
         <LandingSectionHeader
           badge="Four Architectural Pillars"
           tone="blue"
           icon={Layers}
           title="One Unified Operating System Across Every Department"
-          description="Disconnected point solutions create compliance blind spots. ComplianceHR Infinity connects People, Service Delivery, Governance, and Finance on a single data model."
+          description="Disconnected point solutions create compliance blind spots — ComplianceHR Infinity connects People, Service Delivery, Governance, and Finance on a single data model."
+          rightTag="4 Pillars · 46 Modules"
         />
 
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 items-stretch">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 items-stretch">
           {PILLARS.map((pillar, idx) => {
             const Icon = pillar.icon;
             return (
               <Reveal
                 key={pillar.title}
-                delay={idx * 0.05}
-                className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-6 text-left transition hover:border-[#0072FF] hover:shadow-md"
+                delay={idx * 0.03}
+                className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-3.5 text-left transition hover:border-[#0072FF]"
               >
                 <div>
-                  <div className="flex items-start justify-between gap-3 border-b border-slate-100 pb-4">
-                    <div className="flex items-center gap-3 min-w-0">
+                  {/* Header First -> Sentence -> Blue/Purple Badge & Open Link After */}
+                  <div className="space-y-1 border-b border-slate-100 pb-2">
+                    <div className="flex items-center justify-between gap-2">
+                      <h3 className="font-editorial text-sm sm:text-base font-black text-[#0A2B6D] leading-snug">
+                        {pillar.title}
+                      </h3>
                       <div
-                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-white"
-                        style={{ backgroundColor: pillar.accent }}
+                        className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-white"
+                        style={{
+                          backgroundColor: pillar.accent,
+                          boxShadow: '0 0 8px 1px rgba(255,255,255,0.85)',
+                        }}
                       >
-                        <Icon className="h-5 w-5 text-white" />
-                      </div>
-                      <div className="min-w-0">
-                        <span
-                          className="block text-xs font-bold uppercase tracking-wider"
-                          style={{ color: pillar.accent }}
-                        >
-                          {pillar.badge}
-                        </span>
-                        <h3 className="mt-0.5 font-editorial text-xl font-extrabold text-[#0A2B6D] leading-snug">
-                          {pillar.title}
-                        </h3>
+                        <Icon className="h-3.5 w-3.5 text-white" style={{ filter: 'drop-shadow(0 0 3px #FFFFFF)' }} />
                       </div>
                     </div>
-                    <Link
-                      to={pillar.route}
-                      className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-bold text-[#0A2B6D] transition hover:border-[#0072FF] hover:bg-[#0A2B6D] hover:text-white"
-                    >
-                      <span>Open</span>
-                      <ArrowRight className="h-3.5 w-3.5" />
-                    </Link>
+
+                    <p className="text-xs font-medium leading-snug text-[#0A2B6D]/80">
+                      {pillar.subtitle}
+                    </p>
+
+                    <div className="flex items-center justify-between gap-2 pt-0.5">
+                      <span
+                        className="rounded px-2 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wider"
+                        style={{ backgroundColor: `${pillar.accent}14`, color: pillar.accent }}
+                      >
+                        {pillar.badge}
+                      </span>
+                      <Link
+                        to={pillar.route}
+                        className="inline-flex shrink-0 items-center gap-1 rounded-md border border-slate-200 bg-slate-50 px-2.5 py-0.5 text-[11px] font-extrabold text-[#0A2B6D] transition hover:border-[#0072FF] hover:bg-[#0A2B6D] hover:text-white"
+                      >
+                        <span>Open</span>
+                        <ArrowRight className="h-3 w-3" />
+                      </Link>
+                    </div>
                   </div>
 
-                  <p className="mt-3 text-sm font-normal leading-relaxed text-[#0A2B6D]/80">
-                    {pillar.subtitle}
-                  </p>
-
-                  <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <div className="mt-2.5 grid grid-cols-1 gap-2 sm:grid-cols-2">
                     {pillar.items.map((item) => (
                       <div
                         key={item.name}
-                        className="rounded-lg border border-slate-200 bg-[#F8FAFC] p-3.5"
+                        className="rounded-lg border border-slate-200 bg-[#F8FAFC] p-2.5"
                       >
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1.5">
                           <CheckCircle2
-                            className="h-4 w-4 shrink-0"
+                            className="h-3.5 w-3.5 shrink-0"
                             style={{ color: pillar.accent }}
                           />
-                          <h4 className="text-sm font-bold text-[#0A2B6D]">
+                          <h4 className="text-xs font-extrabold text-[#0A2B6D]">
                             {item.name}
                           </h4>
                         </div>
-                        <p className="mt-1.5 text-sm font-normal leading-relaxed text-[#0A2B6D]/75">
+                        <p className="mt-0.5 text-[11px] font-medium leading-snug text-[#0A2B6D]/80">
                           {item.desc}
                         </p>
                       </div>

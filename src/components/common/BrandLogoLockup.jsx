@@ -9,7 +9,7 @@ export const BRAND_SLOGAN_TEXT =
 
 /**
  * Canonical ComplianceHR Infinity Brand Lockup:
- * Line 1 (Top): Larger Logo brought down slightly to fit well on Black Background, centred
+ * Line 1 (Top): Enlarged Logo & White Frame (+1cm) with minimal white border around emblem
  * Line 2 (Middle): "ComplianceHR Infinity" on ONE single line
  * Line 3 (Bottom): Slogan on ONE single line
  */
@@ -23,23 +23,27 @@ export default function BrandLogoLockup({
 }) {
   const isCustomName = companyName && companyName !== 'ComplianceHR Infinity';
 
-  // Tightened logo frame to trim excess white border around the emblem while showing 100% of the logo
+  // Increased logo + white area size (~1cm larger) while keeping tight minimal white border around the emblem
   const logoSizeClass =
     size === 'xs'
-      ? 'mt-0.5 h-14 w-26 sm:h-16 sm:w-30'
-      : 'mt-0.5 h-20 w-36 sm:h-24 sm:w-40';
+      ? 'mt-0.5 h-20 w-36 sm:h-24 sm:w-44'
+      : size === 'lg'
+      ? 'mt-0.5 h-28 w-52 sm:h-32 sm:w-60'
+      : 'mt-0.5 h-24 w-44 sm:h-28 sm:w-52';
 
   // Line 2: Structured heading on ONE single line
   const nameSizeClass =
     size === 'xs'
-      ? 'text-[15px] sm:text-base mt-1'
-      : 'text-xl sm:text-2xl mt-1';
+      ? 'text-base sm:text-lg mt-1'
+      : size === 'lg'
+      ? 'text-xl sm:text-2xl mt-1'
+      : 'text-lg sm:text-xl mt-1';
 
   // Line 3: Slogan under name
   const sloganSizeClass =
     size === 'xs'
-      ? 'text-[8px] tracking-tight gap-x-1 mt-0.5'
-      : 'text-xs sm:text-[13px] tracking-wide gap-x-2 mt-1';
+      ? 'text-[9px] sm:text-[10px] tracking-tight gap-x-1.5 mt-0.5'
+      : 'text-xs sm:text-[13px] tracking-wide gap-x-2 mt-0.5';
 
   const isDark = theme === 'dark';
 
@@ -49,13 +53,15 @@ export default function BrandLogoLockup({
     >
       {/* UNIFIED CONTAINER FOR LOGO, NAME & SLOGAN */}
       <div className="flex w-full flex-col items-center justify-center bg-transparent px-1 py-0.5">
-        {/* LINE 1: FULL UNCLIPPED LOGO WITH MINIMAL WHITE MARGIN */}
-        <div className={`${logoSizeClass} flex shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[#00C6FF]/40 bg-white`}>
+        {/* LINE 1: ENLARGED (+1CM) UNCLIPPED LOGO & WHITE AREA WITH SLIGHTLY REDUCED WHITE MARGIN */}
+        <div
+          className={`${logoSizeClass} flex shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[#00C6FF]/60 bg-white p-0.5 shadow-[0_0_12px_rgba(255,255,255,0.45)]`}
+        >
           <Image
             src={logoUrl || DEFAULT_BRAND_LOGO}
             alt={companyName || 'ComplianceHR Infinity'}
             fittingType="fit"
-            className="h-full w-full scale-[1.15] object-contain"
+            className="h-full w-full scale-[1.22] object-contain"
           />
         </div>
 

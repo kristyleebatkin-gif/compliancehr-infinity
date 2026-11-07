@@ -174,18 +174,18 @@ function StoryVideoCard({
 
   return (
     <div
-      className="overflow-hidden rounded-3xl p-[2px] shadow-xl"
+      className="overflow-hidden rounded-2xl p-[2px] shadow-md"
       style={{
         background: 'linear-gradient(120deg, #00C6FF 0%, #0072FF 30%, #5A00D6 68%, #FF2E9A 100%)',
       }}
     >
-      <div className="rounded-[22px] bg-white p-5 sm:p-7 lg:p-8 space-y-6">
-        {/* Card Header */}
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-b border-sky-100 pb-4">
-          <div className="flex items-center gap-3.5">
+      <div className="rounded-[14px] bg-white p-3.5 space-y-3">
+        {/* Card Header: Header FIRST -> Sentence -> Blue/Purple Badges & Action Buttons After */}
+        <div className="space-y-1 border-b border-sky-100 pb-2.5 text-left">
+          <div className="flex items-center gap-2.5">
             {portraitUrl && (
               <div
-                className="h-16 w-16 shrink-0 overflow-hidden rounded-2xl p-[2px] shadow-md"
+                className="h-10 w-10 shrink-0 overflow-hidden rounded-xl p-[1.5px] shadow-2xs"
                 style={{
                   background: 'linear-gradient(120deg, #00C6FF 0%, #0072FF 45%, #FF2E9A 100%)',
                 }}
@@ -193,74 +193,82 @@ function StoryVideoCard({
                 <Image
                   src={portraitUrl}
                   alt="Kristy Whelan — Founder & Director Portrait"
-                  className="h-full w-full rounded-[14px] object-cover"
+                  className="h-full w-full rounded-[9px] object-cover"
                   fittingType="fill"
                 />
               </div>
             )}
-            <div className="space-y-1">
-              <div className="flex flex-wrap items-center gap-2">
-                <span
-                  className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-white"
-                  style={{
-                    background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
-                  }}
-                >
-                  <Film className="h-3.5 w-3.5 text-[#00C6FF]" />
-                  {badge}
-                </span>
-                <span className="inline-flex items-center rounded-full border border-sky-200 bg-[#F0F7FF] px-3 py-1 text-xs font-extrabold text-[#0A2B6D]">
-                  {durationLabel}
-                </span>
-              </div>
-              <h3 className="text-xl font-extrabold tracking-tight text-[#0A2B6D] sm:text-2xl">
+            <div className="min-w-0">
+              <h3 className="text-sm sm:text-base font-black tracking-tight text-[#0A2B6D] leading-tight">
                 {title}
               </h3>
               {subtitle && (
-                <p className="text-sm font-semibold text-[#0A2B6D]/75">{subtitle}</p>
+                <p className="text-xs font-semibold text-[#0A2B6D]/80">{subtitle}</p>
               )}
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2">
-            <button
-              type="button"
-              onClick={startSynchronizedNarration}
-              className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-extrabold text-white shadow-md transition hover:opacity-95"
-              style={{
-                background: isNarrating
-                  ? '#FF2E9A'
-                  : 'linear-gradient(120deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
-              }}
-            >
-              {isNarrating ? (
-                <>
-                  <Pause className="h-4 w-4" />
-                  <span>Stop Voiceover &amp; Video</span>
-                </>
-              ) : (
-                <>
-                  <Volume2 className="h-4 w-4" />
-                  <span>Play Video + Full Voiceover</span>
-                </>
-              )}
-            </button>
+          <div className="flex flex-wrap items-center justify-between gap-2 pt-0.5">
+            <div className="flex flex-wrap items-center gap-1.5">
+              <span
+                className="inline-flex items-center gap-1.5 rounded-md px-2 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wider text-white"
+                style={{
+                  background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+                }}
+              >
+                <span
+                  className="flex h-3.5 w-3.5 items-center justify-center rounded bg-white/15"
+                  style={{ boxShadow: '0 0 6px rgba(255,255,255,0.9)' }}
+                >
+                  <Film className="h-2.5 w-2.5 text-white" />
+                </span>
+                <span>{badge}</span>
+              </span>
+              <span className="inline-flex items-center rounded-md border border-[#5A00D6]/25 bg-[#F5F0FF] px-2 py-0.5 text-[10.5px] font-extrabold text-[#5A00D6]">
+                {durationLabel}
+              </span>
+            </div>
 
-            <button
-              type="button"
-              onClick={() => setShowScript((v) => !v)}
-              className="inline-flex items-center gap-1.5 rounded-xl border border-sky-200 bg-[#F0F7FF] px-3.5 py-2.5 text-xs font-extrabold text-[#0A2B6D] transition hover:bg-sky-100"
-            >
-              <FileText className="h-3.5 w-3.5 text-[#0072FF]" />
-              <span>{showScript ? 'Hide Script & Prompt' : 'Show Script & Prompt'}</span>
-            </button>
+            <div className="flex flex-wrap items-center gap-1.5">
+              <button
+                type="button"
+                onClick={startSynchronizedNarration}
+                className="inline-flex h-7 items-center gap-1.5 rounded-lg px-2.5 text-[11px] font-extrabold text-white shadow-2xs transition hover:opacity-95"
+                style={{
+                  background: isNarrating
+                    ? '#FF2E9A'
+                    : 'linear-gradient(120deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
+                }}
+              >
+                {isNarrating ? (
+                  <>
+                    <Pause className="h-3.5 w-3.5" />
+                    <span>Stop Voiceover</span>
+                  </>
+                ) : (
+                  <>
+                    <Volume2 className="h-3.5 w-3.5" />
+                    <span>Play Video + Voiceover</span>
+                  </>
+                )}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setShowScript((v) => !v)}
+                className="inline-flex h-7 items-center gap-1 rounded-lg border border-sky-200 bg-[#F0F7FF] px-2.5 text-[11px] font-extrabold text-[#0A2B6D] transition hover:bg-sky-100"
+              >
+                <FileText className="h-3 w-3 text-[#0072FF]" />
+                <span>{showScript ? 'Hide Script' : 'Script & Prompt'}</span>
+              </button>
+            </div>
           </div>
         </div>
 
         {/* Main Video + Ending Screen Grid */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:items-stretch">
+        <div className="grid grid-cols-1 gap-3 lg:grid-cols-12 lg:items-stretch">
           {/* Video Player Column */}
-          <div className="lg:col-span-8 flex flex-col justify-between overflow-hidden rounded-2xl border-2 border-[#0A2B6D] bg-[#061A44] shadow-lg">
+          <div className="lg:col-span-8 flex flex-col justify-between overflow-hidden rounded-xl border border-[#0A2B6D] bg-[#061A44]">
             <div className="relative aspect-video w-full bg-[#061A44]">
               <video
                 ref={videoRef}
@@ -275,16 +283,16 @@ function StoryVideoCard({
               </video>
             </div>
 
-            {/* Live Synchronized Voiceover Subtitle + Status Bar (below video, clear of play button) */}
-            <div className="border-t border-white/15 bg-[#0A2B6D] px-4 py-3 text-white space-y-2">
-              <div className="rounded-xl border border-white/15 bg-[#061A44]/90 px-4 py-2 text-center">
-                <p className="text-xs font-extrabold leading-relaxed text-white sm:text-sm">
+            {/* Live Synchronized Voiceover Subtitle + Status Bar */}
+            <div className="border-t border-white/15 bg-[#0A2B6D] px-3 py-2 text-white space-y-1">
+              <div className="rounded-lg border border-white/15 bg-[#061A44]/90 px-3 py-1.5 text-center">
+                <p className="text-xs font-extrabold leading-snug text-white">
                   “{lines[activeLineIndex] || lines[0]}”
                 </p>
               </div>
-              <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+              <div className="flex flex-wrap items-center justify-between gap-2 text-[10.5px]">
                 <span className="font-bold text-[#00C6FF]">
-                  {isNarrating ? '◉ Live Voiceover Narration Active' : '◉ Ready — Click Play Video + Full Voiceover'}
+                  {isNarrating ? '◉ Live Voiceover Narration Active' : '◉ Ready — Click Play Video + Voiceover'}
                 </span>
                 <span className="font-semibold text-white/80">
                   Line {activeLineIndex + 1} of {lines.length}
@@ -295,58 +303,35 @@ function StoryVideoCard({
 
           {/* Ending / Final Tagline Card */}
           <div
-            className="lg:col-span-4 flex flex-col justify-between rounded-2xl border-2 border-[#0A2B6D] p-6 text-white shadow-lg"
+            className="lg:col-span-4 flex flex-col justify-between rounded-xl border border-[#0A2B6D] p-3.5 text-white"
             style={{
               background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
             }}
           >
-            <div className="space-y-3">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
-                <Sparkles className="h-3.5 w-3.5" />
-                {endingCard.tag}
-              </span>
-
-              {portraitUrl && (
-                <div className="flex items-center gap-3 rounded-2xl border border-white/20 bg-white/10 p-3">
-                  <div className="h-16 w-16 shrink-0 overflow-hidden rounded-xl border-2 border-[#00C6FF]">
-                    <Image
-                      src={portraitUrl}
-                      alt="Kristy Whelan Portrait"
-                      className="h-full w-full object-cover"
-                      fittingType="fill"
-                    />
-                  </div>
-                  <div>
-                    <div className="text-xs font-extrabold uppercase tracking-wider text-[#00C6FF]">
-                      Welcome From The Director
-                    </div>
-                    <div className="text-sm font-black text-white">Kristy Whelan</div>
-                    <div className="text-xs font-semibold text-white/80">
-                      Case Manager · Compliance Manager · Director
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              <div className="h-1 w-16 rounded-full bg-gradient-to-r from-[#00C6FF] via-[#0072FF] to-[#FF2E9A]" />
-              <h4 className="text-2xl font-black tracking-tight text-white">
+            <div className="space-y-2">
+              <h4 className="text-base sm:text-lg font-black tracking-tight text-white">
                 {endingCard.headline}
               </h4>
-              <p className="text-sm font-extrabold text-[#00C6FF]">
+              <p className="text-xs font-extrabold text-[#00C6FF]">
                 {endingCard.role}
               </p>
-              <p className="text-base font-bold text-white/95">
+              <p className="text-xs font-bold text-white/95">
                 {endingCard.company}
               </p>
               {endingCard.extraLine && (
-                <p className="text-sm font-extrabold text-[#FF2E9A]">
+                <p className="text-xs font-extrabold text-[#FF2E9A]">
                   {endingCard.extraLine}
                 </p>
               )}
+
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
+                <Sparkles className="h-3 w-3 text-white" style={{ filter: 'drop-shadow(0 0 3px #FFFFFF)' }} />
+                <span>{endingCard.tag}</span>
+              </span>
             </div>
 
-            <div className="mt-6 rounded-xl border border-white/20 bg-white/10 p-4">
-              <p className="text-sm font-extrabold italic leading-relaxed text-white">
+            <div className="mt-3 rounded-lg border border-white/20 bg-white/10 p-2.5">
+              <p className="text-xs font-extrabold italic leading-snug text-white">
                 “{endingCard.quote}”
               </p>
             </div>
@@ -355,38 +340,32 @@ function StoryVideoCard({
 
         {/* Full Voiceover Script & AI Video Prompt Drawer */}
         {showScript && (
-          <div className="grid grid-cols-1 gap-4 pt-2 lg:grid-cols-12">
-            {/* Voiceover Script */}
-            <div className="lg:col-span-7 rounded-2xl border border-sky-200 bg-[#F8FAFC] p-4 sm:p-5">
-              <div className="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-sky-200 pb-2.5">
-                <div>
-                  <span className="text-xs font-black uppercase tracking-wider text-[#0072FF]">
-                    Voiceover Script ({durationLabel})
-                  </span>
-                  <p className="text-xs font-semibold text-[#0A2B6D]/75">
-                    Click any line to highlight or jump straight to that moment
-                  </p>
-                </div>
+          <div className="grid grid-cols-1 gap-3 pt-1 lg:grid-cols-12">
+            <div className="lg:col-span-7 rounded-xl border border-sky-200 bg-[#F8FAFC] p-3">
+              <div className="mb-2 flex flex-wrap items-center justify-between gap-2 border-b border-sky-200 pb-1.5">
+                <span className="text-xs font-black uppercase tracking-wider text-[#0072FF]">
+                  Voiceover Script ({durationLabel})
+                </span>
                 <button
                   type="button"
                   onClick={() => copyText(lines.join('\n\n'), 'script')}
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-sky-200 bg-white px-3 py-1.5 text-xs font-extrabold text-[#0A2B6D] hover:bg-[#F0F7FF]"
+                  className="inline-flex items-center gap-1 rounded-md border border-sky-200 bg-white px-2.5 py-1 text-[11px] font-extrabold text-[#0A2B6D] hover:bg-[#F0F7FF]"
                 >
                   {copiedKey === 'script' ? (
                     <>
-                      <Check className="h-3.5 w-3.5 text-emerald-600" />
-                      <span>Copied Script</span>
+                      <Check className="h-3 w-3 text-emerald-600" />
+                      <span>Copied</span>
                     </>
                   ) : (
                     <>
-                      <Copy className="h-3.5 w-3.5 text-[#0072FF]" />
+                      <Copy className="h-3 w-3 text-[#0072FF]" />
                       <span>Copy Script</span>
                     </>
                   )}
                 </button>
               </div>
 
-              <div className="max-h-60 space-y-1.5 overflow-y-auto pr-1">
+              <div className="max-h-40 space-y-1 overflow-y-auto pr-1">
                 {lines.map((line, idx) => {
                   const active = idx === activeLineIndex;
                   return (
@@ -394,13 +373,13 @@ function StoryVideoCard({
                       key={idx}
                       type="button"
                       onClick={() => setActiveLineIndex(idx)}
-                      className={`w-full rounded-lg px-3 py-1.5 text-left text-xs transition ${
+                      className={`w-full rounded-md px-2.5 py-1 text-left text-xs transition ${
                         active
                           ? 'border border-[#0072FF] bg-[#F0F7FF] font-extrabold text-[#0A2B6D]'
                           : 'font-semibold text-[#0A2B6D]/85 hover:bg-white'
                       }`}
                     >
-                      <span className="mr-2 font-black text-[#0072FF]">{idx + 1}.</span>
+                      <span className="mr-1.5 font-black text-[#0072FF]">{idx + 1}.</span>
                       {line}
                     </button>
                   );
@@ -408,45 +387,44 @@ function StoryVideoCard({
               </div>
             </div>
 
-            {/* AI Video Prompt */}
-            <div className="lg:col-span-5 flex flex-col justify-between rounded-2xl border border-purple-200 bg-[#F5F0FF]/60 p-4 sm:p-5">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between gap-2 border-b border-purple-200 pb-2.5">
+            <div className="lg:col-span-5 flex flex-col justify-between rounded-xl border border-purple-200 bg-[#F5F0FF]/60 p-3">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between gap-2 border-b border-purple-200 pb-1.5">
                   <span className="text-xs font-black uppercase tracking-wider text-[#5A00D6]">
                     AI Video Prompt
                   </span>
                   <button
                     type="button"
                     onClick={() => copyText(aiPrompt, 'prompt')}
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-purple-200 bg-white px-3 py-1.5 text-xs font-extrabold text-[#5A00D6] hover:bg-purple-50"
+                    className="inline-flex items-center gap-1 rounded-md border border-purple-200 bg-white px-2.5 py-1 text-[11px] font-extrabold text-[#5A00D6] hover:bg-purple-50"
                   >
                     {copiedKey === 'prompt' ? (
                       <>
-                        <Check className="h-3.5 w-3.5 text-emerald-600" />
-                        <span>Copied Prompt</span>
+                        <Check className="h-3 w-3 text-emerald-600" />
+                        <span>Copied</span>
                       </>
                     ) : (
                       <>
-                        <Copy className="h-3.5 w-3.5 text-[#5A00D6]" />
-                        <span>Copy AI Prompt</span>
+                        <Copy className="h-3 w-3 text-[#5A00D6]" />
+                        <span>Copy Prompt</span>
                       </>
                     )}
                   </button>
                 </div>
 
                 {referenceLabel && (
-                  <div className="rounded-lg border border-purple-200 bg-white px-3 py-2 text-xs font-extrabold text-[#5A00D6]">
+                  <div className="rounded-md border border-purple-200 bg-white px-2.5 py-1 text-[11px] font-extrabold text-[#5A00D6]">
                     Reference: {referenceLabel}
                   </div>
                 )}
 
-                <p className="text-xs font-semibold leading-relaxed text-[#0A2B6D]">
+                <p className="text-[11px] font-semibold leading-snug text-[#0A2B6D]">
                   {aiPrompt}
                 </p>
               </div>
 
-              <div className="mt-4 rounded-xl border border-sky-200 bg-white p-3 text-xs font-bold text-[#0A2B6D]">
-                <span style={{ color: accentColor }}>◉</span> Transformation-first story: sells less stress, more confidence, better visibility, more time, and better outcomes.
+              <div className="mt-2 rounded-lg border border-sky-200 bg-white p-2 text-[11px] font-bold text-[#0A2B6D]">
+                <span style={{ color: accentColor }}>◉</span> Sells less stress, more confidence, better visibility, more time, and better outcomes.
               </div>
             </div>
           </div>
@@ -460,94 +438,97 @@ export default function LandingLaunchVideosSection() {
   return (
     <section
       aria-label="ComplianceHR Infinity Launch Transformation Videos"
-      className="overflow-hidden rounded-3xl p-[3px] shadow-2xl"
+      className="overflow-hidden rounded-2xl p-[2px] shadow-xl"
       style={{
         background: 'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
       }}
     >
-      <div className="rounded-[21px] bg-white p-5 sm:p-7 space-y-6">
-        {/* Unified Top Header on the Single Master Tile: Kristy Whelan + Transformation Story + See ComplianceHR Infinity in Action */}
+      <div className="rounded-[14px] bg-white p-3.5 sm:p-4 space-y-3">
+        {/* Unified Top Header on the Single Master Tile: Header FIRST -> Sentence -> Blue/Purple Badges After */}
         <div
-          className="rounded-2xl p-4 sm:p-6 text-white shadow-lg space-y-4"
+          className="rounded-xl p-3.5 text-white shadow-md space-y-2.5"
           style={{
             background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
           }}
         >
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between border-b border-white/15 pb-4">
-            <div className="flex items-center gap-3.5">
+          <div className="flex flex-col gap-2.5 border-b border-white/15 pb-2.5 text-left">
+            <div className="flex items-center gap-3">
               <div
-                className="h-16 w-16 shrink-0 overflow-hidden rounded-2xl p-[2px] shadow-md"
+                className="h-12 w-12 shrink-0 overflow-hidden rounded-xl p-[1.5px] shadow-md"
                 style={{
                   background: 'linear-gradient(120deg, #00C6FF 0%, #0072FF 45%, #FF2E9A 100%)',
+                  boxShadow: '0 0 8px rgba(255,255,255,0.8)',
                 }}
               >
                 <Image
                   src={FOUNDER_PORTRAIT_URL}
                   alt="Kristy Whelan — Founder & Director Portrait"
-                  className="h-full w-full rounded-[14px] object-cover"
+                  className="h-full w-full rounded-[10px] object-cover"
                   fittingType="fill"
                 />
               </div>
-              <div className="space-y-1">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-0.5 text-[11px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
-                    <HeartHandshake className="h-3.5 w-3.5" />
-                    Kristy Whelan · Founder &amp; Director Transformation Suite
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 rounded-full border border-[#00C6FF]/40 bg-[#0072FF]/25 px-3 py-0.5 text-[11px] font-extrabold uppercase tracking-wider text-white">
-                    <ShieldCheck className="h-3.5 w-3.5 text-[#00C6FF]" />
-                    See ComplianceHR Infinity in Action
-                  </span>
-                </div>
-                <h2 className="text-xl font-extrabold tracking-tight text-white sm:text-2xl">
+              <div className="min-w-0 space-y-0.5">
+                <h2 className="text-base sm:text-lg lg:text-xl font-black tracking-tight text-white leading-tight lg:whitespace-nowrap">
                   People Don&apos;t Buy Features — They Buy Transformation &amp; The Future of Compliance
                 </h2>
-                <p className="text-xs font-semibold leading-relaxed text-white/85">
+                <p className="text-xs font-semibold leading-snug text-white/90">
                   Built from experience. Designed for excellence. Created to give people their time back — because our purpose has always been helping people achieve their goals.
                 </p>
               </div>
             </div>
+
+            <div className="flex flex-wrap items-center gap-2 pt-0.5">
+              <span className="inline-flex items-center gap-1.5 rounded-md border border-[#00C6FF]/40 bg-[#0072FF]/25 px-2.5 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
+                <span
+                  className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-white/15"
+                  style={{ boxShadow: '0 0 6px rgba(255,255,255,0.9)' }}
+                >
+                  <HeartHandshake className="h-2.5 w-2.5 text-white" />
+                </span>
+                <span>Kristy Whelan · Founder &amp; Director Transformation Suite</span>
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-md border border-[#A855F7]/50 bg-[#5A00D6]/35 px-2.5 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wider text-white">
+                <ShieldCheck className="h-3 w-3 text-white" style={{ filter: 'drop-shadow(0 0 3px #FFFFFF)' }} />
+                <span>See ComplianceHR Infinity in Action</span>
+              </span>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-            <div className="rounded-xl border border-white/15 bg-white/5 p-3 space-y-1.5">
-              <div className="text-[11px] font-extrabold uppercase tracking-wider text-rose-300">
-                People don&apos;t wake up wanting:
-              </div>
-              <div className="flex flex-wrap gap-1.5">
-                {NOT_WHAT_PEOPLE_WAKE_UP_WANTING.map((item) => (
-                  <span
-                    key={item}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-bold text-white/90"
-                  >
-                    <XCircle className="h-3.5 w-3.5 text-rose-300 shrink-0" />
-                    {item}
-                  </span>
-                ))}
-              </div>
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+            <div className="flex flex-wrap items-center gap-1.5 rounded-lg border border-white/15 bg-white/5 px-2.5 py-1.5">
+              <span className="text-[10.5px] font-extrabold uppercase tracking-wider text-rose-300">
+                Not just:
+              </span>
+              {NOT_WHAT_PEOPLE_WAKE_UP_WANTING.map((item) => (
+                <span
+                  key={item}
+                  className="inline-flex items-center gap-1 rounded-full border border-white/15 bg-white/10 px-2 py-0.5 text-[11px] font-bold text-white/90"
+                >
+                  <XCircle className="h-3 w-3 text-rose-300 shrink-0" />
+                  <span>{item}</span>
+                </span>
+              ))}
             </div>
 
-            <div className="rounded-xl border border-[#00C6FF]/40 bg-white p-3 space-y-1.5">
-              <div className="text-[11px] font-extrabold uppercase tracking-wider text-[#0072FF]">
-                They want transformation:
-              </div>
-              <div className="flex flex-wrap gap-1.5">
-                {TRANSFORMATION_OUTCOMES.map((item) => (
-                  <span
-                    key={item}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-sky-200 bg-[#F0F7FF] px-3 py-1 text-xs font-extrabold text-[#0A2B6D]"
-                  >
-                    <CheckCircle2 className="h-3.5 w-3.5 text-[#0072FF] shrink-0" />
-                    {item}
-                  </span>
-                ))}
-              </div>
+            <div className="flex flex-wrap items-center gap-1.5 rounded-lg border border-[#00C6FF]/40 bg-[#081018] px-2.5 py-1.5">
+              <span className="text-[10.5px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
+                Transformation:
+              </span>
+              {TRANSFORMATION_OUTCOMES.map((item) => (
+                <span
+                  key={item}
+                  className="inline-flex items-center gap-1 rounded-full border border-[#00C6FF]/40 bg-[#0072FF]/25 px-2 py-0.5 text-[11px] font-extrabold text-white"
+                >
+                  <CheckCircle2 className="h-3 w-3 text-white shrink-0" style={{ filter: 'drop-shadow(0 0 3px #FFFFFF)' }} />
+                  <span>{item}</span>
+                </span>
+              ))}
             </div>
           </div>
         </div>
 
         {/* Both Videos Neatly Together Inside the Same Single Tile */}
-        <div className="grid grid-cols-1 gap-6 xl:grid-cols-2 items-stretch">
+        <div className="grid grid-cols-1 gap-3 xl:grid-cols-2 items-stretch">
           <StoryVideoCard
             badge='VIDEO 1 · "MY STORY"'
             title='KRISTY WHELAN — "Why I Created ComplianceHR Infinity"'

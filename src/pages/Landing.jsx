@@ -69,16 +69,16 @@ export default function Landing() {
 
         <QuickAppBar />
 
-        <main className="landing-main relative z-10 mx-auto w-full max-w-[1440px] px-3 py-2.5 sm:px-4 space-y-5 pb-16">
+        <main className="landing-main relative z-10 mx-auto w-full max-w-[1440px] px-3 py-2 sm:px-4 space-y-3 pb-4">
           {/* Unified Executive Dashboard, Communication & Subscription Suite */}
           <Dashboard />
         </main>
 
-        {/* Enterprise Multi-Column Footer */}
-        <LandingFooter onBookDemo={openDemoModal} />
-
-        {/* Below-Footer Sovereign Security, Regulatory Attestation & Module Launch Bar */}
+        {/* Blue Enterprise Technology & Regulatory Attestation Dashboard (Reduced by 25%) */}
         <EnterpriseBelowFooterSuite onBookDemo={openDemoModal} />
+
+        {/* Compact White Architectural Pillars Section Above Final Brand Logo Lockup */}
+        <LandingFooter onBookDemo={openDemoModal} />
 
         {/* Floating Bottom-Right Enterprise Quick-Action Bar */}
         <FloatingQuickActionBar

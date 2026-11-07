@@ -505,18 +505,19 @@ export default function BlueprintPreviewSection() {
 
   return (
     <section id="blueprint" className="w-full scroll-mt-20">
-      <div className="enterprise-surface rounded-2xl p-6 sm:p-8 lg:p-10 space-y-6">
+      <div className="enterprise-surface rounded-2xl p-3.5 sm:p-4 space-y-3">
         <LandingSectionHeader
           badge="46-Module Enterprise Architecture Register"
           tone="navy"
           icon={Layers}
           title="Explore All 46 Connected Modules & Governance Scopes"
           description="Inspect every module across the platform using Saved Views, multi-column sorting, domain filtering, bulk selection, and CSV architecture export."
+          rightTag="46 Connected Workspaces"
         />
 
-        {/* Saved Views Bar (Microsoft Purview / ServiceNow GRC Standard) */}
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-4">
-          <div className="flex flex-wrap items-center gap-1.5" role="tablist" aria-label="Saved module views">
+        {/* Compact Saved Views + Search + Filter + Export Bar on One Clean Strip */}
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-2.5">
+          <div className="flex flex-wrap items-center gap-1" role="tablist" aria-label="Saved module views">
             {SAVED_VIEWS.map((view) => {
               const active = savedView === view.id;
               return (
@@ -529,7 +530,7 @@ export default function BlueprintPreviewSection() {
                     setSavedView(view.id);
                     setPage(1);
                   }}
-                  className={`rounded-lg px-3 py-1.5 text-xs font-bold transition ${
+                  className={`rounded-md px-2.5 py-1 text-[11px] font-bold transition ${
                     active
                       ? 'bg-[#0A2B6D] text-white shadow-2xs'
                       : 'border border-slate-200 bg-slate-50 text-[#0A2B6D] hover:bg-white hover:border-[#0072FF]'
@@ -541,36 +542,9 @@ export default function BlueprintPreviewSection() {
             })}
           </div>
 
-          {/* View Mode Toggle */}
-          <div className="inline-flex items-center rounded-lg border border-slate-200 bg-slate-50 p-0.5">
-            <button
-              type="button"
-              onClick={() => setViewMode('table')}
-              className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1 text-xs font-bold transition ${
-                viewMode === 'table' ? 'bg-white text-[#0A2B6D] shadow-2xs' : 'text-[#0A2B6D]/70'
-              }`}
-            >
-              <Table2 className="h-3.5 w-3.5 text-[#0072FF]" />
-              <span>Enterprise Table</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setViewMode('cards')}
-              className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1 text-xs font-bold transition ${
-                viewMode === 'cards' ? 'bg-white text-[#0A2B6D] shadow-2xs' : 'text-[#0A2B6D]/70'
-              }`}
-            >
-              <LayoutGrid className="h-3.5 w-3.5 text-[#5A00D6]" />
-              <span>Module Cards</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Enterprise Table Toolbar: Search, Domain Filter, Bulk Actions, CSV Export */}
-        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-          <div className="flex flex-1 flex-wrap items-center gap-2.5">
-            <div className="relative min-w-[240px] flex-1 max-w-sm">
-              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#0A2B6D]/50" />
+          <div className="flex flex-wrap items-center gap-1.5">
+            <div className="relative min-w-[180px]">
+              <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#0A2B6D]/50" />
               <input
                 type="search"
                 value={searchQuery}
@@ -578,63 +552,71 @@ export default function BlueprintPreviewSection() {
                   setSearchQuery(e.target.value);
                   setPage(1);
                 }}
-                placeholder="Search modules, pillars, RLS scopes..."
+                placeholder="Search 46 modules..."
                 aria-label="Search 46 modules"
-                className="w-full rounded-lg border border-slate-200 bg-white pl-9 pr-3 py-2 text-sm font-medium text-[#0A2B6D] focus:border-[#0072FF] focus:outline-none"
+                className="h-7 w-full rounded-md border border-slate-200 bg-white pl-8 pr-2.5 text-xs font-semibold text-[#0A2B6D] focus:border-[#0072FF] focus:outline-none"
               />
             </div>
 
-            <div className="inline-flex items-center gap-1.5">
-              <Filter className="h-4 w-4 text-[#5A00D6]" />
-              <select
-                aria-label="Filter by architectural pillar"
-                value={pillarFilter}
-                onChange={(e) => {
-                  setPillarFilter(e.target.value);
-                  setPage(1);
-                }}
-                className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-[#0A2B6D]"
-              >
-                <option value="ALL">All Pillars</option>
-                <option value="Executive & Governance">Executive &amp; Governance</option>
-                <option value="People & Profiles">People &amp; Profiles</option>
-                <option value="Service Delivery">Service Delivery</option>
-                <option value="Compliance & Risk">Compliance &amp; Risk</option>
-                <option value="Finance & Operations">Finance &amp; Operations</option>
-              </select>
-            </div>
-          </div>
+            <select
+              aria-label="Filter by architectural pillar"
+              value={pillarFilter}
+              onChange={(e) => {
+                setPillarFilter(e.target.value);
+                setPage(1);
+              }}
+              className="h-7 rounded-md border border-slate-200 bg-white px-2 text-[11px] font-bold text-[#0A2B6D]"
+            >
+              <option value="ALL">All Pillars</option>
+              <option value="Executive & Governance">Executive &amp; Governance</option>
+              <option value="People & Profiles">People &amp; Profiles</option>
+              <option value="Service Delivery">Service Delivery</option>
+              <option value="Compliance & Risk">Compliance &amp; Risk</option>
+              <option value="Finance & Operations">Finance &amp; Operations</option>
+            </select>
 
-          <div className="flex flex-wrap items-center gap-2">
+            <div className="inline-flex items-center rounded-md border border-slate-200 bg-slate-50 p-0.5">
+              <button
+                type="button"
+                onClick={() => setViewMode('table')}
+                className={`inline-flex items-center gap-1 rounded px-2 py-0.5 text-[11px] font-bold transition ${
+                  viewMode === 'table' ? 'bg-white text-[#0A2B6D] shadow-2xs' : 'text-[#0A2B6D]/70'
+                }`}
+              >
+                <Table2 className="h-3 w-3 text-[#0072FF]" />
+                <span>Table</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setViewMode('cards')}
+                className={`inline-flex items-center gap-1 rounded px-2 py-0.5 text-[11px] font-bold transition ${
+                  viewMode === 'cards' ? 'bg-white text-[#0A2B6D] shadow-2xs' : 'text-[#0A2B6D]/70'
+                }`}
+              >
+                <LayoutGrid className="h-3 w-3 text-[#5A00D6]" />
+                <span>Cards</span>
+              </button>
+            </div>
+
             {selectedIds.length > 0 && (
-              <div className="inline-flex items-center gap-2 rounded-lg border border-[#0072FF]/30 bg-[#0072FF]/5 px-3 py-1.5 text-xs font-bold text-[#0A2B6D]">
-                <CheckSquare className="h-3.5 w-3.5 text-[#0072FF]" />
-                <span>{selectedIds.length} selected</span>
-                <button
-                  type="button"
-                  onClick={() =>
-                    exportModulesCsv(ALL_MODULES.filter((m) => selectedIds.includes(m.id)))
-                  }
-                  className="text-[#0072FF] underline hover:text-[#5A00D6]"
-                >
-                  Export Selected
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setSelectedIds([])}
-                  className="text-[#0A2B6D]/70 hover:text-[#0A2B6D]"
-                >
-                  Clear
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={() =>
+                  exportModulesCsv(ALL_MODULES.filter((m) => selectedIds.includes(m.id)))
+                }
+                className="inline-flex h-7 items-center gap-1 rounded-md border border-[#0072FF]/30 bg-[#0072FF]/10 px-2.5 text-[11px] font-bold text-[#0072FF]"
+              >
+                <CheckSquare className="h-3 w-3" />
+                <span>Export Selected ({selectedIds.length})</span>
+              </button>
             )}
 
             <button
               type="button"
               onClick={() => exportModulesCsv(filteredModules)}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3.5 py-2 text-xs font-bold text-[#0A2B6D] transition hover:border-[#0072FF] hover:text-[#0072FF]"
+              className="inline-flex h-7 items-center gap-1 rounded-md border border-slate-200 bg-white px-2.5 text-[11px] font-bold text-[#0A2B6D] transition hover:border-[#0072FF] hover:text-[#0072FF]"
             >
-              <Download className="h-3.5 w-3.5 text-[#0072FF]" />
+              <Download className="h-3 w-3 text-[#0072FF]" />
               <span>Export CSV ({filteredModules.length})</span>
             </button>
           </div>
@@ -737,14 +719,17 @@ export default function BlueprintPreviewSection() {
                         <td className="px-3.5 py-3 align-middle font-mono text-xs font-bold text-[#5A00D6]">
                           {mod.code}
                         </td>
-                        <td className="px-3.5 py-3 align-middle">
-                          <div className="flex items-start gap-2.5">
-                            <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-[#0A2B6D] text-white">
-                              <Icon className="h-3.5 w-3.5 text-[#00C6FF]" />
+                        <td className="px-3 py-2 align-middle">
+                          <div className="flex items-start gap-2">
+                            <div
+                              className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-[#0A2B6D] text-white"
+                              style={{ boxShadow: '0 0 6px rgba(255,255,255,0.85)' }}
+                            >
+                              <Icon className="h-3.5 w-3.5 text-white" style={{ filter: 'drop-shadow(0 0 3px #FFFFFF)' }} />
                             </div>
                             <div>
-                              <div className="font-bold text-[#0A2B6D]">{mod.label}</div>
-                              <div className="text-xs font-normal text-[#0A2B6D]/70 max-w-md">
+                              <div className="text-xs font-extrabold text-[#0A2B6D]">{mod.label}</div>
+                              <div className="text-[11px] font-medium text-[#0A2B6D]/75 max-w-md leading-snug">
                                 {mod.blurb}
                               </div>
                             </div>
@@ -833,37 +818,38 @@ export default function BlueprintPreviewSection() {
           </div>
         ) : (
           /* Clean Enterprise Module Cards Grid */
-          <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {filteredModules.map((mod) => {
               const Icon = mod.icon;
               return (
                 <Link
                   key={mod.id}
                   to={mod.path}
-                  className="group flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-4 text-left transition hover:border-[#0072FF] hover:shadow-md"
+                  className="group flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-3 text-left transition hover:border-[#0072FF]"
                 >
                   <div>
+                    {/* Header First -> Sentence -> Blue/Purple Badges After */}
                     <div className="flex items-center justify-between gap-2">
-                      <span className="font-mono text-xs font-bold text-[#5A00D6]">{mod.code}</span>
-                      <span className="rounded bg-slate-100 px-2 py-0.5 text-xs font-semibold text-[#0A2B6D]">
-                        {mod.pillar}
-                      </span>
-                    </div>
-                    <div className="mt-2.5 flex items-center gap-2">
-                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#0A2B6D] text-white">
-                        <Icon className="h-4 w-4 text-[#00C6FF]" />
-                      </div>
-                      <h3 className="text-base font-extrabold text-[#0A2B6D] group-hover:text-[#0072FF]">
+                      <h3 className="text-xs sm:text-sm font-black text-[#0A2B6D] group-hover:text-[#0072FF]">
                         {mod.label}
                       </h3>
+                      <div
+                        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-[#0A2B6D] text-white"
+                        style={{ boxShadow: '0 0 6px rgba(255,255,255,0.85)' }}
+                      >
+                        <Icon className="h-3.5 w-3.5 text-white" style={{ filter: 'drop-shadow(0 0 3px #FFFFFF)' }} />
+                      </div>
                     </div>
-                    <p className="mt-2 text-sm font-normal leading-relaxed text-[#0A2B6D]/75">
+                    <p className="mt-1 text-[11px] font-medium leading-snug text-[#0A2B6D]/80">
                       {mod.blurb}
                     </p>
                   </div>
-                  <div className="mt-3 flex items-center justify-between border-t border-slate-100 pt-2.5 text-xs font-semibold text-[#0072FF]">
-                    <span>{mod.registers} Registers · {mod.checkpoints} Checks</span>
-                    <ArrowRight className="h-3.5 w-3.5" />
+                  <div className="mt-2 flex items-center justify-between border-t border-slate-100 pt-1.5 text-[10.5px] font-extrabold">
+                    <span className="font-mono text-[#5A00D6]">{mod.code} · {mod.pillar}</span>
+                    <span className="inline-flex items-center gap-1 text-[#0072FF]">
+                      <span>{mod.registers}R · {mod.checkpoints}C</span>
+                      <ArrowRight className="h-3 w-3" />
+                    </span>
                   </div>
                 </Link>
               );

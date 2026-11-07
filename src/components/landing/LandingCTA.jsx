@@ -2,98 +2,110 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Calendar, ShieldCheck, CheckCircle2, Building2 } from 'lucide-react';
 import Reveal from '@/components/landing/Reveal';
-import BrandLogoLockup from '@/components/common/BrandLogoLockup';
+
+const APP_STATED_FACTS = [
+  '46 Connected Modules',
+  '45 Self-Maintaining Master Registers',
+  '356 NDIS & Aged Care Checkpoints',
+];
 
 export default function LandingCTA({ onBookDemo }) {
   return (
     <section id="final-cta" className="w-full scroll-mt-20">
       <Reveal
-        className="overflow-hidden rounded-2xl border border-[#00C6FF]/40 shadow-xl"
+        className="overflow-hidden rounded-2xl p-[2px] shadow-xl"
         style={{
-          background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+          background: 'linear-gradient(120deg, #00C6FF 0%, #0072FF 38%, #A855F7 70%, #FF2E9A 100%)',
         }}
       >
         <div
-          className="h-1.5 w-full"
+          className="rounded-[14px] px-4 py-3.5 sm:px-5 sm:py-4 text-white space-y-2.5"
           style={{
-            background: 'linear-gradient(90deg, #00C6FF 0%, #0072FF 35%, #5A00D6 70%, #FF2E9A 100%)',
+            background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
           }}
-        />
-        <div className="px-6 py-8 sm:px-10 sm:py-10 text-white space-y-6">
-          <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12">
-            <div className="lg:col-span-7 text-left space-y-3">
-              <span className="inline-flex items-center gap-2 rounded-md border border-[#00C6FF]/40 bg-[#0072FF]/20 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-[#00C6FF]">
-                <Building2 className="h-3.5 w-3.5 text-[#00C6FF]" />
+        >
+          {/* 1. Header Always First (Run In on One Straight Line, Slightly Bigger) + Sentence Under It + Blue/Purple Badges After */}
+          <div className="space-y-1 border-b border-white/15 pb-2.5 text-left">
+            <h2
+              className="font-editorial text-lg sm:text-xl lg:text-2xl font-black tracking-tight text-white leading-tight lg:whitespace-nowrap"
+              style={{ color: '#FFFFFF' }}
+            >
+              Deploy a Unified Compliance, Risk &amp; Workforce Operating System
+            </h2>
+
+            <p className="w-full text-xs sm:text-[13px] font-semibold leading-snug text-white/90 lg:whitespace-nowrap">
+              Replace disconnected spreadsheets and point tools with one audit-ready platform built for NDIS, Aged Care, and Allied Health governance.
+            </p>
+
+            <div className="flex flex-wrap items-center justify-between gap-2 pt-0.5">
+              <span className="inline-flex items-center gap-1.5 rounded-md border border-[#00C6FF]/40 bg-[#0072FF]/25 px-2.5 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
+                <span
+                  className="flex h-4 w-4 items-center justify-center rounded-full bg-white/15"
+                  style={{ boxShadow: '0 0 8px 1px rgba(255,255,255,0.9)' }}
+                >
+                  <Building2 className="h-2.5 w-2.5 text-white" />
+                </span>
                 <span>14-Day Enterprise Evaluation · Full 46-Module Access</span>
               </span>
 
-              <h2
-                className="font-editorial text-2xl sm:text-3xl lg:text-[32px] font-extrabold tracking-tight text-white leading-tight"
-                style={{ color: '#FFFFFF' }}
-              >
-                Deploy a Unified Compliance, Risk &amp; Workforce Operating System
-              </h2>
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#A855F7]/50 bg-[#5A00D6]/30 px-2.5 py-0.5 text-[10.5px] font-extrabold text-white">
+                <ShieldCheck className="h-3 w-3 shrink-0 text-white" style={{ filter: 'drop-shadow(0 0 4px #FFFFFF)' }} />
+                <span>Role-based access controls · Dedicated Australian compliance support</span>
+              </span>
+            </div>
+          </div>
 
-              <p className="max-w-2xl text-sm sm:text-base font-normal leading-relaxed text-white/90">
-                Replace disconnected spreadsheets and point tools with one audit-ready platform built for NDIS, Aged Care, and Allied Health governance.
-              </p>
-
-              <div className="flex flex-wrap items-center gap-4 pt-1 text-xs font-extrabold text-white">
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-[#00C6FF]/40 bg-white/10 px-3 py-1">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-[#00C6FF]" />
-                  46 Connected Modules
-                </span>
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-[#00C6FF]/40 bg-white/10 px-3 py-1">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-[#00C6FF]" />
-                  45 Self-Maintaining Master Registers
-                </span>
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-[#00C6FF]/40 bg-white/10 px-3 py-1">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-[#00C6FF]" />
-                  356 NDIS &amp; Aged Care Checkpoints
-                </span>
-              </div>
+          {/* 2. Three Stated Facts About the App Next to the Squished Book Demo / Free Trial Tile */}
+          <div className="grid grid-cols-1 gap-2.5 lg:grid-cols-12 items-stretch">
+            {/* Left: 3 Stated Facts */}
+            <div className="lg:col-span-7 grid grid-cols-1 gap-2 sm:grid-cols-3 items-stretch">
+              {APP_STATED_FACTS.map((fact, idx) => (
+                <div
+                  key={fact}
+                  className="flex items-center gap-2 rounded-xl border border-white/15 bg-[#081018]/85 px-3 py-2.5"
+                >
+                  <span
+                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-white/50 bg-[#0072FF]/35"
+                    style={{ boxShadow: '0 0 8px rgba(255,255,255,0.75)' }}
+                  >
+                    <CheckCircle2
+                      className="h-3.5 w-3.5 text-white"
+                      style={{ filter: 'drop-shadow(0 0 3px #FFFFFF)' }}
+                    />
+                  </span>
+                  <div className="min-w-0">
+                    <div className="text-[10px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
+                      Fact 0{idx + 1}
+                    </div>
+                    <div className="text-xs font-extrabold leading-snug text-white">
+                      {fact}
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
 
-            <div className="lg:col-span-5 flex flex-col justify-center gap-3 rounded-xl border border-white/20 bg-white/10 p-5">
+            {/* Right: Squished Book Executive Demo & Start 14-Day Free Trial Tile Next to the 3 Facts */}
+            <div className="lg:col-span-5 flex flex-wrap sm:flex-nowrap items-center justify-between gap-2 rounded-xl border border-white/20 bg-[#081018]/90 px-3 py-2">
               <button
                 type="button"
                 onClick={() => onBookDemo && onBookDemo('Executive Platform Demo')}
-                className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-bold text-white shadow-md transition hover:opacity-95"
+                className="inline-flex h-8 flex-1 items-center justify-center gap-1.5 rounded-lg px-3 text-xs font-extrabold text-white shadow-md transition hover:opacity-95 whitespace-nowrap"
                 style={{
                   background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
                 }}
               >
-                <Calendar className="h-4 w-4 shrink-0 text-white" />
+                <Calendar className="h-3.5 w-3.5 shrink-0 text-white" style={{ filter: 'drop-shadow(0 0 3px #FFFFFF)' }} />
                 <span>Book Executive Demo</span>
               </button>
 
               <Link
                 to="/register"
-                className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-lg border border-white/30 bg-white px-5 py-3 text-sm font-bold text-[#0A2B6D] shadow-sm transition hover:bg-slate-100"
+                className="inline-flex h-8 flex-1 items-center justify-center gap-1.5 rounded-lg border border-white/30 bg-white px-3 text-xs font-extrabold text-[#0A2B6D] shadow-sm transition hover:bg-slate-100 whitespace-nowrap"
               >
                 <span style={{ color: '#0A2B6D' }}>Start 14-Day Free Trial</span>
-                <ArrowRight className="h-4 w-4 shrink-0 text-[#0072FF]" />
+                <ArrowRight className="h-3.5 w-3.5 shrink-0 text-[#0072FF]" />
               </Link>
-
-              <div className="flex items-center justify-center gap-1.5 pt-1 text-xs font-medium text-white/90 text-center">
-                <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-[#00C6FF]" />
-                <span>Role-based access controls · Dedicated Australian compliance support</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Centred Brand Logo & Statement Bar Under Deploy a Unified Tile */}
-          <div className="flex flex-col items-center justify-between gap-4 rounded-xl border border-white/15 bg-black/50 px-5 py-4 lg:flex-row">
-            <Link to="/" className="inline-flex items-center justify-center">
-              <BrandLogoLockup size="sm" theme="dark" showSlogan={true} />
-            </Link>
-            <div className="text-center lg:text-right space-y-1 max-w-xl">
-              <div className="text-xs sm:text-sm font-extrabold text-[#00C6FF]">
-                Enterprise Compliance, Clinical Governance, Workforce Screening &amp; Operations Platform
-              </div>
-              <p className="text-xs font-semibold text-white/85">
-                Built for Australian NDIS, Strengthened Aged Care, and Allied Health providers — one unified source of truth across every register, profile, and audit checkpoint.
-              </p>
             </div>
           </div>
         </div>

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ShieldCheck, GraduationCap, AlertTriangle, CalendarClock,
-  BadgeCheck, HeartHandshake, LayoutDashboard, CheckCircle2,
-  ArrowUpRight, TrendingUp, Lock, Activity, FileCheck2,
+  BadgeCheck, HeartHandshake, LayoutDashboard,
+  ArrowUpRight, TrendingUp,
 } from 'lucide-react';
 import {
   ResponsiveContainer, AreaChart, Area, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Cell,
@@ -29,7 +29,6 @@ const PILLAR_BAR_DATA = [
   { name: 'Claims', score: 99.4, fill: '#5A00D6' },
 ];
 
-// ROW 1 — Mandatory Executive KPIs
 const EXECUTIVE_KPI_ROW = [
   {
     id: 'org-health',
@@ -78,7 +77,6 @@ const EXECUTIVE_KPI_ROW = [
   },
 ];
 
-// ROW 2 — Mandatory Attention Required Items
 const ATTENTION_REQUIRED_ROW = [
   {
     id: 'incidents',
@@ -115,15 +113,6 @@ const ATTENTION_REQUIRED_ROW = [
     severity: 'Scheduled',
     color: '#0A2B6D',
     path: '/certificates',
-  },
-  {
-    id: 'gaps',
-    title: 'Compliance Gaps',
-    count: '0 Unverified',
-    sla: 'All 17 NDIS categories evidenced',
-    severity: 'Verified',
-    color: '#0072FF',
-    path: '/compliance',
   },
 ];
 
@@ -228,301 +217,183 @@ export default function LandingProductShowcase() {
   return (
     <section id="showcase" className="w-full scroll-mt-20">
       <Reveal>
-        <div className="enterprise-surface rounded-2xl p-6 sm:p-8 lg:p-10 space-y-6">
-          {/* Top Two Lines: Line 1 Badge + Heading + Summary · Line 2 Domain View Switcher */}
-          <div className="space-y-2.5 border-b border-slate-200 pb-3.5 text-left">
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <div className="flex flex-wrap items-center gap-2.5">
-                <span className="inline-flex items-center gap-1.5 rounded-md border border-[#0A2B6D]/25 bg-[#0A2B6D]/10 px-2.5 py-1 text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                  <LayoutDashboard className="h-3.5 w-3.5 text-[#0072FF]" />
-                  <span>Enterprise Command Architecture</span>
-                </span>
-                <h2 className="font-editorial text-xl sm:text-2xl font-extrabold tracking-tight text-[#0A2B6D]">
-                  Executive Governance &amp; Operational Telemetry
-                </h2>
-              </div>
-              <span className="text-xs font-semibold text-[#0A2B6D]/80">
-                Row 1 Executive KPIs · Attention Required SLA Monitors · Operational Performance
-              </span>
-            </div>
+        <div className="enterprise-surface rounded-2xl p-3.5 sm:p-4 space-y-3">
+          {/* Header First -> Sentence -> Blue/Purple Badge After */}
+          <LandingSectionHeader
+            badge="Enterprise Command Architecture"
+            tone="navy"
+            icon={LayoutDashboard}
+            title="Executive Governance & Operational Telemetry"
+            description="Live executive KPIs, statutory SLA monitors, and 6-pillar audit readiness trajectories unified in one command deck."
+            rightTag="5 Executive KPIs + 4 Statutory SLA Monitors"
+          />
 
-            <div
-              role="tablist"
-              aria-label="Executive dashboard showcase views"
-              className="flex flex-wrap items-center gap-1.5"
-            >
-              {SHOWCASE_PANELS.map((panel) => {
-                const Icon = panel.icon;
-                const isActive = panel.id === selectedId;
-                return (
-                  <button
-                    key={panel.id}
-                    type="button"
-                    role="tab"
-                    aria-selected={isActive}
-                    onClick={() => setSelectedId(panel.id)}
-                    className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-bold transition ${
-                      isActive
-                        ? 'border-[#0A2B6D] bg-[#0A2B6D] text-white shadow-xs'
-                        : 'border-slate-200 bg-slate-50 text-[#0A2B6D] hover:border-[#0072FF] hover:bg-white'
+          {/* Compact Domain Switcher */}
+          <div
+            role="tablist"
+            aria-label="Executive dashboard showcase views"
+            className="flex flex-wrap items-center gap-1.5"
+          >
+            {SHOWCASE_PANELS.map((panel) => {
+              const Icon = panel.icon;
+              const isActive = panel.id === selectedId;
+              return (
+                <button
+                  key={panel.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => setSelectedId(panel.id)}
+                  className={`inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-xs font-bold transition ${
+                    isActive
+                      ? 'border-[#0A2B6D] bg-[#0A2B6D] text-white shadow-2xs'
+                      : 'border-slate-200 bg-slate-50 text-[#0A2B6D] hover:border-[#0072FF] hover:bg-white'
+                  }`}
+                >
+                  <Icon className="h-3.5 w-3.5 shrink-0" style={{ color: isActive ? '#00C6FF' : panel.color }} />
+                  <span>{panel.shortLabel}</span>
+                  <span
+                    className={`rounded px-1.5 py-0 text-[10.5px] font-extrabold ${
+                      isActive ? 'bg-white/15 text-[#00C6FF]' : 'bg-white text-[#5A00D6]'
                     }`}
                   >
-                    <Icon className="h-3.5 w-3.5 shrink-0" style={{ color: isActive ? '#00C6FF' : panel.color }} />
-                    <span>{panel.shortLabel}</span>
-                    <span
-                      className={`rounded px-1.5 py-0.5 text-[11px] font-extrabold ${
-                        isActive ? 'bg-white/15 text-[#00C6FF]' : 'bg-white text-[#5A00D6]'
-                      }`}
-                    >
-                      {panel.metricValue}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
+                    {panel.metricValue}
+                  </span>
+                </button>
+              );
+            })}
           </div>
 
           {/* All 9 Word/Metric Tiles Together Directly Under Executive & Row 1 */}
-          <div className="space-y-2.5">
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <h3 className="text-sm font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                Row 1 · Executive &amp; Governance Command (All 9 Core Telemetry Tiles)
-              </h3>
-              <span className="text-xs font-semibold text-[#5A00D6]">
-                5 Executive KPIs + 4 Statutory SLA Monitors Unified
-              </span>
-            </div>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
-              {EXECUTIVE_KPI_ROW.map((kpi) => (
-                <Link
-                  key={kpi.id}
-                  to={kpi.path}
-                  className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-slate-200 bg-white p-3.5 text-left shadow-2xs transition hover:border-[#0072FF] hover:shadow-md"
-                >
-                  <span
-                    className="absolute inset-x-0 top-0 h-1"
-                    style={{ backgroundColor: kpi.accent }}
-                  />
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-xs font-bold text-[#0A2B6D]">
-                      {kpi.label}
-                    </span>
-                    <span
-                      className="rounded px-2 py-0.5 text-[11px] font-bold"
-                      style={{ backgroundColor: `${kpi.accent}12`, color: kpi.accent }}
-                    >
-                      {kpi.status}
-                    </span>
-                  </div>
-                  <div className="mt-2 font-editorial text-2xl font-extrabold text-[#0A2B6D] leading-none">
-                    {kpi.score}
-                  </div>
-                  <div className="mt-2 border-t border-slate-100 pt-1.5 text-xs font-medium text-[#0A2B6D]/75">
-                    {kpi.target}
-                  </div>
-                </Link>
-              ))}
-              {ATTENTION_REQUIRED_ROW.slice(0, 4).map((item) => (
-                <Link
-                  key={item.id}
-                  to={item.path}
-                  className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-slate-200 bg-white p-3.5 text-left shadow-2xs transition hover:border-[#0072FF] hover:shadow-md"
-                >
-                  <span
-                    className="absolute inset-x-0 top-0 h-1"
-                    style={{ backgroundColor: item.color }}
-                  />
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-xs font-bold text-[#0A2B6D]">
-                      {item.title}
-                    </span>
-                    <span
-                      className="rounded px-2 py-0.5 text-[11px] font-bold"
-                      style={{ backgroundColor: `${item.color}12`, color: item.color }}
-                    >
-                      {item.severity}
-                    </span>
-                  </div>
-                  <div className="mt-2 font-editorial text-2xl font-extrabold text-[#0A2B6D] leading-none">
-                    {item.count}
-                  </div>
-                  <div className="mt-2 border-t border-slate-100 pt-1.5 text-xs font-medium text-[#0A2B6D]/75">
-                    {item.sla}
-                  </div>
-                </Link>
-              ))}
-            </div>
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-9">
+            {EXECUTIVE_KPI_ROW.map((kpi) => (
+              <Link
+                key={kpi.id}
+                to={kpi.path}
+                className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-slate-200 bg-white p-2.5 text-left shadow-2xs transition hover:border-[#0072FF]"
+              >
+                <span
+                  className="absolute inset-x-0 top-0 h-1"
+                  style={{ backgroundColor: kpi.accent }}
+                />
+                <div className="text-[11px] font-extrabold text-[#0A2B6D] leading-tight">
+                  {kpi.label}
+                </div>
+                <div className="my-1 font-editorial text-lg font-black text-[#0A2B6D] leading-none">
+                  {kpi.score}
+                </div>
+                <div className="text-[10px] font-bold" style={{ color: kpi.accent }}>
+                  {kpi.target}
+                </div>
+              </Link>
+            ))}
+            {ATTENTION_REQUIRED_ROW.map((item) => (
+              <Link
+                key={item.id}
+                to={item.path}
+                className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-slate-200 bg-white p-2.5 text-left shadow-2xs transition hover:border-[#0072FF]"
+              >
+                <span
+                  className="absolute inset-x-0 top-0 h-1"
+                  style={{ backgroundColor: item.color }}
+                />
+                <div className="text-[11px] font-extrabold text-[#0A2B6D] leading-tight">
+                  {item.title}
+                </div>
+                <div className="my-1 font-editorial text-lg font-black text-[#0A2B6D] leading-none">
+                  {item.count}
+                </div>
+                <div className="text-[10px] font-bold" style={{ color: item.color }}>
+                  {item.severity}
+                </div>
+              </Link>
+            ))}
           </div>
 
-          {/* ROW 3 — Operational Performance (Trends, Analytics, Registers, Workforce Metrics) */}
-          <div className="space-y-2.5">
-            <div className="flex items-center justify-between">
-              <h3 className="text-sm font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                Row 3 · Operational Performance, Trends &amp; Register Telemetry
-              </h3>
-              <span className="text-xs font-semibold text-[#0A2B6D]/70">
-                Active Focus: {activePanel.title}
-              </span>
+          {/* ROW 3 — Compact Operational Performance, Trends & Register Telemetry */}
+          <div className="grid grid-cols-1 gap-3 lg:grid-cols-12 items-stretch">
+            {/* Panel 1: Active Domain Readiness Summary */}
+            <div className="lg:col-span-4 flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-3 text-left">
+              <div>
+                <h4 className="text-sm sm:text-base font-black text-[#0A2B6D]">
+                  {activePanel.title}
+                </h4>
+                <p className="mt-1 text-xs font-medium leading-snug text-[#0A2B6D]/80">
+                  {activePanel.summary}
+                </p>
+                <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                  <span className="rounded-md bg-[#0072FF]/10 px-2 py-0.5 text-[10.5px] font-extrabold text-[#0072FF]">
+                    {activePanel.badge}
+                  </span>
+                  <span className="rounded-md bg-[#5A00D6]/10 px-2 py-0.5 text-[10.5px] font-extrabold text-[#5A00D6]">
+                    {activePanel.kpi}
+                  </span>
+                </div>
+              </div>
+
+              <div className="mt-2.5 border-t border-slate-100 pt-2 flex items-center justify-between">
+                <span className="text-xs font-extrabold text-[#0A2B6D]">356 Checkpoints · 45 Registers</span>
+                <Link
+                  to={activePanel.path}
+                  className="inline-flex h-7 items-center gap-1 rounded-lg bg-[#0A2B6D] px-2.5 text-[11px] font-extrabold text-white transition hover:bg-[#0072FF]"
+                >
+                  <span>Open</span>
+                  <ArrowUpRight className="h-3 w-3" />
+                </Link>
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-4 lg:grid-cols-12 items-stretch">
-              {/* Panel 1: Active Domain Readiness Summary */}
-              <div className="lg:col-span-4 flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-5 text-left">
-                <div>
-                  <div className="flex items-center justify-between gap-2 border-b border-slate-100 pb-3">
-                    <div>
-                      <span className="block text-xs font-bold uppercase tracking-wider text-[#0072FF]">
-                        {activePanel.badge}
-                      </span>
-                      <h4 className="mt-0.5 text-lg font-extrabold text-[#0A2B6D]">
-                        {activePanel.title}
-                      </h4>
-                    </div>
-                    <span className="rounded-md bg-[#0072FF]/10 px-2.5 py-1 text-xs font-bold text-[#0072FF]">
-                      {activePanel.metricValue}
-                    </span>
-                  </div>
-
-                  <p className="mt-3 text-sm font-normal leading-relaxed text-[#0A2B6D]/80">
-                    {activePanel.summary}
-                  </p>
-
-                  <div className="mt-4 space-y-2">
-                    <div className="flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2 text-xs">
-                      <span className="font-semibold text-[#0A2B6D]">NDIS Practice Standards</span>
-                      <span className="font-bold text-[#0072FF]">356 / 356 Checkpoints</span>
-                    </div>
-                    <div className="flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2 text-xs">
-                      <span className="font-semibold text-[#0A2B6D]">Master Registers Linked</span>
-                      <span className="font-bold text-[#5A00D6]">45 Auto-Maintained</span>
-                    </div>
-                    <div className="flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2 text-xs">
-                      <span className="font-semibold text-[#0A2B6D]">Row-Level Security (RLS)</span>
-                      <span className="font-bold text-[#0A2B6D]">15 Role Tiers Enforced</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-4 border-t border-slate-100 pt-3 flex items-center justify-between">
-                  <span className="text-xs font-bold text-[#5A00D6]">{activePanel.kpi}</span>
-                  <Link
-                    to={activePanel.path}
-                    className="inline-flex items-center gap-1.5 rounded-lg bg-[#0A2B6D] px-3.5 py-2 text-xs font-bold text-white transition hover:bg-[#0072FF]"
-                  >
-                    <span>Open Module</span>
-                    <ArrowUpRight className="h-3.5 w-3.5" />
-                  </Link>
-                </div>
+            {/* Panel 2: Executive Trajectory Chart */}
+            <div className="lg:col-span-4 flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-3 text-left">
+              <div className="flex items-center justify-between gap-2 border-b border-slate-100 pb-1.5">
+                <h4 className="text-xs sm:text-sm font-black text-[#0A2B6D]">
+                  Audit Readiness &amp; Claims Trajectory (%)
+                </h4>
+                <span className="inline-flex items-center gap-1 rounded bg-emerald-50 px-2 py-0.5 text-[10.5px] font-extrabold text-emerald-700">
+                  <TrendingUp className="h-3 w-3" />
+                  +5.0%
+                </span>
               </div>
 
-              {/* Panel 2: Executive Trajectory Chart */}
-              <div className="lg:col-span-4 flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-5 text-left">
-                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
-                  <div>
-                    <span className="block text-xs font-bold uppercase tracking-wider text-[#0072FF]">
-                      6-Month Trend
-                    </span>
-                    <h4 className="mt-0.5 text-lg font-extrabold text-[#0A2B6D]">
-                      Audit Readiness &amp; Claims (%)
-                    </h4>
-                  </div>
-                  <span className="inline-flex items-center gap-1 rounded-md bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-700">
-                    <TrendingUp className="h-3.5 w-3.5" />
-                    +5.0% Gain
-                  </span>
-                </div>
+              <div className="my-1.5 h-32 w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={TRAJECTORY_DATA} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
+                    <XAxis dataKey="month" fontSize={10} tick={{ fill: '#0A2B6D', fontWeight: 700 }} />
+                    <YAxis width={30} domain={[92, 100]} fontSize={10} tick={{ fill: '#0A2B6D', fontWeight: 700 }} />
+                    <Tooltip formatter={(v) => `${v}%`} />
+                    <Area type="monotone" dataKey="readiness" stroke="#0072FF" strokeWidth={2} fill="#0072FF" fillOpacity={0.15} />
+                    <Area type="monotone" dataKey="claims" stroke="#FF2E9A" strokeWidth={2} fillOpacity={0} />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
 
-                <div className="my-3 h-44 w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={TRAJECTORY_DATA} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
-                      <defs>
-                        <linearGradient id="readinessFill" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#0072FF" stopOpacity={0.25} />
-                          <stop offset="95%" stopColor="#5A00D6" stopOpacity={0.02} />
-                        </linearGradient>
-                      </defs>
-                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
-                      <XAxis dataKey="month" fontSize={12} tick={{ fill: '#0A2B6D', fontWeight: 600 }} />
-                      <YAxis
-                        width={36}
-                        domain={[92, 100]}
-                        fontSize={12}
-                        tick={{ fill: '#0A2B6D', fontWeight: 600 }}
-                      />
-                      <Tooltip formatter={(v) => `${v}%`} />
-                      <Area
-                        type="monotone"
-                        dataKey="readiness"
-                        name="Audit Readiness"
-                        stroke="#0072FF"
-                        strokeWidth={2.5}
-                        fill="url(#readinessFill)"
-                      />
-                      <Area
-                        type="monotone"
-                        dataKey="claims"
-                        name="Claim Reconciliation"
-                        stroke="#FF2E9A"
-                        strokeWidth={2}
-                        fillOpacity={0}
-                      />
-                    </AreaChart>
-                  </ResponsiveContainer>
-                </div>
-
-                <div className="flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 pt-3 text-xs font-semibold text-[#0A2B6D]">
-                  <span className="inline-flex items-center gap-1.5">
-                    <span className="h-2.5 w-2.5 rounded-full bg-[#0072FF]" />
-                    <span>Readiness (99.2%)</span>
-                  </span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <span className="h-2.5 w-2.5 rounded-full bg-[#FF2E9A]" />
-                    <span>3-Way Claim Match (99.4%)</span>
-                  </span>
-                </div>
+            {/* Panel 3: Department Benchmarks Chart */}
+            <div className="lg:col-span-4 flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-3 text-left">
+              <div className="flex items-center justify-between gap-2 border-b border-slate-100 pb-1.5">
+                <h4 className="text-xs sm:text-sm font-black text-[#0A2B6D]">
+                  6-Pillar Domain Readiness (%)
+                </h4>
+                <span className="rounded bg-[#5A00D6]/10 px-2 py-0.5 text-[10.5px] font-extrabold text-[#5A00D6]">
+                  &gt;98.8% All Pillars
+                </span>
               </div>
 
-              {/* Panel 3: Department Benchmarks Chart */}
-              <div className="lg:col-span-4 flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-5 text-left">
-                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
-                  <div>
-                    <span className="block text-xs font-bold uppercase tracking-wider text-[#5A00D6]">
-                      Domain Benchmarks
-                    </span>
-                    <h4 className="mt-0.5 text-lg font-extrabold text-[#0A2B6D]">
-                      6-Pillar Readiness (%)
-                    </h4>
-                  </div>
-                  <span className="rounded-md bg-[#5A00D6]/10 px-2.5 py-1 text-xs font-bold text-[#5A00D6]">
-                    &gt;98.8% All Pillars
-                  </span>
-                </div>
-
-                <div className="my-3 h-44 w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={PILLAR_BAR_DATA} margin={{ top: 8, right: 10, left: 0, bottom: 0 }}>
-                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
-                      <XAxis dataKey="name" fontSize={12} tick={{ fill: '#0A2B6D', fontWeight: 600 }} />
-                      <YAxis
-                        width={36}
-                        domain={[95, 100]}
-                        fontSize={12}
-                        tick={{ fill: '#0A2B6D', fontWeight: 600 }}
-                      />
-                      <Tooltip formatter={(v) => `${v}%`} />
-                      <Bar dataKey="score" name="Readiness (%)" radius={[4, 4, 0, 0]} barSize={26}>
-                        {PILLAR_BAR_DATA.map((entry) => (
-                          <Cell key={entry.name} fill={entry.fill} />
-                        ))}
-                      </Bar>
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-
-                <div className="flex items-center justify-between gap-2 border-t border-slate-100 pt-3 text-xs font-semibold text-[#0A2B6D]">
-                  <span>Benchmark Threshold: 95.0%</span>
-                  <span className="text-[#0072FF] font-bold">All 6 Exceed Target</span>
-                </div>
+              <div className="my-1.5 h-32 w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={PILLAR_BAR_DATA} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
+                    <XAxis dataKey="name" fontSize={10} tick={{ fill: '#0A2B6D', fontWeight: 700 }} />
+                    <YAxis width={30} domain={[95, 100]} fontSize={10} tick={{ fill: '#0A2B6D', fontWeight: 700 }} />
+                    <Tooltip formatter={(v) => `${v}%`} />
+                    <Bar dataKey="score" radius={[4, 4, 0, 0]} barSize={22}>
+                      {PILLAR_BAR_DATA.map((entry) => (
+                        <Cell key={entry.name} fill={entry.fill} />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
             </div>
           </div>

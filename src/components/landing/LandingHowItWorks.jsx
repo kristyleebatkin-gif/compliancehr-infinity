@@ -51,58 +51,63 @@ const STEPS = [
 export default function LandingHowItWorks() {
   return (
     <section id="how-it-works" className="w-full scroll-mt-20">
-      <div className="enterprise-surface rounded-2xl p-6 sm:p-8 lg:p-10 space-y-6">
+      <div className="enterprise-surface rounded-2xl p-3.5 sm:p-4 space-y-3">
         <LandingSectionHeader
           badge="Implementation Lifecycle"
           tone="blue"
           icon={Route}
           title="Three Stages to Continuous Audit Readiness"
           description="Transition from fragmented spreadsheets to a governed, inspection-ready operating system in three structured stages."
+          rightTag="3-Stage Deployment"
         />
 
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-3 items-stretch">
+        <div className="grid grid-cols-1 gap-2.5 md:grid-cols-3 items-stretch">
           {STEPS.map((item, idx) => {
             const Icon = item.icon;
             return (
               <Reveal
                 key={item.title}
-                delay={idx * 0.06}
-                className="flex h-full flex-col justify-between rounded-xl border border-slate-200 bg-white p-6 text-left transition hover:border-[#0072FF]"
+                delay={idx * 0.03}
+                className="flex h-full flex-col justify-between rounded-xl border border-slate-200 bg-white p-3 text-left transition hover:border-[#0072FF]"
               >
                 <div>
-                  <div className="flex items-center justify-between gap-3">
-                    <span
-                      className="rounded-md px-2.5 py-1 text-xs font-bold uppercase tracking-wider"
-                      style={{ backgroundColor: `${item.accent}12`, color: item.accent }}
-                    >
-                      {item.step}
-                    </span>
-
+                  {/* Header First -> Sentence -> Blue/Purple Badge & White-Lit Symbol After */}
+                  <div className="flex items-center justify-between gap-2">
+                    <h3 className="font-editorial text-sm sm:text-base font-black text-[#0A2B6D]">
+                      {item.title}
+                    </h3>
                     <div
-                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-white"
-                      style={{ backgroundColor: item.accent }}
+                      className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-white"
+                      style={{
+                        backgroundColor: item.accent,
+                        boxShadow: '0 0 8px 1px rgba(255,255,255,0.85)',
+                      }}
                     >
-                      <Icon className="h-5 w-5 text-white" />
+                      <Icon className="h-3.5 w-3.5 text-white" style={{ filter: 'drop-shadow(0 0 3px #FFFFFF)' }} />
                     </div>
                   </div>
 
-                  <h3 className="mt-4 font-editorial text-xl font-extrabold text-[#0A2B6D]">
-                    {item.title}
-                  </h3>
-
-                  <p className="mt-1 text-sm font-semibold" style={{ color: item.accent }}>
-                    {item.subtitle}
-                  </p>
-
-                  <p className="mt-2.5 text-sm font-normal leading-relaxed text-[#0A2B6D]/80">
+                  <p className="mt-1 text-xs font-medium leading-snug text-[#0A2B6D]/80">
                     {item.detail}
                   </p>
+
+                  <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                    <span
+                      className="rounded px-2 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wider"
+                      style={{ backgroundColor: `${item.accent}14`, color: item.accent }}
+                    >
+                      {item.step}
+                    </span>
+                    <span className="text-[11px] font-bold" style={{ color: item.accent }}>
+                      {item.subtitle}
+                    </span>
+                  </div>
                 </div>
 
-                <ul className="mt-5 space-y-2 border-t border-slate-100 pt-4">
+                <ul className="mt-2.5 space-y-1 border-t border-slate-100 pt-2">
                   {item.highlights.map((h) => (
-                    <li key={h} className="flex items-center gap-2 text-xs font-bold text-[#0A2B6D]">
-                      <CheckCircle2 className="h-4 w-4 shrink-0 text-[#0072FF]" />
+                    <li key={h} className="flex items-center gap-1.5 text-[11px] font-bold text-[#0A2B6D]">
+                      <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-[#0072FF]" />
                       <span>{h}</span>
                     </li>
                   ))}

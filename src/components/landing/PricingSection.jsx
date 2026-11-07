@@ -182,45 +182,53 @@ const FEATURE_COMPARISON_ROWS = [
 
 export default function PricingSection({ onContactSales }) {
   const [billing, setBilling] = useState('monthly');
-  const [showComparison, setShowComparison] = useState(true);
+  const [showComparison, setShowComparison] = useState(false);
 
   return (
     <section id="pricing" className="w-full scroll-mt-20">
       <div
-        className="rounded-3xl p-[3px] shadow-xl"
+        className="rounded-2xl p-[2px] shadow-xl"
         style={{
           background: 'linear-gradient(120deg, #0072FF 0%, #0A2B6D 28%, #5A00D6 62%, #FF2E9A 100%)',
         }}
       >
-        <div className="rounded-[21px] bg-white p-5 sm:p-8 lg:p-10 space-y-8">
-          {/* Header & Responsive Billing Toggle */}
-          <div className="mx-auto max-w-3xl text-center space-y-4">
-            <span className="inline-flex items-center gap-2 rounded-full bg-[#0072FF]/10 px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-[#0072FF]">
-              <Award className="h-3.5 w-3.5 text-[#0A2B6D]" />
-              Transparent All-In-One NDIS &amp; Aged Care Pricing
-            </span>
-
-            <h2 className="font-editorial text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#0A2B6D]">
-              Smart Enhanced{' '}
-              <span className="text-[#0072FF]">
-                All-In-One Elite Packages
-              </span>
+        <div className="rounded-[14px] bg-white p-3.5 sm:p-4 space-y-3">
+          {/* 1. Header Always First (One Straight Sentence, Slightly Bigger) -> Sentence -> Blue/Purple Badge & Toggle After */}
+          <div className="space-y-1 border-b border-slate-200 pb-2.5 text-left">
+            <h2 className="font-editorial text-lg sm:text-xl lg:text-2xl font-black tracking-tight text-[#0A2B6D] leading-tight lg:whitespace-nowrap">
+              Smart Enhanced All-In-One Elite Packages ($760–$1,220/mo)
             </h2>
 
-            <p className="text-sm sm:text-base font-medium leading-relaxed text-[#0A2B6D]/80">
+            <p className="text-xs sm:text-[13px] font-semibold leading-snug text-[#0A2B6D]/85">
               Every Smart Enhanced tier includes full access to all 46 connected modules, 100+ tailored Business Details documents, $160/mo Elite Package Tokens, 1,200 message credits, 50,000 integration credits, and dedicated support.
             </p>
 
-            {/* Equal-Width Responsive Monthly / Annual Toggle */}
-            <div className="mx-auto w-full max-w-lg pt-1">
-              <div className="grid grid-cols-1 gap-1.5 rounded-2xl border border-slate-200 bg-slate-100/80 p-1.5 sm:grid-cols-2">
+            <div className="flex flex-wrap items-center justify-between gap-2 pt-0.5">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="inline-flex items-center gap-1.5 rounded-md border border-[#0072FF]/30 bg-[#0072FF]/10 px-2.5 py-0.5 text-[11px] font-extrabold uppercase tracking-wider text-[#0072FF]">
+                  <span
+                    className="flex h-4 w-4 items-center justify-center rounded bg-[#0A2B6D]"
+                    style={{ boxShadow: '0 0 6px 1px rgba(255,255,255,0.9)' }}
+                  >
+                    <Award className="h-2.5 w-2.5 text-white" style={{ filter: 'drop-shadow(0 0 3px #FFFFFF)' }} />
+                  </span>
+                  <span>Transparent All-In-One NDIS &amp; Aged Care Pricing</span>
+                </span>
+
+                <span className="rounded-full border border-[#5A00D6]/25 bg-[#F5F0FF] px-2.5 py-0.5 text-[11px] font-extrabold text-[#5A00D6]">
+                  14-Day Free Trial Included
+                </span>
+              </div>
+
+              {/* Compact Billing Switcher */}
+              <div className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-slate-100 p-0.5">
                 <button
                   type="button"
                   onClick={() => setBilling('monthly')}
-                  className={`flex min-h-[40px] w-full items-center justify-center rounded-xl px-4 py-2 text-xs sm:text-sm font-extrabold transition ${
+                  className={`rounded-md px-2.5 py-1 text-[11px] font-extrabold transition ${
                     billing === 'monthly'
-                      ? 'bg-[#0A2B6D] text-white shadow-sm'
-                      : 'bg-white/60 text-[#0A2B6D] hover:text-[#0072FF]'
+                      ? 'bg-[#0A2B6D] text-white shadow-2xs'
+                      : 'text-[#0A2B6D] hover:text-[#0072FF]'
                   }`}
                 >
                   Monthly Subscription
@@ -228,104 +236,75 @@ export default function PricingSection({ onContactSales }) {
                 <button
                   type="button"
                   onClick={() => setBilling('yearly')}
-                  className={`flex min-h-[40px] w-full items-center justify-center rounded-xl px-4 py-2 text-xs sm:text-sm font-extrabold transition ${
+                  className={`rounded-md px-2.5 py-1 text-[11px] font-extrabold transition ${
                     billing === 'yearly'
-                      ? 'bg-[#0072FF] text-white shadow-sm'
-                      : 'bg-white/60 text-[#0A2B6D] hover:text-[#0072FF]'
+                      ? 'bg-[#0072FF] text-white shadow-2xs'
+                      : 'text-[#0A2B6D] hover:text-[#0072FF]'
                   }`}
                 >
-                  Annual Billing (Monthly Rate)
+                  Annual Billing
                 </button>
               </div>
             </div>
           </div>
 
-          {/* 6 Smart Enhanced Subscription Cards Grid — Centred Users & Fitted Token Info */}
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 items-stretch">
+          {/* 6 Smart Enhanced Subscription Cards Grid — Compact & Proportional */}
+          <div className="grid grid-cols-1 gap-2.5 md:grid-cols-2 lg:grid-cols-3 items-stretch">
             {COMPLIANCE_HR_PACKAGES.map((pkg) => {
               const isFeatured = Boolean(pkg.featured);
               return (
                 <div
                   key={pkg.id}
-                  className={`relative flex h-full flex-col justify-between rounded-3xl p-[2.5px] transition-all hover:-translate-y-0.5 ${
-                    isFeatured ? 'shadow-2xl' : 'shadow-md hover:shadow-xl'
+                  className={`relative flex h-full flex-col justify-between rounded-xl p-[2px] transition-all ${
+                    isFeatured ? 'shadow-md' : 'shadow-2xs'
                   }`}
                   style={{
                     background: isFeatured
-                      ? 'linear-gradient(120deg, #0072FF 0%, #0A2B6D 100%)'
+                      ? 'linear-gradient(120deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)'
                       : 'linear-gradient(120deg, #cbd5e1 0%, #94a3b8 100%)',
                   }}
                 >
-                  <div className="flex h-full flex-col justify-between rounded-[21px] bg-white p-5 sm:p-6">
-                    <div className="flex flex-col">
-                      {/* Centred Top Badge & Centred Users Capacity */}
-                      <div className="flex flex-col items-center justify-center text-center space-y-2">
-                        <span
-                          className={`inline-flex items-center justify-center rounded-full px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-white whitespace-nowrap ${
-                            isFeatured ? 'bg-[#0072FF]' : 'bg-[#0A2B6D]'
-                          }`}
-                        >
-                          {pkg.badge}
-                        </span>
-
-                        <h3 className="font-editorial text-base sm:text-lg font-extrabold text-[#0A2B6D] leading-snug text-center">
-                          {pkg.name}
-                        </h3>
-
-                        {/* Centred Users Pill */}
-                        <div className="inline-flex items-center justify-center rounded-full border-2 border-[#0072FF]/35 bg-[#0072FF]/10 px-4 py-1 text-xs font-extrabold text-[#0072FF] whitespace-nowrap">
-                          {pkg.users}
+                  <div className="flex h-full flex-col justify-between rounded-[10px] bg-white p-3">
+                    <div className="flex flex-col space-y-2">
+                      {/* Header Row Inside Card: Users Capacity + Price */}
+                      <div className="flex items-center justify-between gap-2 border-b border-slate-100 pb-2">
+                        <div>
+                          <span
+                            className={`inline-flex items-center rounded-md px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white ${
+                              isFeatured ? 'bg-[#0072FF]' : 'bg-[#0A2B6D]'
+                            }`}
+                          >
+                            {pkg.users}
+                          </span>
+                          <h3 className="mt-1 font-editorial text-xs sm:text-sm font-extrabold text-[#0A2B6D] leading-tight">
+                            {pkg.name}
+                          </h3>
                         </div>
-                      </div>
 
-                      {/* Exact Configured Price Box — Centred Price & Fitted Token Info */}
-                      <div className="mt-3.5 rounded-2xl border border-sky-200 bg-[#F0F7FF] p-3.5 text-center">
-                        <div className="flex items-baseline justify-center gap-1.5 whitespace-nowrap">
-                          <span className="font-editorial text-3xl font-extrabold text-[#0A2B6D] leading-none">
+                        <div className="text-right shrink-0">
+                          <div className="font-editorial text-xl sm:text-2xl font-black text-[#0A2B6D] leading-none">
                             ${pkg.monthly.toLocaleString()}
-                          </span>
-                          <span className="text-xs font-bold text-[#0A2B6D]/80">
-                            per a month
-                          </span>
-                          <span className="ml-1 rounded-md bg-[#0072FF]/15 px-2 py-0.5 text-xs font-extrabold text-[#0072FF]">
-                            {billing === 'yearly' ? 'Annual' : 'Monthly'}
-                          </span>
-                        </div>
-                        <div className="mt-2 border-t border-sky-200/80 pt-2 text-xs font-extrabold text-[#0A2B6D] whitespace-nowrap">
-                          Base ${pkg.previousMonthly}/mo + ${pkg.eliteAddon}/mo Elite Tokens
+                          </div>
+                          <div className="text-[10px] font-bold text-[#5A00D6]">
+                            /month ({billing === 'yearly' ? 'Annual' : 'Monthly'})
+                          </div>
                         </div>
                       </div>
 
-                      {/* Symmetrical 2-Column Credit Allowances */}
-                      <div className="mt-3 grid grid-cols-2 gap-2 items-stretch">
-                        <div className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white px-2 py-2 text-center">
-                          <div className="flex items-center justify-center gap-1">
-                            <Zap className="h-3.5 w-3.5 shrink-0 text-[#0072FF]" />
-                            <span className="text-sm font-extrabold text-[#0A2B6D]">1,200</span>
-                          </div>
-                          <span className="mt-0.5 text-xs font-semibold text-[#0A2B6D]/75 whitespace-nowrap">
-                            Message credits / mo
-                          </span>
-                        </div>
-                        <div className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white px-2 py-2 text-center">
-                          <div className="flex items-center justify-center gap-1">
-                            <Layers className="h-3.5 w-3.5 shrink-0 text-[#0A2B6D]" />
-                            <span className="text-sm font-extrabold text-[#0A2B6D]">50,000</span>
-                          </div>
-                          <span className="mt-0.5 text-xs font-semibold text-[#0A2B6D]/75 whitespace-nowrap">
-                            Integration credits / mo
-                          </span>
-                        </div>
+                      {/* Compact Price & Credit Strip */}
+                      <div className="flex flex-wrap items-center justify-between gap-1 rounded-lg border border-sky-200 bg-[#F0F7FF] px-2.5 py-1.5 text-[10.5px] font-extrabold text-[#0A2B6D]">
+                        <span>Base ${pkg.previousMonthly} + ${pkg.eliteAddon} Elite</span>
+                        <span className="text-[#0072FF]">1,200 Msg · 50k Int</span>
                       </div>
 
                       {/* Benefits List */}
-                      <ul className="mt-4 space-y-2 border-t border-slate-100 pt-3.5 text-left">
+                      <ul className="space-y-1 text-left">
                         {pkg.benefits.map((b) => (
                           <li
                             key={b}
-                            className="flex items-start gap-2 text-xs font-semibold leading-snug text-[#0A2B6D]"
+                            className="flex items-start gap-1.5 text-[11px] font-semibold leading-snug text-[#0A2B6D]"
                           >
-                            <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#0072FF]" />
+                            <Check className="mt-0.5 h-3 w-3 shrink-0 text-[#0072FF]" />
                             <span>{b}</span>
                           </li>
                         ))}
@@ -333,16 +312,16 @@ export default function PricingSection({ onContactSales }) {
                     </div>
 
                     {/* Bottom-Aligned Card CTAs */}
-                    <div className="mt-5 space-y-2 border-t border-slate-100 pt-4">
+                    <div className="mt-2.5 grid grid-cols-2 gap-1.5 border-t border-slate-100 pt-2">
                       <Link
                         to="/register"
-                        className="inline-flex min-h-[42px] w-full items-center justify-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-xs xl:text-sm font-extrabold text-white shadow-md transition hover:opacity-95"
+                        className="inline-flex h-7 items-center justify-center gap-1 whitespace-nowrap rounded-lg px-2 text-[11px] font-extrabold text-white shadow-2xs transition hover:opacity-95"
                         style={{
                           background: isFeatured ? '#0072FF' : '#0A2B6D',
                         }}
                       >
-                        <span>Start Free Trial (14 Days)</span>
-                        <ArrowRight className="h-4 w-4 shrink-0 text-white" />
+                        <span>Free Trial</span>
+                        <ArrowRight className="h-3 w-3 shrink-0 text-white" />
                       </Link>
 
                       <button
@@ -351,9 +330,9 @@ export default function PricingSection({ onContactSales }) {
                           onContactSales &&
                           onContactSales(`Sales Enquiry — ${pkg.users} (${pkg.priceLabel})`)
                         }
-                        className="inline-flex min-h-[36px] w-full items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-extrabold text-[#0A2B6D] transition hover:border-[#0072FF] hover:text-[#0072FF]"
+                        className="inline-flex h-7 items-center justify-center gap-1 rounded-lg border border-slate-200 bg-white px-2 text-[11px] font-extrabold text-[#0A2B6D] transition hover:border-[#0072FF] hover:text-[#0072FF]"
                       >
-                        <PhoneCall className="h-3.5 w-3.5 text-[#0072FF]" />
+                        <PhoneCall className="h-3 w-3 text-[#0072FF]" />
                         <span>Contact Sales</span>
                       </button>
                     </div>
@@ -363,25 +342,26 @@ export default function PricingSection({ onContactSales }) {
             })}
           </div>
 
-          {/* 6 Core Platform Benefits Included in Every Plan */}
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
+          {/* 6 Core Platform Benefits Included in Every Plan with White Lights in Symbols */}
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
             {CORE_PLATFORM_BENEFITS.map((b) => {
               const Icon = b.icon;
               return (
                 <div
                   key={b.title}
-                  className="flex h-full flex-col justify-between rounded-2xl border border-sky-200/80 bg-[#F0F7FF] p-5 text-left"
+                  className="flex items-start gap-2.5 rounded-xl border border-sky-200/80 bg-[#F0F7FF] p-2.5 text-left"
                 >
-                  <div>
-                    <div className="flex items-start gap-3">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#0A2B6D] text-white">
-                        <Icon className="h-5 w-5 text-[#00C6FF]" />
-                      </div>
-                      <h4 className="text-sm font-extrabold text-[#0A2B6D] leading-snug">
-                        {b.title}
-                      </h4>
-                    </div>
-                    <p className="mt-2.5 text-xs leading-relaxed text-[#0A2B6D]/80">
+                  <div
+                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#0A2B6D] text-white"
+                    style={{ boxShadow: '0 0 8px 1px rgba(255,255,255,0.85)' }}
+                  >
+                    <Icon className="h-3.5 w-3.5 text-white" style={{ filter: 'drop-shadow(0 0 3px #FFFFFF)' }} />
+                  </div>
+                  <div className="min-w-0">
+                    <h4 className="text-xs font-extrabold text-[#0A2B6D] leading-snug">
+                      {b.title}
+                    </h4>
+                    <p className="mt-0.5 text-[11px] leading-snug text-[#0A2B6D]/80">
                       {b.desc}
                     </p>
                   </div>
@@ -390,55 +370,44 @@ export default function PricingSection({ onContactSales }) {
             })}
           </div>
 
-          {/* Responsive Feature Comparison Grid */}
-          <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          {/* Compact Collapsible Feature Comparison Bar */}
+          <div className="rounded-xl border border-slate-200 bg-[#F8FAFC] px-3 py-2 space-y-2">
+            <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="text-left">
-                <h3 className="font-editorial text-xl sm:text-2xl font-extrabold text-[#0A2B6D]">
-                  Full Feature Comparison Across All Tiers
+                <h3 className="font-editorial text-sm sm:text-base font-black text-[#0A2B6D]">
+                  Full Feature Comparison Across All Tiers — Every Tier Unlocks All 46 Connected Modules
                 </h3>
-                <p className="text-xs sm:text-sm text-[#0A2B6D]/75">
-                  Every tier unlocks the complete 46-module platform—simply choose your active user capacity.
-                </p>
               </div>
-              <div className="flex flex-wrap items-center gap-2 shrink-0">
+              <div className="flex flex-wrap items-center gap-1.5 shrink-0">
                 <button
                   type="button"
                   onClick={() => setShowComparison((v) => !v)}
-                  className="rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-xs font-extrabold text-[#0A2B6D] transition hover:bg-slate-100"
+                  className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-extrabold text-[#0A2B6D] transition hover:bg-slate-100"
                 >
-                  {showComparison ? 'Hide Comparison' : 'Show Comparison'}
+                  {showComparison ? 'Hide Comparison' : 'Show Comparison (8)'}
                 </button>
                 <button
                   type="button"
                   onClick={() => onContactSales && onContactSales('Enterprise & Multi-Site Sales Enquiry')}
-                  className="inline-flex items-center gap-1.5 rounded-xl bg-[#0A2B6D] px-3.5 py-2 text-xs font-extrabold text-white transition hover:bg-[#0072FF]"
+                  className="inline-flex items-center gap-1 rounded-lg bg-[#0A2B6D] px-2.5 py-1 text-[11px] font-extrabold text-white transition hover:bg-[#0072FF]"
                 >
-                  <PhoneCall className="h-3.5 w-3.5 text-[#00C6FF]" />
+                  <PhoneCall className="h-3 w-3 text-white" style={{ filter: 'drop-shadow(0 0 3px #FFFFFF)' }} />
                   <span>Contact Sales</span>
                 </button>
               </div>
             </div>
 
             {showComparison && (
-              <div className="overflow-hidden rounded-xl border border-slate-200 divide-y divide-slate-200">
-                <div className="hidden sm:grid sm:grid-cols-12 bg-[#F0F7FF] px-4 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-[#0A2B6D]">
-                  <div className="sm:col-span-7">Platform Capability</div>
-                  <div className="sm:col-span-5">Inclusion Across Tiers (Up to 20 → 101+ Users)</div>
-                </div>
+              <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2 lg:grid-cols-4 pt-1">
                 {FEATURE_COMPARISON_ROWS.map((row) => (
                   <div
                     key={row.feature}
-                    className="grid grid-cols-1 gap-1.5 px-4 py-3 text-left sm:grid-cols-12 sm:items-center sm:gap-4"
+                    className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-left"
                   >
-                    <div className="sm:col-span-7 text-xs sm:text-sm font-bold text-[#0A2B6D]">
-                      {row.feature}
-                    </div>
-                    <div className="sm:col-span-5 text-xs sm:text-sm font-extrabold text-[#0072FF]">
-                      <span className="inline-flex items-center gap-1.5">
-                        <Check className="h-4 w-4 shrink-0 text-[#0072FF]" />
-                        <span>{row.included}</span>
-                      </span>
+                    <div className="text-[11px] font-extrabold text-[#0A2B6D]">{row.feature}</div>
+                    <div className="mt-0.5 inline-flex items-center gap-1 text-[10.5px] font-bold text-[#0072FF]">
+                      <Check className="h-3 w-3 shrink-0 text-[#0072FF]" />
+                      <span>{row.included}</span>
                     </div>
                   </div>
                 ))}
