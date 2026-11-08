@@ -120,6 +120,7 @@ export const NAV_PERMISSIONS = {
   'our-staff': [...OPERATIONS, ROLES.EMPLOYEE],
   'our-participants': [...OPERATIONS, ROLES.PARTICIPANT],
   dashboard: [...PERSONAL, ROLES.GUEST, ROLES.VOLUNTEER],
+  today: PERSONAL,
   'operations-centre': OPERATIONS,
   notifications: PERSONAL,
   assistant: PERSONAL,
