@@ -6,7 +6,7 @@ import { useAuth } from '@/lib/AuthContext';
 import {
   LogOut, LayoutDashboard, ClipboardList,
   Users, ShieldCheck, ShieldAlert, FolderOpen, Megaphone,
-  BarChart3, Cpu, Settings, Sun,
+  BarChart3, Cpu, Settings, Sun, Smartphone,
 } from 'lucide-react';
 
 const BRAND_GRADIENT =
@@ -29,6 +29,7 @@ export const PRIMARY_11_OS_NAV = [
     children: [
       { label: 'Dashboard', path: '/dashboard', sub: 'Executive Dashboard, Subscriptions & Command', icon: LayoutDashboard },
       { label: 'Administration – Lead (Sherelle)', path: '/today', sub: 'Daily operations workspace', icon: Sun },
+      { label: 'Team Leader – Lead & Build (Jamie)', path: '/team-leader', sub: 'Team leader mobile workspace', icon: Smartphone },
       { label: 'Communication', path: '/communications', sub: 'Unified Communication, Mailbox & Roster', icon: Megaphone },
       { label: 'Daily Briefing', path: '/briefing', sub: 'Morning operational briefing' },
       { label: 'Meetings', path: '/meetings', sub: 'Agendas, minutes & action items' },
@@ -215,6 +216,7 @@ export const FOCUSED_5_PILLAR_NAV = [
     children: [
       { label: 'Dashboard', path: '/dashboard', sub: 'Executive Dashboard, Subscriptions & Command', icon: LayoutDashboard },
       { label: 'Administration – Lead (Sherelle)', path: '/today', sub: 'Daily operations workspace', icon: Sun },
+      { label: 'Team Leader – Lead & Build (Jamie)', path: '/team-leader', sub: 'Team leader mobile workspace', icon: Smartphone },
       { label: 'Communication', path: '/communications', sub: 'Unified Communication, Mailbox & Roster', icon: Megaphone },
       { label: 'Daily Briefing', path: '/briefing', sub: 'Morning operational briefing' },
       { label: 'Meetings', path: '/meetings', sub: 'Agendas, minutes & action items' },

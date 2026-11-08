@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Sun, Smartphone } from 'lucide-react';
+import { Sun, Smartphone, Sparkles } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
 import ExecutiveDashboards from '@/pages/ExecutiveDashboards';
 import LiveDashboards from '@/components/dashboard/LiveDashboards';
@@ -53,6 +53,12 @@ export default function Dashboard() {
           className="inline-flex items-center gap-1.5 rounded-xl border border-[#C7B6FF] bg-white px-3 py-1.5 text-[12px] font-bold text-[#5A00D6] shadow-sm transition hover:bg-[#F5F0FF]"
         >
           <Smartphone className="h-3.5 w-3.5" /> Team leader app
+        </Link>
+        <Link
+          to="/team-leader"
+          className="inline-flex items-center gap-1.5 rounded-xl border border-[#9B72CB]/60 bg-white px-3 py-1.5 text-[12px] font-bold text-[#5A00D6] shadow-sm transition hover:bg-[#F5F0FF]"
+        >
+          <Sparkles className="h-3.5 w-3.5" /> Team Leader – Lead &amp; Build (Jamie)
         </Link>
       </div>
 

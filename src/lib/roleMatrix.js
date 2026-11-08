@@ -121,6 +121,7 @@ export const NAV_PERMISSIONS = {
   'our-participants': [...OPERATIONS, ROLES.PARTICIPANT],
   dashboard: [...PERSONAL, ROLES.GUEST, ROLES.VOLUNTEER],
   today: PERSONAL,
+  'team-leader': PERSONAL,
   'operations-centre': OPERATIONS,
   notifications: PERSONAL,
   assistant: PERSONAL,
