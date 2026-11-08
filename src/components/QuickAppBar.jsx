@@ -230,7 +230,7 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
               className="group block w-full text-left rounded-md p-[1px] transition-all duration-150"
               style={{ background: BRAND_GRADIENT }}
             >
-              <div className="flex h-[22px] items-center justify-between gap-1 rounded-[5px] bg-[#0A2B6D]/90 px-1.5">
+              <div className="flex h-[22px] items-center justify-between gap-1 rounded-[5px] bg-white px-1.5">
                 <div className="flex min-w-0 flex-1 items-center gap-1">
                   <span
                     className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-[3px] bg-[#0A2B6D]/90"
@@ -238,7 +238,7 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
                   >
                     <Cpu className="h-2 w-2 shrink-0" style={{ color: '#0072FF' }} />
                   </span>
-                  <span className="min-w-0 truncate text-[9.5px] font-extrabold leading-none text-white">
+                  <span className="min-w-0 truncate text-[9.5px] font-extrabold leading-none text-workspace-navy">
                     AI Core
                   </span>
                 </div>
@@ -269,7 +269,7 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
                   }`}
                   style={{ background: BRAND_GRADIENT }}
                 >
-                  <div className="flex h-[22px] items-center justify-between gap-1 rounded-[5px] bg-[#0A2B6D]/90 px-1.5">
+                  <div className="flex h-[22px] items-center justify-between gap-1 rounded-[5px] bg-white px-1.5">
                     <div className="flex min-w-0 flex-1 items-center gap-1">
                       <span
                         className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-[3px] bg-[#0A2B6D]/90"
@@ -277,7 +277,7 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
                       >
                         <Icon className="h-2 w-2 shrink-0" style={{ color: symColor }} />
                       </span>
-                      <span className="min-w-0 truncate text-[9.5px] font-extrabold leading-none text-white">
+                      <span className="min-w-0 truncate text-[9.5px] font-extrabold leading-none text-workspace-navy">
                         {item.label}
                       </span>
                     </div>
@@ -312,7 +312,7 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
                     }`}
                     style={{ background: BRAND_GRADIENT }}
                   >
-                    <div className="flex h-[22px] items-center justify-between gap-1 rounded-[5px] bg-[#0A2B6D]/90 px-1.5">
+                    <div className="flex h-[22px] items-center justify-between gap-1 rounded-[5px] bg-white px-1.5">
                       <div className="flex min-w-0 flex-1 items-center gap-1">
                         <span
                           className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-[3px] bg-[#0A2B6D]/90"
@@ -320,7 +320,7 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
                         >
                           <Icon className="h-2 w-2 shrink-0" style={{ color: modColor }} />
                         </span>
-                        <span className="min-w-0 truncate text-[9.5px] font-extrabold leading-none text-white">
+                        <span className="min-w-0 truncate text-[9.5px] font-extrabold leading-none text-workspace-navy">
                           {module.label}
                         </span>
                       </div>

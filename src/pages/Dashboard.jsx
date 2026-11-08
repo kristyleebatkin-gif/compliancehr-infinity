@@ -6,6 +6,7 @@ import AdminDashboard from '@/components/dashboard/AdminDashboard';
 import TaskLeaderboard from '@/components/communications/TaskLeaderboard';
 import { useRole } from '@/lib/useRole';
 import { LayoutDashboard, Activity, Trophy, ShieldCheck } from 'lucide-react';
+import ReportGenerator from '@/components/reports/ReportGenerator';
 
 const ADMIN_ROLES = ['admin', 'Provider Administrator', 'Administration'];
 
@@ -52,6 +53,7 @@ export default function Dashboard() {
           description="Operational compliance, risk, incident, expiry and provider-quality views. Values remain linked to their source modules."
           icon={ShieldCheck}
         >
+          <ReportGenerator area="administration" />
           <AdminDashboard />
         </DashboardSection>
       )}

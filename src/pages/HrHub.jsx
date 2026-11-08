@@ -22,6 +22,7 @@ import MasterSkillsAndInstructionsStudio from '@/components/training/MasterSkill
 import Volunteers from '@/pages/Volunteers';
 import HrMediaGoalsHobbiesHub from '@/components/hr/HrMediaGoalsHobbiesHub';
 import ShorelineCommandCenter from '@/components/hr/ShorelineCommandCenter';
+import ReportGenerator from '@/components/reports/ReportGenerator';
 
 const today = () => new Date().toISOString().slice(0, 10);
 const fmt = (d) => (d ? String(d).slice(0, 10) : '');
@@ -175,6 +176,7 @@ export default function HrHub({ profile, embedded = false } = {}) {
         tabs={<HrDashboardNavigation isManager={isManager} payrollVisible={payrollVisible} />}
         actions={
           <>
+            {!profile && <ReportGenerator area="hr" isManager={isManager} />}
             <Button
               size="sm"
               className="border-2 border-[#0A2B6D] shadow-sm font-extrabold"
