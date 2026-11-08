@@ -395,6 +395,58 @@ These notes reuse what already exists: `base44/shared/routedManagementAlerts.ts`
 4. What wording should the overdue escalation use, and who signs off a late notification reason?
 5. Which build path: a Base44 branch with test records, then release (recommended)?
 
+### 31K. Quotes, invoicing and wages: Xero and ShiftCare parity plus AI assistance (design, added 8 November 2026)
+Standard: quotes and invoicing match what Xero and ShiftCare offer, and **wages match client shifts exactly**. One delivered, approved shift is the single source for the wage line, the invoice or claim line and the shift note. Feature lists come from general knowledge of Xero and ShiftCare. Confirm their current features before build.
+
+Already built (keep and verify): the Quote Centre (Draft, Sent, Accepted, Declined, Expired; branded PDF; email; win rate), the Invoicing Centre (invoice builder, preview, PDF, print, email, CSV export, PRODA claim export, aged receivables, bank reconciliation with bank rules, finance summary), ProviderInvoice (built from shifts, support item codes, kilometres, GST, price guide release, AI validation), Shift (clock in and out with location, unpaid break, approval, invoiced flag and invoice link), Payslip (totals only), PayRun, StaffPayrollDetail, PayrollChangeLog, payslip email, and AI line items (aiLineItems) for quotes and invoices.
+
+Found in review:
+- Two invoice registers (Invoice and ProviderInvoice). Pick one as the source.
+- Invoice status is only Draft, Sent, Paid or Overdue.
+- Invoices can be hard-deleted.
+- The PRODA export in BestInClassBenchmarkSuite builds a sample claim row (CHR-PRODA-001).
+- A quote is accepted only by signing and returning the PDF.
+- A quote can't be turned into an invoice.
+- Payslips can't be traced back to the shifts behind them.
+
+**Wages match client shifts exactly**
+235. [Critical] Shift is the single source. Each payslip and pay run gets wage lines, one per shift (shift_id, participant, date, actual start and end from clock events, unpaid break, overnight split, pay item, rate, allowances, kilometres, total). Payslip totals are the sum of these lines and can't be typed in.
+236. [Critical] Three-way match before release. For every shift in the period: delivered and approved shift, wage line and invoice or claim line must agree on shift_id, date, start, end, break, hours and kilometres. A mismatch, missing line or unapproved shift blocks the pay run and invoice batch and shows an exceptions list. A manager can override with a reason, which is logged.
+237. [High] Rounding and time rules are set once and shared by wages and billing: minimum engagement, overnight and timezone, public holidays, cancellations. Staff allowances and participant billable items stay separate rule sets, each with its own effective dates and approver.
+238. [High] Corrections flow both ways. Editing an approved shift after pay or billing creates a correction (back-pay or deduction line, credit note or adjustment claim) linked to the original. Paid records are never edited in place.
+239. [High] Cancellations. A short-notice client cancellation is billed per NDIS rules and the service agreement, and the worker is paid per the award. Both come from the one cancelled-shift record.
+240. [Medium] Reports: wages vs billing per shift, participant and worker; margin per shift; unbilled delivered shifts; unpaid delivered shifts.
+
+**Quotes (Xero-style)**
+241. [High] Online quote acceptance. The client opens a secure link, reviews, accepts or declines with a typed name, date and time, and adds a comment. The status updates automatically and the manager is told.
+242. [High] Turn an accepted quote into a service agreement draft and, later, an invoice, copying the lines. Keep the quote history and versions (revise and resend).
+243. [Medium] Quote templates, saved line items, discounts, terms, expiry reminders, follow-up email before expiry, and a quote-to-shifts budget check against the participant's plan.
+
+**Invoices (Xero-style)**
+244. [High] Full invoice life cycle: Draft, Awaiting approval, Approved, Sent, Partially paid, Paid, Overdue, Voided, Credited. Replace delete with void, with a reason and an audit log entry. Number invoices in sequence with no reuse.
+245. [High] Payments: part payments, overpayments, prepayments, payment date and method, allocation to invoices, receipts emailed, and matching to bank statement lines.
+246. [High] Credit notes and refunds linked to the original invoice and claim.
+247. [Medium] Repeating invoices (weekly or fortnightly from approved shifts), batch create and send, and scheduled automatic overdue reminders (for example 7, 14 and 30 days).
+248. [Medium] Customer statements (monthly, activity or outstanding), branded themes, attachments, invoice viewed or sent history, and a pay-online link (Stripe or similar) where self-managed or private clients pay directly.
+249. [Medium] Accounting sync: two-way sync with Xero (contacts, invoices, payments, credit notes, pay items), or a verified export, with a sync log. GST coding: NDIS supports are GST-free; other supplies carry GST.
+
+**NDIS and aged care billing (ShiftCare-style)**
+250. [Critical] Remove the sample PRODA claim row. Bulk payment request files are built only from real approved, delivered, unclaimed shifts. Each claim line records its claim reference.
+251. [High] Billing by funding type: NDIA-managed (bulk payment request upload, then import the payment results to mark each line Paid or Rejected with the reason), plan-managed (invoice to the plan manager with participant details), self-managed (invoice to the participant), and aged care Support at Home (monthly statements and client contributions).
+252. [High] Price limits by date: rates come from NDISPriceGuideRelease by service date, with time-of-day, weekday, Saturday, Sunday and public holiday items, and shared or group support ratios. Block any claim above the price limit for its date and region.
+253. [High] Plan budget checks at invoice time: the funds remaining for each support category, with warnings before the budget or the plan end date is passed (links to item 184).
+254. [Medium] Travel: provider travel (labour) and non-labour travel kilometres claimed by NDIS rules. Worker kilometres are paid by the award from the same trip record.
+255. [Medium] Rejected claims queue with reason, fix and resubmit, and an ageing view of unpaid NDIA claims.
+
+**AI assistance (it suggests; a person approves)**
+256. [High] AI billing check before send or claim: flags wrong support item for the time or day, rate above limit, duplicate claim, shift without a note, wage or billing mismatch, and plan budget overrun, each with the reason. This builds on ProviderInvoice ai_validation_status.
+257. [Medium] AI quote builder: from a plain description ("2 hours weekday personal care 3 times a week for 12 weeks") it drafts lines from the current price guide (extending aiLineItems), the weekly and total cost and the plan budget impact.
+258. [Medium] AI payroll check: explains each pay line in plain English (which award rule and why), flags unusual hours, missing breaks and fatigue risks, and drafts the exceptions summary for the manager.
+259. [Medium] AI collections assistant: drafts polite overdue reminders and statements in the business's voice, and suggests a follow-up order by age and amount. A person always presses send.
+260. [Low] AI finance Q&A in the personal assistant agent: "what's unbilled this week?", "which claims were rejected and why?", "wages vs billing for March". It reads only, and its answers link to the records they came from.
+
+Acceptance for 31K: a test fortnight of shifts produces payslip wage lines, invoices and a claim file that agree line by line. Every mismatch is caught. No sample or invented data appears in any output. Each AI suggestion is logged with the person who approved it.
+
 ## Completion log — latest implementation
 - Item 39: choosing a participant in the shift form now shows their goals and saves the selected goal on the shift. Regenerated the landing logo with a fully transparent background (no checkerboard pattern) and updated it across the nav, hero and footer.
 - Items 26-28: employee profiles now include an "Intake Logs" tab showing the acknowledgements log, referee checks and buddy shifts from the linked intake case, each panel exportable as CSV. Intake save stays open for drafting, while submission and approval are already blocked until every readiness check is complete (items 22, 31, 32 verified).
@@ -418,4 +470,4 @@ These notes reuse what already exists: `base44/shared/routedManagementAlerts.ts`
 - The master to-do list is now finalised. The only item deliberately left out is native mobile push notifications, which requires the app to be published as a native iOS/Android build first.
 
 ## Build order suggestion
-1 → 2 → 3 → 4–8 (profiles + intake + rostering core) → 9–15 (compliance/risk/safety) → 16–22 (finance/comms/training/meetings) → 23–30 → 31 (Sherelle Manager Playbook: Critical items 170, 178, 189, 190 first, then High, Medium, Low).
+1 → 2 → 3 → 4–8 (profiles + intake + rostering core) → 9–15 (compliance/risk/safety) → 16–22 (finance/comms/training/meetings) → 23–30 → 31 (Sherelle Manager Playbook: Critical items 170, 178, 189, 190, 235, 236, 250 first, then High, Medium, Low).
