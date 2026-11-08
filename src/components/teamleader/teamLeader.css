@@ -1,0 +1,194 @@
+.tl-shell {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 18px 10px 28px;
+  background:
+    radial-gradient(760px 420px at 12% -10%, #dce7ff 0%, rgba(220, 231, 255, 0) 60%),
+    radial-gradient(620px 400px at 92% 4%, #ffe1f2 0%, rgba(255, 225, 242, 0) 60%),
+    linear-gradient(160deg, #f7faff 0%, #f2eeff 52%, #fff2fa 100%);
+}
+
+.tl-phone {
+  width: 100%;
+  max-width: 412px;
+  height: min(880px, calc(100dvh - 46px));
+  min-height: 620px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  border-radius: 34px;
+  border: 1px solid rgba(10, 43, 109, 0.12);
+  box-shadow: 0 40px 80px -50px rgba(6, 26, 68, 0.7);
+  font-family: var(--font-body);
+}
+
+.tl-phone[data-theme='light'] {
+  --tl-text: #0a2b6d;
+  --tl-muted: #4b6392;
+  --tl-surface: rgba(255, 255, 255, 0.86);
+  --tl-border: rgba(10, 43, 109, 0.1);
+  --tl-pill: rgba(10, 43, 109, 0.06);
+  color: var(--tl-text);
+  background:
+    radial-gradient(420px 260px at 100% 0%, #ffe6f4 0%, rgba(255, 230, 244, 0) 62%),
+    linear-gradient(172deg, #f6faff 0%, #f1ecff 58%, #fff0f8 100%);
+}
+
+.tl-phone[data-theme='dark'] {
+  --tl-text: #eaf2ff;
+  --tl-muted: #a6bee4;
+  --tl-surface: rgba(14, 29, 62, 0.72);
+  --tl-border: rgba(150, 190, 255, 0.18);
+  --tl-pill: rgba(160, 200, 255, 0.14);
+  color: var(--tl-text);
+  background:
+    radial-gradient(420px 280px at 100% -6%, #55107d 0%, rgba(85, 16, 125, 0) 62%),
+    linear-gradient(170deg, #061a44 0%, #0a2b6d 52%, #240d4a 100%);
+}
+
+.tl-card {
+  background: var(--tl-surface);
+  border: 1px solid var(--tl-border);
+  border-radius: 18px;
+  box-shadow: 0 16px 34px -30px rgba(6, 26, 68, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.tl-text {
+  color: var(--tl-text);
+}
+
+.tl-muted {
+  color: var(--tl-muted);
+}
+
+.tl-pill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.tl-green {
+  background: rgba(16, 160, 112, 0.16);
+  color: #0a7a52;
+}
+
+.tl-amber {
+  background: rgba(214, 132, 0, 0.18);
+  color: #97590a;
+}
+
+.tl-pink {
+  background: rgba(255, 46, 154, 0.16);
+  color: #b0126a;
+}
+
+.tl-blue {
+  background: rgba(0, 114, 255, 0.14);
+  color: #0a54b8;
+}
+
+.tl-gray {
+  background: var(--tl-pill);
+  color: var(--tl-muted);
+}
+
+.tl-phone[data-theme='dark'] .tl-green {
+  color: #7de3b6;
+}
+
+.tl-phone[data-theme='dark'] .tl-amber {
+  color: #ffcf7a;
+}
+
+.tl-phone[data-theme='dark'] .tl-pink {
+  color: #ff9ecd;
+}
+
+.tl-phone[data-theme='dark'] .tl-blue {
+  color: #9cc6ff;
+}
+
+.tl-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border-radius: 11px;
+  padding: 7px 12px;
+  font-size: 11.5px;
+  font-weight: 700;
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.tl-btn:active {
+  transform: scale(0.98);
+}
+
+.tl-primary {
+  background: linear-gradient(135deg, #0a2b6d 0%, #5a00d6 60%, #ff2e9a 140%);
+  color: #ffffff;
+}
+
+.tl-ghost {
+  background: var(--tl-pill);
+  color: var(--tl-text);
+}
+
+.tl-ask {
+  background: var(--tl-surface);
+  border: 1px solid var(--tl-border);
+  border-radius: 999px;
+}
+
+.tl-nav {
+  background: var(--tl-surface);
+  border-top: 1px solid var(--tl-border);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.tl-key {
+  border-radius: 14px;
+  background: var(--tl-pill);
+  color: var(--tl-text);
+  font-size: 18px;
+  font-weight: 700;
+  padding: 12px 0;
+  transition: background 140ms ease;
+}
+
+.tl-key:active {
+  background: rgba(90, 0, 214, 0.18);
+}
+
+.tl-scroll {
+  scrollbar-width: none;
+}
+
+.tl-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.tl-table th {
+  text-align: left;
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--tl-muted);
+  padding: 6px 8px;
+}
+
+.tl-table td {
+  padding: 8px;
+  font-size: 11.5px;
+  border-top: 1px solid var(--tl-border);
+}

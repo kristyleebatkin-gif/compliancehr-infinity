@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { Sun, Smartphone } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
 import ExecutiveDashboards from '@/pages/ExecutiveDashboards';
 import LiveDashboards from '@/components/dashboard/LiveDashboards';
@@ -38,6 +40,21 @@ export default function Dashboard() {
         description="Your live operational overview, priorities, module performance and team recognition."
         icon={LayoutDashboard}
       />
+
+      <div className="flex flex-wrap gap-2">
+        <Link
+          to="/today"
+          className="inline-flex items-center gap-1.5 rounded-xl border border-[#8CCBFF] bg-white px-3 py-1.5 text-[12px] font-bold text-[#0A2B6D] shadow-sm transition hover:bg-[#EAF5FF]"
+        >
+          <Sun className="h-3.5 w-3.5" /> Today workspace
+        </Link>
+        <Link
+          to="/team-leader"
+          className="inline-flex items-center gap-1.5 rounded-xl border border-[#C7B6FF] bg-white px-3 py-1.5 text-[12px] font-bold text-[#5A00D6] shadow-sm transition hover:bg-[#F5F0FF]"
+        >
+          <Smartphone className="h-3.5 w-3.5" /> Team leader app
+        </Link>
+      </div>
 
       <DashboardSection
         title="Executive Performance"
