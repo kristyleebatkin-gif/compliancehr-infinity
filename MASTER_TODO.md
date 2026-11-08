@@ -356,6 +356,45 @@ Source: the Manager's Playbook (59 NDIS, aged care, Fair Work and WHS tasks, eac
 233. [High] Missing: safeguard record automation. Add a workflow on ParticipantSafeguardRecord so medication, mealtime and restrictive practice records trigger items 178, 187 and 191.
 234. [Medium] Missing: incident categories. Add Death, Missing person, Injury, Restrictive practice and Child safety to the incident category list so reports and analytics match the reportable types.
 
+### 31J. Design notes for the Critical items (draft, still designing; nothing built)
+These notes reuse what already exists: `base44/shared/routedManagementAlerts.ts` (in-app notifications by role), `base44/shared/gmailSend.ts` (email), `autoRouteEntry`, `incidentTriage`, the Notification, AuditLog and TodoTask entities, and `base44/shared/reminders.ts` (Sydney time).
+
+**Item 170: alerts go to roles, not one inbox**
+- One shared recipient list: extend `routedManagementAlerts.ts` so it returns in-app recipients and email addresses by role for each alert type, and add a Manager on duty slot (Sherelle by default) from BusinessDetails.
+- Backup: a BusinessDetails setting `alert_backup_email` (the owner) is copied on Critical alerts only, so the owner isn't flooded.
+- Replace the 5 hard-coded addresses (High Severity Incident Alert, todoSignoffAlert, appraisalReminders, contractVolunteerExpiryReminders, techSupportRequest) with calls to the shared list.
+- Every send writes an AuditLog entry (who, what, when, record link) as evidence of delivery.
+- If no active person holds the role, send to the backup and raise a compliance issue: "no one holds role X".
+- Acceptance: a test record reaches each role holder in-app and by email, appears in the audit log, and the hard-coded address is gone.
+
+**Item 178: medication problems become incidents**
+- Trigger: a workflow on ParticipantSafeguardRecord create or update where the record type is Medication Administration and the outcome is Error, Omitted, Refused or Withheld.
+- Error or Omitted: a new function creates an Incident (category Medication Error; severity High for Error, Medium for Omitted), links `incident_id` back, and copies the participant, staff, date and medication. Duplicates are prevented on the source record id. `autoRouteEntry` then sends the manager copy.
+- Refused or Withheld: the medication plan may expect this, so create a manager follow-up task instead. Create an incident if it happens 2 or more times in 7 days for the same person, or if the plan says to escalate.
+- Acceptance: each outcome produces the right record exactly once, linked both ways.
+
+**Item 189: reportable incident deadlines run themselves**
+- Awareness time: when an incident is saved, if `provider_awareness_at` is empty, set it to the time it was saved. Managers can correct it, and every change is logged.
+- AI suggestion: run `incidentTriage` on the server automatically and store its suggestion and reasons in new fields `triage_suggestion` and `triage_status` (Suggested, Confirmed, Overridden). The AI never decides; a manager confirms or overrides with a reason.
+- Holding deadline: if the AI suggests reportable or unsure, set a 24-hour notification deadline straight away and alert, so time isn't lost while waiting for a decision.
+- Final deadlines: work them out with fixed rules (not AI) from the confirmed type. 24 hours from awareness; 5 business days for an unauthorised restrictive practice with no harm; the 5-day report; the final report when the Commission asks; SIRS Priority 1 at 24 hours and Priority 2 at 30 days.
+- Deadline sweep: a scheduled check every 15 minutes, Sydney time, alerts at 12 hours, 4 hours and 1 hour left. At a missed deadline it escalates to the Provider Administrator plus backup and requires `late_notification_reason`. Daily checks cover the 5-day and final reports.
+- Done when the matching submitted field is filled in (`initial_notified_at`, `five_day_follow_up_submitted`, `final_report_submitted`, `sirs_notified_at`) and the Commission reference is recorded.
+- Acceptance: test incidents for each type produce the correct deadlines and alerts. Confirmation and override are logged.
+
+**Item 190: urgent alert triggers on reportability, not severity only**
+- Widen the High Severity Incident Alert condition: severity High or Critical, OR `requires_ndis_report`, OR `sirs_reportable`, OR a reportable type other than Not assessed or Not reportable, OR `requires_police`, OR `whs_notification_required`.
+- Trigger on create and on update when one of these first becomes true, sending once per record.
+- Recipients come from item 170.
+- Acceptance: a reportable incident logged as Medium alerts once, and a Low non-reportable incident does not.
+
+**Decisions still needed from the owner (before build)**
+1. Who is Manager on duty after hours: Sherelle always, or a roster on-call?
+2. Should Refused or Withheld medication ever create an incident on the first occurrence?
+3. Should the owner backup receive Critical alerts only, or all alerts?
+4. What wording should the overdue escalation use, and who signs off a late notification reason?
+5. Which build path: a Base44 branch with test records, then release (recommended)?
+
 ## Completion log — latest implementation
 - Item 39: choosing a participant in the shift form now shows their goals and saves the selected goal on the shift. Regenerated the landing logo with a fully transparent background (no checkerboard pattern) and updated it across the nav, hero and footer.
 - Items 26-28: employee profiles now include an "Intake Logs" tab showing the acknowledgements log, referee checks and buddy shifts from the linked intake case, each panel exportable as CSV. Intake save stays open for drafting, while submission and approval are already blocked until every readiness check is complete (items 22, 31, 32 verified).
