@@ -4,6 +4,7 @@ import { useRole } from '@/lib/useRole';
 import useTodayData, { todayIso } from '@/components/today/useTodayData';
 import TodaySidebar from '@/components/today/TodaySidebar';
 import TodayHeader from '@/components/today/TodayHeader';
+import TodayMobileNav from '@/components/today/TodayMobileNav';
 import AskBar from '@/components/today/AskBar';
 import MorningBriefTiles from '@/components/today/MorningBriefTiles';
 import EmailsPanel from '@/components/today/EmailsPanel';
@@ -72,6 +73,7 @@ export default function TodayDashboard() {
             onStart={startWorkday}
           />
 
+          <TodayMobileNav />
           <AskBar counts={counts} />
           <MorningBriefTiles counts={counts} />
 
