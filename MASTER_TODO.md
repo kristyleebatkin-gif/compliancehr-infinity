@@ -270,6 +270,86 @@ Grouped by module, roughly in build order: branding/landing first, then profiles
 168. Help Centre live, accurate and helpful.
 169. All user guides accurate to their matching module.
 
+## 31. Sherelle — Manager Playbook Module (added 8 November 2026)
+Source: the Manager's Playbook (59 NDIS, aged care, Fair Work and WHS tasks, each with ordered steps, a "done when" test and the rules) and the playbook gap review of this app on 8 November 2026. Goal: Sherelle, as manager, can complete every task end to end in the app, as automatically as possible. Review status per task: Covered = built, verify live; Partial = record exists but no automatic deadline, alert or next step; Missing = not built. Priority tags: [Critical] [High] [Medium] [Low]. An item is done only when the full flow runs live, alerts are delivered to the right role, and completion is recorded as evidence. A reminder is not completion evidence. Rules are a plain-English guide, not legal advice: the provider's compliance lead confirms them before release.
+
+### 31A. Manager foundations
+170. [Critical] Route alerts to roles, not one personal inbox. High Severity Incident Alert, todoSignoffAlert, appraisalReminders, contractVolunteerExpiryReminders and techSupportRequest send only to a hard-coded address. Send to the manager on duty (Sherelle), the Compliance Manager and Provider Administrator, with the owner as backup.
+171. [High] Manager's Playbook page: all 59 tasks, searchable and grouped by area, each showing when it happens, the ordered steps, "done when" and the rules, and linking to the module or form that completes it.
+172. [High] Start any playbook task as a task pack: one to-do task per step, with an owner, due dates taken from the rule (24 hours, 5 business days, 21 days, 30 days) and manager sign-off. Completed steps are recorded as evidence.
+173. [Medium] Annual rules review of the playbook by the compliance lead (NDIS, Aged Care Act 2024, Fair Work, WHS), with a dated sign-off and a reminder 12 months later.
+174. [Low] Link Sherelle's private 15-minute daily coaching app (In Your Corner). No coaching data comes into ComplianceHR.
+
+### 31B. Every shift
+175. Covered: start-of-shift handover. Verify the Daily Brief shows open incidents, new risks and plan changes per site.
+176. Partial: sick call or roster gap. rosterSuggest must also check award rules (item 205) and escalate to on-call when a high-needs shift is still uncovered.
+177. Covered: shift and progress note review (days 1–5 reminders, day 6 to management). Verify the sweep is enabled and emails are delivered.
+178. [Critical] Partial: medication check. A medication record of Refused, Withheld, Omitted or Error automatically creates an Incident (category Medication Error) and alerts the manager.
+179. [Medium] Partial: end-of-shift sign-off checklist (notes done, incidents lodged, handover, client money reconciled, keys and vehicle returned, timesheet matches).
+
+### 31C. Participants and clients
+180. Covered: new NDIS participant intake. Verify the flow ends with a signed service agreement, consents, risk assessment, support plan, matched workers and a first-month review task.
+181. [High] Missing: new aged care client intake. Add the Statement of Rights explained, registered supporters, service or care agreement, Support at Home level, advance care planning offered, consents and an early review task.
+182. Covered: support or care plan review (3-monthly). Verify the review is recorded as completed, not just requested.
+183. [Medium] Partial: change of circumstances. Add a record (what changed, evidence, reassessment requested, date) and a follow-up task.
+184. [High] Partial: funding and budget tracking. Alert at 75% and 90% of budget spent and at 90, 60 and 30 days before the plan end date.
+185. [Medium] Missing: dignity of risk record (choice, risks explained, safety supports, supporters involved, review date).
+186. [High] Partial: behaviour support plan in practice. Alert before restrictive practice authorisations expire, build a monthly restrictive practice report pack, and require every rostered worker to acknowledge the BSP.
+187. [Medium] Partial: mealtime and swallowing risk. A swallowing concern or plan not followed creates an incident and a mealtime plan review task.
+188. Covered: exit or transfer (Exit Checklist). Verify the final invoice, return of belongings and money, and the request for feedback.
+
+### 31D. Incidents and safeguarding
+189. [Critical] Partial: NDIS reportable incidents and aged care SIRS. Run incidentTriage automatically on save (it is button-only and suggestion-only today). Save provider awareness time and the 24-hour, 5-business-day, final report and SIRS P1/P2 due dates. Send countdown alerts and escalate if a deadline is missed. The manager confirms the decision; the AI only suggests.
+190. [Critical] Partial: the urgent incident alert triggers on severity only. Also trigger on any reportable type, SIRS priority, requires police or WHS notification, so a reportable incident logged as Medium still alerts.
+191. [High] Partial: restrictive practice used. A practice recorded without a current authorisation automatically creates an unauthorised restrictive practice incident (5 business days if no harm, 24 hours if harm).
+192. [Medium] Partial: allegation against a worker. Add a flow: remove from the client (no finding), report, police hold, procedural fairness steps, outcome and screening unit notice if required.
+193. [Medium] Partial: child safety concern. Add a report record (state agency, reference, date and time, reporter) linked to the incident.
+194. [Medium] Partial: death of a client and missing person. Add checklist templates with timed steps and the automatic NDIS and SIRS deadlines.
+195. [High] Partial: data breach. Add a 30-day notifiability assessment deadline with alerts, plus OAIC and individual notification steps.
+196. Covered: emergency or disaster. Verify continuity of supports for at-risk people and a plan review after each event.
+
+### 31E. Complaints and quality
+197. [High] Partial: complaints. Record the acknowledged date and time against an acknowledgement deadline, the outcome the person wants, open disclosure, and that they were told they can contact the NDIS Commission (1800 035 544) or the Aged Care Commission (1800 951 822). Alert before the deadline, not only at 2–3 months.
+198. Covered: continuous improvement register. Verify each item closes with evidence it worked.
+199. Covered: internal file audit (3-monthly). Verify it raises gaps as tasks.
+200. Covered: external audit (NDIS registration audit records, auditors portal). Verify the non-conformity close-out deadlines.
+201. Covered: policy update and sign-off, and risk register review.
+
+### 31F. Your team (Fair Work)
+202. [Medium] Partial: recruitment. Record the award and classification and that the Fair Work Information Statement (and Casual Employment Information Statement) was given.
+203. Covered: pre-employment checks (screening, WWCC, right to work, orientation module, expiry alerts).
+204. Covered: induction (Onboarding Task Pack).
+205. [High] Partial: building a roster. Add award rules to the roster validation rules: break between shifts, minimum engagement, maximum and overtime hours, fatigue, broken shifts, sleepovers, part-time agreed hours and roster notice.
+206. [High] Partial: timesheets and pay. Certify SCHADS and Aged Care Award calculations, check payslips are issued within 1 working day, track super paid within 7 days of payday (Payday Super from 1 July 2026), and keep an underpayment correction log.
+207. Covered: leave requests, including family and domestic violence leave. Verify FDV leave never appears on a payslip.
+208. [High] Missing: flexible work request. Add a record with a 21-day written-response clock and reasonable business grounds.
+209. [High] Missing: casual to permanent (employee choice). Add a record with a 21-day written-response clock.
+210. Covered: training and certificate tracking.
+211. [Medium] Partial: monthly supervision 1:1s. Add a reminder and agreed notes per staff member.
+212. Covered: performance appraisal reminders.
+213. [Medium] Partial: underperformance. Add an improvement plan record (expectations, support, review dates, outcome).
+214. Covered: misconduct and discipline (Investigations). Verify the support person offer and written outcome.
+215. [Low] Partial: staff grievance record and outcome.
+216. [Medium] Partial: bullying and sexual harassment. Add a positive-duty prevention register and reports.
+217. [Medium] Partial: workplace injury. Add the WHS notifiable incident deadline, insurer notification date and a return-to-work plan record.
+218. [Medium] Partial: resignation or termination (Offboarding Task Pack). Add the final pay deadline and the separation certificate within 14 days of request.
+219. [Low] Missing: right to disconnect. Add an on-call agreement and after-hours contact settings.
+
+### 31G. Safety (WHS)
+220. Covered: hazard report (Take Five, risk portal).
+221. Covered: home visit risk assessment (monthly).
+222. Covered: vehicle safety (every shift).
+223. [Medium] Partial: infection outbreak. Add an outbreak record with the public health notification and an aged care IPC lead step.
+224. Covered: emergency drills (6-monthly).
+225. [Low] Partial: psychosocial safety assessment and controls.
+
+### 31H. Money and records
+226. Covered: NDIS claiming (Invoicing Centre). Verify claims match delivered shifts (item 36).
+227. [Medium] Partial: annual price update. Use NDISPriceGuideRelease records instead of the fixed list in src/lib/ndisPriceGuide.js, and create a 1 July update task.
+228. [Medium] Partial: client money handling. Add a ledger reconciled every shift.
+229. [Medium] Missing: aged care fees and monthly Support at Home statements.
+230. Covered: records and privacy. Verify the 7-year NDIS retention period and secure disposal.
+
 ## Completion log — latest implementation
 - Item 39: choosing a participant in the shift form now shows their goals and saves the selected goal on the shift. Regenerated the landing logo with a fully transparent background (no checkerboard pattern) and updated it across the nav, hero and footer.
 - Items 26-28: employee profiles now include an "Intake Logs" tab showing the acknowledgements log, referee checks and buddy shifts from the linked intake case, each panel exportable as CSV. Intake save stays open for drafting, while submission and approval are already blocked until every readiness check is complete (items 22, 31, 32 verified).
@@ -293,4 +373,4 @@ Grouped by module, roughly in build order: branding/landing first, then profiles
 - The master to-do list is now finalised. The only item deliberately left out is native mobile push notifications, which requires the app to be published as a native iOS/Android build first.
 
 ## Build order suggestion
-1 → 2 → 3 → 4–8 (profiles + intake + rostering core) → 9–15 (compliance/risk/safety) → 16–22 (finance/comms/training/meetings) → 23–30.
+1 → 2 → 3 → 4–8 (profiles + intake + rostering core) → 9–15 (compliance/risk/safety) → 16–22 (finance/comms/training/meetings) → 23–30 → 31 (Sherelle Manager Playbook: Critical items 170, 178, 189, 190 first, then High, Medium, Low).
