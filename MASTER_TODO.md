@@ -350,6 +350,12 @@ Source: the Manager's Playbook (59 NDIS, aged care, Fair Work and WHS tasks, eac
 229. [Medium] Missing: aged care fees and monthly Support at Home statements.
 230. Covered: records and privacy. Verify the 7-year NDIS retention period and secure disposal.
 
+### 31I. Also missing (found in the 8 November 2026 review)
+231. [High] Missing: live proof that every scheduled and entity automation (62 workflows) is switched on and delivering. Record the last run, the result and a test email received for each.
+232. [High] Missing: complaint auto-routing. Add an Auto Route: Complaints workflow (register entry plus manager copy the moment a complaint is saved), matching incidents, risks and feedback. Today complaints are only picked up by the 2–3 month aging scan.
+233. [High] Missing: safeguard record automation. Add a workflow on ParticipantSafeguardRecord so medication, mealtime and restrictive practice records trigger items 178, 187 and 191.
+234. [Medium] Missing: incident categories. Add Death, Missing person, Injury, Restrictive practice and Child safety to the incident category list so reports and analytics match the reportable types.
+
 ## Completion log — latest implementation
 - Item 39: choosing a participant in the shift form now shows their goals and saves the selected goal on the shift. Regenerated the landing logo with a fully transparent background (no checkerboard pattern) and updated it across the nav, hero and footer.
 - Items 26-28: employee profiles now include an "Intake Logs" tab showing the acknowledgements log, referee checks and buddy shifts from the linked intake case, each panel exportable as CSV. Intake save stays open for drafting, while submission and approval are already blocked until every readiness check is complete (items 22, 31, 32 verified).
