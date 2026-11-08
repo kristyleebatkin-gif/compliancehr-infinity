@@ -308,7 +308,7 @@ export default function AppLayout() {
                     </button>
                     <Link
                       to="/login"
-                      className="inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/20 px-2.5 text-[10px] font-extrabold text-workspace-navy shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90"
+                      className="inline-flex md:hidden lg:inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/20 px-2.5 text-[10px] font-extrabold text-workspace-navy shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90"
                       style={{ backgroundColor: '#00C6FF' }}
                     >
                       Sign In
@@ -320,14 +320,14 @@ export default function AppLayout() {
                   <div className="flex min-w-0 flex-wrap items-center justify-start gap-1">
                     <Link
                       to="/?demo=book"
-                      className="inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-[#00C6FF]/50 px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(0,114,255,0.55)] transition hover:opacity-90"
+                      className="inline-flex md:hidden lg:inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-[#00C6FF]/50 px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(0,114,255,0.55)] transition hover:opacity-90"
                       style={{ backgroundColor: '#0072FF' }}
                     >
                       Book Demo
                     </Link>
                     <Link
                       to="/register"
-                      className="inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/25 px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(255,46,154,0.55)] transition hover:opacity-90"
+                      className="inline-flex md:hidden lg:inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/25 px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(255,46,154,0.55)] transition hover:opacity-90"
                       style={{ backgroundColor: '#FF2E9A' }}
                     >
                       Start Free
