@@ -66,7 +66,7 @@ function ModuleCard({ mod }) {
       <div className="mt-3 space-y-1.5">
         {mod.breakdown.slice(0, 5).map((item) => (
           <div key={item.label} className="flex items-center gap-2">
-            <span className="w-28 shrink-0 break-words text-xs font-semibold text-foreground">{item.label}</span>
+            <span className="w-28 shrink-0 truncate text-[11px] font-medium text-muted-foreground">{item.label}</span>
             <div className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
               <div className="h-full rounded-full" style={{ width: `${Math.round((item.count / max) * 100)}%`, background: colour }} />
             </div>
@@ -76,7 +76,7 @@ function ModuleCard({ mod }) {
         {mod.breakdown.length === 0 && <p className="text-[11px] text-muted-foreground">No status breakdown yet.</p>}
       </div>
       {extraCounts.length > 0 && (
-        <p className="mt-3 text-xs font-semibold text-foreground">
+        <p className="mt-3 text-[11px] font-medium text-muted-foreground">
           {extraCounts.map(([entity, count]) => `${entity}: ${count}`).join(' · ')}
         </p>
       )}

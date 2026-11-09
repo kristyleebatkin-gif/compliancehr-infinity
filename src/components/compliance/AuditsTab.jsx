@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -34,9 +33,6 @@ const EMPTY = { title: '', audit_area: 'Participant Files', audit_type: 'Interna
  * automatically added to the continuous improvement register.
  */
 export default function AuditsTab() {
-  const { pathname, search } = useLocation();
-  const requestedTab = pathname === '/compliance' ? new URLSearchParams(search).get('auditTab') : null;
-  const initialTab = ['dashboard', 'audits', 'actions', 'checklists', 'calendar', 'log'].includes(requestedTab) ? requestedTab : 'dashboard';
   const { toast } = useToast();
   const { user } = useRole();
   const [audits, setAudits] = useState([]);
@@ -206,7 +202,7 @@ export default function AuditsTab() {
         </div>
       </div>
 
-      <Tabs defaultValue={initialTab}>
+      <Tabs defaultValue="dashboard">
         <TabsList className="h-auto flex-wrap gap-1 rounded-2xl border border-border/60 bg-muted/50 p-1 shadow-sm">
           <TabsTrigger value="dashboard" className="rounded-lg px-2.5 py-1 text-xs font-semibold data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-500 data-[state=active]:to-violet-400 data-[state=active]:text-white">Dashboard</TabsTrigger>
           <TabsTrigger value="audits" className="rounded-lg px-2.5 py-1 text-xs font-semibold data-[state=active]:bg-gradient-to-r data-[state=active]:from-violet-500 data-[state=active]:to-fuchsia-400 data-[state=active]:text-white">Audit register</TabsTrigger>

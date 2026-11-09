@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import ModuleShell from '@/components/module/ModuleShell';
 import ModuleSearchBar from '@/components/module/ModuleSearchBar';
@@ -22,17 +21,13 @@ import MasterSkillsAndInstructionsStudio from '@/components/training/MasterSkill
 import Volunteers from '@/pages/Volunteers';
 import HrMediaGoalsHobbiesHub from '@/components/hr/HrMediaGoalsHobbiesHub';
 import ShorelineCommandCenter from '@/components/hr/ShorelineCommandCenter';
-import ReportGenerator from '@/components/reports/ReportGenerator';
 
 const today = () => new Date().toISOString().slice(0, 10);
 const fmt = (d) => (d ? String(d).slice(0, 10) : '');
 const MANAGER_ROLES = ['admin', 'Provider Administrator', 'Management', 'Compliance Manager', 'Administration', 'Team Leader', 'Human Resources Manager', 'Rostering Coordinator'];
 
 export default function HrHub({ profile, embedded = false } = {}) {
-  const { pathname, search } = useLocation();
-  const requestedTab = !embedded && pathname === '/hr' ? new URLSearchParams(search).get('tab') : null;
-  const [tab, setTab] = useState(() => ['leave', 'reviews'].includes(requestedTab) ? requestedTab : 'leave');
-  useEffect(() => { if (['leave', 'reviews'].includes(requestedTab)) setTab(requestedTab); }, [requestedTab]);
+  const [tab, setTab] = useState('leave');
   const [leaves, setLeaves] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -176,7 +171,6 @@ export default function HrHub({ profile, embedded = false } = {}) {
         tabs={<HrDashboardNavigation isManager={isManager} payrollVisible={payrollVisible} />}
         actions={
           <>
-            {!profile && <ReportGenerator area="hr" isManager={isManager} />}
             <Button
               size="sm"
               className="border-2 border-[#0A2B6D] shadow-sm font-extrabold"

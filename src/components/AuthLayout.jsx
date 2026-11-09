@@ -21,7 +21,7 @@ export default function AuthLayout({ icon: Icon, title, subtitle, footer, childr
       {/* Top White Header Area Only: Canonical 3-Line Brand Logo Lockup Inside One App Design Coloured Border */}
       <div className="w-full bg-white py-3 px-4 border-b-2 border-[#5A00D6]/25 flex flex-col items-center justify-center gap-2">
         <Link to="/" aria-label="ComplianceHR Infinity Home">
-          <BrandLogoLockup size="md" theme="light" showSlogan />
+          <BrandLogoLockup size="md" showSlogan />
         </Link>
         <div className="flex flex-wrap items-center justify-center gap-2">
           <Link

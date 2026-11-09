@@ -151,7 +151,7 @@ export const AUDIT_CATEGORIES_17 = [
 function ComplianceHrInfinityLogoEmblem({ ringClass = 'ring-purple-200/80' }) {
   return (
     <div className="flex flex-col items-center justify-center text-center select-none">
-      <div className={`flex aspect-[13/7] w-28 max-w-full items-center justify-center overflow-hidden rounded-xl bg-white p-0.5 shadow-sm ring-1 ${ringClass}`}>
+      <div className={`flex h-12 w-32 items-center justify-center overflow-hidden rounded-xl bg-white px-2 py-0.5 shadow-sm ring-1 ${ringClass}`}>
         <Image
           src={CHR_LOGO}
           alt="ComplianceHR Infinity — Complete Control. Greater Confidence. Brighter Success."
@@ -431,7 +431,7 @@ export function SingleMasterComplianceAuditForm({
               registered providers and care organisations assess and monitor compliance with the NDIS Practice Standards,
               Provider Registration Rules 2018, WHS, Fair Work and relevant legislation.
             </p>
-            <div className="aspect-[13/7] w-16 shrink-0 overflow-hidden rounded bg-white/70 p-0.5 opacity-45">
+            <div className="h-10 w-16 shrink-0 overflow-hidden rounded bg-white/70 p-0.5 opacity-45">
               <Image
                 src={CHR_LOGO}
                 alt="ComplianceHR Infinity emblem"

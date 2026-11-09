@@ -4,7 +4,6 @@ import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Image } from '@/components/ui/image';
 import { Loader2, Save, UploadCloud, Sparkles } from 'lucide-react';
 import { loadCompanyBranding, saveCompanyBranding } from '@/lib/companyBranding';
 
@@ -93,9 +92,9 @@ export default function BusinessIdentityCard({ actions = null }) {
           The business name, logo, and slogan saved here appear on every generated form, plan, register, wall frame, and staff badge.
         </p>
         <div className="flex flex-wrap items-center gap-5">
-          <div className="flex aspect-[13/7] w-44 max-w-full shrink-0 items-center justify-center overflow-hidden rounded-2xl border-2 border-violet-400 bg-white p-0.5 shadow-md">
+          <div className="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl border-2 border-violet-400 bg-white p-2 shadow-md">
             {logoUrl
-              ? <Image src={logoUrl} alt="Business logo" fittingType="fit" className="h-full w-full object-contain" />
+              ? <img src={logoUrl} alt="Business logo" className="h-full w-full object-contain" />
               : <span className="text-[10px] font-bold text-muted-foreground">No logo</span>}
           </div>
           <div className="grid flex-1 gap-4 sm:grid-cols-2">

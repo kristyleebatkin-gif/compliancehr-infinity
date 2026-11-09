@@ -111,7 +111,7 @@ export default function ScanToPdf({ open, onOpenChange }) {
                 {pages.map((p, i) => (
                   <div key={i} className="group relative overflow-hidden rounded-lg border border-border">
                     <img src={p.dataUrl} alt={`Page ${i + 1}`} className="h-20 w-full object-cover" />
-                    <button onClick={() => setPages((prev) => prev.filter((_, j) => j !== i))} aria-label="Remove page" className="absolute right-1 top-1 rounded-full bg-workspace-navy/60 p-1 text-white opacity-0 transition group-hover:opacity-100">
+                    <button onClick={() => setPages((prev) => prev.filter((_, j) => j !== i))} aria-label="Remove page" className="absolute right-1 top-1 rounded-full bg-black/60 p-1 text-white opacity-0 transition group-hover:opacity-100">
                       <Trash2 className="h-3 w-3" />
                     </button>
                   </div>

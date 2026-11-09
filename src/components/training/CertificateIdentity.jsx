@@ -5,7 +5,7 @@ import { Image } from '@/components/ui/image';
 export default function CertificateIdentity({ companyName, academyName, programName, learnerName, moduleTitle, moduleNumber, group, score, validityMonths }) {
   return <div className="mx-auto min-w-0 max-w-2xl space-y-5">
     <div className="space-y-1.5">
-      <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/e772c8399_logo.jpg" alt="App logo" fittingType="fit" className="mx-auto mb-3 aspect-[13/7] w-28 rounded-xl border border-primary/30 bg-card p-0.5" />
+      <Image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/e772c8399_logo.jpg" alt="App logo" fittingType="fit" className="mx-auto mb-3 h-14 w-14 rounded-full border border-primary/30" />
       <p className="break-words text-xs font-bold uppercase leading-relaxed tracking-wider text-primary">{companyName || 'ComplianceHR'}</p>
       <p className="break-words text-xs font-medium leading-relaxed">{academyName || 'ComplianceHR Training Hub'}</p>
       <p className="break-words text-[11px] leading-relaxed text-muted-foreground">{programName || 'Professional Development Program'}</p>

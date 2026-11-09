@@ -156,7 +156,7 @@ export default function SurveyRegister() {
       )}
 
       {open && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-workspace-navy/50 p-4 sm:items-center" onClick={() => setOpen(false)}>
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 p-4 sm:items-center" onClick={() => setOpen(false)}>
           <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-xl bg-card p-5 shadow-xl" onClick={(e) => e.stopPropagation()}>
             <h3 className="mb-4 text-lg font-semibold">{editingId ? 'Edit survey' : 'New survey'}</h3>
             <div className="grid gap-3">

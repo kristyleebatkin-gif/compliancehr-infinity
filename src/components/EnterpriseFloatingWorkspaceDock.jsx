@@ -31,7 +31,7 @@ export default function EnterpriseFloatingWorkspaceDock({ inline = false }) {
           background: 'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
         }}
       >
-        <div className="flex flex-nowrap items-center justify-center gap-1 rounded-full bg-workspace-navy px-1.5 py-0.5 text-white whitespace-nowrap">
+        <div className="flex flex-nowrap items-center justify-center gap-1 rounded-full bg-black px-1.5 py-0.5 text-white whitespace-nowrap">
           <button
             type="button"
             onClick={() => setAiPopupOpen((v) => !v)}
@@ -74,9 +74,9 @@ export default function EnterpriseFloatingWorkspaceDock({ inline = false }) {
             onClick={scrollToTop}
             aria-label="Scroll to top"
             title="Scroll to top"
-            className="inline-flex h-[19px] w-[19px] shrink-0 items-center justify-center rounded-full border border-white/30 bg-[#00C6FF] text-workspace-navy transition hover:opacity-90"
+            className="inline-flex h-[19px] w-[19px] shrink-0 items-center justify-center rounded-full border border-white/30 bg-[#00C6FF] text-black transition hover:opacity-90"
           >
-            <ArrowUp className="h-2.5 w-2.5 text-workspace-navy" />
+            <ArrowUp className="h-2.5 w-2.5 text-black" />
           </button>
         </div>
       </div>

@@ -140,7 +140,7 @@ export default function ExecutiveScoreDrillDownModal({
       role="dialog"
       aria-modal="true"
       aria-labelledby="score-drilldown-title"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-workspace-navy/50 p-3 sm:p-6 overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-3 sm:p-6 overflow-y-auto"
     >
       <div className="w-full max-w-4xl rounded-2xl border-2 border-[#0A2B6D] bg-white shadow-2xl overflow-hidden">
         {/* Header */}

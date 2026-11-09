@@ -32,8 +32,8 @@ export default function StaffBadgePreview({ branding, staff, compact = false }) 
           <div
             className={
               compact
-                ? 'flex aspect-[13/7] w-12 shrink-0 items-center justify-center overflow-hidden rounded-md'
-                : 'flex aspect-[13/7] w-20 shrink-0 items-center justify-center overflow-hidden rounded-lg'
+                ? 'flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-md'
+                : 'flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg'
             }
             style={GRADIENT_BORDER_STYLE}
           >

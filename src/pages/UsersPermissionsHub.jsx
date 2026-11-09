@@ -6,7 +6,6 @@ import UsersTable from '@/components/users/UsersTable';
 import PermissionMatrix from '@/components/users/PermissionMatrix';
 import RecentActionsPanel from '@/components/dashboard/RecentActionsPanel';
 import PlatformCoreGovernanceCommandStrip from '@/components/users/PlatformCoreGovernanceCommandStrip';
-import ReportGenerator from '@/components/reports/ReportGenerator';
 
 export default function UsersPermissionsHub() {
   return (
@@ -18,7 +17,6 @@ export default function UsersPermissionsHub() {
         moduleKey="users"
       />
 
-      <ReportGenerator area="administration" />
       <PlatformCoreGovernanceCommandStrip />
 
       <section

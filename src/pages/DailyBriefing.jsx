@@ -88,14 +88,12 @@ export default function DailyBriefing() {
       const dueToday = [
         ...tasksDue.items.map((t) => ({
           primary: t.title || 'Untitled task',
-          path: `/tasks?task=${encodeURIComponent(t.id)}`,
           secondary: [t.module, peopleLabel(t.responsible)].filter(Boolean).join(' · '),
           meta: 'Due today',
           tone: 'text-warning',
         })),
         ...checksDue.items.map((c) => ({
           primary: c.title || 'Untitled checklist',
-          path: '/compliance?tab=kits-drills',
           secondary: c.section || 'Compliance check',
           meta: 'Due today',
           tone: 'text-warning',
@@ -105,14 +103,12 @@ export default function DailyBriefing() {
       const overdue = [
         ...tasksOver.items.map((t) => ({
           primary: t.title || 'Untitled task',
-          path: `/tasks?task=${encodeURIComponent(t.id)}`,
           secondary: [t.module, peopleLabel(t.responsible)].filter(Boolean).join(' · '),
           meta: `Overdue by ${overdueDays(t.due_date)} day(s) (was ${t.due_date})`,
           tone: 'text-danger',
         })),
         ...checksOver.items.map((c) => ({
           primary: c.title || 'Untitled checklist',
-          path: '/compliance?tab=kits-drills',
           secondary: c.section || 'Compliance check',
           meta: `Overdue by ${overdueDays(c.next_due_date)} day(s) (was ${c.next_due_date})`,
           tone: 'text-danger',
@@ -122,7 +118,6 @@ export default function DailyBriefing() {
       const toExpiring = (records, kind, label, personField) =>
         (records?.items || []).filter((r) => r && r.expiry_date).map((r) => ({
           kind, label,
-          path: kind === 'Document' ? '/documents?tab=expiry-calendar' : kind === 'Certificate' ? '/certificates' : null,
           person: r[personField],
           name: kind === 'Document' ? (r.document_type || label) : kind === 'Certificate' ? r.module_title : r.insurer,
           title: kind === 'Certificate' ? `${r.module_title || 'Certificate'} — ${r.staff_name || ''}` : kind === 'Insurance' ? r.policy_name : r.title,
@@ -135,7 +130,6 @@ export default function DailyBriefing() {
       ].sort((a, b) => (a.expiry || '').localeCompare(b.expiry || ''));
       const expiring = expiringRaw.map((r) => ({
         primary: r.title || 'Untitled record',
-        path: r.path,
         secondary: `${r.label} · ${r.name || ''} · ${peopleLabel(r.person)}`,
         meta: `Expires ${r.expiry} — in ${Math.max(0, differenceInCalendarDays(parseISO(r.expiry), parseISO(today)))} day(s)`,
         tone: differenceInCalendarDays(parseISO(r.expiry), parseISO(today)) <= 7 ? 'text-danger' : 'text-warning',
@@ -148,7 +142,6 @@ export default function DailyBriefing() {
       ].sort((a, b) => (b.expiry || '').localeCompare(a.expiry || ''));
       const expired = expiredRaw.map((r) => ({
         primary: r.title || 'Untitled record',
-        path: r.path,
         secondary: `${r.label} · ${r.name || ''} · ${peopleLabel(r.person)}`,
         meta: `Expired ${r.expiry}`,
         tone: 'text-danger',
@@ -191,15 +184,15 @@ export default function DailyBriefing() {
   const summaryItems = state?.summaryCounts ? [
     { label: 'Incidents', value: state.summaryCounts.incidents, sub: '24h / 5d NDIS SLA', path: '/incidents', icon: AlertTriangle },
     { label: 'Risks', value: state.summaryCounts.risks, sub: 'ISO 31000 Register', path: '/risks', icon: ShieldAlert },
-    { label: 'Audits', value: state.summaryCounts.audits, sub: 'Scheduled & Active', path: '/compliance?tab=audits&auditTab=audits', icon: ClipboardCheck },
+    { label: 'Audits', value: state.summaryCounts.audits, sub: 'Scheduled & Active', path: '/compliance', icon: ClipboardCheck },
     { label: 'Actions', value: state.summaryCounts.actions, sub: 'Corrective & To-Do', path: '/tasks', icon: ListChecks },
     { label: 'Training', value: state.summaryCounts.training, sub: 'Active LMS Courses', path: '/training', icon: GraduationCap },
-    { label: 'Compliance', value: state.summaryCounts.compliance, sub: 'Open Compliance Items', path: '/compliance?tab=issues', icon: ShieldCheck },
-    { label: 'Expiries', value: state.summaryCounts.expiries, sub: 'Approaching & Past', path: '/documents?tab=expiry-calendar', icon: FileWarning },
-    { label: 'Reviews', value: state.summaryCounts.reviews, sub: 'Performance Reviews', path: '/hr?tab=reviews', icon: Clock },
+    { label: 'Compliance', value: state.summaryCounts.compliance, sub: 'Open Compliance Items', path: '/compliance', icon: ShieldCheck },
+    { label: 'Expiries', value: state.summaryCounts.expiries, sub: 'Approaching & Past', path: '/documents', icon: FileWarning },
+    { label: 'Reviews', value: state.summaryCounts.reviews, sub: 'Performance & Plans', path: '/review-due', icon: Clock },
     { label: 'Escalations', value: state.summaryCounts.escalations, sub: 'Overdue Items', path: '/tasks', icon: CalendarX2 },
-    { label: 'Approvals', value: state.summaryCounts.approvals, sub: 'Pending Leave Requests', path: '/hr?tab=leave', icon: CheckCircle2 },
-    { label: 'Critical Issues', value: state.summaryCounts.critical, sub: 'Immediate Action', path: '/compliance?tab=issues', icon: AlertTriangle },
+    { label: 'Approvals', value: state.summaryCounts.approvals, sub: 'Pending Sign-Offs', path: '/hr', icon: CheckCircle2 },
+    { label: 'Critical Issues', value: state.summaryCounts.critical, sub: 'Immediate Action', path: '/compliance', icon: AlertTriangle },
   ] : [];
 
   return (
@@ -231,7 +224,7 @@ export default function DailyBriefing() {
             src={CHR_LOGO}
             alt="ComplianceHR Infinity"
             fittingType="fit"
-            className="aspect-[13/7] w-20 rounded-xl border border-slate-200 bg-white p-0.5 shadow-2xs"
+            className="h-5 w-14 rounded-md border border-slate-200 bg-white px-1 py-0.5 shadow-2xs"
           />
           <span className="mt-0.5 font-editorial text-[12px] font-extrabold leading-tight tracking-tight text-[#0A2B6D]">
             Compliance
@@ -341,12 +334,6 @@ export default function DailyBriefing() {
                 );
               })}
             </div>
-            <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs font-semibold">
-              <Link className="text-brand hover:underline" to="/compliance?tab=audits&auditTab=actions">Audit actions</Link>
-              <Link className="text-brand hover:underline" to="/compliance?tab=kits-drills">Checklist actions and escalations</Link>
-              <Link className="text-brand hover:underline" to="/documents?tab=expiry-calendar">Document and certificate expiries</Link>
-              <a className="text-brand hover:underline" href="#brief-expiry-records">Insurance expiries in this briefing</a>
-            </div>
           </div>
         )}
       </section>
@@ -354,7 +341,7 @@ export default function DailyBriefing() {
       {loading ? (
         <div className="flex justify-center py-12"><div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-primary" /></div>
       ) : state ? (
-        <div id="brief-expiry-records" className="grid scroll-mt-24 gap-3 lg:grid-cols-2">
+        <div className="grid gap-3 lg:grid-cols-2">
           <BriefingList title="Due today" icon={ListChecks} tone="text-warning" items={state.dueToday} emptyLabel="Nothing due today." />
           <BriefingList title="Overdue" icon={CalendarClock} tone="text-danger" items={state.overdue} emptyLabel="No overdue items." />
           <BriefingList title={`Expiring in ${state.windowDays} days`} icon={FileWarning} tone="text-warning" items={state.expiring} emptyLabel="Nothing expiring in this window." />

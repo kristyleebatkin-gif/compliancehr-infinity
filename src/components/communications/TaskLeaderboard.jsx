@@ -72,9 +72,9 @@ export default function TaskLeaderboard({ compact = true }) {
 
   return (
     <section
-      className="flex flex-col justify-between overflow-hidden rounded-xl border border-[#FF2E9A]/60 bg-[#0A2B6D]/95 p-3 text-white shadow-[0_10px_30px_rgba(10,43,109,0.22)] backdrop-blur-md"
+      className="flex flex-col justify-between overflow-hidden rounded-xl border border-[#FF2E9A]/60 bg-[#081018] p-2.5 text-white shadow-md"
     >
-      <div className="flex items-center justify-between gap-2 border-b border-white/25 pb-1.5">
+      <div className="flex items-center justify-between gap-2 border-b border-white/10 pb-1.5">
         <div className="flex items-center gap-1.5 min-w-0">
           <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded bg-[#FF2E9A] text-white">
             <Trophy className="h-3 w-3 text-white" />
@@ -88,7 +88,7 @@ export default function TaskLeaderboard({ compact = true }) {
           <button
             type="button"
             onClick={() => setExpanded((v) => !v)}
-            className="rounded bg-[#16447A] border border-white/20 px-2 py-0.5 text-[10px] font-bold text-white"
+            className="rounded bg-[#162235] border border-white/20 px-2 py-0.5 text-[10px] font-bold text-white"
           >
             {expanded ? 'Compact' : 'Prizes'}
           </button>
@@ -97,7 +97,7 @@ export default function TaskLeaderboard({ compact = true }) {
 
       <div className="mt-2 space-y-1.5">
         {season.board.length === 0 ? (
-          <p className="rounded-lg border border-white/25 bg-[#16447A] px-2.5 py-1.5 text-[11px] text-slate-300">
+          <p className="rounded-lg border border-white/10 bg-[#162235] px-2.5 py-1.5 text-[11px] text-slate-300">
             Complete a shared task to claim 1st place on the Staff Leaderboard.
           </p>
         ) : (
@@ -108,7 +108,7 @@ export default function TaskLeaderboard({ compact = true }) {
               return (
                 <div
                   key={entry.name}
-                  className="flex items-center justify-between rounded-lg border border-white/30 bg-[#16447A] px-2.5 py-1 text-[11px] text-white"
+                  className="flex items-center justify-between rounded-lg border border-white/15 bg-[#162235] px-2.5 py-1 text-[11px] text-white"
                 >
                   <span className="truncate font-bold text-white">
                     {rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `#${rank}`} {character.emoji} {entry.name}
@@ -132,9 +132,9 @@ export default function TaskLeaderboard({ compact = true }) {
         )}
 
         {expanded && (
-          <div className="grid grid-cols-3 gap-1 pt-1 border-t border-white/25">
+          <div className="grid grid-cols-3 gap-1 pt-1 border-t border-white/10">
             {settings.vouchers.slice(0, 3).map((v) => (
-              <div key={v.rank} className="rounded bg-[#16447A] border border-white/30 px-2 py-1 text-[10px] text-white">
+              <div key={v.rank} className="rounded bg-[#162235] border border-white/15 px-2 py-1 text-[10px] text-white">
                 <Award className="inline h-3 w-3 text-[#FF2E9A] mr-1" />
                 <span className="font-bold">{v.rank === 1 ? '1st:' : v.rank === 2 ? '2nd:' : '3rd:'} {v.label}</span>
               </div>

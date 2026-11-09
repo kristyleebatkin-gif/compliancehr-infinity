@@ -11,7 +11,7 @@ export default function OnlineDocumentReading({ title, code }) {
     <div className="space-y-4">
       <header className="flex items-center gap-4 rounded-xl border border-sky-200 bg-[#F0F7FF] p-4">
         {branding.logoUrl && (
-          <div className="flex aspect-[13/7] w-24 shrink-0 items-center justify-center rounded-xl border border-sky-200 bg-white p-0.5">
+          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-sky-200 bg-white p-1">
             <Image src={branding.logoUrl} alt={`${branding.companyName} logo`} fittingType="fit" className="h-full w-full" />
           </div>
         )}

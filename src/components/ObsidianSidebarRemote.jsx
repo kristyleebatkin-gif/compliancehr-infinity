@@ -417,12 +417,12 @@ export default function ObsidianSidebarRemote({
             aria-label="ComplianceHR Infinity Home"
             className="flex w-full items-center justify-center"
           >
-            <BrandLogoLockup size="xs" theme="dark" showSlogan compactSlogan className="w-full" />
+            <BrandLogoLockup size="xs" theme="dark" showSlogan className="w-full" />
           </Link>
 
           {/* Remote Control Mode Switcher (Blue, Purple, Pink with White Writing) */}
           <div
-            className="grid w-full shrink-0 grid-cols-3 gap-0.5 rounded-lg p-[1.5px]"
+            className="grid w-full shrink-0 grid-cols-3 gap-1 rounded-lg p-[1.5px]"
             style={{ background: BRAND_GRADIENT }}
           >
             <button
@@ -437,7 +437,7 @@ export default function ObsidianSidebarRemote({
                   ) || FOCUSED_5_PILLAR_NAV[0];
                 openMajorSectionInMainView(match, 'pillars5', false);
               }}
-              className={`min-h-[26px] min-w-0 whitespace-nowrap rounded-[6px] px-0.5 py-0.5 text-[10px] font-extrabold tracking-tight text-white transition-all ${
+              className={`min-h-[26px] rounded-[6px] py-0.5 text-[11px] font-extrabold text-white transition-all ${
                 navMode === 'pillars5' ? 'ring-2 ring-white' : 'opacity-90 hover:opacity-100'
               }`}
               style={{
@@ -459,7 +459,7 @@ export default function ObsidianSidebarRemote({
                   ) || PRIMARY_11_OS_NAV[0];
                 openMajorSectionInMainView(match, 'os11', false);
               }}
-              className={`min-h-[26px] min-w-0 whitespace-nowrap rounded-[6px] px-0.5 py-0.5 text-[10px] font-extrabold tracking-tight text-white transition-all ${
+              className={`min-h-[26px] rounded-[6px] py-0.5 text-[11px] font-extrabold text-white transition-all ${
                 navMode === 'os11' ? 'ring-2 ring-white' : 'opacity-90 hover:opacity-100'
               }`}
               style={{
@@ -480,7 +480,7 @@ export default function ObsidianSidebarRemote({
                   })
                 );
               }}
-              className={`min-h-[26px] min-w-0 whitespace-nowrap rounded-[6px] px-0.5 py-0.5 text-[10px] font-extrabold tracking-tight text-white transition-all ${
+              className={`min-h-[26px] rounded-[6px] py-0.5 text-[11px] font-extrabold text-white transition-all ${
                 navMode === 'all' ? 'ring-2 ring-white' : 'opacity-90 hover:opacity-100'
               }`}
               style={{

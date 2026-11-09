@@ -13,12 +13,10 @@ import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import ForgotPassword from '@/pages/ForgotPassword';
 import ResetPassword from '@/pages/ResetPassword';
-import Mfa from '@/pages/Mfa';
 import OAuthConsent from '@/pages/OAuthConsent';
 
 import AppLayout from '@/components/AppLayout';
 import Dashboard from '@/pages/Dashboard';
-import ExecutiveDashboards from '@/pages/ExecutiveDashboards';
 import OperationsCentre from '@/pages/OperationsCentre';
 import LegacyProfileRedirect from '@/components/profile/LegacyProfileRedirect';
 import ComplianceHub from '@/pages/ComplianceHub';
@@ -132,12 +130,10 @@ const AuthenticatedApp = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
-      <Route path="/mfa" element={<Mfa />} />
       <Route path="/oauth/consent" element={<OAuthConsent />} />
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
         <Route element={<AppLayout />}>
           <Route path="/dashboard" element={<RoleGate navKey="dashboard"><Dashboard /></RoleGate>} />
-          <Route path="/executive-dashboards" element={<RoleGate navKey="analytics"><ExecutiveDashboards /></RoleGate>} />
           <Route path="/operations-centre" element={<RoleGate navKey="operations-centre"><OperationsCentre /></RoleGate>} />
           <Route path="/my-work" element={<Navigate to="/my-profile?tab=work" replace />} />
           <Route path="/my-profile" element={<RoleGate navKey="my-profile"><MyProfile /></RoleGate>} />
