@@ -270,6 +270,183 @@ Grouped by module, roughly in build order: branding/landing first, then profiles
 168. Help Centre live, accurate and helpful.
 169. All user guides accurate to their matching module.
 
+## 31. Sherelle — Manager Playbook Module (added 8 November 2026)
+Source: the Manager's Playbook (59 NDIS, aged care, Fair Work and WHS tasks, each with ordered steps, a "done when" test and the rules) and the playbook gap review of this app on 8 November 2026. Goal: Sherelle, as manager, can complete every task end to end in the app, as automatically as possible. Review status per task: Covered = built, verify live; Partial = record exists but no automatic deadline, alert or next step; Missing = not built. Priority tags: [Critical] [High] [Medium] [Low]. An item is done only when the full flow runs live, alerts are delivered to the right role, and completion is recorded as evidence. A reminder is not completion evidence. Rules are a plain-English guide, not legal advice: the provider's compliance lead confirms them before release.
+
+### 31A. Manager foundations
+170. [Critical] Route alerts to roles, not one personal inbox. High Severity Incident Alert, todoSignoffAlert, appraisalReminders, contractVolunteerExpiryReminders and techSupportRequest send only to a hard-coded address. Send to the manager on duty (Sherelle), the Compliance Manager and Provider Administrator, with the owner as backup.
+171. [High] Manager's Playbook page: all 59 tasks, searchable and grouped by area, each showing when it happens, the ordered steps, "done when" and the rules, and linking to the module or form that completes it.
+172. [High] Start any playbook task as a task pack: one to-do task per step, with an owner, due dates taken from the rule (24 hours, 5 business days, 21 days, 30 days) and manager sign-off. Completed steps are recorded as evidence.
+173. [Medium] Annual rules review of the playbook by the compliance lead (NDIS, Aged Care Act 2024, Fair Work, WHS), with a dated sign-off and a reminder 12 months later.
+174. [Low] Link Sherelle's private 15-minute daily coaching app (In Your Corner). No coaching data comes into ComplianceHR.
+
+### 31B. Every shift
+175. Covered: start-of-shift handover. Verify the Daily Brief shows open incidents, new risks and plan changes per site.
+176. Partial: sick call or roster gap. rosterSuggest must also check award rules (item 205) and escalate to on-call when a high-needs shift is still uncovered.
+177. Covered: shift and progress note review (days 1–5 reminders, day 6 to management). Verify the sweep is enabled and emails are delivered.
+178. [Critical] Partial: medication check. A medication record of Refused, Withheld, Omitted or Error automatically creates an Incident (category Medication Error) and alerts the manager.
+179. [Medium] Partial: end-of-shift sign-off checklist (notes done, incidents lodged, handover, client money reconciled, keys and vehicle returned, timesheet matches).
+
+### 31C. Participants and clients
+180. Covered: new NDIS participant intake. Verify the flow ends with a signed service agreement, consents, risk assessment, support plan, matched workers and a first-month review task.
+181. [High] Missing: new aged care client intake. Add the Statement of Rights explained, registered supporters, service or care agreement, Support at Home level, advance care planning offered, consents and an early review task.
+182. Covered: support or care plan review (3-monthly). Verify the review is recorded as completed, not just requested.
+183. [Medium] Partial: change of circumstances. Add a record (what changed, evidence, reassessment requested, date) and a follow-up task.
+184. [High] Partial: funding and budget tracking. Alert at 75% and 90% of budget spent and at 90, 60 and 30 days before the plan end date.
+185. [Medium] Missing: dignity of risk record (choice, risks explained, safety supports, supporters involved, review date).
+186. [High] Partial: behaviour support plan in practice. Alert before restrictive practice authorisations expire, build a monthly restrictive practice report pack, and require every rostered worker to acknowledge the BSP.
+187. [Medium] Partial: mealtime and swallowing risk. A swallowing concern or plan not followed creates an incident and a mealtime plan review task.
+188. Covered: exit or transfer (Exit Checklist). Verify the final invoice, return of belongings and money, and the request for feedback.
+
+### 31D. Incidents and safeguarding
+189. [Critical] Partial: NDIS reportable incidents and aged care SIRS. Run incidentTriage automatically on save (it is button-only and suggestion-only today). Save provider awareness time and the 24-hour, 5-business-day, final report and SIRS P1/P2 due dates. Send countdown alerts and escalate if a deadline is missed. The manager confirms the decision; the AI only suggests.
+190. [Critical] Partial: the urgent incident alert triggers on severity only. Also trigger on any reportable type, SIRS priority, requires police or WHS notification, so a reportable incident logged as Medium still alerts.
+191. [High] Partial: restrictive practice used. A practice recorded without a current authorisation automatically creates an unauthorised restrictive practice incident (5 business days if no harm, 24 hours if harm).
+192. [Medium] Partial: allegation against a worker. Add a flow: remove from the client (no finding), report, police hold, procedural fairness steps, outcome and screening unit notice if required.
+193. [Medium] Partial: child safety concern. Add a report record (state agency, reference, date and time, reporter) linked to the incident.
+194. [Medium] Partial: death of a client and missing person. Add checklist templates with timed steps and the automatic NDIS and SIRS deadlines.
+195. [High] Partial: data breach. Add a 30-day notifiability assessment deadline with alerts, plus OAIC and individual notification steps.
+196. Covered: emergency or disaster. Verify continuity of supports for at-risk people and a plan review after each event.
+
+### 31E. Complaints and quality
+197. [High] Partial: complaints. Record the acknowledged date and time against an acknowledgement deadline, the outcome the person wants, open disclosure, and that they were told they can contact the NDIS Commission (1800 035 544) or the Aged Care Commission (1800 951 822). Alert before the deadline, not only at 2–3 months.
+198. Covered: continuous improvement register. Verify each item closes with evidence it worked.
+199. Covered: internal file audit (3-monthly). Verify it raises gaps as tasks.
+200. Covered: external audit (NDIS registration audit records, auditors portal). Verify the non-conformity close-out deadlines.
+201. Covered: policy update and sign-off, and risk register review.
+
+### 31F. Your team (Fair Work)
+202. [Medium] Partial: recruitment. Record the award and classification and that the Fair Work Information Statement (and Casual Employment Information Statement) was given.
+203. Covered: pre-employment checks (screening, WWCC, right to work, orientation module, expiry alerts).
+204. Covered: induction (Onboarding Task Pack).
+205. [High] Partial: building a roster. Add award rules to the roster validation rules: break between shifts, minimum engagement, maximum and overtime hours, fatigue, broken shifts, sleepovers, part-time agreed hours and roster notice.
+206. [High] Partial: timesheets and pay. Certify SCHADS and Aged Care Award calculations, check payslips are issued within 1 working day, track super paid within 7 days of payday (Payday Super from 1 July 2026), and keep an underpayment correction log.
+207. Covered: leave requests, including family and domestic violence leave. Verify FDV leave never appears on a payslip.
+208. [High] Missing: flexible work request. Add a record with a 21-day written-response clock and reasonable business grounds.
+209. [High] Missing: casual to permanent (employee choice). Add a record with a 21-day written-response clock.
+210. Covered: training and certificate tracking.
+211. [Medium] Partial: monthly supervision 1:1s. Add a reminder and agreed notes per staff member.
+212. Covered: performance appraisal reminders.
+213. [Medium] Partial: underperformance. Add an improvement plan record (expectations, support, review dates, outcome).
+214. Covered: misconduct and discipline (Investigations). Verify the support person offer and written outcome.
+215. [Low] Partial: staff grievance record and outcome.
+216. [Medium] Partial: bullying and sexual harassment. Add a positive-duty prevention register and reports.
+217. [Medium] Partial: workplace injury. Add the WHS notifiable incident deadline, insurer notification date and a return-to-work plan record.
+218. [Medium] Partial: resignation or termination (Offboarding Task Pack). Add the final pay deadline and the separation certificate within 14 days of request.
+219. [Low] Missing: right to disconnect. Add an on-call agreement and after-hours contact settings.
+
+### 31G. Safety (WHS)
+220. Covered: hazard report (Take Five, risk portal).
+221. Covered: home visit risk assessment (monthly).
+222. Covered: vehicle safety (every shift).
+223. [Medium] Partial: infection outbreak. Add an outbreak record with the public health notification and an aged care IPC lead step.
+224. Covered: emergency drills (6-monthly).
+225. [Low] Partial: psychosocial safety assessment and controls.
+
+### 31H. Money and records
+226. Covered: NDIS claiming (Invoicing Centre). Verify claims match delivered shifts (item 36).
+227. [Medium] Partial: annual price update. Use NDISPriceGuideRelease records instead of the fixed list in src/lib/ndisPriceGuide.js, and create a 1 July update task.
+228. [Medium] Partial: client money handling. Add a ledger reconciled every shift.
+229. [Medium] Missing: aged care fees and monthly Support at Home statements.
+230. Covered: records and privacy. Verify the 7-year NDIS retention period and secure disposal.
+
+### 31I. Also missing (found in the 8 November 2026 review)
+231. [High] Missing: live proof that every scheduled and entity automation (62 workflows) is switched on and delivering. Record the last run, the result and a test email received for each.
+232. [High] Missing: complaint auto-routing. Add an Auto Route: Complaints workflow (register entry plus manager copy the moment a complaint is saved), matching incidents, risks and feedback. Today complaints are only picked up by the 2–3 month aging scan.
+233. [High] Missing: safeguard record automation. Add a workflow on ParticipantSafeguardRecord so medication, mealtime and restrictive practice records trigger items 178, 187 and 191.
+234. [Medium] Missing: incident categories. Add Death, Missing person, Injury, Restrictive practice and Child safety to the incident category list so reports and analytics match the reportable types.
+
+### 31J. Design notes for the Critical items (draft, still designing; nothing built)
+These notes reuse what already exists: `base44/shared/routedManagementAlerts.ts` (in-app notifications by role), `base44/shared/gmailSend.ts` (email), `autoRouteEntry`, `incidentTriage`, the Notification, AuditLog and TodoTask entities, and `base44/shared/reminders.ts` (Sydney time).
+
+**Item 170: alerts go to roles, not one inbox**
+- One shared recipient list: extend `routedManagementAlerts.ts` so it returns in-app recipients and email addresses by role for each alert type, and add a Manager on duty slot (Sherelle by default) from BusinessDetails.
+- Backup: a BusinessDetails setting `alert_backup_email` (the owner) is copied on Critical alerts only, so the owner isn't flooded.
+- Replace the 5 hard-coded addresses (High Severity Incident Alert, todoSignoffAlert, appraisalReminders, contractVolunteerExpiryReminders, techSupportRequest) with calls to the shared list.
+- Every send writes an AuditLog entry (who, what, when, record link) as evidence of delivery.
+- If no active person holds the role, send to the backup and raise a compliance issue: "no one holds role X".
+- Acceptance: a test record reaches each role holder in-app and by email, appears in the audit log, and the hard-coded address is gone.
+
+**Item 178: medication problems become incidents**
+- Trigger: a workflow on ParticipantSafeguardRecord create or update where the record type is Medication Administration and the outcome is Error, Omitted, Refused or Withheld.
+- Error or Omitted: a new function creates an Incident (category Medication Error; severity High for Error, Medium for Omitted), links `incident_id` back, and copies the participant, staff, date and medication. Duplicates are prevented on the source record id. `autoRouteEntry` then sends the manager copy.
+- Refused or Withheld: the medication plan may expect this, so create a manager follow-up task instead. Create an incident if it happens 2 or more times in 7 days for the same person, or if the plan says to escalate.
+- Acceptance: each outcome produces the right record exactly once, linked both ways.
+
+**Item 189: reportable incident deadlines run themselves**
+- Awareness time: when an incident is saved, if `provider_awareness_at` is empty, set it to the time it was saved. Managers can correct it, and every change is logged.
+- AI suggestion: run `incidentTriage` on the server automatically and store its suggestion and reasons in new fields `triage_suggestion` and `triage_status` (Suggested, Confirmed, Overridden). The AI never decides; a manager confirms or overrides with a reason.
+- Holding deadline: if the AI suggests reportable or unsure, set a 24-hour notification deadline straight away and alert, so time isn't lost while waiting for a decision.
+- Final deadlines: work them out with fixed rules (not AI) from the confirmed type. 24 hours from awareness; 5 business days for an unauthorised restrictive practice with no harm; the 5-day report; the final report when the Commission asks; SIRS Priority 1 at 24 hours and Priority 2 at 30 days.
+- Deadline sweep: a scheduled check every 15 minutes, Sydney time, alerts at 12 hours, 4 hours and 1 hour left. At a missed deadline it escalates to the Provider Administrator plus backup and requires `late_notification_reason`. Daily checks cover the 5-day and final reports.
+- Done when the matching submitted field is filled in (`initial_notified_at`, `five_day_follow_up_submitted`, `final_report_submitted`, `sirs_notified_at`) and the Commission reference is recorded.
+- Acceptance: test incidents for each type produce the correct deadlines and alerts. Confirmation and override are logged.
+
+**Item 190: urgent alert triggers on reportability, not severity only**
+- Widen the High Severity Incident Alert condition: severity High or Critical, OR `requires_ndis_report`, OR `sirs_reportable`, OR a reportable type other than Not assessed or Not reportable, OR `requires_police`, OR `whs_notification_required`.
+- Trigger on create and on update when one of these first becomes true, sending once per record.
+- Recipients come from item 170.
+- Acceptance: a reportable incident logged as Medium alerts once, and a Low non-reportable incident does not.
+
+**Decisions still needed from the owner (before build)**
+1. Who is Manager on duty after hours: Sherelle always, or a roster on-call?
+2. Should Refused or Withheld medication ever create an incident on the first occurrence?
+3. Should the owner backup receive Critical alerts only, or all alerts?
+4. What wording should the overdue escalation use, and who signs off a late notification reason?
+5. Which build path: a Base44 branch with test records, then release (recommended)?
+
+### 31K. Quotes, invoicing and wages: Xero and ShiftCare parity plus AI assistance (design, added 8 November 2026)
+Standard: quotes and invoicing match what Xero and ShiftCare offer, and **wages match client shifts exactly**. One delivered, approved shift is the single source for the wage line, the invoice or claim line and the shift note. Feature lists come from general knowledge of Xero and ShiftCare. Confirm their current features before build.
+
+Already built (keep and verify): the Quote Centre (Draft, Sent, Accepted, Declined, Expired; branded PDF; email; win rate), the Invoicing Centre (invoice builder, preview, PDF, print, email, CSV export, PRODA claim export, aged receivables, bank reconciliation with bank rules, finance summary), ProviderInvoice (built from shifts, support item codes, kilometres, GST, price guide release, AI validation), Shift (clock in and out with location, unpaid break, approval, invoiced flag and invoice link), Payslip (totals only), PayRun, StaffPayrollDetail, PayrollChangeLog, payslip email, and AI line items (aiLineItems) for quotes and invoices.
+
+Found in review:
+- Two invoice registers (Invoice and ProviderInvoice). Pick one as the source.
+- Invoice status is only Draft, Sent, Paid or Overdue.
+- Invoices can be hard-deleted.
+- The PRODA export in BestInClassBenchmarkSuite builds a sample claim row (CHR-PRODA-001).
+- A quote is accepted only by signing and returning the PDF.
+- A quote can't be turned into an invoice.
+- Payslips can't be traced back to the shifts behind them.
+
+**Wages match client shifts exactly**
+235. [Critical] Shift is the single source. Each payslip and pay run gets wage lines, one per shift (shift_id, participant, date, actual start and end from clock events, unpaid break, overnight split, pay item, rate, allowances, kilometres, total). Payslip totals are the sum of these lines and can't be typed in.
+236. [Critical] Three-way match before release. For every shift in the period: delivered and approved shift, wage line and invoice or claim line must agree on shift_id, date, start, end, break, hours and kilometres. A mismatch, missing line or unapproved shift blocks the pay run and invoice batch and shows an exceptions list. A manager can override with a reason, which is logged.
+237. [High] Rounding and time rules are set once and shared by wages and billing: minimum engagement, overnight and timezone, public holidays, cancellations. Staff allowances and participant billable items stay separate rule sets, each with its own effective dates and approver.
+238. [High] Corrections flow both ways. Editing an approved shift after pay or billing creates a correction (back-pay or deduction line, credit note or adjustment claim) linked to the original. Paid records are never edited in place.
+239. [High] Cancellations. A short-notice client cancellation is billed per NDIS rules and the service agreement, and the worker is paid per the award. Both come from the one cancelled-shift record.
+240. [Medium] Reports: wages vs billing per shift, participant and worker; margin per shift; unbilled delivered shifts; unpaid delivered shifts.
+
+**Quotes (Xero-style)**
+241. [High] Online quote acceptance. The client opens a secure link, reviews, accepts or declines with a typed name, date and time, and adds a comment. The status updates automatically and the manager is told.
+242. [High] Turn an accepted quote into a service agreement draft and, later, an invoice, copying the lines. Keep the quote history and versions (revise and resend).
+243. [Medium] Quote templates, saved line items, discounts, terms, expiry reminders, follow-up email before expiry, and a quote-to-shifts budget check against the participant's plan.
+
+**Invoices (Xero-style)**
+244. [High] Full invoice life cycle: Draft, Awaiting approval, Approved, Sent, Partially paid, Paid, Overdue, Voided, Credited. Replace delete with void, with a reason and an audit log entry. Number invoices in sequence with no reuse.
+245. [High] Payments: part payments, overpayments, prepayments, payment date and method, allocation to invoices, receipts emailed, and matching to bank statement lines.
+246. [High] Credit notes and refunds linked to the original invoice and claim.
+247. [Medium] Repeating invoices (weekly or fortnightly from approved shifts), batch create and send, and scheduled automatic overdue reminders (for example 7, 14 and 30 days).
+248. [Medium] Customer statements (monthly, activity or outstanding), branded themes, attachments, invoice viewed or sent history, and a pay-online link (Stripe or similar) where self-managed or private clients pay directly.
+249. [Medium] Accounting sync: two-way sync with Xero (contacts, invoices, payments, credit notes, pay items), or a verified export, with a sync log. GST coding: NDIS supports are GST-free; other supplies carry GST.
+
+**NDIS and aged care billing (ShiftCare-style)**
+250. [Critical] Remove the sample PRODA claim row. Bulk payment request files are built only from real approved, delivered, unclaimed shifts. Each claim line records its claim reference.
+251. [High] Billing by funding type: NDIA-managed (bulk payment request upload, then import the payment results to mark each line Paid or Rejected with the reason), plan-managed (invoice to the plan manager with participant details), self-managed (invoice to the participant), and aged care Support at Home (monthly statements and client contributions).
+252. [High] Price limits by date: rates come from NDISPriceGuideRelease by service date, with time-of-day, weekday, Saturday, Sunday and public holiday items, and shared or group support ratios. Block any claim above the price limit for its date and region.
+253. [High] Plan budget checks at invoice time: the funds remaining for each support category, with warnings before the budget or the plan end date is passed (links to item 184).
+254. [Medium] Travel: provider travel (labour) and non-labour travel kilometres claimed by NDIS rules. Worker kilometres are paid by the award from the same trip record.
+255. [Medium] Rejected claims queue with reason, fix and resubmit, and an ageing view of unpaid NDIA claims.
+
+**AI assistance (it suggests; a person approves)**
+256. [High] AI billing check before send or claim: flags wrong support item for the time or day, rate above limit, duplicate claim, shift without a note, wage or billing mismatch, and plan budget overrun, each with the reason. This builds on ProviderInvoice ai_validation_status.
+257. [Medium] AI quote builder: from a plain description ("2 hours weekday personal care 3 times a week for 12 weeks") it drafts lines from the current price guide (extending aiLineItems), the weekly and total cost and the plan budget impact.
+258. [Medium] AI payroll check: explains each pay line in plain English (which award rule and why), flags unusual hours, missing breaks and fatigue risks, and drafts the exceptions summary for the manager.
+259. [Medium] AI collections assistant: drafts polite overdue reminders and statements in the business's voice, and suggests a follow-up order by age and amount. A person always presses send.
+260. [Low] AI finance Q&A in the personal assistant agent: "what's unbilled this week?", "which claims were rejected and why?", "wages vs billing for March". It reads only, and its answers link to the records they came from.
+
+Acceptance for 31K: a test fortnight of shifts produces payslip wage lines, invoices and a claim file that agree line by line. Every mismatch is caught. No sample or invented data appears in any output. Each AI suggestion is logged with the person who approved it.
+
 ## Completion log — latest implementation
 - Item 39: choosing a participant in the shift form now shows their goals and saves the selected goal on the shift. Regenerated the landing logo with a fully transparent background (no checkerboard pattern) and updated it across the nav, hero and footer.
 - Items 26-28: employee profiles now include an "Intake Logs" tab showing the acknowledgements log, referee checks and buddy shifts from the linked intake case, each panel exportable as CSV. Intake save stays open for drafting, while submission and approval are already blocked until every readiness check is complete (items 22, 31, 32 verified).
@@ -293,4 +470,4 @@ Grouped by module, roughly in build order: branding/landing first, then profiles
 - The master to-do list is now finalised. The only item deliberately left out is native mobile push notifications, which requires the app to be published as a native iOS/Android build first.
 
 ## Build order suggestion
-1 → 2 → 3 → 4–8 (profiles + intake + rostering core) → 9–15 (compliance/risk/safety) → 16–22 (finance/comms/training/meetings) → 23–30.
+1 → 2 → 3 → 4–8 (profiles + intake + rostering core) → 9–15 (compliance/risk/safety) → 16–22 (finance/comms/training/meetings) → 23–30 → 31 (Sherelle Manager Playbook: Critical items 170, 178, 189, 190, 235, 236, 250 first, then High, Medium, Low).

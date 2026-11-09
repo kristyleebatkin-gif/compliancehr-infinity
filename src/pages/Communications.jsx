@@ -40,6 +40,7 @@ import CommWeatherBar from '@/components/communications/CommWeatherBar';
 import RosterMiniOverview from '@/components/communications/RosterMiniOverview';
 import { CommunicationAndMailboxTabs } from '@/components/safe/ExecutiveWallScene';
 import '@/components/communications/commCentreTheme.css';
+import ReportGenerator from '@/components/reports/ReportGenerator';
 
 const BRAND_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #A855F7 62%, #FF2E9A 100%)';
@@ -138,6 +139,8 @@ function Communications({ profile, profileKind } = {}) {
             </div>
           </div>
         </header>
+
+        <ReportGenerator area="communication" restricted={restricted} profile={effProfile ? { ...effProfile, kind: effKind } : null} />
 
         {/* 2. Four Exciting & Professional Dashboards for Time, Date, Weather & Active Care Services */}
         <CommWeatherBar />

@@ -96,25 +96,36 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
           </button>
         </div>
       ) : (
-        <div className="mx-auto flex max-w-[1440px] flex-col items-center justify-end gap-0.5 bg-[#0A2B6D]/95 px-2 pt-1 pb-0.5 sm:px-4 lg:px-6">
+        <div className="mx-auto flex max-w-[1440px] flex-col items-center justify-center gap-0.5 bg-[#0A2B6D]/95 px-2 pt-1 pb-0.5 sm:px-4 md:flex-row md:flex-wrap md:items-end md:gap-3 lg:px-6">
           {/* Top / Centre: Larger Business Logo + Name + Slogan */}
           <Link
             to="/"
-            className="inline-flex flex-col items-center justify-end text-center"
+            className="inline-flex max-w-full shrink-0 flex-col items-center justify-end text-center"
             aria-label="ComplianceHR Infinity home"
           >
-            <BrandLogoLockup size="md" theme="dark" showSlogan={true} />
+            <BrandLogoLockup size="md" theme="dark" showSlogan compactSlogan />
           </Link>
 
           {/* Single Row Under Logo: Sign In, Book Demo, Participant Profiles, Both Views & Start Free */}
-          <div className="flex w-full flex-wrap items-center justify-center gap-1.5 py-0.5">
-            <Link
-              to="/login"
-              className="inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/20 px-2.5 text-[10px] font-extrabold text-black shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90"
-              style={{ backgroundColor: '#00C6FF' }}
-            >
-              Sign In
-            </Link>
+          <div className="flex w-full max-w-full flex-wrap items-end justify-center gap-1.5 py-0.5 md:w-auto md:shrink-0">
+            <div className="flex shrink-0 flex-col items-center gap-1">
+              <button
+                type="button"
+                className="xl:hidden inline-flex items-center justify-center rounded-lg border border-[#00C6FF] bg-[#0A2B6D]/95 p-1 text-[#00C6FF]"
+                aria-label={open ? 'Close menu' : 'Open menu'}
+                aria-expanded={open}
+                onClick={() => setOpen(!open)}
+              >
+                {open ? <X className="h-3.5 w-3.5" /> : <Menu className="h-3.5 w-3.5" />}
+              </button>
+              <Link
+                to="/login"
+                className="inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/20 px-2.5 text-[10px] font-extrabold text-workspace-navy shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90"
+                style={{ backgroundColor: '#00C6FF' }}
+              >
+                Sign In
+              </Link>
+            </div>
 
             <button
               type="button"
@@ -165,15 +176,6 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
               <ArrowRight className="h-3 w-3 shrink-0 text-white" />
             </Link>
 
-            <button
-              type="button"
-              className="xl:hidden inline-flex items-center justify-center rounded-lg border border-[#00C6FF] bg-[#0A2B6D]/95 p-1 text-[#00C6FF]"
-              aria-label={open ? 'Close menu' : 'Open menu'}
-              aria-expanded={open}
-              onClick={() => setOpen(!open)}
-            >
-              {open ? <X className="h-3.5 w-3.5" /> : <Menu className="h-3.5 w-3.5" />}
-            </button>
           </div>
         </div>
       )}

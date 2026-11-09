@@ -127,7 +127,7 @@ export function CompanySafeMaterialPanel({ companyName = 'ComplianceHR Infinity'
           </Link>
         </div>
         <div className="mb-2 flex flex-col items-center justify-center rounded-xl border border-blue-200 bg-white p-2 text-center shadow-2xs">
-          <div className="h-10 w-24 shrink-0 overflow-hidden bg-white">
+          <div className="aspect-[13/7] w-24 shrink-0 overflow-hidden rounded-xl border bg-white p-0.5">
             <Image src={logoUrl || DEFAULT_LOGO} alt="Logo" fittingType="fit" className="h-full w-full object-contain" />
           </div>
           <div className="mt-1 truncate text-xs font-extrabold text-blue-950">ComplianceHR Infinity</div>
@@ -207,7 +207,7 @@ export function CompanySafeMaterialPanel({ companyName = 'ComplianceHR Infinity'
         </div>
         <div className="rounded-xl border border-purple-300 bg-white p-2 shadow-sm">
           <div className="flex items-center gap-2 rounded-lg p-1.5 text-white" style={{ background: SQUISHED_GRADIENT }}>
-            <div className="h-7 w-7 shrink-0 overflow-hidden rounded-lg bg-white p-0.5">
+            <div className="aspect-[13/7] w-12 shrink-0 overflow-hidden rounded-lg bg-white p-0.5">
               <Image src={logoUrl || DEFAULT_LOGO} alt="Badge Logo" fittingType="fit" className="h-full w-full object-contain" />
             </div>
             <div className="min-w-0">

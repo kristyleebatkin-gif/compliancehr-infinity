@@ -16,7 +16,10 @@ import NdisAuditPack from '@/components/governance/NdisAuditPack';
 import CareSphereSmeGarmSuite from '@/components/enterprise/CareSphereSmeGarmSuite';
 
 export default function GovernanceLayer() {
-  const [tab, setTab] = useState('sme-garm');
+  const [tab, setTab] = useState(() => {
+    const requested = new URLSearchParams(window.location.search).get('tab');
+    return ['sme-garm', 'lifecycle', 'objects', 'document-control', 'delegations', 'acknowledgements', 'registers', 'links', 'standards', 'evidence-chain', 'assurance', 'audit-pack'].includes(requested) ? requested : 'sme-garm';
+  });
 
   return (
     <div className="mx-auto w-full max-w-[1440px] space-y-4">

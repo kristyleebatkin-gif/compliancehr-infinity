@@ -79,11 +79,11 @@ export default function ComplianceStatusBoard() {
           {title}
           <ArrowUpRight className="h-3.5 w-3.5 text-muted-foreground" />
         </Link>
-        <span className="text-xs font-semibold tabular-nums text-foreground/55">{doneLabel}</span>
+        <span className="text-xs font-semibold tabular-nums text-foreground/80">{doneLabel}</span>
       </div>
 
       {segments.length === 0 ? (
-        <div className="mt-3 flex items-center gap-2 rounded-lg border border-dashed border-border/60 bg-card px-3 py-4 text-xs text-foreground/50">
+        <div className="mt-3 flex items-center gap-2 rounded-lg border border-dashed border-border/60 bg-card px-3 py-4 text-xs text-foreground/80">
           <ListChecks className="h-4 w-4 text-safe" />{empty}
         </div>
       ) : (

@@ -54,7 +54,7 @@ function StatCard({ icon: Icon, label, value, tone, to }) {
       <div>
         <div className="text-3xl font-extrabold leading-none" style={{ color: tone }}>{value}</div>
         <div className="mt-1 text-sm font-semibold text-foreground/70">{label}</div>
-        <div className="mt-1 text-[11px] font-medium text-foreground/45">Open matching records</div>
+        <div className="mt-1 text-[11px] font-medium text-foreground/80">Open matching records</div>
       </div>
     </Link>
   );
@@ -102,7 +102,7 @@ export default function DashboardCharts() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center gap-2 rounded-2xl border border-border/60 bg-card p-10 text-sm text-foreground/50">
+      <div className="flex items-center justify-center gap-2 rounded-2xl border border-border/60 bg-card p-10 text-sm text-foreground/80">
         <Loader2 className="h-4 w-4 animate-spin" /> Loading insights…
       </div>
     );
@@ -124,7 +124,7 @@ export default function DashboardCharts() {
             </span>
             Incidents by Status
           </div>
-          <div className="mb-4 pl-10 text-xs font-medium text-foreground/55">Distribution of all tracked incidents</div>
+          <div className="mb-4 pl-10 text-xs font-medium text-foreground/80">Distribution of all tracked incidents</div>
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={incidentByStatus} margin={{ top: 4, right: 8, left: -16, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
@@ -148,7 +148,7 @@ export default function DashboardCharts() {
             </span>
             Risks by Rating
           </div>
-          <div className="mb-4 pl-10 text-xs font-medium text-foreground/55">Breakdown of all risks by severity</div>
+          <div className="mb-4 pl-10 text-xs font-medium text-foreground/80">Breakdown of all risks by severity</div>
           <ResponsiveContainer width="100%" height={220}>
             <PieChart>
               <Pie data={riskByRating} dataKey="count" nameKey="rating" cx="50%" cy="50%" innerRadius={50} outerRadius={80} paddingAngle={2}>
@@ -171,9 +171,9 @@ export default function DashboardCharts() {
           </span>
           High-Risk Items by Category
         </div>
-        <div className="mb-4 pl-10 text-xs font-medium text-foreground/55">High &amp; Critical risks grouped by category to show where mitigation is needed most</div>
+        <div className="mb-4 pl-10 text-xs font-medium text-foreground/80">High &amp; Critical risks grouped by category to show where mitigation is needed most</div>
         {highRiskByCategory.length === 0 ? (
-          <div className="flex items-center justify-center gap-2 py-8 text-sm text-foreground/50">
+          <div className="flex items-center justify-center gap-2 py-8 text-sm text-foreground/80">
             <ShieldAlert className="h-4 w-4" /> No high-risk items recorded
           </div>
         ) : (

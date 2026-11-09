@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 
 export default function BriefingList({ title, icon: Icon, tone = 'text-foreground', items = [], emptyLabel = 'All clear' }) {
@@ -18,7 +19,7 @@ export default function BriefingList({ title, icon: Icon, tone = 'text-foregroun
           <ul className="mt-2 max-h-72 divide-y divide-border/60 overflow-y-auto">
             {items.map((it, i) => (
               <li key={i} className="py-2">
-                <div className="text-sm font-medium leading-snug">{it.primary}</div>
+                {it.path ? <Link to={it.path} className="text-sm font-medium leading-snug text-brand hover:underline">{it.primary}</Link> : <div className="text-sm font-medium leading-snug">{it.primary}</div>}
                 {it.secondary && <div className="text-xs text-muted-foreground">{it.secondary}</div>}
                 {it.meta && <div className={`text-xs font-semibold ${it.tone || tone}`}>{it.meta}</div>}
               </li>

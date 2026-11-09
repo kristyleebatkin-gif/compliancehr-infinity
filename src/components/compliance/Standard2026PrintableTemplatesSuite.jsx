@@ -312,7 +312,7 @@ export default function Standard2026PrintableTemplatesSuite() {
         {/* Official 2026 Document Header Band — Clean Solid Dark Blue & Light Blue (No Gradient) */}
         <div className="flex flex-wrap items-center justify-between gap-2 border-b-4 border-[#0072FF] bg-[#0A2B6D] px-4 py-3.5 text-white">
           <div className="flex items-center gap-2.5 min-w-0">
-            <div className="flex h-11 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-white p-0.5 shadow">
+            <div className="flex aspect-[13/7] w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white p-0.5 shadow">
               <Image
                 src={CHR_LOGO}
                 alt="ComplianceHR Infinity"

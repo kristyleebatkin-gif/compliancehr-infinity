@@ -81,7 +81,7 @@ export default function AttentionPanel() {
             </span>
             What needs your attention
           </div>
-          <div className="text-xs text-foreground/50">Overdue and due-soon items across your compliance registers</div>
+          <div className="text-xs text-foreground/80">Overdue and due-soon items across your compliance registers</div>
         </div>
         {data && !loading && data.total > 0 && (
           <span className="rounded-full bg-gradient-to-r from-orange-500 to-rose-500 px-3 py-1.5 text-xs font-bold text-white shadow-sm">
@@ -91,14 +91,14 @@ export default function AttentionPanel() {
       </div>
 
       {loading ? (
-        <div className="flex items-center justify-center py-8 text-foreground/40">
+        <div className="flex items-center justify-center py-8 text-foreground/80">
           <Loader2 className="h-5 w-5 animate-spin" />
         </div>
       ) : data.total === 0 ? (
         <div className="flex flex-col items-center justify-center py-8 text-center">
           <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 text-white shadow-lg"><CheckCircle2 className="h-6 w-6" /></div>
           <div className="text-sm font-medium">You're all caught up</div>
-          <div className="mt-0.5 text-xs text-foreground/50">No overdue or expiring compliance items right now.</div>
+          <div className="mt-0.5 text-xs text-foreground/80">No overdue or expiring compliance items right now.</div>
         </div>
       ) : (
         <>
@@ -117,7 +117,7 @@ export default function AttentionPanel() {
 
           {data.top.length > 0 && (
             <div className="mt-4">
-              <div className="mb-2 text-xs font-semibold text-foreground/50">Most urgent</div>
+              <div className="mb-2 text-xs font-semibold text-foreground/80">Most urgent</div>
               <div className="space-y-1.5">
                 {data.top.map((t, i) => (
                   <Link key={i} to={t.to} className="flex items-center justify-between rounded-lg border border-rose-200 bg-gradient-to-r from-rose-50 to-orange-50 px-3 py-2 transition-all hover:-translate-y-0.5 hover:shadow-sm dark:border-rose-900 dark:from-rose-950/20 dark:to-orange-950/20">
@@ -125,7 +125,7 @@ export default function AttentionPanel() {
                       <span className={`h-2 w-2 rounded-full ${t.tone === 'danger' ? 'bg-danger' : 'bg-warning'}`} />
                       <span className="text-sm text-foreground/80 line-clamp-1">{t.label}</span>
                     </div>
-                    {t.date && <span className="text-xs text-foreground/40">{t.date}</span>}
+                    {t.date && <span className="text-xs text-foreground/80">{t.date}</span>}
                   </Link>
                 ))}
               </div>

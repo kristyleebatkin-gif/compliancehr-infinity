@@ -200,17 +200,17 @@ export default function RemoteAccessVpnHub() {
 
   return (
     <div className="mx-auto max-w-[1440px] space-y-4 text-white">
-      {/* Top Hero Command Deck: Black, Aqua, Blue & Pink */}
+      {/* Top Hero Command Deck */}
       <div
         className="rounded-2xl p-[2px] shadow-xl"
         style={{
           background: 'linear-gradient(120deg, #00C6FF 0%, #0072FF 40%, #A855F7 70%, #FF2E9A 100%)',
         }}
       >
-        <div className="rounded-[14px] bg-black p-4 sm:p-6">
+        <div className="rounded-[14px] bg-workspace-navy p-4 sm:p-6">
           <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-center">
             <div className="space-y-1.5">
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#00C6FF] bg-[#050B16] px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#00C6FF] bg-workspace-navy px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
                 <Wifi className="h-3.5 w-3.5 text-[#00C6FF]" />
                 <span>Zero-Trust Cloud &amp; VPN Security Hub</span>
               </div>
@@ -226,10 +226,10 @@ export default function RemoteAccessVpnHub() {
             <div className="flex flex-wrap items-center gap-2">
               <Button
                 onClick={openCreate}
-                className="h-9 rounded-lg border border-white/25 px-4 text-xs font-extrabold text-black shadow-[0_0_14px_rgba(0,198,255,0.6)]"
+                className="h-9 rounded-lg border border-white/25 px-4 text-xs font-extrabold text-workspace-navy shadow-[0_0_14px_rgba(0,198,255,0.6)]"
                 style={{ backgroundColor: '#00C6FF' }}
               >
-                <Plus className="mr-1.5 h-4 w-4 text-black" />
+                <Plus className="mr-1.5 h-4 w-4 text-workspace-navy" />
                 Add Remote Access / VPN Rule
               </Button>
               <Button
@@ -245,7 +245,7 @@ export default function RemoteAccessVpnHub() {
 
           {/* 4 Pillar Benefits Strip */}
           <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="rounded-xl border border-[#00C6FF]/50 bg-[#081018] p-3.5">
+            <div className="rounded-xl border border-[#00C6FF]/50 bg-workspace-navy p-3.5">
               <div className="flex items-center justify-between">
                 <span className="text-[11px] font-extrabold uppercase text-[#00C6FF]">
                   Active Endpoints &amp; Policies
@@ -258,7 +258,7 @@ export default function RemoteAccessVpnHub() {
               </div>
             </div>
 
-            <div className="rounded-xl border border-[#A855F7]/50 bg-[#081018] p-3.5">
+            <div className="rounded-xl border border-[#A855F7]/50 bg-workspace-navy p-3.5">
               <div className="flex items-center justify-between">
                 <span className="text-[11px] font-extrabold uppercase text-[#A855F7]">
                   VPN-Free Zero-Trust
@@ -271,7 +271,7 @@ export default function RemoteAccessVpnHub() {
               </div>
             </div>
 
-            <div className="rounded-xl border border-[#0072FF]/60 bg-[#081018] p-3.5">
+            <div className="rounded-xl border border-[#0072FF]/60 bg-workspace-navy p-3.5">
               <div className="flex items-center justify-between">
                 <span className="text-[11px] font-extrabold uppercase text-[#38BDF8]">
                   Encryption &amp; MFA Posture
@@ -284,7 +284,7 @@ export default function RemoteAccessVpnHub() {
               </div>
             </div>
 
-            <div className="rounded-xl border border-[#FF2E9A]/60 bg-[#081018] p-3.5">
+            <div className="rounded-xl border border-[#FF2E9A]/60 bg-workspace-navy p-3.5">
               <div className="flex items-center justify-between">
                 <span className="text-[11px] font-extrabold uppercase text-[#FF2E9A]">
                   Revoked / Blocked Sessions
@@ -304,14 +304,14 @@ export default function RemoteAccessVpnHub() {
       <AuditorLinkGeneratorCard onCreated={loadData} />
 
       {/* Filter & Search Bar */}
-      <div className="flex flex-col gap-2.5 rounded-xl border border-[#00C6FF]/40 bg-black p-3.5 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-2.5 rounded-xl border border-[#00C6FF]/40 bg-workspace-navy p-3.5 sm:flex-row sm:items-center sm:justify-between">
         <div className="relative flex-1">
           <Search className="pointer-events-none absolute left-3 top-2.5 h-4 w-4 text-[#00C6FF]" />
           <Input
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search endpoints, staff, regions, or VPN gateway rules..."
-            className="h-9 border-[#0072FF]/60 bg-[#081018] pl-9 text-xs font-semibold text-white placeholder:text-slate-400"
+            className="h-9 border-[#0072FF]/60 bg-workspace-navy pl-9 text-xs font-semibold text-white placeholder:text-slate-400"
           />
         </div>
 
@@ -319,7 +319,7 @@ export default function RemoteAccessVpnHub() {
           <select
             value={modeFilter}
             onChange={(e) => setModeFilter(e.target.value)}
-            className="h-9 rounded-lg border border-[#00C6FF]/60 bg-[#081018] px-3 text-xs font-extrabold text-white"
+            className="h-9 rounded-lg border border-[#00C6FF]/60 bg-workspace-navy px-3 text-xs font-extrabold text-white"
           >
             <option value="ALL">All Access Modes</option>
             {ACCESS_MODES.map((m) => (
@@ -332,7 +332,7 @@ export default function RemoteAccessVpnHub() {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="h-9 rounded-lg border border-[#FF2E9A]/60 bg-[#081018] px-3 text-xs font-extrabold text-white"
+            className="h-9 rounded-lg border border-[#FF2E9A]/60 bg-workspace-navy px-3 text-xs font-extrabold text-white"
           >
             <option value="ALL">All Statuses</option>
             {STATUS_OPTIONS.map((s) => (
@@ -347,20 +347,20 @@ export default function RemoteAccessVpnHub() {
       {/* Endpoints & VPN Rules List */}
       <div className="space-y-2.5">
         {loading ? (
-          <div className="rounded-xl border border-[#00C6FF]/30 bg-black p-8 text-center text-sm font-bold text-[#00C6FF]">
+          <div className="rounded-xl border border-[#00C6FF]/30 bg-workspace-navy p-8 text-center text-sm font-bold text-[#00C6FF]">
             Loading Remote Access &amp; VPN Security policies...
           </div>
         ) : records.length === 0 ? (
-          <div className="rounded-xl border border-[#00C6FF]/30 bg-black p-8 text-center space-y-3">
+          <div className="rounded-xl border border-[#00C6FF]/30 bg-workspace-navy p-8 text-center space-y-3">
             <p className="text-sm font-extrabold text-white">
               No remote access or VPN rules match your current filter.
             </p>
             <Button
               onClick={openCreate}
-              className="text-black font-extrabold"
+              className="text-workspace-navy font-extrabold"
               style={{ backgroundColor: '#00C6FF' }}
             >
-              <Plus className="mr-1.5 h-4 w-4 text-black" />
+              <Plus className="mr-1.5 h-4 w-4 text-workspace-navy" />
               Create First Remote Access Rule
             </Button>
           </div>
@@ -385,10 +385,10 @@ export default function RemoteAccessVpnHub() {
                     'linear-gradient(120deg, #00C6FF 0%, #0072FF 45%, #FF2E9A 100%)',
                 }}
               >
-                <div className="flex flex-col justify-between gap-3 rounded-[10.5px] bg-black p-4 lg:flex-row lg:items-center">
+                <div className="flex flex-col justify-between gap-3 rounded-[10.5px] bg-workspace-navy p-4 lg:flex-row lg:items-center">
                   <div className="flex items-start gap-3 min-w-0">
                     <div
-                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#050B16]"
+                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-workspace-navy"
                       style={{
                         border: '1.5px solid #00C6FF',
                         boxShadow: '0 0 8px rgba(0,198,255,0.45)',
@@ -403,7 +403,7 @@ export default function RemoteAccessVpnHub() {
                           {item.title}
                         </span>
                         <span
-                          className="inline-flex items-center gap-1.5 rounded-full bg-black px-2.5 py-0.5 text-[10px] font-black uppercase"
+                          className="inline-flex items-center gap-1.5 rounded-full bg-workspace-navy px-2.5 py-0.5 text-[10px] font-black uppercase"
                           style={{
                             border: `1px solid ${led}`,
                             color: '#FFFFFF',
@@ -423,7 +423,7 @@ export default function RemoteAccessVpnHub() {
                           className="rounded-full px-2.5 py-0.5 text-[10px] font-extrabold uppercase"
                           style={{
                             backgroundColor: isRevoked ? '#FF2E9A' : '#00C6FF',
-                            color: isRevoked ? '#FFFFFF' : '#000000',
+                            color: isRevoked ? '#FFFFFF' : '#0A2B6D',
                           }}
                         >
                           {item.status}
@@ -461,7 +461,7 @@ export default function RemoteAccessVpnHub() {
                     <button
                       type="button"
                       onClick={() => handleTestTunnel(item)}
-                      className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-[#00C6FF] bg-black px-3 text-[11px] font-extrabold text-[#00C6FF] transition hover:bg-[#050B16]"
+                      className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-[#00C6FF] bg-workspace-navy px-3 text-[11px] font-extrabold text-[#00C6FF] transition hover:bg-workspace-navy"
                     >
                       <Wifi className="h-3.5 w-3.5 text-[#00C6FF]" />
                       <span>{testingId === item.id ? 'Testing...' : 'Verify Connection'}</span>
@@ -483,7 +483,7 @@ export default function RemoteAccessVpnHub() {
                       className="inline-flex h-8 items-center gap-1 rounded-lg px-3 text-[11px] font-extrabold transition hover:opacity-90"
                       style={{
                         backgroundColor: isRevoked ? '#00C6FF' : '#FF2E9A',
-                        color: isRevoked ? '#000000' : '#FFFFFF',
+                        color: isRevoked ? '#0A2B6D' : '#FFFFFF',
                       }}
                     >
                       {isRevoked ? (
@@ -503,7 +503,7 @@ export default function RemoteAccessVpnHub() {
                       type="button"
                       onClick={() => handleDelete(item)}
                       aria-label="Delete policy"
-                      className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[#FF2E9A]/60 bg-black text-[#FF2E9A] transition hover:bg-[#FF2E9A] hover:text-white"
+                      className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[#FF2E9A]/60 bg-workspace-navy text-[#FF2E9A] transition hover:bg-[#FF2E9A] hover:text-white"
                     >
                       <Trash2 className="h-3.5 w-3.5" />
                     </button>
@@ -517,7 +517,7 @@ export default function RemoteAccessVpnHub() {
 
       {/* Create / Edit Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-w-lg border-2 border-[#00C6FF] bg-black text-white">
+        <DialogContent className="max-w-lg border-2 border-[#00C6FF] bg-workspace-navy text-white">
           <DialogHeader>
             <DialogTitle className="text-lg font-black text-[#00C6FF]">
               {editingItem ? 'Edit Remote Access / VPN Rule' : 'New Remote Access / VPN Rule'}
@@ -534,7 +534,7 @@ export default function RemoteAccessVpnHub() {
                 value={form.title}
                 onChange={(e) => setForm({ ...form, title: e.target.value })}
                 placeholder="e.g., Frontline Support Worker Zero-Trust Mobile Access"
-                className="border-[#0072FF] bg-[#081018] text-white"
+                className="border-[#0072FF] bg-workspace-navy text-white"
               />
             </div>
 
@@ -546,7 +546,7 @@ export default function RemoteAccessVpnHub() {
                 <select
                   value={form.access_mode}
                   onChange={(e) => setForm({ ...form, access_mode: e.target.value })}
-                  className="h-9 w-full rounded-md border border-[#0072FF] bg-[#081018] px-2.5 font-bold text-white"
+                  className="h-9 w-full rounded-md border border-[#0072FF] bg-workspace-navy px-2.5 font-bold text-white"
                 >
                   {ACCESS_MODES.map((m) => (
                     <option key={m} value={m}>
@@ -563,7 +563,7 @@ export default function RemoteAccessVpnHub() {
                 <select
                   value={form.status}
                   onChange={(e) => setForm({ ...form, status: e.target.value })}
-                  className="h-9 w-full rounded-md border border-[#0072FF] bg-[#081018] px-2.5 font-bold text-white"
+                  className="h-9 w-full rounded-md border border-[#0072FF] bg-workspace-navy px-2.5 font-bold text-white"
                 >
                   {STATUS_OPTIONS.map((s) => (
                     <option key={s} value={s}>
@@ -583,7 +583,7 @@ export default function RemoteAccessVpnHub() {
                   value={form.user_name}
                   onChange={(e) => setForm({ ...form, user_name: e.target.value })}
                   placeholder="e.g., Community Support Team"
-                  className="border-[#0072FF] bg-[#081018] text-white"
+                  className="border-[#0072FF] bg-workspace-navy text-white"
                 />
               </div>
 
@@ -594,7 +594,7 @@ export default function RemoteAccessVpnHub() {
                 <select
                   value={form.device_type}
                   onChange={(e) => setForm({ ...form, device_type: e.target.value })}
-                  className="h-9 w-full rounded-md border border-[#0072FF] bg-[#081018] px-2.5 font-bold text-white"
+                  className="h-9 w-full rounded-md border border-[#0072FF] bg-workspace-navy px-2.5 font-bold text-white"
                 >
                   {DEVICE_TYPES.map((d) => (
                     <option key={d} value={d}>
@@ -614,7 +614,7 @@ export default function RemoteAccessVpnHub() {
                   value={form.location_region}
                   onChange={(e) => setForm({ ...form, location_region: e.target.value })}
                   placeholder="e.g., Brisbane & Regional QLD"
-                  className="border-[#0072FF] bg-[#081018] text-white"
+                  className="border-[#0072FF] bg-workspace-navy text-white"
                 />
               </div>
 
@@ -626,7 +626,7 @@ export default function RemoteAccessVpnHub() {
                   value={form.ip_allowlist_rule}
                   onChange={(e) => setForm({ ...form, ip_allowlist_rule: e.target.value })}
                   placeholder="Dynamic Identity-Verified (No VPN Required)"
-                  className="border-[#0072FF] bg-[#081018] text-white"
+                  className="border-[#0072FF] bg-workspace-navy text-white"
                 />
               </div>
             </div>
@@ -639,7 +639,7 @@ export default function RemoteAccessVpnHub() {
                 value={form.notes}
                 onChange={(e) => setForm({ ...form, notes: e.target.value })}
                 placeholder="Zero-trust browser tunnel — no client VPN software required."
-                className="border-[#0072FF] bg-[#081018] text-white"
+                className="border-[#0072FF] bg-workspace-navy text-white"
               />
             </div>
 
@@ -655,7 +655,7 @@ export default function RemoteAccessVpnHub() {
               <Button
                 type="submit"
                 disabled={saving}
-                className="font-extrabold text-black"
+                className="font-extrabold text-workspace-navy"
                 style={{ backgroundColor: '#00C6FF' }}
               >
                 {saving ? 'Saving...' : 'Save Access Rule'}

@@ -10,7 +10,7 @@ import { MODULE_DIRECTORY as PRIMARY_NAV } from '@/lib/moduleDirectory';
 import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
 import {
   Bell, LogOut, Menu, X, ChevronDown, MoreHorizontal, ShieldQuestion, Sparkles,
-  LayoutDashboard, Users, Heart, GraduationCap, ShieldCheck, User, Building2, Layers,
+  LayoutDashboard, Users, Heart, GraduationCap, ShieldCheck, User, Building2,
 } from 'lucide-react';
 import GlobalSearch from '@/components/GlobalSearch';
 import AutoRegisterInsights from '@/components/AutoRegisterInsights';
@@ -19,6 +19,7 @@ import ObsidianSidebarRemote from '@/components/ObsidianSidebarRemote';
 import EnterpriseWorkspaceBar from '@/components/enterprise/EnterpriseWorkspaceBar';
 import VisualDesignModuleCommandStandard from '@/components/enterprise/VisualDesignModuleCommandStandard';
 import BrandLogoLockup from '@/components/common/BrandLogoLockup';
+import BrandSlogan from '@/components/common/BrandSlogan';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import PendingApprovalNotice from '@/components/users/PendingApprovalNotice';
 import ModuleGuide from '@/components/ModuleGuide';
@@ -33,10 +34,6 @@ const BOTTOM_NAV = [
   { label: 'Employees', path: '/our-employees', key: 'our-staff', icon: Users },
   { label: 'Training', path: '/training', key: 'training', icon: GraduationCap },
   { label: 'Compliance & Evidence', path: '/compliance', key: 'compliance', icon: ShieldCheck },
-];
-
-const WORKSPACE_VIEWS = [
-  { id: 'both', label: 'Both Views', Icon: Layers },
 ];
 
 export default function AppLayout() {
@@ -247,11 +244,11 @@ export default function AppLayout() {
         Skip to main content
       </a>
       <aside
-        className="hidden w-64 shrink-0 flex-col bg-black md:flex"
+        className="hidden w-64 shrink-0 flex-col bg-workspace-navy md:flex"
         style={{
           borderRight: '3px solid transparent',
           backgroundImage:
-            'linear-gradient(#000000, #000000), linear-gradient(180deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+            'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%), linear-gradient(180deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
           backgroundOrigin: 'border-box',
           backgroundClip: 'padding-box, border-box',
         }}
@@ -278,9 +275,9 @@ export default function AppLayout() {
                 'linear-gradient(120deg, #00C6FF 0%, #0072FF 25%, #5A00D6 55%, #FF2E9A 100%)',
             }}
           />
-          {/* Very Top Section Above Dashboard: Black Background, Larger Logo Brought Down, Fitted Action Buttons */}
+          {/* Top section above the dashboard */}
           {compactHeader ? (
-            <div className="bg-black px-3 py-1 sm:px-6 lg:px-8">
+            <div className="bg-workspace-navy px-3 py-1 sm:px-6 lg:px-8">
               <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-2">
                 <Link to="/dashboard" className="flex items-center gap-1.5 text-xs font-extrabold">
                   <span style={{ color: '#00C6FF' }}>Compliance</span>
@@ -298,75 +295,46 @@ export default function AppLayout() {
               </div>
             </div>
           ) : (
-            <div className="bg-black px-2 pt-1 pb-0.5 sm:px-4 lg:px-6 transition-all duration-200">
+            <div className="bg-workspace-navy px-2 pt-1 pb-0.5 sm:px-4 lg:px-6 transition-all duration-200">
               <div className="mx-auto flex max-w-[1440px] flex-col items-center justify-end gap-0.5">
-                {/* Top / Centre: Larger Business Logo + Name + Slogan */}
-                <Link
-                  to="/dashboard"
-                  className="inline-flex flex-col items-center justify-end text-center transition"
-                >
-                  <BrandLogoLockup size="md" theme="dark" showSlogan={true} />
-                </Link>
-
-                {/* Single Row Under Logo: Sign In, Book Demo, Participant Profiles, Both Views & Start Free */}
-                <div className="flex w-full flex-wrap items-center justify-center gap-1.5 py-0.5">
-                  <Link
-                    to="/login"
-                    className="inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/20 px-2.5 text-[10px] font-extrabold text-black shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90"
-                    style={{ backgroundColor: '#00C6FF' }}
-                  >
-                    Sign In
+                <div className="grid w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-1.5">
+                  <div className="flex min-w-0 flex-col items-end gap-1">
+                    <button
+                      onClick={() => setMobileOpen(true)}
+                      aria-label="Open menu"
+                      className="shrink-0 rounded-lg border-2 border-[#00C6FF] bg-workspace-navy p-1 text-[#00C6FF] shadow-2xs transition hover:border-[#FF2E9A] md:hidden"
+                    >
+                      <Menu className="h-3.5 w-3.5" style={{ color: '#00C6FF' }} />
+                    </button>
+                    <Link
+                      to="/login"
+                      className="inline-flex md:hidden lg:inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/20 px-2.5 text-[10px] font-extrabold text-workspace-navy shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90"
+                      style={{ backgroundColor: '#00C6FF' }}
+                    >
+                      Sign In
+                    </Link>
+                  </div>
+                  <Link to="/dashboard" className="inline-flex min-w-0 flex-col items-center text-center transition">
+                    <BrandLogoLockup size="md" theme="dark" showSlogan={false} />
                   </Link>
-                  <Link
-                    to="/?demo=book"
-                    className="inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-[#00C6FF]/50 px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(0,114,255,0.55)] transition hover:opacity-90"
-                    style={{ backgroundColor: '#0072FF' }}
-                  >
-                    Book Demo
-                  </Link>
-                  <Link
-                    to="/our-participants"
-                    className="inline-flex h-[24px] shrink-0 items-center justify-center gap-1 rounded-full border border-[#00C6FF] bg-[#0072FF] px-3 text-[10px] font-extrabold uppercase tracking-wide text-white shadow-[0_0_10px_rgba(0,114,255,0.5)] transition hover:opacity-95"
-                  >
-                    <Heart className="h-3 w-3 shrink-0 text-[#00C6FF]" />
-                    <span className="whitespace-nowrap">Participant Profiles</span>
-                  </Link>
-                  {WORKSPACE_VIEWS.map(({ id, label, Icon }) => {
-                    const selected = workspaceView === id;
-                    return (
-                      <button
-                        key={id}
-                        type="button"
-                        onClick={() => switchWorkspaceView(id)}
-                        aria-pressed={selected}
-                        title={label}
-                        className="inline-flex h-[24px] shrink-0 items-center justify-center gap-1 rounded-full border px-3 text-[10px] font-extrabold tracking-wide shadow-[0_0_10px_rgba(0,198,255,0.5)] transition-all hover:opacity-95"
-                        style={{
-                          background: 'linear-gradient(90deg, #00C6FF 0%, #0072FF 50%, #FF2E9A 100%)',
-                          borderColor: '#00C6FF',
-                          color: '#FFFFFF',
-                        }}
-                      >
-                        <Icon className="h-3 w-3 shrink-0" style={{ color: '#00C6FF' }} />
-                        <span className="whitespace-nowrap uppercase">{label}</span>
-                      </button>
-                    );
-                  })}
-                  <Link
-                    to="/register"
-                    className="inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/25 px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(255,46,154,0.55)] transition hover:opacity-90"
-                    style={{ backgroundColor: '#FF2E9A' }}
-                  >
-                    Start Free
-                  </Link>
-                  <button
-                    onClick={() => setMobileOpen(true)}
-                    aria-label="Open menu"
-                    className="shrink-0 rounded-lg border-2 border-[#00C6FF] bg-black p-1 text-[#00C6FF] shadow-2xs transition hover:border-[#FF2E9A] md:hidden"
-                  >
-                    <Menu className="h-3.5 w-3.5" style={{ color: '#00C6FF' }} />
-                  </button>
+                  <div className="flex min-w-0 flex-wrap items-center justify-start gap-1">
+                    <Link
+                      to="/?demo=book"
+                      className="inline-flex md:hidden lg:inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-[#00C6FF]/50 px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(0,114,255,0.55)] transition hover:opacity-90"
+                      style={{ backgroundColor: '#0072FF' }}
+                    >
+                      Book Demo
+                    </Link>
+                    <Link
+                      to="/register"
+                      className="inline-flex md:hidden lg:inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/25 px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(255,46,154,0.55)] transition hover:opacity-90"
+                      style={{ backgroundColor: '#FF2E9A' }}
+                    >
+                      Start Free
+                    </Link>
+                  </div>
                 </div>
+                <BrandSlogan size="md" className="text-[11px] sm:text-sm md:text-base tracking-tight" />
               </div>
             </div>
           )}
@@ -388,7 +356,7 @@ export default function AppLayout() {
             background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
           }}
         >
-          <QuickAppBar />
+          <QuickAppBar workspaceView={workspaceView} onSwitchWorkspaceView={switchWorkspaceView} />
           <div className={location.pathname === '/staff' || location.pathname.startsWith('/staff/') ? 'mx-auto max-w-[1440px] px-3' : 'mx-auto max-w-[1440px] px-3 pt-2'}>
             <PendingApprovalNotice />
           </div>
