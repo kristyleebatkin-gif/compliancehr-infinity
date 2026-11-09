@@ -19,6 +19,7 @@ export default function BrandLogoLockup({
   companyName = 'ComplianceHR Infinity',
   size = 'md',
   theme = 'dark',
+  lightBackground = false,
   className = '',
   showSlogan = true,
   compactSlogan = false,
@@ -82,7 +83,7 @@ export default function BrandLogoLockup({
                 className="bg-clip-text text-transparent"
                 style={{
                   backgroundImage:
-                    'linear-gradient(90deg, #00C6FF 0%, #0072FF 30%, #A100FF 68%, #FF2E9A 100%)',
+                    lightBackground ? 'linear-gradient(90deg, #0072FF 0%, #5A00D6 55%, #A30059 100%)' : 'linear-gradient(90deg, #00C6FF 0%, #0072FF 30%, #A100FF 68%, #FF2E9A 100%)',
                 }}
               >
                 HR Infinity
@@ -92,7 +93,7 @@ export default function BrandLogoLockup({
         </div>
 
         {/* LINE 3: SLOGAN UNDER NAME */}
-        {showSlogan && <BrandSlogan size={size} compact={compactSlogan} />}
+        {showSlogan && <BrandSlogan size={size} compact={compactSlogan} lightBackground={lightBackground} />}
       </div>
     </div>
   );

@@ -295,7 +295,7 @@ export default function AppLayout() {
               </div>
             </div>
           ) : (
-            <div className="bg-workspace-navy px-2 pt-1 pb-0.5 sm:px-4 lg:px-6 transition-all duration-200">
+            <div className="bg-white px-2 pt-1 pb-0.5 sm:px-4 lg:px-6 transition-all duration-200">
               <div className="mx-auto flex max-w-[1440px] flex-col items-center justify-end gap-0.5">
                 <div className="grid w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-1.5">
                   <div className="flex min-w-0 flex-col items-end gap-1">
@@ -315,7 +315,7 @@ export default function AppLayout() {
                     </Link>
                   </div>
                   <Link to="/dashboard" className="inline-flex min-w-0 flex-col items-center text-center transition">
-                    <BrandLogoLockup size="md" theme="dark" showSlogan={false} />
+                    <BrandLogoLockup size="md" theme="light" lightBackground showSlogan={false} />
                   </Link>
                   <div className="flex min-w-0 flex-wrap items-center justify-start gap-1">
                     <Link
@@ -334,7 +334,7 @@ export default function AppLayout() {
                     </Link>
                   </div>
                 </div>
-                <BrandSlogan size="md" className="text-[11px] sm:text-sm md:text-base tracking-tight" />
+                <BrandSlogan size="md" lightBackground className="text-[11px] sm:text-sm md:text-base tracking-tight" />
               </div>
             </div>
           )}
