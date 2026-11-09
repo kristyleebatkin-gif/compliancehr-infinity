@@ -230,15 +230,15 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
               className="group block w-full text-left rounded-md p-[1px] transition-all duration-150"
               style={{ background: BRAND_GRADIENT }}
             >
-              <div className="flex h-[22px] items-center justify-between gap-1 rounded-[5px] bg-white px-1.5">
+              <div className="flex h-[22px] items-center justify-between gap-1 rounded-[5px] bg-white px-1.5 md:h-[26px] lg:h-[22px]">
                 <div className="flex min-w-0 flex-1 items-center gap-1">
                   <span
-                    className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-[3px] bg-[#0A2B6D]/90"
+                    className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-[3px] bg-[#0A2B6D]/90 md:h-4 md:w-4 lg:h-3.5 lg:w-3.5"
                     style={{ border: '1px solid #0072FF' }}
                   >
-                    <Cpu className="h-2 w-2 shrink-0" style={{ color: '#0072FF' }} />
+                    <Cpu className="h-2 w-2 shrink-0 md:h-2.5 md:w-2.5 lg:h-2 lg:w-2" style={{ color: '#0072FF' }} />
                   </span>
-                  <span className="min-w-0 truncate text-[9.5px] font-extrabold leading-none text-workspace-navy">
+                  <span className="min-w-0 truncate text-[9.5px] font-extrabold leading-none text-workspace-navy md:text-[10.5px] lg:text-[9.5px]">
                     AI Core
                   </span>
                 </div>
@@ -269,15 +269,15 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
                   }`}
                   style={{ background: BRAND_GRADIENT }}
                 >
-                  <div className="flex h-[22px] items-center justify-between gap-1 rounded-[5px] bg-white px-1.5">
+                  <div className="flex h-[22px] items-center justify-between gap-1 rounded-[5px] bg-white px-1.5 md:h-[26px] lg:h-[22px]">
                     <div className="flex min-w-0 flex-1 items-center gap-1">
                       <span
-                        className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-[3px] bg-[#0A2B6D]/90"
+                        className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-[3px] bg-[#0A2B6D]/90 md:h-4 md:w-4 lg:h-3.5 lg:w-3.5"
                         style={{ border: `1px solid ${symColor}` }}
                       >
-                        <Icon className="h-2 w-2 shrink-0" style={{ color: symColor }} />
+                        <Icon className="h-2 w-2 shrink-0 md:h-2.5 md:w-2.5 lg:h-2 lg:w-2" style={{ color: symColor }} />
                       </span>
-                      <span className="min-w-0 truncate text-[9.5px] font-extrabold leading-none text-workspace-navy">
+                      <span className="min-w-0 truncate text-[9.5px] font-extrabold leading-none text-workspace-navy md:text-[10.5px] lg:text-[9.5px]">
                         {item.label}
                       </span>
                     </div>
@@ -312,15 +312,15 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
                     }`}
                     style={{ background: BRAND_GRADIENT }}
                   >
-                    <div className="flex h-[22px] items-center justify-between gap-1 rounded-[5px] bg-white px-1.5">
+                    <div className="flex h-[22px] items-center justify-between gap-1 rounded-[5px] bg-white px-1.5 md:h-[26px] lg:h-[22px]">
                       <div className="flex min-w-0 flex-1 items-center gap-1">
                         <span
-                          className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-[3px] bg-[#0A2B6D]/90"
+                          className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-[3px] bg-[#0A2B6D]/90 md:h-4 md:w-4 lg:h-3.5 lg:w-3.5"
                           style={{ border: `1px solid ${modColor}` }}
                         >
-                          <Icon className="h-2 w-2 shrink-0" style={{ color: modColor }} />
+                          <Icon className="h-2 w-2 shrink-0 md:h-2.5 md:w-2.5 lg:h-2 lg:w-2" style={{ color: modColor }} />
                         </span>
-                        <span className="min-w-0 truncate text-[9.5px] font-extrabold leading-none text-workspace-navy">
+                        <span className="min-w-0 truncate text-[9.5px] font-extrabold leading-none text-workspace-navy md:text-[10.5px] lg:text-[9.5px]">
                           {module.label}
                         </span>
                       </div>
