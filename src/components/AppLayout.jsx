@@ -339,6 +339,10 @@ export default function AppLayout() {
             </div>
           )}
 
+          <div className="max-h-[40vh] overflow-y-auto">
+            <QuickAppBar workspaceView={workspaceView} onSwitchWorkspaceView={switchWorkspaceView} />
+          </div>
+
           {/* Continuous App-Design Gradient Divider Line aligned with remote */}
           <div
             className="h-[3px] w-full"
@@ -356,7 +360,6 @@ export default function AppLayout() {
             background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
           }}
         >
-          <QuickAppBar workspaceView={workspaceView} onSwitchWorkspaceView={switchWorkspaceView} />
           <div className={location.pathname === '/staff' || location.pathname.startsWith('/staff/') ? 'mx-auto max-w-[1440px] px-3' : 'mx-auto max-w-[1440px] px-3 pt-2'}>
             <PendingApprovalNotice />
           </div>
