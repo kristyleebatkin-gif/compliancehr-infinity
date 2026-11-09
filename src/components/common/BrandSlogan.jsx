@@ -12,9 +12,9 @@ export default function BrandSlogan({ size = 'md', compact = false, lightBackgro
 
   return (
     <div className={cn('flex max-w-full items-center justify-center whitespace-nowrap text-center font-extrabold leading-tight', sizing, className)}>
-      <span style={{ color: lightBackground ? '#0A2B6D' : '#00C6FF' }}>Complete Control.</span>{' '}
+      <span style={{ color: lightBackground ? '#0072FF' : '#00C6FF' }}>Complete Control.</span>{' '}
       <span style={{ color: lightBackground ? '#5A00D6' : '#A855F7' }}>Greater Confidence.</span>{' '}
-      <span style={{ color: lightBackground ? '#A30059' : '#FF2E9A' }}>Brighter Success.</span>
+      <span style={{ color: lightBackground ? '#D9006C' : '#FF2E9A' }}>Brighter Success.</span>
     </div>
   );
 }
