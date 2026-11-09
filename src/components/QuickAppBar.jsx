@@ -160,7 +160,7 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
         style={{ background: BRAND_GRADIENT }}
       >
         <div
-          className="overflow-hidden rounded-[10px] p-1.5 space-y-1"
+          className="overflow-hidden rounded-[10px] p-1.5 space-y-1 md:flex md:flex-col lg:block"
           style={{ background: DARK_NAVY_CHASSIS }}
         >
           {/* LINE 1: Quick Access Bar Title + AI Quick Ask & 4 Buttons Next To It + Mode Switcher */}
@@ -221,7 +221,7 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
 
           {/* LINE 2: 50%-Reduced Compact Section Modulars (Tight Grid Without Gaps) */}
           <div
-            className="grid grid-cols-3 gap-1 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-7 items-stretch"
+            className="grid grid-cols-3 gap-1 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-7 items-stretch md:order-2 lg:order-none"
             style={{ background: DARK_NAVY_CHASSIS }}
           >
             <Link
@@ -296,7 +296,7 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
 
           {/* LINE 3: Active Section's 50%-Reduced Compact Module Buttons */}
           {expandedGroup && expandedGroup.modules?.length > 0 && (
-            <div className="grid grid-cols-3 gap-1 border-t border-white/10 pt-1 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-8 items-stretch">
+            <div className="grid grid-cols-3 gap-1 border-t border-white/10 pt-1 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-8 items-stretch md:order-3 lg:order-none">
               {expandedGroup.modules.map((module, mIdx) => {
                 const Icon = module.icon;
                 const modActive = isActive(module.path);
@@ -338,7 +338,7 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
             </div>
           )}
           {onSwitchWorkspaceView && (
-            <div className="flex flex-wrap items-center justify-center gap-1.5 border-t border-white/10 pt-1">
+            <div className="flex flex-wrap items-center justify-center gap-1.5 border-t border-white/10 pt-1 md:order-1 lg:order-none">
               <Link to="/login" className="hidden h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/20 bg-[#00C6FF] px-2.5 text-[10px] font-extrabold text-workspace-navy shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90 md:inline-flex lg:hidden">Sign In</Link>
               <Link to="/?demo=book" className="hidden h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-[#00C6FF]/50 bg-[#0072FF] px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(0,114,255,0.55)] transition hover:opacity-90 md:inline-flex lg:hidden">Book Demo</Link>
               <Link to="/register" className="hidden h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/25 bg-[#FF2E9A] px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(255,46,154,0.55)] transition hover:opacity-90 md:inline-flex lg:hidden">Start Free</Link>
