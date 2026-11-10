@@ -1,0 +1,286 @@
+.sa-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 140;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  color: #ffffff;
+  font-family: var(--font-body);
+  animation: sa-fade 320ms ease-out;
+}
+
+@keyframes sa-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.sa-art,
+.sa-art::before,
+.sa-art::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+}
+
+.sa-art {
+  z-index: 0;
+}
+
+/* ---- Motifs ---- */
+
+.sa-motif-sun::before {
+  background: radial-gradient(circle at 72% 26%, var(--sa-accent) 0%, rgba(255, 255, 255, 0) 42%);
+  opacity: 0.55;
+}
+
+.sa-motif-sun::after {
+  background: repeating-radial-gradient(circle at 72% 26%, rgba(255, 255, 255, 0.18) 0 2px, rgba(255, 255, 255, 0) 2px 110px);
+  opacity: 0.55;
+}
+
+.sa-motif-grid::before {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.16) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.16) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(circle at 50% 46%, #000 0%, transparent 78%);
+  mask-image: radial-gradient(circle at 50% 46%, #000 0%, transparent 78%);
+}
+
+.sa-motif-grid::after {
+  background: radial-gradient(circle at 50% 44%, var(--sa-accent) 0%, rgba(255, 255, 255, 0) 38%);
+  opacity: 0.22;
+}
+
+.sa-motif-ledger::before {
+  background-image: repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.16) 0 1px, transparent 1px 46px);
+  opacity: 0.7;
+}
+
+.sa-motif-ledger::after {
+  background: linear-gradient(90deg, transparent 0 14%, var(--sa-accent) 14%, var(--sa-accent) 14.2%, transparent 14.2%);
+  opacity: 0.5;
+}
+
+.sa-motif-rings::before {
+  background: repeating-radial-gradient(circle at 50% 52%, rgba(255, 255, 255, 0.2) 0 1px, transparent 1px 88px);
+}
+
+.sa-motif-rings::after {
+  background: radial-gradient(circle at 50% 52%, var(--sa-accent) 0%, rgba(255, 255, 255, 0) 30%);
+  opacity: 0.26;
+}
+
+.sa-motif-aurora::before {
+  background:
+    radial-gradient(58% 44% at 22% 30%, var(--sa-accent) 0%, rgba(255, 255, 255, 0) 62%),
+    radial-gradient(56% 40% at 78% 70%, #A78BFA 0%, rgba(255, 255, 255, 0) 64%);
+  opacity: 0.42;
+  filter: blur(28px);
+}
+
+.sa-motif-aurora::after {
+  background: linear-gradient(115deg, transparent 44%, rgba(255, 255, 255, 0.16) 50%, transparent 56%);
+}
+
+.sa-motif-stars::before {
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.85) 1px, transparent 1.4px),
+    radial-gradient(rgba(255, 255, 255, 0.45) 1px, transparent 1.6px);
+  background-size: 140px 140px, 92px 92px;
+  background-position: 0 0, 46px 68px;
+  opacity: 0.6;
+}
+
+.sa-motif-stars::after {
+  background: radial-gradient(circle at 70% 24%, var(--sa-accent) 0%, rgba(255, 255, 255, 0) 34%);
+  opacity: 0.24;
+}
+
+.sa-motif-pulse::before {
+  background-image: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.3) 0 3px, transparent 3px 18px);
+  -webkit-mask-image: radial-gradient(ellipse 62% 26% at 50% 62%, #000 0%, transparent 76%);
+  mask-image: radial-gradient(ellipse 62% 26% at 50% 62%, #000 0%, transparent 76%);
+  opacity: 0.5;
+}
+
+.sa-motif-pulse::after {
+  background: radial-gradient(ellipse 48% 22% at 50% 62%, var(--sa-accent) 0%, rgba(255, 255, 255, 0) 74%);
+  opacity: 0.4;
+  filter: blur(14px);
+}
+
+.sa-motif-topo::before {
+  background: repeating-radial-gradient(circle at 16% 84%, rgba(255, 255, 255, 0.16) 0 1px, transparent 1px 46px);
+}
+
+.sa-motif-topo::after {
+  background: repeating-radial-gradient(circle at 86% 18%, rgba(255, 255, 255, 0.12) 0 1px, transparent 1px 62px);
+}
+
+.sa-motif-clock::before {
+  background: repeating-conic-gradient(from 0deg at 50% 50%, rgba(255, 255, 255, 0.24) 0deg 0.6deg, transparent 0.6deg 6deg);
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 26%, transparent 62%);
+  mask-image: radial-gradient(circle at 50% 50%, #000 26%, transparent 62%);
+  opacity: 0.7;
+}
+
+.sa-motif-clock::after {
+  background: radial-gradient(circle at 50% 50%, var(--sa-accent) 0%, rgba(255, 255, 255, 0) 34%);
+  opacity: 0.26;
+}
+
+.sa-motif-dawn::before {
+  background: radial-gradient(circle at 50% 118%, var(--sa-accent) 0%, rgba(255, 255, 255, 0) 46%);
+  opacity: 0.5;
+}
+
+.sa-motif-dawn::after {
+  background: repeating-radial-gradient(circle at 50% 118%, rgba(255, 255, 255, 0.2) 0 1px, transparent 1px 80px);
+  opacity: 0.6;
+}
+
+/* ---- Content ---- */
+
+.sa-body {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 32px 24px;
+  text-align: center;
+}
+
+.sa-eyebrow {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.sa-clock {
+  font-size: clamp(56px, 12vw, 132px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 18px 60px rgba(4, 12, 32, 0.4);
+}
+
+.sa-date {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.sa-person {
+  margin-top: 10px;
+  font-size: clamp(16px, 2.4vw, 22px);
+  font-weight: 800;
+}
+
+.sa-design-name {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.66);
+}
+
+.sa-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+  max-width: 620px;
+}
+
+.sa-stat {
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.sa-stat span {
+  color: var(--sa-accent);
+}
+
+.sa-hint {
+  margin-top: 14px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* ---- Settings tiles ---- */
+
+.sa-tile-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+@media (min-width: 560px) {
+  .sa-tile-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.sa-tile {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(10, 43, 109, 0.14);
+  border-radius: 14px;
+  padding: 0;
+  text-align: left;
+  background: #ffffff;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.sa-tile:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 26px -18px rgba(10, 43, 109, 0.5);
+}
+
+.sa-tile[data-active='true'] {
+  border-color: #5A00D6;
+  box-shadow: 0 0 0 2px rgba(90, 0, 214, 0.35);
+}
+
+.sa-tile-art {
+  position: relative;
+  height: 78px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.sa-tile-body {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sa-tile {
+    transition: none;
+  }
+
+  .sa-overlay {
+    animation: none;
+  }
+}

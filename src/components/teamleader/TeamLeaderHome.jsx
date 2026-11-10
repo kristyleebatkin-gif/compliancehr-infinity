@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calculator, Moon, Sun, Mic, ArrowUp, ChevronRight, Clock, Lock, Sparkles } from 'lucide-react';
+import { Calculator, Moon, Sun, Mic, ArrowUp, ChevronRight, Clock, Lock, Sparkles, Monitor } from 'lucide-react';
 import useSpeechInput from '@/components/today/useSpeechInput';
 import { initials } from '@/components/today/todayUi';
 import HandoverNotes from '@/components/teamleader/HandoverNotes';
@@ -13,7 +13,7 @@ const TILES = [
 
 const CHIPS = ["Today's highlights", "Who's late to clock in?", 'Chase shift notes'];
 
-export default function TeamLeaderHome({ user, data, derived, theme, onToggleTheme, onScreen, onSecurityPin }) {
+export default function TeamLeaderHome({ user, data, derived, theme, onToggleTheme, onScreen, onSecurityPin, onScreensaver }) {
   const [text, setText] = useState('');
   const [reply, setReply] = useState('');
   const speech = useSpeechInput((transcript) => setText((prev) => (prev ? `${prev} ${transcript}` : transcript)));
@@ -63,6 +63,11 @@ export default function TeamLeaderHome({ user, data, derived, theme, onToggleThe
           <button type="button" onClick={() => onScreen('calculator')} aria-label="Calculator" className="tl-btn tl-ghost !px-2">
             <Calculator className="h-4 w-4" />
           </button>
+          {onScreensaver && (
+            <button type="button" onClick={onScreensaver} aria-label="Screensaver settings" title="Screensaver" className="tl-btn tl-ghost !px-2">
+              <Monitor className="h-4 w-4" />
+            </button>
+          )}
           <button type="button" onClick={onToggleTheme} aria-label="Switch theme" className="tl-btn tl-ghost !px-2">
             {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </button>

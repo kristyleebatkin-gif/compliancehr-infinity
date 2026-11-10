@@ -10,6 +10,9 @@ import { TeamScreen, RosterScreen } from '@/components/teamleader/TeamAndRosterS
 import TeamLeaderNav from '@/components/teamleader/TeamLeaderNav';
 import StudioLauncher from '@/components/today/studio/StudioLauncher';
 import SecurityPinGate from '@/components/security/SecurityPinGate';
+import useScreensaver from '@/components/screensaver/useScreensaver';
+import ScreensaverOverlay from '@/components/screensaver/ScreensaverOverlay';
+import ScreensaverSettingsDialog from '@/components/screensaver/ScreensaverSettingsDialog';
 
 const ERROR_LABELS = {
   shifts: 'today’s roster',
@@ -32,6 +35,7 @@ function TeamLeaderWorkspace({ onSecurityPin }) {
   const { data, derived, reload } = useTeamLeaderData();
   const [screen, setScreen] = useState('home');
   const [theme, setTheme] = useState(() => localStorage.getItem('cs-team-theme') || 'dark');
+  const screensaver = useScreensaver({ workspace: 'team-leader' });
 
   useEffect(() => {
     localStorage.setItem('cs-team-theme', theme);
@@ -90,11 +94,37 @@ function TeamLeaderWorkspace({ onSecurityPin }) {
               onToggleTheme={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
               onScreen={setScreen}
               onSecurityPin={onSecurityPin}
+              onScreensaver={() => screensaver.setSettingsOpen(true)}
             />
           )}
         </div>
         <TeamLeaderNav screen={screen} onSelect={setScreen} />
       </div>
+
+      <ScreensaverSettingsDialog
+        open={screensaver.settingsOpen}
+        onOpenChange={screensaver.setSettingsOpen}
+        title={screensaver.roleLabel}
+        designs={screensaver.designs}
+        activeId={screensaver.designId}
+        onSelect={screensaver.selectDesign}
+        onPreview={screensaver.previewScreensaver}
+      />
+
+      {screensaver.open && derived && failedSections.length === 0 && (
+        <ScreensaverOverlay
+          design={screensaver.design}
+          name={user?.full_name}
+          roleLabel={screensaver.roleLabel}
+          stats={[
+            { label: 'on shift', value: derived.onShift.length },
+            { label: 'not clocked in', value: derived.late.length },
+            { label: 'notes missing', value: derived.missingNotes.length },
+            { label: 'escalations', value: derived.escalations.length }
+          ]}
+          onClose={screensaver.closeScreensaver}
+        />
+      )}
     </div>
   );
 }
