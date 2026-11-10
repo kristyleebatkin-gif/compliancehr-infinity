@@ -40,12 +40,16 @@ const MODULES = [
   { key: 'hr', title: 'HR Hub', href: '/hr', icon: Briefcase, bar: 'bg-indigo-600' },
 ];
 
-const ADMIN_ROLES = ['admin', 'Provider Administrator', 'Administration'];
-
-const csvCell = (value) => '"' + String(value ?? '').replace(/"/g, '""') + '"';
+const csvCell = (value) => {
+  if (typeof value === 'number' || typeof value === 'boolean') return String(value);
+  const raw = String(value ?? '');
+  const safe = /^[\\s]*[=+\\-@]/.test(raw) ? `'${raw}` : raw;
+  return '"' + safe.replace(/"/g, '""') + '"';
+};
 
 function ModuleCard({ mod }) {
-  const max = Math.max(1, ...mod.breakdown.map((b) => b.count));
+  const breakdown = Array.isArray(mod.breakdown) ? mod.breakdown : [];
+  const max = Math.max(1, ...breakdown.map((b) => b.count));
   const extraCounts = Object.entries(mod.counts || {});
   const colour = moduleKeyColour(mod.key);
   return (
@@ -64,7 +68,7 @@ function ModuleCard({ mod }) {
         <span className="text-xs font-semibold text-muted-foreground">live records</span>
       </div>
       <div className="mt-3 space-y-1.5">
-        {mod.breakdown.slice(0, 5).map((item) => (
+        {breakdown.slice(0, 5).map((item) => (
           <div key={item.label} className="flex items-center gap-2">
             <span className="w-28 shrink-0 break-words text-xs font-semibold text-foreground">{item.label}</span>
             <div className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
@@ -73,7 +77,7 @@ function ModuleCard({ mod }) {
             <span className="w-8 text-right text-[11px] font-bold text-foreground">{item.count}</span>
           </div>
         ))}
-        {mod.breakdown.length === 0 && <p className="text-[11px] text-muted-foreground">No status breakdown yet.</p>}
+        {breakdown.length === 0 && <p className="text-[11px] text-muted-foreground">No status breakdown yet.</p>}
       </div>
       {extraCounts.length > 0 && (
         <p className="mt-3 text-xs font-semibold text-foreground">
@@ -175,6 +179,8 @@ export default function LiveDashboards() {
         <div role="alert" className="rounded-2xl border border-[#8CCBFF] bg-white/90 p-6 text-sm font-semibold text-[#0A2B6D]">
           Live module performance is unavailable until the source service responds.
         </div>
+      ) : modules?.length === 0 ? (
+        <div className="rounded-2xl border border-[#8CCBFF] bg-white/90 p-6 text-sm font-semibold text-[#0A2B6D]">No module performance snapshots are available yet.</div>
       ) : modules ? (
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
           {modules.map((mod) => {
