@@ -126,7 +126,7 @@ export default function Dashboard() {
           description="Current module record volumes and status breakdowns, with direct links to each module."
           icon={LayoutDashboard}
         >
-          <LiveDashboards />
+          <LiveDashboards embedded />
         </DashboardSection>
       )}
 
