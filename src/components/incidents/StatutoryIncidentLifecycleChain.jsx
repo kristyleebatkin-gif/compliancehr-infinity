@@ -173,7 +173,7 @@ export default function StatutoryIncidentLifecycleChain({ incident, canEdit, onU
       <div
         className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 text-white"
         style={{
-          background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+          background: 'linear-gradient(165deg, #0A2B6D 0%, #0A2B6D 55%, #5A00D6 100%)',
         }}
       >
         <div className="flex items-center gap-2.5">

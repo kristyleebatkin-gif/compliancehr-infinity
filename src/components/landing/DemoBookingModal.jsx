@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Calendar, CheckCircle2, ShieldCheck, X, ArrowRight, Building2, Mail, Phone, User, Users, Save,
+  Calendar, CheckCircle2, X, ArrowRight, Building2, Mail, Phone, User, Users, Save,
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 

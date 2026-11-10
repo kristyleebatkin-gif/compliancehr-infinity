@@ -222,7 +222,7 @@ function Risks({ profile, profileKind, embedded = false } = {}) {
     return ratingMatches && statusMatches && folderMatches && searchMatches;
   });
 
-  const btn = 'flex items-center gap-1.5 rounded-lg border border-border bg-white px-3 py-1.5 text-xs font-semibold text-black hover:bg-white/80 disabled:opacity-50';
+  const btn = 'flex items-center gap-1.5 rounded-lg border border-border bg-white px-3 py-1.5 text-xs font-semibold text-[#0A2B6D] hover:bg-white/80 disabled:opacity-50';
   const actionRow = can('risks') && (
     <>
       <button onClick={openNew} className={btn}><Plus className="h-4 w-4" />Add Risk Report</button>

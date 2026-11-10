@@ -1,0 +1,379 @@
+.today-shell {
+  --t-text: #0A2B6D;
+  --t-muted: #4b6392;
+  --t-surface: rgba(255, 255, 255, 0.78);
+  --t-surface-strong: rgba(255, 255, 255, 0.94);
+  --t-border: rgba(10, 43, 109, 0.1);
+  --t-shadow: 0 22px 48px -30px rgba(10, 43, 109, 0.5);
+  --t-pill: rgba(10, 43, 109, 0.06);
+  --t-hover: rgba(10, 43, 109, 0.04);
+  min-height: 100vh;
+  color: var(--t-text);
+  font-family: var(--font-body);
+  background:
+    radial-gradient(1100px 620px at 6% -12%, #e8eeff 0%, rgba(232, 238, 255, 0) 60%),
+    radial-gradient(900px 520px at 98% 2%, #fde8f6 0%, rgba(253, 232, 246, 0) 58%),
+    radial-gradient(900px 640px at 58% 112%, #ede4ff 0%, rgba(237, 228, 255, 0) 60%),
+    linear-gradient(158deg, #f8fbff 0%, #f2f0ff 52%, #fff4fa 100%);
+}
+
+.today-shell[data-theme='dark'] {
+  --t-text: #eaf2ff;
+  --t-muted: #a6bee4;
+  --t-surface: rgba(10, 43, 109, 0.66);
+  --t-surface-strong: rgba(10, 43, 109, 0.88);
+  --t-border: rgba(150, 190, 255, 0.18);
+  --t-shadow: 0 24px 54px -30px rgba(10, 43, 109, 0.58);
+  --t-pill: rgba(160, 200, 255, 0.14);
+  --t-hover: rgba(160, 200, 255, 0.08);
+  background:
+    radial-gradient(1000px 560px at 4% -8%, #0A2B6D 0%, rgba(10, 43, 109, 0) 60%),
+    radial-gradient(780px 460px at 98% 4%, #5a00d6 0%, rgba(90, 0, 214, 0) 58%),
+    linear-gradient(165deg, #0A2B6D 0%, #0A2B6D 48%, #5a00d6 100%);
+}
+
+.t-card {
+  background: var(--t-surface);
+  border: 1px solid var(--t-border);
+  border-radius: 18px;
+  box-shadow: var(--t-shadow);
+  backdrop-filter: blur(22px) saturate(150%);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+}
+
+.t-rail {
+  background: var(--t-surface);
+  border: 1px solid var(--t-border);
+  border-radius: 22px;
+  box-shadow: var(--t-shadow);
+  backdrop-filter: blur(26px) saturate(160%);
+  -webkit-backdrop-filter: blur(26px) saturate(160%);
+}
+
+.t-title {
+  color: var(--t-text);
+  letter-spacing: -0.01em;
+}
+
+.t-muted {
+  color: var(--t-muted);
+}
+
+.t-row {
+  border-radius: 12px;
+  transition: background 160ms ease;
+}
+
+.t-row:hover {
+  background: var(--t-hover);
+}
+
+.t-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: 999px;
+  padding: 2px 9px;
+  font-size: 10.5px;
+  font-weight: 700;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.t-pill-blue {
+  background: rgba(0, 114, 255, 0.12);
+  color: #0a54b8;
+}
+
+.t-pill-green {
+  background: rgba(16, 160, 112, 0.14);
+  color: #0a7a52;
+}
+
+.t-pill-amber {
+  background: rgba(214, 132, 0, 0.16);
+  color: #97590a;
+}
+
+.t-pill-pink {
+  background: rgba(255, 46, 154, 0.14);
+  color: #b0126a;
+}
+
+.t-pill-gray {
+  background: var(--t-pill);
+  color: var(--t-muted);
+}
+
+.today-shell[data-theme='dark'] .t-pill-blue {
+  color: #9cc6ff;
+}
+
+.today-shell[data-theme='dark'] .t-pill-green {
+  color: #7de3b6;
+}
+
+.today-shell[data-theme='dark'] .t-pill-amber {
+  color: #ffcf7a;
+}
+
+.today-shell[data-theme='dark'] .t-pill-pink {
+  color: #ff9ecd;
+}
+
+.t-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: 11px;
+  padding: 7px 13px;
+  font-size: 12px;
+  font-weight: 700;
+  transition: transform 160ms ease, opacity 160ms ease, background 160ms ease;
+}
+
+.t-btn:hover {
+  transform: translateY(-1px);
+}
+
+.t-btn-primary {
+  background: linear-gradient(135deg, #0A2B6D 0%, #5a00d6 62%, #ff2e9a 138%);
+  color: #ffffff;
+}
+
+.t-btn-ghost {
+  background: var(--t-pill);
+  color: var(--t-text);
+}
+
+.t-ask {
+  background: var(--t-surface-strong);
+  border: 1px solid var(--t-border);
+  border-radius: 16px;
+  box-shadow: 0 16px 34px -26px rgba(6, 26, 68, 0.55);
+}
+
+.t-ask input::placeholder {
+  color: var(--t-muted);
+  opacity: 0.8;
+}
+
+.t-dock {
+  background: var(--t-surface-strong);
+  border: 1px solid var(--t-border);
+  border-radius: 20px;
+  box-shadow: 0 24px 50px -24px rgba(6, 26, 68, 0.55);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+}
+
+.t-dock-item {
+  color: var(--t-text);
+  border-radius: 13px;
+  transition: transform 180ms ease, background 180ms ease;
+}
+
+.t-dock-item:hover {
+  transform: translateY(-4px) scale(1.04);
+  background: var(--t-pill);
+}
+
+.t-grad-text {
+  background: linear-gradient(120deg, #0A2B6D 0%, #5a00d6 58%, #ff2e9a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.today-shell[data-theme='dark'] .t-grad-text {
+  background: linear-gradient(120deg, #a8c8ff 0%, #c3a0ff 58%, #ffa0cf 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* ---- Little music radio strip ---- */
+.t-radio {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  padding: 8px 10px;
+  border-radius: 16px;
+  background: var(--t-surface-strong);
+  border: 1px solid var(--t-border);
+  box-shadow: 0 16px 34px -28px rgba(6, 26, 68, 0.55);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+}
+
+.t-radio-toggle {
+  display: grid;
+  place-items: center;
+  height: 38px;
+  width: 38px;
+  flex: none;
+  border-radius: 13px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #0a2b6d 0%, #5a00d6 62%, #ff2e9a 138%);
+  transition: transform 160ms ease, opacity 160ms ease;
+}
+
+.t-radio-toggle:hover {
+  transform: translateY(-1px);
+}
+
+.t-radio-meta {
+  min-width: 0;
+  flex: 1 1 150px;
+}
+
+.t-radio-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--t-muted);
+}
+
+.t-radio-live {
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--t-pill);
+  letter-spacing: 0.1em;
+}
+
+.t-radio-live.is-on {
+  background: rgba(255, 46, 154, 0.14);
+  color: #b0126a;
+}
+
+.today-shell[data-theme='dark'] .t-radio-live.is-on {
+  color: #ff9ecd;
+}
+
+.t-radio-station {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--t-text);
+}
+
+.t-radio-note {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--t-muted);
+}
+
+.t-radio-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.t-radio-step {
+  display: grid;
+  place-items: center;
+  height: 30px;
+  width: 30px;
+  border-radius: 10px;
+  background: var(--t-pill);
+  color: var(--t-text);
+  transition: background 160ms ease;
+}
+
+.t-radio-step:hover {
+  background: var(--t-hover);
+}
+
+.t-radio-select {
+  height: 30px;
+  max-width: 152px;
+  padding: 0 8px;
+  border-radius: 10px;
+  border: 1px solid var(--t-border);
+  background: var(--t-surface-strong);
+  color: var(--t-text);
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.t-radio-volume {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--t-muted);
+}
+
+.t-radio-volume input[type='range'] {
+  width: 84px;
+  accent-color: #5a00d6;
+}
+
+/* ---- Device tuning: iPad (A16, 11-inch) and 16-inch MacBook Pro ---- */
+@media (min-width: 820px) {
+  .today-shell .t-radio-meta {
+    min-width: 210px;
+  }
+
+  .today-shell .t-radio-select {
+    max-width: 190px;
+  }
+}
+
+@media (min-width: 1500px) {
+  .today-shell .t-radio-volume input[type='range'] {
+    width: 118px;
+  }
+
+  .today-shell .t-radio {
+    padding: 9px 12px;
+  }
+}
+
+/* Tablet and touch screens: comfortable 44px targets */
+@media (pointer: coarse) {
+  .today-shell .t-btn {
+    min-height: 44px;
+    padding: 10px 15px;
+    font-size: 13px;
+  }
+
+  .today-shell .t-radio-toggle {
+    height: 46px;
+    width: 46px;
+  }
+
+  .today-shell .t-radio-step {
+    height: 40px;
+    width: 40px;
+  }
+
+  .today-shell .t-radio-select {
+    height: 40px;
+    font-size: 12.5px;
+  }
+
+  .today-shell .t-radio-volume input[type='range'] {
+    height: 40px;
+    width: 120px;
+  }
+
+  .today-shell .t-dock-item {
+    width: 62px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .today-shell nav[aria-label='Today workspace navigation'] a {
+    min-height: 38px;
+    padding-left: 13px;
+    padding-right: 13px;
+  }
+}

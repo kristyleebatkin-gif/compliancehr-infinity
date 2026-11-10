@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
-import { safeUrl } from '@/lib/safeUrl';
 import ParticipantRecordDetails from '@/components/documents/ParticipantRecordDetails';
 
 export default function ParticipantRecordSource({ entity, query, title }) {

@@ -5,12 +5,15 @@ import {
   ReceiptText, Wrench, MapPin, HeartHandshake, Building2, Newspaper, Landmark,
   UserCog, Handshake, BarChart3, Briefcase, ShoppingCart, KanbanSquare,
   ClipboardList, MessageSquare, Lightbulb, LifeBuoy, BookOpen, Bot, ClipboardCheck, Activity, TrendingUp,
+  Sun,
 } from 'lucide-react';
 
 // Single source of truth for every module in the app: the sidebar, bottom nav and
 // the dashboard module hub all read this list so nothing can go missing again.
 export const MODULE_DIRECTORY = [
   // 1. DASHBOARD & COMMUNICATION COMMAND
+  { key: 'today', label: 'Administration – Lead (Sherelle)', path: '/today', icon: Sun, group: '1. Dashboard & Communication', blurb: 'Sherelle’s daily operations workspace: morning brief, emails, roster, invoices, NDIS updates, compliance job, to-dos and team.' },
+  { key: 'team-leader', label: 'Team Leader - Lead (Jamie)', path: '/team-leader', icon: Sparkles, group: '1. Dashboard & Communication', blurb: 'Jamie’s team leader workspace: escalations, shift notes, who is on shift, roster cover, highlights, calculator and handover notes.' },
   { key: 'dashboard', label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard, group: '1. Dashboard & Communication', blurb: 'Executive Dashboard, Subscriptions, Communication, Mailbox, Live Roster, Briefings, Meetings, Feedback & Shared To-Do in one hub.' },
   { key: 'communications', label: 'Communication', path: '/communications', icon: Megaphone, group: '1. Dashboard & Communication', blurb: 'Unified Communication, Mailbox, Live Roster, Merged Tasks & Shared To-Do Lists.' },
   { key: 'daily-briefing', label: 'Daily Briefing', path: '/briefing', icon: Newspaper, group: '1. Dashboard & Communication', blurb: 'Daily organisational briefing, operational priorities and executive updates.' },

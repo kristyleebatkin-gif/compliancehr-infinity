@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Badge } from '@/components/ui/badge';
 import { CheckCircle2, ArrowUpRight, ShieldCheck, Layers, Wrench } from 'lucide-react';
 
 const PARTICIPANT_9_SECTIONS = [

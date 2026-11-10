@@ -5,7 +5,6 @@ import {
   ArrowUpDown,
   CheckSquare,
   Download,
-  Filter,
   Layers,
   LayoutGrid,
   Search,

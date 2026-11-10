@@ -30,8 +30,8 @@
     --payroll: 193 100% 42%;
     --header-blue: 213 100% 50%;
     --header-pink: 329 100% 59%;
-    --header-gradient: linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%);
-    --section-header-gradient: linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%);
+    --header-gradient: linear-gradient(165deg, #0A2B6D 0%, #0A2B6D 55%, #5A00D6 100%);
+    --section-header-gradient: linear-gradient(165deg, #0A2B6D 0%, #0A2B6D 55%, #5A00D6 100%);
     --brand: 213 100% 50%;
     --brand-foreground: 0 0% 100%;
     --teal: 193 100% 42%;
@@ -72,32 +72,32 @@
   }
 
   .dark {
-    --background: 222 47% 9%;
+    --background: 220 83% 23%;
     --foreground: 210 40% 98%;
-    --card: 222 47% 11%;
+    --card: 220 83% 23%;
     --card-foreground: 210 40% 98%;
-    --popover: 222 47% 11%;
+    --popover: 220 83% 23%;
     --popover-foreground: 210 40% 98%;
     --primary: 213 94% 60%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 217 33% 17%;
+    --secondary: 213 100% 50%;
     --secondary-foreground: 210 40% 98%;
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 25% 78%;
-    --accent: 217 33% 18%;
+    --muted: 220 83% 23%;
+    --muted-foreground: 210 100% 89%;
+    --accent: 265 100% 42%;
     --accent-foreground: 210 40% 98%;
     --destructive: 0 70% 55%;
     --destructive-foreground: 0 0% 98%;
-    --border: 217 33% 20%;
-    --input: 217 33% 20%;
+    --border: 210 100% 89%;
+    --input: 210 100% 89%;
     --ring: 213 94% 60%;
     --header-foreground: 0 0% 100%;
     --workspace-navy: 220 83% 23%;
     --payroll: 160 70% 55%;
     --header-blue: 221 83% 53%;
     --header-pink: 330 81% 44%;
-    --header-gradient: linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%);
-    --section-header-gradient: linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%);
+    --header-gradient: linear-gradient(165deg, #0A2B6D 0%, #0A2B6D 55%, #5A00D6 100%);
+    --section-header-gradient: linear-gradient(165deg, #0A2B6D 0%, #0A2B6D 55%, #5A00D6 100%);
     --brand: 213 94% 60%;
     --brand-foreground: 0 0% 100%;
     --teal: 217 91% 67%;
@@ -114,21 +114,21 @@
     --chart-4: 35 95% 55%;
     --chart-5: 0 70% 55%;
     --hr-evidence: 185 70% 60%;
-    --profile-lilac: 222 47% 13%;
-    --profile-sky: 222 47% 13%;
-    --profile-mint: 222 47% 13%;
-    --profile-peach: 222 47% 13%;
-    --profile-rose: 222 47% 13%;
-    --profile-lemon: 222 47% 13%;
-    --ai-hint: 217 33% 16%;
+    --profile-lilac: 270 100% 96%;
+    --profile-sky: 207 100% 96%;
+    --profile-mint: 150 60% 92%;
+    --profile-peach: 30 100% 94%;
+    --profile-rose: 340 100% 95%;
+    --profile-lemon: 50 100% 93%;
+    --ai-hint: 220 83% 23%;
     --ai-hint-foreground: 210 40% 96%;
-    --sidebar-background: 222 47% 11%;
+    --sidebar-background: 220 83% 23%;
     --sidebar-foreground: 210 40% 90%;
     --sidebar-primary: 213 94% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 217 33% 17%;
+    --sidebar-accent: 213 100% 50%;
     --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 217 33% 20%;
+    --sidebar-border: 210 100% 89%;
     --sidebar-ring: 213 94% 60%;
   }
 }
@@ -188,12 +188,16 @@
 }
 
 @layer utilities {
+  /* Legacy black text utility is remapped to the approved Choices NQ navy. */
+  .text-black {
+    color: #0A2B6D !important;
+  }
   .gradient-brand {
-    background: linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%);
+    background: linear-gradient(165deg, #0A2B6D 0%, #0A2B6D 55%, #5A00D6 100%);
     color: hsl(var(--header-foreground));
   }
   .app-page-header, .gradient-brand.text-white {
-    background: linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%);
+    background: linear-gradient(165deg, #0A2B6D 0%, #0A2B6D 55%, #5A00D6 100%);
     color: hsl(var(--header-foreground));
   }
   .app-page-header :is(h1, h2, h3, p, [class*="text-white"]),

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Bell, BookOpen, LayoutGrid, ShieldAlert } from 'lucide-react';
-import { getTilePalette, getHeaderView, getSymbolView } from '@/lib/fullColourTiles';
+import { getSymbolView } from '@/lib/fullColourTiles';
 
 const TOP_BORDER_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';
@@ -39,7 +39,7 @@ export default function DashboardQuickStart() {
       <div
         className="rounded-[13px] p-3"
         style={{
-          background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+          background: 'linear-gradient(165deg, #0A2B6D 0%, #0A2B6D 55%, #5A00D6 100%)',
         }}
       >
         <div
@@ -78,7 +78,7 @@ export default function DashboardQuickStart() {
             <ol
               className="grid gap-2.5 rounded-xl p-2.5 sm:grid-cols-2 lg:grid-cols-4 text-left"
               style={{
-                background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+                background: 'linear-gradient(165deg, #0A2B6D 0%, #0A2B6D 55%, #5A00D6 100%)',
               }}
             >
               {STEPS.map((step, index) => {

@@ -40,12 +40,16 @@ const MODULES = [
   { key: 'hr', title: 'HR Hub', href: '/hr', icon: Briefcase, bar: 'bg-indigo-600' },
 ];
 
-const ADMIN_ROLES = ['admin', 'Provider Administrator', 'Administration'];
-
-const csvCell = (value) => '"' + String(value ?? '').replace(/"/g, '""') + '"';
+const csvCell = (value) => {
+  if (typeof value === 'number' || typeof value === 'boolean') return String(value);
+  const raw = String(value ?? '');
+  const safe = /^[\s]*[=+\-@]/.test(raw) ? `'${raw}` : raw;
+  return '"' + safe.replace(/"/g, '""') + '"';
+};
 
 function ModuleCard({ mod }) {
-  const max = Math.max(1, ...mod.breakdown.map((b) => b.count));
+  const breakdown = Array.isArray(mod.breakdown) ? mod.breakdown : [];
+  const max = Math.max(1, ...breakdown.map((b) => b.count));
   const extraCounts = Object.entries(mod.counts || {});
   const colour = moduleKeyColour(mod.key);
   return (
@@ -64,7 +68,7 @@ function ModuleCard({ mod }) {
         <span className="text-xs font-semibold text-muted-foreground">live records</span>
       </div>
       <div className="mt-3 space-y-1.5">
-        {mod.breakdown.slice(0, 5).map((item) => (
+        {breakdown.slice(0, 5).map((item) => (
           <div key={item.label} className="flex items-center gap-2">
             <span className="w-28 shrink-0 break-words text-xs font-semibold text-foreground">{item.label}</span>
             <div className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
@@ -73,7 +77,7 @@ function ModuleCard({ mod }) {
             <span className="w-8 text-right text-[11px] font-bold text-foreground">{item.count}</span>
           </div>
         ))}
-        {mod.breakdown.length === 0 && <p className="text-[11px] text-muted-foreground">No status breakdown yet.</p>}
+        {breakdown.length === 0 && <p className="text-[11px] text-muted-foreground">No status breakdown yet.</p>}
       </div>
       {extraCounts.length > 0 && (
         <p className="mt-3 text-xs font-semibold text-foreground">
@@ -84,20 +88,27 @@ function ModuleCard({ mod }) {
   );
 }
 
-export default function LiveDashboards() {
-  const { role } = useRole();
+export default function LiveDashboards({ embedded = false } = {}) {
+  const { can } = useRole();
   const [modules, setModules] = useState(null);
   const [generatedAt, setGeneratedAt] = useState(null);
   const [loading, setLoading] = useState(true);
   const [exporting, setExporting] = useState(false);
-  const isAdmin = ADMIN_ROLES.includes(role);
+  const [error, setError] = useState(null);
+  const [exportError, setExportError] = useState(null);
+  const canExport = can('analytics');
 
   const load = useCallback(async () => {
     setLoading(true);
+    setError(null);
     try {
       const res = await base44.functions.invoke('liveModuleOverview', {});
-      setModules(res.data.modules || []);
-      setGeneratedAt(res.data.generated_at);
+      const payload = res?.data || res;
+      if (!Array.isArray(payload?.modules)) throw new Error('Unexpected module overview response.');
+      setModules(payload.modules);
+      setGeneratedAt(payload.generated_at || null);
+    } catch {
+      setError('Live module information could not be loaded. Refresh to retry.');
     } finally {
       setLoading(false);
     }
@@ -107,11 +118,13 @@ export default function LiveDashboards() {
 
   const exportLog = async () => {
     setExporting(true);
+    setExportError(null);
     try {
       const rows = [];
       let cursor;
       do {
         const page = await base44.entities.ModuleDailyStatus.list({ sort: '-snapshot_date', limit: 500, cursor });
+        if (!Array.isArray(page?.items)) throw new Error('Unexpected export response.');
         rows.push(...page.items);
         cursor = page.next_cursor;
       } while (cursor);
@@ -128,6 +141,8 @@ export default function LiveDashboards() {
       link.click();
       link.remove();
       URL.revokeObjectURL(url);
+    } catch {
+      setExportError('The daily status export could not be completed. Please retry.');
     } finally {
       setExporting(false);
     }
@@ -136,28 +151,40 @@ export default function LiveDashboards() {
   return (
     <div className="space-y-3">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="flex items-center gap-2.5">
-          <span className="gradient-brand flex h-7 w-7 items-center justify-center rounded-lg shadow-sm">
-            <LayoutDashboard className="h-4 w-4 text-white" />
-          </span>
-          <span className="text-sm font-bold font-editorial text-foreground/80">Live module dashboards</span>
-          {generatedAt && <span className="text-xs text-muted-foreground">Updated {new Date(generatedAt).toLocaleTimeString()}</span>}
-        </div>
+        {!embedded ? (
+          <div className="flex items-center gap-2.5">
+            <span className="gradient-brand flex h-7 w-7 items-center justify-center rounded-lg shadow-sm">
+              <LayoutDashboard className="h-4 w-4 text-white" />
+            </span>
+            <span className="text-sm font-bold font-editorial text-foreground/80">Live module dashboards</span>
+            {generatedAt && <span className="text-xs text-muted-foreground">Updated {new Date(generatedAt).toLocaleTimeString()}</span>}
+          </div>
+        ) : (
+          <span className="text-xs text-muted-foreground">{generatedAt ? `Updated ${new Date(generatedAt).toLocaleTimeString()}` : 'Live snapshot'}</span>
+        )}
         <div className="flex items-center gap-2">
           <Button variant="outline" size="sm" onClick={load} disabled={loading}>
             <RefreshCw className={`h-3.5 w-3.5 ${loading ? 'animate-spin' : ''}`} /> Refresh
           </Button>
-          {isAdmin && (
+          {canExport && (
             <Button variant="outline" size="sm" onClick={exportLog} disabled={exporting}>
               <Download className="h-3.5 w-3.5" /> {exporting ? 'Exporting…' : 'Export daily status log'}
             </Button>
           )}
         </div>
       </div>
+      {error && <p role="alert" className="rounded-xl border border-[#FF2E9A]/50 bg-white/90 px-3 py-2 text-xs font-semibold text-[#0A2B6D]">{error}</p>}
+      {exportError && <p role="alert" className="rounded-xl border border-[#FF2E9A]/50 bg-white/90 px-3 py-2 text-xs font-semibold text-[#0A2B6D]">{exportError}</p>}
       {loading && !modules ? (
         <div className="flex items-center justify-center rounded-2xl border bg-card p-10">
           <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-slate-800" />
         </div>
+      ) : error && !modules ? (
+        <div role="alert" className="rounded-2xl border border-[#8CCBFF] bg-white/90 p-6 text-sm font-semibold text-[#0A2B6D]">
+          Live module performance is unavailable until the source service responds.
+        </div>
+      ) : modules?.length === 0 ? (
+        <div className="rounded-2xl border border-[#8CCBFF] bg-white/90 p-6 text-sm font-semibold text-[#0A2B6D]">No module performance snapshots are available yet.</div>
       ) : modules ? (
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
           {modules.map((mod) => {

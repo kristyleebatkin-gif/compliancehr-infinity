@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import {
-  CheckCircle2, AlertTriangle, TrendingUp, Vote, Database, ArrowRight,
-  PenTool, ShieldCheck, Lock, FileCheck2,
+import { AlertTriangle,
+  PenTool, ShieldCheck, FileCheck2,
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { useAuth } from '@/lib/AuthContext';

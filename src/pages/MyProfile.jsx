@@ -5,7 +5,6 @@ import { base44 } from '@/api/base44Client';
 import { syncEmployeeRecord } from '@/lib/employeeRecordBridge';
 import { format } from 'date-fns';
 import PageHeader from '@/components/PageHeader';
-import SoftwareAndSafeBanner from '@/components/safe/SoftwareAndSafeBanner';
 import EmptyState from '@/components/EmptyState';
 import { Button } from '@/components/ui/button';
 import PersonalProfileForm from '@/components/profile/PersonalProfileForm';

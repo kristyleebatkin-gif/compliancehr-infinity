@@ -52,11 +52,6 @@ import MasterComplianceAuditForms from '@/components/compliance/MasterCompliance
 import ScreenByScreenMasterAudit2026 from '@/components/compliance/ScreenByScreenMasterAudit2026';
 import Standard2026PrintableTemplatesSuite from '@/components/compliance/Standard2026PrintableTemplatesSuite';
 import EnterpriseStandardQualityGateSuite from '@/components/compliance/EnterpriseStandardQualityGateSuite';
-import EasyAccessVisibilityHub from '@/components/compliance/EasyAccessVisibilityHub';
-import IntelligentOperationsGuidanceSuite from '@/components/compliance/IntelligentOperationsGuidanceSuite';
-import EnterpriseToolsAiIntelligencePlatform from '@/components/compliance/EnterpriseToolsAiIntelligencePlatform';
-import FiveLayerEnterpriseAcceptanceSuite from '@/components/compliance/FiveLayerEnterpriseAcceptanceSuite';
-import UniversalDataStorageRetentionExportSuite from '@/components/compliance/UniversalDataStorageRetentionExportSuite';
 import BusinessHealthComplianceIntelligenceDashboard from '@/components/compliance/BusinessHealthComplianceIntelligenceDashboard';
 import InfinityCoreEngine from '@/components/compliance/InfinityCoreEngine';
 import InfinityOneClickOperations from '@/components/operations/InfinityOneClickOperations';
@@ -81,7 +76,6 @@ import CertificationCalendar from '@/components/compliance/CertificationCalendar
 import RiskHeatmap from '@/components/compliance/RiskHeatmap';
 import StaffComplianceChart from '@/components/compliance/StaffComplianceChart';
 import RosterScreeningAlerts from '@/components/rostering/RosterScreeningAlerts';
-import ComplianceGlobalSearch from '@/components/compliance/ComplianceGlobalSearch';
 import ComplianceTaskActions from '@/components/compliance/ComplianceTaskActions';
 import TaskKanban from '@/components/compliance/TaskKanban';
 import DocumentRenewalCalendar from '@/components/compliance/DocumentRenewalCalendar';
@@ -301,9 +295,9 @@ export default function ComplianceHub({ initialTab = 'standards-map' } = {}) {
             <WeeklyReportPdfButton />
             <BoardReportButton />
             <ComplianceHealthExportButton />
-            <Button asChild variant="outline" className="border-border bg-white text-black"><Link to="/certificates"><Award className="mr-2 h-4 w-4" />Issue certificate</Link></Button>
+            <Button asChild variant="outline" className="border-border bg-white text-[#0A2B6D]"><Link to="/certificates"><Award className="mr-2 h-4 w-4" />Issue certificate</Link></Button>
             <AuditArchiveButton />
-            <Button variant="outline" className="border-border bg-white text-black" onClick={exportCorrectiveRegister}>
+            <Button variant="outline" className="border-border bg-white text-[#0A2B6D]" onClick={exportCorrectiveRegister}>
               <Download className="mr-2 h-4 w-4" /> Corrective Action Register (CSV)
             </Button>
           </>

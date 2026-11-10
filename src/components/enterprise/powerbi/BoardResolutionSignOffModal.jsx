@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
-  X, ShieldCheck, CheckCircle2, PenTool, Eraser, Lock, FileCheck2, Loader2,
+  X, CheckCircle2, PenTool, Eraser, Lock, FileCheck2, Loader2,
 } from 'lucide-react';
 import { CONSTITUTIONAL_PRINCIPLE } from '@/lib/careSphereSmeGarmData';
 

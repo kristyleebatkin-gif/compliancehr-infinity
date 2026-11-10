@@ -94,6 +94,9 @@ import OurEmployeeDetail from '@/pages/OurEmployeeDetail';
 import OurParticipantDetail from '@/pages/OurParticipantDetail';
 import GovernanceLayer from '@/pages/GovernanceLayer';
 import Landing from '@/pages/Landing';
+import TodayDashboard from '@/pages/TodayDashboard';
+import TeamLeaderDashboard from '@/pages/TeamLeaderDashboard';
+import SecondScreen from '@/pages/SecondScreen';
 import PublicComplaint from '@/pages/PublicComplaint';
 import PublicVolunteer from '@/pages/PublicVolunteer';
 import Connect from '@/pages/Connect';
@@ -136,6 +139,9 @@ const AuthenticatedApp = () => {
       <Route path="/mfa" element={<Mfa />} />
       <Route path="/oauth/consent" element={<OAuthConsent />} />
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
+        <Route path="/today" element={<RoleGate navKey="today"><TodayDashboard /></RoleGate>} />
+        <Route path="/team-leader" element={<RoleGate navKey="team-leader"><TeamLeaderDashboard /></RoleGate>} />
+        <Route path="/second-screen" element={<SecondScreen />} />
         <Route element={<AppLayout />}>
           <Route path="/dashboard" element={<RoleGate navKey="dashboard"><Dashboard /></RoleGate>} />
           <Route path="/executive-dashboards" element={<RoleGate navKey="analytics"><ExecutiveDashboards /></RoleGate>} />

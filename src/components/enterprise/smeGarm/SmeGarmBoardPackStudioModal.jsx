@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  X, ChevronLeft, ChevronRight, Download, CheckCircle2,
+  X, ChevronLeft, ChevronRight, Download,
   FileText, Presentation, Database, Vote,
 } from 'lucide-react';
 import {

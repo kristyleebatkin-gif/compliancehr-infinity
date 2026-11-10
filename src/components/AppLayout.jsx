@@ -5,24 +5,17 @@ import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
 import { useRole } from '@/lib/useRole';
 import { canAccessNav, ROLES } from '@/lib/roles';
-import AuditorOnlyLayout from '@/components/AuditorOnlyLayout';
 import { MODULE_DIRECTORY as PRIMARY_NAV } from '@/lib/moduleDirectory';
 import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
-import {
-  Bell, LogOut, Menu, X, ChevronDown, MoreHorizontal, ShieldQuestion, Sparkles,
-  LayoutDashboard, Users, Heart, GraduationCap, ShieldCheck, User, Building2,
+import { Menu, X, ChevronDown, MoreHorizontal, ShieldQuestion,
+  LayoutDashboard, Users, Heart, GraduationCap, ShieldCheck,
 } from 'lucide-react';
-import GlobalSearch from '@/components/GlobalSearch';
-import AutoRegisterInsights from '@/components/AutoRegisterInsights';
 import QuickAppBar from '@/components/QuickAppBar';
 import ObsidianSidebarRemote from '@/components/ObsidianSidebarRemote';
-import EnterpriseWorkspaceBar from '@/components/enterprise/EnterpriseWorkspaceBar';
-import VisualDesignModuleCommandStandard from '@/components/enterprise/VisualDesignModuleCommandStandard';
 import BrandLogoLockup from '@/components/common/BrandLogoLockup';
 import BrandSlogan from '@/components/common/BrandSlogan';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import PendingApprovalNotice from '@/components/users/PendingApprovalNotice';
-import ModuleGuide from '@/components/ModuleGuide';
 import ModuleDocsFooter from '@/components/ModuleDocsFooter';
 import UniversalDocumentViewerModal from '@/components/documents/UniversalDocumentViewerModal';
 import EnterpriseFloatingWorkspaceDock from '@/components/EnterpriseFloatingWorkspaceDock';
@@ -248,7 +241,7 @@ export default function AppLayout() {
         style={{
           borderRight: '3px solid transparent',
           backgroundImage:
-            'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%), linear-gradient(180deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+            'linear-gradient(165deg, #0A2B6D 0%, #0A2B6D 55%, #5A00D6 100%), linear-gradient(180deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
           backgroundOrigin: 'border-box',
           backgroundClip: 'padding-box, border-box',
         }}
@@ -357,7 +350,7 @@ export default function AppLayout() {
           id="main-workspace-content"
           className="relative z-0 flex-1 overflow-x-hidden pb-20 md:pb-6"
           style={{
-            background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+            background: 'linear-gradient(165deg, #0A2B6D 0%, #0A2B6D 55%, #5A00D6 100%)',
           }}
         >
           <div className={location.pathname === '/staff' || location.pathname.startsWith('/staff/') ? 'mx-auto max-w-[1440px] px-3' : 'mx-auto max-w-[1440px] px-3 pt-2'}>

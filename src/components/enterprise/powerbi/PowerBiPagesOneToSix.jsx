@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Shield, AlertTriangle, TrendingUp, CheckCircle2, ArrowUpRight,
-  Activity, Award, Compass, Eye,
+import { ArrowUpRight,
 } from 'lucide-react';
 import {
   PAGE1_TOP_KPIS,

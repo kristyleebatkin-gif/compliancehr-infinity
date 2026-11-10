@@ -471,3 +471,25 @@ Acceptance for 31K: a test fortnight of shifts produces payslip wage lines, invo
 
 ## Build order suggestion
 1 → 2 → 3 → 4–8 (profiles + intake + rostering core) → 9–15 (compliance/risk/safety) → 16–22 (finance/comms/training/meetings) → 23–30 → 31 (Sherelle Manager Playbook: Critical items 170, 178, 189, 190, 235, 236, 250 first, then High, Medium, Low).
+
+## Dashboard final-polish batch — 11 November 2026
+Completed in the existing `dashboards-sherelle-jamie` branch:
+- [x] Gate Today and Team Leader workspaces with the role matrix; synchronize frontend and backend permissions.
+- [x] Separate executive/business, staff, participant and limited-support dashboard views.
+- [x] Make staff/participant dashboard tiles use explicit navigation permission keys.
+- [x] Make Today workspace panels, sidebar and mobile navigation permission-aware.
+- [x] Count and list only Draft invoices as awaiting approval.
+- [x] Add server-side summary counts and honest error/retry states for failed dashboard data.
+- [x] Scope Team Leader shift notes to today's shift-note records and improve no-shift/late/unfilled wording.
+- [x] Add task leaderboard pagination and loading/error states.
+- [x] Apply navy-blue glass styling and replace near-black dark-mode surface tokens with the approved navy palette.
+- [x] Run full verification: `npm run ci:verify` passed (24 tests, lint, build); `npm run typecheck` passed.
+
+Still required before production approval:
+- [ ] Visual acceptance of the branch preview by the owner.
+- [ ] Responsive checks at 360, 390, 768, 1024, 1366 and 1440px.
+- [ ] Keyboard, focus, contrast, zoom and screen-reader checks.
+- [ ] Runtime role tests with representative approved accounts and live entity RLS.
+- [ ] Verify real dashboard counts, exact deep links, exports and operational actions in the preview.
+- [ ] Merge the dashboard branch to main and publish only after owner approval.
+- [ ] Owner decision: confirm which approved role should access Invoicing (including Sherelle's Administration/Finance responsibilities). Align navigation permissions with entity RLS and add approved/denied runtime tests before exposing invoice actions. No access expansion was made in the dashboard polish batch.

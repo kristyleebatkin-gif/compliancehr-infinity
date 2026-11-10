@@ -6,13 +6,13 @@ import { useAuth } from '@/lib/AuthContext';
 import {
   LogOut, LayoutDashboard, ClipboardList,
   Users, ShieldCheck, ShieldAlert, FolderOpen, Megaphone,
-  BarChart3, Cpu, Settings,
+  BarChart3, Cpu, Settings, Sun, Smartphone,
 } from 'lucide-react';
 
 const BRAND_GRADIENT =
   'linear-gradient(120deg, #0072FF 0%, #A855F7 50%, #FF2E9A 100%)';
 
-const DARK_NAVY_CHASSIS = 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)';
+const DARK_NAVY_CHASSIS = 'linear-gradient(165deg, #0A2B6D 0%, #0A2B6D 55%, #5A00D6 100%)';
 
 // Strict repeating symbol & square indicator sequence: Blue, Purple, Pink, Blue, Purple, Pink...
 const SYMBOL_COLOR_SEQUENCE = ['#0072FF', '#A855F7', '#FF2E9A'];
@@ -28,6 +28,8 @@ export const PRIMARY_11_OS_NAV = [
     status: 'LIVE',
     children: [
       { label: 'Dashboard', path: '/dashboard', sub: 'Executive Dashboard, Subscriptions & Command', icon: LayoutDashboard },
+      { label: 'Administration – Lead (Sherelle)', path: '/today', sub: 'Daily operations workspace', icon: Sun },
+      { label: 'Team Leader - Lead (Jamie)', path: '/team-leader', sub: 'Team leader mobile workspace', icon: Smartphone },
       { label: 'Communication', path: '/communications', sub: 'Unified Communication, Mailbox & Roster', icon: Megaphone },
       { label: 'Daily Briefing', path: '/briefing', sub: 'Morning operational briefing' },
       { label: 'Meetings', path: '/meetings', sub: 'Agendas, minutes & action items' },
@@ -213,6 +215,8 @@ export const FOCUSED_5_PILLAR_NAV = [
     status: 'LIVE',
     children: [
       { label: 'Dashboard', path: '/dashboard', sub: 'Executive Dashboard, Subscriptions & Command', icon: LayoutDashboard },
+      { label: 'Administration – Lead (Sherelle)', path: '/today', sub: 'Daily operations workspace', icon: Sun },
+      { label: 'Team Leader - Lead (Jamie)', path: '/team-leader', sub: 'Team leader mobile workspace', icon: Smartphone },
       { label: 'Communication', path: '/communications', sub: 'Unified Communication, Mailbox & Roster', icon: Megaphone },
       { label: 'Daily Briefing', path: '/briefing', sub: 'Morning operational briefing' },
       { label: 'Meetings', path: '/meetings', sub: 'Agendas, minutes & action items' },

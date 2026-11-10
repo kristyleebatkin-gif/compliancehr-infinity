@@ -11,7 +11,6 @@ import {
 } from '@/lib/careSpherePowerBiData';
 import {
   CONSTITUTIONAL_PRINCIPLE,
-  MANDATORY_CLOSING_STATEMENT,
   MANDATORY_OUTPUT_PILLARS,
 } from '@/lib/careSphereSmeGarmData';
 import {

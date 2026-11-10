@@ -5,8 +5,8 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/components/ui/use-toast';
 import {
-  ShieldCheck, Users, MessageSquare, BookOpen, Calendar, Award, Briefcase,
-  Flag, Ban, Scale, Sparkles, BarChart3, Crown, CheckCircle2, Lock, AlertTriangle,
+  ShieldCheck, Users, MessageSquare, BookOpen, Award, Briefcase,
+  Flag, Ban, Scale, BarChart3, Crown, CheckCircle2, Lock, AlertTriangle,
   Download, Send, Star, ThumbsUp, FileCheck2, Play,
 } from 'lucide-react';
 import {

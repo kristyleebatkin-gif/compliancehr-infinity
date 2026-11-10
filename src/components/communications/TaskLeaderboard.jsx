@@ -11,21 +11,49 @@ export default function TaskLeaderboard({ compact = true }) {
   const [expanded, setExpanded] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [now, setNow] = useState(new Date());
-  const { settings, loading: settingsLoading, save: saveSettings } = useTaskCompetitionSettings();
+  const { settings, loading: settingsLoading, error: settingsError, save: saveSettings } = useTaskCompetitionSettings();
   const [revision, setRevision] = useState(0);
+  const [tasksLoading, setTasksLoading] = useState(true);
+  const [tasksError, setTasksError] = useState(null);
 
   useEffect(() => base44.entities.TodoTask.subscribe(() => setRevision((value) => value + 1)), []);
 
   useEffect(() => {
-    (async () => {
-      const seasonStart = settings.season_start;
-      const seasonEnd = format(new Date(settings.season_end), 'yyyy-MM-dd');
-      const taskPage = await base44.entities.TodoTask.filter(
-        { status: { $in: ['Completed', 'Finalised'] }, completed_date: { $gte: seasonStart, $lte: seasonEnd } },
-        { limit: 500, fields: ['responsible', 'completed_date', 'time_taken_minutes', 'title', 'module'] }
-      );
-      setTasks(taskPage.items || []);
-    })();
+    let active = true;
+    const loadTasks = async () => {
+      setTasksLoading(true);
+      setTasksError(null);
+      try {
+        const seasonStart = settings.season_start;
+        const seasonEnd = format(new Date(settings.season_end), 'yyyy-MM-dd');
+        const filter = { status: { $in: ['Completed', 'Finalised'] }, completed_date: { $gte: seasonStart, $lte: seasonEnd } };
+        const rows = [];
+        const seenCursors = new Set();
+        let cursor;
+        do {
+          const taskPage = await base44.entities.TodoTask.filter(filter, {
+            limit: 500,
+            cursor,
+            fields: ['responsible', 'completed_date', 'time_taken_minutes', 'title', 'module']
+          });
+          if (!Array.isArray(taskPage?.items)) throw new Error('Unexpected task leaderboard response.');
+          rows.push(...taskPage.items);
+          cursor = taskPage.next_cursor;
+          if (cursor && seenCursors.has(cursor)) throw new Error('Task leaderboard pagination did not advance.');
+          if (cursor) seenCursors.add(cursor);
+        } while (cursor);
+        if (active) setTasks(rows);
+      } catch {
+        if (active) {
+          setTasks([]);
+          setTasksError('Staff leaderboard scores could not be loaded.');
+        }
+      } finally {
+        if (active) setTasksLoading(false);
+      }
+    };
+    loadTasks();
+    return () => { active = false; };
   }, [settings.season_start, settings.season_end, revision]);
 
   useEffect(() => {
@@ -96,7 +124,16 @@ export default function TaskLeaderboard({ compact = true }) {
       </div>
 
       <div className="mt-2 space-y-1.5">
-        {season.board.length === 0 ? (
+        {settingsLoading || tasksLoading ? (
+          <p className="rounded-lg border border-white/25 bg-[#16447A] px-2.5 py-2 text-[11px] text-white">Loading verified staff scores…</p>
+        ) : settingsError ? (
+          <p role="alert" className="rounded-lg border border-[#FF2E9A]/50 bg-[#16447A] px-2.5 py-2 text-[11px] text-white">Competition settings could not be loaded. Refresh the page to retry.</p>
+        ) : tasksError ? (
+          <div role="alert" className="rounded-lg border border-[#FF2E9A]/50 bg-[#16447A] px-2.5 py-2 text-[11px] text-white">
+            {tasksError}
+            <button type="button" onClick={() => setRevision((value) => value + 1)} className="ml-2 underline underline-offset-2">Retry scores</button>
+          </div>
+        ) : season.board.length === 0 ? (
           <p className="rounded-lg border border-white/25 bg-[#16447A] px-2.5 py-1.5 text-[11px] text-slate-300">
             Complete a shared task to claim 1st place on the Staff Leaderboard.
           </p>

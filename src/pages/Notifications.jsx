@@ -86,7 +86,7 @@ export default function Notifications() {
     } finally {
       setLoading(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [buildQuery]);
 
   // Reload when filters change
@@ -107,7 +107,7 @@ export default function Notifications() {
       }
     });
     return unsubscribe;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [user?.id, readFilter, typeFilter]);
 
   const unreadCount = items.filter((n) => !n.read).length;
@@ -147,7 +147,7 @@ export default function Notifications() {
         icon={Bell}
         moduleKey="notifications"
         actions={
-          <Button variant="outline" size="sm" onClick={markAllRead} disabled={unreadCount === 0 && !hasMore} className="gap-2 border-border bg-white text-black">
+          <Button variant="outline" size="sm" onClick={markAllRead} disabled={unreadCount === 0 && !hasMore} className="gap-2 border-border bg-white text-[#0A2B6D]">
             <CheckCheck className="h-4 w-4" /> Mark all read
           </Button>
         }

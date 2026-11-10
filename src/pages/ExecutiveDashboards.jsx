@@ -45,14 +45,14 @@ const VIEWS = {
   ] },
 };
 
-export default function ExecutiveDashboards() {
+export default function ExecutiveDashboards({ embedded = false } = {}) {
   const [view, setView] = useState('executive');
   const { data, isLoading } = useExecutiveDashboardMetrics(view);
   const current = VIEWS[view];
   return (
     <div className="mx-auto w-full max-w-[1440px] space-y-3 pb-6">
-      <PageHeader title={current.title} description={current.description} icon={current.icon} />
-      <ReportGenerator area="executive" />
+      {!embedded && <PageHeader title={current.title} description={current.description} icon={current.icon} />}
+      {!embedded && <ReportGenerator area="executive" />}
       <section className="executive-dashboard-metrics executive-glass-surface space-y-4 rounded-xl border border-header-foreground/20 p-4 shadow-panel sm:p-5">
         <div className="flex flex-wrap gap-2" aria-label="Executive dashboard selection">
           {Object.entries(VIEWS).map(([key, item]) => (

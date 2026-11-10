@@ -4,13 +4,12 @@ import { canAccessNav } from '@/lib/roles';
 import { useRole } from '@/lib/useRole';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import { ArrowRight } from 'lucide-react';
-import BrandLogoLockup from '@/components/common/BrandLogoLockup';
 
 const BRAND_GRADIENT =
   'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)';
 
 const DARK_NAVY_CHASSIS =
-  'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)';
+  'linear-gradient(165deg, #0A2B6D 0%, #0A2B6D 55%, #5A00D6 100%)';
 
 const APP_DESIGN_COLOURS = ['#0072FF', '#5A00D6', '#FF2E9A', '#A100FF', '#00C6FF'];
 

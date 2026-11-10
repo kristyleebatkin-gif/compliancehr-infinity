@@ -1,5 +1,4 @@
 import React from 'react';
-import BrandLogoLockup from '@/components/common/BrandLogoLockup';
 import { LayoutGrid, CalendarDays, GraduationCap, Award, Sparkles, TrendingUp, Target, ArrowRight } from 'lucide-react';
 
 const BRAND_GRADIENT =

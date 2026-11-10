@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import {
-  Search, Download, FileCheck2, CheckCircle2, Layers, Stethoscope, BookOpen, Filter,
+  Search, Download, FileCheck2, Stethoscope, BookOpen,
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';

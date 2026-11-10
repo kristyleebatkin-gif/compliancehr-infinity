@@ -1,0 +1,87 @@
+{
+  "name": "WorkspaceSecurityPin",
+  "type": "object",
+  "properties": {
+    "workspace": {
+      "type": "string",
+      "enum": [
+        "today",
+        "team-leader"
+      ],
+      "enumColors": [
+        "blue",
+        "purple"
+      ],
+      "title": "Protected Workspace"
+    },
+    "pin_salt": {
+      "type": "string",
+      "title": "PIN Salt"
+    },
+    "pin_hash": {
+      "type": "string",
+      "title": "PIN Hash"
+    },
+    "failed_attempts": {
+      "type": "number",
+      "default": 0,
+      "title": "Failed Unlock Attempts"
+    },
+    "locked_until": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Locked Until"
+    },
+    "last_changed_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "PIN Last Changed"
+    }
+  },
+  "required": [
+    "workspace",
+    "pin_salt",
+    "pin_hash"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

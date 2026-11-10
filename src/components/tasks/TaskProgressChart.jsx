@@ -101,7 +101,7 @@ export default function TaskProgressChart({ tasks, users }) {
               <BarChart data={chart} layout="vertical" margin={{ top: 4, right: 24, bottom: 0, left: 0 }}>
                 <XAxis type="number" hide allowDecimals={false} />
                 <YAxis type="category" dataKey="name" width={74} axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: 'currentColor' }} />
-                <Tooltip cursor={{ fill: 'rgba(0,0,0,0.04)' }} contentStyle={{ fontSize: 12, borderRadius: 8 }} />
+                <Tooltip cursor={{ fill: 'rgba(10,43,109,0.04)' }} contentStyle={{ fontSize: 12, borderRadius: 8 }} />
                 <Bar dataKey="value" radius={[0, 6, 6, 0]} barSize={20}>
                   {chart.map((entry) => <Cell key={entry.name} fill={entry.fill} />)}
                 </Bar>

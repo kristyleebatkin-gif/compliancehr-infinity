@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, ArrowRight, Calendar, Layers, Building2, Users } from 'lucide-react';
+import { Menu, X, ArrowRight, Calendar, Layers, Users } from 'lucide-react';
 import BrandLogoLockup from '@/components/common/BrandLogoLockup';
-import FloatingQuickActionBar from '@/components/landing/FloatingQuickActionBar';
 
 const WORKSPACE_VIEWS = [
   { id: 'both', label: 'Both Views', Icon: Layers },

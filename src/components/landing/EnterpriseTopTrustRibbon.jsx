@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ShieldCheck, Lock, Sparkles, Activity, Globe, ArrowUpRight, CheckCircle2, ClipboardCheck,
+  ShieldCheck, Lock, Sparkles, Activity, Globe, ArrowUpRight, ClipboardCheck,
 } from 'lucide-react';
 
 export default function EnterpriseTopTrustRibbon({ onBookDemo }) {
