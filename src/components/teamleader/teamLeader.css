@@ -86,7 +86,7 @@
   align-items: center;
   border-radius: 999px;
   padding: 2px 8px;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   white-space: nowrap;
 }
@@ -183,7 +183,7 @@
 
 .tl-table th {
   text-align: left;
-  font-size: 9.5px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--tl-muted);
@@ -277,7 +277,7 @@
   .tl-nav button {
     padding: 12px 2px;
     border-radius: 15px;
-    font-size: 10.5px;
+    font-size: 12px;
   }
 
   .tl-nav button:hover {
