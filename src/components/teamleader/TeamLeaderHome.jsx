@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calculator, Moon, Sun, Mic, ArrowUp, ChevronRight, Clock, Lock } from 'lucide-react';
+import { Calculator, Moon, Sun, Mic, ArrowUp, ChevronRight, Clock, Lock, Sparkles } from 'lucide-react';
 import useSpeechInput from '@/components/today/useSpeechInput';
 import { initials } from '@/components/today/todayUi';
 import HandoverNotes from '@/components/teamleader/HandoverNotes';
@@ -46,7 +46,7 @@ export default function TeamLeaderHome({ user, data, derived, theme, onToggleThe
   const firstName = (user?.full_name || '').split(' ')[0] || 'there';
 
   return (
-    <div className="space-y-3 px-3.5 pt-3.5">
+    <div className="tl-home">
       <header className="flex items-start justify-between gap-2">
         <div className="min-w-0">
           <p className="tl-muted text-[10px] font-bold uppercase tracking-[0.14em]">
@@ -57,6 +57,9 @@ export default function TeamLeaderHome({ user, data, derived, theme, onToggleThe
           </h1>
         </div>
         <div className="flex items-center gap-1.5">
+          <button type="button" onClick={() => onScreen('workbench')} aria-label="Open the workbench" className="tl-btn tl-ghost !px-2">
+            <Sparkles className="h-4 w-4" />
+          </button>
           <button type="button" onClick={() => onScreen('calculator')} aria-label="Calculator" className="tl-btn tl-ghost !px-2">
             <Calculator className="h-4 w-4" />
           </button>
@@ -114,59 +117,75 @@ export default function TeamLeaderHome({ user, data, derived, theme, onToggleThe
       {reply ? <p className="tl-card px-3 py-2 text-[11.5px] leading-relaxed">{reply}</p> : null}
       {speech.error ? <p className="text-[10.5px] font-bold text-[#B0126A]">{speech.error}</p> : null}
 
-      <div className="grid grid-cols-2 gap-2">
-        {TILES.map(({ key, label, hint, tone, screen }) => (
-          <button key={key} type="button" onClick={() => onScreen(screen)} className="tl-card p-2.5 text-left transition active:scale-[0.99]">
-            <span className={`grid h-7 w-7 place-items-center rounded-lg bg-gradient-to-br ${tone} text-white`}>
-              <span className="text-[11px] font-extrabold">{derived[key].length}</span>
-            </span>
-            <p className="tl-text mt-2 text-[11.5px] font-extrabold leading-tight">{label}</p>
-            <p className="tl-muted mt-0.5 text-[9.5px] font-semibold">{hint}</p>
-          </button>
-        ))}
-        <button type="button" onClick={() => onScreen('notes')} className="tl-card col-span-2 flex items-center gap-2 p-2.5 text-left">
-          <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-[#FF2E9A] to-[#5A00D6] text-white">
-            <span className="text-[11px] font-extrabold">{derived.noteIncidents.length}</span>
-          </span>
-          <div className="min-w-0 flex-1">
-            <p className="tl-text text-[11.5px] font-extrabold">Incident from notes</p>
-            <p className="tl-muted truncate text-[9.5px] font-semibold">
-              {derived.noteIncidents[0]?.person_name || 'Nothing flagged yet'}
-            </p>
-          </div>
-          <ChevronRight className="tl-muted h-3.5 w-3.5 shrink-0" />
-        </button>
-      </div>
-
-      <section className="tl-card p-3">
-        <div className="flex items-center justify-between">
-          <p className="tl-text text-[12px] font-extrabold">Team right now</p>
-          <button type="button" onClick={() => onScreen('team')} className="tl-muted text-[10px] font-bold">
-            See all
-          </button>
-        </div>
-        <div className="mt-1 divide-y divide-[#0A2B6D]/8">
-          {(data.team || []).slice(0, 4).map((member) => {
-            const status = derived.statusFor(member);
-            return (
-              <div key={member.id} className="flex items-center gap-2 py-1.5">
-                <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#0A2B6D]/8 text-[9.5px] font-extrabold text-[#0A2B6D]">
-                  {(member.full_name || '?').slice(0, 1)}
+      <div className="tl-home-cols">
+        <div className="tl-home-col">
+          <div className="grid grid-cols-2 gap-2">
+            {TILES.map(({ key, label, hint, tone, screen }) => (
+              <button key={key} type="button" onClick={() => onScreen(screen)} className="tl-card p-2.5 text-left transition active:scale-[0.99]">
+                <span className={`grid h-7 w-7 place-items-center rounded-lg bg-gradient-to-br ${tone} text-white`}>
+                  <span className="text-[11px] font-extrabold">{derived[key].length}</span>
                 </span>
-                <p className="tl-text min-w-0 flex-1 truncate text-[11.5px] font-bold">{member.full_name}</p>
-                <span className={`tl-pill tl-${status.tone}`}>{status.label}</span>
+                <p className="tl-text mt-2 text-[11.5px] font-extrabold leading-tight">{label}</p>
+                <p className="tl-muted mt-0.5 text-[9.5px] font-semibold">{hint}</p>
+              </button>
+            ))}
+            <button type="button" onClick={() => onScreen('notes')} className="tl-card col-span-2 flex items-center gap-2 p-2.5 text-left">
+              <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-[#FF2E9A] to-[#5A00D6] text-white">
+                <span className="text-[11px] font-extrabold">{derived.noteIncidents.length}</span>
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="tl-text text-[11.5px] font-extrabold">Incident from notes</p>
+                <p className="tl-muted truncate text-[9.5px] font-semibold">
+                  {derived.noteIncidents[0]?.person_name || 'Nothing flagged yet'}
+                </p>
               </div>
-            );
-          })}
-          {!data.team?.length ? <p className="tl-muted py-2 text-[11px]">No team profiles yet.</p> : null}
+              <ChevronRight className="tl-muted h-3.5 w-3.5 shrink-0" />
+            </button>
+            <button type="button" onClick={() => onScreen('workbench')} className="tl-card col-span-2 flex items-center gap-2 p-2.5 text-left">
+              <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-[#0072FF] via-[#5A00D6] to-[#FF2E9A] text-white">
+                <Sparkles className="h-3.5 w-3.5" />
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="tl-text text-[11.5px] font-extrabold">Workbench · 5 studios</p>
+                <p className="tl-muted truncate text-[9.5px] font-semibold">Assistant, Design, CRM, Docs, Meetings</p>
+              </div>
+              <ChevronRight className="tl-muted h-3.5 w-3.5 shrink-0" />
+            </button>
+          </div>
         </div>
-      </section>
 
-      <HandoverNotes day={data.day} />
+        <div className="tl-home-col">
+          <section className="tl-card p-3">
+            <div className="flex items-center justify-between">
+              <p className="tl-text text-[12px] font-extrabold">Team right now</p>
+              <button type="button" onClick={() => onScreen('team')} className="tl-muted text-[10px] font-bold">
+                See all
+              </button>
+            </div>
+            <div className="mt-1 divide-y divide-[#0A2B6D]/8">
+              {(data.team || []).slice(0, 4).map((member) => {
+                const status = derived.statusFor(member);
+                return (
+                  <div key={member.id} className="flex items-center gap-2 py-1.5">
+                    <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#0A2B6D]/8 text-[9.5px] font-extrabold text-[#0A2B6D]">
+                      {(member.full_name || '?').slice(0, 1)}
+                    </span>
+                    <p className="tl-text min-w-0 flex-1 truncate text-[11.5px] font-bold">{member.full_name}</p>
+                    <span className={`tl-pill tl-${status.tone}`}>{status.label}</span>
+                  </div>
+                );
+              })}
+              {!data.team?.length ? <p className="tl-muted py-2 text-[11px]">No team profiles yet.</p> : null}
+            </div>
+          </section>
 
-      <p className="tl-muted flex items-center gap-1 pb-1 text-[9.5px] font-semibold">
-        <Clock className="h-3 w-3" /> Shift data refreshes when you reopen this screen
-      </p>
+          <HandoverNotes day={data.day} />
+
+          <p className="tl-muted flex items-center gap-1 pb-1 text-[9.5px] font-semibold">
+            <Clock className="h-3 w-3" /> Shift data refreshes when you reopen this screen
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

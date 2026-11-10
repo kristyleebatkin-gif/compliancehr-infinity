@@ -1,9 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Home, Users, CalendarClock, MessageSquare, UserCircle } from 'lucide-react';
+import { Home, Users, CalendarClock, Sparkles, MessageSquare, UserCircle } from 'lucide-react';
 
 const TABS = [
   { key: 'home', label: 'Home', icon: Home },
+  { key: 'workbench', label: 'Studio', icon: Sparkles },
   { key: 'team', label: 'Team', icon: Users },
   { key: 'roster', label: 'Roster', icon: CalendarClock },
   { key: 'messages', label: 'Messages', icon: MessageSquare, path: '/communications' },
@@ -14,7 +15,7 @@ export default function TeamLeaderNav({ screen, onSelect }) {
   const navigate = useNavigate();
 
   return (
-    <nav className="tl-nav sticky bottom-0 grid grid-cols-5 px-1 pb-2 pt-1.5">
+    <nav className="tl-nav sticky bottom-0 grid grid-cols-6 px-1 pb-2 pt-1.5">
       {TABS.map(({ key, label, icon: Icon, path }) => {
         const active = screen === key;
         return (
@@ -22,6 +23,7 @@ export default function TeamLeaderNav({ screen, onSelect }) {
             key={key}
             type="button"
             onClick={() => (path ? navigate(path) : onSelect(key))}
+            aria-current={active ? 'page' : undefined}
             className={`flex flex-col items-center gap-0.5 rounded-xl py-1.5 text-[9.5px] font-bold ${
               active ? 'text-[#5A00D6]' : 'tl-muted'
             }`}
