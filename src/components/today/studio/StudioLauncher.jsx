@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { Sparkles, Palette, Target, FileText, Mic, ArrowUpRight } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Sparkles, Palette, Target, FileText, Mic, ArrowUpRight, Loader2 } from 'lucide-react';
 import { Panel } from '@/components/today/todayUi';
 import StudioShell from '@/components/today/studio/StudioShell';
+import { migrateLocalStudio } from '@/components/today/studio/studioData';
 import AssistantStudio from '@/components/today/studio/AssistantStudio';
 import DesignStudio from '@/components/today/studio/DesignStudio';
 import CrmStudio from '@/components/today/studio/CrmStudio';
@@ -57,7 +58,20 @@ export default function StudioLauncher({
   subtitle = 'Five studios in one — built for the iPad and the MacBook'
 }) {
   const [active, setActive] = useState(null);
+  const [ready, setReady] = useState(false);
   const tool = TOOLS.find((item) => item.id === active);
+
+  useEffect(() => {
+    let cancelled = false;
+    migrateLocalStudio()
+      .catch(() => null)
+      .finally(() => {
+        if (!cancelled) setReady(true);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <>
@@ -91,11 +105,16 @@ export default function StudioLauncher({
 
       {tool ? (
         <StudioShell title={tool.name} subtitle={tool.subtitle} icon={tool.icon} onClose={() => setActive(null)}>
-          {tool.id === 'assistant' ? <AssistantStudio context={context} /> : null}
-          {tool.id === 'design' ? <DesignStudio /> : null}
-          {tool.id === 'crm' ? <CrmStudio /> : null}
-          {tool.id === 'docs' ? <DocsStudio /> : null}
-          {tool.id === 'meetings' ? <MeetingStudio /> : null}
+          {!ready ? (
+            <p className="t-muted flex items-center gap-2 text-xs font-semibold">
+              <Loader2 className="h-3.5 w-3.5 animate-spin" /> Moving anything saved on this device into the app…
+            </p>
+          ) : null}
+          {ready && tool.id === 'assistant' ? <AssistantStudio context={context} /> : null}
+          {ready && tool.id === 'design' ? <DesignStudio /> : null}
+          {ready && tool.id === 'crm' ? <CrmStudio /> : null}
+          {ready && tool.id === 'docs' ? <DocsStudio /> : null}
+          {ready && tool.id === 'meetings' ? <MeetingStudio /> : null}
         </StudioShell>
       ) : null}
     </>

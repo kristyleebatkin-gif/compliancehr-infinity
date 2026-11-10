@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import html2canvas from 'html2canvas';
+import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
-import { Download, Loader2, Sparkles, Trash2, Wand2 } from 'lucide-react';
+import { Download, FileImage, Loader2, Sparkles, Trash2, Wand2 } from 'lucide-react';
 import { TEMPLATES, PALETTES, LAYOUTS } from '@/components/today/studio/designTemplates';
-import { readStore, writeStore, uid, downloadFile, formatWhen } from '@/components/today/studio/studioStore';
+import { downloadFile, formatWhen } from '@/components/today/studio/studioStore';
+import { listStudioItems, createStudioItem, deleteStudioItem, itemWhen } from '@/components/today/studio/studioData';
 
 const BLANK = {
   headline: 'Support that fits your life',
@@ -17,10 +19,12 @@ export default function DesignStudio() {
   const [paletteId, setPaletteId] = useState('midnight');
   const [layout, setLayout] = useState('left');
   const [fields, setFields] = useState(BLANK);
-  const [designs, setDesigns] = useState(() => readStore('designs', []));
+  const [designs, setDesigns] = useState([]);
+  const [designsReady, setDesignsReady] = useState(false);
   const [brief, setBrief] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
+  const [filed, setFiled] = useState('');
   const [scale, setScale] = useState(0.32);
   const stageRef = useRef(null);
   const canvasRef = useRef(null);
@@ -29,8 +33,21 @@ export default function DesignStudio() {
   const palette = PALETTES.find((item) => item.id === paletteId) || PALETTES[0];
 
   useEffect(() => {
-    writeStore('designs', designs.slice(0, 12));
-  }, [designs]);
+    let cancelled = false;
+    listStudioItems('design')
+      .then((items) => {
+        if (!cancelled) setDesigns(items);
+      })
+      .catch((err) => {
+        if (!cancelled) setError(err?.message || 'Your saved designs could not be loaded.');
+      })
+      .finally(() => {
+        if (!cancelled) setDesignsReady(true);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -85,9 +102,60 @@ export default function DesignStudio() {
     }
   };
 
-  const saveDesign = () => {
-    const entry = { id: uid(), templateId, paletteId, layout, fields, updated: new Date().toISOString() };
-    setDesigns((prev) => [entry, ...prev.filter((item) => item.fields.headline !== fields.headline)].slice(0, 12));
+  const saveDesign = async () => {
+    if (busy) return;
+    setBusy(true);
+    setError('');
+    try {
+      const item = await createStudioItem('design', fields.headline || 'Design', {
+        templateId,
+        paletteId,
+        layout,
+        fields: { ...fields },
+        savedAt: new Date().toISOString()
+      });
+      setDesigns((prev) => [item, ...prev]);
+    } catch (err) {
+      setError(err?.response?.data?.error || err?.message || 'That design could not be saved.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const filePng = async () => {
+    if (!canvasRef.current || busy) return;
+    setBusy(true);
+    setError('');
+    setFiled('');
+    try {
+      const canvas = await html2canvas(canvasRef.current, { scale: 1, useCORS: true, backgroundColor: null });
+      const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
+      if (!blob) throw new Error('The image could not be created on this device.');
+      const fileName = `${(fields.brand || 'design').replace(/\s+/g, '-').toLowerCase()}-${template.id}.png`;
+      const { file_uri } = await base44.integrations.Core.UploadPrivateFile({
+        file: new File([blob], fileName, { type: 'image/png' })
+      });
+      await createStudioItem(
+        'filed_design',
+        fields.headline || 'Design',
+        { templateId, paletteId, layout, fields: { ...fields }, fileName, savedAt: new Date().toISOString() },
+        { file_uri, file_name: fileName }
+      );
+      setFiled('Filed to Documents');
+    } catch (err) {
+      setError(err?.response?.data?.error || err?.message || 'That design could not be filed.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const removeDesign = async (id) => {
+    setDesigns((prev) => prev.filter((item) => item.id !== id));
+    try {
+      await deleteStudioItem(id);
+    } catch (err) {
+      setError(err?.message || 'That design could not be removed.');
+    }
   };
 
   const align = layout === 'centre' ? 'center' : layout === 'left' ? 'left' : 'left';
@@ -169,37 +237,51 @@ export default function DesignStudio() {
           <button type="button" onClick={download} disabled={busy} className="t-btn t-btn-primary disabled:opacity-50">
             {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />} Download PNG
           </button>
-          <button type="button" onClick={saveDesign} className="t-btn t-btn-ghost">Save to my designs</button>
+          <button type="button" onClick={saveDesign} disabled={busy} className="t-btn t-btn-ghost disabled:opacity-50">Save to my designs</button>
+          <button type="button" onClick={filePng} disabled={busy} className="t-btn t-btn-ghost disabled:opacity-50">
+            <FileImage className="h-3.5 w-3.5" /> File PNG in Documents
+          </button>
         </div>
 
-        {designs.length ? (
-          <div className="flex flex-wrap items-center gap-1.5">
-            <span className="studio-label mb-0 mr-1">My designs</span>
-            {designs.slice(0, 6).map((design) => (
-              <button
-                key={design.id}
-                type="button"
-                onClick={() => {
-                  setTemplateId(design.templateId);
-                  setPaletteId(design.paletteId);
-                  setLayout(design.layout);
-                  setFields(design.fields);
-                }}
-                className="studio-chip flex items-center gap-1"
-                title={`Saved ${formatWhen(design.updated)}`}
-              >
-                {design.fields.headline.slice(0, 22)}
-                <Trash2
-                  className="h-3 w-3 opacity-60"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    setDesigns((prev) => prev.filter((item) => item.id !== design.id));
-                  }}
-                />
-              </button>
-            ))}
-          </div>
+        {filed ? (
+          <p className="t-muted text-[11px] font-semibold">
+            {filed} — <Link to="/documents" className="underline">open the Documents section</Link>
+          </p>
         ) : null}
+
+        {designs.length ? (
+          <div className="space-y-1.5">
+            <span className="studio-label mb-0">My designs ({designs.length})</span>
+            <div className="flex max-h-[140px] flex-wrap items-center gap-1.5 overflow-y-auto">
+              {designs.map((design) => (
+                <button
+                  key={design.id}
+                  type="button"
+                  onClick={() => {
+                    const saved = design.payload || {};
+                    setTemplateId(saved.templateId || TEMPLATES[0].id);
+                    setPaletteId(saved.paletteId || PALETTES[0].id);
+                    setLayout(saved.layout || 'left');
+                    setFields({ ...BLANK, ...(saved.fields || {}) });
+                  }}
+                  className="studio-chip flex items-center gap-1"
+                  title={`Saved ${formatWhen(itemWhen(design))}`}
+                >
+                  {String(design.payload?.fields?.headline || design.title || 'Design').slice(0, 22)}
+                  <Trash2
+                    className="h-3 w-3 opacity-60"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      removeDesign(design.id);
+                    }}
+                  />
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : designsReady ? null : (
+          <p className="t-muted text-[11px]">Loading your saved designs…</p>
+        )}
       </div>
 
       <div className="space-y-3">

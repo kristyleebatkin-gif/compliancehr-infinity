@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Send, Plus, Loader2, Sparkles, MessageSquare } from 'lucide-react';
-import { readStore, writeStore, uid } from '@/components/today/studio/studioStore';
+import { listStudioItems, createStudioItem, updateStudioItem, itemWhen } from '@/components/today/studio/studioData';
 
 const PROMPTS = [
   'Plan my day around what is on my dashboard',
@@ -11,8 +11,9 @@ const PROMPTS = [
 ];
 
 export default function AssistantStudio({ context }) {
-  const [threads, setThreads] = useState(() => readStore('assistant', []));
-  const [activeId, setActiveId] = useState(() => readStore('assistant', [])[0]?.id || null);
+  const [threads, setThreads] = useState([]);
+  const [activeId, setActiveId] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [input, setInput] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
@@ -22,8 +23,29 @@ export default function AssistantStudio({ context }) {
   const messages = active?.messages || [];
 
   useEffect(() => {
-    writeStore('assistant', threads.slice(0, 15));
-  }, [threads]);
+    let cancelled = false;
+    listStudioItems('assistant')
+      .then((items) => {
+        if (cancelled) return;
+        const list = items.map((item) => ({
+          id: item.id,
+          title: item.title || 'Assistant chat',
+          messages: item.payload?.messages || [],
+          updated: itemWhen(item)
+        }));
+        setThreads(list);
+        setActiveId((current) => current || list[0]?.id || null);
+      })
+      .catch((err) => {
+        if (!cancelled) setError(err?.message || 'Your saved chats could not be loaded.');
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ block: 'end' });
@@ -40,39 +62,37 @@ export default function AssistantStudio({ context }) {
     if (!question || busy) return;
     setError('');
     setInput('');
-
-    let thread = threads.find((item) => item.id === activeId);
-    let id = thread?.id;
-    if (!id) {
-      id = uid();
-      thread = { id, title: question.slice(0, 42), messages: [], updated: new Date().toISOString() };
-      setThreads((prev) => [thread, ...prev]);
-      setActiveId(id);
-    }
-
-    const history = [...(thread.messages || []), { role: 'user', content: question }];
-    setThreads((prev) =>
-      prev.map((item) =>
-        item.id === id
-          ? { ...item, title: item.messages.length ? item.title : question.slice(0, 42), messages: history, updated: new Date().toISOString() }
-          : item
-      )
-    );
     setBusy(true);
 
+    const thread = threads.find((item) => item.id === activeId) || null;
+    const threadTitle = thread?.title || question.slice(0, 42);
+    let messages = [...(thread?.messages || []), { role: 'user', content: question }];
+    let id = thread?.id;
+
     try {
-      const res = await base44.functions.invoke('studioAi', { task: 'chat', messages: history, context });
+      if (id) {
+        setThreads((prev) => prev.map((item) => (item.id === id ? { ...item, messages, updated: new Date().toISOString() } : item)));
+        await updateStudioItem(id, { title: threadTitle, payload: { messages, savedAt: new Date().toISOString() } });
+      } else {
+        const created = await createStudioItem('assistant', threadTitle, {
+          messages,
+          savedAt: new Date().toISOString()
+        });
+        id = created.id;
+        setThreads((prev) => [{ id, title: threadTitle, messages, updated: created.updated }, ...prev]);
+        setActiveId(id);
+      }
+
+      const res = await base44.functions.invoke('studioAi', { task: 'chat', messages, context });
       const reply = res?.data?.reply || 'No reply came back — try again.';
+      messages = [...messages, { role: 'assistant', content: reply }];
+      await updateStudioItem(id, { title: threadTitle, payload: { messages, savedAt: new Date().toISOString() } });
       setThreads((prev) =>
-        prev.map((item) =>
-          item.id === id
-            ? { ...item, messages: [...item.messages, { role: 'assistant', content: reply }], updated: new Date().toISOString() }
-            : item
-        )
+        prev.map((item) => (item.id === id ? { ...item, messages, updated: new Date().toISOString() } : item))
       );
     } catch (err) {
       setError(err?.response?.data?.error || err?.message || 'The assistant is unavailable right now.');
-      setThreads((prev) => prev.map((item) => (item.id === id ? { ...item, messages: item.messages.slice(0, -1) } : item)));
+      if (id) setThreads((prev) => prev.map((item) => (item.id === id ? { ...item, messages } : item)));
     } finally {
       setBusy(false);
     }
@@ -84,7 +104,12 @@ export default function AssistantStudio({ context }) {
         <button type="button" onClick={newChat} className="studio-chip flex items-center gap-1">
           <Plus className="h-3.5 w-3.5" /> New chat
         </button>
-        {threads.slice(0, 5).map((thread) => (
+        {loading ? (
+          <span className="t-muted flex items-center gap-1 text-[11px] font-semibold">
+            <Loader2 className="h-3 w-3 animate-spin" /> Loading your chats…
+          </span>
+        ) : null}
+        {threads.map((thread) => (
           <button
             key={thread.id}
             type="button"

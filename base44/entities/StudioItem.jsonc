@@ -1,0 +1,106 @@
+{
+  "name": "StudioItem",
+  "type": "object",
+  "properties": {
+    "kind": {
+      "type": "string",
+      "title": "Studio Item Type",
+      "enum": [
+        "design",
+        "filed_design",
+        "document",
+        "meeting",
+        "assistant",
+        "crm_note"
+      ],
+      "enumColors": [
+        "pink",
+        "gray",
+        "blue",
+        "purple",
+        "green",
+        "yellow"
+      ],
+      "default": "document"
+    },
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "payload": {
+      "type": "string",
+      "title": "Saved Content"
+    },
+    "file_uri": {
+      "type": "string",
+      "title": "Filed File"
+    },
+    "file_name": {
+      "type": "string",
+      "title": "File Name"
+    },
+    "retention_until": {
+      "type": "string",
+      "format": "date",
+      "title": "Retained Until"
+    },
+    "migrated_source_id": {
+      "type": "string",
+      "title": "Migrated From Device Save"
+    }
+  },
+  "required": [
+    "kind",
+    "title"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

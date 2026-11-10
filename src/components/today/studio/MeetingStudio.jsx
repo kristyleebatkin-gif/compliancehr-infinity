@@ -1,15 +1,27 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Mic, Square, Loader2, Sparkles, Save, Trash2, Upload, ListChecks } from 'lucide-react';
-import { readStore, writeStore, uid, formatWhen, downloadFile } from '@/components/today/studio/studioStore';
+import { formatWhen, downloadFile } from '@/components/today/studio/studioStore';
+import { listStudioItems, createStudioItem, deleteStudioItem, itemWhen } from '@/components/today/studio/studioData';
 
 const clock = (seconds) => `${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
 
+const toMeeting = (item) => ({
+  id: item.id,
+  title: item.title || 'Untitled meeting',
+  when: itemWhen(item),
+  duration: item.payload?.duration || 0,
+  transcript: item.payload?.transcript || '',
+  summary: item.payload?.summary || null
+});
+
 export default function MeetingStudio() {
-  const [meetings, setMeetings] = useState(() => readStore('meetings', []));
+  const [meetings, setMeetings] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [title, setTitle] = useState('');
   const [transcript, setTranscript] = useState('');
   const [summary, setSummary] = useState(null);
+  const [recordingUri, setRecordingUri] = useState('');
   const [recording, setRecording] = useState(false);
   const [elapsed, setElapsed] = useState(0);
   const [busy, setBusy] = useState('');
@@ -22,8 +34,21 @@ export default function MeetingStudio() {
   const timerRef = useRef(null);
 
   useEffect(() => {
-    writeStore('meetings', meetings.slice(0, 20));
-  }, [meetings]);
+    let cancelled = false;
+    listStudioItems('meeting')
+      .then((items) => {
+        if (!cancelled) setMeetings(items.map(toMeeting));
+      })
+      .catch((err) => {
+        if (!cancelled) setError(err?.message || 'Your saved meetings could not be loaded.');
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => () => {
     if (timerRef.current) clearInterval(timerRef.current);
@@ -36,6 +61,7 @@ export default function MeetingStudio() {
     try {
       const file = new File([blob], name, { type: blob.type || 'audio/webm' });
       const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file });
+      setRecordingUri(file_uri);
       const res = await base44.functions.invoke('studioTranscribe', { file_uri });
       setTranscript(res?.data?.transcript || '');
     } catch (err) {
@@ -90,20 +116,38 @@ export default function MeetingStudio() {
     }
   };
 
-  const save = () => {
-    const entry = {
-      id: uid(),
-      title: title.trim() || 'Untitled meeting',
-      when: new Date().toISOString(),
-      duration: elapsed,
-      transcript,
-      summary
-    };
-    setMeetings((prev) => [entry, ...prev].slice(0, 20));
-    setTitle('');
-    setTranscript('');
-    setSummary(null);
-    setElapsed(0);
+  const save = async () => {
+    if (busy === 'save') return;
+    setBusy('save');
+    setError('');
+    try {
+      const item = await createStudioItem('meeting', title.trim() || 'Untitled meeting', {
+        duration: elapsed,
+        transcript,
+        summary,
+        recordingUri,
+        savedAt: new Date().toISOString()
+      });
+      setMeetings((prev) => [toMeeting(item), ...prev]);
+      setTitle('');
+      setTranscript('');
+      setSummary(null);
+      setRecordingUri('');
+      setElapsed(0);
+    } catch (err) {
+      setError(err?.message || 'That meeting could not be saved.');
+    } finally {
+      setBusy('');
+    }
+  };
+
+  const removeMeeting = async (id) => {
+    setMeetings((prev) => prev.filter((item) => item.id !== id));
+    try {
+      await deleteStudioItem(id);
+    } catch (err) {
+      setError(err?.message || 'That meeting could not be removed.');
+    }
   };
 
   return (
@@ -144,7 +188,7 @@ export default function MeetingStudio() {
             ) : null}
           </div>
           <p className="t-muted mt-2 text-[10.5px] leading-relaxed">
-            Recording stays private — it is stored privately and only a short-lived link is used for transcription.
+            Recording stays private — it is stored privately with the meeting, and only a short-lived link is used for transcription.
           </p>
         </div>
 
@@ -205,7 +249,11 @@ export default function MeetingStudio() {
 
       <div className="t-card p-3">
         <p className="t-title text-[13px] font-extrabold">Past meetings</p>
-        {meetings.length === 0 ? (
+        {loading ? (
+          <p className="t-muted mt-2 flex items-center gap-1.5 text-[11.5px]">
+            <Loader2 className="h-3 w-3 animate-spin" /> Loading your meetings…
+          </p>
+        ) : meetings.length === 0 ? (
           <p className="t-muted mt-2 text-[11.5px]">Saved meetings appear here with their summary and actions.</p>
         ) : (
           <div className="mt-1.5 max-h-[430px] space-y-1 overflow-y-auto">
@@ -226,7 +274,7 @@ export default function MeetingStudio() {
                   </button>
                   <button
                     type="button"
-                    onClick={() => setMeetings((prev) => prev.filter((item) => item.id !== meeting.id))}
+                    onClick={() => removeMeeting(meeting.id)}
                     aria-label={`Delete ${meeting.title}`}
                     className="t-muted shrink-0 hover:text-[#FF2E9A]"
                   >

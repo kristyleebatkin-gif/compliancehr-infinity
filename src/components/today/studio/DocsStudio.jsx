@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FilePlus2, Download, Trash2, Bold, Italic, List, Heading2, ArrowUpRight } from 'lucide-react';
-import { readStore, writeStore, uid, downloadFile, wordCount, formatWhen } from '@/components/today/studio/studioStore';
+import { FilePlus2, Download, Trash2, Bold, Italic, List, Heading2, ArrowUpRight, Loader2 } from 'lucide-react';
+import { downloadFile, wordCount, formatWhen } from '@/components/today/studio/studioStore';
+import { listStudioItems, createStudioItem, updateStudioItem, deleteStudioItem, itemWhen } from '@/components/today/studio/studioData';
 
 const STARTERS = [
   { id: 'blank', label: 'Blank', html: '<h1>Untitled document</h1><p></p>' },
@@ -22,49 +23,123 @@ const STARTERS = [
   }
 ];
 
+const toDoc = (item) => ({
+  id: item.id,
+  title: item.title || 'Untitled document',
+  html: item.payload?.html || '',
+  updated: itemWhen(item)
+});
+
 export default function DocsStudio() {
-  const [docs, setDocs] = useState(() => readStore('docs', []));
-  const [activeId, setActiveId] = useState(() => readStore('docs', [])[0]?.id || null);
+  const [docs, setDocs] = useState([]);
+  const [activeId, setActiveId] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [status, setStatus] = useState('');
+  const [error, setError] = useState('');
   const editorRef = useRef(null);
-  const timerRef = useRef(null);
+  const docsRef = useRef([]);
+  const saveTimer = useRef(null);
 
   const active = docs.find((doc) => doc.id === activeId) || null;
 
   useEffect(() => {
-    writeStore('docs', docs.slice(0, 40));
+    let cancelled = false;
+    listStudioItems('document')
+      .then((items) => {
+        if (cancelled) return;
+        const list = items.map(toDoc);
+        setDocs(list);
+        setActiveId((current) => current || list[0]?.id || null);
+      })
+      .catch((err) => {
+        if (!cancelled) setError(err?.message || 'Your documents could not be loaded.');
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    docsRef.current = docs;
   }, [docs]);
 
   useEffect(() => {
-    if (editorRef.current && active) {
-      editorRef.current.innerHTML = active.html || '';
+    const doc = docsRef.current.find((item) => item.id === activeId);
+    if (editorRef.current && doc) {
+      editorRef.current.innerHTML = doc.html || '';
     }
     // Only re-seed the editor when a different document is opened.
   }, [activeId]);
 
-  const createDoc = (starter) => {
-    const entry = {
-      id: uid(),
-      title: starter.label === 'Blank' ? 'Untitled document' : starter.label,
-      html: starter.html,
-      updated: new Date().toISOString()
-    };
-    setDocs((prev) => [entry, ...prev]);
-    setActiveId(entry.id);
+  useEffect(
+    () => () => {
+      if (saveTimer.current) clearTimeout(saveTimer.current);
+    },
+    []
+  );
+
+  const persist = useCallback(async (id) => {
+    const doc = docsRef.current.find((item) => item.id === id);
+    if (!doc) return;
+    setStatus('Saving…');
+    try {
+      await updateStudioItem(id, { title: doc.title, payload: { html: doc.html, savedAt: doc.updated } });
+      setStatus('Saved to the app');
+      setError('');
+    } catch (err) {
+      setStatus('');
+      setError(err?.message || 'That document could not be saved.');
+    }
+  }, []);
+
+  const scheduleSave = useCallback(
+    (id) => {
+      if (saveTimer.current) clearTimeout(saveTimer.current);
+      saveTimer.current = setTimeout(() => {
+        saveTimer.current = null;
+        persist(id);
+      }, 700);
+    },
+    [persist]
+  );
+
+  const createDoc = async (starter) => {
+    setError('');
+    const title = starter.label === 'Blank' ? 'Untitled document' : starter.label;
+    try {
+      const item = await createStudioItem('document', title, {
+        html: starter.html,
+        savedAt: new Date().toISOString()
+      });
+      const doc = { id: item.id, title, html: starter.html, updated: item.updated };
+      setDocs((prev) => [doc, ...prev]);
+      setActiveId(doc.id);
+      setStatus('Saved to the app');
+    } catch (err) {
+      setError(err?.message || 'That document could not be created.');
+    }
   };
 
   const patchActive = (patch) => {
-    setDocs((prev) => prev.map((doc) => (doc.id === activeId ? { ...doc, ...patch, updated: new Date().toISOString() } : doc)));
+    if (!activeId) return;
+    const updated = new Date().toISOString();
+    setDocs((prev) => prev.map((doc) => (doc.id === activeId ? { ...doc, ...patch, updated } : doc)));
+    scheduleSave(activeId);
   };
 
   const onInput = () => {
-    const html = editorRef.current?.innerHTML || '';
-    if (timerRef.current) clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => patchActive({ html }), 500);
+    patchActive({ html: editorRef.current?.innerHTML || '' });
   };
 
   const flush = () => {
-    if (timerRef.current) clearTimeout(timerRef.current);
-    if (activeId && editorRef.current) patchActive({ html: editorRef.current.innerHTML });
+    if (saveTimer.current) {
+      clearTimeout(saveTimer.current);
+      saveTimer.current = null;
+    }
+    if (activeId) persist(activeId);
   };
 
   const selectDoc = (id) => {
@@ -78,9 +153,14 @@ export default function DocsStudio() {
     onInput();
   };
 
-  const removeDoc = (id) => {
+  const removeDoc = async (id) => {
     setDocs((prev) => prev.filter((doc) => doc.id !== id));
     if (id === activeId) setActiveId(null);
+    try {
+      await deleteStudioItem(id);
+    } catch (err) {
+      setError(err?.message || 'That document could not be removed.');
+    }
   };
 
   return (
@@ -104,7 +184,11 @@ export default function DocsStudio() {
 
         <div className="t-card p-3">
           <p className="t-title text-[13px] font-extrabold">My documents</p>
-          {docs.length === 0 ? (
+          {loading ? (
+            <p className="t-muted mt-2 flex items-center gap-1.5 text-[11.5px]">
+              <Loader2 className="h-3 w-3 animate-spin" /> Loading your documents…
+            </p>
+          ) : docs.length === 0 ? (
             <p className="t-muted mt-2 text-[11.5px]">Nothing saved yet. Start with a template above.</p>
           ) : (
             <div className="mt-1.5 max-h-[320px] space-y-0.5 overflow-y-auto">
@@ -163,14 +247,17 @@ export default function DocsStudio() {
           />
 
           <p className="t-muted text-[10.5px]">
-            {wordCount(active.html)} words · saves automatically on this device · exported files open in Word, Google Docs or Pages.
+            {wordCount(active.html)} words · {status || 'saved to the app'} · it appears in{' '}
+            <Link to="/documents" className="underline">Documents</Link> · exported files open in Word, Google Docs or Pages.
           </p>
+          {error ? <p className="text-[11px] font-semibold text-[#FF2E9A]">{error}</p> : null}
         </div>
       ) : (
         <div className="t-card grid min-h-[280px] place-items-center p-6 text-center">
           <div>
             <p className="t-title text-[13px] font-extrabold">Pick a document or start a new one</p>
-            <p className="t-muted mt-1 text-[11.5px]">Minutes, policies, letters and notes — written here, exported anywhere.</p>
+            <p className="t-muted mt-1 text-[11.5px]">Minutes, policies, letters and notes — saved to the app, exported anywhere.</p>
+            {error ? <p className="mt-2 text-[11px] font-semibold text-[#FF2E9A]">{error}</p> : null}
           </div>
         </div>
       )}
