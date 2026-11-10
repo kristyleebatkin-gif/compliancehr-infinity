@@ -248,7 +248,7 @@ export default function AppLayout() {
         style={{
           borderRight: '3px solid transparent',
           backgroundImage:
-            'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%), linear-gradient(180deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+            'linear-gradient(165deg, #0A2B6D 0%, #0A2B6D 55%, #5A00D6 100%), linear-gradient(180deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
           backgroundOrigin: 'border-box',
           backgroundClip: 'padding-box, border-box',
         }}
@@ -353,7 +353,7 @@ export default function AppLayout() {
           id="main-workspace-content"
           className="relative z-0 flex-1 overflow-x-hidden pb-20 md:pb-6"
           style={{
-            background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+            background: 'linear-gradient(165deg, #0A2B6D 0%, #0A2B6D 55%, #5A00D6 100%)',
           }}
         >
           <QuickAppBar workspaceView={workspaceView} onSwitchWorkspaceView={switchWorkspaceView} />
