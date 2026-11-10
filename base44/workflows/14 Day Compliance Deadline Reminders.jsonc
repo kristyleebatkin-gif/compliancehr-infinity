@@ -1,0 +1,45 @@
+{
+  "description": "Daily scan of NDIS compliance deadlines, staff certifications and assigned compliance tasks. Creates one reminder per recipient and due date within 14 days, plus an in-app notification. An email workflow sends the reminder.",
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "fourteen_day_compliance_deadline_reminders",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "scan_deadlines": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "complianceDeadlineReminderScan",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Find upcoming compliance deadlines",
+            "description": "Create reminders and in-app alerts"
+          }
+        }
+      }
+    ]
+  },
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 7 * * *",
+      "one_time_date": null,
+      "timezone": "Australia/Sydney",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "name": "14 Day Compliance Deadline Reminders"
+}

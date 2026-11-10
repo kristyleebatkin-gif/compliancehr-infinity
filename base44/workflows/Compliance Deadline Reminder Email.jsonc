@@ -1,0 +1,46 @@
+{
+  "description": "Emails an app user when a 14-day compliance reminder is created for them.",
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "compliance_deadline_reminder_email",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "send_reminder": {
+          "call": "send_email",
+          "with": {
+            "template_name": "ComplianceDeadlineReminder",
+            "to": "${ .trigger.data.recipient_email }",
+            "category": "transactional",
+            "description": "Reminds the recipient about an upcoming compliance deadline",
+            "variables": {
+              "first_name": "${ .trigger.data.first_name }",
+              "item_title": "${ .trigger.data.item_title }",
+              "due_date": "${ .trigger.data.due_date }",
+              "message": "${ .trigger.data.message }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Email the reminder",
+            "description": "Upcoming compliance deadline"
+          }
+        }
+      }
+    ]
+  },
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "create"
+      ],
+      "entity_name": "ComplianceDeadlineReminder"
+    }
+  },
+  "name": "Compliance Deadline Reminder Email"
+}

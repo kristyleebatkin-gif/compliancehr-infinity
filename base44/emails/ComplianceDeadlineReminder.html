@@ -1,0 +1,43 @@
+<mjml>
+  <mj-head>
+    <mj-title>Compliance reminder: {{item_title}}</mj-title>
+    <mj-preview>A compliance deadline is approaching.</mj-preview>
+    <mj-attributes>
+      <mj-all font-family="Manrope, Arial, sans-serif" />
+      <mj-section background-color="#ffffff" padding="0 36px" />
+      <mj-text color="#0a2b6d" font-size="15px" line-height="1.6" padding="0" />
+      <mj-button background-color="#5900d6" color="#ffffff" border-radius="10px" font-weight="700" inner-padding="14px 28px" align="left" />
+      <mj-class name="heading" font-weight="700" />
+      <mj-class name="label" font-size="11px" letter-spacing="1px" text-transform="uppercase" font-weight="700" color="#5900d6" />
+    </mj-attributes>
+  </mj-head>
+  <mj-body background-color="#f8fafc" width="600px">
+    <mj-wrapper padding="28px 12px" background-color="#f8fafc">
+      <mj-section background-color="#5900d6" padding="22px 36px" border-radius="10px 10px 0 0"><mj-column>
+        <mj-image src="https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/e772c8399_logo.jpg" alt="ComplianceHR Infinity" width="48px" align="center" padding="0 0 10px" />
+        <mj-text align="center" color="#ffffff" font-size="12px" font-weight="700" letter-spacing="2px">ComplianceHR Infinity</mj-text>
+      </mj-column></mj-section>
+      <mj-section padding="40px 36px 20px"><mj-column>
+        <mj-text mj-class="heading" font-size="30px" line-height="1.2" padding="0 0 12px">A compliance deadline is approaching</mj-text>
+        <mj-text>Hello {{first_name}}, please review the reminder below and take the necessary action.</mj-text>
+      </mj-column></mj-section>
+      <mj-section padding="8px 28px 16px">
+        <mj-column padding="0 8px 16px" inner-background-color="#f8fafc" inner-border-radius="10px">
+          <mj-text mj-class="label" padding="20px 20px 8px">Deadline</mj-text>
+          <mj-text mj-class="heading" font-size="18px" padding="0 20px 20px">{{item_title}}</mj-text>
+        </mj-column>
+        <mj-column padding="0 8px 16px" inner-background-color="#f8fafc" inner-border-radius="10px">
+          <mj-text mj-class="label" padding="20px 20px 8px">Due date</mj-text>
+          <mj-text mj-class="heading" font-size="18px" padding="0 20px 20px">{{due_date}}</mj-text>
+        </mj-column>
+      </mj-section>
+      <mj-section padding="0 36px 32px"><mj-column>
+        <mj-text padding="0 0 18px">{{message}}</mj-text>
+        <mj-button href="https://compliancehrinfinity.com/notifications">Open notifications</mj-button>
+      </mj-column></mj-section>
+      <mj-section background-color="#5900d6" padding="24px 36px" border-radius="0 0 10px 10px"><mj-column>
+        <mj-text align="center" color="#ffffff" font-size="12px">ComplianceHR Infinity</mj-text>
+      </mj-column></mj-section>
+    </mj-wrapper>
+  </mj-body>
+</mjml>
