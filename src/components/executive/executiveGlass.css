@@ -1,0 +1,5 @@
+.executive-glass-surface {
+  background: linear-gradient(135deg, #0A2B6D, #16468A);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}

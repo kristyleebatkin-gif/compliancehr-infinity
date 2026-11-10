@@ -4,6 +4,7 @@ import PageHeader from '@/components/PageHeader';
 import ExecutiveMetricCard from '@/components/executive/ExecutiveMetricCard';
 import useExecutiveDashboardMetrics from '@/components/executive/useExecutiveDashboardMetrics';
 import ReportGenerator from '@/components/reports/ReportGenerator';
+import '@/components/executive/executiveGlass.css';
 
 const VIEWS = {
   executive: { title: 'CEO Executive Dashboard', description: 'A concise overview of outstanding governance and operational records.', icon: LayoutDashboard, metrics: [
@@ -52,10 +53,10 @@ export default function ExecutiveDashboards() {
     <div className="mx-auto w-full max-w-[1440px] space-y-3 pb-6">
       <PageHeader title={current.title} description={current.description} icon={current.icon} />
       <ReportGenerator area="executive" />
-      <section className="executive-dashboard-metrics gradient-brand space-y-4 rounded-xl border border-brand p-4 sm:p-5">
+      <section className="executive-dashboard-metrics executive-glass-surface space-y-4 rounded-xl border border-header-foreground/20 p-4 shadow-panel sm:p-5">
         <div className="flex flex-wrap gap-2" aria-label="Executive dashboard selection">
           {Object.entries(VIEWS).map(([key, item]) => (
-            <button key={key} type="button" onClick={() => setView(key)} aria-pressed={view === key} className={view === key ? 'rounded-lg bg-card px-4 py-2 text-sm font-bold text-card-foreground' : 'rounded-lg border border-header-foreground/40 px-4 py-2 text-sm font-bold text-header-foreground'}>{item.title}</button>
+            <button key={key} type="button" onClick={() => setView(key)} aria-pressed={view === key} className={view === key ? 'rounded-lg border border-header-foreground/40 bg-brand px-4 py-2 text-sm font-bold text-header-foreground shadow-panel backdrop-blur-md' : 'rounded-lg border border-header-foreground/30 bg-workspace-navy/70 px-4 py-2 text-sm font-bold text-header-foreground backdrop-blur-md hover:bg-workspace-navy/90'}>{item.title}</button>
           ))}
         </div>
         <p className="text-xs leading-relaxed text-header-foreground">Counts reflect records visible to your account. These source registers do not currently support organisation-level filtering, so counts may not represent a single organisation.</p>

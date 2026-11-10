@@ -30,7 +30,7 @@ export function PowerBiRadialGauge({ title, value, target, status, color = '#39E
       className={`flex items-center justify-between gap-3 rounded-xl border p-3.5 transition ${
         onClick ? 'cursor-pointer hover:border-[#39E6FF]' : ''
       }`}
-      style={{ backgroundColor: '#1E293B', borderColor: 'rgba(57,230,255,0.24)' }}
+      style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.24)' }}
     >
       <div className="min-w-0 flex-1 space-y-1">
         <div className="text-[12px] font-semibold leading-snug text-slate-300 break-words">{title}</div>
@@ -145,7 +145,7 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
               type="button"
               onClick={() => onNavigatePage(kpi.targetPage)}
               className="group flex min-w-0 flex-col justify-between rounded-xl border p-2.5 text-left transition hover:border-[#39E6FF]"
-              style={{ backgroundColor: '#1E293B', borderColor: 'rgba(57,230,255,0.22)' }}
+              style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.22)' }}
             >
               <div className="flex flex-wrap items-center justify-between gap-1">
                 <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: '#39E6FF' }}>
@@ -196,7 +196,7 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
         <div className="grid grid-cols-1 gap-3 lg:grid-cols-12">
           <div
             className="rounded-xl border p-3.5 lg:col-span-6"
-            style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.22)' }}
+            style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.22)' }}
           >
             <div className="mb-2 flex items-center justify-between">
               <div>
@@ -207,7 +207,7 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
                 type="button"
                 onClick={() => onNavigatePage('p5_risk')}
                 className="inline-flex items-center gap-1 rounded px-2 py-1 text-[11px] font-bold"
-                style={{ backgroundColor: '#1E293B', color: '#39E6FF' }}
+                style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)', color: '#39E6FF' }}
               >
                 Drill to Page 5 <ArrowUpRight className="h-3 w-3" />
               </button>
@@ -225,7 +225,7 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
                       key={`${imp}-${lik}`}
                       className="flex min-h-[42px] flex-col justify-between rounded border p-1"
                       style={{
-                        backgroundColor: '#1E293B',
+                        backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)',
                         borderColor: plotted.length ? cellColor : 'rgba(255,255,255,0.08)',
                       }}
                     >
@@ -250,7 +250,7 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
 
           <div
             className="rounded-xl border p-3.5 lg:col-span-6"
-            style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.22)' }}
+            style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.22)' }}
           >
             <div className="mb-2 flex items-center justify-between">
               <div className="text-[16px] font-semibold text-white">Top Enterprise Risks (R1–R5)</div>
@@ -261,7 +261,7 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
                 <div
                   key={r.id}
                   className="flex items-center justify-between gap-2 rounded-lg px-3 py-2 text-[12px]"
-                  style={{ backgroundColor: '#1E293B' }}
+                  style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)' }}
                 >
                   <div className="min-w-0 flex-1">
                     <div className="font-bold leading-snug text-white break-words">{r.title}</div>
@@ -286,7 +286,7 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
         <div className="grid grid-cols-1 gap-3 lg:grid-cols-12">
           <div
             className="rounded-xl border p-3.5 lg:col-span-7"
-            style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.22)' }}
+            style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.22)' }}
           >
             <div className="mb-2 flex items-center justify-between">
               <div className="text-[16px] font-semibold text-white">Benefits Waterfall</div>
@@ -294,7 +294,7 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
                 type="button"
                 onClick={() => onNavigatePage('p8_benefits')}
                 className="inline-flex items-center gap-1 rounded px-2 py-1 text-[11px] font-bold"
-                style={{ backgroundColor: '#1E293B', color: '#39E6FF' }}
+                style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)', color: '#39E6FF' }}
               >
                 Open Page 8 <ArrowUpRight className="h-3 w-3" />
               </button>
@@ -304,7 +304,7 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
                 <div
                   key={st.step}
                   className="flex min-w-0 flex-col justify-between rounded-lg border p-2.5"
-                  style={{ backgroundColor: '#1E293B', borderColor: st.color }}
+                  style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)', borderColor: st.color }}
                 >
                   <div className="text-[10px] font-bold leading-snug text-slate-300 break-words">{st.step}</div>
                   <div className="mt-2 text-sm font-black leading-tight" style={{ color: st.color }}>{st.display}</div>
@@ -315,23 +315,23 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
 
           <div
             className="grid grid-cols-3 gap-2.5 rounded-xl border p-3.5 lg:col-span-5"
-            style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.22)' }}
+            style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.22)' }}
           >
-            <div className="rounded-lg p-3" style={{ backgroundColor: '#1E293B' }}>
+            <div className="rounded-lg p-3" style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)' }}>
               <div className="text-[11px] text-slate-300">ROI Dashboard</div>
               <div className="mt-1 text-[28px] font-bold leading-none" style={{ color: '#22C55E' }}>
                 {PAGE8_BENEFITS_WATERFALL.roi}
               </div>
               <div className="mt-1 text-[11px] text-slate-400">Validated Net Return</div>
             </div>
-            <div className="rounded-lg p-3" style={{ backgroundColor: '#1E293B' }}>
+            <div className="rounded-lg p-3" style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)' }}>
               <div className="text-[11px] text-slate-300">Payback Period</div>
               <div className="mt-1 text-[24px] font-bold leading-none" style={{ color: '#39E6FF' }}>
                 6.8m
               </div>
               <div className="mt-1 text-[11px] text-slate-400">6.8 months</div>
             </div>
-            <div className="rounded-lg p-3" style={{ backgroundColor: '#1E293B' }}>
+            <div className="rounded-lg p-3" style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)' }}>
               <div className="text-[11px] text-slate-300">Achievement</div>
               <div className="mt-1 text-[28px] font-bold leading-none" style={{ color: '#FBBF24' }}>
                 {PAGE8_BENEFITS_WATERFALL.achievement}%
@@ -345,7 +345,7 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
         <div className="grid grid-cols-1 gap-3 lg:grid-cols-12">
           <div
             className="rounded-xl border p-3.5 lg:col-span-6"
-            style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.22)' }}
+            style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.22)' }}
           >
             <div className="mb-2 flex items-center justify-between">
               <div className="text-[16px] font-semibold text-white">Executive Actions</div>
@@ -363,7 +363,7 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
                 <div
                   key={act.id}
                   className="flex items-center justify-between gap-2 rounded-lg px-3 py-2 text-[12px]"
-                  style={{ backgroundColor: '#1E293B' }}
+                  style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)' }}
                 >
                   <div className="min-w-0 flex-1">
                     <div className="font-bold leading-snug text-white break-words">{act.action}</div>
@@ -385,7 +385,7 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
 
           <div
             className="rounded-xl border p-3.5 lg:col-span-6"
-            style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.22)' }}
+            style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.22)' }}
           >
             <div className="mb-2 flex items-center justify-between">
               <div className="text-[16px] font-semibold text-white">Decisions Required (Board Register)</div>
@@ -403,7 +403,7 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
                 <div
                   key={dec.id}
                   className="flex items-center justify-between gap-2 rounded-lg px-3 py-2 text-[12px]"
-                  style={{ backgroundColor: '#1E293B' }}
+                  style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)' }}
                 >
                   <div className="min-w-0 flex-1">
                     <div className="font-bold leading-snug text-white break-words">
@@ -440,12 +440,12 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
 
           <div
             className="rounded-xl border p-4 lg:col-span-4"
-            style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.24)' }}
+            style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.24)' }}
           >
             <div className="text-[16px] font-semibold text-white">Governance Trend (FY25 → FY27)</div>
             <div className="mt-3 grid grid-cols-3 gap-2.5">
               {PAGE2_GOVERNANCE_DATA.trend.map((t) => (
-                <div key={t.period} className="rounded-lg p-3 text-center" style={{ backgroundColor: '#1E293B' }}>
+                <div key={t.period} className="rounded-lg p-3 text-center" style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)' }}>
                   <div className="text-[12px] text-slate-300">{t.period}</div>
                   <div className="mt-1 text-[28px] font-bold" style={{ color: '#39E6FF' }}>{t.score}</div>
                 </div>
@@ -455,7 +455,7 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
 
           <div
             className="rounded-xl border p-4 lg:col-span-4"
-            style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.24)' }}
+            style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.24)' }}
           >
             <div className="text-[16px] font-semibold text-white">Governance Maturity Breakdown</div>
             <div className="mt-2 space-y-2">
@@ -465,7 +465,7 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
                     <span className="text-white">{m.domain}</span>
                     <span style={{ color: m.score >= 85 ? '#22C55E' : '#FBBF24' }}>{m.score}</span>
                   </div>
-                  <div className="h-2 w-full rounded-full bg-slate-900">
+                  <div className="h-2 w-full rounded-full bg-workspace-navy">
                     <div
                       className="h-full rounded-full"
                       style={{ width: `${m.score}%`, backgroundColor: m.score >= 85 ? '#22C55E' : '#FBBF24' }}
@@ -480,7 +480,7 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
         {/* Drill-through: Capability → Assessment → Finding → Action */}
         <div
           className="rounded-xl border p-4"
-          style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.24)' }}
+          style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.24)' }}
         >
           <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
             <div>
@@ -497,7 +497,7 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
                   onClick={() => setSelectedGovDrill(item)}
                   className="rounded-lg px-3 py-1 text-[12px] font-bold"
                   style={{
-                    backgroundColor: selectedGovDrill.capability === item.capability ? '#39E6FF' : '#1E293B',
+                    backgroundColor: selectedGovDrill.capability === item.capability ? '#39E6FF' : 'rgba(22, 70, 138, 0.8)',
                     color: selectedGovDrill.capability === item.capability ? '#081018' : '#FFFFFF',
                   }}
                 >
@@ -514,7 +514,7 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
               { step: '3. Finding', val: selectedGovDrill.finding, color: '#FBBF24' },
               { step: '4. Action', val: selectedGovDrill.action, color: '#39E6FF' },
             ].map((s) => (
-              <div key={s.step} className="rounded-xl border p-3.5" style={{ backgroundColor: '#1E293B', borderColor: s.color }}>
+              <div key={s.step} className="rounded-xl border p-3.5" style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)', borderColor: s.color }}>
                 <div className="text-[11px] font-bold uppercase" style={{ color: s.color }}>{s.step}</div>
                 <div className="mt-1 text-[13px] font-semibold text-white">{s.val}</div>
               </div>
@@ -540,12 +540,12 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
             />
             <div
               className="rounded-xl border p-4"
-              style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.24)' }}
+              style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.24)' }}
             >
               <div className="text-[16px] font-semibold text-white">Health Trend (65 → 78 → 87)</div>
               <div className="mt-3 grid grid-cols-3 gap-2">
                 {PAGE3_ORG_HEALTH_DATA.trend.map((t) => (
-                  <div key={t.period} className="rounded-lg p-2.5 text-center" style={{ backgroundColor: '#1E293B' }}>
+                  <div key={t.period} className="rounded-lg p-2.5 text-center" style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)' }}>
                     <div className="text-[11px] text-slate-300">{t.period}</div>
                     <div className="text-[24px] font-bold" style={{ color: '#22C55E' }}>{t.score}</div>
                   </div>
@@ -556,7 +556,7 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
 
           <div
             className="flex flex-col items-center justify-center rounded-xl border p-4 lg:col-span-4"
-            style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.24)' }}
+            style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.24)' }}
           >
             <div className="mb-1 text-[16px] font-semibold text-white">8-Dimension Health Radar Chart</div>
             <SvgRadarChart dimensions={PAGE3_ORG_HEALTH_DATA.radarDimensions} />
@@ -564,7 +564,7 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
 
           <div
             className="rounded-xl border p-4 lg:col-span-4"
-            style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.24)' }}
+            style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.24)' }}
           >
             <div className="text-[16px] font-semibold text-white">
               Drill-Through: Health Domain → Contributing KPI → Action Plan
@@ -577,7 +577,7 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
                   onClick={() => setSelectedHealthDim(d)}
                   className="rounded px-2 py-1 text-[11px] font-bold"
                   style={{
-                    backgroundColor: selectedHealthDim.dimension === d.dimension ? '#39E6FF' : '#1E293B',
+                    backgroundColor: selectedHealthDim.dimension === d.dimension ? '#39E6FF' : 'rgba(22, 70, 138, 0.8)',
                     color: selectedHealthDim.dimension === d.dimension ? '#081018' : '#FFFFFF',
                   }}
                 >
@@ -586,17 +586,17 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
               ))}
             </div>
             <div className="mt-3 space-y-2">
-              <div className="rounded-lg p-2.5" style={{ backgroundColor: '#1E293B' }}>
+              <div className="rounded-lg p-2.5" style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)' }}>
                 <div className="text-[10px] font-bold uppercase" style={{ color: '#39E6FF' }}>Health Domain</div>
                 <div className="text-sm font-bold text-white">
                   {selectedHealthDim.dimension} (Weight {selectedHealthDim.weight} · Score {selectedHealthDim.score}/100)
                 </div>
               </div>
-              <div className="rounded-lg p-2.5" style={{ backgroundColor: '#1E293B' }}>
+              <div className="rounded-lg p-2.5" style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)' }}>
                 <div className="text-[10px] font-bold uppercase" style={{ color: '#22C55E' }}>↓ Contributing KPI</div>
                 <div className="text-sm font-bold text-white">{selectedHealthDim.kpi}</div>
               </div>
-              <div className="rounded-lg p-2.5" style={{ backgroundColor: '#1E293B' }}>
+              <div className="rounded-lg p-2.5" style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)' }}>
                 <div className="text-[10px] font-bold uppercase" style={{ color: '#FBBF24' }}>↓ Action Plan</div>
                 <div className="text-sm font-bold text-white">{selectedHealthDim.actionPlan}</div>
               </div>
@@ -622,12 +622,12 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
             />
             <div
               className="rounded-xl border p-4"
-              style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.24)' }}
+              style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.24)' }}
             >
               <div className="text-[16px] font-semibold text-white">Readiness Trend Visual (58 → 73 → 82)</div>
               <div className="mt-3 grid grid-cols-3 gap-2">
                 {PAGE4_READINESS_DATA.trend.map((t) => (
-                  <div key={t.period} className="rounded-lg p-2.5 text-center" style={{ backgroundColor: '#1E293B' }}>
+                  <div key={t.period} className="rounded-lg p-2.5 text-center" style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)' }}>
                     <div className="text-[11px] text-slate-300">{t.period}</div>
                     <div className="text-[24px] font-bold" style={{ color: '#39E6FF' }}>{t.score}</div>
                   </div>
@@ -638,7 +638,7 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
 
           <div
             className="rounded-xl border p-4 lg:col-span-8"
-            style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.24)' }}
+            style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.24)' }}
           >
             <div className="mb-3 text-[16px] font-semibold text-white">
               9-Domain Ω∞ Readiness Heatmap
@@ -650,7 +650,7 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
                   <div
                     key={d.domain}
                     className="rounded-xl border p-3"
-                    style={{ backgroundColor: '#1E293B', borderColor: c }}
+                    style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)', borderColor: c }}
                   >
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-bold text-white">{d.domain}</span>
@@ -681,7 +681,7 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
           {/* 5x5 Heatmap */}
           <div
             className="rounded-xl border p-4 lg:col-span-6"
-            style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.24)' }}
+            style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.24)' }}
           >
             <div className="mb-2 text-[16px] font-semibold text-white">
               5×5 Heat Map (R1 AI · R2 Workforce · R3 Cyber · R4 Data · R5 Benefits)
@@ -696,7 +696,7 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
                     <div
                       key={`${imp}-${lik}`}
                       className="flex min-h-[52px] flex-col justify-between rounded-lg border p-1.5"
-                      style={{ backgroundColor: '#1E293B', borderColor: items.length ? c : 'rgba(255,255,255,0.08)' }}
+                      style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)', borderColor: items.length ? c : 'rgba(255,255,255,0.08)' }}
                     >
                       <span className="text-[9px] font-bold" style={{ color: c }}>I{imp}×L{lik}={score}</span>
                       <div className="flex flex-wrap gap-1">
@@ -716,14 +716,14 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
           {/* Risk Exposure Trend */}
           <div
             className="rounded-xl border p-4 lg:col-span-6"
-            style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.24)' }}
+            style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.24)' }}
           >
             <div className="mb-3 text-[16px] font-semibold text-white">
               Risk Exposure Trend (Critical · High · Open Risks)
             </div>
             <div className="grid grid-cols-4 gap-2.5">
               {PAGE5_EXPOSURE_TREND.map((t) => (
-                <div key={t.period} className="rounded-xl p-3" style={{ backgroundColor: '#1E293B' }}>
+                <div key={t.period} className="rounded-xl p-3" style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)' }}>
                   <div className="text-sm font-bold text-white">{t.period}</div>
                   <div className="mt-2 space-y-1 text-[12px] font-bold">
                     <div style={{ color: '#EF4444' }}>Critical: {t.critical}</div>
@@ -739,7 +739,7 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
         {/* Top 10 Risk Register */}
         <div
           className="rounded-xl border p-4"
-          style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.24)' }}
+          style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.24)' }}
         >
           <div className="mb-2 text-[16px] font-semibold text-white">
             Enterprise Risk Register — Top 10 Risks (Risk · Owner · Rating · Trend · Due Date)
@@ -788,7 +788,7 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
     <div className="space-y-4" style={{ fontFamily: "'Segoe UI', sans-serif" }}>
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         {PAGE6_ASSURANCE_DATA.kpis.map((k) => (
-          <div key={k.label} className="rounded-xl border p-3.5" style={{ backgroundColor: '#1E293B', borderColor: 'rgba(57,230,255,0.22)' }}>
+          <div key={k.label} className="rounded-xl border p-3.5" style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.22)' }}>
             <div className="text-[12px] text-slate-300">{k.label}</div>
             <div className="mt-1 text-[32px] font-bold leading-none" style={{ color: k.color }}>{k.value}</div>
             <div className="mt-1 text-[11px] text-slate-400">Target: {k.target}</div>
@@ -799,21 +799,21 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
         <div
           className="rounded-xl border p-4 lg:col-span-7"
-          style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.24)' }}
+          style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.24)' }}
         >
           <div className="mb-3 text-[16px] font-semibold text-white">
             Audit Findings by Severity (Stacked Column: Critical · High · Medium · Low)
           </div>
           <div className="space-y-3">
             {PAGE6_ASSURANCE_DATA.findingsBySeverity.map((row) => (
-              <div key={row.line} className="rounded-lg p-3" style={{ backgroundColor: '#1E293B' }}>
+              <div key={row.line} className="rounded-lg p-3" style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)' }}>
                 <div className="flex items-center justify-between text-[12px] font-bold text-white">
                   <span>{row.line}</span>
                   <span className="text-slate-300">
                     Critical: {row.critical} · High: {row.high} · Medium: {row.medium} · Low: {row.low}
                   </span>
                 </div>
-                <div className="mt-2 flex h-3 w-full overflow-hidden rounded-full bg-slate-900">
+                <div className="mt-2 flex h-3 w-full overflow-hidden rounded-full bg-workspace-navy">
                   <div style={{ width: `${row.critical * 15}%`, backgroundColor: '#EF4444' }} />
                   <div style={{ width: `${row.high * 20}%`, backgroundColor: '#F97316' }} />
                   <div style={{ width: `${row.medium * 25}%`, backgroundColor: '#FBBF24' }} />
@@ -826,14 +826,14 @@ export default function PowerBiPagesOneToSix({ activePage, onNavigatePage }) {
 
         <div
           className="rounded-xl border p-4 lg:col-span-5"
-          style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.24)' }}
+          style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.24)' }}
         >
           <div className="mb-3 text-[16px] font-semibold text-white">
             Assurance Coverage Trend (74 → 85 → 92)
           </div>
           <div className="grid grid-cols-3 gap-2.5">
             {PAGE6_ASSURANCE_DATA.coverageTrend.map((t) => (
-              <div key={t.period} className="rounded-xl p-3 text-center" style={{ backgroundColor: '#1E293B' }}>
+              <div key={t.period} className="rounded-xl p-3 text-center" style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)' }}>
                 <div className="text-[12px] text-slate-300">{t.period}</div>
                 <div className="mt-1 text-[28px] font-bold" style={{ color: '#22C55E' }}>{t.coverage}%</div>
               </div>

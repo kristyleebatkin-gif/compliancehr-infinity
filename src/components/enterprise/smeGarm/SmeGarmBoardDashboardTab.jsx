@@ -12,6 +12,7 @@ import {
   computeBenefitAchievement,
   getOmegaReadinessBand,
 } from '@/lib/careSphereSmeGarmData';
+import '@/components/executive/executiveGlass.css';
 
 function RadialGaugeCard({ title, subtitle, value, target, statusLabel, accentColor }) {
   const pct = Math.max(0, Math.min(100, Number(value || 0)));
@@ -22,7 +23,7 @@ function RadialGaugeCard({ title, subtitle, value, target, statusLabel, accentCo
   return (
     <div
       className="flex items-center justify-between gap-4 rounded-xl border p-4"
-      style={{ backgroundColor: '#1E293B', borderColor: 'rgba(57,230,255,0.28)' }}
+      style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.28)' }}
     >
       <div className="min-w-0 flex-1 space-y-1">
         <div className="text-[10px] font-black uppercase tracking-wider" style={{ color: '#39E6FF' }}>
@@ -97,11 +98,11 @@ export default function SmeGarmBoardDashboardTab({
   const omegaBand = getOmegaReadinessBand(omegaReadinessIndex);
 
   return (
-    <div className="space-y-4">
+    <div className="executive-glass-surface space-y-4 rounded-xl p-3">
       {/* Sub-Dashboard Switcher: Board | Audit & Risk | Governance | Executive */}
       <div
         className="flex flex-wrap items-center justify-between gap-2 rounded-xl border p-2.5"
-        style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.25)' }}
+        style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.25)' }}
       >
         <div className="flex flex-wrap items-center gap-1.5">
           {[
@@ -116,7 +117,7 @@ export default function SmeGarmBoardDashboardTab({
               onClick={() => setSubDashboard(d.id)}
               className="rounded-lg px-3 py-1.5 text-xs font-black transition-all"
               style={{
-                backgroundColor: subDashboard === d.id ? '#39E6FF' : '#1E293B',
+                backgroundColor: subDashboard === d.id ? '#39E6FF' : 'rgba(22, 70, 138, 0.8)',
                 color: subDashboard === d.id ? '#081018' : '#FFFFFF',
                 border: subDashboard === d.id ? '1px solid #39E6FF' : '1px solid rgba(255,255,255,0.12)',
               }}
@@ -170,7 +171,7 @@ export default function SmeGarmBoardDashboardTab({
         {/* 5x5 Enterprise Risk Heatmap (Impact x Likelihood) */}
         <div
           className="rounded-xl border p-4 lg:col-span-7"
-          style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.22)' }}
+          style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.22)' }}
         >
           <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
             <div>
@@ -210,7 +211,7 @@ export default function SmeGarmBoardDashboardTab({
                     key={`${impact}-${likelihood}`}
                     className="flex min-h-[54px] flex-col justify-between rounded-lg border p-1.5 transition"
                     style={{
-                      backgroundColor: '#1E293B',
+                      backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)',
                       borderColor: matchingRisks.length ? band.color : 'rgba(255,255,255,0.08)',
                       boxShadow: matchingRisks.length ? `0 0 10px ${band.color}44` : 'none',
                     }}
@@ -247,7 +248,7 @@ export default function SmeGarmBoardDashboardTab({
         {/* Benefits Realisation Waterfall & ROI Summary */}
         <div
           className="rounded-xl border p-4 lg:col-span-5"
-          style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.22)' }}
+          style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.22)' }}
         >
           <div className="mb-2.5 space-y-1.5">
             <div className="flex flex-wrap items-center justify-between gap-1.5">
@@ -265,7 +266,7 @@ export default function SmeGarmBoardDashboardTab({
                   type="button"
                   onClick={() => setSubDashboard('board')}
                   className="rounded px-2 py-0.5 text-[10px] font-black text-white"
-                  style={{ backgroundColor: subDashboard === 'board' ? '#0072FF' : '#1E293B' }}
+                  style={{ backgroundColor: subDashboard === 'board' ? '#0072FF' : 'rgba(22, 70, 138, 0.8)' }}
                 >
                   Board
                 </button>
@@ -273,7 +274,7 @@ export default function SmeGarmBoardDashboardTab({
                   type="button"
                   onClick={() => setSubDashboard('audit_risk')}
                   className="rounded px-2 py-0.5 text-[10px] font-black text-white"
-                  style={{ backgroundColor: subDashboard === 'audit_risk' ? '#A855F7' : '#1E293B' }}
+                  style={{ backgroundColor: subDashboard === 'audit_risk' ? '#A855F7' : 'rgba(22, 70, 138, 0.8)' }}
                 >
                   Audit &amp; Risk
                 </button>
@@ -282,7 +283,7 @@ export default function SmeGarmBoardDashboardTab({
                 type="button"
                 onClick={() => onSelectModule('benefits')}
                 className="inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[10px] font-black"
-                style={{ backgroundColor: '#1E293B', color: '#39E6FF' }}
+                style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)', color: '#39E6FF' }}
               >
                 Open Module 3 <ArrowUpRight className="h-3 w-3" />
               </button>
@@ -296,7 +297,7 @@ export default function SmeGarmBoardDashboardTab({
                 <div
                   key={b.id}
                   className="rounded-lg border p-2.5"
-                  style={{ backgroundColor: '#1E293B', borderColor: 'rgba(255,255,255,0.1)' }}
+                  style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)', borderColor: 'rgba(255,255,255,0.1)' }}
                 >
                   <div className="flex items-center justify-between gap-2">
                     <span className="text-xs font-extrabold text-white">
@@ -312,7 +313,7 @@ export default function SmeGarmBoardDashboardTab({
                       Achievement: {achievement}% · Payback: {b.paybackMonths}m
                     </span>
                   </div>
-                  <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-900">
+                  <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-workspace-navy">
                     <div
                       className="h-full rounded-full transition-all"
                       style={{
@@ -333,7 +334,7 @@ export default function SmeGarmBoardDashboardTab({
         {/* 6-Quarter Trend Table & Bars */}
         <div
           className="rounded-xl border p-4 lg:col-span-6"
-          style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.22)' }}
+          style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.22)' }}
         >
           <div className="text-[10px] font-black uppercase tracking-wider" style={{ color: '#39E6FF' }}>
             Multi-Quarter Trajectory · FactGovernanceAssessment &amp; FactReadiness
@@ -347,7 +348,7 @@ export default function SmeGarmBoardDashboardTab({
               <div
                 key={row.q}
                 className="grid grid-cols-12 items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs"
-                style={{ backgroundColor: '#1E293B' }}
+                style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)' }}
               >
                 <span className="col-span-2 font-black text-white">{row.q}</span>
                 <div className="col-span-10 grid grid-cols-4 gap-2 text-[11px] font-bold">
@@ -362,19 +363,19 @@ export default function SmeGarmBoardDashboardTab({
 
           {/* Three Lines Assurance Quick Summary */}
           <div className="mt-3 grid grid-cols-3 gap-2 pt-2 border-t border-slate-700/60">
-            <div className="rounded-lg p-2" style={{ backgroundColor: '#1E293B' }}>
+            <div className="rounded-lg p-2" style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)' }}>
               <div className="text-[9px] font-black uppercase" style={{ color: '#39E6FF' }}>
                 Line 1 · Operational
               </div>
               <div className="text-sm font-black text-white">94.0% Effective</div>
             </div>
-            <div className="rounded-lg p-2" style={{ backgroundColor: '#1E293B' }}>
+            <div className="rounded-lg p-2" style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)' }}>
               <div className="text-[9px] font-black uppercase" style={{ color: '#22C55E' }}>
                 Line 2 · GRC &amp; AI
               </div>
               <div className="text-sm font-black text-white">94.5% Effective</div>
             </div>
-            <div className="rounded-lg p-2" style={{ backgroundColor: '#1E293B' }}>
+            <div className="rounded-lg p-2" style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)' }}>
               <div className="text-[9px] font-black uppercase" style={{ color: '#FBBF24' }}>
                 Line 3 · Internal Audit
               </div>
@@ -386,7 +387,7 @@ export default function SmeGarmBoardDashboardTab({
         {/* 8-Point Constitutional Governance Test Inspector */}
         <div
           className="rounded-xl border p-4 lg:col-span-6"
-          style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.22)' }}
+          style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.22)' }}
         >
           <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
             <div>
@@ -405,7 +406,7 @@ export default function SmeGarmBoardDashboardTab({
                   onClick={() => setInspectedRecord(r)}
                   className="rounded px-2 py-0.5 text-[10px] font-black transition"
                   style={{
-                    backgroundColor: inspectedRecord.id === r.id ? '#39E6FF' : '#1E293B',
+                    backgroundColor: inspectedRecord.id === r.id ? '#39E6FF' : 'rgba(22, 70, 138, 0.8)',
                     color: inspectedRecord.id === r.id ? '#081018' : '#FFFFFF',
                   }}
                 >
@@ -432,7 +433,7 @@ export default function SmeGarmBoardDashboardTab({
               <div
                 key={item.q}
                 className="rounded-lg border p-2.5"
-                style={{ backgroundColor: '#1E293B', borderColor: 'rgba(57,230,255,0.18)' }}
+                style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.18)' }}
               >
                 <div className="text-[10px] font-black uppercase" style={{ color: '#39E6FF' }}>
                   {item.q}

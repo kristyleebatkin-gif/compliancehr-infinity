@@ -10,16 +10,16 @@ import ReportGenerator from '@/components/reports/ReportGenerator';
 
 const ADMIN_ROLES = ['admin', 'Provider Administrator', 'Administration'];
 
-function DashboardSection({ title, description, icon: Icon, children }) {
+function DashboardSection({ title, description, icon: Icon, children, glass = false }) {
   return (
-    <section className="space-y-3 rounded-2xl border border-[#8CCBFF]/70 bg-white/90 p-3 shadow-[0_8px_28px_rgba(10,43,109,0.08)] backdrop-blur-md sm:p-4">
-      <div className="flex items-start gap-3 border-b border-[#D9ECFF] pb-3">
-        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-[#8CCBFF] bg-[#EAF5FF] text-[#0A2B6D]">
+    <section className={glass ? 'executive-glass-surface space-y-3 rounded-2xl border border-header-foreground/20 p-3 shadow-panel sm:p-4' : 'space-y-3 rounded-2xl border border-[#8CCBFF]/70 bg-white/90 p-3 shadow-[0_8px_28px_rgba(10,43,109,0.08)] backdrop-blur-md sm:p-4'}>
+      <div className={glass ? 'flex items-start gap-3 border-b border-header-foreground/20 pb-3' : 'flex items-start gap-3 border-b border-[#D9ECFF] pb-3'}>
+        <span className={glass ? 'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-header-foreground/20 bg-workspace-navy/70 text-header-foreground backdrop-blur-md' : 'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-[#8CCBFF] bg-[#EAF5FF] text-[#0A2B6D]'}>
           <Icon className="h-5 w-5" />
         </span>
         <div className="min-w-0">
-          <h2 className="text-base font-extrabold text-[#0A2B6D] sm:text-lg">{title}</h2>
-          <p className="text-sm font-semibold leading-relaxed text-workspace-navy">{description}</p>
+          <h2 className={glass ? 'text-base font-extrabold text-header-foreground sm:text-lg' : 'text-base font-extrabold text-[#0A2B6D] sm:text-lg'}>{title}</h2>
+          <p className={glass ? 'text-sm font-semibold leading-relaxed text-header-foreground' : 'text-sm font-semibold leading-relaxed text-workspace-navy'}>{description}</p>
         </div>
       </div>
       {children}
@@ -41,6 +41,7 @@ export default function Dashboard() {
 
       <DashboardSection
         title="Executive Performance"
+        glass
         description="Live counts from the source registers. Select a measure to open the register and take action."
         icon={Activity}
       >
