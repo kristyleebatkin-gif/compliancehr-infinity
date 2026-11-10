@@ -121,7 +121,7 @@ export const NAV_PERMISSIONS = {
   'our-participants': [...OPERATIONS, ROLES.PARTICIPANT],
   dashboard: [...PERSONAL, ROLES.GUEST, ROLES.VOLUNTEER],
   // These workspaces contain operational, staff and finance information.
-  // Keep access to approved administration roles only.
+  // The base role list is administration-only; existing FULL_ACCESS executive roles retain their global access.
   today: ['admin', ROLES.ADMIN, ROLES.TEAM_LEADER],
   'team-leader': ['admin', ROLES.ADMIN, ROLES.TEAM_LEADER],
   'operations-centre': OPERATIONS,
