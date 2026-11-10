@@ -7,12 +7,10 @@ const REGULATORS = [
   { key: 'worksafe-qld', name: 'WorkSafe Queensland', site: 'worksafe.qld.gov.au' },
 ];
 
-const regulatorKeys = REGULATORS.map((regulator) => regulator.key);
-
 const GENERIC_TITLES = [
   'fair work ombudsman',
   'worksafe queensland',
-  'workSafe qld',
+  'worksafe qld',
   'ndis quality and safeguards commission',
   'aged care quality and safety commission',
   'news',
@@ -24,25 +22,55 @@ const GENERIC_TITLES = [
 
 const isHomepage = (url) => {
   try {
-    const parsed = new URL(url);
-    return parsed.pathname.replace(/\/+$/, '') === '';
+    return new URL(url).pathname.replace(/\/+$/, '') === '';
   } catch {
     return true;
   }
 };
 
-const cleanPosters = (items) => (items || [])
-  .filter((item) => item && item.title && item.url && regulatorKeys.includes(item.regulator))
+const cleanItems = (items) => (items || [])
+  .filter((item) => item && item.title && item.url)
   .filter((item) => !GENERIC_TITLES.includes(String(item.title).trim().toLowerCase()) && !isHomepage(String(item.url)))
   .map((item) => ({
-    regulator: item.regulator,
     title: String(item.title).slice(0, 240),
     summary: item.summary ? String(item.summary).slice(0, 900) : '',
     category: item.category ? String(item.category).slice(0, 80) : '',
     published_date: item.published_date ? String(item.published_date).slice(0, 10) : '',
     url: String(item.url),
   }))
-  .slice(0, 12);
+  .slice(0, 2);
+
+const promptFor = (regulator) => `Use web search on the official ${regulator.name} website (${regulator.site}) only. Find up to 2 of the newest published news items, announcements, regulatory changes or consultations relevant to an NDIS and aged care provider that also employs staff in Queensland.
+
+Return for each item:
+- title: the exact published headline of the item
+- published_date: publication date in YYYY-MM-DD format, or an empty string if genuinely unknown
+- category: a short label such as "Practice standards", "Pricing", "Enforcement", "Consultation", "Award pay rates", "Safety alert"
+- summary: 2 to 3 plain-English sentences stating what changed and what a provider or employer must do about it
+- url: the direct link to that specific item on ${regulator.site}, never the homepage
+
+Only return items that are real and currently published and that you found through web search. Never use the organisation's name as a title, never invent headlines, dates, summaries or links. If you cannot verify a current item, return an empty list.`;
+
+const RESPONSE_SCHEMA = {
+  type: 'object',
+  properties: {
+    posts: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          title: { type: 'string' },
+          published_date: { type: 'string' },
+          category: { type: 'string' },
+          summary: { type: 'string' },
+          url: { type: 'string' },
+        },
+        required: ['title', 'url'],
+      },
+    },
+  },
+  required: ['posts'],
+};
 
 export default async function (req) {
   try {
@@ -50,51 +78,30 @@ export default async function (req) {
     const user = await base44.auth.me().catch((e) => (e.status === 401 ? null : Promise.reject(e)));
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
 
-    const regulatorList = REGULATORS
-      .map((regulator) => `- regulator: "${regulator.key}" — ${regulator.name} (${regulator.site})`)
-      .join('\n');
+    const results = await Promise.allSettled(
+      REGULATORS.map((regulator) => base44.asServiceRole.integrations.Core.InvokeLLM({
+        add_context_from_internet: true,
+        prompt: promptFor(regulator),
+        response_json_schema: RESPONSE_SCHEMA,
+      }))
+    );
 
-    const result = await base44.asServiceRole.integrations.Core.InvokeLLM({
-      add_context_from_internet: true,
-      prompt: `Using web search only on official regulator websites, find the newest published announcements, news, updates and changes from each of these Australian regulators:
+    const byRegulator = results.map((result, index) => (
+      result.status === 'fulfilled'
+        ? cleanItems(result.value?.posts).map((post) => ({ ...post, regulator: REGULATORS[index].key }))
+        : []
+    ));
 
-${regulatorList}
+    // Interleave so every regulator that returned something is represented near the top.
+    const posters = [];
+    for (let round = 0; round < 2; round += 1) {
+      byRegulator.forEach((items) => { if (items[round]) posters.push(items[round]); });
+    }
 
-For each regulator find up to 3 of the most recent and most relevant items for a registered NDIS and aged care provider that also employs staff in Queensland. Prioritise: regulatory changes, practice standards and audit changes, pricing or funding changes, compliance and enforcement action, consultations, wage and award changes, and work health and safety alerts.
-
-For each item return:
-- regulator: exactly one of ${regulatorKeys.map((key) => `"${key}"`).join(', ')}
-- title: the exact published headline
-- published_date: publication date in YYYY-MM-DD format, or an empty string if genuinely unknown
-- category: a short label such as "Practice standards", "Pricing", "Enforcement", "Consultation", "Award pay rates", "Safety alert"
-- summary: 2 to 3 plain-English sentences stating what changed and what a provider or employer must do about it
-- url: the direct link to that specific item on the regulator's official website. Never use a news index, section landing page or homepage when the article's own page is available, and never link to news aggregators.
-
-Only include real, currently published items you can verify from web search. Never invent titles, dates, summaries or URLs. Cover all four regulators, with at least one item each. Order newest first.`,
-      response_json_schema: {
-        type: 'object',
-        properties: {
-          posters: {
-            type: 'array',
-            items: {
-              type: 'object',
-              properties: {
-                regulator: { type: 'string', enum: regulatorKeys },
-                title: { type: 'string' },
-                published_date: { type: 'string' },
-                category: { type: 'string' },
-                summary: { type: 'string' },
-                url: { type: 'string' },
-              },
-              required: ['regulator', 'title', 'url'],
-            },
-          },
-        },
-        required: ['posters'],
-      },
-    });
-
-    return Response.json({ fetched_date: new Date().toISOString(), posters: cleanPosters(result?.posters) });
+    if (!posters.length) {
+      return Response.json({ error: 'No verified regulator updates were found just now.' }, { status: 502 });
+    }
+    return Response.json({ fetched_date: new Date().toISOString(), posters: posters.slice(0, 12) });
   } catch (error) {
     return Response.json({ error: error.message || 'Regulator news feed failed.' }, { status: 500 });
   }

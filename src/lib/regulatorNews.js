@@ -17,7 +17,12 @@ export function readPosterCache() {
 }
 
 export async function fetchRegulatorPosters() {
-  const { data } = await base44.functions.invoke('regulatorNewsFeed', {});
+  let data;
+  try {
+    ({ data } = await base44.functions.invoke('regulatorNewsFeed', {}));
+  } catch (error) {
+    throw new Error(error?.response?.data?.error || error?.message || 'The regulator updates could not be loaded.');
+  }
   if (data?.error) throw new Error(data.error);
   const posters = (data?.posters || [])
     .map((poster) => ({ ...poster, url: safeUrl(poster.url) }))
