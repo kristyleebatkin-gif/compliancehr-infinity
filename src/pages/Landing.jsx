@@ -38,7 +38,7 @@ export default function Landing() {
         style={{
           borderRight: '3px solid transparent',
           backgroundImage:
-            'linear-gradient(165deg, #061A44, #0A2B6D 55%, #141B4D), linear-gradient(180deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+            'linear-gradient(165deg, #0A2B6D, #0A2B6D 55%, #5A00D6), linear-gradient(180deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
           backgroundOrigin: 'border-box',
           backgroundClip: 'padding-box, border-box',
         }}
