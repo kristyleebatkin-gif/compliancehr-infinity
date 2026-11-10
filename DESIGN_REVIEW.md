@@ -94,3 +94,4 @@ Scope: existing `dashboards-sherelle-jamie` branch; app `6ac9f91f0d82b1f80ec6a25
 | Capability protection | Needs Improvement | Build and regression suite pass; live data relationships, role-specific RLS and operational workflows not exercised. |
 
 Preview: `dashboards-sherelle-jamie` branch only. No merge to main and no production publication. Human visual acceptance and reviewer sign-off remain pending. Overall review decision remains **Needs Rework** until the outstanding checks are completed.
+- Additional permissions finding: the Invoicing navigation policy is restricted to FULL_ACCESS roles, while finance-related entity policies name other roles. The dashboard now hides invoice actions when route access is not granted. Owner-approved finance-role policy and matching backend RLS tests are still required; no access was widened in this batch.
