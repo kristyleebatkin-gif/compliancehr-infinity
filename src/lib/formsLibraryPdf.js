@@ -1,6 +1,7 @@
 import { jsPDF } from 'jspdf';
 import { drawDocumentFooter, loadCompanyBranding } from '@/lib/companyBranding';
 import { isIncidentReportForm, drawIncidentFirstPageSignoff } from '@/components/documents/incidentPdfSignoff';
+import { drawManagementSignoff } from '@/components/documents/managementSignoffPdf';
 import { drawFormHeader, drawFieldRows, drawRegisterTable, drawSignatures, drawFormNotice, drawDeclaration, drawReviewSection } from '@/lib/formDocumentStyles';
 
 /**
@@ -29,6 +30,7 @@ export async function downloadBlankFormPdf({
   y = drawReviewSection(doc, y);
   if (declaration) y = drawDeclaration(doc, y);
   y = drawSignatures(doc, y);
+  y = drawManagementSignoff(doc, y);
 
   if (incidentForm) drawIncidentFirstPageSignoff(doc);
   drawDocumentFooter(doc, { title, code });

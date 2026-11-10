@@ -81,6 +81,6 @@ export default function useOnlineDocument(options) {
     try { const { signed_url } = await base44.integrations.Core.CreateFileSignedUrl({ file_uri: record.submitted_document_url }); window.open(signed_url, '_blank', 'noopener,noreferrer'); }
     catch (e) { setError(e.message); } finally { setBusy(false); }
   };
-  const editCopy = () => { setRecord(null); setModel((current) => ({ ...current, confirmed: false })); };
+  const editCopy = () => { setRecord(null); setModel((current) => ({ ...current, confirmed: false, answers: { ...current.answers, __managementSignoff: {} } })); };
   return { model, setModel, record, records, loading, busy, error, notice, save, select, more, hasMore: page?.has_more, close, download, editCopy, ready: !!user };
 }

@@ -3,6 +3,7 @@ import { drawDocumentFooter } from '@/lib/companyBranding';
 import { drawFormHeader, drawFieldRows, drawSectionHeading } from '@/lib/formDocumentStyles';
 import { ensurePdfSpace } from '@/lib/pdfPageLayout';
 import { drawPdfParagraph as paragraph, drawPdfBullets as bullets } from '@/lib/pdfFlowText';
+import { drawManagementSignoff } from '@/components/documents/managementSignoffPdf';
 
 /**
  * High-quality, professionally styled master templates for the signature
@@ -141,6 +142,7 @@ function buildParticipantHandbook(code) {
     fields: ['Participant name', 'Handbook version received', 'Signature date'],
   });
 
+  y = drawManagementSignoff(doc, y);
   drawDocumentFooter(doc, { title: 'Participant Handbook', code });
   doc.save('Participant Handbook.pdf');
 }
@@ -246,6 +248,7 @@ function buildServiceAgreement(code) {
     fields: ['Participant / representative agreement', 'Supports, fees and cancellations confirmed on'],
   });
 
+  y = drawManagementSignoff(doc, y);
   drawDocumentFooter(doc, { title: 'Service Agreement', code });
   doc.save('Service Agreement.pdf');
 }
@@ -337,6 +340,7 @@ function buildEmploymentContract(code) {
     fields: ['Employee signature and date', 'Employer signature and date'],
   });
 
+  y = drawManagementSignoff(doc, y);
   drawDocumentFooter(doc, { title: 'Employment Contract', code });
   doc.save('Employment Contract.pdf');
 }
@@ -402,6 +406,7 @@ function buildPositionDescription(code) {
     fields: ['Approved by and date'],
   });
 
+  y = drawManagementSignoff(doc, y);
   drawDocumentFooter(doc, { title: 'Position Description', code });
   doc.save('Position Description.pdf');
 }

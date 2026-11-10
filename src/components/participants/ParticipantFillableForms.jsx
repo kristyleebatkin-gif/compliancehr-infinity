@@ -10,6 +10,7 @@ import { buildAutofilledAnswers } from '@/lib/participantAutofill';
 import { downloadFilledFormPdf } from '@/lib/participantFormPdf';
 import { routeDocument } from '@/lib/documentRouting';
 import OnlineDocumentFields from '@/components/documents/OnlineDocumentFields';
+import ManagementSignoffSection from '@/components/documents/ManagementSignoffSection';
 import StaffProfileQuestionField from '@/components/profile/StaffProfileQuestionField';
 import { legacyFormFields } from '@/lib/formQuestionModel';
 import OnlineDocumentRegister from '@/components/documents/OnlineDocumentRegister';
@@ -95,6 +96,7 @@ export default function ParticipantFillableForms({ participant, formType, compac
       columns: definition.columns,
       rows: answers.__rows?.length || definition.rows,
       tableValues: answers.__rows || [],
+      managementSignoff: answers.__managementSignoff,
       completedBy: answers._completedBy || '',
     });
   };
@@ -163,6 +165,7 @@ export default function ParticipantFillableForms({ participant, formType, compac
             {[...definition.fields, ...legacyFormFields(definition.fields, answers)].map(field => <StaffProfileQuestionField key={field.label} field={field} dateInputs answers={answers} onChange={(label, value) => setAnswers(current => ({ ...current, [label]: value }))} />)}
           </fieldset> : <OnlineDocumentFields fields={definition.fields} answers={answers} onChange={(label, value) => setAnswers((current) => ({ ...current, [label]: value }))} disabled={saving} />}
           <OnlineDocumentRegister columns={definition.columns} rows={answers.__rows || []} onChange={(rows) => setAnswers((current) => ({ ...current, __rows: rows }))} disabled={saving} />
+          <ManagementSignoffSection value={answers.__managementSignoff} onChange={(signoff) => setAnswers((current) => ({ ...current, __managementSignoff: signoff }))} disabled={saving} />
         </div>
       )}
     </div>

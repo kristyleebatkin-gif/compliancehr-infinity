@@ -11,6 +11,7 @@ import { downloadPdfDocument } from '@/lib/documentDownloads';
 import { drawFormHeader, drawFieldRows, drawRegisterTable } from '@/lib/formDocumentStyles';
 import { ensurePdfSpace } from '@/lib/pdfPageLayout';
 import { isIncidentReportForm, drawIncidentFirstPageSignoff } from '@/components/documents/incidentPdfSignoff';
+import { drawManagementSignoff } from '@/components/documents/managementSignoffPdf';
 
 const BRAND = [49, 46, 129];
 const ACCENT = [37, 99, 235];
@@ -147,6 +148,7 @@ export function buildChecklistPdf({
   // Sign-off uses the same solid-outlined answer boxes.
   drawSectionHeading('Completion and authorisation', 90);
   y = drawFieldRows(doc, y, signoffFields.map((label, index) => ({ label, value: String(signoffValues[index] ?? '') })), {}, { interactive: true });
+  y = drawManagementSignoff(doc, y, {}, true);
 
   // Footer
   if (incidentForm) drawIncidentFirstPageSignoff(doc, { addTextField });

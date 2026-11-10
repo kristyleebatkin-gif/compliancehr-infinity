@@ -1,6 +1,7 @@
 import { jsPDF } from 'jspdf';
 import { drawFormHeader, drawSectionHeading, drawFieldRows, drawRegisterTable, drawSignatures, drawFormNotice, drawDeclaration } from '@/lib/formDocumentStyles';
 import { drawDocumentFooter, loadCompanyBranding } from '@/lib/companyBranding';
+import { drawManagementSignoff } from '@/components/documents/managementSignoffPdf';
 
 /**
  * Professional downloadable templates for the company safe's compliance and
@@ -124,6 +125,7 @@ export async function downloadComplianceTemplatePdf(docType) {
   y = drawDeclaration(doc, y);
 
   y = drawSignatures(doc, y, { left: 'Responsible Officer (Signature)', right: 'Date', heading: 'Verification' });
+  y = drawManagementSignoff(doc, y);
 
   drawDocumentFooter(doc, { title: docType, code });
   doc.save(`${docType} - Company Safe Template.pdf`);

@@ -1,6 +1,7 @@
 import { jsPDF } from 'jspdf';
 import { drawDocumentFooter, loadCompanyBranding } from '@/lib/companyBranding';
 import { isIncidentReportForm, drawIncidentFirstPageSignoff } from '@/components/documents/incidentPdfSignoff';
+import { drawManagementSignoff } from '@/components/documents/managementSignoffPdf';
 import { drawFormHeader, drawFieldRows, drawRegisterTable, drawSignatures, drawFormNotice, drawDeclaration, drawReviewSection, FORM_NOTICES } from '@/lib/formDocumentStyles';
 
 /**
@@ -21,6 +22,7 @@ export async function buildFilledFormDoc({
   completedAt = '',
   purpose = '',
   tableValues = [],
+  managementSignoff = {},
   declaration = true,
 }) {
   await loadCompanyBranding().catch(() => {});
@@ -34,6 +36,7 @@ export async function buildFilledFormDoc({
   y = drawReviewSection(doc, y);
   if (declaration) y = drawDeclaration(doc, y);
   y = drawSignatures(doc, y, { completedBy, completedAt });
+  y = drawManagementSignoff(doc, y, managementSignoff);
 
   if (incidentForm) drawIncidentFirstPageSignoff(doc, { name: completedBy, date: completedAt });
   drawDocumentFooter(doc, { title, code });
