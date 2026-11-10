@@ -301,9 +301,9 @@ export default function ComplianceHub({ initialTab = 'standards-map' } = {}) {
             <WeeklyReportPdfButton />
             <BoardReportButton />
             <ComplianceHealthExportButton />
-            <Button asChild variant="outline" className="border-border bg-white text-black"><Link to="/certificates"><Award className="mr-2 h-4 w-4" />Issue certificate</Link></Button>
+            <Button asChild variant="outline" className="border-border bg-white text-[#0A2B6D]"><Link to="/certificates"><Award className="mr-2 h-4 w-4" />Issue certificate</Link></Button>
             <AuditArchiveButton />
-            <Button variant="outline" className="border-border bg-white text-black" onClick={exportCorrectiveRegister}>
+            <Button variant="outline" className="border-border bg-white text-[#0A2B6D]" onClick={exportCorrectiveRegister}>
               <Download className="mr-2 h-4 w-4" /> Corrective Action Register (CSV)
             </Button>
           </>
