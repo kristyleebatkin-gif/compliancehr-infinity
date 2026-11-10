@@ -12,7 +12,7 @@ import {
 const BRAND_GRADIENT =
   'linear-gradient(120deg, #0072FF 0%, #A855F7 50%, #FF2E9A 100%)';
 
-const DARK_NAVY_CHASSIS = 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)';
+const DARK_NAVY_CHASSIS = 'linear-gradient(165deg, #0A2B6D 0%, #0A2B6D 55%, #5A00D6 100%)';
 
 // Strict repeating symbol & square indicator sequence: Blue, Purple, Pink, Blue, Purple, Pink...
 const SYMBOL_COLOR_SEQUENCE = ['#0072FF', '#A855F7', '#FF2E9A'];
