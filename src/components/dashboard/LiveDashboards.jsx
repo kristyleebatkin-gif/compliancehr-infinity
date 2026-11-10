@@ -85,19 +85,26 @@ function ModuleCard({ mod }) {
 }
 
 export default function LiveDashboards() {
-  const { role } = useRole();
+  const { can } = useRole();
   const [modules, setModules] = useState(null);
   const [generatedAt, setGeneratedAt] = useState(null);
   const [loading, setLoading] = useState(true);
   const [exporting, setExporting] = useState(false);
-  const isAdmin = ADMIN_ROLES.includes(role);
+  const [error, setError] = useState(null);
+  const [exportError, setExportError] = useState(null);
+  const canExport = can('analytics');
 
   const load = useCallback(async () => {
     setLoading(true);
+    setError(null);
     try {
       const res = await base44.functions.invoke('liveModuleOverview', {});
-      setModules(res.data.modules || []);
-      setGeneratedAt(res.data.generated_at);
+      const payload = res?.data || res;
+      if (!Array.isArray(payload?.modules)) throw new Error('Unexpected module overview response.');
+      setModules(payload.modules);
+      setGeneratedAt(payload.generated_at || null);
+    } catch {
+      setError('Live module information could not be loaded. Refresh to retry.');
     } finally {
       setLoading(false);
     }
@@ -107,11 +114,13 @@ export default function LiveDashboards() {
 
   const exportLog = async () => {
     setExporting(true);
+    setExportError(null);
     try {
       const rows = [];
       let cursor;
       do {
         const page = await base44.entities.ModuleDailyStatus.list({ sort: '-snapshot_date', limit: 500, cursor });
+        if (!Array.isArray(page?.items)) throw new Error('Unexpected export response.');
         rows.push(...page.items);
         cursor = page.next_cursor;
       } while (cursor);
@@ -128,6 +137,8 @@ export default function LiveDashboards() {
       link.click();
       link.remove();
       URL.revokeObjectURL(url);
+    } catch {
+      setExportError('The daily status export could not be completed. Please retry.');
     } finally {
       setExporting(false);
     }
@@ -147,16 +158,22 @@ export default function LiveDashboards() {
           <Button variant="outline" size="sm" onClick={load} disabled={loading}>
             <RefreshCw className={`h-3.5 w-3.5 ${loading ? 'animate-spin' : ''}`} /> Refresh
           </Button>
-          {isAdmin && (
+          {canExport && (
             <Button variant="outline" size="sm" onClick={exportLog} disabled={exporting}>
               <Download className="h-3.5 w-3.5" /> {exporting ? 'Exporting…' : 'Export daily status log'}
             </Button>
           )}
         </div>
       </div>
+      {error && <p role="alert" className="rounded-xl border border-[#FF2E9A]/50 bg-white/90 px-3 py-2 text-xs font-semibold text-[#0A2B6D]">{error}</p>}
+      {exportError && <p role="alert" className="rounded-xl border border-[#FF2E9A]/50 bg-white/90 px-3 py-2 text-xs font-semibold text-[#0A2B6D]">{exportError}</p>}
       {loading && !modules ? (
         <div className="flex items-center justify-center rounded-2xl border bg-card p-10">
           <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-slate-800" />
+        </div>
+      ) : error && !modules ? (
+        <div role="alert" className="rounded-2xl border border-[#8CCBFF] bg-white/90 p-6 text-sm font-semibold text-[#0A2B6D]">
+          Live module performance is unavailable until the source service responds.
         </div>
       ) : modules ? (
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
