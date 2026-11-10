@@ -59,3 +59,38 @@ Technical evidence: build command passed; targeted ESLint passed for the edited 
 Review decision: Needs Rework. No production approval or publication. No live records, automation, messages or notifications were exercised during these checks. Named human acceptance reviewer remains unassigned.
 
 Latest code checkpoint before this review document: 6ae26d652206ac9a73a1759c; commit ea0ed77284b7dae19edfdd88992f9916cea10245. Code checkpoint is not a database/document backup.
+
+## Dashboard final-polish batch — 11 November 2026
+Scope: existing `dashboards-sherelle-jamie` branch; app `6ac9f91f0d82b1f80ec6a25f`; source version `01a639d6419766364babf4f4840c7bea326d41ca`.
+
+### Delivered and verified
+- Added role-gated access to `/today` and `/team-leader`; frontend and backend role matrices are now byte-for-byte aligned.
+- Added automated role tests for approved administration and executive roles, and denial for staff, participants, volunteers, guests and auditors.
+- Split the main dashboard into business-command, staff, participant and limited-support views.
+- Replaced path-derived dashboard permission checks with explicit navigation keys in staff and participant workspaces.
+- Made Today workspace panels and navigation permission-aware; hid finance functions when the current role cannot access the invoicing module.
+- Limited invoice approval counts and lists to Draft invoices; Sent invoices are no longer described as awaiting approval.
+- Added server-side summary counts and honest per-section error/retry states; incomplete totals are not presented as complete zeroes.
+- Scoped Team Leader notes to today's shift-note date, corrected no-shift status wording, and added incomplete-data handling.
+- Added leaderboard pagination and loading/error states; added safe CSV text-cell handling to the module snapshot export.
+- Applied the navy-blue glass theme to the new workspaces and updated global dark-mode surface tokens to the approved navy palette. No production data was modified.
+
+### Technical verification
+- `npm run ci:verify`: PASS — lint, 24 automated tests, and production build.
+- `npm run typecheck`: PASS — zero TypeScript diagnostics.
+- The build emits a non-blocking Browserslist/caniuse-lite age warning.
+- `npm run lint:fix` removed unused imports; non-blocking unused-variable warnings remain outside this batch.
+
+### Review status
+| Area | Status | Evidence / remaining work |
+| --- | --- | --- |
+| Architecture | Pass (source scope) | Existing dashboard, role matrix, and module frameworks reused; no competing framework introduced. |
+| Truth and trust | Needs Improvement | Counts, Draft invoice filtering and error states improved; live entity responses and permission-denial states still need runtime verification. |
+| Navigation | Needs Improvement | Role-gated routes and explicit permission keys implemented; exact deep-link and browser navigation checks remain. |
+| UX / dashboard hierarchy | Needs Improvement | Role-specific views and duplicate Team Leader shortcut/header removed; three-second discoverability and common-task timing not measured. |
+| Design system | Needs Improvement | Navy glass tokens applied; rendered consistency and contrast require visual acceptance. |
+| Mobile | Needs Improvement | 360, 390, 768, 1024, 1366 and 1440px checks not executed. |
+| Accessibility | Needs Improvement | Keyboard, zoom, screen-reader and contrast checks not executed. |
+| Capability protection | Needs Improvement | Build and regression suite pass; live data relationships, role-specific RLS and operational workflows not exercised. |
+
+Preview: `dashboards-sherelle-jamie` branch only. No merge to main and no production publication. Human visual acceptance and reviewer sign-off remain pending. Overall review decision remains **Needs Rework** until the outstanding checks are completed.
