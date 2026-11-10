@@ -27,9 +27,9 @@
   --t-pill: rgba(160, 200, 255, 0.14);
   --t-hover: rgba(160, 200, 255, 0.08);
   background:
-    radial-gradient(1000px 560px at 4% -8%, #123a86 0%, rgba(18, 58, 134, 0) 60%),
-    radial-gradient(780px 460px at 98% 4%, #4a1170 0%, rgba(74, 17, 112, 0) 58%),
-    linear-gradient(165deg, #061a44 0%, #0a2b6d 48%, #1b0f45 100%);
+    radial-gradient(1000px 560px at 4% -8%, #0a2b6d 0%, rgba(18, 58, 134, 0) 60%),
+    radial-gradient(780px 460px at 98% 4%, #5a00d6 0%, rgba(74, 17, 112, 0) 58%),
+    linear-gradient(165deg, #0a2b6d 0%, #0a2b6d 48%, #5a00d6 100%);
 }
 
 .t-card {
