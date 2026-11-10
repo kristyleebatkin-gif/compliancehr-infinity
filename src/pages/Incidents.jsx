@@ -385,7 +385,7 @@ function Incidents({ profile, profileKind, embedded = false } = {}) {
             <Button
               size="sm"
               disabled={Boolean(escalatingId)}
-              className="h-7 border border-[#dc2626] bg-white text-[10px] font-black text-rose-900 hover:bg-rose-100"
+              className="h-auto min-h-9 max-w-full whitespace-normal border border-[#dc2626] bg-white text-xs font-black leading-snug text-rose-900 hover:bg-rose-100"
               onClick={() => {
                 const highIncidents = items.filter((i) => (i.requires_ndis_report || i.severity === 'Critical' || i.severity === 'High') && i.status !== 'Closed');
                 const target = highIncidents[0] || items[0];
@@ -675,7 +675,7 @@ function Incidents({ profile, profileKind, embedded = false } = {}) {
               <Field label="Findings"><TextArea value={invForm.findings} onChange={(e) => set('findings', e.target.value)} /></Field>
               <Field label="Recommendations"><TextArea value={invForm.recommendations} onChange={(e) => set('recommendations', e.target.value)} /></Field>
               <Field label="Corrective Actions"><TextArea value={invForm.corrective_actions} onChange={(e) => set('corrective_actions', e.target.value)} /></Field>
-              <div className="flex justify-end gap-2 pt-2">
+              <div className="flex flex-wrap justify-end gap-2 pt-2">
                 <button type="button" onClick={() => setShowInv(false)} className="rounded-lg border border-border px-4 py-2 text-sm font-medium hover:bg-muted">Cancel</button>
                 <button type="submit" disabled={savingInvestigation} className="rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white disabled:opacity-50">{savingInvestigation ? 'Saving...' : editingInvestigation ? 'Save Investigation' : 'Create Investigation'}</button>
               </div>

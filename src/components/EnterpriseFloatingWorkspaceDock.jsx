@@ -23,10 +23,10 @@ export default function EnterpriseFloatingWorkspaceDock({ inline = false }) {
   return (
     <div
       aria-label="Workspace AI Quick-Action Bar"
-      className="relative flex flex-col items-center justify-center"
+      className="relative flex min-w-0 max-w-full flex-col items-center justify-center"
     >
       <div
-        className="rounded-full p-[1.5px] shadow-[0_0_12px_rgba(0,198,255,0.45)]"
+        className="max-w-full rounded-2xl p-[1.5px] shadow-[0_0_12px_rgba(0,198,255,0.45)]"
         style={{
           background: 'linear-gradient(120deg, #00C6FF 0%, #0072FF 32%, #5A00D6 68%, #FF2E9A 100%)',
         }}

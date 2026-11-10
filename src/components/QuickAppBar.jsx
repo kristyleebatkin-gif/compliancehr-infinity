@@ -175,10 +175,10 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
 
               <div className="flex min-w-0 flex-wrap items-center gap-1">
               <div
-                className="inline-flex items-center rounded-full p-[1px]"
+                className="inline-flex max-w-full items-center rounded-full p-[1px]"
                 style={{ background: BRAND_GRADIENT }}
               >
-                <div className="inline-flex items-center gap-0.5 rounded-full bg-workspace-navy/80 p-0.5 backdrop-blur-md">
+                <div className="flex max-w-full flex-wrap items-center gap-0.5 rounded-full bg-workspace-navy/80 p-0.5 backdrop-blur-md">
                   {[
                     { id: 'pillars5', label: '5 Pillars' },
                     { id: 'os11', label: '13 Channels' },
