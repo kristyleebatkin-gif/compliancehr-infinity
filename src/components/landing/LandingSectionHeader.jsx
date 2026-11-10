@@ -1,9 +1,9 @@
 import React from 'react';
 
 const TONES = {
-  blue: { tint: 'rgba(0, 114, 255, 0.08)', border: 'rgba(0, 114, 255, 0.28)', text: '#0072FF' },
+  blue: { tint: 'rgba(0, 114, 255, 0.08)', border: 'rgba(0, 114, 255, 0.28)', text: '#0A54B8' },
   purple: { tint: 'rgba(90, 0, 214, 0.08)', border: 'rgba(90, 0, 214, 0.28)', text: '#5A00D6' },
-  pink: { tint: 'rgba(255, 46, 154, 0.08)', border: 'rgba(255, 46, 154, 0.28)', text: '#FF2E9A' },
+  pink: { tint: 'rgba(255, 46, 154, 0.08)', border: 'rgba(255, 46, 154, 0.28)', text: '#A30B5C' },
   navy: { tint: 'rgba(10, 43, 109, 0.08)', border: 'rgba(10, 43, 109, 0.28)', text: '#0A2B6D' },
 };
 
@@ -36,7 +36,7 @@ export default function LandingSectionHeader({
 
       {/* 2. SENTENCE UNDER HEADER */}
       {description ? (
-        <p className="text-xs sm:text-[13px] font-semibold leading-snug text-[#0A2B6D]/85">
+        <p className="text-sm sm:text-[13px] font-semibold leading-relaxed text-[#0A2B6D]">
           {description}
         </p>
       ) : null}

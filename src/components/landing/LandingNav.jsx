@@ -88,7 +88,7 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
           <button
             type="button"
             onClick={toggleHeaderCollapse}
-            className="inline-flex h-[24px] items-center gap-1 rounded-md px-3 text-[10px] font-extrabold text-white shadow-2xs transition"
+            className="inline-flex min-h-8 sm:min-h-0 sm:h-[24px] items-center gap-1 rounded-md px-3 text-[10px] font-extrabold text-white shadow-2xs transition"
             style={{ backgroundColor: '#FF2E9A' }}
           >
             <span>Expand Header</span>
@@ -119,7 +119,7 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
               </button>
               <Link
                 to="/login"
-                className="inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/20 px-2.5 text-[10px] font-extrabold text-workspace-navy shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90"
+                className="inline-flex min-h-8 sm:min-h-0 sm:h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/20 px-2.5 text-[10px] font-extrabold text-workspace-navy shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90"
                 style={{ backgroundColor: '#00C6FF' }}
               >
                 Sign In
@@ -129,7 +129,7 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
             <button
               type="button"
               onClick={() => onBookDemo && onBookDemo('Book a Personal Demo')}
-              className="inline-flex h-[24px] shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-lg border border-[#00C6FF]/50 px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(0,114,255,0.55)] transition hover:opacity-90"
+              className="inline-flex min-h-8 sm:min-h-0 sm:h-[24px] shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-lg border border-[#00C6FF]/50 px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(0,114,255,0.55)] transition hover:opacity-90"
               style={{ backgroundColor: '#0072FF' }}
             >
               <Calendar className="h-3 w-3 shrink-0" style={{ color: '#00C6FF' }} />
@@ -138,7 +138,7 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
 
             <Link
               to="/our-participants"
-              className="inline-flex h-[24px] shrink-0 items-center justify-center gap-1 rounded-full border border-[#00C6FF] bg-[#0072FF] px-3 text-[10px] font-extrabold uppercase tracking-wide text-white shadow-[0_0_10px_rgba(0,114,255,0.5)] transition hover:opacity-95"
+              className="inline-flex min-h-8 sm:min-h-0 sm:h-[24px] shrink-0 items-center justify-center gap-1 rounded-full border border-[#00C6FF] bg-[#0072FF] px-3 text-[10px] font-extrabold uppercase tracking-wide text-white shadow-[0_0_10px_rgba(0,114,255,0.5)] transition hover:opacity-95"
             >
               <Users className="h-3 w-3 shrink-0 text-[#00C6FF]" />
               <span className="whitespace-nowrap">Participant Profiles</span>
@@ -153,7 +153,7 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
                   onClick={() => switchWorkspaceView(id)}
                   aria-pressed={selected}
                   title={label}
-                  className="inline-flex h-[24px] shrink-0 items-center justify-center gap-1 rounded-full border px-3 text-[10px] font-extrabold tracking-wide shadow-[0_0_10px_rgba(0,198,255,0.5)] transition-all hover:opacity-95"
+                  className="inline-flex min-h-8 sm:min-h-0 sm:h-[24px] shrink-0 items-center justify-center gap-1 rounded-full border px-3 text-[10px] font-extrabold tracking-wide shadow-[0_0_10px_rgba(0,198,255,0.5)] transition-all hover:opacity-95"
                   style={{
                     background: 'linear-gradient(90deg, #00C6FF 0%, #0072FF 50%, #FF2E9A 100%)',
                     borderColor: '#00C6FF',
@@ -168,7 +168,7 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
 
             <Link
               to="/register"
-              className="inline-flex h-[24px] shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-lg border border-white/25 px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(255,46,154,0.55)] transition hover:opacity-90"
+              className="inline-flex min-h-8 sm:min-h-0 sm:h-[24px] shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-lg border border-white/25 px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(255,46,154,0.55)] transition hover:opacity-90"
               style={{ backgroundColor: '#FF2E9A' }}
             >
               <span>Start Free</span>
@@ -199,7 +199,7 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
                 key={href}
                 href={href}
                 onClick={() => setOpen(false)}
-                className="rounded-lg border border-slate-200 bg-slate-50/70 px-3 py-2 text-xs font-semibold text-[#0A2B6D]"
+                className="rounded-lg border border-slate-200 bg-slate-50/70 px-3 py-2 text-sm sm:text-xs font-semibold text-[#0A2B6D]"
               >
                 {label}
               </a>
@@ -215,7 +215,7 @@ export default function LandingNav({ onBookDemo, showLiveDashboard = true, onTog
                   key={path}
                   to={path}
                   onClick={() => setOpen(false)}
-                  className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-[#0A2B6D]"
+                  className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-sm sm:text-xs font-semibold text-[#0A2B6D]"
                 >
                   {label}
                 </Link>

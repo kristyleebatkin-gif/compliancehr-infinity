@@ -1,3 +1,4 @@
+import SectionInventoryDownload from '@/components/landing/SectionInventoryDownload';
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import {
@@ -610,6 +611,7 @@ export default function BlueprintPreviewSection() {
               </button>
             )}
 
+            <SectionInventoryDownload />
             <button
               type="button"
               onClick={() => exportModulesCsv(filteredModules)}

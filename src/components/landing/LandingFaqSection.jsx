@@ -90,7 +90,7 @@ export default function LandingFaqSection() {
                 >
                   <div>
                     {/* Header Question First -> Blue Topic Badge After */}
-                    <h3 className="text-xs sm:text-sm font-black text-[#0A2B6D] leading-snug">
+                    <h3 className="text-sm font-black text-[#0A2B6D] leading-snug">
                       {faq.question}
                     </h3>
                     <span className="mt-1 inline-block rounded bg-[#0072FF]/10 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#0072FF]">
@@ -106,7 +106,7 @@ export default function LandingFaqSection() {
                 <div
                   id={`faq-answer-${idx}`}
                   hidden={!isOpen}
-                  className="border-t border-slate-200/80 px-3 pb-3 pt-2 text-left text-xs font-medium leading-snug text-[#0A2B6D]/85"
+                  className="border-t border-slate-200/80 px-3 pb-3 pt-2 text-left text-sm font-medium leading-relaxed text-[#0A2B6D]"
                 >
                   {faq.answer}
                 </div>
