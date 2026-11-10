@@ -104,7 +104,7 @@ export default function SafetyTrendsDashboard() {
                 <BarChart data={trend} margin={{ top: 4, right: 8, bottom: 0, left: -24 }}>
                   <XAxis dataKey="label" tickLine={false} axisLine={false} fontSize={11} />
                   <YAxis allowDecimals={false} domain={[0, trendMax]} tickLine={false} axisLine={false} fontSize={11} />
-                  <Tooltip cursor={{ fill: 'rgba(0,0,0,0.04)' }} />
+                  <Tooltip cursor={{ fill: 'rgba(10,43,109,0.04)' }} />
                   <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: 11 }} />
                   {SEVERITY_KEYS.map((s) => (
                     <Bar key={s} dataKey={s} stackId="severity" fill={SEVERITY_COLORS[s]} radius={s === 'Critical' ? [6, 6, 0, 0] : [0, 0, 0, 0]} />
