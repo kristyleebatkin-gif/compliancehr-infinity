@@ -20,6 +20,8 @@ import ModuleShell from '@/components/module/ModuleShell';
 import FinanceMetricCards from '@/components/finance/FinanceMetricCards';
 import ModuleAlertsButton from '@/components/ModuleAlertsButton';
 import { loadCompanyBranding } from '@/lib/companyBranding';
+import WorkflowScreenRadio from '@/components/shared/WorkflowScreenRadio';
+import LiveRegulatorPosters from '@/components/regulatory/LiveRegulatorPosters';
 
 const money = (v) => (v == null ? '-' : `$${Number(v).toLocaleString('en-AU', { minimumFractionDigits: 2 })}`);
 const STATUSES = ['Draft', 'Sent', 'Accepted', 'Declined', 'Expired'];
@@ -167,6 +169,8 @@ export default function QuoteCentre() {
   return (
     <div className="finance-workspace quotes-workspace space-y-4">
       <ModuleShell title="Quote Centre" subtitle="NDIS support quotations with price guide items, business details and terms from Company Safe." icon={ClipboardList} moduleKey="quotes" insightModule="quotes" actions={<ModuleAlertsButton />} />
+      <WorkflowScreenRadio />
+      <LiveRegulatorPosters />
       {loadError && <div role="alert" className="flex items-center justify-between gap-3 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">Quote records could not be confirmed; totals and lists are unavailable.<Button size="sm" variant="outline" onClick={load}>Retry</Button></div>}
       <FinanceMetricCards entries={[
         { label: 'Quotes', value: loadError ? '—' : String(quotes.length), Icon: ClipboardList, tone: 'primary' },
