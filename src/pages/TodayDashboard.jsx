@@ -18,6 +18,7 @@ import TodosPanel from '@/components/today/TodosPanel';
 import TeamNowPanel from '@/components/today/TeamNowPanel';
 import YouPanel from '@/components/today/YouPanel';
 import TodayDock from '@/components/today/TodayDock';
+import StudioLauncher from '@/components/today/studio/StudioLauncher';
 import SecurityPinGate from '@/components/security/SecurityPinGate';
 
 const ERROR_LABELS = {
@@ -94,6 +95,11 @@ function TodayWorkspace({ onSecurityPin }) {
     return entries;
   }, [data, counts, visibleKeys.todos, visibleKeys.invoices]);
 
+  const studioContext = useMemo(() => {
+    if (!data) return '';
+    return `${data.summary?.emails ?? 0} emails in the inbox, ${counts.shifts} shifts today (${counts.onShift} in progress, ${counts.unfilled} unfilled), ${counts.invoices} draft invoices, ${(data.todos || []).length} open tasks, ${counts.notesOutstanding} outstanding shift notes.`;
+  }, [data, counts]);
+
   const failedSections = useMemo(
     () => Object.entries(data?.errors || {}).filter(([, error]) => Boolean(error)).map(([key]) => ERROR_LABELS[key] || key),
     [data]
@@ -149,6 +155,8 @@ function TodayWorkspace({ onSecurityPin }) {
                   <MorningBriefTiles counts={counts} visibleKeys={visibleKeys} />
                 </>
               )}
+
+              <StudioLauncher context={studioContext} />
 
               <div className="grid gap-3.5 md:grid-cols-2 xl:grid-cols-3 min-[1640px]:grid-cols-4">
                 {visibleKeys.emails && (data.errors?.emails ? <SectionUnavailable label={ERROR_LABELS.emails} /> : <EmailsPanel emails={data.emails} />)}

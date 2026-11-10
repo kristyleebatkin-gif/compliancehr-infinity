@@ -1,0 +1,241 @@
+/* Today workbench — assistant, design, CRM, docs and meeting studios.
+   Tuned for iPad A16 (11-inch) and 16-inch MacBook Pro, plus phones. */
+
+.studio-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background: rgba(4, 15, 40, 0.68);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+}
+
+.studio-panel {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--t-surface-strong);
+  border: 1px solid var(--t-border);
+  box-shadow: 0 44px 90px -46px rgba(4, 15, 40, 0.85);
+}
+
+@media (min-width: 900px) {
+  .studio-backdrop {
+    align-items: center;
+    padding: 22px;
+  }
+
+  .studio-panel {
+    max-width: 1180px;
+    max-height: 90vh;
+    border-radius: 22px;
+  }
+}
+
+.studio-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--t-border);
+}
+
+.studio-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 13px;
+}
+
+@media (min-width: 640px) {
+  .studio-body {
+    padding: 17px;
+  }
+}
+
+.studio-input,
+.studio-textarea,
+.studio-select {
+  width: 100%;
+  border-radius: 11px;
+  border: 1px solid var(--t-border);
+  background: var(--t-pill);
+  color: var(--t-text);
+  padding: 8px 11px;
+  font-size: 13px;
+  font-weight: 600;
+  outline: none;
+}
+
+.studio-input:focus,
+.studio-textarea:focus,
+.studio-select:focus {
+  border-color: #5a00d6;
+  box-shadow: 0 0 0 3px rgba(90, 0, 214, 0.14);
+}
+
+.studio-textarea {
+  min-height: 84px;
+  line-height: 1.55;
+  resize: vertical;
+}
+
+.studio-label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--t-muted);
+}
+
+.studio-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px;
+  text-align: left;
+  border-radius: 16px;
+  border: 1px solid var(--t-border);
+  background: var(--t-pill);
+  transition: transform 160ms ease, background 160ms ease;
+}
+
+.studio-tile:hover,
+.studio-tile:focus-visible {
+  transform: translateY(-2px);
+  background: var(--t-hover);
+}
+
+.studio-chip {
+  border-radius: 999px;
+  border: 1px solid var(--t-border);
+  background: var(--t-pill);
+  color: var(--t-text);
+  padding: 4px 11px;
+  font-size: 11px;
+  font-weight: 700;
+  transition: background 150ms ease;
+}
+
+.studio-chip:hover {
+  background: var(--t-hover);
+}
+
+.studio-bubble {
+  border-radius: 15px;
+  padding: 9px 12px;
+  font-size: 12.5px;
+  line-height: 1.62;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.studio-bubble-user {
+  background: linear-gradient(135deg, #0a2b6d 0%, #5a00d6 100%);
+  color: #ffffff;
+}
+
+.studio-bubble-ai {
+  border: 1px solid var(--t-border);
+  background: var(--t-pill);
+  color: var(--t-text);
+}
+
+.studio-doc {
+  min-height: 46vh;
+  border-radius: 12px;
+  border: 1px solid var(--t-border);
+  background: var(--t-surface-strong);
+  padding: 22px 24px;
+  color: var(--t-text);
+  font-size: 13.5px;
+  line-height: 1.75;
+  outline: none;
+}
+
+.studio-doc:focus {
+  border-color: #5a00d6;
+  box-shadow: 0 0 0 3px rgba(90, 0, 214, 0.12);
+}
+
+.studio-doc h1,
+.studio-doc h2,
+.studio-doc h3 {
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin: 0.7em 0 0.3em;
+}
+
+.studio-doc h1 {
+  font-size: 22px;
+}
+
+.studio-doc h2 {
+  font-size: 17px;
+}
+
+.studio-doc ul,
+.studio-doc ol {
+  margin: 0.4em 0 0.4em 1.2em;
+  list-style: disc;
+}
+
+.studio-doc a {
+  color: #0072ff;
+  text-decoration: underline;
+}
+
+.design-stage {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid var(--t-border);
+  background: var(--t-pill);
+  padding: 12px;
+}
+
+.design-canvas {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  transform-origin: top center;
+}
+
+.rec-pulse {
+  animation: rec-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes rec-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rec-pulse { animation: none; }
+}
+
+/* Touch: comfortable targets inside the studios */
+@media (pointer: coarse) {
+  .studio-chip {
+    min-height: 38px;
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+
+  .studio-input,
+  .studio-textarea,
+  .studio-select {
+    min-height: 42px;
+    font-size: 14px;
+  }
+}
