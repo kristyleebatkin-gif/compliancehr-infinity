@@ -43,7 +43,7 @@ const MODULES = [
 const csvCell = (value) => {
   if (typeof value === 'number' || typeof value === 'boolean') return String(value);
   const raw = String(value ?? '');
-  const safe = /^[\\s]*[=+\\-@]/.test(raw) ? `'${raw}` : raw;
+  const safe = /^[\s]*[=+\-@]/.test(raw) ? `'${raw}` : raw;
   return '"' + safe.replace(/"/g, '""') + '"';
 };
 
