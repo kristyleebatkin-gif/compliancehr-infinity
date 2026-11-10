@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Moon, Music, Coffee } from 'lucide-react';
+import { Moon, Music, Coffee, HeartPulse, ExternalLink } from 'lucide-react';
 import { Panel, Pill } from '@/components/today/todayUi';
 
 const FACTS = [
@@ -68,6 +68,23 @@ export default function YouPanel() {
             aria-label="Hours slept"
             className="w-14 rounded-lg border border-[#0A2B6D]/15 bg-white px-2 py-1 text-[12px] font-bold text-[#0A2B6D] outline-none"
           />
+        </div>
+
+        <div className="flex items-center gap-2 rounded-xl border border-[#0A2B6D]/10 bg-white/60 p-2.5">
+          <HeartPulse className="h-4 w-4 shrink-0 text-[#B0126A]" />
+          <div className="min-w-0 flex-1">
+            <p className="text-[11.5px] font-extrabold text-[#0A2B6D]">Stress, energy &amp; sleep</p>
+            <p className="text-[10.5px] text-[#4B6392]">Check your readings in Welltory — opens in a new tab.</p>
+          </div>
+          <a
+            href="https://welltory.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="t-btn t-btn-ghost inline-flex shrink-0 items-center gap-1 !px-2.5 !py-1 !text-[10.5px]"
+          >
+            Open Welltory
+            <ExternalLink className="h-3 w-3" />
+          </a>
         </div>
 
         <div className="flex items-center gap-2 rounded-xl border border-[#0A2B6D]/10 bg-white/60 p-2.5">
