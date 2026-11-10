@@ -17,11 +17,32 @@ import TeamNowPanel from '@/components/today/TeamNowPanel';
 import YouPanel from '@/components/today/YouPanel';
 import TodayDock from '@/components/today/TodayDock';
 
+const ERROR_LABELS = {
+  emails: 'email inbox',
+  shifts: 'today’s roster',
+  invoices: 'draft invoices',
+  notes: 'today’s shift notes',
+  ndis: 'NDIS updates',
+  todos: 'tasks',
+  team: 'staff directory',
+  incidents: 'incident records',
+  issues: 'compliance issues'
+};
+
+function SectionUnavailable({ label }) {
+  return (
+    <section role="alert" className="t-card flex min-h-36 flex-col justify-center gap-1.5 border border-[#FF2E9A]/40 p-4">
+      <p className="t-title text-sm font-extrabold">Unable to load {label}</p>
+      <p className="t-muted text-xs leading-relaxed">This section is unavailable right now. No empty or zero result is being reported.</p>
+    </section>
+  );
+}
+
 export default function TodayDashboard() {
   const { user } = useRole();
   const { data, reload } = useTodayData();
   const wellbeingRef = useRef(null);
-  const [theme, setTheme] = useState(() => localStorage.getItem('cs-today-theme') || 'light');
+  const [theme, setTheme] = useState(() => localStorage.getItem('cs-today-theme') || 'dark');
   const [started, setStarted] = useState(() => localStorage.getItem('cs-today-started') === todayIso());
 
   useEffect(() => {
@@ -39,17 +60,23 @@ export default function TodayDashboard() {
       invoices: invoices.length,
       notesOutstanding: notes.filter((note) => note.lifecycle_status !== 'Acknowledged').length,
       onShift: shifts.filter((shift) => shift.clock_in && !shift.clock_out).length,
-      unfilled: shifts.filter((shift) => !shift.employee_name).length
+      unfilled: shifts.filter((shift) => !shift.employee_name && shift.status !== 'Cancelled').length
     };
   }, [data]);
 
   const plan = useMemo(() => {
-    const todos = data?.todos || [];
-    return [
-      ...todos.slice(0, 2).map((task) => ({ id: task.id, label: task.title })),
-      { id: 'invoices', label: `${counts.invoices} invoices to approve` }
-    ];
+    if (!data) return [];
+    const tasks = data.errors?.todos ? [] : (data.todos || []).slice(0, 2);
+    const entries = tasks.map((task) => ({ id: task.id, label: task.title }));
+    if (!data.errors?.invoices) entries.push({ id: 'invoices', label: `${counts.invoices} invoices to approve` });
+    return entries;
   }, [data, counts]);
+
+  const failedSections = useMemo(
+    () => Object.entries(data?.errors || {}).filter(([, error]) => Boolean(error)).map(([key]) => ERROR_LABELS[key] || key),
+    [data]
+  );
+  const hasErrors = failedSections.length > 0;
 
   const startWorkday = () => {
     localStorage.setItem('cs-today-started', todayIso());
@@ -74,8 +101,6 @@ export default function TodayDashboard() {
           />
 
           <TodayMobileNav />
-          <AskBar counts={counts} />
-          <MorningBriefTiles counts={counts} />
 
           {!data ? (
             <div className="grid gap-3.5 md:grid-cols-2 xl:grid-cols-3">
@@ -84,18 +109,37 @@ export default function TodayDashboard() {
               ))}
             </div>
           ) : (
-            <div className="grid gap-3.5 md:grid-cols-2 xl:grid-cols-3">
-              <EmailsPanel emails={data.emails} />
-              <RosterTodayPanel shifts={data.shifts} notes={data.notes} />
-              <InvoicesPanel invoices={data.invoices} onRefresh={reload} />
-              <NdisUpdatesPanel updates={data.ndis} />
-              <ComplianceJobPanel issues={data.issues} incidents={data.incidents} />
-              <TodosPanel todos={data.todos} />
-              <TeamNowPanel team={data.team} shifts={data.shifts} notes={data.notes} />
-              <div ref={wellbeingRef} className="xl:col-span-1">
-                <YouPanel />
+            <>
+              {hasErrors ? (
+                <div role="alert" className="t-card flex flex-wrap items-center justify-between gap-3 border border-[#FF2E9A]/50 p-3.5">
+                  <div className="min-w-0">
+                    <p className="t-title text-sm font-extrabold">Some dashboard information could not be loaded</p>
+                    <p className="t-muted mt-1 text-xs leading-relaxed">
+                      Unavailable: {failedSections.join(', ')}. Summary totals are hidden so incomplete data is not presented as a complete result.
+                    </p>
+                  </div>
+                  <button type="button" onClick={reload} className="t-btn t-btn-primary shrink-0">Retry data</button>
+                </div>
+              ) : (
+                <>
+                  <AskBar counts={counts} />
+                  <MorningBriefTiles counts={counts} />
+                </>
+              )}
+
+              <div className="grid gap-3.5 md:grid-cols-2 xl:grid-cols-3">
+                {data.errors?.emails ? <SectionUnavailable label={ERROR_LABELS.emails} /> : <EmailsPanel emails={data.emails} />}
+                {(data.errors?.shifts || data.errors?.notes) ? <SectionUnavailable label="roster and shift-note data" /> : <RosterTodayPanel shifts={data.shifts} notes={data.notes} />}
+                {data.errors?.invoices ? <SectionUnavailable label={ERROR_LABELS.invoices} /> : <InvoicesPanel invoices={data.invoices} onRefresh={reload} />}
+                {data.errors?.ndis ? <SectionUnavailable label={ERROR_LABELS.ndis} /> : <NdisUpdatesPanel updates={data.ndis} />}
+                {(data.errors?.issues || data.errors?.incidents) ? <SectionUnavailable label="compliance and incident data" /> : <ComplianceJobPanel issues={data.issues} incidents={data.incidents} />}
+                {data.errors?.todos ? <SectionUnavailable label={ERROR_LABELS.todos} /> : <TodosPanel todos={data.todos} />}
+                {(data.errors?.team || data.errors?.shifts || data.errors?.notes) ? <SectionUnavailable label="team availability data" /> : <TeamNowPanel team={data.team} shifts={data.shifts} notes={data.notes} />}
+                <div ref={wellbeingRef} className="xl:col-span-1">
+                  <YouPanel />
+                </div>
               </div>
-            </div>
+            </>
           )}
         </main>
       </div>
