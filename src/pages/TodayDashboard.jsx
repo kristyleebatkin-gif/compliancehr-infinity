@@ -26,7 +26,11 @@ const ERROR_LABELS = {
   todos: 'tasks',
   team: 'staff directory',
   incidents: 'incident records',
-  issues: 'compliance issues'
+  issues: 'compliance issues',
+  emailCount: 'email totals',
+  shiftCount: 'roster totals',
+  invoiceCount: 'draft-invoice totals',
+  noteCount: 'shift-note totals'
 };
 
 function SectionUnavailable({ label }) {
@@ -49,26 +53,22 @@ export default function TodayDashboard() {
     localStorage.setItem('cs-today-theme', theme);
   }, [theme]);
 
-  const counts = useMemo(() => {
-    const emails = data?.emails || [];
-    const shifts = data?.shifts || [];
-    const invoices = data?.invoices || [];
-    const notes = data?.notes || [];
-    return {
-      emails: emails.filter((email) => !['Responded', 'Archived'].includes(email.lifecycle_status)).length,
-      shifts: shifts.length,
-      invoices: invoices.length,
-      notesOutstanding: notes.filter((note) => note.lifecycle_status !== 'Acknowledged').length,
-      onShift: shifts.filter((shift) => shift.clock_in && !shift.clock_out).length,
-      unfilled: shifts.filter((shift) => !shift.employee_name && shift.status !== 'Cancelled').length
-    };
-  }, [data]);
+  const counts = useMemo(() => ({
+    emails: data?.summary?.emails ?? 0,
+    shifts: data?.summary?.shifts ?? 0,
+    invoices: data?.summary?.invoices ?? 0,
+    notesOutstanding: data?.summary?.notesOutstanding ?? 0,
+    onShift: (data?.shifts || []).filter((shift) => shift.clock_in && !shift.clock_out).length,
+    unfilled: (data?.shifts || []).filter((shift) => !shift.employee_name && shift.status !== 'Cancelled').length
+  }), [data]);
 
   const plan = useMemo(() => {
     if (!data) return [];
     const tasks = data.errors?.todos ? [] : (data.todos || []).slice(0, 2);
     const entries = tasks.map((task) => ({ id: task.id, label: task.title }));
-    if (!data.errors?.invoices) entries.push({ id: 'invoices', label: `${counts.invoices} invoices to approve` });
+    if (!data.errors?.invoiceCount && !data.errors?.invoices) {
+      entries.push({ id: 'invoices', label: `${counts.invoices} invoices to approve` });
+    }
     return entries;
   }, [data, counts]);
 
