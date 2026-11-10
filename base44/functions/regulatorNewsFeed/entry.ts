@@ -9,8 +9,31 @@ const REGULATORS = [
 
 const regulatorKeys = REGULATORS.map((regulator) => regulator.key);
 
+const GENERIC_TITLES = [
+  'fair work ombudsman',
+  'worksafe queensland',
+  'workSafe qld',
+  'ndis quality and safeguards commission',
+  'aged care quality and safety commission',
+  'news',
+  'news and events',
+  'newsroom',
+  'media releases',
+  'regulatory bulletins',
+];
+
+const isHomepage = (url) => {
+  try {
+    const parsed = new URL(url);
+    return parsed.pathname.replace(/\/+$/, '') === '';
+  } catch {
+    return true;
+  }
+};
+
 const cleanPosters = (items) => (items || [])
   .filter((item) => item && item.title && item.url && regulatorKeys.includes(item.regulator))
+  .filter((item) => !GENERIC_TITLES.includes(String(item.title).trim().toLowerCase()) && !isHomepage(String(item.url)))
   .map((item) => ({
     regulator: item.regulator,
     title: String(item.title).slice(0, 240),
