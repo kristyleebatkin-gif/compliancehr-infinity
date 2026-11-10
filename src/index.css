@@ -188,6 +188,10 @@
 }
 
 @layer utilities {
+  /* Legacy black text utility is remapped to the approved Choices NQ navy. */
+  .text-black {
+    color: #0A2B6D !important;
+  }
   .gradient-brand {
     background: linear-gradient(165deg, #0A2B6D 0%, #0A2B6D 55%, #5A00D6 100%);
     color: hsl(var(--header-foreground));
