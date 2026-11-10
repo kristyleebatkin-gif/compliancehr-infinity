@@ -33,7 +33,7 @@ export default function LiveRegulatorPosters() {
 
   useEffect(() => {
     if (!posters.length) load();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <section className="space-y-2" aria-label="Live regulator posters">

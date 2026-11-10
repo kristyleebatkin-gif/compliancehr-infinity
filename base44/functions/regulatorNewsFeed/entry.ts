@@ -98,10 +98,12 @@ export default async function (req) {
       byRegulator.forEach((items) => { if (items[round]) posters.push(items[round]); });
     }
 
+    const sources = byRegulator.map((items, index) => ({ regulator: REGULATORS[index].key, items: items.length }));
+
     if (!posters.length) {
-      return Response.json({ error: 'No verified regulator updates were found just now.' }, { status: 502 });
+      return Response.json({ error: 'No verified regulator updates were found just now.', sources }, { status: 502 });
     }
-    return Response.json({ fetched_date: new Date().toISOString(), posters: posters.slice(0, 12) });
+    return Response.json({ fetched_date: new Date().toISOString(), sources, posters: posters.slice(0, 12) });
   } catch (error) {
     return Response.json({ error: error.message || 'Regulator news feed failed.' }, { status: 500 });
   }
