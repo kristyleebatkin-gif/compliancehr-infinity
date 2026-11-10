@@ -27,7 +27,7 @@ import BulkShiftEditor from '@/components/rostering/BulkShiftEditor';
 import PayrollReport from '@/components/rostering/PayrollReport';
 import PayrollHub from '@/components/payroll/PayrollHub';
 import RosterDashboardNavigation from '@/components/rostering/RosterDashboardNavigation';
-import WorkflowScreenRadio from '@/components/shared/WorkflowScreenRadio';
+import SecondScreenSwitch from '@/components/shared/SecondScreenSwitch';
 import LiveRegulatorPosters from '@/components/regulatory/LiveRegulatorPosters';
 import ShiftPatterns from '@/components/rostering/ShiftPatterns';
 import ParticipantShiftDetails from '@/components/rostering/ParticipantShiftDetails';
@@ -317,7 +317,7 @@ function Rostering({ profile, profileKind, ourView = false, embedded = false } =
     <div className={embedded ? 'space-y-4' : 'mx-auto w-full max-w-[1440px] space-y-4'}>
       {!embedded && (
         <>
-          <WorkflowScreenRadio />
+          <SecondScreenSwitch current="roster" />
           <LiveRegulatorPosters />
         </>
       )}

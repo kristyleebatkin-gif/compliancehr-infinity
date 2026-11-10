@@ -27,6 +27,7 @@ import BestInClassBenchmarkSuite from '@/components/operations/BestInClassBenchm
 import { Plus, Trash2, FileSpreadsheet, Printer, Send, FileDown, Loader2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { loadCompanyBranding } from '@/lib/companyBranding';
+import SecondScreenSwitch from '@/components/shared/SecondScreenSwitch';
 
 const STATUSES = ['Draft', 'Sent', 'Paid', 'Overdue'];
 
@@ -134,6 +135,7 @@ export default function InvoicingCentre() {
 
   return (
     <div className="finance-workspace mx-auto w-full max-w-[1440px] space-y-4">
+      <SecondScreenSwitch current="invoicing" />
       <Tabs defaultValue="invoices">
         <ModuleShell
           icon={FileSpreadsheet}
