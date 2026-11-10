@@ -99,9 +99,9 @@ export default function EmergencyResponse({ embedded = false } = {}) {
         subtitle={employee ? 'Your emergency drill and safety-check records.' : 'Fire and evacuation readiness, safety checks, emergency documents, visitors and resources.'}
         insightModule={!employee ? 'emergency' : undefined}
         actions={<>
-          <Button variant="outline" className="border-border bg-white text-black" onClick={() => setOpen(true)}><Plus className="mr-2 h-4 w-4" />Log drill</Button>
-          {!employee && <Button variant="outline" className="border-border bg-white text-black" onClick={() => { setActiveTab('documents'); setDocumentOpen(true); }}><Plus className="mr-2 h-4 w-4" />Add doc</Button>}
-          <Button variant="outline" className="border-border bg-white text-black" onClick={exportSafetyChecks} disabled={loading || checks.length === 0}><Download className="mr-2 h-4 w-4" />Export safety check register</Button>
+          <Button variant="outline" className="border-border bg-white text-[#0A2B6D]" onClick={() => setOpen(true)}><Plus className="mr-2 h-4 w-4" />Log drill</Button>
+          {!employee && <Button variant="outline" className="border-border bg-white text-[#0A2B6D]" onClick={() => { setActiveTab('documents'); setDocumentOpen(true); }}><Plus className="mr-2 h-4 w-4" />Add doc</Button>}
+          <Button variant="outline" className="border-border bg-white text-[#0A2B6D]" onClick={exportSafetyChecks} disabled={loading || checks.length === 0}><Download className="mr-2 h-4 w-4" />Export safety check register</Button>
         </>}
         insight={!employee ? <EmergencyDownloads /> : undefined}
       />}
