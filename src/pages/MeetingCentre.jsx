@@ -171,8 +171,8 @@ export default function MeetingCentre({ embedded = false } = {}) {
         insightModule="meetings"
         tabs={<MeetingNavigation onSchedule={openNew} />}
         actions={<>
-          <Button size="sm" variant="outline" className="border-border bg-white text-black" aria-label="Export meeting register" onClick={exportRegister} disabled={loading || meetings.length === 0}><Download className="h-3.5 w-3.5" />Export</Button>
-          <Button size="sm" variant="outline" className="border-border bg-white text-black" aria-label="Download minutes template" onClick={downloadMinutesTemplate}><FileDown className="h-3.5 w-3.5" />Minutes</Button>
+          <Button size="sm" variant="outline" className="border-border bg-white text-[#0A2B6D]" aria-label="Export meeting register" onClick={exportRegister} disabled={loading || meetings.length === 0}><Download className="h-3.5 w-3.5" />Export</Button>
+          <Button size="sm" variant="outline" className="border-border bg-white text-[#0A2B6D]" aria-label="Download minutes template" onClick={downloadMinutesTemplate}><FileDown className="h-3.5 w-3.5" />Minutes</Button>
         </>}
         search={<MeetingSearchFilters search={search} onSearch={setSearch} typeFilter={typeFilter} onTypeFilter={setTypeFilter} types={TYPES} />}
       />
