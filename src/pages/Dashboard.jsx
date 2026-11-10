@@ -96,7 +96,7 @@ export default function Dashboard() {
             to="/team-leader"
             className="inline-flex items-center gap-1.5 rounded-xl border border-[#C7B6FF] bg-white px-3 py-2 text-[12px] font-bold text-[#5A00D6] shadow-sm transition hover:bg-[#F5F0FF]"
           >
-            <Sparkles className="h-3.5 w-3.5" /> Team Leader – Lead &amp; Build (Jamie)
+            <Sparkles className="h-3.5 w-3.5" /> Team Leader - Lead (Jamie)
           </Link>
         )}
       </div>
