@@ -147,7 +147,7 @@ export default function Notifications() {
         icon={Bell}
         moduleKey="notifications"
         actions={
-          <Button variant="outline" size="sm" onClick={markAllRead} disabled={unreadCount === 0 && !hasMore} className="gap-2 border-border bg-white text-black">
+          <Button variant="outline" size="sm" onClick={markAllRead} disabled={unreadCount === 0 && !hasMore} className="gap-2 border-border bg-white text-[#0A2B6D]">
             <CheckCheck className="h-4 w-4" /> Mark all read
           </Button>
         }
