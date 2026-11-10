@@ -126,7 +126,7 @@ function GoalProgress({ profile, profileKind, ourView = false, embedded = false 
         subtitle="Participant goals, progress notes and reports."
         moduleKey="goals"
         insightModule="goals"
-        actions={activeTab !== 'staff' ? <><Button variant="outline" className="border-border bg-white text-black" disabled={role === ROLES.PARTICIPANT} onClick={() => setOpen(true)}><Plus />New goal</Button><Button variant="outline" className="border-border bg-white text-black" onClick={exportGoals} disabled={loading || goals.length === 0}><Download />Export register</Button></> : undefined}
+        actions={activeTab !== 'staff' ? <><Button variant="outline" className="border-border bg-white text-[#0A2B6D]" disabled={role === ROLES.PARTICIPANT} onClick={() => setOpen(true)}><Plus />New goal</Button><Button variant="outline" className="border-border bg-white text-[#0A2B6D]" onClick={exportGoals} disabled={loading || goals.length === 0}><Download />Export register</Button></> : undefined}
       />}
       {embedded && <RegisterInsights module="goals" />}
       {embedded && activeTab !== 'staff' && <div className="module-action-bar flex flex-wrap gap-1"><Button className="goals-header-action" disabled={role === ROLES.PARTICIPANT} onClick={() => setOpen(true)}><Plus />New goal</Button><Button className="goals-header-action" variant="outline" onClick={exportGoals} disabled={loading || goals.length === 0}><Download />Export register</Button></div>}
