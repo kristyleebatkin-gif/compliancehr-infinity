@@ -120,6 +120,10 @@ export const NAV_PERMISSIONS = {
   'our-staff': [...OPERATIONS, ROLES.EMPLOYEE],
   'our-participants': [...OPERATIONS, ROLES.PARTICIPANT],
   dashboard: [...PERSONAL, ROLES.GUEST, ROLES.VOLUNTEER],
+  // These workspaces contain operational, staff and finance information.
+  // Keep access to approved administration roles only.
+  today: ['admin', ROLES.ADMIN, ROLES.TEAM_LEADER],
+  'team-leader': ['admin', ROLES.ADMIN, ROLES.TEAM_LEADER],
   'operations-centre': OPERATIONS,
   notifications: PERSONAL,
   assistant: PERSONAL,
@@ -146,6 +150,7 @@ export const NAV_PERMISSIONS = {
   'universal-storage': PERSONAL,
   documents: PERSONAL,
   'company-safe': FULL_ACCESS,
+  'remote-access': PERSONAL,
   certificates: OPERATIONS,
   'audit-log': OPERATIONS,
   'auditor-portal': [...FULL_ACCESS, ROLES.AUDITOR],
@@ -531,11 +536,11 @@ export function createTenantScopedEntitiesProxy(rawEntities, contextResolver, pr
   };
 
   const noTenantFieldEntities = new Set();
-  const knownTenantSet = Array.isArray((proxyOptions as any)?.knownTenantEntities)
-    ? new Set((proxyOptions as any).knownTenantEntities)
+  const knownTenantSet = Array.isArray(proxyOptions?.knownTenantEntities)
+    ? new Set(proxyOptions.knownTenantEntities)
     : null;
-  const enableReadCache = Boolean((proxyOptions as any)?.enableReadCache);
-  const readCacheTtlMs = Number((proxyOptions as any)?.readCacheTtlMs) || 15000;
+  const enableReadCache = Boolean(proxyOptions?.enableReadCache);
+  const readCacheTtlMs = Number(proxyOptions?.readCacheTtlMs) || 15000;
   const readCache = new Map();
   const inFlightReads = new Map();
 
