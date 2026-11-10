@@ -12,7 +12,8 @@ const toMeeting = (item) => ({
   when: itemWhen(item),
   duration: item.payload?.duration || 0,
   transcript: item.payload?.transcript || '',
-  summary: item.payload?.summary || null
+  summary: item.payload?.summary || null,
+  recordingUri: item.payload?.recordingUri || ''
 });
 
 export default function MeetingStudio() {
@@ -138,6 +139,15 @@ export default function MeetingStudio() {
       setError(err?.message || 'That meeting could not be saved.');
     } finally {
       setBusy('');
+    }
+  };
+
+  const openRecording = async (uri) => {
+    try {
+      const { signed_url } = await base44.integrations.Core.CreateFileSignedUrl({ file_uri: uri, expires_in: 600 });
+      if (signed_url) window.open(signed_url, '_blank', 'noopener');
+    } catch (err) {
+      setError(err?.message || 'That recording could not be opened.');
     }
   };
 
@@ -287,6 +297,15 @@ export default function MeetingStudio() {
                     {(meeting.summary?.actions || []).map((action, index) => (
                       <p key={index} className="t-muted text-[11px]">• {action.action}</p>
                     ))}
+                    {meeting.recordingUri ? (
+                      <button
+                        type="button"
+                        onClick={() => openRecording(meeting.recordingUri)}
+                        className="t-muted text-[11px] font-semibold underline"
+                      >
+                        Open the saved recording
+                      </button>
+                    ) : null}
                   </div>
                 ) : null}
               </div>

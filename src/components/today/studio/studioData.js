@@ -149,6 +149,14 @@ function localJobs() {
 export async function migrateLocalStudio() {
   if (typeof localStorage === 'undefined') return { moved: 0 };
 
+  let alreadyDone = false;
+  try {
+    alreadyDone = localStorage.getItem(MIGRATION_FLAG) === 'done';
+  } catch {
+    alreadyDone = false;
+  }
+  if (alreadyDone) return { moved: 0 };
+
   const jobs = localJobs();
   let moved = 0;
 
