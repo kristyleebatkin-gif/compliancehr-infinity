@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useRole } from '@/lib/useRole';
+import { canAccessNav, hasApprovedAccess } from '@/lib/roles';
 
 export const todayIso = () => new Date().toLocaleDateString('en-CA');
 
@@ -30,23 +31,25 @@ const skippedItems = () => ({ items: [], error: null });
 const skippedCount = () => ({ count: null, error: null });
 
 export default function useTodayData() {
-  const { can } = useRole();
+  const { role, user } = useRole();
   const [data, setData] = useState(null);
+  const access = useMemo(() => {
+    const allowed = (key) => hasApprovedAccess(user) && canAccessNav(role, key);
+    return {
+      emails: allowed('communications'),
+      shifts: allowed('rostering'),
+      invoices: allowed('invoicing'),
+      notes: allowed('communications'),
+      ndis: allowed('ndis-news'),
+      todos: allowed('tasks'),
+      team: allowed('our-staff'),
+      incidents: allowed('incidents'),
+      issues: allowed('compliance')
+    };
+  }, [role, user?.id, user?.account_status, user?.access_approved]);
 
   const load = useCallback(async () => {
     const day = todayIso();
-    const access = {
-      emails: can('communications'),
-      shifts: can('rostering'),
-      invoices: can('invoicing'),
-      notes: can('communications'),
-      ndis: can('ndis-news'),
-      todos: can('tasks'),
-      team: can('our-staff'),
-      incidents: can('incidents'),
-      issues: can('compliance')
-    };
-
     const [emails, shifts, invoices, notes, ndis, todos, team, incidents, issues, emailCount, shiftCount, invoiceCount, noteCount] = await Promise.all([
       access.emails ? readItems(base44.entities.CommunicationEntry.filter({ entry_kind: 'Email' }, { sort: '-created_date', limit: 6 })) : skippedItems(),
       access.shifts ? readItems(base44.entities.Shift.filter({ date: day }, { sort: 'start_time', limit: 500 })) : skippedItems(),
@@ -98,7 +101,7 @@ export default function useTodayData() {
         noteCount: noteCount.error
       }
     });
-  }, [can]);
+  }, [access]);
 
   useEffect(() => {
     load();
