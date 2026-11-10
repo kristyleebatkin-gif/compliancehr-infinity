@@ -88,7 +88,7 @@ function ModuleCard({ mod }) {
   );
 }
 
-export default function LiveDashboards() {
+export default function LiveDashboards({ embedded = false } = {}) {
   const { can } = useRole();
   const [modules, setModules] = useState(null);
   const [generatedAt, setGeneratedAt] = useState(null);
@@ -151,13 +151,17 @@ export default function LiveDashboards() {
   return (
     <div className="space-y-3">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="flex items-center gap-2.5">
-          <span className="gradient-brand flex h-7 w-7 items-center justify-center rounded-lg shadow-sm">
-            <LayoutDashboard className="h-4 w-4 text-white" />
-          </span>
-          <span className="text-sm font-bold font-editorial text-foreground/80">Live module dashboards</span>
-          {generatedAt && <span className="text-xs text-muted-foreground">Updated {new Date(generatedAt).toLocaleTimeString()}</span>}
-        </div>
+        {!embedded ? (
+          <div className="flex items-center gap-2.5">
+            <span className="gradient-brand flex h-7 w-7 items-center justify-center rounded-lg shadow-sm">
+              <LayoutDashboard className="h-4 w-4 text-white" />
+            </span>
+            <span className="text-sm font-bold font-editorial text-foreground/80">Live module dashboards</span>
+            {generatedAt && <span className="text-xs text-muted-foreground">Updated {new Date(generatedAt).toLocaleTimeString()}</span>}
+          </div>
+        ) : (
+          <span className="text-xs text-muted-foreground">{generatedAt ? `Updated ${new Date(generatedAt).toLocaleTimeString()}` : 'Live snapshot'}</span>
+        )}
         <div className="flex items-center gap-2">
           <Button variant="outline" size="sm" onClick={load} disabled={loading}>
             <RefreshCw className={`h-3.5 w-3.5 ${loading ? 'animate-spin' : ''}`} /> Refresh
