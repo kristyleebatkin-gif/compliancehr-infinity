@@ -1,0 +1,87 @@
+{
+  "name": "ComplianceDeadlineReminder",
+  "type": "object",
+  "properties": {
+    "recipient_id": {
+      "type": "string",
+      "title": "Recipient User ID"
+    },
+    "recipient_email": {
+      "type": "string",
+      "title": "Recipient Email"
+    },
+    "first_name": {
+      "type": "string",
+      "title": "First Name"
+    },
+    "item_title": {
+      "type": "string",
+      "title": "Reminder Title"
+    },
+    "category": {
+      "type": "string",
+      "title": "Deadline Category"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Due Date"
+    },
+    "source_type": {
+      "type": "string",
+      "title": "Source Type"
+    },
+    "source_id": {
+      "type": "string",
+      "title": "Source ID"
+    },
+    "message": {
+      "type": "string",
+      "title": "Notification Message"
+    },
+    "notification_created": {
+      "type": "boolean",
+      "default": false,
+      "title": "Notification Created"
+    }
+  },
+  "required": [
+    "recipient_id",
+    "recipient_email",
+    "item_title",
+    "category",
+    "due_date",
+    "source_type",
+    "source_id",
+    "message"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "data.recipient_id": "{{user.id}}"
+        }
+      ]
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
