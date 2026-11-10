@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calculator, Moon, Sun, Mic, ArrowUp, ChevronRight, Clock } from 'lucide-react';
+import { Calculator, Moon, Sun, Mic, ArrowUp, ChevronRight, Clock, Lock } from 'lucide-react';
 import useSpeechInput from '@/components/today/useSpeechInput';
 import { initials } from '@/components/today/todayUi';
 import HandoverNotes from '@/components/teamleader/HandoverNotes';
@@ -13,7 +13,7 @@ const TILES = [
 
 const CHIPS = ["Today's highlights", "Who's late to clock in?", 'Chase shift notes'];
 
-export default function TeamLeaderHome({ user, data, derived, theme, onToggleTheme, onScreen }) {
+export default function TeamLeaderHome({ user, data, derived, theme, onToggleTheme, onScreen, onSecurityPin }) {
   const [text, setText] = useState('');
   const [reply, setReply] = useState('');
   const speech = useSpeechInput((transcript) => setText((prev) => (prev ? `${prev} ${transcript}` : transcript)));
@@ -63,6 +63,11 @@ export default function TeamLeaderHome({ user, data, derived, theme, onToggleThe
           <button type="button" onClick={onToggleTheme} aria-label="Switch theme" className="tl-btn tl-ghost !px-2">
             {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </button>
+          {onSecurityPin && (
+            <button type="button" onClick={onSecurityPin} aria-label="Security PIN" title="Security PIN" className="tl-btn tl-ghost !px-2">
+              <Lock className="h-4 w-4" />
+            </button>
+          )}
           <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-[#0A2B6D] via-[#5A00D6] to-[#FF2E9A] text-[11px] font-extrabold text-white">
             {initials(user?.full_name)}
           </span>

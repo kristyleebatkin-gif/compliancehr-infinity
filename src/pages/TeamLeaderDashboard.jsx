@@ -8,6 +8,7 @@ import HighlightsScreen from '@/components/teamleader/HighlightsScreen';
 import CalculatorScreen from '@/components/teamleader/CalculatorScreen';
 import { TeamScreen, RosterScreen } from '@/components/teamleader/TeamAndRosterScreens';
 import TeamLeaderNav from '@/components/teamleader/TeamLeaderNav';
+import SecurityPinGate from '@/components/security/SecurityPinGate';
 
 const ERROR_LABELS = {
   shifts: 'today’s roster',
@@ -18,6 +19,14 @@ const ERROR_LABELS = {
 };
 
 export default function TeamLeaderDashboard() {
+  return (
+    <SecurityPinGate workspace="team-leader" title="Team Leader – Lead" subtitle="Jamie's team workspace">
+      {({ openSecurityPin }) => <TeamLeaderWorkspace onSecurityPin={openSecurityPin} />}
+    </SecurityPinGate>
+  );
+}
+
+function TeamLeaderWorkspace({ onSecurityPin }) {
   const { user } = useRole();
   const { data, derived, reload } = useTeamLeaderData();
   const [screen, setScreen] = useState('home');
@@ -68,6 +77,7 @@ export default function TeamLeaderDashboard() {
               theme={theme}
               onToggleTheme={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
               onScreen={setScreen}
+              onSecurityPin={onSecurityPin}
             />
           )}
         </div>

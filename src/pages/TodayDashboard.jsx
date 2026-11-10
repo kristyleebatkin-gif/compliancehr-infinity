@@ -17,6 +17,7 @@ import TodosPanel from '@/components/today/TodosPanel';
 import TeamNowPanel from '@/components/today/TeamNowPanel';
 import YouPanel from '@/components/today/YouPanel';
 import TodayDock from '@/components/today/TodayDock';
+import SecurityPinGate from '@/components/security/SecurityPinGate';
 
 const ERROR_LABELS = {
   emails: 'email inbox',
@@ -44,6 +45,14 @@ function SectionUnavailable({ label }) {
 }
 
 export default function TodayDashboard() {
+  return (
+    <SecurityPinGate workspace="today" title="Administration – Lead" subtitle="Sherelle's daily operations workspace">
+      {({ openSecurityPin }) => <TodayWorkspace onSecurityPin={openSecurityPin} />}
+    </SecurityPinGate>
+  );
+}
+
+function TodayWorkspace({ onSecurityPin }) {
   const { user, role } = useRole();
   const { data, reload } = useTodayData();
   const wellbeingRef = useRef(null);
@@ -110,6 +119,7 @@ export default function TodayDashboard() {
             onToggleTheme={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             started={started}
             onStart={startWorkday}
+            onSecurityPin={onSecurityPin}
           />
 
           <TodayMobileNav />

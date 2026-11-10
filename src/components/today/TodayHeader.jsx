@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Moon, Sun, Bell, Play } from 'lucide-react';
+import { Moon, Sun, Bell, Play, Lock } from 'lucide-react';
 import { initials } from '@/components/today/todayUi';
 
 const greeting = () => {
@@ -18,7 +18,7 @@ const longDate = () =>
     year: 'numeric'
   });
 
-export default function TodayHeader({ user, theme, onToggleTheme, started, onStart }) {
+export default function TodayHeader({ user, theme, onToggleTheme, started, onStart, onSecurityPin }) {
   const firstName = (user?.full_name || '').split(' ')[0] || 'there';
 
   return (
@@ -35,6 +35,17 @@ export default function TodayHeader({ user, theme, onToggleTheme, started, onSta
           <Play className="h-3.5 w-3.5" />
           {started ? 'Day started' : 'Mark my day started'}
         </button>
+        {onSecurityPin && (
+          <button
+            type="button"
+            onClick={onSecurityPin}
+            aria-label="Security PIN"
+            title="Security PIN"
+            className="t-btn t-btn-ghost !px-2.5"
+          >
+            <Lock className="h-4 w-4" />
+          </button>
+        )}
         <Link to="/notifications" aria-label="Notifications" className="t-btn t-btn-ghost !px-2.5">
           <Bell className="h-4 w-4" />
         </Link>
