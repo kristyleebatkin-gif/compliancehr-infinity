@@ -160,7 +160,7 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
         <div className="overflow-hidden rounded-[10px] p-1.5 space-y-1 md:flex md:flex-col lg:block">
           {/* LINE 1: Quick Access Bar Title + AI Quick Ask & 4 Buttons Next To It + Mode Switcher */}
           <div className="flex flex-wrap items-center justify-start gap-1.5">
-            <div className="flex min-w-0 flex-wrap items-center gap-1.5 md:flex-nowrap">
+            <div className="flex min-w-0 flex-wrap items-center gap-1.5">
               <div
                 className="inline-flex min-w-0 items-center rounded-full p-[1px]"
                 style={{ background: BRAND_GRADIENT }}
@@ -173,7 +173,7 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
                 </div>
               </div>
 
-              <div className="flex shrink-0 flex-nowrap items-center gap-1">
+              <div className="flex min-w-0 flex-wrap items-center gap-1">
               <div
                 className="inline-flex items-center rounded-full p-[1px]"
                 style={{ background: BRAND_GRADIENT }}
@@ -188,7 +188,7 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
                       key={m.id}
                       type="button"
                       onClick={() => switchRemoteMode(m.id)}
-                      className={`whitespace-nowrap rounded-full px-1.5 py-0 text-[8px] font-extrabold transition ${
+                      className={`min-h-9 whitespace-nowrap rounded-full px-3 py-1 text-xs font-extrabold transition ${
                         remoteMode === m.id
                           ? 'bg-brand text-header-foreground'
                           : 'text-header-foreground hover:bg-workspace-navy'
@@ -203,7 +203,7 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
               {expandedGroup?.path && (
                 <Link
                   to={expandedGroup.path}
-                  className="inline-flex h-[20px] max-w-[180px] items-center gap-1 rounded-full border border-header-foreground/20 bg-workspace-navy/80 px-2 text-[8px] font-extrabold text-header-foreground backdrop-blur-md transition hover:bg-workspace-navy"
+                  className="inline-flex min-h-9 max-w-full items-center gap-1 rounded-full border border-header-foreground/20 bg-workspace-navy/80 px-3 text-xs font-extrabold text-header-foreground backdrop-blur-md transition hover:bg-workspace-navy"
                 >
                   <span className="truncate">Open {expandedGroup.label.replace(/^\d+\.\s*/, '')}</span>
                   <ArrowRight className="h-2 w-2 text-[#0072FF]" />
@@ -216,22 +216,22 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
 
           {/* LINE 2: 50%-Reduced Compact Section Modulars (Tight Grid Without Gaps) */}
           <div
-            className="grid grid-cols-3 gap-1 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-7 items-stretch md:order-2 lg:order-none"
+            className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 items-stretch md:order-2 lg:order-none"
           >
             <Link
               to="/assistant"
               title="AI Core Hub"
               className="group block w-full rounded-md border border-header-foreground/20 bg-workspace-navy/80 p-[1px] text-left backdrop-blur-md transition-all duration-150"
             >
-              <div className="flex h-[22px] items-center justify-between gap-1 rounded-[5px] bg-transparent px-1.5 md:h-[26px] lg:h-[22px]">
+              <div className="flex min-h-11 items-center justify-between gap-2 rounded-[5px] bg-transparent px-2 py-1.5">
                 <div className="flex min-w-0 flex-1 items-center gap-1">
                   <span
-                    className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-[3px] bg-[#0A2B6D]/90 md:h-4 md:w-4 lg:h-3.5 lg:w-3.5"
+                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[3px] bg-[#0A2B6D]/90"
                     style={{ border: '1px solid #0072FF' }}
                   >
-                    <Cpu className="h-2 w-2 shrink-0 md:h-2.5 md:w-2.5 lg:h-2 lg:w-2" style={{ color: '#0072FF' }} />
+                    <Cpu className="h-3.5 w-3.5 shrink-0" style={{ color: '#0072FF' }} />
                   </span>
-                  <span className="min-w-0 truncate text-[9.5px] font-extrabold leading-none text-header-foreground md:text-[10.5px] lg:text-[9.5px]">
+                  <span className="min-w-0 break-words text-xs font-extrabold leading-tight text-header-foreground">
                     AI Core
                   </span>
                 </div>
@@ -261,15 +261,15 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
                     isSelectedSection ? 'ring-1 ring-[#00C6FF]' : ''
                   }`}
                 >
-                  <div className="flex h-[22px] items-center justify-between gap-1 rounded-[5px] bg-transparent px-1.5 md:h-[26px] lg:h-[22px]">
+                  <div className="flex min-h-11 items-center justify-between gap-2 rounded-[5px] bg-transparent px-2 py-1.5">
                     <div className="flex min-w-0 flex-1 items-center gap-1">
                       <span
-                        className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-[3px] bg-[#0A2B6D]/90 md:h-4 md:w-4 lg:h-3.5 lg:w-3.5"
+                        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[3px] bg-[#0A2B6D]/90"
                         style={{ border: `1px solid ${symColor}` }}
                       >
-                        <Icon className="h-2 w-2 shrink-0 md:h-2.5 md:w-2.5 lg:h-2 lg:w-2" style={{ color: symColor }} />
+                        <Icon className="h-3.5 w-3.5 shrink-0" style={{ color: symColor }} />
                       </span>
-                      <span className="min-w-0 truncate text-[9.5px] font-extrabold leading-none text-header-foreground md:text-[10.5px] lg:text-[9.5px]">
+                      <span className="min-w-0 break-words text-xs font-extrabold leading-tight text-header-foreground">
                         {item.label}
                       </span>
                     </div>
@@ -288,7 +288,7 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
 
           {/* LINE 3: Active Section's 50%-Reduced Compact Module Buttons */}
           {expandedGroup && expandedGroup.modules?.length > 0 && (
-            <div className="grid grid-cols-3 gap-1 border-t border-white/10 pt-1 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-8 items-stretch md:order-3 lg:order-none">
+            <div className="grid grid-cols-2 gap-1.5 border-t border-white/10 pt-1.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 items-stretch md:order-3 lg:order-none">
               {expandedGroup.modules.map((module, mIdx) => {
                 const Icon = module.icon;
                 const modActive = isActive(module.path);
@@ -303,15 +303,15 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
                       modActive ? 'ring-1 ring-[#00C6FF]' : ''
                     }`}
                   >
-                    <div className="flex h-[22px] items-center justify-between gap-1 rounded-[5px] bg-transparent px-1.5 md:h-[26px] lg:h-[22px]">
+                    <div className="flex min-h-11 items-center justify-between gap-2 rounded-[5px] bg-transparent px-2 py-1.5">
                       <div className="flex min-w-0 flex-1 items-center gap-1">
                         <span
-                          className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-[3px] bg-[#0A2B6D]/90 md:h-4 md:w-4 lg:h-3.5 lg:w-3.5"
+                          className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[3px] bg-[#0A2B6D]/90"
                           style={{ border: `1px solid ${modColor}` }}
                         >
-                          <Icon className="h-2 w-2 shrink-0 md:h-2.5 md:w-2.5 lg:h-2 lg:w-2" style={{ color: modColor }} />
+                          <Icon className="h-3.5 w-3.5 shrink-0" style={{ color: modColor }} />
                         </span>
-                        <span className="min-w-0 truncate text-[9.5px] font-extrabold leading-none text-header-foreground md:text-[10.5px] lg:text-[9.5px]">
+                        <span className="min-w-0 break-words text-xs font-extrabold leading-tight text-header-foreground">
                           {module.label}
                         </span>
                       </div>
@@ -330,12 +330,12 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
           )}
           {onSwitchWorkspaceView && (
             <div className="flex flex-wrap items-center justify-center gap-1.5 border-t border-white/10 pt-1 md:order-1 lg:order-none">
-              <Link to="/login" className="hidden h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/20 bg-[#00C6FF] px-2.5 text-[10px] font-extrabold text-workspace-navy shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90 md:inline-flex lg:hidden">Sign In</Link>
-              <Link to="/?demo=book" className="hidden h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-[#00C6FF]/50 bg-[#0072FF] px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(0,114,255,0.55)] transition hover:opacity-90 md:inline-flex lg:hidden">Book Demo</Link>
-              <Link to="/register" className="hidden h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/25 bg-[#FF2E9A] px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(255,46,154,0.55)] transition hover:opacity-90 md:inline-flex lg:hidden">Start Free</Link>
+              <Link to="/login" className="hidden min-h-9 shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/20 bg-[#00C6FF] px-2.5 text-[10px] font-extrabold text-workspace-navy shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90 md:inline-flex lg:hidden">Sign In</Link>
+              <Link to="/?demo=book" className="hidden min-h-9 shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-[#00C6FF]/50 bg-[#0072FF] px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(0,114,255,0.55)] transition hover:opacity-90 md:inline-flex lg:hidden">Book Demo</Link>
+              <Link to="/register" className="hidden min-h-9 shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/25 bg-[#FF2E9A] px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(255,46,154,0.55)] transition hover:opacity-90 md:inline-flex lg:hidden">Start Free</Link>
               <Link
                 to="/our-participants"
-                className="inline-flex h-[24px] shrink-0 items-center justify-center gap-1 rounded-full border border-[#00C6FF] bg-[#0072FF] px-3 text-[10px] font-extrabold uppercase tracking-wide text-white shadow-[0_0_10px_rgba(0,114,255,0.5)] transition hover:opacity-95"
+                className="inline-flex min-h-9 shrink-0 items-center justify-center gap-1 rounded-full border border-[#00C6FF] bg-[#0072FF] px-3 text-[10px] font-extrabold uppercase tracking-wide text-white shadow-[0_0_10px_rgba(0,114,255,0.5)] transition hover:opacity-95"
               >
                 <Heart className="h-3 w-3 shrink-0 text-[#00C6FF]" />
                 <span className="whitespace-nowrap">Participant Profiles</span>
@@ -345,7 +345,7 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
                 onClick={() => onSwitchWorkspaceView('both')}
                 aria-pressed={workspaceView === 'both'}
                 title="Both Views"
-                className="inline-flex h-[24px] shrink-0 items-center justify-center gap-1 rounded-full border px-3 text-[10px] font-extrabold tracking-wide shadow-[0_0_10px_rgba(0,198,255,0.5)] transition-all hover:opacity-95"
+                className="inline-flex min-h-9 shrink-0 items-center justify-center gap-1 rounded-full border px-3 text-[10px] font-extrabold tracking-wide shadow-[0_0_10px_rgba(0,198,255,0.5)] transition-all hover:opacity-95"
                 style={{ background: 'linear-gradient(90deg, #00C6FF 0%, #0072FF 50%, #FF2E9A 100%)', borderColor: '#00C6FF', color: '#FFFFFF' }}
               >
                 <Layers className="h-3 w-3 shrink-0" style={{ color: '#00C6FF' }} />
