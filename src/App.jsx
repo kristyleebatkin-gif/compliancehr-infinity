@@ -137,8 +137,8 @@ const AuthenticatedApp = () => {
       <Route path="/mfa" element={<Mfa />} />
       <Route path="/oauth/consent" element={<OAuthConsent />} />
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
-        <Route path="/today" element={<TodayDashboard />} />
-        <Route path="/team-leader" element={<TeamLeaderDashboard />} />
+        <Route path="/today" element={<RoleGate navKey="today"><TodayDashboard /></RoleGate>} />
+        <Route path="/team-leader" element={<RoleGate navKey="team-leader"><TeamLeaderDashboard /></RoleGate>} />
         <Route element={<AppLayout />}>
           <Route path="/dashboard" element={<RoleGate navKey="dashboard"><Dashboard /></RoleGate>} />
           <Route path="/executive-dashboards" element={<RoleGate navKey="analytics"><ExecutiveDashboards /></RoleGate>} />
