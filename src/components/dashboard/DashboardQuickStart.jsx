@@ -39,7 +39,7 @@ export default function DashboardQuickStart() {
       <div
         className="rounded-[13px] p-3"
         style={{
-          background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+          background: 'linear-gradient(165deg, #0A2B6D 0%, #0A2B6D 55%, #5A00D6 100%)',
         }}
       >
         <div
@@ -78,7 +78,7 @@ export default function DashboardQuickStart() {
             <ol
               className="grid gap-2.5 rounded-xl p-2.5 sm:grid-cols-2 lg:grid-cols-4 text-left"
               style={{
-                background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
+                background: 'linear-gradient(165deg, #0A2B6D 0%, #0A2B6D 55%, #5A00D6 100%)',
               }}
             >
               {STEPS.map((step, index) => {
