@@ -9,10 +9,13 @@ const TILES = [
   { key: 'notesOutstanding', label: 'Shift notes outstanding', icon: NotebookPen, href: '/communications', tone: 'from-[#FF2E9A] to-[#5A00D6]' }
 ];
 
-export default function MorningBriefTiles({ counts }) {
+export default function MorningBriefTiles({ counts, visibleKeys = {} }) {
+  const visibleTiles = TILES.filter((tile) => visibleKeys[tile.key]);
+  if (!visibleTiles.length) return null;
+
   return (
-    <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
-      {TILES.map(({ key, label, icon: Icon, href, tone }) => (
+    <div className={`grid grid-cols-2 gap-3 ${visibleTiles.length === 1 ? 'xl:grid-cols-1' : visibleTiles.length === 2 ? 'xl:grid-cols-2' : 'xl:grid-cols-4'}`}>
+      {visibleTiles.map(({ key, label, icon: Icon, href, tone }) => (
         <Link key={key} to={href} className="t-card group p-3.5 transition hover:-translate-y-0.5">
           <div className="flex items-start justify-between gap-2">
             <span className={`grid h-8 w-8 place-items-center rounded-xl bg-gradient-to-br ${tone} text-white`}>
