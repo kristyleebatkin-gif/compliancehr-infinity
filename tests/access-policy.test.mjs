@@ -69,3 +69,14 @@ test('role navigation keeps approved allowed and denied paths', () => {
   assert.equal(frontend.canAccessNav('Administration', 'invoicing'), false);
   assert.equal(frontend.canAccessNav('Provider Administrator', 'users'), true);
 });
+
+test('Today and Team Leader workspaces are limited to approved administration roles', () => {
+  for (const role of ['admin', 'Provider Administrator', 'Administration', 'Team Leader']) {
+    assert.equal(frontend.canAccessNav(role, 'today'), true, `${role} can open the administration workspace`);
+    assert.equal(frontend.canAccessNav(role, 'team-leader'), true, `${role} can open the team leader workspace`);
+  }
+  for (const role of ['Employee', 'Participant', 'Volunteer', 'Guest', 'Management', 'Compliance Administrator', 'Auditor']) {
+    assert.equal(frontend.canAccessNav(role, 'today'), false, `${role} cannot open the administration workspace`);
+    assert.equal(frontend.canAccessNav(role, 'team-leader'), false, `${role} cannot open the team leader workspace`);
+  }
+});
