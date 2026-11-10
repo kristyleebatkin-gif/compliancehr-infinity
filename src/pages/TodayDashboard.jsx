@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import '@/components/today/today.css';
 import { useRole } from '@/lib/useRole';
+import { canAccessNav } from '@/lib/roles';
 import useTodayData, { todayIso } from '@/components/today/useTodayData';
 import TodaySidebar from '@/components/today/TodaySidebar';
 import TodayHeader from '@/components/today/TodayHeader';
@@ -43,11 +44,22 @@ function SectionUnavailable({ label }) {
 }
 
 export default function TodayDashboard() {
-  const { user } = useRole();
+  const { user, role } = useRole();
   const { data, reload } = useTodayData();
   const wellbeingRef = useRef(null);
   const [theme, setTheme] = useState(() => localStorage.getItem('cs-today-theme') || 'dark');
   const [started, setStarted] = useState(() => localStorage.getItem('cs-today-started') === todayIso());
+
+  const visibleKeys = {
+    emails: canAccessNav(role, 'communications'),
+    shifts: canAccessNav(role, 'rostering'),
+    invoices: canAccessNav(role, 'invoicing'),
+    notesOutstanding: canAccessNav(role, 'communications'),
+    ndis: canAccessNav(role, 'ndis-news'),
+    todos: canAccessNav(role, 'tasks'),
+    team: canAccessNav(role, 'our-staff') && canAccessNav(role, 'rostering') && canAccessNav(role, 'communications'),
+    compliance: canAccessNav(role, 'compliance') && canAccessNav(role, 'incidents')
+  };
 
   useEffect(() => {
     localStorage.setItem('cs-today-theme', theme);
@@ -64,13 +76,13 @@ export default function TodayDashboard() {
 
   const plan = useMemo(() => {
     if (!data) return [];
-    const tasks = data.errors?.todos ? [] : (data.todos || []).slice(0, 2);
+    const tasks = visibleKeys.todos && !data.errors?.todos ? (data.todos || []).slice(0, 2) : [];
     const entries = tasks.map((task) => ({ id: task.id, label: task.title }));
-    if (!data.errors?.invoiceCount && !data.errors?.invoices) {
+    if (visibleKeys.invoices && !data.errors?.invoiceCount && !data.errors?.invoices) {
       entries.push({ id: 'invoices', label: `${counts.invoices} invoices to approve` });
     }
     return entries;
-  }, [data, counts]);
+  }, [data, counts, visibleKeys.todos, visibleKeys.invoices]);
 
   const failedSections = useMemo(
     () => Object.entries(data?.errors || {}).filter(([, error]) => Boolean(error)).map(([key]) => ERROR_LABELS[key] || key),
@@ -104,9 +116,7 @@ export default function TodayDashboard() {
 
           {!data ? (
             <div className="grid gap-3.5 md:grid-cols-2 xl:grid-cols-3">
-              {[0, 1, 2, 3, 4, 5].map((key) => (
-                <div key={key} className="t-card h-40 animate-pulse" />
-              ))}
+              {[0, 1, 2, 3, 4, 5].map((key) => <div key={key} className="t-card h-40 animate-pulse" />)}
             </div>
           ) : (
             <>
@@ -122,22 +132,20 @@ export default function TodayDashboard() {
                 </div>
               ) : (
                 <>
-                  <AskBar counts={counts} />
-                  <MorningBriefTiles counts={counts} />
+                  <AskBar counts={counts} visibleKeys={visibleKeys} />
+                  <MorningBriefTiles counts={counts} visibleKeys={visibleKeys} />
                 </>
               )}
 
               <div className="grid gap-3.5 md:grid-cols-2 xl:grid-cols-3">
-                {data.errors?.emails ? <SectionUnavailable label={ERROR_LABELS.emails} /> : <EmailsPanel emails={data.emails} />}
-                {(data.errors?.shifts || data.errors?.notes) ? <SectionUnavailable label="roster and shift-note data" /> : <RosterTodayPanel shifts={data.shifts} notes={data.notes} />}
-                {data.errors?.invoices ? <SectionUnavailable label={ERROR_LABELS.invoices} /> : <InvoicesPanel invoices={data.invoices} onRefresh={reload} />}
-                {data.errors?.ndis ? <SectionUnavailable label={ERROR_LABELS.ndis} /> : <NdisUpdatesPanel updates={data.ndis} />}
-                {(data.errors?.issues || data.errors?.incidents) ? <SectionUnavailable label="compliance and incident data" /> : <ComplianceJobPanel issues={data.issues} incidents={data.incidents} />}
-                {data.errors?.todos ? <SectionUnavailable label={ERROR_LABELS.todos} /> : <TodosPanel todos={data.todos} />}
-                {(data.errors?.team || data.errors?.shifts || data.errors?.notes) ? <SectionUnavailable label="team availability data" /> : <TeamNowPanel team={data.team} shifts={data.shifts} notes={data.notes} />}
-                <div ref={wellbeingRef} className="xl:col-span-1">
-                  <YouPanel />
-                </div>
+                {visibleKeys.emails && (data.errors?.emails ? <SectionUnavailable label={ERROR_LABELS.emails} /> : <EmailsPanel emails={data.emails} />)}
+                {visibleKeys.shifts && visibleKeys.notesOutstanding && (data.errors?.shifts || data.errors?.notes ? <SectionUnavailable label="roster and shift-note data" /> : <RosterTodayPanel shifts={data.shifts} notes={data.notes} />)}
+                {visibleKeys.invoices && (data.errors?.invoices ? <SectionUnavailable label={ERROR_LABELS.invoices} /> : <InvoicesPanel invoices={data.invoices} onRefresh={reload} />)}
+                {visibleKeys.ndis && (data.errors?.ndis ? <SectionUnavailable label={ERROR_LABELS.ndis} /> : <NdisUpdatesPanel updates={data.ndis} />)}
+                {visibleKeys.compliance && (data.errors?.issues || data.errors?.incidents ? <SectionUnavailable label="compliance and incident data" /> : <ComplianceJobPanel issues={data.issues} incidents={data.incidents} />)}
+                {visibleKeys.todos && (data.errors?.todos ? <SectionUnavailable label={ERROR_LABELS.todos} /> : <TodosPanel todos={data.todos} />)}
+                {visibleKeys.team && (data.errors?.team || data.errors?.shifts || data.errors?.notes ? <SectionUnavailable label="team availability data" /> : <TeamNowPanel team={data.team} shifts={data.shifts} notes={data.notes} />)}
+                <div ref={wellbeingRef} className="xl:col-span-1"><YouPanel /></div>
               </div>
             </>
           )}
