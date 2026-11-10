@@ -135,8 +135,8 @@ export default function ReceiptHub({ profile } = {}) {
           <Button onClick={() => setScanOpen(true)}><ScanLine className="mr-1.5 h-4 w-4" />Scan Receipt</Button>
           <Button variant="secondary" onClick={() => setPdfOpen(true)}><FileText className="mr-1.5 h-4 w-4" />Scan to PDF</Button>
           <Button onClick={() => setOpen(true)}><Plus className="mr-1.5 h-4 w-4" />Log Receipt</Button>
-          <Button variant="outline" className="border-border bg-white text-black" onClick={exportCsv} disabled={loading || receipts.length === 0}><Download className="mr-1.5 h-4 w-4" />Export Register</Button>
-          <Button variant="outline" className="border-border bg-white text-black" onClick={exportAccess}><History className="mr-1.5 h-4 w-4" />Access Log</Button>
+          <Button variant="outline" className="border-border bg-white text-[#0A2B6D]" onClick={exportCsv} disabled={loading || receipts.length === 0}><Download className="mr-1.5 h-4 w-4" />Export Register</Button>
+          <Button variant="outline" className="border-border bg-white text-[#0A2B6D]" onClick={exportAccess}><History className="mr-1.5 h-4 w-4" />Access Log</Button>
         </>}
         search={<ReceiptFilters filters={filters} setFilters={setFilters} count={shownReceipts.length} total={receipts.length} />}
         small={[
