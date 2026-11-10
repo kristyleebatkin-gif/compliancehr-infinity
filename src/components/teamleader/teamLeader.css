@@ -32,7 +32,7 @@
 
 .tl-phone[data-theme='light'] {
   --tl-text: #0A2B6D;
-  --tl-muted: #42608F;
+  --tl-muted: #274675;
   --tl-surface: #ffffff;
   --tl-border: #D9ECFF;
   --tl-pill: #EAF5FF;
@@ -116,21 +116,7 @@
   color: var(--tl-muted);
 }
 
-.tl-phone[data-theme='dark'] .tl-green {
-  color: #A7F3D0;
-}
-
-.tl-phone[data-theme='dark'] .tl-amber {
-  color: #FDE68A;
-}
-
-.tl-phone[data-theme='dark'] .tl-pink {
-  color: #FBCFE8;
-}
-
-.tl-phone[data-theme='dark'] .tl-blue {
-  color: #9cc6ff;
-}
+/* Status badges keep dark text on their light backgrounds in either theme. */
 
 .tl-btn {
   display: inline-flex;

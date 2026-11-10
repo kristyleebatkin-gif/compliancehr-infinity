@@ -27,7 +27,7 @@ export default function ScreensaverSettingsDialog({
           <DialogTitle className="flex items-center gap-2 font-heading text-base font-extrabold text-[#0A2B6D]">
             <Monitor className="h-4 w-4" /> Screensaver
           </DialogTitle>
-          <DialogDescription className="text-xs leading-relaxed text-[#4b6392]">
+          <DialogDescription className="text-xs leading-relaxed text-[#274675]">
             {subtitle || `Choose the screensaver for ${title}. It appears when this dashboard is left idle, and it is saved for you on this device.`}
           </DialogDescription>
         </DialogHeader>
@@ -50,7 +50,7 @@ export default function ScreensaverSettingsDialog({
                 <div className="sa-tile-body">
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-[12px] font-extrabold text-[#0A2B6D]">{design.name}</p>
-                    <p className="truncate text-[10.5px] font-semibold text-[#4b6392]">{design.blurb}</p>
+                    <p className="truncate text-[10.5px] font-semibold text-[#274675]">{design.blurb}</p>
                   </div>
                   {active && (
                     <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#5A00D6] text-white">
@@ -64,7 +64,7 @@ export default function ScreensaverSettingsDialog({
         </div>
 
         <div className="mt-1 flex flex-wrap items-center justify-between gap-2">
-          <p className="text-[10.5px] font-semibold text-[#4b6392]">
+          <p className="text-[10.5px] font-semibold text-[#274675]">
             Saved automatically for your profile on this device.
           </p>
           <button
