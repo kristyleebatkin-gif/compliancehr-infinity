@@ -33,7 +33,7 @@ export default function TodayHeader({ user, theme, onToggleTheme, started, onSta
       <div className="flex items-center gap-2">
         <button type="button" onClick={onStart} className="t-btn t-btn-primary">
           <Play className="h-3.5 w-3.5" />
-          {started ? 'Workday started' : 'Start my workday'}
+          {started ? 'Day started' : 'Mark my day started'}
         </button>
         <Link to="/notifications" aria-label="Notifications" className="t-btn t-btn-ghost !px-2.5">
           <Bell className="h-4 w-4" />
