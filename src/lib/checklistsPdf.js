@@ -10,6 +10,8 @@ import {
 import { downloadPdfDocument } from '@/lib/documentDownloads';
 import { drawFormHeader, drawFieldRows, drawRegisterTable } from '@/lib/formDocumentStyles';
 import { ensurePdfSpace } from '@/lib/pdfPageLayout';
+import { isIncidentReportForm, drawIncidentFirstPageSignoff } from '@/components/documents/incidentPdfSignoff';
+import { drawManagementSignoff } from '@/components/documents/managementSignoffPdf';
 
 const BRAND = [49, 46, 129];
 const ACCENT = [37, 99, 235];
@@ -103,7 +105,14 @@ export function buildChecklistPdf({
     y += 34;
   };
 
-  y = drawFormHeader(doc, { title, code, docType, subtitle, neutralBranding: !useConfiguredBranding });
+  const incidentForm = isIncidentReportForm(title);
+  y = drawFormHeader(doc, { title, code, docType, subtitle, neutralBranding: !useConfiguredBranding, reserveFirstPageSignoff: incidentForm });
+  drawSectionHeading('Purpose', 24);
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor(...INK);
+  const purposeLines = doc.splitTextToSize(`Use this form to record information for ${title}.`, contentW - 12);
+  ensure(purposeLines.length * 12 + 12);
+  doc.text(purposeLines, margin + 6, y + 10);
+  y += purposeLines.length * 12 + 12;
   if (fields?.length) {
     drawSectionHeading('Form information', 90);
     y = drawFieldRows(doc, y, fields, {}, { interactive: true });
@@ -133,11 +142,16 @@ export function buildChecklistPdf({
     }
   }
 
+  drawSectionHeading('Review', 90);
+  y = drawFieldRows(doc, y, ['Reviewer name', 'Review date', 'Reviewer signature', 'Next review date'].map((label) => ({ label })), {}, { interactive: true });
+
   // Sign-off uses the same solid-outlined answer boxes.
   drawSectionHeading('Completion and authorisation', 90);
   y = drawFieldRows(doc, y, signoffFields.map((label, index) => ({ label, value: String(signoffValues[index] ?? '') })), {}, { interactive: true });
+  y = drawManagementSignoff(doc, y, {}, true);
 
   // Footer
+  if (incidentForm) drawIncidentFirstPageSignoff(doc, { addTextField });
   drawDocumentFooter(doc, {
     title,
     code,

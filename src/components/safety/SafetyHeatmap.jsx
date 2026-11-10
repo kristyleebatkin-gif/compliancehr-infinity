@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
 import { MapPin } from 'lucide-react';
+import TableTab from '@/components/common/TableTab';
 
 // Shift time buckets (24h), parsed from the incident's time_occurred
 const TIME_BUCKETS = [
@@ -78,6 +79,7 @@ export default function SafetyHeatmap() {
           </span>
         )}
       </div>
+      <TableTab label="Incident heatmap">
       {loading ? (
         <div className="flex items-center justify-center py-10">
           <div className="h-7 w-7 animate-spin rounded-full border-4 border-border border-t-foreground" />
@@ -129,6 +131,7 @@ export default function SafetyHeatmap() {
           </div>
         </>
       )}
+      </TableTab>
     </div>
   );
 }

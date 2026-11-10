@@ -45,7 +45,7 @@ const blankInv = { title: '', investigation_id: '', incident_id: '', investigato
 function Incidents({ profile, profileKind, embedded = false } = {}) {
   const [searchParams] = useSearchParams();
   const { toast } = useToast();
-  const { role } = useRole();
+  const { role, can } = useRole();
   const canReview = [ROLES.ADMIN, ROLES.COMPLIANCE, ROLES.TEAM_LEADER].includes(role);
   const [items, setItems] = useState([]);
   const [investigations, setInvestigations] = useState([]);
@@ -333,6 +333,7 @@ function Incidents({ profile, profileKind, embedded = false } = {}) {
             <Button size="sm"><Plus className="h-4 w-4 mr-1.5" /> New Incident</Button>
           </Link>
           {canReview && <Button size="sm" onClick={() => downloadIncidentReport(items)} disabled={loading || items.length === 0}><Download className="h-4 w-4 mr-1.5" /> Reports (PDF)</Button>}
+          {!embedded && can('risks') && <Button size="sm" variant="outline" asChild><Link to="/risk-chemical-dashboard"><ShieldAlert className="h-4 w-4" />Risks &amp; Chemicals Dashboard</Link></Button>}
         </>}
       >
       {embedded && <RegisterInsights module="incidents" />}
@@ -385,7 +386,7 @@ function Incidents({ profile, profileKind, embedded = false } = {}) {
             <Button
               size="sm"
               disabled={Boolean(escalatingId)}
-              className="h-7 border border-[#dc2626] bg-white text-[10px] font-black text-rose-900 hover:bg-rose-100"
+              className="h-auto min-h-9 max-w-full whitespace-normal border border-[#dc2626] bg-white text-xs font-black leading-snug text-rose-900 hover:bg-rose-100"
               onClick={() => {
                 const highIncidents = items.filter((i) => (i.requires_ndis_report || i.severity === 'Critical' || i.severity === 'High') && i.status !== 'Closed');
                 const target = highIncidents[0] || items[0];
@@ -675,7 +676,7 @@ function Incidents({ profile, profileKind, embedded = false } = {}) {
               <Field label="Findings"><TextArea value={invForm.findings} onChange={(e) => set('findings', e.target.value)} /></Field>
               <Field label="Recommendations"><TextArea value={invForm.recommendations} onChange={(e) => set('recommendations', e.target.value)} /></Field>
               <Field label="Corrective Actions"><TextArea value={invForm.corrective_actions} onChange={(e) => set('corrective_actions', e.target.value)} /></Field>
-              <div className="flex justify-end gap-2 pt-2">
+              <div className="flex flex-wrap justify-end gap-2 pt-2">
                 <button type="button" onClick={() => setShowInv(false)} className="rounded-lg border border-border px-4 py-2 text-sm font-medium hover:bg-muted">Cancel</button>
                 <button type="submit" disabled={savingInvestigation} className="rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white disabled:opacity-50">{savingInvestigation ? 'Saving...' : editingInvestigation ? 'Save Investigation' : 'Create Investigation'}</button>
               </div>

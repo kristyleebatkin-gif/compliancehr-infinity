@@ -7,7 +7,21 @@ import FloatingQuickActionBar from '@/components/landing/FloatingQuickActionBar'
 import DemoBookingModal from '@/components/landing/DemoBookingModal';
 import ObsidianSidebarRemote from '@/components/ObsidianSidebarRemote';
 import QuickAppBar from '@/components/QuickAppBar';
-import Dashboard from '@/pages/Dashboard';
+import LandingHero from '@/components/landing/LandingHero';
+import LandingLaunchVideosSection from '@/components/landing/LandingLaunchVideosSection';
+import LandingEvidenceStandardSection from '@/components/landing/LandingEvidenceStandardSection';
+import LandingRegisterEngineSection from '@/components/landing/LandingRegisterEngineSection';
+import LandingProductShowcase from '@/components/landing/LandingProductShowcase';
+import LandingSolutionSection from '@/components/landing/LandingSolutionSection';
+import LandingStatsSection from '@/components/landing/LandingStatsSection';
+import BenefitsSection from '@/components/landing/BenefitsSection';
+import LandingHowItWorks from '@/components/landing/LandingHowItWorks';
+import LandingTestimonialsSection from '@/components/landing/LandingTestimonialsSection';
+import PricingSection from '@/components/landing/PricingSection';
+import BlueprintPreviewSection from '@/components/landing/BlueprintPreviewSection';
+import LandingFaqSection from '@/components/landing/LandingFaqSection';
+import RemoteAccessStatusCard from '@/components/landing/RemoteAccessStatusCard';
+import LandingCTA from '@/components/landing/LandingCTA';
 
 export default function Landing() {
   const [demoModalOpen, setDemoModalOpen] = useState(false);
@@ -69,9 +83,22 @@ export default function Landing() {
 
         <QuickAppBar />
 
-        <main className="landing-main relative z-10 mx-auto w-full max-w-[1440px] px-3 py-2 sm:px-4 space-y-3 pb-4">
-          {/* Unified Executive Dashboard, Communication & Subscription Suite */}
-          <Dashboard />
+        <main className="landing-main relative z-10 mx-auto w-full max-w-[1440px] px-4 py-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-14 pb-20">
+          <LandingHero onBookDemo={openDemoModal} />
+          <LandingLaunchVideosSection />
+          <LandingEvidenceStandardSection />
+          <LandingRegisterEngineSection />
+          <LandingProductShowcase />
+          <LandingSolutionSection />
+          <LandingStatsSection />
+          <BenefitsSection />
+          <LandingHowItWorks />
+          <LandingTestimonialsSection />
+          <PricingSection onContactSales={openDemoModal} />
+          <BlueprintPreviewSection />
+          <LandingFaqSection />
+          <RemoteAccessStatusCard />
+          <LandingCTA onBookDemo={openDemoModal} />
         </main>
 
         {/* Blue Enterprise Technology & Regulatory Attestation Dashboard (Reduced by 25%) */}

@@ -1,6 +1,7 @@
 import { jsPDF } from 'jspdf';
 import { drawFormHeader, drawSectionHeading, drawFieldRows, drawSignatures } from '@/lib/formDocumentStyles';
 import { drawDocumentFooter } from '@/lib/companyBranding';
+import { drawManagementSignoff } from '@/components/documents/managementSignoffPdf';
 
 import { drawPdfParagraph, drawPdfBullets } from '@/lib/pdfFlowText';
 
@@ -98,6 +99,7 @@ export function downloadContractPdf(data, business = {}, completedBy = '') {
     completedAt: fmt(data.completed_date || new Date().toISOString().slice(0, 10)),
   });
 
+  y = drawManagementSignoff(doc, y);
   drawDocumentFooter(doc, { title: 'Employment Contract', code: 'HR-CON' });
   doc.save(`Employment Contract - ${data.employee_name || 'Employee'}.pdf`);
 }
@@ -141,6 +143,7 @@ export function downloadPositionDescriptionPdf(data, business = {}, completedBy 
     completedAt: fmt(data.acknowledged_date || new Date().toISOString().slice(0, 10)),
   });
 
+  y = drawManagementSignoff(doc, y);
   drawDocumentFooter(doc, { title: 'Position Description', code: 'HR-PD' });
   doc.save(`Position Description - ${data.employee_name || 'Employee'}.pdf`);
 }

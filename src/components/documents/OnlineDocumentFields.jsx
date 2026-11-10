@@ -33,13 +33,13 @@ export default function OnlineDocumentFields({ fields = [], answers = {}, onChan
         return (
           <div
             key={field.label}
-            className={`col-span-12 ${spans[span]} min-w-0 self-stretch overflow-hidden rounded-xl border border-sky-200 bg-white shadow-2xs transition hover:border-[#0072FF]`}
+            className={`col-span-12 ${spans[span]} min-w-0 self-stretch overflow-hidden rounded-xl border border-sky-300 bg-white shadow-2xs transition hover:border-[#0072FF]`}
           >
             {/* Clean Light Blue & Dark Blue Field Header (No Purple/Pink Gradient) */}
             <label
               id={`${id}-label`}
               htmlFor={field.options ? undefined : id}
-              className="block border-b border-sky-200 bg-[#F0F7FF] px-4 py-2.5 text-sm font-extrabold leading-relaxed text-[#0A2B6D]"
+              className="block border-b border-sky-300 bg-[#F0F7FF] px-4 py-2.5 text-sm font-extrabold leading-relaxed text-[#0A2B6D]"
             >
               <span className="text-[#0072FF] mr-1.5">Q{index + 1}.</span>
               {field.question}

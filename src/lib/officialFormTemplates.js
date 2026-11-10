@@ -1,7 +1,7 @@
 import { jsPDF } from 'jspdf';
 import { drawDocumentFooter, loadCompanyBranding } from '@/lib/companyBranding';
 import {
-  drawFormHeader, drawFormNotice, drawFieldRows, drawRegisterTable, drawDeclaration, drawSectionHeading,
+  drawFormHeader, drawFormNotice, drawFieldRows, drawRegisterTable, drawDeclaration, drawSectionHeading, drawReviewSection,
 } from '@/lib/formDocumentStyles';
 
 /**
@@ -16,6 +16,8 @@ import {
 import { drawPdfParagraph as paragraph, drawPdfBullets as bulletList } from '@/lib/pdfFlowText';
 import { ensurePdfSpace, PDF_MARGIN } from '@/lib/pdfPageLayout';
 import { drawFormBreather } from '@/lib/pdfFormBreathers';
+import { isIncidentReportForm, drawIncidentFirstPageSignoff } from '@/components/documents/incidentPdfSignoff';
+import { drawManagementSignoff } from '@/components/documents/managementSignoffPdf';
 
 function proseSections(doc, y, sections) {
   for (let s = 0; s < sections.length; s++) {
@@ -244,16 +246,18 @@ export async function buildBrandedTemplatePdf({
   rows = 12,
   declaration = true,
   signoff = [['Participant / Representative (Signature)', 'Date']],
-  values = {}, tableValues = [], completedBy = '', completedAt = '', signatureDataUrl = '',
+  values = {}, tableValues = [], completedBy = '', completedAt = '', signatureDataUrl = '', signerName = '', review = {}, managementSignoff = {},
 }) {
   await loadCompanyBranding().catch(() => {});
   const doc = new jsPDF({ unit: 'pt', format: 'a4', orientation: columns ? 'landscape' : 'portrait' });
 
-  let y = drawFormHeader(doc, { title, code, docType, subtitle, completedBy });
-  y = drawFormNotice(doc, y, { purpose });
+  const incidentForm = isIncidentReportForm(title);
+  let y = drawFormHeader(doc, { title, code, docType, subtitle, completedBy, reserveFirstPageSignoff: incidentForm });
+  y = drawFormNotice(doc, y, { purpose: purpose || `Use this form to record information for ${title}.` });
   if (sections.length) y = proseSections(doc, y, sections);
   if (fields.length) y = drawFieldRows(doc, y, fields, values);
   if (columns?.length) y = drawRegisterTable(doc, y, columns, { rows, values: tableValues });
+  y = drawReviewSection(doc, y, review);
   if (declaration) y = drawDeclaration(doc, y);
   if (signatureDataUrl?.startsWith('data:image/')) {
     y = ensurePdfSpace(doc, y, 120);
@@ -265,7 +269,9 @@ export async function buildBrandedTemplatePdf({
   if (completedBy) {
     y = drawFieldRows(doc, y, [{ label: 'Completed by' }, { label: 'Completed on' }], { 'Completed by': completedBy, 'Completed on': completedAt });
   } else y = signatureRows(doc, y, signoff);
+  y = drawManagementSignoff(doc, y, managementSignoff);
 
+  if (incidentForm) drawIncidentFirstPageSignoff(doc, { name: signerName, date: signatureDataUrl ? completedAt : '', signature: signatureDataUrl });
   drawDocumentFooter(doc, { title, code });
   return doc;
 }

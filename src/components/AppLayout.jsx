@@ -288,7 +288,7 @@ export default function AppLayout() {
               </div>
             </div>
           ) : (
-            <div className="bg-workspace-navy px-2 pt-1 pb-0.5 sm:px-4 lg:px-6 transition-all duration-200">
+            <div className="bg-white px-2 pt-1 pb-0.5 sm:px-4 lg:px-6 transition-all duration-200">
               <div className="mx-auto flex max-w-[1440px] flex-col items-center justify-end gap-0.5">
                 <div className="grid w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-1.5">
                   <div className="flex min-w-0 flex-col items-end gap-1">
@@ -301,36 +301,40 @@ export default function AppLayout() {
                     </button>
                     <Link
                       to="/login"
-                      className="inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/20 px-2.5 text-[10px] font-extrabold text-workspace-navy shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90"
+                      className="inline-flex md:hidden lg:inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/20 px-2.5 text-[10px] font-extrabold text-workspace-navy shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90"
                       style={{ backgroundColor: '#00C6FF' }}
                     >
                       Sign In
                     </Link>
                   </div>
                   <Link to="/dashboard" className="inline-flex min-w-0 flex-col items-center text-center transition">
-                    <BrandLogoLockup size="md" theme="dark" showSlogan={false} />
+                    <BrandLogoLockup size="md" theme="light" lightBackground showSlogan={false} />
                   </Link>
                   <div className="flex min-w-0 flex-wrap items-center justify-start gap-1">
                     <Link
                       to="/?demo=book"
-                      className="inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-[#00C6FF]/50 px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(0,114,255,0.55)] transition hover:opacity-90"
+                      className="inline-flex md:hidden lg:inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-[#00C6FF]/50 px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(0,114,255,0.55)] transition hover:opacity-90"
                       style={{ backgroundColor: '#0072FF' }}
                     >
                       Book Demo
                     </Link>
                     <Link
                       to="/register"
-                      className="inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/25 px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(255,46,154,0.55)] transition hover:opacity-90"
+                      className="inline-flex md:hidden lg:inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/25 px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(255,46,154,0.55)] transition hover:opacity-90"
                       style={{ backgroundColor: '#FF2E9A' }}
                     >
                       Start Free
                     </Link>
                   </div>
                 </div>
-                <BrandSlogan size="md" className="text-[11px] sm:text-sm md:text-base tracking-tight" />
+                <BrandSlogan size="md" lightBackground className="text-[11px] sm:text-sm md:text-base tracking-tight" />
               </div>
             </div>
           )}
+
+          <div className="max-h-[40vh] overflow-y-auto">
+            <QuickAppBar workspaceView={workspaceView} onSwitchWorkspaceView={switchWorkspaceView} />
+          </div>
 
           {/* Continuous App-Design Gradient Divider Line aligned with remote */}
           <div
@@ -349,7 +353,6 @@ export default function AppLayout() {
             background: 'linear-gradient(165deg, #0A2B6D 0%, #0A2B6D 55%, #5A00D6 100%)',
           }}
         >
-          <QuickAppBar workspaceView={workspaceView} onSwitchWorkspaceView={switchWorkspaceView} />
           <div className={location.pathname === '/staff' || location.pathname.startsWith('/staff/') ? 'mx-auto max-w-[1440px] px-3' : 'mx-auto max-w-[1440px] px-3 pt-2'}>
             <PendingApprovalNotice />
           </div>

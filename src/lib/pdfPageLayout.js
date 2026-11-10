@@ -3,7 +3,7 @@ import { titleCase } from '@/lib/formQuestionModel';
 
 const layouts = new WeakMap();
 export const PDF_MARGIN = 40;
-export const pdfContentBottom = (doc) => doc.internal.pageSize.getHeight() - 70;
+export const pdfContentBottom = (doc) => doc.internal.pageSize.getHeight() - 70 - (layouts.get(doc)?.reserveFirstPageSignoff && doc.internal.getCurrentPageInfo().pageNumber === 1 ? 76 : 0);
 export const pdfContentTop = (doc) => layouts.get(doc)?.top || 54;
 
 function paintHeader(doc, options) {
@@ -48,7 +48,7 @@ function paintHeader(doc, options) {
 }
 
 export function registerDocumentHeader(doc, options) {
-  const layout = { top: 54 };
+  const layout = { top: 54, reserveFirstPageSignoff: Boolean(options.reserveFirstPageSignoff) };
   layouts.set(doc, layout);
   layout.top = paintHeader(doc, options);
   doc.internal.events.subscribe('addPage', () => {

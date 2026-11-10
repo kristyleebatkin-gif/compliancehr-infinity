@@ -39,6 +39,7 @@ import IssueSubmitPortal from '@/pages/IssueSubmitPortal';
 import FeedbackSubmitPortal from '@/pages/FeedbackSubmitPortal';
 import Certificates from '@/pages/Certificates';
 import Risks from '@/pages/Risks';
+import RiskChemicalDashboard from '@/pages/RiskChemicalDashboard';
 
 import Feedback from '@/pages/Feedback';
 import Checklists from '@/pages/Checklists';
@@ -176,6 +177,7 @@ const AuthenticatedApp = () => {
           <Route path="/participants" element={<LegacyProfileRedirect kind="participant" />} />
           <Route path="/participants/:id" element={<LegacyProfileRedirect kind="participant" />} />
           <Route path="/risks" element={<RoleGate navKey="risks"><Risks /></RoleGate>} />
+          <Route path="/risk-chemical-dashboard" element={<RoleGate navKey="risks"><RiskChemicalDashboard /></RoleGate>} />
 
           <Route path="/feedback" element={<RoleGate navKey="feedback"><Feedback /></RoleGate>} />
           <Route path="/checklists" element={<RoleGate navKey="checklists"><Checklists /></RoleGate>} />

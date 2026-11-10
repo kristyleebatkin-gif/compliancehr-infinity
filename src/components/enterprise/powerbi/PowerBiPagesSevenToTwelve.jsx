@@ -188,7 +188,7 @@ export default function PowerBiPagesSevenToTwelve({ activePage }) {
       <div className="space-y-4" style={{ fontFamily: "'Segoe UI', sans-serif" }}>
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           {PAGE7_CAPA_DATA.kpis.map((k) => (
-            <div key={k.label} className="rounded-xl border p-3.5" style={{ backgroundColor: '#1E293B', borderColor: 'rgba(57,230,255,0.22)' }}>
+            <div key={k.label} className="rounded-xl border p-3.5" style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.22)' }}>
               <div className="text-[12px] text-slate-300">{k.label}</div>
               <div className="mt-1 text-[32px] font-bold leading-none" style={{ color: k.color }}>{k.value}</div>
               <div className="mt-1 text-[11px] text-slate-400">{k.sub}</div>
@@ -198,7 +198,7 @@ export default function PowerBiPagesSevenToTwelve({ activePage }) {
 
         <div
           className="rounded-xl border p-4"
-          style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.24)' }}
+          style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.24)' }}
         >
           <div className="mb-3 text-[16px] font-semibold text-white">
             Corrective Actions Heatmap: Severity × Days Open (Age Buckets: 0-30 · 31-60 · 61-90 · 90+)
@@ -224,7 +224,7 @@ export default function PowerBiPagesSevenToTwelve({ activePage }) {
                           <span
                             className="inline-block min-w-[44px] rounded-lg py-1.5 text-sm font-black"
                             style={{
-                              backgroundColor: val > 0 ? `${row.color}33` : '#1E293B',
+                              backgroundColor: val > 0 ? `${row.color}33` : 'rgba(22, 70, 138, 0.8)',
                               color: val > 0 ? row.color : '#64748B',
                               border: val > 0 ? `1px solid ${row.color}` : '1px solid transparent',
                             }}
@@ -249,7 +249,7 @@ export default function PowerBiPagesSevenToTwelve({ activePage }) {
     return (
       <div className="space-y-4" style={{ fontFamily: "'Segoe UI', sans-serif" }}>
         <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-          <div className="rounded-xl border p-4" style={{ backgroundColor: '#1E293B', borderColor: '#22C55E' }}>
+          <div className="rounded-xl border p-4" style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)', borderColor: '#22C55E' }}>
             <div className="text-[12px] text-slate-300">ROI Card</div>
             <div className="mt-1 text-[32px] font-bold" style={{ color: '#22C55E' }}>
               ROI = {PAGE8_BENEFITS_WATERFALL.roi}
@@ -257,7 +257,7 @@ export default function PowerBiPagesSevenToTwelve({ activePage }) {
             <div className="mt-1 text-[11px] text-slate-300">Validated Enterprise Return on Investment</div>
           </div>
 
-          <div className="rounded-xl border p-4" style={{ backgroundColor: '#1E293B', borderColor: '#39E6FF' }}>
+          <div className="rounded-xl border p-4" style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)', borderColor: '#39E6FF' }}>
             <div className="text-[12px] text-slate-300">Payback Card</div>
             <div className="mt-1 text-[32px] font-bold" style={{ color: '#39E6FF' }}>
               {PAGE8_BENEFITS_WATERFALL.payback}
@@ -276,7 +276,7 @@ export default function PowerBiPagesSevenToTwelve({ activePage }) {
 
         <div
           className="rounded-xl border p-4"
-          style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.24)' }}
+          style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.24)' }}
         >
           <div className="mb-3 text-[16px] font-semibold text-white">
             Benefits Waterfall (Investment → Executive Productivity → Workforce Optimisation → Operational Efficiency → Risk Avoidance → Net Benefit)
@@ -286,7 +286,7 @@ export default function PowerBiPagesSevenToTwelve({ activePage }) {
               <div
                 key={s.step}
                 className="flex flex-col justify-between rounded-xl border p-3.5"
-                style={{ backgroundColor: '#1E293B', borderColor: s.color }}
+                style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)', borderColor: s.color }}
               >
                 <div>
                   <div className="text-[10px] font-bold uppercase" style={{ color: '#39E6FF' }}>
@@ -311,7 +311,7 @@ export default function PowerBiPagesSevenToTwelve({ activePage }) {
       <div className="space-y-4" style={{ fontFamily: "'Segoe UI', sans-serif" }}>
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           {PAGE9_RAID_DATA.kpis.map((k) => (
-            <div key={k.measure} className="rounded-xl border p-3.5" style={{ backgroundColor: '#1E293B', borderColor: k.color }}>
+            <div key={k.measure} className="rounded-xl border p-3.5" style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)', borderColor: k.color }}>
               <div className="text-[12px] text-slate-300">{k.measure}</div>
               <div className="mt-1 text-[32px] font-bold leading-none" style={{ color: k.color }}>{k.value}</div>
             </div>
@@ -319,11 +319,11 @@ export default function PowerBiPagesSevenToTwelve({ activePage }) {
         </div>
 
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
-          <div className="rounded-xl border p-4 lg:col-span-4" style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.24)' }}>
+          <div className="rounded-xl border p-4 lg:col-span-4" style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.24)' }}>
             <div className="mb-2 text-[16px] font-semibold text-white">RAID Trend</div>
             <div className="space-y-2">
               {PAGE9_RAID_DATA.trend.map((t) => (
-                <div key={t.month} className="flex items-center justify-between rounded-lg px-3 py-2 text-[12px]" style={{ backgroundColor: '#1E293B' }}>
+                <div key={t.month} className="flex items-center justify-between rounded-lg px-3 py-2 text-[12px]" style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)' }}>
                   <span className="font-bold text-white">{t.month}</span>
                   <span style={{ color: '#EF4444' }}>R:{t.risks}</span>
                   <span style={{ color: '#39E6FF' }}>A:{t.assumptions}</span>
@@ -334,7 +334,7 @@ export default function PowerBiPagesSevenToTwelve({ activePage }) {
             </div>
           </div>
 
-          <div className="rounded-xl border p-4 lg:col-span-4" style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.24)' }}>
+          <div className="rounded-xl border p-4 lg:col-span-4" style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.24)' }}>
             <div className="mb-2 text-[16px] font-semibold text-white">Issues by Age (Bar Chart)</div>
             <div className="space-y-2.5">
               {PAGE9_RAID_DATA.issuesByAge.map((b) => (
@@ -343,7 +343,7 @@ export default function PowerBiPagesSevenToTwelve({ activePage }) {
                     <span>{b.bucket}</span>
                     <span style={{ color: '#39E6FF' }}>{b.count} Issues</span>
                   </div>
-                  <div className="h-2.5 w-full rounded-full bg-slate-900">
+                  <div className="h-2.5 w-full rounded-full bg-workspace-navy">
                     <div className="h-full rounded-full" style={{ width: `${(b.count / 8) * 100}%`, backgroundColor: '#39E6FF' }} />
                   </div>
                 </div>
@@ -351,7 +351,7 @@ export default function PowerBiPagesSevenToTwelve({ activePage }) {
             </div>
           </div>
 
-          <div className="rounded-xl border p-4 lg:col-span-4" style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.24)' }}>
+          <div className="rounded-xl border p-4 lg:col-span-4" style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.24)' }}>
             <div className="mb-2 text-[16px] font-semibold text-white">Risks by Severity (17 Total)</div>
             <div className="space-y-2.5">
               {PAGE9_RAID_DATA.risksBySeverity.map((s) => (
@@ -360,7 +360,7 @@ export default function PowerBiPagesSevenToTwelve({ activePage }) {
                     <span>{s.severity}</span>
                     <span style={{ color: s.color }}>{s.count}</span>
                   </div>
-                  <div className="h-2.5 w-full rounded-full bg-slate-900">
+                  <div className="h-2.5 w-full rounded-full bg-workspace-navy">
                     <div className="h-full rounded-full" style={{ width: `${(s.count / 17) * 100}%`, backgroundColor: s.color }} />
                   </div>
                 </div>
@@ -378,7 +378,7 @@ export default function PowerBiPagesSevenToTwelve({ activePage }) {
       <div className="space-y-4" style={{ fontFamily: "'Segoe UI', sans-serif" }}>
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           {PAGE10_EXECUTIVE_ACTIONS.kpis.map((k) => (
-            <div key={k.label} className="rounded-xl border p-3.5" style={{ backgroundColor: '#1E293B', borderColor: k.color }}>
+            <div key={k.label} className="rounded-xl border p-3.5" style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)', borderColor: k.color }}>
               <div className="text-[12px] text-slate-300">{k.label}</div>
               <div className="mt-1 text-[32px] font-bold leading-none" style={{ color: k.color }}>{k.value}</div>
             </div>
@@ -386,7 +386,7 @@ export default function PowerBiPagesSevenToTwelve({ activePage }) {
         </div>
 
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
-          <div className="rounded-xl border p-4 lg:col-span-8" style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.24)' }}>
+          <div className="rounded-xl border p-4 lg:col-span-8" style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.24)' }}>
             <div className="mb-2 text-[16px] font-semibold text-white">
               Executive Action Table (Click a row to drill through)
             </div>
@@ -430,7 +430,7 @@ export default function PowerBiPagesSevenToTwelve({ activePage }) {
             </div>
           </div>
 
-          <div className="rounded-xl border p-4 lg:col-span-4" style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.24)' }}>
+          <div className="rounded-xl border p-4 lg:col-span-4" style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.24)' }}>
             <div className="text-[16px] font-semibold text-white">
               Drill-Through: Action → Owner → Committee → Board Decision
             </div>
@@ -441,7 +441,7 @@ export default function PowerBiPagesSevenToTwelve({ activePage }) {
                 { label: '↓ Committee', val: selectedAction.committee, color: '#FBBF24' },
                 { label: '↓ Board Decision', val: selectedAction.boardDecision, color: '#39E6FF' },
               ].map((step) => (
-                <div key={step.label} className="rounded-lg border p-2.5" style={{ backgroundColor: '#1E293B', borderColor: step.color }}>
+                <div key={step.label} className="rounded-lg border p-2.5" style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)', borderColor: step.color }}>
                   <div className="text-[10px] font-bold uppercase" style={{ color: step.color }}>{step.label}</div>
                   <div className="text-xs font-bold text-white">{step.val}</div>
                 </div>
@@ -480,7 +480,7 @@ export default function PowerBiPagesSevenToTwelve({ activePage }) {
               sub: 'Recorded in GovernanceObject & AuditLog',
             },
           ].map((c) => (
-            <div key={c.label} className="rounded-xl border p-3.5" style={{ backgroundColor: '#1E293B', borderColor: c.color }}>
+            <div key={c.label} className="rounded-xl border p-3.5" style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)', borderColor: c.color }}>
               <div className="text-[12px] text-slate-300">{c.label}</div>
               <div className="mt-1 text-[30px] font-bold leading-none" style={{ color: c.color }}>{c.count}</div>
               <div className="mt-1 text-[10px] text-slate-400">{c.sub}</div>
@@ -489,7 +489,7 @@ export default function PowerBiPagesSevenToTwelve({ activePage }) {
         </div>
 
         {/* Decision Register with Digital Sign-Off Controls */}
-        <div className="rounded-xl border p-4" style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.24)' }}>
+        <div className="rounded-xl border p-4" style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.24)' }}>
           <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
             <div>
               <div className="text-[16px] font-semibold text-white">
@@ -541,7 +541,7 @@ export default function PowerBiPagesSevenToTwelve({ activePage }) {
                       </td>
                       <td className="py-3 pr-3">
                         {isSigned ? (
-                          <div className="rounded-lg border px-2.5 py-1.5" style={{ backgroundColor: '#1E293B', borderColor: 'rgba(34,197,94,0.35)' }}>
+                          <div className="rounded-lg border px-2.5 py-1.5" style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)', borderColor: 'rgba(34,197,94,0.35)' }}>
                             <div className="flex items-center gap-1 text-[11px] font-bold" style={{ color: '#22C55E' }}>
                               <ShieldCheck className="h-3.5 w-3.5 shrink-0" />
                               Digitally Signed · {d.signatureHash}
@@ -574,7 +574,7 @@ export default function PowerBiPagesSevenToTwelve({ activePage }) {
                               onClick={() => openSignOffModal(d, st)}
                               className="rounded px-2 py-1 text-[10px] font-bold transition"
                               style={{
-                                backgroundColor: d.status === st ? '#39E6FF' : '#1E293B',
+                                backgroundColor: d.status === st ? '#39E6FF' : 'rgba(22, 70, 138, 0.8)',
                                 color: d.status === st ? '#081018' : '#FFFFFF',
                               }}
                             >
@@ -586,7 +586,7 @@ export default function PowerBiPagesSevenToTwelve({ activePage }) {
                             onClick={() => openSignOffModal(d, d.status === 'Open' ? 'Approved' : d.status)}
                             className="inline-flex items-center gap-1 rounded border px-2.5 py-1 text-[10px] font-black transition"
                             style={{
-                              backgroundColor: isSigned ? '#1E293B' : '#22C55E',
+                              backgroundColor: isSigned ? 'rgba(22, 70, 138, 0.8)' : '#22C55E',
                               color: isSigned ? '#39E6FF' : '#081018',
                               borderColor: isSigned ? '#39E6FF' : '#22C55E',
                             }}
@@ -622,7 +622,7 @@ export default function PowerBiPagesSevenToTwelve({ activePage }) {
     <div className="space-y-4" style={{ fontFamily: "'Segoe UI', sans-serif" }}>
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         {PAGE12_FABRIC_AI_DATA.kpis.map((k) => (
-          <div key={k.label} className="rounded-xl border p-3.5" style={{ backgroundColor: '#1E293B', borderColor: k.color }}>
+          <div key={k.label} className="rounded-xl border p-3.5" style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)', borderColor: k.color }}>
             <div className="text-[12px] text-slate-300">{k.label}</div>
             <div className="mt-1 text-[32px] font-bold leading-none" style={{ color: k.color }}>{k.value}</div>
             <div className="mt-1 text-[11px] text-slate-400">Target: {k.target}</div>
@@ -630,7 +630,7 @@ export default function PowerBiPagesSevenToTwelve({ activePage }) {
         ))}
       </div>
 
-      <div className="rounded-xl border p-4" style={{ backgroundColor: '#162235', borderColor: 'rgba(57,230,255,0.24)' }}>
+      <div className="rounded-xl border p-4" style={{ backgroundColor: 'rgba(10, 43, 109, 0.82)', backdropFilter: 'blur(12px)', borderColor: 'rgba(57,230,255,0.24)' }}>
         <div className="mb-3 text-[16px] font-semibold text-white">
           Microsoft Fabric End-to-End Architecture Flow
         </div>
@@ -639,7 +639,7 @@ export default function PowerBiPagesSevenToTwelve({ activePage }) {
             <div
               key={node.step}
               className="flex flex-col justify-between rounded-xl border p-3"
-              style={{ backgroundColor: '#1E293B', borderColor: '#39E6FF' }}
+              style={{ backgroundColor: 'rgba(22, 70, 138, 0.8)', backdropFilter: 'blur(12px)', borderColor: '#39E6FF' }}
             >
               <div>
                 <div className="text-[10px] font-bold uppercase" style={{ color: '#39E6FF' }}>

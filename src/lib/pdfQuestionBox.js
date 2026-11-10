@@ -18,7 +18,7 @@ export function questionMetrics(doc, field, value, width) {
 export function paintQuestionBox(doc, field, value, x, y, width, metrics, addTextField, interactive) {
   const { labelH, height, helpH, labels, lines } = metrics;
   doc.setFillColor(240, 247, 255); doc.roundedRect(x + 2, y + 3, width, height, 5, 5, 'F');
-  doc.setFillColor(255); doc.setDrawColor(0, 114, 255); doc.setLineWidth(0.8);
+  doc.setFillColor(255); doc.setDrawColor(10, 43, 109); doc.setLineWidth(0.8);
   doc.roundedRect(x, y, width, height, 5, 5, 'FD');
   doc.setFillColor(10, 43, 109); doc.roundedRect(x, y, width, labelH, 5, 5, 'F');
   doc.rect(x, y + labelH - 5, width, 5, 'F');

@@ -10,6 +10,7 @@ import { buildStaffAutofilledAnswers } from '@/lib/staffAutofill';
 import { downloadFilledFormPdf } from '@/lib/participantFormPdf';
 import { routeDocument } from '@/lib/documentRouting';
 import OnlineDocumentFields from '@/components/documents/OnlineDocumentFields';
+import ManagementSignoffSection from '@/components/documents/ManagementSignoffSection';
 import { loadEmployeeForm, syncEmployeeRecord } from '@/lib/employeeRecordBridge';
 
 export default function StaffFillableForms({ staff }) {
@@ -84,6 +85,7 @@ export default function StaffFillableForms({ staff }) {
       subtitle: `${definition.key} - ${staff.full_name}`,
       fields: definition.fields,
       values: answers,
+      managementSignoff: answers.__managementSignoff,
       completedBy: '',
     });
   };
@@ -144,6 +146,7 @@ export default function StaffFillableForms({ staff }) {
       ) : (
         <div className="mt-5">
           <OnlineDocumentFields fields={definition.fields} answers={answers} onChange={(label, value) => setAnswers((current) => ({ ...current, [label]: value }))} disabled={saving} />
+          <ManagementSignoffSection value={answers.__managementSignoff} onChange={(signoff) => setAnswers((current) => ({ ...current, __managementSignoff: signoff }))} disabled={saving} />
         </div>
       )}
     </div>

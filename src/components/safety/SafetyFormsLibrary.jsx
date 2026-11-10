@@ -57,8 +57,8 @@ export default function SafetyFormsLibrary({ types = SAFETY_DOCUMENTS.map((docum
           const completed = documents.filter((document) => document.document_type === form.type);
           return (
             <div key={form.type} className="rounded-xl border border-border/60 p-3">
-              <div className="flex items-start justify-between gap-2">
-                <div><div className="text-sm font-semibold">{form.type}</div><div className="text-xs font-medium text-brand">{form.code}</div></div>
+              <div className="flex flex-wrap items-start justify-between gap-2">
+                <div className="min-w-0"><div className="text-sm font-semibold">{form.type}</div><div className="text-xs font-medium text-brand">{form.code}</div></div>
                 <button onClick={() => downloadSafetyDocument(form)} className="flex items-center gap-1 rounded-lg border border-border px-2.5 py-1.5 text-xs font-semibold hover:bg-muted"><Download className="h-3.5 w-3.5" />Fillable form</button>
               </div>
               <label className="mt-3 flex cursor-pointer items-center justify-center gap-1.5 rounded-lg bg-brand/10 px-3 py-2 text-xs font-semibold text-brand hover:bg-brand/15">

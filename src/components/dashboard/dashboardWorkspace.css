@@ -1,6 +1,6 @@
-/* Keep text legible on light metric cards inside dark executive panels. */
+/* Keep text legible on the executive glass cards. */
 .app-readable .executive-dashboard-metrics .executive-metric-card :is(h3, p) {
-  color: hsl(var(--card-foreground)) !important;
+  color: hsl(var(--header-foreground)) !important;
 }
 
 /* Shared breathing room for major dashboard surfaces, not small metric tiles. */

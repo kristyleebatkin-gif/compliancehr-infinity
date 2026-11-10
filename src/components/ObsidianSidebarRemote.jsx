@@ -415,13 +415,13 @@ export default function ObsidianSidebarRemote({
       >
         <div className="h-1.5 w-full shrink-0" style={{ background: BRAND_GRADIENT }} />
 
-        <div className="flex shrink-0 flex-col items-center justify-end gap-1 bg-[#0A2B6D]/90 px-1.5 pt-1 pb-1 text-center">
+        <div className="flex shrink-0 flex-col items-center justify-end gap-1 bg-white px-1.5 pt-1 pb-1 text-center">
           <Link
             to="/dashboard"
             aria-label="ComplianceHR Infinity Home"
             className="flex w-full items-center justify-center"
           >
-            <BrandLogoLockup size="xs" theme="dark" showSlogan compactSlogan className="w-full" />
+            <BrandLogoLockup size="xs" theme="light" lightBackground showSlogan compactSlogan className="w-full" />
           </Link>
 
           {/* Remote Control Mode Switcher (Blue, Purple, Pink with White Writing) */}

@@ -21,6 +21,7 @@ import {
 } from '@/lib/careSphereBoardPackExporter';
 import PowerBiPagesOneToSix from '@/components/enterprise/powerbi/PowerBiPagesOneToSix';
 import PowerBiPagesSevenToTwelve from '@/components/enterprise/powerbi/PowerBiPagesSevenToTwelve';
+import '@/components/executive/executiveGlass.css';
 
 const ICON_MAP = {
   shield: Shield,
@@ -112,13 +113,12 @@ export default function CareSpherePowerBiCommandCentre() {
     <section
       ref={containerRef}
       aria-label="CareSphere Power BI Executive Command Centre (12-Page Suite)"
-      className={`preserve-island-theme border shadow-2xl transition-all ${
+      className={`preserve-island-theme executive-glass-surface border shadow-2xl transition-all ${
         isPresentationMode
           ? 'fixed inset-0 z-[100] flex flex-col overflow-y-auto rounded-none p-2 sm:p-4'
           : 'overflow-hidden rounded-2xl'
       }`}
       style={{
-        backgroundColor: '#0A2B6D',
         borderColor: '#39E6FF',
         color: '#FFFFFF',
         fontFamily: "'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif",
@@ -134,7 +134,7 @@ export default function CareSpherePowerBiCommandCentre() {
       {/* Top Power BI Widescreen Header Bar: Concise Text + All Action & Export Buttons on One Single Line */}
       <div
         className="space-y-1.5 border-b px-4 py-2.5"
-        style={{ backgroundColor: '#16468A', borderColor: 'rgba(57,230,255,0.28)' }}
+        style={{ backgroundColor: 'rgba(22,70,138,0.72)', borderColor: 'rgba(57,230,255,0.28)', backdropFilter: 'blur(12px)' }}
       >
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h1 className="text-base sm:text-lg font-extrabold leading-snug text-white break-words">
@@ -250,7 +250,7 @@ export default function CareSpherePowerBiCommandCentre() {
         <nav
           aria-label="Power BI 12-Page Navigation Menu"
           className="border-b p-2.5 lg:col-span-3 xl:col-span-2 lg:border-b-0 lg:border-r"
-          style={{ backgroundColor: '#16468A', borderColor: 'rgba(57,230,255,0.22)' }}
+          style={{ backgroundColor: 'rgba(22,70,138,0.72)', borderColor: 'rgba(57,230,255,0.22)', backdropFilter: 'blur(12px)' }}
         >
           <div className="mb-2 px-1 text-[10px] font-bold uppercase tracking-wider" style={{ color: '#39E6FF' }}>
             Power BI Report Pages (12)
@@ -285,7 +285,7 @@ export default function CareSpherePowerBiCommandCentre() {
         </nav>
 
         {/* Right Widescreen Report Canvas */}
-        <div className="relative p-4 lg:col-span-9 xl:col-span-10" style={{ backgroundColor: '#0A2B6D' }}>
+        <div className="relative p-4 lg:col-span-9 xl:col-span-10">
           {currentPageMeta.pageNum <= 6 ? (
             <PowerBiPagesOneToSix
               activePage={activePage}
@@ -299,7 +299,7 @@ export default function CareSpherePowerBiCommandCentre() {
           {showSpeakerNotes && (
             <aside
               aria-label="Board Meeting Speaker Notes Overlay"
-              className="mt-4 rounded-xl border p-4 shadow-2xl"
+              className="mt-4 rounded-xl border p-4 shadow-2xl backdrop-blur-md"
               style={{
                 backgroundColor: 'rgba(10, 43, 109, 0.96)',
                 borderColor: '#39E6FF',
@@ -462,7 +462,7 @@ export default function CareSpherePowerBiCommandCentre() {
       {/* Concise 2-3 Line Constitutional Summary Footer */}
       <div
         className="border-t px-4 py-2 text-[11px]"
-        style={{ backgroundColor: '#16468A', borderColor: 'rgba(57,230,255,0.28)' }}
+        style={{ backgroundColor: 'rgba(22,70,138,0.72)', borderColor: 'rgba(57,230,255,0.28)', backdropFilter: 'blur(12px)' }}
       >
         <p className="font-bold leading-snug text-white break-words">
           {CONSTITUTIONAL_PRINCIPLE} — {MANDATORY_OUTPUT_PILLARS.join(' · ')}

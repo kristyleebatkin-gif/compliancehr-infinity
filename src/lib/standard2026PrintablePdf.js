@@ -79,7 +79,7 @@ function renderTemplatePage(doc, tpl, orgInfo, blankMode = false, pageIndex = 1,
     const cellX = M + col * colW;
     const cellY = y + row * rowH;
 
-    doc.setDrawColor(186, 230, 253);
+    doc.setDrawColor(115, 165, 205);
     doc.setFillColor(255, 255, 255);
     doc.rect(cellX, cellY, colW, rowH, 'FD');
 
@@ -92,7 +92,7 @@ function renderTemplatePage(doc, tpl, orgInfo, blankMode = false, pageIndex = 1,
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(7.2);
     if (blankMode) {
-      doc.setDrawColor(186, 230, 253);
+      doc.setDrawColor(115, 165, 205);
       doc.line(cellX + 2, cellY + 8.5, cellX + colW - 3, cellY + 8.5);
     } else {
       const val = String(field.value ?? field.sample ?? '');
@@ -113,8 +113,9 @@ function renderTemplatePage(doc, tpl, orgInfo, blankMode = false, pageIndex = 1,
 
   // Table subheader
   doc.setFillColor(240, 247, 255);
-  doc.setDrawColor(186, 230, 253);
+  doc.setDrawColor(115, 165, 205);
   doc.rect(M, y, contentW, 5, 'FD');
+  [14, 116, 150].forEach((offset) => doc.line(M + offset, y, M + offset, y + 5));
   doc.setTextColor(10, 43, 109);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(6.2);
@@ -127,8 +128,9 @@ function renderTemplatePage(doc, tpl, orgInfo, blankMode = false, pageIndex = 1,
   const cpRowH = 7.8;
   tpl.auditCheckpoints.forEach((cp, idx) => {
     doc.setFillColor(idx % 2 === 0 ? 255 : 240, idx % 2 === 0 ? 255 : 247, 255);
-    doc.setDrawColor(186, 230, 253);
+    doc.setDrawColor(115, 165, 205);
     doc.rect(M, y, contentW, cpRowH, 'FD');
+    [14, 116, 150].forEach((offset) => doc.line(M + offset, y, M + offset, y + cpRowH));
 
     doc.setTextColor(0, 114, 255);
     doc.setFont('helvetica', 'bold');
@@ -171,7 +173,7 @@ function renderTemplatePage(doc, tpl, orgInfo, blankMode = false, pageIndex = 1,
 
     const boxH = 26;
     doc.setFillColor(255, 255, 255);
-    doc.setDrawColor(186, 230, 253);
+    doc.setDrawColor(115, 165, 205);
     doc.rect(M, y, contentW, boxH, 'FD');
 
     doc.setTextColor(0, 114, 255);
@@ -196,6 +198,9 @@ function renderTemplatePage(doc, tpl, orgInfo, blankMode = false, pageIndex = 1,
     y += boxH + 3;
   });
 
+  // Place the incident sign-off at the bottom of its first printed page.
+  if (tpl.id === 'DOC-SAF-2026-01') y = H - M - 29.2;
+
   // Section 5: Mandatory Dual-Signature & Audit Verification Block
   doc.setFillColor(10, 43, 109);
   doc.rect(M, y, contentW, 5.2, 'F');
@@ -209,7 +214,7 @@ function renderTemplatePage(doc, tpl, orgInfo, blankMode = false, pageIndex = 1,
   tpl.signOffRoles.forEach((role, idx) => {
     const sx = M + idx * colW;
     doc.setFillColor(240, 247, 255);
-    doc.setDrawColor(186, 230, 253);
+    doc.setDrawColor(115, 165, 205);
     doc.rect(sx, y, colW, sigH, 'FD');
 
     doc.setTextColor(10, 43, 109);

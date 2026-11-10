@@ -19,6 +19,7 @@ export default function BrandLogoLockup({
   companyName = 'ComplianceHR Infinity',
   size = 'md',
   theme = 'dark',
+  lightBackground = false,
   className = '',
   showSlogan = true,
   compactSlogan = false,
@@ -51,13 +52,13 @@ export default function BrandLogoLockup({
       <div className="flex w-full flex-col items-center justify-center bg-transparent px-1 py-0.5">
         {/* LINE 1: ENLARGED (+1CM) UNCLIPPED LOGO & WHITE AREA WITH SLIGHTLY REDUCED WHITE MARGIN */}
         <div
-          className={`${logoSizeClass} aspect-[13/7] max-w-full shrink-0 overflow-hidden rounded-xl border border-[#00C6FF]/60 bg-white p-0.5 shadow-[0_0_12px_rgba(255,255,255,0.45)]`}
+          className={`${logoSizeClass} aspect-[13/7] max-w-full shrink-0 overflow-hidden rounded-xl bg-white p-0.5 ${lightBackground ? '' : 'border border-[#00C6FF]/60 shadow-[0_0_12px_rgba(255,255,255,0.45)]'}`}
         >
           <Image
             src={logoUrl || DEFAULT_BRAND_LOGO}
             alt={companyName || 'ComplianceHR Infinity'}
             fittingType="fit"
-            className="h-full w-full object-contain"
+            className={`h-full w-full object-contain ${lightBackground ? 'saturate-150 contrast-105' : ''}`}
           />
         </div>
 
@@ -77,12 +78,12 @@ export default function BrandLogoLockup({
             </span>
           ) : (
             <>
-              <span style={{ color: isDark ? '#00C6FF' : '#0A2B6D' }}>Compliance{' '}</span>
+              <span style={{ color: lightBackground ? '#0072FF' : isDark ? '#00C6FF' : '#0A2B6D' }}>Compliance{' '}</span>
               <span
                 className="bg-clip-text text-transparent"
                 style={{
                   backgroundImage:
-                    'linear-gradient(90deg, #00C6FF 0%, #0072FF 30%, #A100FF 68%, #FF2E9A 100%)',
+                    lightBackground ? 'linear-gradient(90deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)' : 'linear-gradient(90deg, #00C6FF 0%, #0072FF 30%, #A100FF 68%, #FF2E9A 100%)',
                 }}
               >
                 HR Infinity
@@ -92,7 +93,7 @@ export default function BrandLogoLockup({
         </div>
 
         {/* LINE 3: SLOGAN UNDER NAME */}
-        {showSlogan && <BrandSlogan size={size} compact={compactSlogan} />}
+        {showSlogan && <BrandSlogan size={size} compact={compactSlogan} lightBackground={lightBackground} />}
       </div>
     </div>
   );

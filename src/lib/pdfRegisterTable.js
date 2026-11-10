@@ -21,6 +21,8 @@ export function drawPdfRegisterTable(doc, y, columns, { rows = 12, values = [], 
   const header = () => {
     doc.setFillColor(10, 43, 109); doc.setDrawColor(10, 43, 109);
     doc.rect(M, y, width, headH, 'FD');
+    doc.setDrawColor(186, 230, 253);
+    for (let i = 1; i < columns.length; i++) doc.line(M + i * colW, y, M + i * colW, y + headH);
     doc.setFont('helvetica', 'bold'); doc.setFontSize(8); doc.setTextColor(255);
     labels.forEach((l, i) => doc.text(l, M + i * colW + 7, y + 15, { lineHeightFactor: 1.375 }));
     y += headH;
