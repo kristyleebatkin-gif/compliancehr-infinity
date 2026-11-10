@@ -23,15 +23,15 @@
   position: relative;
   overflow: hidden;
   border-radius: 38px;
-  border: 8px solid #0d1220;
+  border: 8px solid #0A2B6D;
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.6),
-    0 30px 60px -34px rgba(6, 12, 32, 0.75);
+    0 30px 60px -34px rgba(10, 43, 109, 0.28);
   font-family: var(--font-body);
 }
 
 .tl-phone[data-theme='light'] {
-  --tl-text: #111827;
+  --tl-text: #0A2B6D;
   --tl-muted: #5b6475;
   --tl-surface: #ffffff;
   --tl-border: #e4e9f2;
@@ -48,20 +48,20 @@
 .tl-phone[data-theme='dark'] {
   --tl-text: #e9eef8;
   --tl-muted: #a6b1c5;
-  --tl-surface: #151a24;
-  --tl-border: #242c3b;
-  --tl-pill: #1d2431;
+  --tl-surface: rgba(10, 43, 109, 0.82);
+  --tl-border: rgba(140, 203, 255, 0.24);
+  --tl-pill: rgba(0, 114, 255, 0.20);
   --tl-rule: rgba(155, 114, 203, 0.16);
   color: var(--tl-text);
   background:
     radial-gradient(420px 280px at 104% -8%, rgba(66, 133, 244, 0.3) 0%, rgba(66, 133, 244, 0) 64%),
     radial-gradient(360px 260px at -8% 4%, rgba(217, 101, 112, 0.24) 0%, rgba(217, 101, 112, 0) 62%),
     repeating-linear-gradient(to bottom, transparent 0 27px, var(--tl-rule) 27px 28px),
-    #0e1218;
+    linear-gradient(165deg, #0A2B6D 0%, #0A2B6D 62%, #5A00D6 100%);
 }
 
 .tl-phone[data-theme='dark'] {
-  border-color: #05070d;
+  border-color: #0A2B6D;
 }
 
 .tl-card {
@@ -69,8 +69,8 @@
   border: 1px solid var(--tl-border);
   border-radius: 20px;
   box-shadow:
-    0 1px 2px rgba(11, 18, 32, 0.06),
-    0 12px 26px -20px rgba(11, 18, 32, 0.55);
+    0 1px 2px rgba(10, 43, 109, 0.10),
+    0 12px 26px -20px rgba(10, 43, 109, 0.28);
 }
 
 .tl-text {
@@ -164,13 +164,13 @@
   background: var(--tl-surface);
   border: 1px solid var(--tl-border);
   border-radius: 999px;
-  box-shadow: 0 1px 2px rgba(11, 18, 32, 0.05);
+  box-shadow: 0 1px 2px rgba(10, 43, 109, 0.10);
 }
 
 .tl-nav {
   background: var(--tl-surface);
   border-top: 1px solid var(--tl-border);
-  box-shadow: 0 -8px 20px -18px rgba(11, 18, 32, 0.7);
+  box-shadow: 0 -8px 20px -18px rgba(10, 43, 109, 0.28);
 }
 
 .tl-key {
