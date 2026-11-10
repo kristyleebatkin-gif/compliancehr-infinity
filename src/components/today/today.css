@@ -1,10 +1,10 @@
 .today-shell {
-  --t-text: #0a2b6d;
+  --t-text: #0A2B6D;
   --t-muted: #4b6392;
   --t-surface: rgba(255, 255, 255, 0.78);
   --t-surface-strong: rgba(255, 255, 255, 0.94);
   --t-border: rgba(10, 43, 109, 0.1);
-  --t-shadow: 0 22px 48px -30px rgba(6, 26, 68, 0.5);
+  --t-shadow: 0 22px 48px -30px rgba(10, 43, 109, 0.5);
   --t-pill: rgba(10, 43, 109, 0.06);
   --t-hover: rgba(10, 43, 109, 0.04);
   min-height: 100vh;
@@ -27,9 +27,9 @@
   --t-pill: rgba(160, 200, 255, 0.14);
   --t-hover: rgba(160, 200, 255, 0.08);
   background:
-    radial-gradient(1000px 560px at 4% -8%, #0a2b6d 0%, rgba(18, 58, 134, 0) 60%),
-    radial-gradient(780px 460px at 98% 4%, #5a00d6 0%, rgba(74, 17, 112, 0) 58%),
-    linear-gradient(165deg, #0a2b6d 0%, #0a2b6d 48%, #5a00d6 100%);
+    radial-gradient(1000px 560px at 4% -8%, #0A2B6D 0%, rgba(10, 43, 109, 0) 60%),
+    radial-gradient(780px 460px at 98% 4%, #5a00d6 0%, rgba(90, 0, 214, 0) 58%),
+    linear-gradient(165deg, #0A2B6D 0%, #0A2B6D 48%, #5a00d6 100%);
 }
 
 .t-card {
@@ -138,7 +138,7 @@
 }
 
 .t-btn-primary {
-  background: linear-gradient(135deg, #0a2b6d 0%, #5a00d6 62%, #ff2e9a 138%);
+  background: linear-gradient(135deg, #0A2B6D 0%, #5a00d6 62%, #ff2e9a 138%);
   color: #ffffff;
 }
 
@@ -180,7 +180,7 @@
 }
 
 .t-grad-text {
-  background: linear-gradient(120deg, #0a2b6d 0%, #5a00d6 58%, #ff2e9a 100%);
+  background: linear-gradient(120deg, #0A2B6D 0%, #5a00d6 58%, #ff2e9a 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
