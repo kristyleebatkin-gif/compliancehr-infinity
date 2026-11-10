@@ -1,6 +1,6 @@
 .today-shell {
   --t-text: #0A2B6D;
-  --t-muted: #4b6392;
+  --t-muted: #274675;
   --t-surface: rgba(255, 255, 255, 0.78);
   --t-surface-strong: rgba(255, 255, 255, 0.94);
   --t-border: rgba(10, 43, 109, 0.1);
@@ -19,7 +19,7 @@
 
 .today-shell[data-theme='dark'] {
   --t-text: #eaf2ff;
-  --t-muted: #a6bee4;
+  --t-muted: #d2e3ff;
   --t-surface: rgba(10, 43, 109, 0.66);
   --t-surface-strong: rgba(10, 43, 109, 0.88);
   --t-border: rgba(150, 190, 255, 0.18);
@@ -74,7 +74,7 @@
   gap: 4px;
   border-radius: 999px;
   padding: 2px 9px;
-  font-size: 10.5px;
+  font-size: 12px;
   font-weight: 700;
   line-height: 1.4;
   white-space: nowrap;
@@ -156,7 +156,7 @@
 
 .t-ask input::placeholder {
   color: var(--t-muted);
-  opacity: 0.8;
+  opacity: 1;
 }
 
 .t-dock {

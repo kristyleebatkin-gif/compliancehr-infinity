@@ -51,15 +51,19 @@ const TOOLS = [
   }
 ];
 
-export default function StudioLauncher({ context }) {
+export default function StudioLauncher({
+  context,
+  title = 'Sherelle’s workbench',
+  subtitle = 'Five studios in one — built for the iPad and the MacBook'
+}) {
   const [active, setActive] = useState(null);
   const tool = TOOLS.find((item) => item.id === active);
 
   return (
     <>
       <Panel
-        title="Sherelle’s workbench"
-        subtitle="Five studios in one — built for the iPad and the MacBook"
+        title={title}
+        subtitle={subtitle}
         action={<span className="t-pill t-pill-gray">{TOOLS.length} tools</span>}
       >
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">

@@ -65,7 +65,7 @@ export default function LandingHero({ onBookDemo }) {
                 The Complete Compliance &amp; Workforce Operating System
               </h1>
 
-              <p className="text-xs sm:text-[13px] font-semibold leading-snug text-white/90">
+              <p className="text-sm sm:text-[13px] font-semibold leading-relaxed text-white/90">
                 Built for NDIS, Aged Care, and Allied Health executives, compliance managers, and auditors — unifying 45 self-maintaining master registers, 356 audit checkpoints, workforce credentials, rostering, and statutory reporting in one system of record.
               </p>
 
@@ -84,7 +84,7 @@ export default function LandingHero({ onBookDemo }) {
                   <button
                     type="button"
                     onClick={() => onBookDemo && onBookDemo('Executive Platform Demo')}
-                    className="inline-flex h-7 items-center justify-center gap-1.5 rounded-lg border border-white/40 px-3 text-[11px] font-extrabold text-white shadow-md transition hover:opacity-95"
+                    className="inline-flex min-h-9 sm:min-h-0 sm:h-7 items-center justify-center gap-1.5 rounded-lg border border-white/40 px-3 text-[11px] font-extrabold text-white shadow-md transition hover:opacity-95"
                     style={{
                       background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
                     }}
@@ -95,7 +95,7 @@ export default function LandingHero({ onBookDemo }) {
 
                   <Link
                     to={authed ? '/dashboard' : '/register'}
-                    className="inline-flex h-7 items-center justify-center gap-1.5 rounded-lg border-2 border-[#00C6FF] bg-white px-3 text-[11px] font-extrabold text-[#0A2B6D] shadow-sm transition hover:bg-slate-100"
+                    className="inline-flex min-h-9 sm:min-h-0 sm:h-7 items-center justify-center gap-1.5 rounded-lg border-2 border-[#00C6FF] bg-white px-3 text-[11px] font-extrabold text-[#0A2B6D] shadow-sm transition hover:bg-slate-100"
                   >
                     <span style={{ color: '#0A2B6D' }}>
                       {authed ? 'Open Command Centre' : 'Start 14-Day Free Trial'}

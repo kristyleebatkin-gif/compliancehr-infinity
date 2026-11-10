@@ -20,6 +20,9 @@ import YouPanel from '@/components/today/YouPanel';
 import TodayDock from '@/components/today/TodayDock';
 import StudioLauncher from '@/components/today/studio/StudioLauncher';
 import SecurityPinGate from '@/components/security/SecurityPinGate';
+import useScreensaver from '@/components/screensaver/useScreensaver';
+import ScreensaverOverlay from '@/components/screensaver/ScreensaverOverlay';
+import ScreensaverSettingsDialog from '@/components/screensaver/ScreensaverSettingsDialog';
 
 const ERROR_LABELS = {
   emails: 'email inbox',
@@ -60,6 +63,7 @@ function TodayWorkspace({ onSecurityPin }) {
   const wellbeingRef = useRef(null);
   const [theme, setTheme] = useState(() => localStorage.getItem('cs-today-theme') || 'dark');
   const [started, setStarted] = useState(() => localStorage.getItem('cs-today-started') === todayIso());
+  const screensaver = useScreensaver({ workspace: 'today' });
 
   const visibleKeys = {
     emails: canAccessNav(role, 'communications'),
@@ -127,6 +131,7 @@ function TodayWorkspace({ onSecurityPin }) {
             started={started}
             onStart={startWorkday}
             onSecurityPin={onSecurityPin}
+            onScreensaver={() => screensaver.setSettingsOpen(true)}
           />
 
           <TodayRadio />
@@ -173,6 +178,35 @@ function TodayWorkspace({ onSecurityPin }) {
         </main>
       </div>
       <TodayDock />
+
+      <ScreensaverSettingsDialog
+        open={screensaver.settingsOpen}
+        onOpenChange={screensaver.setSettingsOpen}
+        title={screensaver.roleLabel}
+        designs={screensaver.designs}
+        activeId={screensaver.designId}
+        onSelect={screensaver.selectDesign}
+        onPreview={screensaver.previewScreensaver}
+      />
+
+      {screensaver.open && (
+        <ScreensaverOverlay
+          design={screensaver.design}
+          name={user?.full_name}
+          roleLabel={screensaver.roleLabel}
+          stats={
+            data && !hasErrors
+              ? [
+                  { label: 'in the inbox', value: counts.emails },
+                  { label: 'shifts today', value: counts.shifts },
+                  { label: 'draft invoices', value: counts.invoices },
+                  { label: 'open tasks', value: (data.todos || []).length }
+                ]
+              : []
+          }
+          onClose={screensaver.closeScreensaver}
+        />
+      )}
     </div>
   );
 }

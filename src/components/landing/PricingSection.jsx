@@ -195,7 +195,7 @@ export default function PricingSection({ onContactSales }) {
         }}
       >
         {/* Top Perimeter Glowing White Light Strip */}
-        <div className="flex items-center justify-between px-4 py-1 bg-[#0A2B6D]/95 backdrop-blur-sm rounded-t-[13px] border-b border-[#00C6FF]/60">
+        <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-1 bg-[#0A2B6D]/95 backdrop-blur-sm rounded-t-[13px] border-b border-[#00C6FF]/60">
           <div className="flex items-center gap-2">
             {[0, 1, 2, 3, 4].map((dot) => (
               <span
@@ -233,7 +233,7 @@ export default function PricingSection({ onContactSales }) {
               Smart Enhanced All-In-One Elite Packages ($760–$1,220/mo) &amp; 100+ Tailored Documents ($999 Outright or $125/mo)
             </h2>
 
-            <p className="text-xs sm:text-[13px] font-semibold leading-snug text-[#0A2B6D]/85">
+            <p className="text-sm sm:text-[13px] font-semibold leading-relaxed text-[#0A2B6D]">
               Every Smart Enhanced tier includes full access to all 46 connected modules, 100+ tailored Business Details documents, $160/mo Elite Package Tokens, 1,200 message credits, 50,000 integration credits, and dedicated support.
             </p>
 
@@ -334,11 +334,11 @@ export default function PricingSection({ onContactSales }) {
 
                       {/* Exact Price & Credit Breakdown Box */}
                       <div className="rounded-lg border border-sky-300 bg-[#F0F7FF] px-2.5 py-1.5 space-y-1">
-                        <div className="flex items-center justify-between text-[11px] font-extrabold text-[#0A2B6D]">
+                        <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 text-[11px] font-extrabold text-[#0A2B6D]">
                           <span>Base ${pkg.previousMonthly}/mo + ${pkg.eliteAddon}/mo Elite Tokens</span>
                           <span className="text-[#5A00D6]">= ${pkg.monthly}/mo</span>
                         </div>
-                        <div className="flex items-center justify-between border-t border-sky-200 pt-1 text-[10.5px] font-bold text-[#0072FF]">
+                        <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 border-t border-sky-200 pt-1 text-[10.5px] font-bold text-[#0A54B8]">
                           <span>⚡ {pkg.messageCredits}</span>
                           <span>🔗 {pkg.integrationCredits}</span>
                         </div>
@@ -349,7 +349,7 @@ export default function PricingSection({ onContactSales }) {
                         {pkg.benefits.map((b) => (
                           <li
                             key={b}
-                            className="flex items-start gap-1.5 text-[11px] font-semibold leading-snug text-[#0A2B6D]"
+                            className="flex items-start gap-1.5 text-sm sm:text-[11px] font-semibold leading-relaxed text-[#0A2B6D]"
                           >
                             <span
                               className="mt-0.5 flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-[#0A2B6D]"
@@ -367,7 +367,7 @@ export default function PricingSection({ onContactSales }) {
                     <div className="mt-2.5 grid grid-cols-2 gap-1.5 border-t border-sky-200 pt-2">
                       <Link
                         to="/register"
-                        className="inline-flex h-7 items-center justify-center gap-1 whitespace-nowrap rounded-lg px-2 text-[11px] font-extrabold text-white shadow-2xs transition hover:opacity-95"
+                        className="inline-flex min-h-9 sm:min-h-0 sm:h-7 items-center justify-center gap-1 whitespace-nowrap rounded-lg px-2 text-[11px] font-extrabold text-white shadow-2xs transition hover:opacity-95"
                         style={{
                           background: isFeatured
                             ? 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)'
@@ -384,7 +384,7 @@ export default function PricingSection({ onContactSales }) {
                           onContactSales &&
                           onContactSales(`Sales Enquiry — ${pkg.users} (${pkg.priceLabel})`)
                         }
-                        className="inline-flex h-7 items-center justify-center gap-1 rounded-lg border-2 border-[#0072FF]/50 bg-white px-2 text-[11px] font-extrabold text-[#0A2B6D] transition hover:border-[#0072FF] hover:text-[#0072FF]"
+                        className="inline-flex min-h-9 sm:min-h-0 sm:h-7 items-center justify-center gap-1 rounded-lg border-2 border-[#0072FF]/50 bg-white px-2 text-[11px] font-extrabold text-[#0A2B6D] transition hover:border-[#0072FF] hover:text-[#0072FF]"
                       >
                         <PhoneCall className="h-3 w-3 text-[#0072FF]" />
                         <span>Contact Sales</span>
@@ -452,7 +452,7 @@ export default function PricingSection({ onContactSales }) {
                     <h4 className="text-xs font-extrabold text-[#0A2B6D] leading-snug">
                       {b.title}
                     </h4>
-                    <p className="mt-0.5 text-[11px] leading-snug text-[#0A2B6D]/80">
+                    <p className="mt-0.5 text-sm sm:text-[11px] leading-relaxed text-[#0A2B6D]">
                       {b.desc}
                     </p>
                   </div>
