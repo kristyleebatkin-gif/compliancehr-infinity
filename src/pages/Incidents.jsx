@@ -45,7 +45,7 @@ const blankInv = { title: '', investigation_id: '', incident_id: '', investigato
 function Incidents({ profile, profileKind, embedded = false } = {}) {
   const [searchParams] = useSearchParams();
   const { toast } = useToast();
-  const { role } = useRole();
+  const { role, can } = useRole();
   const canReview = [ROLES.ADMIN, ROLES.COMPLIANCE, ROLES.TEAM_LEADER].includes(role);
   const [items, setItems] = useState([]);
   const [investigations, setInvestigations] = useState([]);
@@ -333,6 +333,7 @@ function Incidents({ profile, profileKind, embedded = false } = {}) {
             <Button size="sm"><Plus className="h-4 w-4 mr-1.5" /> New Incident</Button>
           </Link>
           {canReview && <Button size="sm" onClick={() => downloadIncidentReport(items)} disabled={loading || items.length === 0}><Download className="h-4 w-4 mr-1.5" /> Reports (PDF)</Button>}
+          {!embedded && can('risks') && <Button size="sm" variant="outline" asChild><Link to="/risk-chemical-dashboard"><ShieldAlert className="h-4 w-4" />Risks &amp; Chemicals Dashboard</Link></Button>}
         </>}
       >
       {embedded && <RegisterInsights module="incidents" />}

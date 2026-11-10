@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import withEmployeeView from '@/components/withEmployeeView';
 import EmployeeRiskReports from '@/components/employee/EmployeeRiskReports';
 export default withEmployeeView(Risks, EmployeeRiskReports);
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { recordStatusLog, currentUserName } from '@/lib/statusLog';
 import { useToast } from '@/components/ui/use-toast';
@@ -261,6 +261,8 @@ function Risks({ profile, profileKind, embedded = false } = {}) {
           small={tiles}
         />
       )}
+
+      {!embedded && <Link to="/risk-chemical-dashboard" className="inline-flex min-h-9 items-center gap-2 rounded-lg bg-workspace-navy px-4 py-2 text-sm font-bold text-header-foreground hover:opacity-90"><Grid3X3 className="h-4 w-4" />Risks &amp; Chemicals Dashboard</Link>}
 
       {/* Standardized iPad-Style Risk Workspace Tabs */}
       <Tabs value={riskTab} onValueChange={setRiskTab}>

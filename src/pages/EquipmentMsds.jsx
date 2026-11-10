@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import ModuleShell from '@/components/module/ModuleShell';
 import { Wrench } from 'lucide-react';
@@ -6,7 +7,8 @@ import EquipmentManuals from '@/pages/EquipmentManuals';
 import MsdsLibrary from '@/pages/MsdsLibrary';
 
 export default function EquipmentMsds() {
-  const [tab, setTab] = useState('manuals');
+  const [searchParams] = useSearchParams();
+  const [tab, setTab] = useState(() => searchParams.get('tab') === 'msds' ? 'msds' : 'manuals');
   const [manualTarget, setManualTarget] = useState(null);
   const [reportTarget, setReportTarget] = useState(null);
   return (
