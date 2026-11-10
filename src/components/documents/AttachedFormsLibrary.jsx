@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
-import { safeUrl } from '@/lib/safeUrl';
 import { useToast } from '@/components/ui/use-toast';
 import { ChevronDown, Download, ExternalLink, FileText, Loader2, Pencil, Search, UploadCloud } from 'lucide-react';
 import OnlineDocumentDialog from '@/components/documents/OnlineDocumentDialog';

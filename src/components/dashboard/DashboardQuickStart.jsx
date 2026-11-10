@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Bell, BookOpen, LayoutGrid, ShieldAlert } from 'lucide-react';
-import { getTilePalette, getHeaderView, getSymbolView } from '@/lib/fullColourTiles';
+import { getSymbolView } from '@/lib/fullColourTiles';
 
 const TOP_BORDER_GRADIENT =
   'linear-gradient(120deg, #00C6FF 0%, #0072FF 22%, #5A00D6 48%, #A100FF 74%, #FF2E9A 100%)';

@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ShieldCheck, AlertTriangle, Users, FileCheck2, Activity,
-  ArrowUpRight, Lock, CheckCircle2, Clock,
+  ArrowUpRight, Lock, CheckCircle2,
 } from 'lucide-react';
 
 // ROW 1 — 5 Mandatory Executive KPIs

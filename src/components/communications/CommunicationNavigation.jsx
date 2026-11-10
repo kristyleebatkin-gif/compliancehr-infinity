@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Vault, Mail, MailWarning, BellRing, CheckCircle2 } from 'lucide-react';
+import { Mail, MailWarning, BellRing, CheckCircle2 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import AlertLamp from '@/components/communications/AlertLamp';
-import AboveMailboxCommandDeck from '@/components/safe/AboveMailboxCommandDeck';
 import { useRole } from '@/lib/useRole';
 import '@/components/communications/communicationNavigation.css';
 

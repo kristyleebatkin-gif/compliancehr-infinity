@@ -60,7 +60,7 @@ export default function AssistantChat({ agent, onBack }) {
     if (loadingList || activeConv) return;
     if (conversations.length) openConversation(conversations[0]);
     else newConversation();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [loadingList, conversations.length]);
 
   // Live streaming updates for the active conversation

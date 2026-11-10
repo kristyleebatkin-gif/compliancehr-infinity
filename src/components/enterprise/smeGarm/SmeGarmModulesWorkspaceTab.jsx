@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
-import {
-  ShieldCheck, AlertTriangle, TrendingUp, Activity, Cpu, Database,
-  FileSpreadsheet, BrainCircuit, CheckCircle2, Lock, Layers,
-} from 'lucide-react';
+
 import {
   ENTERPRISE_RISKS_SEED,
   THREE_LINES_ASSURANCE_SEED,

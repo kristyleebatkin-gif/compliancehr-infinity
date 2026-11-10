@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   ShieldCheck, Users, HeartHandshake, FolderOpen,
   AlertTriangle, FileBarChart2, Zap, GraduationCap,

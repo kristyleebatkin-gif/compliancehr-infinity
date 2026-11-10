@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  ShieldCheck, Presentation, Lock, Layers, LayoutDashboard,
+import { Presentation, Layers, LayoutDashboard,
 } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import {

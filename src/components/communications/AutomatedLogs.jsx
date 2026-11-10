@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { History, Loader2, Mail, Search, ChevronDown, ChevronUp, Bot } from 'lucide-react';
+import { History, Loader2, Search, ChevronDown, ChevronUp, Bot } from 'lucide-react';
 
 const AUTOMATED_FILTER = {
   $or: [

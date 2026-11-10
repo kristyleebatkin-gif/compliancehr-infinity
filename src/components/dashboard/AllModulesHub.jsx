@@ -4,7 +4,6 @@ import { canAccessNav } from '@/lib/roles';
 import { useRole } from '@/lib/useRole';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import { ArrowRight } from 'lucide-react';
-import BrandLogoLockup from '@/components/common/BrandLogoLockup';
 
 const BRAND_GRADIENT =
   'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)';

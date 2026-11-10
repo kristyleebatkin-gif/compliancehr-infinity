@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {
   Activity, ArrowRight, CalendarClock, FileCheck2, Fingerprint, Gauge,
-  Layers, ScrollText, ShieldCheck, Sparkles, Users,
+  Layers, ShieldCheck, Sparkles, Users,
 } from 'lucide-react';
 import Reveal from '@/components/landing/Reveal';
 import LandingSectionHeader from '@/components/landing/LandingSectionHeader';

@@ -52,11 +52,6 @@ import MasterComplianceAuditForms from '@/components/compliance/MasterCompliance
 import ScreenByScreenMasterAudit2026 from '@/components/compliance/ScreenByScreenMasterAudit2026';
 import Standard2026PrintableTemplatesSuite from '@/components/compliance/Standard2026PrintableTemplatesSuite';
 import EnterpriseStandardQualityGateSuite from '@/components/compliance/EnterpriseStandardQualityGateSuite';
-import EasyAccessVisibilityHub from '@/components/compliance/EasyAccessVisibilityHub';
-import IntelligentOperationsGuidanceSuite from '@/components/compliance/IntelligentOperationsGuidanceSuite';
-import EnterpriseToolsAiIntelligencePlatform from '@/components/compliance/EnterpriseToolsAiIntelligencePlatform';
-import FiveLayerEnterpriseAcceptanceSuite from '@/components/compliance/FiveLayerEnterpriseAcceptanceSuite';
-import UniversalDataStorageRetentionExportSuite from '@/components/compliance/UniversalDataStorageRetentionExportSuite';
 import BusinessHealthComplianceIntelligenceDashboard from '@/components/compliance/BusinessHealthComplianceIntelligenceDashboard';
 import InfinityCoreEngine from '@/components/compliance/InfinityCoreEngine';
 import InfinityOneClickOperations from '@/components/operations/InfinityOneClickOperations';
@@ -81,7 +76,6 @@ import CertificationCalendar from '@/components/compliance/CertificationCalendar
 import RiskHeatmap from '@/components/compliance/RiskHeatmap';
 import StaffComplianceChart from '@/components/compliance/StaffComplianceChart';
 import RosterScreeningAlerts from '@/components/rostering/RosterScreeningAlerts';
-import ComplianceGlobalSearch from '@/components/compliance/ComplianceGlobalSearch';
 import ComplianceTaskActions from '@/components/compliance/ComplianceTaskActions';
 import TaskKanban from '@/components/compliance/TaskKanban';
 import DocumentRenewalCalendar from '@/components/compliance/DocumentRenewalCalendar';

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ShieldCheck, Users, Sparkles, ArrowRight, RefreshCw,
+  ShieldCheck, Users, ArrowRight, RefreshCw,
   Cpu, Award, CheckCircle2, Layers, HeartHandshake, Stethoscope,
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';

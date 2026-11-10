@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Lock, FolderLock, MessagesSquare, Mail,
+  Lock, FolderLock, Mail,
   Building2, LogIn, Monitor, Columns, Users, CalendarClock, CheckCircle2, ArrowRight,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';

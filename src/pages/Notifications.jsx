@@ -86,7 +86,7 @@ export default function Notifications() {
     } finally {
       setLoading(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [buildQuery]);
 
   // Reload when filters change
@@ -107,7 +107,7 @@ export default function Notifications() {
       }
     });
     return unsubscribe;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [user?.id, readFilter, typeFilter]);
 
   const unreadCount = items.filter((n) => !n.read).length;

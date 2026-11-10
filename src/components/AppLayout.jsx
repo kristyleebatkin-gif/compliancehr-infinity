@@ -5,24 +5,17 @@ import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
 import { useRole } from '@/lib/useRole';
 import { canAccessNav, ROLES } from '@/lib/roles';
-import AuditorOnlyLayout from '@/components/AuditorOnlyLayout';
 import { MODULE_DIRECTORY as PRIMARY_NAV } from '@/lib/moduleDirectory';
 import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
-import {
-  Bell, LogOut, Menu, X, ChevronDown, MoreHorizontal, ShieldQuestion, Sparkles,
-  LayoutDashboard, Users, Heart, GraduationCap, ShieldCheck, User, Building2,
+import { Menu, X, ChevronDown, MoreHorizontal, ShieldQuestion,
+  LayoutDashboard, Users, Heart, GraduationCap, ShieldCheck,
 } from 'lucide-react';
-import GlobalSearch from '@/components/GlobalSearch';
-import AutoRegisterInsights from '@/components/AutoRegisterInsights';
 import QuickAppBar from '@/components/QuickAppBar';
 import ObsidianSidebarRemote from '@/components/ObsidianSidebarRemote';
-import EnterpriseWorkspaceBar from '@/components/enterprise/EnterpriseWorkspaceBar';
-import VisualDesignModuleCommandStandard from '@/components/enterprise/VisualDesignModuleCommandStandard';
 import BrandLogoLockup from '@/components/common/BrandLogoLockup';
 import BrandSlogan from '@/components/common/BrandSlogan';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import PendingApprovalNotice from '@/components/users/PendingApprovalNotice';
-import ModuleGuide from '@/components/ModuleGuide';
 import ModuleDocsFooter from '@/components/ModuleDocsFooter';
 import UniversalDocumentViewerModal from '@/components/documents/UniversalDocumentViewerModal';
 import EnterpriseFloatingWorkspaceDock from '@/components/EnterpriseFloatingWorkspaceDock';

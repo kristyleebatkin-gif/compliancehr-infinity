@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import {
-  ShieldCheck, AlertTriangle, TrendingUp, Award, CheckCircle2,
-  Eye, Layers, ArrowUpRight, Sparkles, Lock,
+import { ArrowUpRight, Sparkles,
 } from 'lucide-react';
 import {
   ENTERPRISE_RISKS_SEED,
-  THREE_LINES_ASSURANCE_SEED,
   BENEFITS_REALISATION_SEED,
   computeRiskScore,
   getRiskRatingBand,
