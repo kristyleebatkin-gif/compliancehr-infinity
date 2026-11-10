@@ -20,8 +20,8 @@
 .today-shell[data-theme='dark'] {
   --t-text: #eaf2ff;
   --t-muted: #a6bee4;
-  --t-surface: rgba(13, 27, 58, 0.66);
-  --t-surface-strong: rgba(15, 31, 66, 0.88);
+  --t-surface: rgba(10, 43, 109, 0.66);
+  --t-surface-strong: rgba(10, 43, 109, 0.88);
   --t-border: rgba(150, 190, 255, 0.18);
   --t-shadow: 0 24px 54px -30px rgba(10, 43, 109, 0.58);
   --t-pill: rgba(160, 200, 255, 0.14);
