@@ -147,8 +147,8 @@ export default function CrmHub({ embedded = false } = {}) {
         icon={Briefcase}
         moduleKey="crm"
         actions={<>
-          <Button size="sm" variant="outline" className="border-border bg-white text-black" onClick={() => setShowForm(!showForm)}><Plus className="h-4 w-4" />Add lead</Button>
-          <Button size="sm" variant="outline" className="border-border bg-white text-black" onClick={exportLeads}>Export CSV</Button>
+          <Button size="sm" variant="outline" className="border-border bg-white text-[#0A2B6D]" onClick={() => setShowForm(!showForm)}><Plus className="h-4 w-4" />Add lead</Button>
+          <Button size="sm" variant="outline" className="border-border bg-white text-[#0A2B6D]" onClick={exportLeads}>Export CSV</Button>
         </>}
         small={[
           ['Open pipeline value', money(pipelineValue)],
