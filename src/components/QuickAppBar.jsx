@@ -5,11 +5,10 @@ import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import { PRIMARY_11_OS_NAV, FOCUSED_5_PILLAR_NAV } from '@/components/ObsidianSidebarRemote';
 import { useAuth } from '@/lib/AuthContext';
 import EnterpriseFloatingWorkspaceDock from '@/components/EnterpriseFloatingWorkspaceDock';
+import '@/components/executive/executiveGlass.css';
 
 const BRAND_GRADIENT =
   'linear-gradient(120deg, #0072FF 0%, #5A00D6 50%, #FF2E9A 100%)';
-
-const DARK_NAVY_CHASSIS = 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)';
 
 const APP_DESIGN_COLOURS = ['#0072FF', '#A855F7', '#FF2E9A'];
 
@@ -156,13 +155,9 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
     <div id="main-view-navigator-remote" className="scroll-mt-48 mx-auto w-full max-w-[1440px] bg-workspace-navy px-3 pt-1.5">
       <section
         aria-label="Quick Access Bar"
-        className="preserve-island-theme overflow-hidden rounded-xl p-[1.5px] shadow-md"
-        style={{ background: BRAND_GRADIENT }}
+        className="preserve-island-theme executive-glass-surface overflow-hidden rounded-xl border border-header-foreground/20 shadow-panel"
       >
-        <div
-          className="overflow-hidden rounded-[10px] p-1.5 space-y-1 md:flex md:flex-col lg:block"
-          style={{ background: DARK_NAVY_CHASSIS }}
-        >
+        <div className="overflow-hidden rounded-[10px] p-1.5 space-y-1 md:flex md:flex-col lg:block">
           {/* LINE 1: Quick Access Bar Title + AI Quick Ask & 4 Buttons Next To It + Mode Switcher */}
           <div className="flex flex-wrap items-center justify-start gap-1.5">
             <div className="flex min-w-0 flex-wrap items-center gap-1.5 md:flex-nowrap">
@@ -183,7 +178,7 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
                 className="inline-flex items-center rounded-full p-[1px]"
                 style={{ background: BRAND_GRADIENT }}
               >
-                <div className="inline-flex items-center gap-0.5 rounded-full bg-white p-0.5">
+                <div className="inline-flex items-center gap-0.5 rounded-full bg-workspace-navy/80 p-0.5 backdrop-blur-md">
                   {[
                     { id: 'pillars5', label: '5 Pillars' },
                     { id: 'os11', label: '13 Channels' },
@@ -195,8 +190,8 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
                       onClick={() => switchRemoteMode(m.id)}
                       className={`whitespace-nowrap rounded-full px-1.5 py-0 text-[8px] font-extrabold transition ${
                         remoteMode === m.id
-                          ? 'bg-[#0A2B6D] text-white'
-                          : 'text-[#0A2B6D] hover:bg-[#F5F0FF]'
+                          ? 'bg-brand text-header-foreground'
+                          : 'text-header-foreground hover:bg-workspace-navy'
                       }`}
                     >
                       ◉ {m.label}
@@ -208,9 +203,9 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
               {expandedGroup?.path && (
                 <Link
                   to={expandedGroup.path}
-                  className="inline-flex h-[20px] max-w-[180px] items-center gap-1 rounded-full bg-white px-2 text-[8px] font-extrabold text-[#0A2B6D] transition hover:bg-[#F5F0FF]"
+                  className="inline-flex h-[20px] max-w-[180px] items-center gap-1 rounded-full border border-header-foreground/20 bg-workspace-navy/80 px-2 text-[8px] font-extrabold text-header-foreground backdrop-blur-md transition hover:bg-workspace-navy"
                 >
-                  <span className="truncate" style={{ color: '#0A2B6D' }}>Open {expandedGroup.label.replace(/^\d+\.\s*/, '')}</span>
+                  <span className="truncate">Open {expandedGroup.label.replace(/^\d+\.\s*/, '')}</span>
                   <ArrowRight className="h-2 w-2 text-[#0072FF]" />
                 </Link>
               )}
@@ -222,15 +217,13 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
           {/* LINE 2: 50%-Reduced Compact Section Modulars (Tight Grid Without Gaps) */}
           <div
             className="grid grid-cols-3 gap-1 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-7 items-stretch md:order-2 lg:order-none"
-            style={{ background: DARK_NAVY_CHASSIS }}
           >
             <Link
               to="/assistant"
               title="AI Core Hub"
-              className="group block w-full text-left rounded-md p-[1px] transition-all duration-150"
-              style={{ background: BRAND_GRADIENT }}
+              className="group block w-full rounded-md border border-header-foreground/20 bg-workspace-navy/80 p-[1px] text-left backdrop-blur-md transition-all duration-150"
             >
-              <div className="flex h-[22px] items-center justify-between gap-1 rounded-[5px] bg-white px-1.5 md:h-[26px] lg:h-[22px]">
+              <div className="flex h-[22px] items-center justify-between gap-1 rounded-[5px] bg-transparent px-1.5 md:h-[26px] lg:h-[22px]">
                 <div className="flex min-w-0 flex-1 items-center gap-1">
                   <span
                     className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-[3px] bg-[#0A2B6D]/90 md:h-4 md:w-4 lg:h-3.5 lg:w-3.5"
@@ -238,7 +231,7 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
                   >
                     <Cpu className="h-2 w-2 shrink-0 md:h-2.5 md:w-2.5 lg:h-2 lg:w-2" style={{ color: '#0072FF' }} />
                   </span>
-                  <span className="min-w-0 truncate text-[9.5px] font-extrabold leading-none text-workspace-navy md:text-[10.5px] lg:text-[9.5px]">
+                  <span className="min-w-0 truncate text-[9.5px] font-extrabold leading-none text-header-foreground md:text-[10.5px] lg:text-[9.5px]">
                     AI Core
                   </span>
                 </div>
@@ -264,12 +257,11 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
                   onClick={() => handleSelectMajorSection(item, true)}
                   aria-expanded={isSelectedSection}
                   title={item.label}
-                  className={`group block w-full text-left rounded-md p-[1px] transition-all duration-150 focus-visible:outline-none ${
+                  className={`group block w-full rounded-md border border-header-foreground/20 bg-workspace-navy/80 p-[1px] text-left backdrop-blur-md transition-all duration-150 focus-visible:outline-none ${
                     isSelectedSection ? 'ring-1 ring-[#00C6FF]' : ''
                   }`}
-                  style={{ background: BRAND_GRADIENT }}
                 >
-                  <div className="flex h-[22px] items-center justify-between gap-1 rounded-[5px] bg-white px-1.5 md:h-[26px] lg:h-[22px]">
+                  <div className="flex h-[22px] items-center justify-between gap-1 rounded-[5px] bg-transparent px-1.5 md:h-[26px] lg:h-[22px]">
                     <div className="flex min-w-0 flex-1 items-center gap-1">
                       <span
                         className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-[3px] bg-[#0A2B6D]/90 md:h-4 md:w-4 lg:h-3.5 lg:w-3.5"
@@ -277,7 +269,7 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
                       >
                         <Icon className="h-2 w-2 shrink-0 md:h-2.5 md:w-2.5 lg:h-2 lg:w-2" style={{ color: symColor }} />
                       </span>
-                      <span className="min-w-0 truncate text-[9.5px] font-extrabold leading-none text-workspace-navy md:text-[10.5px] lg:text-[9.5px]">
+                      <span className="min-w-0 truncate text-[9.5px] font-extrabold leading-none text-header-foreground md:text-[10.5px] lg:text-[9.5px]">
                         {item.label}
                       </span>
                     </div>
@@ -307,12 +299,11 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
                     to={module.path}
                     aria-current={modActive ? 'page' : undefined}
                     title={module.label}
-                    className={`group block w-full text-left rounded-md p-[1px] transition-all duration-150 ${
+                    className={`group block w-full rounded-md border border-header-foreground/20 bg-workspace-navy/80 p-[1px] text-left backdrop-blur-md transition-all duration-150 ${
                       modActive ? 'ring-1 ring-[#00C6FF]' : ''
                     }`}
-                    style={{ background: BRAND_GRADIENT }}
                   >
-                    <div className="flex h-[22px] items-center justify-between gap-1 rounded-[5px] bg-white px-1.5 md:h-[26px] lg:h-[22px]">
+                    <div className="flex h-[22px] items-center justify-between gap-1 rounded-[5px] bg-transparent px-1.5 md:h-[26px] lg:h-[22px]">
                       <div className="flex min-w-0 flex-1 items-center gap-1">
                         <span
                           className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-[3px] bg-[#0A2B6D]/90 md:h-4 md:w-4 lg:h-3.5 lg:w-3.5"
@@ -320,7 +311,7 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
                         >
                           <Icon className="h-2 w-2 shrink-0 md:h-2.5 md:w-2.5 lg:h-2 lg:w-2" style={{ color: modColor }} />
                         </span>
-                        <span className="min-w-0 truncate text-[9.5px] font-extrabold leading-none text-workspace-navy md:text-[10.5px] lg:text-[9.5px]">
+                        <span className="min-w-0 truncate text-[9.5px] font-extrabold leading-none text-header-foreground md:text-[10.5px] lg:text-[9.5px]">
                           {module.label}
                         </span>
                       </div>
