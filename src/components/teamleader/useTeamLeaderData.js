@@ -31,11 +31,11 @@ export default function useTeamLeaderData() {
   const load = useCallback(async () => {
     const day = todayIso();
     const [shifts, notes, todos, incidents, team] = await Promise.all([
-      readItems(base44.entities.Shift.filter({ date: day }, { sort: 'start_time', limit: 40 })),
-      readItems(base44.entities.CommunicationEntry.filter({ entry_kind: 'Shift Note', entry_date: day }, { sort: '-created_date', limit: 40 })),
-      readItems(base44.entities.TodoTask.filter({ status: { $in: ['Pending', 'In Progress', 'Open'] } }, { limit: 20 })),
-      readItems(base44.entities.Incident.filter({ status: { $in: ['Reported', 'Under Investigation', 'Action Required'] } }, { limit: 10 })),
-      readItems(base44.entities.StaffProfile.filter({ status: { $in: ['Active', 'On Leave'] } }, { limit: 20 }))
+      readItems(base44.entities.Shift.filter({ date: day }, { sort: 'start_time', limit: 500 })),
+      readItems(base44.entities.CommunicationEntry.filter({ entry_kind: 'Shift Note', entry_date: day }, { sort: '-created_date', limit: 100 })),
+      readItems(base44.entities.TodoTask.filter({ status: { $in: ['Pending', 'In Progress', 'Open'] } }, { sort: 'due_date', limit: 100 })),
+      readItems(base44.entities.Incident.filter({ status: { $in: ['Reported', 'Under Investigation', 'Action Required'] } }, { sort: '-date_reported', limit: 50 })),
+      readItems(base44.entities.StaffProfile.filter({ status: { $in: ['Active', 'On Leave'] } }, { limit: 100 }))
     ]);
 
     setData({
