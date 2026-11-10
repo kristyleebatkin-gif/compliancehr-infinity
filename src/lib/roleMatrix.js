@@ -120,8 +120,10 @@ export const NAV_PERMISSIONS = {
   'our-staff': [...OPERATIONS, ROLES.EMPLOYEE],
   'our-participants': [...OPERATIONS, ROLES.PARTICIPANT],
   dashboard: [...PERSONAL, ROLES.GUEST, ROLES.VOLUNTEER],
-  today: PERSONAL,
-  'team-leader': PERSONAL,
+  // These workspaces contain operational, staff and finance information.
+  // Keep access to approved administration roles only.
+  today: ['admin', ROLES.ADMIN, ROLES.TEAM_LEADER],
+  'team-leader': ['admin', ROLES.ADMIN, ROLES.TEAM_LEADER],
   'operations-centre': OPERATIONS,
   notifications: PERSONAL,
   assistant: PERSONAL,
