@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { ArrowLeft, RefreshCw, ShieldAlert } from 'lucide-react';
 import RiskChemicalSummary from '@/components/safety/RiskChemicalSummary';
+import RiskChemicalFilters from '@/components/safety/RiskChemicalFilters';
 import RiskChemicalBreakdown from '@/components/safety/RiskChemicalBreakdown';
 import RiskChemicalDueList from '@/components/safety/RiskChemicalDueList';
 import '@/components/executive/executiveGlass.css';
 
 export default function RiskChemicalDashboard() {
   const queryClient = useQueryClient();
+  const [riskRating, setRiskRating] = useState('');
+  const [hazardClass, setHazardClass] = useState('');
   return (
     <div className="mx-auto max-w-[1440px] space-y-4 p-3 md:p-5">
       <header className="executive-glass-surface rounded-xl border border-header-foreground/20 p-5 text-header-foreground shadow-panel">
@@ -19,9 +22,10 @@ export default function RiskChemicalDashboard() {
         </div>
       </header>
       <p className="text-xs text-muted-foreground">Shows records available to your account. Service dates come from the asset register; chemical hazard classes are shown as recorded.</p>
-      <RiskChemicalSummary />
-      <div className="grid gap-4 lg:grid-cols-2"><RiskChemicalBreakdown kind="risk" /><RiskChemicalBreakdown kind="chemical" /></div>
-      <div className="grid gap-4 lg:grid-cols-2"><RiskChemicalDueList kind="risk" /><RiskChemicalDueList kind="asset" /></div>
+      <RiskChemicalFilters riskRating={riskRating} setRiskRating={setRiskRating} hazardClass={hazardClass} setHazardClass={setHazardClass} />
+      <RiskChemicalSummary riskRating={riskRating} hazardClass={hazardClass} />
+      <div className="grid gap-4 lg:grid-cols-2"><RiskChemicalBreakdown kind="risk" riskRating={riskRating} /><RiskChemicalBreakdown kind="chemical" hazardClass={hazardClass} /></div>
+      <div className="grid gap-4 lg:grid-cols-2"><RiskChemicalDueList kind="risk" riskRating={riskRating} /><RiskChemicalDueList kind="asset" /></div>
     </div>
   );
 }

@@ -3,18 +3,18 @@ import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { useRole } from '@/lib/useRole';
 import { Activity, AlertTriangle, FlaskConical, Wrench } from 'lucide-react';
-import { safetyDashboardToday, openRiskQuery } from '@/components/safety/riskChemicalQueries';
+import { safetyDashboardToday, filteredRiskQuery, filteredChemicalQuery } from '@/components/safety/riskChemicalQueries';
 
-export default function RiskChemicalSummary() {
+export default function RiskChemicalSummary({ riskRating, hazardClass }) {
   const { user } = useRole();
   const today = safetyDashboardToday();
   const { data, isPending } = useQuery({
-    queryKey: ['risk-chemical-dashboard', 'summary', user?.id, today], enabled: !!user?.id,
+    queryKey: ['risk-chemical-dashboard', 'summary', user?.id, today, riskRating, hazardClass], enabled: !!user?.id,
     queryFn: async () => {
       const results = await Promise.allSettled([
-        base44.entities.Risk.count(openRiskQuery),
-        base44.entities.Risk.count({ ...openRiskQuery, rating: { $in: ['High', 'Critical'] } }),
-        base44.entities.Chemical.count({}),
+        base44.entities.Risk.count(filteredRiskQuery(riskRating)),
+        base44.entities.Risk.count({ ...filteredRiskQuery(riskRating), $and: [{ rating: { $in: ['High', 'Critical'] } }] }),
+        base44.entities.Chemical.count(filteredChemicalQuery(hazardClass)),
         base44.entities.Asset.count({ status: { $ne: 'Retired' }, next_service_date: { $gte: '1900-01-01', $lt: today } }),
       ]);
       return results.map((r) => r.status === 'fulfilled' ? r.value : null);

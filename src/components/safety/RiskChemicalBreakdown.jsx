@@ -3,15 +3,15 @@ import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { useRole } from '@/lib/useRole';
-import { openRiskQuery } from '@/components/safety/riskChemicalQueries';
+import { filteredRiskQuery, filteredChemicalQuery } from '@/components/safety/riskChemicalQueries';
 
-export default function RiskChemicalBreakdown({ kind }) {
+export default function RiskChemicalBreakdown({ kind, riskRating, hazardClass }) {
   const { user } = useRole();
   const isRisk = kind === 'risk';
   const field = isRisk ? 'rating' : 'hazard_class';
   const { data, isPending, isError, refetch } = useQuery({
-    queryKey: ['risk-chemical-dashboard', 'breakdown', kind, user?.id], enabled: !!user?.id,
-    queryFn: () => base44.entities[isRisk ? 'Risk' : 'Chemical'].aggregate({ query: isRisk ? openRiskQuery : {}, groupBy: field }),
+    queryKey: ['risk-chemical-dashboard', 'breakdown', kind, user?.id, isRisk ? riskRating : hazardClass], enabled: !!user?.id,
+    queryFn: () => base44.entities[isRisk ? 'Risk' : 'Chemical'].aggregate({ query: isRisk ? filteredRiskQuery(riskRating) : filteredChemicalQuery(hazardClass), groupBy: field }),
   });
   const rows = (data?.rows || []).map((row) => ({ label: row[field] || 'Not recorded', count: row.count })).sort((a, b) => b.count - a.count);
   const max = Math.max(1, ...rows.map((row) => row.count));

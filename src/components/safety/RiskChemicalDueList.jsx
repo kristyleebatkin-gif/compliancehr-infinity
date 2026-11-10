@@ -3,16 +3,16 @@ import { Link } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { useRole } from '@/lib/useRole';
-import { openRiskQuery, safetyDashboardDate, safetyDashboardToday } from '@/components/safety/riskChemicalQueries';
+import { filteredRiskQuery, safetyDashboardDate, safetyDashboardToday } from '@/components/safety/riskChemicalQueries';
 
-export default function RiskChemicalDueList({ kind }) {
+export default function RiskChemicalDueList({ kind, riskRating }) {
   const { user } = useRole();
   const risk = kind === 'risk';
   const field = risk ? 'review_date' : 'next_service_date';
   const today = safetyDashboardToday();
   const { data, isPending, isError, refetch, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
-    queryKey: ['risk-chemical-dashboard', 'dates', kind, user?.id], enabled: !!user?.id, initialPageParam: undefined,
-    queryFn: ({ pageParam }) => base44.entities[risk ? 'Risk' : 'Asset'].filter({ ...(risk ? openRiskQuery : { status: { $ne: 'Retired' } }), [field]: { $gte: '1900-01-01' } }, { sort: field, limit: 10, ...(pageParam ? { cursor: pageParam } : {}) }),
+    queryKey: ['risk-chemical-dashboard', 'dates', kind, user?.id, risk ? riskRating : null], enabled: !!user?.id, initialPageParam: undefined,
+    queryFn: ({ pageParam }) => base44.entities[risk ? 'Risk' : 'Asset'].filter({ ...(risk ? filteredRiskQuery(riskRating) : { status: { $ne: 'Retired' } }), [field]: { $gte: '1900-01-01' } }, { sort: field, limit: 10, ...(pageParam ? { cursor: pageParam } : {}) }),
     getNextPageParam: (page) => page.has_more ? page.next_cursor : undefined,
   });
   const records = data?.pages.flatMap((page) => page.items) || [];
