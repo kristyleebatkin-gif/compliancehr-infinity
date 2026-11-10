@@ -122,8 +122,8 @@ export default function ProcurementHub() {
           <div key={label}><p className="text-[10px] font-semibold uppercase tracking-wide">{label}</p><p className="mt-1 text-2xl font-bold tabular-nums">{value}</p></div>
         ))}
         actions={<>
-          <Button size="sm" variant="outline" className="border-border bg-white text-black" onClick={() => { setTab('orders'); setShowPoForm(!showPoForm); }}><Plus className="mr-2 h-4 w-4" />New purchase order</Button>
-          <Button size="sm" variant="outline" className="border-border bg-white text-black" onClick={() => downloadCsv('purchase-orders.csv', [
+          <Button size="sm" variant="outline" className="border-border bg-white text-[#0A2B6D]" onClick={() => { setTab('orders'); setShowPoForm(!showPoForm); }}><Plus className="mr-2 h-4 w-4" />New purchase order</Button>
+          <Button size="sm" variant="outline" className="border-border bg-white text-[#0A2B6D]" onClick={() => downloadCsv('purchase-orders.csv', [
             { label: 'PO number', key: 'po_number' }, { label: 'Supplier', key: 'supplier_name' }, { label: 'Items', key: 'items' },
             { label: 'Total', key: 'total' }, { label: 'Order date', key: 'order_date' }, { label: 'Required by', key: 'required_by_date' },
             { label: 'Status', key: 'status' }, { label: 'Received', key: 'received_date' },
