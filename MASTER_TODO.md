@@ -492,3 +492,4 @@ Still required before production approval:
 - [ ] Runtime role tests with representative approved accounts and live entity RLS.
 - [ ] Verify real dashboard counts, exact deep links, exports and operational actions in the preview.
 - [ ] Merge the dashboard branch to main and publish only after owner approval.
+- [ ] Owner decision: confirm which approved role should access Invoicing (including Sherelle's Administration/Finance responsibilities). Align navigation permissions with entity RLS and add approved/denied runtime tests before exposing invoice actions. No access expansion was made in the dashboard polish batch.
