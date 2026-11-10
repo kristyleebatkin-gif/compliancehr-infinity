@@ -29,7 +29,7 @@ export function drawFormNotice(doc, y, { purpose = '', guidance = FORM_NOTICES.g
   const pageW = doc.internal.pageSize.getWidth();
   const textW = pageW - PAGE_MARGIN * 2 - 36;
   const blocks = [
-    { text: purpose, size: 9, bold: true },
+    { text: purpose && `Purpose: ${purpose}`, size: 9, bold: true },
     { text: FORM_NOTICES.welcome, size: 8.5, italic: true, accent: true },
     { text: guidance, size: 8.5 },
     { text: privacy, size: 8 },
@@ -96,6 +96,17 @@ export function drawFieldRows(doc, y, fields, values = {}, options = {}) {
 
 export function drawRegisterTable(doc, y, columns, options = {}) {
   return drawPdfRegisterTable(doc, y, columns, options);
+}
+
+export function drawReviewSection(doc, y, review = {}) {
+  y = drawSectionHeading(doc, y, 'Review');
+  return drawFieldRows(doc, y, [
+    { label: 'Reviewer name' }, { label: 'Review date' },
+    { label: 'Reviewer signature (typed)' }, { label: 'Next review date' },
+  ], {
+    'Reviewer name': review.name || '', 'Review date': review.date || '',
+    'Reviewer signature (typed)': review.signature || '', 'Next review date': review.nextReview || '',
+  });
 }
 
 export function drawSignatures(doc, y, {

@@ -34,7 +34,7 @@ export async function fileOnlineDocument({ title, code, definition, model, user,
     values: { ...model.answers, 'Declaration confirmed by': model.name },
     columns: definition.columns, rows: model.tableRows.length,
     tableValues: model.tableRows, completedBy: user.full_name || user.email, completedAt,
-    signatureDataUrl: model.signature,
+    signatureDataUrl: model.signature, signerName: model.name, review: model.review || {},
   });
   const file = new File([doc.output('blob')], `${title} (completed online).pdf`, { type: 'application/pdf' });
   const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file });

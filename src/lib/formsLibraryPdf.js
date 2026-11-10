@@ -1,6 +1,7 @@
 import { jsPDF } from 'jspdf';
 import { drawDocumentFooter, loadCompanyBranding } from '@/lib/companyBranding';
-import { drawFormHeader, drawFieldRows, drawRegisterTable, drawSignatures, drawFormNotice, drawDeclaration } from '@/lib/formDocumentStyles';
+import { isIncidentReportForm, drawIncidentFirstPageSignoff } from '@/components/documents/incidentPdfSignoff';
+import { drawFormHeader, drawFieldRows, drawRegisterTable, drawSignatures, drawFormNotice, drawDeclaration, drawReviewSection } from '@/lib/formDocumentStyles';
 
 /**
  * Generic branded fillable form PDF used as fallback when a library document
@@ -20,13 +21,16 @@ export async function downloadBlankFormPdf({
   await loadCompanyBranding().catch(() => {});
   const doc = new jsPDF({ unit: 'pt', format: 'a4', orientation: columns ? 'landscape' : 'portrait' });
 
-  let y = drawFormHeader(doc, { title, code, subtitle, docType: 'Form' });
-  y = drawFormNotice(doc, y, { purpose });
+  const incidentForm = isIncidentReportForm(title);
+  let y = drawFormHeader(doc, { title, code, subtitle, docType: 'Form', reserveFirstPageSignoff: incidentForm });
+  y = drawFormNotice(doc, y, { purpose: purpose || `Use this form to record information for ${title}.` });
   y = drawFieldRows(doc, y, fields);
   if (columns) y = drawRegisterTable(doc, y, columns, { rows });
+  y = drawReviewSection(doc, y);
   if (declaration) y = drawDeclaration(doc, y);
   y = drawSignatures(doc, y);
 
+  if (incidentForm) drawIncidentFirstPageSignoff(doc);
   drawDocumentFooter(doc, { title, code });
 
   doc.save(`${title}.pdf`);

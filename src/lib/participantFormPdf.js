@@ -1,6 +1,7 @@
 import { jsPDF } from 'jspdf';
 import { drawDocumentFooter, loadCompanyBranding } from '@/lib/companyBranding';
-import { drawFormHeader, drawFieldRows, drawRegisterTable, drawSignatures, drawFormNotice, drawDeclaration, FORM_NOTICES } from '@/lib/formDocumentStyles';
+import { isIncidentReportForm, drawIncidentFirstPageSignoff } from '@/components/documents/incidentPdfSignoff';
+import { drawFormHeader, drawFieldRows, drawRegisterTable, drawSignatures, drawFormNotice, drawDeclaration, drawReviewSection, FORM_NOTICES } from '@/lib/formDocumentStyles';
 
 /**
  * Branded participant form PDF with in-app answers written into each field.
@@ -25,13 +26,16 @@ export async function buildFilledFormDoc({
   await loadCompanyBranding().catch(() => {});
   const doc = new jsPDF({ unit: 'pt', format: 'a4', orientation: columns ? 'landscape' : 'portrait' });
 
-  let y = drawFormHeader(doc, { title, code, subtitle, completedBy, docType: 'Form' });
-  y = drawFormNotice(doc, y, { purpose });
+  const incidentForm = isIncidentReportForm(title);
+  let y = drawFormHeader(doc, { title, code, subtitle, completedBy, docType: 'Form', reserveFirstPageSignoff: incidentForm });
+  y = drawFormNotice(doc, y, { purpose: purpose || `Use this form to record information for ${title}.` });
   y = drawFieldRows(doc, y, fields, values);
   if (columns?.length) y = drawRegisterTable(doc, y, columns, { rows, values: tableValues });
+  y = drawReviewSection(doc, y);
   if (declaration) y = drawDeclaration(doc, y);
   y = drawSignatures(doc, y, { completedBy, completedAt });
 
+  if (incidentForm) drawIncidentFirstPageSignoff(doc, { name: completedBy, date: completedAt });
   drawDocumentFooter(doc, { title, code });
 
   return doc;

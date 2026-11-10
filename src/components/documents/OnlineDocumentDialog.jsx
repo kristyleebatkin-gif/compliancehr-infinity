@@ -7,6 +7,7 @@ import OnlineDocumentRegister from '@/components/documents/OnlineDocumentRegiste
 import OnlineDocumentReading from '@/components/documents/OnlineDocumentReading';
 import OnlineDocumentHistory from '@/components/documents/OnlineDocumentHistory';
 import OnlineDocumentConfirmation from '@/components/documents/OnlineDocumentConfirmation';
+import OnlineDocumentReviewSection from '@/components/documents/OnlineDocumentReviewSection';
 import OnlineDocumentActions from '@/components/documents/OnlineDocumentActions';
 import DocumentAcknowledgements from '@/components/documents/DocumentAcknowledgements';
 import EmployeeRecordNotice from '@/components/profile/EmployeeRecordNotice';
@@ -78,6 +79,7 @@ export default function OnlineDocumentDialog(props) {
                 onChange={(rows) => setModel((current) => ({ ...current, tableRows: rows }))}
                 disabled={editor.busy || readOnly || !editor.ready}
               />
+              <OnlineDocumentReviewSection value={model.review} onChange={(review) => setModel((current) => ({ ...current, review }))} disabled={editor.busy || readOnly || !editor.ready} />
               <OnlineDocumentConfirmation model={model} onChange={setModel} disabled={editor.busy || readOnly || !editor.ready} />
               <OnlineDocumentActions editor={editor} readOnly={readOnly} />
               {readOnly && <DocumentAcknowledgements entity="FormSubmission" documentId={editor.record.id} title={props.title} />}
