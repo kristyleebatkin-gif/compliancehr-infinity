@@ -1,35 +1,28 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
-  Sun,
-  Inbox,
-  CalendarClock,
-  ReceiptText,
-  Heart,
-  ShieldCheck,
-  HeartHandshake,
-  Users,
-  FolderOpen,
-  ScrollText,
-  HeartPulse,
-  Sparkles
+  Sun, Inbox, CalendarClock, ReceiptText, Heart, ShieldCheck,
+  HeartHandshake, Users, FolderOpen, ScrollText, HeartPulse, Sparkles
 } from 'lucide-react';
+import { useRole } from '@/lib/useRole';
 
 const MODULES = [
-  { label: 'Today', path: '/today', icon: Sun },
-  { label: 'Inbox', path: '/communications', icon: Inbox },
-  { label: 'Roster', path: '/rostering', icon: CalendarClock },
-  { label: 'Invoicing', path: '/invoicing', icon: ReceiptText },
-  { label: 'Participants & Goals', path: '/our-participants', icon: Heart },
-  { label: 'Compliance & Audits', path: '/compliance', icon: ShieldCheck },
-  { label: 'NDIS & Aged Care', path: '/ndis-portal', icon: HeartHandshake },
-  { label: 'Team', path: '/our-employees', icon: Users },
-  { label: 'Documents', path: '/documents', icon: FolderOpen },
-  { label: 'Audit log & Registers', path: '/governance', icon: ScrollText }
+  { key: 'today', label: 'Today', path: '/today', icon: Sun },
+  { key: 'communications', label: 'Inbox', path: '/communications', icon: Inbox },
+  { key: 'rostering', label: 'Roster', path: '/rostering', icon: CalendarClock },
+  { key: 'invoicing', label: 'Invoicing', path: '/invoicing', icon: ReceiptText },
+  { key: 'our-participants', label: 'Participants & Goals', path: '/our-participants', icon: Heart },
+  { key: 'compliance', label: 'Compliance & Audits', path: '/compliance', icon: ShieldCheck },
+  { key: 'ndis-provider', label: 'NDIS & Aged Care', path: '/ndis-portal', icon: HeartHandshake },
+  { key: 'our-staff', label: 'Team', path: '/our-employees', icon: Users },
+  { key: 'documents', label: 'Documents', path: '/documents', icon: FolderOpen },
+  { key: 'governance', label: 'Audit log & Registers', path: '/governance', icon: ScrollText }
 ];
 
 export default function TodaySidebar({ plan, onWellbeing }) {
   const { pathname } = useLocation();
+  const { can } = useRole();
+  const visibleModules = MODULES.filter((module) => can(module.key));
 
   return (
     <aside className="t-rail sticky top-4 hidden h-[calc(100vh-2rem)] w-[228px] shrink-0 flex-col p-3 lg:flex">
@@ -38,13 +31,14 @@ export default function TodaySidebar({ plan, onWellbeing }) {
         <p className="t-grad-text text-[15px] font-extrabold leading-tight">Infinity</p>
       </div>
 
-      <nav className="min-h-0 flex-1 space-y-0.5 overflow-y-auto pr-0.5">
-        {MODULES.map(({ label, path, icon: Icon }) => {
+      <nav className="min-h-0 flex-1 space-y-0.5 overflow-y-auto pr-0.5" aria-label="Today workspace navigation">
+        {visibleModules.map(({ key, label, path, icon: Icon }) => {
           const active = pathname === path;
           return (
             <Link
-              key={path}
+              key={key}
               to={path}
+              aria-current={active ? 'page' : undefined}
               className={`flex items-center gap-2.5 rounded-xl px-2.5 py-2 text-[12.5px] font-semibold transition ${
                 active ? 'bg-white/85 text-[#0A2B6D] shadow-sm' : 't-muted hover:bg-white/50'
               }`}
@@ -71,9 +65,7 @@ export default function TodaySidebar({ plan, onWellbeing }) {
         </div>
         <ul className="mt-2 space-y-1.5">
           {(plan || []).slice(0, 3).map((item) => (
-            <li key={item.id} className="text-[11.5px] font-medium leading-snug text-[#2E4472]">
-              • {item.label}
-            </li>
+            <li key={item.id} className="text-[11.5px] font-medium leading-snug text-[#2E4472]">• {item.label}</li>
           ))}
           {!plan?.length ? <li className="text-[11.5px] text-[#4B6392]">Nothing scheduled yet.</li> : null}
         </ul>
