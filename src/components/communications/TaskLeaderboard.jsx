@@ -26,12 +26,23 @@ export default function TaskLeaderboard({ compact = true }) {
       try {
         const seasonStart = settings.season_start;
         const seasonEnd = format(new Date(settings.season_end), 'yyyy-MM-dd');
-        const taskPage = await base44.entities.TodoTask.filter(
-          { status: { $in: ['Completed', 'Finalised'] }, completed_date: { $gte: seasonStart, $lte: seasonEnd } },
-          { limit: 500, fields: ['responsible', 'completed_date', 'time_taken_minutes', 'title', 'module'] }
-        );
-        if (!Array.isArray(taskPage?.items)) throw new Error('Unexpected task leaderboard response.');
-        if (active) setTasks(taskPage.items);
+        const filter = { status: { $in: ['Completed', 'Finalised'] }, completed_date: { $gte: seasonStart, $lte: seasonEnd } };
+        const rows = [];
+        const seenCursors = new Set();
+        let cursor;
+        do {
+          const taskPage = await base44.entities.TodoTask.filter(filter, {
+            limit: 500,
+            cursor,
+            fields: ['responsible', 'completed_date', 'time_taken_minutes', 'title', 'module']
+          });
+          if (!Array.isArray(taskPage?.items)) throw new Error('Unexpected task leaderboard response.');
+          rows.push(...taskPage.items);
+          cursor = taskPage.next_cursor;
+          if (cursor && seenCursors.has(cursor)) throw new Error('Task leaderboard pagination did not advance.');
+          if (cursor) seenCursors.add(cursor);
+        } while (cursor);
+        if (active) setTasks(rows);
       } catch {
         if (active) {
           setTasks([]);
