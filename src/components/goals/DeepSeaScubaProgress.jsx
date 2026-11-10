@@ -131,7 +131,7 @@ export default function DeepSeaScubaProgress({ goals = [], onProgress, compact =
 
           <p
             className="mx-auto max-w-3xl text-center text-xs sm:text-sm font-extrabold text-black"
-            style={{ color: '#000000' }}
+            style={{ color: '#0A2B6D' }}
           >
             Slide the yellow submarine or tap 25%, 50%, 75% or 100% to fill each neon-aqua scuba tank and unlock custom deep-sea rewards!
           </p>
