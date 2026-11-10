@@ -115,9 +115,11 @@ export default function TaskLeaderboard({ compact = true }) {
       <div className="mt-2 space-y-1.5">
         {settingsLoading || tasksLoading ? (
           <p className="rounded-lg border border-white/25 bg-[#16447A] px-2.5 py-2 text-[11px] text-white">Loading verified staff scores…</p>
-        ) : settingsError || tasksError ? (
+        ) : settingsError ? (
+          <p role="alert" className="rounded-lg border border-[#FF2E9A]/50 bg-[#16447A] px-2.5 py-2 text-[11px] text-white">Competition settings could not be loaded. Refresh the page to retry.</p>
+        ) : tasksError ? (
           <div role="alert" className="rounded-lg border border-[#FF2E9A]/50 bg-[#16447A] px-2.5 py-2 text-[11px] text-white">
-            {settingsError ? 'Competition settings could not be loaded.' : tasksError}
+            {tasksError}
             <button type="button" onClick={() => setRevision((value) => value + 1)} className="ml-2 underline underline-offset-2">Retry scores</button>
           </div>
         ) : season.board.length === 0 ? (
