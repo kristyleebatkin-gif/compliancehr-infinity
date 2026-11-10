@@ -8,6 +8,7 @@ import { Download, CalendarDays } from 'lucide-react';
 import { downloadCsv } from '@/lib/csvExport';
 import { useToast } from '@/components/ui/use-toast';
 import { format } from 'date-fns';
+import TableTab from '@/components/common/TableTab';
 
 const SEVERITIES = ['All', 'Low', 'Medium', 'High', 'Critical'];
 const severityTone = {
@@ -71,6 +72,7 @@ export default function IncidentLog() {
         </div>
       }
     >
+      <TableTab label="Incident Log">
       <div className="mb-4 flex flex-wrap items-end gap-2">
         <div>
           <label className="mb-1 block text-[11px] font-semibold text-foreground/60">From</label>
@@ -128,6 +130,7 @@ export default function IncidentLog() {
           </table>
         </div>
       )}
+      </TableTab>
     </SectionCard>
   );
 }
