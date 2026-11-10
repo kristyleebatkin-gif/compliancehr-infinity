@@ -5,7 +5,7 @@ import { initials } from '@/components/today/todayUi';
 import HandoverNotes from '@/components/teamleader/HandoverNotes';
 
 const TILES = [
-  { key: 'escalations', label: 'Escalated to you', hint: '24 hrs+', tone: 'from-[#FF2E9A] to-[#5A00D6]', screen: 'highlights' },
+  { key: 'escalations', label: 'Team escalations', hint: 'Urgent / overdue', tone: 'from-[#FF2E9A] to-[#5A00D6]', screen: 'highlights' },
   { key: 'missingNotes', label: 'Shift notes missing', hint: 'Needs a note', tone: 'from-[#5A00D6] to-[#0072FF]', screen: 'notes' },
   { key: 'onShift', label: 'On shift now', hint: 'Clocked in', tone: 'from-[#0072FF] to-[#0A2B6D]', screen: 'team' },
   { key: 'unfilled', label: 'Roster clash / unfilled', hint: 'Cover needed', tone: 'from-[#0A2B6D] to-[#5A00D6]', screen: 'roster' }
@@ -28,7 +28,7 @@ export default function TeamLeaderHome({ user, data, derived, theme, onToggleThe
       setReply(
         derived.late.length
           ? `${derived.late.map((shift) => shift.employee_name || 'Unnamed').join(', ')} ${derived.late.length === 1 ? 'has' : 'have'} not clocked in yet.`
-          : 'Everyone is clocked in on time.'
+          : 'No overdue clock-ins found in today’s roster.'
       );
       return;
     }
