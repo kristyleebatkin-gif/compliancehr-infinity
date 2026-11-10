@@ -5,6 +5,7 @@ import { canAccessNav } from '@/lib/roles';
 import useTodayData, { todayIso } from '@/components/today/useTodayData';
 import TodaySidebar from '@/components/today/TodaySidebar';
 import TodayHeader from '@/components/today/TodayHeader';
+import TodayRadio from '@/components/today/TodayRadio';
 import TodayMobileNav from '@/components/today/TodayMobileNav';
 import AskBar from '@/components/today/AskBar';
 import MorningBriefTiles from '@/components/today/MorningBriefTiles';
@@ -106,7 +107,7 @@ function TodayWorkspace({ onSecurityPin }) {
 
   return (
     <div className="today-shell" data-theme={theme}>
-      <div className="mx-auto flex w-full max-w-[1480px] items-start gap-4 px-3 pb-24 pt-4 sm:px-5">
+      <div className="mx-auto flex w-full max-w-[1480px] items-start gap-4 px-3 pb-24 pt-4 sm:px-5 min-[1640px]:max-w-[1680px]">
         <TodaySidebar
           plan={plan}
           onWellbeing={() => wellbeingRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
@@ -122,10 +123,12 @@ function TodayWorkspace({ onSecurityPin }) {
             onSecurityPin={onSecurityPin}
           />
 
+          <TodayRadio />
+
           <TodayMobileNav />
 
           {!data ? (
-            <div className="grid gap-3.5 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid gap-3.5 md:grid-cols-2 xl:grid-cols-3 min-[1640px]:grid-cols-4">
               {[0, 1, 2, 3, 4, 5].map((key) => <div key={key} className="t-card h-40 animate-pulse" />)}
             </div>
           ) : (
@@ -147,7 +150,7 @@ function TodayWorkspace({ onSecurityPin }) {
                 </>
               )}
 
-              <div className="grid gap-3.5 md:grid-cols-2 xl:grid-cols-3">
+              <div className="grid gap-3.5 md:grid-cols-2 xl:grid-cols-3 min-[1640px]:grid-cols-4">
                 {visibleKeys.emails && (data.errors?.emails ? <SectionUnavailable label={ERROR_LABELS.emails} /> : <EmailsPanel emails={data.emails} />)}
                 {visibleKeys.shifts && visibleKeys.notesOutstanding && (data.errors?.shifts || data.errors?.notes ? <SectionUnavailable label="roster and shift-note data" /> : <RosterTodayPanel shifts={data.shifts} notes={data.notes} />)}
                 {visibleKeys.invoices && (data.errors?.invoices ? <SectionUnavailable label={ERROR_LABELS.invoices} /> : <InvoicesPanel invoices={data.invoices} onRefresh={reload} />)}

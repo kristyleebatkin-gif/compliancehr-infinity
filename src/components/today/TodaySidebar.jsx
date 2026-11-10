@@ -25,7 +25,7 @@ export default function TodaySidebar({ plan, onWellbeing }) {
   const visibleModules = MODULES.filter((module) => can(module.key));
 
   return (
-    <aside className="t-rail sticky top-4 hidden h-[calc(100vh-2rem)] w-[228px] shrink-0 flex-col p-3 lg:flex">
+    <aside className="t-rail sticky top-4 hidden h-[calc(100dvh-2rem)] max-h-[calc(100dvh-2rem)] w-[228px] shrink-0 flex-col p-3 lg:flex xl:w-[244px]">
       <div className="px-2 pb-3 pt-1">
         <p className="t-muted text-[10px] font-bold uppercase tracking-[0.16em]">ComplianceHR</p>
         <p className="t-grad-text text-[15px] font-extrabold leading-tight">Infinity</p>
