@@ -93,7 +93,7 @@ import OurParticipantProfiles from '@/pages/OurParticipantProfiles';
 import OurEmployeeDetail from '@/pages/OurEmployeeDetail';
 import OurParticipantDetail from '@/pages/OurParticipantDetail';
 import GovernanceLayer from '@/pages/GovernanceLayer';
-import Landing from '@/pages/Landing';
+import StartScreen from '@/pages/StartScreen';
 import TodayDashboard from '@/pages/TodayDashboard';
 import TeamLeaderDashboard from '@/pages/TeamLeaderDashboard';
 import SecondScreen from '@/pages/SecondScreen';
@@ -128,7 +128,7 @@ const AuthenticatedApp = () => {
   // Render the main app
   return (
     <Routes>
-      <Route path="/" element={<Landing />} />
+      <Route path="/" element={<StartScreen />} />
       <Route path="/connect" element={<Connect />} />
       <Route path="/report-complaint" element={<PublicComplaint />} />
       <Route path="/volunteer-apply" element={<PublicVolunteer />} />

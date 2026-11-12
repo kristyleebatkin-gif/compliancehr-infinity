@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import EmptyState from '@/components/EmptyState';
 import ScreenByScreenMasterAudit2026 from '@/components/compliance/ScreenByScreenMasterAudit2026';
+import SuggestionsDigestBoard from '@/components/suggestions/SuggestionsDigestBoard';
 import Feedback from '@/pages/Feedback';
 import { useToast } from '@/components/ui/use-toast';
 import { Eye, Zap, SlidersHorizontal, Mail, Loader2, RefreshCw, Search, MessageSquare } from 'lucide-react';
@@ -85,7 +86,7 @@ export default function SuggestionsHub() {
             Suggestions, Audit &amp; Feedback Workspace
           </span>
           <h3 className="text-sm font-extrabold text-[#0A2B6D]">
-            Screen 1: Suggestions &amp; 45-Screen Audit · Screen 2: Feedback &amp; Surveys Register
+            Screen 1: Suggestions &amp; 45-Screen Audit · Screen 2: Feedback &amp; Surveys · Screen 3: Digest Actions
           </h3>
         </div>
         <div className="flex flex-wrap gap-1.5">
@@ -93,6 +94,7 @@ export default function SuggestionsHub() {
             ['both', 'Suggestions + Feedback & Surveys'],
             ['suggestions', 'Screen 1: Suggestions & 45-Screen Audit'],
             ['feedback', 'Screen 2: Feedback & Surveys'],
+            ['digest', 'Screen 3: Digest Actions (145)'],
           ].map(([k, lbl]) => (
             <Button
               key={k}
@@ -131,7 +133,9 @@ export default function SuggestionsHub() {
         </section>
       )}
 
-      {screenMode !== 'feedback' && <ScreenByScreenMasterAudit2026 />}
+      {(screenMode === 'digest' || screenMode === 'both') && <SuggestionsDigestBoard />}
+
+      {(screenMode === 'suggestions' || screenMode === 'both') && <ScreenByScreenMasterAudit2026 />}
 
       {loading && (
         <Card><CardContent className="p-8 flex items-center justify-center gap-2 text-muted-foreground">
@@ -143,7 +147,7 @@ export default function SuggestionsHub() {
         <Card><CardContent className="p-8 text-center text-sm text-destructive">{error}</CardContent></Card>
       )}
 
-      {review && !loading && (
+      {review && !loading && screenMode !== 'digest' && (
         <>
           <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
             {[
