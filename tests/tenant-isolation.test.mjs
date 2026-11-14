@@ -124,3 +124,26 @@ test('tagging function is owner-only and uses the shared classification', async 
   assert.match(src, /SHARED_WITH_COPIES_ENTITIES/);
   assert.match(src, /mode === 'apply'/, 'must default to dry run');
 });
+
+test('release switch is identical in frontend and backend, and stays OFF until live records are tagged', async () => {
+  const front = await read('src/lib/tenantEnforcement.js');
+  assert.equal(front, await read('base44/shared/tenantEnforcement.ts'));
+  // Flip to true only in release 2 together with `node scripts/tenant-rls.mjs --apply`; update this test then.
+  assert.match(front, /export const TENANT_ENFORCEMENT_ON = false;/);
+});
+
+test('live dashboard function uses the server business context and per-business snapshots', async () => {
+  const src = await read('base44/functions/liveModuleOverview/entry.ts');
+  assert.match(src, /resolveTenantContext\(base44/);
+  assert.doesNotMatch(src, /\.(aggregate|count)\(\{\s*(query: \{\}|\})/, 'an unscoped aggregate/count remains');
+  assert.match(src, /key: \['tenant_id', 'module', 'snapshot_date'\]/);
+});
+
+test('branding cache is per business and cleared on sign-out; no business contact details are built in', async () => {
+  const branding = await read('src/lib/companyBranding.js');
+  const client = await read('src/api/base44Client.js');
+  assert.doesNotMatch(branding, /localStorage\.(get|set)Item\(STORAGE_KEY/);
+  assert.doesNotMatch(branding, /11769681650|0402 165 668|kristyleebatkin/);
+  assert.match(client, /rawClient\.auth\.logout = /);
+  assert.match(client, /clearBusinessCaches\(\)/);
+});
