@@ -2,15 +2,15 @@
   "name": "Procurement Order Alerts",
   "description": "Notifies management and finance staff whenever a purchase order is created or its status changes",
   "trigger": {
+    "condition": "${ (.trigger.event_type != \"update\" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; . != \"tenant_id\" and . != \"updated_date\")) and (.trigger.event_type == \"create\" or (.trigger.changed_fields | index(\"status\") != null)) }",
     "config": {
       "trigger_type": "entity",
-      "entity_name": "PurchaseOrder",
       "events": [
         "create",
         "update"
-      ]
-    },
-    "condition": "${ (.trigger.event_type != \"update\" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; . != \"tenant_id\" and . != \"updated_date\")) and (.trigger.event_type == \"create\" or (.trigger.changed_fields | index(\"status\") != null)) }"
+      ],
+      "entity_name": "PurchaseOrder"
+    }
   },
   "definition": {
     "document": {
