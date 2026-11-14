@@ -1,4 +1,5 @@
 {
+  "name": "Document Audit: Employee",
   "description": "Automatically records who changed, created or deleted an employee profile document and when, into the central audit log and the employee's profile audit trail.",
   "trigger": {
     "condition": "${ (.trigger.event_type != \"update\" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; . != \"tenant_id\" and . != \"updated_date\")) }",
@@ -42,6 +43,5 @@
         }
       }
     ]
-  },
-  "name": "Document Audit: Employee"
+  }
 }
