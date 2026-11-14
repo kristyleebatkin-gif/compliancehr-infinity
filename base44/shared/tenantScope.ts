@@ -15,6 +15,7 @@
 //
 // The wrapper always applies, independent of TENANT_ENFORCEMENT_ON: every live record is tagged
 // (14 Nov 2026), so scoping is correct today and stays correct when a second business is added.
+import { createClientFromRequest as sdkClientFromRequest } from 'npm:@base44/sdk@0.8.54';
 import {
   BUSINESS_OWNED_ENTITIES,
   SHARED_WITH_COPIES_ENTITIES,
