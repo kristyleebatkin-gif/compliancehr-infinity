@@ -15,13 +15,11 @@
 // Task sign-off is the first kind of record. Tasks set to "Pending Approval" anywhere in the app
 // are picked up automatically; requests whose task was signed off or reopened elsewhere are withdrawn.
 import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
-import { hasApprovedAccess } from '../../shared/roleMatrix.ts';
+import { hasApprovedAccess, TASK_APPROVER_ROLES } from '../../shared/roleMatrix.ts';
 import { BUSINESS_TIME_ZONE } from '../../shared/businessTime.ts';
 
-export const TASK_APPROVER_ROLES = [
-  'admin', 'Provider Administrator', 'Compliance Manager', 'Administration',
-  'Team Leader', 'Human Resources Manager', 'Quality & Improvement Manager',
-];
+// Who may approve comes from the shared role rules, shown on the Users & Permissions page.
+export { TASK_APPROVER_ROLES };
 
 const norm = (s: unknown) => String(s ?? '').trim().toLowerCase();
 const items = (page: any) => (Array.isArray(page) ? page : page?.items || []);
