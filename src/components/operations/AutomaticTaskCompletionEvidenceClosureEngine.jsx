@@ -389,32 +389,32 @@ export default function AutomaticTaskCompletionEvidenceClosureEngine({ compact =
           </div>
         </div>
 
-        {/* Executive Automation Strip: 5 Zero-Touch Live Scores */}
+        {/* Executive strip: only real counts are shown; scores without a calculation say so */}
         <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-6">
           <div className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-3">
             <div className="text-[10px] font-extrabold uppercase text-[#0072FF]">Compliance Score</div>
-            <div className="mt-0.5 text-lg font-extrabold text-[#0A2B6D]">99.4%</div>
-            <div className="text-[10px] font-bold text-emerald-700">Auto-Updated Live</div>
+            <div className="mt-0.5 text-lg font-extrabold text-[#0A2B6D]">Not measured yet</div>
+            <div className="text-[10px] font-bold text-slate-600">No calculation connected</div>
           </div>
           <div className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-3">
             <div className="text-[10px] font-extrabold uppercase text-[#5A00D6]">Workforce Score</div>
-            <div className="mt-0.5 text-lg font-extrabold text-[#0A2B6D]">98.9%</div>
-            <div className="text-[10px] font-bold text-emerald-700">Screening &amp; Skills Synced</div>
+            <div className="mt-0.5 text-lg font-extrabold text-[#0A2B6D]">Not measured yet</div>
+            <div className="text-[10px] font-bold text-slate-600">No calculation connected</div>
           </div>
           <div className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-3">
             <div className="text-[10px] font-extrabold uppercase text-[#FF2E9A]">Goal Completion</div>
-            <div className="mt-0.5 text-lg font-extrabold text-[#0A2B6D]">96.8%</div>
-            <div className="text-[10px] font-bold text-[#5A00D6]">Auto-Linked from Shift Notes</div>
+            <div className="mt-0.5 text-lg font-extrabold text-[#0A2B6D]">Not measured yet</div>
+            <div className="text-[10px] font-bold text-slate-600">No calculation connected</div>
           </div>
           <div className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-3">
             <div className="text-[10px] font-extrabold uppercase text-[#0072FF]">Audit Readiness</div>
-            <div className="mt-0.5 text-lg font-extrabold text-[#0A2B6D]">100%</div>
-            <div className="text-[10px] font-bold text-emerald-700">45 / 45 Registers Live</div>
+            <div className="mt-0.5 text-lg font-extrabold text-[#0A2B6D]">Not measured yet</div>
+            <div className="text-[10px] font-bold text-slate-600">No calculation connected</div>
           </div>
           <div className="rounded-2xl border-2 border-[#0A2B6D] bg-white p-3">
             <div className="text-[10px] font-extrabold uppercase text-[#5A00D6]">Evidence Coverage</div>
             <div className="mt-0.5 text-lg font-extrabold text-[#0A2B6D]">
-              {Math.max(48, completedCount + 42)} Closed
+              {completedCount} Closed
             </div>
             <div className="text-[10px] font-bold text-[#0072FF]">5-Pt Stamped Records</div>
           </div>
