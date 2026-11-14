@@ -4,9 +4,7 @@ import BrandLogoLockup from '@/components/common/BrandLogoLockup';
 import { MODULE_DIRECTORY, NAV_GROUPS, buildNavigationGroups } from '@/lib/moduleDirectory';
 import { useAuth } from '@/lib/AuthContext';
 import {
-  LogOut, LayoutDashboard, ClipboardList,
-  Users, ShieldCheck, ShieldAlert, FolderOpen, Megaphone,
-  BarChart3, Cpu, Settings, Sun, Smartphone,
+  LogOut,
 } from 'lucide-react';
 
 const BRAND_GRADIENT =
