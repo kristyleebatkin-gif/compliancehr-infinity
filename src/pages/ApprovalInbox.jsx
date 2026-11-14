@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Inbox, Loader2, PenLine, Undo2, ExternalLink, RefreshCw } from 'lucide-react';
+import { Inbox, Loader2, PenLine, Undo2, ExternalLink, RefreshCw, KeyRound } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import ModuleShell from '@/components/module/ModuleShell';
 import { useToast } from '@/components/ui/use-toast';
@@ -35,7 +35,9 @@ async function callApprovals(body) {
 
 const when = (iso) => (iso ? new Date(iso).toLocaleString('en-AU', { timeZone: 'Australia/Brisbane', day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' }) : '-');
 
-function RequestRow({ r, onDecide }) {
+const isAccess = (r) => r?.record_type === 'AccessRequest';
+
+function RequestRow({ r, onDecide, onWithdraw }) {
   return (
     <li className="flex flex-col gap-2 rounded-xl border border-slate-200 bg-white p-3.5 sm:flex-row sm:items-center sm:justify-between">
       <div className="min-w-0">
@@ -49,23 +51,26 @@ function RequestRow({ r, onDecide }) {
       </div>
       <div className="flex shrink-0 flex-wrap items-center gap-2">
         <Badge className={STATUS_STYLE[r.status] || ''}>{r.status}</Badge>
-        {r.record_url && (
+        {r.record_url && !isAccess(r) && (
           <Button asChild variant="ghost" size="sm">
             <Link to={r.record_url}><ExternalLink className="h-4 w-4" />Open</Link>
           </Button>
         )}
         {onDecide && (
           <>
-            <Button size="sm" variant="outline" onClick={() => onDecide(r, 'return')}><Undo2 className="h-4 w-4" />Return</Button>
-            <Button size="sm" onClick={() => onDecide(r, 'approve')}><PenLine className="h-4 w-4" />Sign off</Button>
+            <Button size="sm" variant="outline" onClick={() => onDecide(r, 'return')}><Undo2 className="h-4 w-4" />{isAccess(r) ? 'Decline' : 'Return'}</Button>
+            <Button size="sm" onClick={() => onDecide(r, 'approve')}><PenLine className="h-4 w-4" />{isAccess(r) ? 'Approve' : 'Sign off'}</Button>
           </>
+        )}
+        {onWithdraw && isAccess(r) && r.status === 'Pending' && (
+          <Button size="sm" variant="outline" onClick={() => onWithdraw(r)}>Withdraw</Button>
         )}
       </div>
     </li>
   );
 }
 
-function Section({ title, hint, rows, empty, onDecide }) {
+function Section({ title, hint, rows, empty, onDecide, onWithdraw }) {
   return (
     <section aria-label={title} className="space-y-2">
       <div>
@@ -73,9 +78,56 @@ function Section({ title, hint, rows, empty, onDecide }) {
         {hint && <p className="text-sm text-slate-600">{hint}</p>}
       </div>
       {rows.length ? (
-        <ul className="space-y-2">{rows.map((r) => <RequestRow key={r.id} r={r} onDecide={onDecide} />)}</ul>
+        <ul className="space-y-2">{rows.map((r) => <RequestRow key={r.id} r={r} onDecide={onDecide} onWithdraw={onWithdraw} />)}</ul>
       ) : (
         <p className="rounded-xl border border-dashed border-slate-300 p-4 text-sm text-slate-600">{empty}</p>
+      )}
+    </section>
+  );
+}
+
+// Access Requests (backlog 16.09): ask for a different role; a manager approves or declines it here.
+function AccessRequestForm({ data, onSent }) {
+  const { toast } = useToast();
+  const [role, setRole] = useState('');
+  const [reason, setReason] = useState('');
+  const [sending, setSending] = useState(false);
+  const waiting = (data.my_requests || []).find((r) => isAccess(r) && r.status === 'Pending');
+  const send = async (event) => {
+    event.preventDefault();
+    setSending(true);
+    try {
+      await callApprovals({ action: 'request_access', role, reason });
+      toast({ title: 'Access request sent', description: `A manager will decide your request for ${role}.` });
+      setRole(''); setReason('');
+      await onSent();
+    } catch (e) {
+      toast({ title: 'Not sent', description: e.message, variant: 'destructive' });
+    } finally {
+      setSending(false);
+    }
+  };
+  return (
+    <section aria-label="Ask for different access" className="space-y-2 rounded-xl border border-slate-200 bg-white p-4">
+      <h2 className="flex items-center gap-2 text-base font-semibold text-slate-900"><KeyRound className="h-4 w-4" />Ask for different access</h2>
+      <p className="text-sm text-slate-600">You're currently <strong>{data.my_role}</strong>. If your job needs a different role, ask here and a manager will approve or decline it.</p>
+      {waiting ? (
+        <p className="rounded-lg bg-amber-50 p-3 text-sm text-amber-900">Your request for <strong>{waiting.requested_role}</strong> is waiting for a manager. It's listed under Your requests below, where you can withdraw it.</p>
+      ) : (
+        <form onSubmit={send} className="grid gap-2 sm:grid-cols-[minmax(0,14rem)_1fr_auto] sm:items-end">
+          <div className="space-y-1">
+            <Label htmlFor="access-role">Role you need</Label>
+            <select id="access-role" required value={role} onChange={(e) => setRole(e.target.value)} className="h-9 w-full rounded-md border border-input bg-background px-2 text-sm">
+              <option value="" disabled>Choose a role…</option>
+              {(data.requestable_roles || []).map((r) => <option key={r} value={r}>{r}</option>)}
+            </select>
+          </div>
+          <div className="space-y-1">
+            <Label htmlFor="access-reason">Why do you need it?</Label>
+            <Input id="access-reason" value={reason} onChange={(e) => setReason(e.target.value)} maxLength={1000} placeholder="For example: I now build the weekly roster" />
+          </div>
+          <Button type="submit" disabled={sending || !role || reason.trim().length < 10}>{sending && <Loader2 className="h-4 w-4 animate-spin" />}Send request</Button>
+        </form>
       )}
     </section>
   );
@@ -107,12 +159,23 @@ export default function ApprovalInbox() {
 
   const openDecision = (request, decision) => { setTarget({ request, decision }); setNote(''); setSignature(''); };
 
+  const withdraw = async (request) => {
+    try {
+      await callApprovals({ action: 'withdraw', id: request.id });
+      toast({ title: 'Request withdrawn', description: request.title });
+      await load();
+    } catch (e) {
+      toast({ title: 'Not withdrawn', description: e.message, variant: 'destructive' });
+    }
+  };
+
   const submit = async () => {
     if (!target) return;
     setSaving(true);
     try {
       await callApprovals({ action: 'decide', id: target.request.id, decision: target.decision, note, signature });
-      toast({ title: target.decision === 'approve' ? 'Signed off' : 'Returned', description: target.request.title });
+      const access = isAccess(target.request);
+      toast({ title: target.decision === 'approve' ? (access ? 'Approved' : 'Signed off') : (access ? 'Declined' : 'Returned'), description: target.request.title });
       setTarget(null);
       await load();
     } catch (e) {
@@ -123,6 +186,7 @@ export default function ApprovalInbox() {
   };
 
   const approving = target?.decision === 'approve';
+  const accessTarget = isAccess(target?.request);
 
   return (
     <ModuleShell
@@ -159,10 +223,12 @@ export default function ApprovalInbox() {
               empty=""
             />
           )}
+          {data.can_request_access && <AccessRequestForm data={data} onSent={load} />}
           <Section
             title="Your requests"
             rows={data.my_requests}
-            empty="You have no approval requests. Completing a task that needs sign-off adds it here."
+            empty="You have no approval requests. Completing a task that needs sign-off, or asking for different access, adds it here."
+            onWithdraw={withdraw}
           />
         </div>
       )}
@@ -170,12 +236,15 @@ export default function ApprovalInbox() {
       <Dialog open={Boolean(target)} onOpenChange={(open) => !open && setTarget(null)}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{approving ? 'Sign off' : 'Return for more work'}</DialogTitle>
-            <DialogDescription>{target?.request.title}</DialogDescription>
+            <DialogTitle>{accessTarget ? (approving ? 'Approve access' : 'Decline access') : (approving ? 'Sign off' : 'Return for more work')}</DialogTitle>
+            <DialogDescription>
+              {target?.request.title}
+              {accessTarget && approving && ' Approving changes their role straight away.'}
+            </DialogDescription>
           </DialogHeader>
           <div className="space-y-3">
             <div className="space-y-1">
-              <Label htmlFor="approval-note">{approving ? 'Note (optional)' : 'Why is it being returned?'}</Label>
+              <Label htmlFor="approval-note">{approving ? 'Note (optional)' : accessTarget ? 'Why is it being declined?' : 'Why is it being returned?'}</Label>
               <Textarea id="approval-note" value={note} onChange={(e) => setNote(e.target.value)} rows={3} />
             </div>
             {approving && (
@@ -191,7 +260,7 @@ export default function ApprovalInbox() {
                 disabled={saving || (approving ? signature.trim().length < 2 : note.trim().length < 3)}
               >
                 {saving && <Loader2 className="h-4 w-4 animate-spin" />}
-                {approving ? 'Sign off' : 'Return'}
+                {approving ? (accessTarget ? 'Approve' : 'Sign off') : (accessTarget ? 'Decline' : 'Return')}
               </Button>
             </div>
           </div>
