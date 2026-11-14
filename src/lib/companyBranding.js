@@ -81,9 +81,12 @@ export function getCompanyBranding() {
     }
     // Older caches stored the slogan with the brand name prefixed; drop it so
     // documents never print the name twice.
-    branding.slogan = String(branding.slogan || '')
-      .replace(/^ComplianceHR (Infinity|Infinitely)\s*[|·]\s*/i, '')
-      .trim() || DEFAULTS.slogan;
+    // A business may choose to have no slogan (stored as ''); only a missing value uses the default.
+    branding.slogan = branding.slogan === ''
+      ? ''
+      : String(branding.slogan || '')
+        .replace(/^ComplianceHR (Infinity|Infinitely)\s*[|·]\s*/i, '')
+        .trim() || DEFAULTS.slogan;
     return branding;
   } catch {
     return DEFAULTS;
@@ -138,7 +141,7 @@ export async function loadCompanyBranding() {
   return {
     ...cacheCompanyBranding({
       companyName: businessBranding.companyName || provider?.provider_name || DEFAULTS.companyName,
-      slogan: provider?.document_slogan || DEFAULTS.slogan,
+      slogan: provider ? String(provider.document_slogan ?? '').trim() : DEFAULTS.slogan,
       logoUrl: provider?.logo_url || getCompanyBranding().logoUrl || '',
       logoDataUrl,
       addressLine: businessBranding.addressLine,
@@ -177,7 +180,7 @@ export async function saveCompanyBranding({
   return {
     ...cacheCompanyBranding({
       companyName: payload.provider_name,
-      slogan: slogan?.trim() || DEFAULTS.slogan,
+      slogan: String(slogan ?? '').trim(),
       logoUrl: payload.logo_url,
       logoDataUrl: cachedLogoDataUrl,
     }),
@@ -220,9 +223,11 @@ export function drawCompanyBranding(doc, x, y, { fontSize = 16, logoSize = 30, m
   let bottomY = y + (nameLines.length - 1) * fontSize * 1.2 + 15;
   const sloganSize = Math.max(7.5, fontSize * 0.5);
   doc.setFont('helvetica', 'normal'); doc.setFontSize(sloganSize); doc.setTextColor(71, 85, 105);
-  const sloganLines = doc.splitTextToSize(branding.slogan, availableWidth);
-  doc.text(sloganLines, textX, bottomY, { lineHeightFactor: 1.35 });
-  bottomY += sloganLines.length * sloganSize * 1.35 + 4;
+  if (branding.slogan) {
+    const sloganLines = doc.splitTextToSize(branding.slogan, availableWidth);
+    doc.text(sloganLines, textX, bottomY, { lineHeightFactor: 1.35 });
+    bottomY += sloganLines.length * sloganSize * 1.35 + 4;
+  }
   if (branding.addressLine) {
     doc.setFontSize(7); doc.setTextColor(100, 116, 139);
     const addressLines = doc.splitTextToSize(branding.addressLine, availableWidth);
@@ -266,7 +271,8 @@ export function drawDocumentFooter(doc, {
   const descriptor = [confidential, docType && docType !== title && docType, title, code && `(${code})`].filter(Boolean).join(' | ');
   const branding = getCompanyBranding();
   const footerTextX = branding.logoDataUrl ? margin + 24 : margin;
-  const slogan = branding.slogan || 'Complete Control. Greater Confidence. Brighter Success.';
+  // The footer is the platform's own identity, so it always uses the ComplianceHR slogan.
+  const slogan = COMPANY_SLOGAN;
 
   for (let page = 1; page <= pages; page += 1) {
     doc.setPage(page);
