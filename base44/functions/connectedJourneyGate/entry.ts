@@ -66,6 +66,10 @@ async function billingBoard(base44: any, body: any) {
   const order = { blocked: 0, ready: 1, complete: 2 };
   rows.sort((a, b) => (order[a.state] - order[b.state]) || String(b.date).localeCompare(String(a.date)));
 
+  for (const row of rows) {
+    if (row.state === 'ready') row.state = 'incomplete';
+    row.unknowns = [...(row.unknowns || []), 'Cross-module acceptance is pending verification.'];
+  }
   return json({
     ok: true,
     journey: 'b',
@@ -80,7 +84,7 @@ async function billingBoard(base44: any, body: any) {
     },
     mode: 'read_only_preview',
     verification: 'Cross-module evidence review only. This preview does not authorise billing, eligibility, closure or release.',
-    rows: rows.map((row: any) => ({ ...row, state: row.state === 'ready' ? 'incomplete' : row.state, unknowns: [...(row.unknowns || []), 'Workflow acceptance and exact record relationships are pending verification.'] })),
+    rows,
   });
 }
 
@@ -133,6 +137,10 @@ async function incidentBoard(base44: any) {
   const rank = { blocked: 0, ready: 1, complete: 2 };
   rows.sort((a: any, b: any) => (rank[a.state] - rank[b.state]) || String(b.date_occurred).localeCompare(String(a.date_occurred)));
 
+  for (const row of rows) {
+    if (row.state === 'ready') row.state = 'incomplete';
+    row.unknowns = [...(row.unknowns || []), 'Cross-module acceptance is pending verification.'];
+  }
   return json({
     ok: true,
     journey: 'c',
@@ -143,7 +151,7 @@ async function incidentBoard(base44: any) {
     },
     mode: 'read_only_preview',
     verification: 'Cross-module evidence review only. This preview does not authorise billing, eligibility, closure or release.',
-    rows: rows.map((row: any) => ({ ...row, state: row.state === 'ready' ? 'incomplete' : row.state, unknowns: [...(row.unknowns || []), 'Workflow acceptance and exact record relationships are pending verification.'] })),
+    rows,
   });
 }
 
@@ -159,8 +167,8 @@ async function eligibilityBoard(base44: any, body: any) {
   const today = day(new Date());
 
   const match = (record: any, profile: any) =>
-    text(record.staff_id) === text(profile.id) ||
-    text(record.employee_id) === text(profile.id);
+    (Boolean(text(profile.id)) && text(record.staff_id) === text(profile.id)) ||
+    (Boolean(text(profile.id)) && text(record.employee_id) === text(profile.id));
 
   const rows = staff
     .filter((profile: any) => !wanted || text(profile.id) === wanted)
@@ -184,6 +192,10 @@ async function eligibilityBoard(base44: any, body: any) {
   const rank = { blocked: 0, incomplete: 1, ready: 2, complete: 3 };
   rows.sort((a: any, b: any) => rank[a.state] - rank[b.state]);
 
+  for (const row of rows) {
+    if (row.state === 'ready') row.state = 'incomplete';
+    row.unknowns = [...(row.unknowns || []), 'Cross-module acceptance is pending verification.'];
+  }
   return json({
     ok: true,
     journey: 'd',
@@ -195,7 +207,7 @@ async function eligibilityBoard(base44: any, body: any) {
     note: 'Eligibility is judged only on checks, certificates and training your organisation has recorded. Missing evidence is shown as unknown, never as a pass.',
     mode: 'read_only_preview',
     verification: 'Cross-module evidence review only. This preview does not authorise billing, eligibility, closure or release.',
-    rows: rows.map((row: any) => ({ ...row, state: row.state === 'ready' ? 'incomplete' : row.state, unknowns: [...(row.unknowns || []), 'Workflow acceptance and exact record relationships are pending verification.'] })),
+    rows,
   });
 }
 
@@ -231,6 +243,10 @@ async function documentBoard(base44: any, user: any) {
   const rank = { ready: 0, blocked: 1, complete: 2 };
   rows.sort((a: any, b: any) => (rank[a.state] - rank[b.state]) || String(a.title).localeCompare(String(b.title)));
 
+  for (const row of rows) {
+    if (row.state === 'ready') row.state = 'incomplete';
+    row.unknowns = [...(row.unknowns || []), 'Cross-module acceptance is pending verification.'];
+  }
   return json({
     ok: true,
     journey: 'e',
@@ -241,7 +257,7 @@ async function documentBoard(base44: any, user: any) {
     },
     mode: 'read_only_preview',
     verification: 'Cross-module evidence review only. This preview does not authorise billing, eligibility, closure or release.',
-    rows: rows.map((row: any) => ({ ...row, state: row.state === 'ready' ? 'incomplete' : row.state, unknowns: [...(row.unknowns || []), 'Workflow acceptance and exact record relationships are pending verification.'] })),
+    rows,
   });
 }
 

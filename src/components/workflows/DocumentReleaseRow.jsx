@@ -2,7 +2,7 @@ import React from 'react';
 import { CheckCheck, GitBranch } from 'lucide-react';
 import GateBadge, { GateFindings } from './GateBadge';
 
-export default function DocumentReleaseRow({ row, canGovern, busy, onAcknowledge, onRevise }) {
+export default function DocumentReleaseRow({ row, canGovern, onAcknowledge, onRevise }) {
   return (
     <tr className="border-b border-border/70 align-top">
       <td className="px-2 py-2 text-[12px] font-semibold text-[#0A2B6D]">
@@ -21,7 +21,7 @@ export default function DocumentReleaseRow({ row, canGovern, busy, onAcknowledge
           {row.state === 'ready' && (
             <button
               type="button"
-              disabled={busy || true}
+              disabled
               onClick={() => onAcknowledge(row)}
               className="inline-flex items-center gap-1 rounded-md border border-emerald-200 bg-emerald-50 px-2 py-1 text-[11px] font-bold text-emerald-800 hover:bg-emerald-100 disabled:opacity-50"
             >
@@ -31,7 +31,7 @@ export default function DocumentReleaseRow({ row, canGovern, busy, onAcknowledge
           {canGovern && row.status === 'Approved' && (
             <button
               type="button"
-              disabled={busy || true}
+              disabled
               onClick={() => onRevise(row)}
               className="inline-flex items-center gap-1 rounded-md border border-[#0072FF]/40 bg-white px-2 py-1 text-[11px] font-bold text-[#0A2B6D] hover:bg-[#F5F0FF] disabled:opacity-50"
             >

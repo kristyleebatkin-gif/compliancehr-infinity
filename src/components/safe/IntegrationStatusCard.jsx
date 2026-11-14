@@ -37,12 +37,13 @@ export default function IntegrationStatusCard() {
 
   const tone = (status) =>
     ({
-      active: 'border-emerald-200 bg-emerald-50 text-emerald-800',
+      credential_available: 'border-sky-200 bg-sky-50 text-blue-900',
+      binding_required: 'border-amber-200 bg-amber-50 text-amber-900',
       expired: 'border-rose-200 bg-rose-50 text-rose-700',
-      unconfigured: 'border-slate-200 bg-slate-50 text-slate-700',
+      unconfigured: 'border-sky-200 bg-sky-50 text-blue-900',
       restricted: 'border-amber-200 bg-amber-50 text-amber-800',
       error: 'border-amber-200 bg-amber-50 text-amber-800',
-    })[status] || 'border-slate-200 bg-slate-50 text-slate-700';
+    })[status] || 'border-sky-200 bg-sky-50 text-blue-900';
 
   return (
     <section className="rounded-xl border border-sky-200 bg-white p-3 sm:p-4">
@@ -64,11 +65,11 @@ export default function IntegrationStatusCard() {
         <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {data.items.map((item) => (
             <div key={item.integration_type} className={`rounded-lg border px-2.5 py-2 ${tone(item.status)}`}>
-              <p className="text-[12px] font-extrabold">{item.integration_type}</p>
+              <p className="text-[12px] font-extrabold">{item.integration_type === 'googlecalendar' ? 'Google Calendar' : item.integration_type === 'googledrive' ? 'Google Drive' : item.integration_type}</p>
               <p className="text-[11.5px] font-semibold">{item.label}</p>
               <p className="text-[11px] opacity-80">{item.used_for}</p>
               {item.error ? <p className="mt-1 text-[10.5px] leading-3.5 opacity-90">Reported: {item.error}</p> : null}
-              <p className="mt-1 text-[10.5px] opacity-70">{new Date(item.checked_at).toLocaleTimeString()} · {item.duration_ms}ms</p>
+              <p className="mt-1 text-[10.5px] opacity-70">{new Date(item.checked_at).toLocaleTimeString()}</p>
             </div>
           ))}
         </div>
