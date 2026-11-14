@@ -49,10 +49,14 @@ export default function SecurityPinGate({ workspace, title, subtitle, children }
           workspaceLabel={title}
           busy={pin.busy}
           error={pin.error}
+          notice={pin.notice}
           lockedUntil={pin.lockedUntil}
           lastChanged={formatDate(pin.record.last_changed_at)}
+          attemptsLeft={pin.attemptsLeft}
+          resetSentTo={pin.resetSentTo}
           onUnlock={pin.unlock}
-          onReset={pin.reset}
+          onRequestReset={pin.requestReset}
+          onConfirmReset={pin.confirmReset}
         />
       </SecurityPinShell>
     );
