@@ -1,4 +1,23 @@
 # ComplianceHR Infinity — mandatory design and UX review
+
+## Dashboard polish — 15 November 2026 (Australia/Brisbane)
+Reviewer: Codex. Environment: Base44 main sandbox, app 6ac9f91f0d82b1f80ec6a25f.
+Baseline commit: e965e15058a0ddb82b1bd2d9710cdb3b75ff0a2d.
+Before-change restore checkpoint: 6af89e967e627b6f2bf54d40.
+
+Scope: Dashboard.jsx, TodayHeader.jsx, today.css and TeamLeaderNav.jsx.
+- Dashboard: named sections, lighter description typography, consistent section spacing, larger responsive workspace shortcuts, visible keyboard focus.
+- Today: wrapping header controls, 44px minimum header targets, wrapping greeting, descriptive theme/profile labels and reduced-motion treatment.
+- Team Leader: clearer selected navigation, larger labels and targets, visible focus and bottom safe-area spacing.
+- Preserved existing module palette, glass surfaces, routes, permission predicates, data actions and iPad Quick Access.
+
+Validation: npm run ci:verify PASS (lint, existing Node tests, 100 Deno tests with zero failures, production build); npm run typecheck PASS.
+Source diff verified: four UI files only before this review update.
+Visual procedure: opened the sandbox preview root and /today in the cloud browser before edits; both remained blank. Browser console did not provide an app-specific error explaining the blank render; dev-server log showed no compile error.
+Expected: rendered app content. Actual: blank viewport. Cause unresolved.
+Mobile viewports 360/390/768/1024/1366/1440, rendered contrast, keyboard interactions and live workflow regression remain NOT EXECUTED. Source changes are not visual acceptance.
+Decision: Needs Improvement / NEEDS REVIEW. Saved draft changes only; no production publication. Before-change checkpoint is available, but restore was not exercised.
+
 Owner-provided standard, adopted 29 October 2026.
 
 ## Operating principle

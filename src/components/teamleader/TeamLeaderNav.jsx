@@ -15,7 +15,7 @@ export default function TeamLeaderNav({ screen, onSelect }) {
   const navigate = useNavigate();
 
   return (
-    <nav className="tl-nav sticky bottom-0 grid grid-cols-6 px-1 pb-2 pt-1.5">
+    <nav aria-label="Team Leader workspace" className="tl-nav sticky bottom-0 grid grid-cols-6 gap-1 px-1 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-1.5">
       {TABS.map(({ key, label, icon: Icon, path }) => {
         const active = screen === key;
         return (
@@ -24,8 +24,8 @@ export default function TeamLeaderNav({ screen, onSelect }) {
             type="button"
             onClick={() => (path ? navigate(path) : onSelect(key))}
             aria-current={active ? 'page' : undefined}
-            className={`flex flex-col items-center gap-0.5 rounded-xl py-1.5 text-[9.5px] font-bold ${
-              active ? 'text-[#5A00D6]' : 'tl-muted'
+            className={`flex min-h-11 min-w-0 flex-col items-center justify-center gap-1 rounded-xl px-0.5 py-2 text-[11px] font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0072FF] ${
+              active ? 'bg-[#F5F0FF] text-[#5A00D6] shadow-sm' : 'tl-muted'
             }`}
           >
             <Icon className="h-[18px] w-[18px]" strokeWidth={active ? 2.2 : 1.6} />
