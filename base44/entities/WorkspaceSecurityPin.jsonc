@@ -20,7 +20,7 @@
     },
     "pin_hash": {
       "type": "string",
-      "title": "PIN Hash"
+      "title": "PIN Hash (PBKDF2, server only)"
     },
     "failed_attempts": {
       "type": "number",
@@ -36,6 +36,39 @@
       "type": "string",
       "format": "date-time",
       "title": "PIN Last Changed"
+    },
+    "owner_user_id": {
+      "type": "string",
+      "title": "PIN Owner (user id)"
+    },
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
+    "unlocked_until": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Unlocked Until (idle timeout)"
+    },
+    "reset_code_hash": {
+      "type": "string",
+      "title": "Reset Code Hash"
+    },
+    "reset_code_expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Reset Code Expires"
+    },
+    "reset_code_attempts": {
+      "type": "number",
+      "default": 0,
+      "title": "Reset Code Attempts"
+    },
+    "reset_code_sent_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Reset Code Sent"
     }
   },
   "required": [
@@ -45,43 +78,24 @@
   ],
   "rls": {
     "read": {
-      "$or": [
-        {
-          "created_by_id": "{{user.id}}"
-        },
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        }
-      ]
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
     },
     "create": {
-      "created_by_id": "{{user.id}}"
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
     },
     "update": {
-      "$or": [
-        {
-          "created_by_id": "{{user.id}}"
-        },
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        }
-      ]
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
     },
     "delete": {
-      "$or": [
-        {
-          "created_by_id": "{{user.id}}"
-        },
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        }
-      ]
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
     }
   }
 }

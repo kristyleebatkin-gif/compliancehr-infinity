@@ -1,187 +1,165 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRole } from '@/lib/useRole';
 import {
-  MAX_PIN_ATTEMPTS,
-  PIN_LOCK_MS,
-  createPin,
-  deletePinRecord,
-  loadPinRecord,
-  lockMsLeft,
-  matchesPin,
+  ACTIVITY_PING_MS,
+  IDLE_LOCK_MS,
   pinProblem,
-  replacePin,
+  pinRequest,
   sanitisePin,
-  updatePinRecord
 } from '@/lib/workspacePin';
 
-const unlockedKey = (workspace, userId) => `chr-workspace-unlocked:${workspace}:${userId || 'anon'}`;
-const attemptsText = (left) => `${left} attempt${left === 1 ? '' : 's'} left.`;
+const ms = (iso) => (iso ? new Date(iso).getTime() || 0 : 0);
+const ACTIVITY_EVENTS = ['pointerdown', 'keydown', 'wheel', 'touchstart'];
 
+// Server-backed dashboard PIN lock. The server decides whether the dashboard is unlocked,
+// so a refresh, a second tab or a stale tab all see the same state.
 export default function useWorkspacePin(workspace) {
   const { user } = useRole();
   const userId = user?.id || '';
-  const [record, setRecord] = useState(null);
+  const [state, setState] = useState(null); // server state: hasPin, unlocked, lockedUntil, lastChanged
   const [loading, setLoading] = useState(true);
-  const [unlocked, setUnlocked] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
-  const [lockedUntil, setLockedUntil] = useState(0);
+  const [resetSentTo, setResetSentTo] = useState('');
+  const lastActivity = useRef(Date.now());
+  const lastPing = useRef(0);
+
+  const apply = useCallback((data) => {
+    if (data && typeof data.hasPin === 'boolean') setState(data);
+    return data;
+  }, []);
+
+  const refresh = useCallback(async () => {
+    const { data } = await pinRequest(workspace, 'status');
+    if (data?.error && typeof data.hasPin !== 'boolean') setError(data.error);
+    return apply(data);
+  }, [workspace, apply]);
 
   useEffect(() => {
     let active = true;
-    if (!userId) {
-      setLoading(false);
-      return () => { active = false; };
-    }
+    if (!userId) { setLoading(false); return () => { active = false; }; }
     setLoading(true);
-    loadPinRecord(workspace, userId)
-      .then((found) => {
-        if (!active) return;
-        setRecord(found);
-        setLockedUntil(Date.now() + lockMsLeft(found));
-        setUnlocked(Boolean(found) && sessionStorage.getItem(unlockedKey(workspace, userId)) === '1');
-      })
-      .catch((err) => { if (active) setError(err?.message || 'The security PIN could not be loaded.'); })
-      .finally(() => { if (active) setLoading(false); });
+    refresh().finally(() => { if (active) setLoading(false); });
     return () => { active = false; };
-  }, [workspace, userId]);
+  }, [userId, refresh]);
 
-  const remember = useCallback((value) => {
-    if (!userId) return;
-    if (value) sessionStorage.setItem(unlockedKey(workspace, userId), '1');
-    else sessionStorage.removeItem(unlockedKey(workspace, userId));
-  }, [workspace, userId]);
+  const unlocked = Boolean(state?.unlocked);
+
+  // Idle lock: 30 minutes with no activity locks this dashboard (server-side too), and
+  // ongoing activity is reported to the server so other tabs stay in step.
+  useEffect(() => {
+    if (!unlocked) return undefined;
+    lastActivity.current = Date.now();
+    const onActivity = () => {
+      lastActivity.current = Date.now();
+      if (Date.now() - lastPing.current > ACTIVITY_PING_MS) {
+        lastPing.current = Date.now();
+        pinRequest(workspace, 'activity').then(({ data }) => apply(data));
+      }
+    };
+    const onVisible = () => { if (document.visibilityState === 'visible') refresh(); };
+    ACTIVITY_EVENTS.forEach((e) => window.addEventListener(e, onActivity, { passive: true }));
+    document.addEventListener('visibilitychange', onVisible);
+    const timer = setInterval(() => {
+      const serverExpired = state?.unlockedUntil && ms(state.unlockedUntil) <= Date.now();
+      if (Date.now() - lastActivity.current >= IDLE_LOCK_MS || serverExpired) {
+        pinRequest(workspace, 'lock').then(({ data }) => apply(data));
+        setNotice('Locked after 30 minutes without activity.');
+      }
+    }, 30 * 1000);
+    return () => {
+      ACTIVITY_EVENTS.forEach((e) => window.removeEventListener(e, onActivity));
+      document.removeEventListener('visibilitychange', onVisible);
+      clearInterval(timer);
+    };
+  }, [unlocked, workspace, apply, refresh, state?.unlockedUntil]);
+
+  const run = async (action, payload, successNotice = '') => {
+    setBusy(true);
+    setError('');
+    setNotice('');
+    try {
+      const { ok, data } = await pinRequest(workspace, action, payload);
+      apply(data);
+      if (!ok) { setError(data?.error || 'That did not work. Please try again.'); return false; }
+      if (successNotice) setNotice(successNotice);
+      return true;
+    } finally {
+      setBusy(false);
+    }
+  };
 
   const create = async (pin, confirmPin) => {
     const problem = pinProblem(pin);
     if (problem) { setError(problem); return false; }
     if (sanitisePin(pin) !== sanitisePin(confirmPin)) { setError('The two PINs do not match.'); return false; }
-    setBusy(true);
-    setError('');
-    try {
-      const saved = await createPin(workspace, pin);
-      setRecord(saved);
-      setUnlocked(true);
-      setLockedUntil(0);
-      remember(true);
-      setNotice('Security PIN set for this dashboard.');
-      return true;
-    } catch (err) {
-      setError(err?.message || 'The PIN could not be saved.');
-      return false;
-    } finally {
-      setBusy(false);
-    }
+    return run('set', { pin: sanitisePin(pin) }, 'Security PIN set for this dashboard.');
   };
 
   const unlock = async (pin) => {
-    if (!record) { setError('No security PIN is set for this dashboard.'); return false; }
-    if (lockedUntil > Date.now()) { setError('Too many incorrect attempts. Please wait before trying again.'); return false; }
     const problem = pinProblem(pin);
     if (problem) { setError(problem); return false; }
-    setBusy(true);
-    setError('');
-    try {
-      if (await matchesPin(record, pin)) {
-        const cleared = { failed_attempts: 0, locked_until: null };
-        await updatePinRecord(record, cleared).catch(() => null);
-        setRecord({ ...record, ...cleared });
-        setUnlocked(true);
-        remember(true);
-        return true;
-      }
-      const attempts = (record.failed_attempts || 0) + 1;
-      const shouldLock = attempts >= MAX_PIN_ATTEMPTS;
-      const patch = {
-        failed_attempts: shouldLock ? 0 : attempts,
-        locked_until: shouldLock ? new Date(Date.now() + PIN_LOCK_MS).toISOString() : null
-      };
-      await updatePinRecord(record, patch).catch(() => null);
-      setRecord({ ...record, ...patch });
-      if (shouldLock) setLockedUntil(Date.now() + PIN_LOCK_MS);
-      setError(shouldLock
-        ? 'Too many incorrect attempts. Try again in 60 seconds.'
-        : `Incorrect PIN. ${attemptsText(MAX_PIN_ATTEMPTS - attempts)}`);
-      return false;
-    } catch (err) {
-      setError(err?.message || 'The PIN could not be checked.');
-      return false;
-    } finally {
-      setBusy(false);
-    }
+    lastActivity.current = Date.now();
+    return run('unlock', { pin: sanitisePin(pin) });
   };
 
   const change = async (currentPin, nextPin, confirmPin) => {
-    if (!record) { setError('No security PIN is set for this dashboard.'); return false; }
-    const currentProblem = pinProblem(currentPin);
-    if (currentProblem) { setError(currentProblem); return false; }
+    const problem = pinProblem(currentPin) || pinProblem(nextPin);
+    if (problem) { setError(problem); return false; }
+    if (sanitisePin(nextPin) !== sanitisePin(confirmPin)) { setError('The two new PINs do not match.'); return false; }
+    return run('change', { currentPin: sanitisePin(currentPin), newPin: sanitisePin(nextPin) }, 'Security PIN updated.');
+  };
+
+  // Forgotten PIN: a one-time code goes to the account's own email address.
+  const requestReset = async () => {
     setBusy(true);
     setError('');
-    setNotice('');
     try {
-      if (!(await matchesPin(record, currentPin))) {
-        setError('Your current PIN is incorrect.');
-        return false;
-      }
-      const nextProblem = pinProblem(nextPin);
-      if (nextProblem) { setError(nextProblem); return false; }
-      if (sanitisePin(nextPin) !== sanitisePin(confirmPin)) { setError('The two new PINs do not match.'); return false; }
-      const saved = await replacePin(record, nextPin);
-      setRecord({ ...record, ...(saved || {}) });
-      setLockedUntil(0);
-      setNotice('Security PIN updated.');
+      const { ok, data } = await pinRequest(workspace, 'requestReset');
+      if (!ok) { setError(data?.error || 'The reset code could not be sent.'); return false; }
+      setResetSentTo(data?.to || 'your email');
+      setNotice(`A 6-digit code was sent to ${data?.to || 'your email'}. It expires in 15 minutes.`);
       return true;
-    } catch (err) {
-      setError(err?.message || 'The PIN could not be changed.');
-      return false;
     } finally {
       setBusy(false);
     }
   };
 
-  const reset = async () => {
-    if (!record) return false;
-    setBusy(true);
-    setError('');
-    try {
-      await deletePinRecord(record);
-      setRecord(null);
-      setUnlocked(false);
-      setLockedUntil(0);
-      remember(false);
-      setNotice('Security PIN removed. Set a new PIN to protect this dashboard.');
-      return true;
-    } catch (err) {
-      setError(err?.message || 'The PIN could not be reset.');
-      return false;
-    } finally {
-      setBusy(false);
-    }
+  const confirmReset = async (code, nextPin, confirmPin) => {
+    const problem = pinProblem(nextPin);
+    if (problem) { setError(problem); return false; }
+    if (sanitisePin(nextPin) !== sanitisePin(confirmPin)) { setError('The two new PINs do not match.'); return false; }
+    const ok = await run('confirmReset', { code: String(code || '').replace(/\D/g, ''), newPin: sanitisePin(nextPin) }, 'PIN reset. Dashboard unlocked.');
+    if (ok) setResetSentTo('');
+    return ok;
   };
 
   const lock = () => {
-    setUnlocked(false);
     setError('');
     setNotice('');
-    remember(false);
+    pinRequest(workspace, 'lock').then(({ data }) => apply(data));
+    setState((s) => (s ? { ...s, unlocked: false } : s));
   };
 
   const clearMessages = () => { setError(''); setNotice(''); };
 
   return {
-    record,
+    record: state?.hasPin ? { last_changed_at: state.lastChanged } : null,
     loading,
     unlocked,
     busy,
     error,
     notice,
-    lockedUntil,
+    lockedUntil: ms(state?.lockedUntil),
+    attemptsLeft: state?.attemptsLeft,
+    resetSentTo,
     create,
     unlock,
     change,
-    reset,
+    requestReset,
+    confirmReset,
     lock,
-    clearMessages
+    clearMessages,
   };
 }

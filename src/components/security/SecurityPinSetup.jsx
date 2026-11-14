@@ -15,7 +15,7 @@ export default function SecurityPinSetup({ workspaceLabel, busy, error, notice, 
     <section className="rounded-2xl border border-header-foreground/20 bg-workspace-navy/40 p-5 text-header-foreground shadow-panel backdrop-blur-xl">
       <h2 className="text-base font-extrabold">Create a security PIN</h2>
       <p className="mt-1 text-xs font-semibold leading-relaxed text-header-foreground/70">
-        First use of {workspaceLabel}. Choose 4 to 8 digits — this PIN is asked for before the dashboard opens on a new session.
+        First use of {workspaceLabel}. Choose 4 to 8 digits — the dashboard locks after 30 minutes without activity and asks for this PIN. Avoid repeated or running digits such as 1111 or 1234.
       </p>
 
       <div className="mt-4 space-y-3">

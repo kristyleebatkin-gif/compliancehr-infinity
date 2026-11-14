@@ -54,7 +54,7 @@ export default function SecurityPinDialog({ open, onOpenChange, pin, workspaceLa
             <KeyRound className="h-4 w-4" /> Dashboard security PIN
           </DialogTitle>
           <DialogDescription className="text-xs font-semibold">
-            This PIN is asked for before {workspaceLabel} opens on a new session. It is stored as a hash against your account, not as readable digits.
+            This PIN locks {workspaceLabel} after 30 minutes without activity. Five wrong attempts lock it for 30 minutes. It is checked on the server and stored only as a one-way hash.
           </DialogDescription>
         </DialogHeader>
 
