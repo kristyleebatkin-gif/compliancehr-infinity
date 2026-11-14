@@ -24,7 +24,8 @@
           "with": {
             "function_name": "leaveRequestAlert",
             "args": {
-              "leave_id": "${ .trigger.entity_id }"
+              "leave_id": "${ .trigger.entity_id }",
+              "tenant_id": "${ .trigger.data.tenant_id // .trigger.old_data.tenant_id }"
             }
           },
           "then": "end",

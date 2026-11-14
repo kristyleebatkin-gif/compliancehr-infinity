@@ -34,7 +34,8 @@
           "with": {
             "function_name": "actionBatchReport",
             "args": {
-              "action_id": "${ .trigger.entity_id }"
+              "action_id": "${ .trigger.entity_id }",
+              "tenant_id": "${ .trigger.data.tenant_id // .trigger.old_data.tenant_id }"
             }
           },
           "then": "end",

@@ -31,7 +31,8 @@
               "module": "${ .trigger.data.module // \"\" }",
               "completed_by": "${ .trigger.data.completed_by // \"\" }",
               "due_date": "${ .trigger.data.due_date // \"\" }",
-              "responsible": "${ .trigger.data.responsible // [] }"
+              "responsible": "${ .trigger.data.responsible // [] }",
+              "tenant_id": "${ .trigger.data.tenant_id // .trigger.old_data.tenant_id }"
             }
           },
           "then": "end",

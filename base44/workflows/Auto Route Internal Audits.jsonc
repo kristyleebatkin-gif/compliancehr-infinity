@@ -28,7 +28,8 @@
             "args": {
               "entity": "InternalAudit",
               "record_id": "${ .trigger.entity_id }",
-              "event": "${ .trigger.event_type }"
+              "event": "${ .trigger.event_type }",
+              "tenant_id": "${ .trigger.data.tenant_id // .trigger.old_data.tenant_id }"
             }
           },
           "then": "end",
