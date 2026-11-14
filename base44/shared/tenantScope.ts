@@ -183,3 +183,119 @@ export async function forEachTenant<T>(
 export function tenantOfTrigger(payload: any): string | null {
   return tenantOf(payload?.data) || tenantOf(payload?.old_data) || payload?.tenant_id || null;
 }
+
+// ---------------------------------------------------------------------------------------------
+// Function wrapper (release 2). Usage in a backend function:
+//
+//   import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+//   export default perBusiness(async function (req) {
+//     const base44 = createScopedClientFromRequest(req);   // instead of createClientFromRequest
+//     ...unchanged function body...
+//   });
+//
+// perBusiness decides the business on the server, never from the browser:
+//   - staff (any role but admin): their own business only; asking for another is refused
+//   - owner (admin) with body.tenant_id: that business (automations pass the record's tag)
+//   - owner without body.tenant_id (scheduled jobs, owner tools): every active business in turn
+// With one business the function's own response is returned unchanged. With several, the
+// responses are combined as { per_business: [...] }.
+// ---------------------------------------------------------------------------------------------
+export const SCOPE_HEADER = 'x-chr-business-scope';
+
+// A client whose entities (user and service role) are limited to one business.
+export function scopedClient(base44: any, tenantId: string) {
+  let service: any = null;
+  let own: any = null;
+  return new Proxy(base44, {
+    get(target, prop, receiver) {
+      if (prop === 'entities') return (own ||= scopedEntities(target.entities, tenantId));
+      if (prop === 'asServiceRole') {
+        if (!service) {
+          const raw = target.asServiceRole;
+          const scopedEnts = scopedEntities(raw.entities, tenantId);
+          service = new Proxy(raw, {
+            get(t, p, r) {
+              if (p === 'entities') return scopedEnts;
+              const v = Reflect.get(t, p, r);
+              return typeof v === 'function' ? v.bind(t) : v;
+            },
+          });
+        }
+        return service;
+      }
+      if (prop === 'businessId') return tenantId;
+      const v = Reflect.get(target, prop, receiver);
+      return typeof v === 'function' ? v.bind(target) : v;
+    },
+  });
+}
+
+type ClientFactory = (req: Request) => any;
+
+export function createScopedClientFromRequest(req: Request, factory: ClientFactory = sdkClientFromRequest) {
+  const tenantId = req.headers.get(SCOPE_HEADER);
+  if (!tenantId) throw new Error('Business scope missing: this function must be wrapped with perBusiness().');
+  return scopedClient(factory(req), tenantId);
+}
+
+const json = (body: any, status: number) => Response.json(body, { status });
+
+export function perBusiness(
+  handler: (req: Request) => Promise<Response>,
+  factory: ClientFactory = sdkClientFromRequest,
+) {
+  return async function (req: Request): Promise<Response> {
+    const hasBody = !['GET', 'HEAD'].includes(req.method);
+    const text = hasBody ? await req.text().catch(() => '') : '';
+    let body: any = {};
+    try { body = text ? JSON.parse(text) : {}; } catch { body = {}; }
+
+    const base = factory(new Request(req.url, { method: req.method, headers: req.headers, body: hasBody ? text : undefined }));
+    let user: any = null;
+    try { user = await base.auth.me(); } catch { user = null; }
+    if (!user) return json({ error: 'Unauthorized' }, 401);
+
+    const own = user.tenant_id || user.data?.tenant_id || null;
+    const requested = typeof body?.tenant_id === 'string' && body.tenant_id ? body.tenant_id : null;
+    let targets: string[];
+    if (user.role !== 'admin') {
+      if (!own) return json({ error: 'This account is not linked to a business.' }, 403);
+      if (requested && requested !== own) return json({ error: 'Cross-business access denied.' }, 403);
+      targets = [own];
+    } else {
+      const active = await activeTenantIds(base);
+      if (requested) {
+        if (!active.includes(requested)) return json({ error: 'Unknown or inactive business.' }, 404);
+        targets = [requested];
+      } else {
+        targets = active.length ? active : own ? [own] : [];
+      }
+    }
+    if (!targets.length) return json({ error: 'No business to act for.' }, 403);
+
+    const runFor = (tenantId: string) => {
+      const headers = new Headers(req.headers);
+      headers.set(SCOPE_HEADER, tenantId); // always set here, so a browser-sent value is overwritten
+      return handler(new Request(req.url, { method: req.method, headers, body: hasBody ? text : undefined }));
+    };
+
+    if (targets.length === 1) return runFor(targets[0]);
+
+    const per_business: any[] = [];
+    let worst = 200;
+    for (const tenantId of targets) {
+      try {
+        const res = await runFor(tenantId);
+        const raw = await res.text();
+        let parsed: any = raw;
+        try { parsed = JSON.parse(raw); } catch { /* keep text */ }
+        per_business.push({ tenant_id: tenantId, status: res.status, body: parsed });
+        if (res.status >= 500) worst = 500;
+      } catch (err) {
+        per_business.push({ tenant_id: tenantId, status: 500, body: { error: String((err as any)?.message || err) } });
+        worst = 500;
+      }
+    }
+    return json({ per_business }, worst);
+  };
+}
