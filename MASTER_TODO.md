@@ -4,7 +4,41 @@
 
 Scope source: `approved-module-build-scope.md` (owner-authorised, 51 module outcomes + priority journeys A–E). This log is additive; every earlier entry below is retained as dated evidence and is **not** re-stated as current proof.
 
+### Batch 2 — secure referral → intake handover (14 November 2026, second sitting)
+
+Review evidence acted on: `implementation-review-and-continuation.md`. The batch-1 entry below is **superseded** on one point and must not be read as current: the handover was performed by the browser (creating the case and updating the referral from client code), so consent, status and ownership could be bypassed by calling the entity APIs directly. That path no longer exists — `src/lib/referralIntake.js` now performs **no writes at all**.
+
+What is implemented now:
+- **Authenticated backend handover** — new function `referralIntakeHandover`, wrapped with the existing `perBusiness()`/`createScopedClientFromRequest` isolation, running as the signed-in user so RLS still applies on top. The browser sends only `referral_id`. Identity, business, role and approval come from `base44.auth.me()`; the referral is loaded from the database; consent, status, existing-link and cross-business rules are decided **after** that load. No record content and no `changedBy` are accepted from the request.
+- **Shared server logic** — `base44/shared/referralHandover.ts` (roles `admin / Provider Administrator / Intake Officer / Administration`, approved-access and business checks, eligibility gates, case-number allocation, linking, audit).
+- **Retry safety** — new ledger entity `ReferralIntakeLink` reserves the case number (`state: creating`) **before** the intake case is created, so a retry recovers instead of duplicating. Recovery path: ledger row → reserved `case_number` → existing case → link. Reuses the reserved number rather than allocating a fresh one.
+- **Precise partial states** instead of false success/failure: `linked`, `already_linked`, `created_link_pending` (retry offered), `linked_audit_pending` (handover succeeded, status-history entry pending). A `StatusLog` failure can no longer tell the user the handover never happened.
+- **Complete reference read** — case numbers are allocated from a paginated read of every participant case and every ledger row; a response-contract mismatch or read failure is an error, never an empty list; over 10,000 records the action is **blocked** (`REFERENCE_SCAN_INCOMPLETE`, nothing written) rather than guessing a number.
+- **Duplicate handling** — a same-name open case is a review flag only (`nameMatchReview`); same name **and** date of birth reports `possibleDuplicateOf` with the other case number. People are never merged by name. A case-number collision is detected after creation and reported (`numberConflict`).
+- **Server-derived provenance** — `referral_source`, `referral_date` (business time zone via `auDate`), `assigned_to`, all status/audit stamps come from the authenticated user and the server clock. The dialog cannot submit twice (disabled while in flight) and closing/reopening it starts from a clean state.
+
+Verification — commands captured individually, no exit status lost to a pipe:
+| Command | Result |
+|---|---|
+| `npm run lint` | exit 0 |
+| `npm test` | exit 0 — 42 pass, 0 fail |
+| `npm run test:deno` | exit 0 — 51 pass, 0 fail (18 are the new handover tests) |
+| `npm run build` | exit 0 |
+| `test_backend_function referralIntakeHandover` (deployed) | missing id → 400 `BAD_INPUT`; unknown id → 404 `REFERRAL_NOT_FOUND` |
+
+`tests/deno/referralHandover.test.ts` drives the real handler logic against synthetic repositories and covers: unapproved / suspended / missing-approval and non-intake roles denied **before any write**; foreign-business referral denied; missing referral 404; no consent; non-linkable status; already-linked referral creates nothing; name match without date of birth flagged but not merged; same name and DOB flagged with the other case; server-derived provenance/tenant/identity; 2,050 records (numbering continues past the old 500 cap); raw-array SDK contract; unreadable scan blocks creation; link failure → pending then retry links **without a second case**; created-but-unlinked case recovered; audit failure reported as pending only; refused case write leaves the reserved number reusable.
+
+A real defect was found by these tests and fixed: the first retry implementation allocated a **second** case number when the referral update had failed, creating a duplicate case. The ledger number is now reused.
+
+Schema change: one **new** entity, `ReferralIntakeLink` (reservation/idempotency ledger — not a second intake system), added to `tenantClassification` in both copies. No existing entity or record was altered or migrated; no tenant-enforcement flag was flipped; nothing published.
+
+Known limits, stated rather than hidden:
+- A dedicated `source_referral_id` field on `IntakeCase` was **not** added: it requires rewriting a 1,188-line, 171-field schema, and transcription risk there outweighs the gain. Recovery instead uses the reserved `case_number` held in the ledger, which is written before the case exists and is never user-editable. A dedicated field remains recommended when that schema is next revised.
+- The platform offers no transaction, so two simultaneous **first-time** handovers for *different* referrals could in principle take the same number; this is detected and reported, not prevented. No atomic guarantee is claimed.
+- Not verified: live browser walkthrough, deployed RLS enforcement of the new entity, and real record creation end to end. The temporary Provider Administrator is still behind the approval gate and security was not bypassed to manufacture a pass.
+
 ### Implemented this batch — priority journey A, first leg (module 45 Referrals → module 10 Intake Centre)
+> **Superseded 14 Nov 2026 (batch 2):** the client-side handover described here has been replaced by the authenticated `referralIntakeHandover` function above. Retained as dated evidence of what was built first, not as current behaviour.
 
 Reconciled state before change: `Referral` records could be logged, sent, PDF'd and status-changed, and `IntakeCase` already supported Draft → … → Converted to Profile with profile creation and document mirroring. **The handover between them did not exist** — a referral could not become an intake case, so journey A stopped at the referral register and intake officers re-keyed details by hand.
 
