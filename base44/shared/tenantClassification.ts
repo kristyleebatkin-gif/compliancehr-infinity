@@ -52,6 +52,7 @@ export const BUSINESS_OWNED_ENTITIES = Object.freeze([
   'AuditChecklistFile',
   'AuditEvidenceFile',
   'AuditLog',
+  'ApprovalRequest',
   'AuditReport',
   'AuditorObservation',
   'AuthorityDeclaration',
