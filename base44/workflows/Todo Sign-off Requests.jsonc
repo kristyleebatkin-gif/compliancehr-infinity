@@ -2,15 +2,15 @@
   "name": "Todo Sign-off Requests",
   "description": "When a task moves to Pending Approval, emails the manager a sign-off request and logs it in the Communication Centre",
   "trigger": {
+    "condition": "${ (.trigger.event_type != \"update\" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; . != \"tenant_id\" and . != \"updated_date\")) and (.trigger.data.status == \"Pending Approval\" and .trigger.old_data.status != \"Pending Approval\") }",
     "config": {
       "trigger_type": "entity",
-      "entity_name": "TodoTask",
       "events": [
         "create",
         "update"
-      ]
-    },
-    "condition": "${ (.trigger.event_type != \"update\" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; . != \"tenant_id\" and . != \"updated_date\")) and (.trigger.data.status == \"Pending Approval\" and .trigger.old_data.status != \"Pending Approval\") }"
+      ],
+      "entity_name": "TodoTask"
+    }
   },
   "definition": {
     "document": {
