@@ -2,15 +2,15 @@
   "name": "Staff Risk Alert Document Change",
   "description": "The moment an employee document is created or changed, scores every staff member's compliance risk and instantly notifies admins in-app for anyone whose risk score exceeds the threshold.",
   "trigger": {
+    "condition": "${ (.trigger.event_type != \"update\" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; . != \"tenant_id\" and . != \"updated_date\")) }",
     "config": {
       "trigger_type": "entity",
-      "entity_name": "EmployeeDocument",
       "events": [
         "create",
         "update"
-      ]
-    },
-    "condition": "${ (.trigger.event_type != \"update\" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; . != \"tenant_id\" and . != \"updated_date\")) }"
+      ],
+      "entity_name": "EmployeeDocument"
+    }
   },
   "definition": {
     "document": {
