@@ -12,6 +12,7 @@ import {
   normalizeTenantEntitySchema,
   createTenantScopedEntitiesProxy,
 } from '../src/lib/roleMatrix.js';
+import { SHARED_LIBRARY_ENTITIES, PLATFORM_ENTITIES } from '../src/lib/tenantClassification.js';
 import {
   createBackupManifest,
   verifyAndRestoreBackup,
@@ -224,15 +225,16 @@ test('disaster recovery manifest creation, checksum verification, and restore va
 });
 
 // HONEST COVERAGE CHECK (audit CRIT-01): reads the real schema files WITHOUT the in-memory
-// normaliser. It is marked `todo` so it reports the gap on every run without blocking CI.
-// When every organisation-owned schema really declares tenant_id, remove `todo` so it gates releases.
-test('real entity schema files declare tenant_id for every organisation-owned entity', { todo: 'CRIT-01 open: business data isolation not yet implemented in the real schemas' }, async () => {
+// normaliser. Now a hard gate: every business-owned and master-template schema must declare tenant_id.
+// Shared-library and platform entities are excluded by the approved classification.
+test('real entity schema files declare tenant_id for every organisation-owned entity', async () => {
   const entitiesDir = new URL('../base44/entities/', import.meta.url);
   const files = (await readdir(entitiesDir)).filter((f) => f.endsWith('.jsonc'));
   const missing = [];
   for (const file of files) {
     const rawSchema = JSON.parse(await readFile(new URL(file, entitiesDir), 'utf8'));
     if (SYSTEM_GLOBAL_ENTITIES.includes(rawSchema.name)) continue;
+    if (SHARED_LIBRARY_ENTITIES.includes(rawSchema.name) || PLATFORM_ENTITIES.includes(rawSchema.name)) continue;
     if (!(rawSchema.properties && rawSchema.properties.tenant_id)) missing.push(rawSchema.name || file);
   }
   assert.equal(missing.length, 0, `${missing.length} of ${files.length} real schemas have no tenant_id: ${missing.slice(0, 15).join(', ')}${missing.length > 15 ? ', ...' : ''}`);
