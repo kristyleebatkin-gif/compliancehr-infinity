@@ -1,4 +1,15 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { scopedEntities, activeTenantIds } from '../../shared/tenantScope.ts';
+
+// Release 2: a public submission is filed under one business. The form may name it
+// (body.tenant_key); with a single active business that business is used. With several and
+// none named, the submission is refused rather than guessed.
+export function pickPublicBusiness(requested: unknown, active: string[]) {
+  const key = typeof requested === 'string' ? requested.trim() : '';
+  if (key) return active.includes(key) ? { ok: true, tenantId: key } : { ok: false, error: 'Unknown organisation.' };
+  if (active.length === 1) return { ok: true, tenantId: active[0] };
+  return { ok: false, error: 'Please use the form link provided by the organisation.' };
+}
 
 const COMPLAINT_CATEGORIES = ['Service Quality', 'Staff Conduct', 'Communication', 'Safety', 'Financial', 'Other'];
 const RELATIONSHIPS = ['Participant', 'Family Member', 'Staff', 'Advocate', 'Other'];
@@ -50,7 +61,7 @@ export function verifyPublicAbuseControls(body, headers = new Headers(), nowMs =
   }
 
   // 4. Tenant throttling (max 20 submissions per tenant per minute)
-  const tenantKey = String(body?.tenant_id || body?.tenant_key || 'default-tenant').slice(0, 80);
+  const tenantKey = String(body?.tenant_key || body?.tenant_id || 'default-tenant').slice(0, 80);
   if (!checkSlidingWindow(tenantHits, tenantKey, 20, 60000, nowMs)) {
     return { allowed: false, status: 429, error: 'Too many submissions for this organisation. Please try again shortly.' };
   }
@@ -80,10 +91,14 @@ export default async function(req) {
     }
 
     const base44 = createClientFromRequest(req);
+    const business = pickPublicBusiness(body.tenant_key, await activeTenantIds(base44));
+    if (!business.ok) return Response.json({ error: business.error }, { status: 400 });
+    const entities = scopedEntities(base44.asServiceRole.entities, business.tenantId);
+
     const recent = new Date(now.getTime() - 60000).toISOString();
     const [complaints, volunteers] = await Promise.all([
-      base44.asServiceRole.entities.Complaint.count({ source_entity_type: 'Public Form', created_date: { $gte: recent } }),
-      base44.asServiceRole.entities.VolunteerInterest.count({ created_date: { $gte: recent } }),
+      entities.Complaint.count({ source_entity_type: 'Public Form', created_date: { $gte: recent } }),
+      entities.VolunteerInterest.count({ created_date: { $gte: recent } }),
     ]);
     if (complaints + volunteers >= 30) {
       return Response.json(
@@ -105,7 +120,7 @@ export default async function(req) {
       const category = COMPLAINT_CATEGORIES.includes(body.category) ? body.category : 'Other';
       const relationship = RELATIONSHIPS.includes(body.complainant_relationship) ? body.complainant_relationship : 'Other';
       const complaint_id = 'CMP-' + date.replace(/-/g, '') + '-' + Math.random().toString(36).slice(2, 6).toUpperCase();
-      const rec = await base44.asServiceRole.entities.Complaint.create({
+      const rec = await entities.Complaint.create({
         title,
         complaint_id,
         date_received: date,
@@ -131,7 +146,7 @@ export default async function(req) {
         return Response.json({ error: 'Full name, a valid email, phone, motivation and privacy consent are required.' }, { status: 400 });
       }
       const interest_type = INTEREST_TYPES.includes(body.interest_type) ? body.interest_type : 'Volunteer';
-      const rec = await base44.asServiceRole.entities.VolunteerInterest.create({
+      const rec = await entities.VolunteerInterest.create({
         interest_type,
         full_name,
         email,
