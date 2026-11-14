@@ -29,7 +29,7 @@ export default function TodoBoard({ compact = false, presentation = 'default' })
   const [saving, setSaving] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [signTarget, setSignTarget] = useState(null);
-  const [signForm, setSignForm] = useState({ signature: '' });
+  const [signForm, setSignForm] = useState({ signature: '', note: '' });
   const [form, setForm] = useState({
     title: '', module: APP_MODULES[0], task_date: new Date().toISOString().slice(0, 10), task_time: '',
     due_date: '', how_to_complete: '', resources_needed: '', important_info: '', responsible: [],
@@ -115,63 +115,31 @@ export default function TodoBoard({ compact = false, presentation = 'default' })
     await load();
   };
 
-  const approve = async () => {
-    if (!signForm.signature.trim()) { toast({ title: 'Signature required', description: 'Type your full name to sign off.', variant: 'destructive' }); return; }
+  // Sign-off goes through the `approvals` server function (Approval Inbox): it checks the
+  // approver's role, refuses self-approval, records the decision and notifies the requester.
+  const decideTask = async (decision) => {
+    const note = (signForm.note || '').trim();
+    if (decision === 'approve' && signForm.signature.trim().length < 2) { toast({ title: 'Signature required', description: 'Type your full name to sign off.', variant: 'destructive' }); return; }
+    if (decision === 'return' && note.length < 3) { toast({ title: 'Reason required', description: 'Say why the task is being sent back.', variant: 'destructive' }); return; }
     setSaving(true);
     try {
-      const user = await base44.auth.me();
-      await base44.entities.TodoTask.update(signTarget.id, {
-        status: 'Finalised',
-        signed_off_by: user?.full_name || 'Manager',
-        signed_off_date: new Date().toISOString().slice(0, 10),
-        signature: signForm.signature.trim(),
-      });
-      await base44.entities.CommunicationEntry.create({
-        entry_kind: 'Employee Log',
-        person_type: 'General',
-        log_type: 'Task Sign-off',
-        subject: `Signed off: ${signTarget.title}`,
-        body: `Compliance task "${signTarget.title}" (module: ${signTarget.module || 'General'}) was completed by ${signTarget.completed_by || 'unknown'} on ${signTarget.completed_date || '-'} and has been digitally signed off by ${user?.full_name || 'a manager'} on ${new Date().toISOString().slice(0, 10)}. Signature recorded, task finalised.`,
-        module: signTarget.module || 'General',
-        entry_date: new Date().toISOString().slice(0, 10),
-        entry_time: new Date().toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit' }),
-        sender_name: user?.full_name || 'Manager',
-        sender_email: user?.email || '',
-        email_sent: false,
-      });
-      toast({ title: 'Signed off and finalised', description: 'The task is now marked as finished with your recorded signature.' });
+      const res = await base44.functions.invoke('approvals', { action: 'decide', task_id: signTarget.id, decision, signature: signForm.signature.trim(), note });
+      const data = res?.data ?? res ?? {};
+      if (data.error) throw new Error(data.error);
+      toast(decision === 'approve'
+        ? { title: 'Signed off and finalised', description: 'The task is now marked as finished with your recorded signature.' }
+        : { title: 'Sent back to pending', description: 'The task was returned so it can be completed again before sign-off.' });
       setSignTarget(null);
       await load();
+    } catch (error) {
+      const message = error?.response?.data?.error || error?.data?.error || error?.message || 'Sign-off was not saved.';
+      toast({ title: 'Not saved', description: message, variant: 'destructive' });
     } finally {
       setSaving(false);
     }
   };
-
-  const decline = async () => {
-    setSaving(true);
-    try {
-      const user = await base44.auth.me();
-      await base44.entities.TodoTask.update(signTarget.id, { status: 'Pending', completed_date: '', completed_by: '', time_taken_minutes: 0, signed_off_by: '', signed_off_date: '', signature: '' });
-      await base44.entities.CommunicationEntry.create({
-        entry_kind: 'Employee Log',
-        person_type: 'General',
-        log_type: 'Task Sign-off',
-        subject: `Sign-off declined: ${signTarget.title}`,
-        body: `Manager ${user?.full_name || 'a manager'} declined sign-off on the completed compliance task "${signTarget.title}" (module: ${signTarget.module || 'General'}). It has been returned to pending so it can be completed again before sign-off.`,
-        module: signTarget.module || 'General',
-        entry_date: new Date().toISOString().slice(0, 10),
-        entry_time: new Date().toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit' }),
-        sender_name: user?.full_name || 'Manager',
-        sender_email: user?.email || '',
-        email_sent: false,
-      });
-      toast({ title: 'Sent back to pending', description: 'The task was returned so it can be completed again before sign-off.' });
-      setSignTarget(null);
-      await load();
-    } finally {
-      setSaving(false);
-    }
-  };
+  const approve = () => decideTask('approve');
+  const decline = () => decideTask('return');
 
   const exportFinalised = () => exportCsv('finalised-tasks.csv', finalised.map((t) => ({
     task: t.title, module: t.module, date: t.task_date, time: t.task_time, due_date: t.due_date,
@@ -184,7 +152,7 @@ export default function TodoBoard({ compact = false, presentation = 'default' })
   return (
     <div className={compact ? 'min-w-0' : 'space-y-4'}>
       {taskId && <Button asChild size="sm" variant="outline"><Link to="/shared-to-do">View all shared tasks</Link></Button>}
-      {presentation === 'review' ? <ReviewTodoBoard pending={pending} awaiting={awaiting} finalised={finalisedByModule.flatMap((group) => group.rows)} loading={loading} canSign={canSign} onNew={() => setOpen(true)} onExport={exportFinalised} onFinalise={(task) => { setFinaliseTarget(task); setFinaliseForm({ completed_by: '', time_taken_minutes: '' }); }} onSign={(task) => { setSignTarget(task); setSignForm({ signature: '' }); }} onReopen={reopen} /> : compact ? <SharedTodoCommandBoard pending={pending} awaiting={awaiting} finalised={finalisedByModule.flatMap((group) => group.rows)} loading={loading} canSign={canSign} onNew={() => setOpen(true)} onExport={exportFinalised} onFinalise={(task) => { setFinaliseTarget(task); setFinaliseForm({ completed_by: '', time_taken_minutes: '' }); }} onSign={(task) => { setSignTarget(task); setSignForm({ signature: '' }); }} onReopen={reopen} /> : <>
+      {presentation === 'review' ? <ReviewTodoBoard pending={pending} awaiting={awaiting} finalised={finalisedByModule.flatMap((group) => group.rows)} loading={loading} canSign={canSign} onNew={() => setOpen(true)} onExport={exportFinalised} onFinalise={(task) => { setFinaliseTarget(task); setFinaliseForm({ completed_by: '', time_taken_minutes: '' }); }} onSign={(task) => { setSignTarget(task); setSignForm({ signature: '', note: '' }); }} onReopen={reopen} /> : compact ? <SharedTodoCommandBoard pending={pending} awaiting={awaiting} finalised={finalisedByModule.flatMap((group) => group.rows)} loading={loading} canSign={canSign} onNew={() => setOpen(true)} onExport={exportFinalised} onFinalise={(task) => { setFinaliseTarget(task); setFinaliseForm({ completed_by: '', time_taken_minutes: '' }); }} onSign={(task) => { setSignTarget(task); setSignForm({ signature: '', note: '' }); }} onReopen={reopen} /> : <>
       <div className={compact ? 'flex flex-wrap items-center justify-between gap-2 rounded-lg bg-primary/5 p-2.5' : 'flex flex-wrap items-center justify-between gap-2'}>
         {compact ? <div className="flex min-w-0 items-center gap-2"><span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary"><ListTodo className="h-4 w-4" /></span><div><h2 className="text-sm font-semibold">Shared To-do List</h2><p className="text-[11px] text-muted-foreground">Share, complete and sign off team actions.</p></div></div> : <p className="text-sm text-muted-foreground">Shared to-dos travel app user to app user: pick the module (location), set how to complete it, resources, important info, who is responsible and a due date. Everyone responsible sees it in their profile, with daily email reminders until it is finalised.</p>}
         <Button size={compact ? 'sm' : 'default'} onClick={() => setOpen(true)}><Plus className="h-4 w-4" />New shared to-do</Button>
@@ -236,7 +204,7 @@ export default function TodoBoard({ compact = false, presentation = 'default' })
                       <span className="text-sm font-semibold">{t.title}</span>
                     </div>
                     {canSign && (
-                      <Button size="sm" onClick={() => { setSignTarget(t); setSignForm({ signature: '' }); }}><PenLine className="h-3.5 w-3.5" />Review &amp; sign off</Button>
+                      <Button size="sm" onClick={() => { setSignTarget(t); setSignForm({ signature: '', note: '' }); }}><PenLine className="h-3.5 w-3.5" />Review &amp; sign off</Button>
                     )}
                   </div>
                   <div className="mt-1 flex flex-wrap gap-3 text-xs text-muted-foreground">
@@ -372,6 +340,11 @@ export default function TodoBoard({ compact = false, presentation = 'default' })
                 <p className="font-editorial-italic text-xl text-brand">{signForm.signature}</p>
               )}
             </div>
+            <div className="grid gap-1.5">
+              <Label htmlFor="todo-signoff-note">Reason (needed to send back)</Label>
+              <Textarea id="todo-signoff-note" rows={2} value={signForm.note} onChange={(e) => setSignForm({ ...signForm, note: e.target.value })} />
+            </div>
+            <p className="text-xs text-muted-foreground">You can't sign off work you completed yourself; another approver must. Also in the <Link className="underline" to="/approvals">Approval Inbox</Link>.</p>
           </div>
           <div className="flex justify-end gap-2">
             <Button variant="outline" onClick={decline} disabled={saving}>Send back to pending</Button>
