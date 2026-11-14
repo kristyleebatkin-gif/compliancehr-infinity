@@ -40,12 +40,12 @@ const MEMBERSHIP_ROLES = new Set([
   'Support Worker', 'Employee', 'Volunteer', 'Participant', 'Auditor',
 ]);
 
-async function allRecords(dao) {
-  const out = [];
-  let cursor = null;
-  const seen = new Set();
+async function allRecords(dao: any): Promise<any[]> {
+  const out: any[] = [];
+  let cursor: string | null = null;
+  const seen = new Set<string>();
   do {
-    const page = await dao.filter({}, { limit: 200, ...(cursor ? { cursor } : {}) });
+    const page: any = await dao.filter({}, { limit: 200, ...(cursor ? { cursor } : {}) });
     const items = Array.isArray(page) ? page : page?.items || [];
     out.push(...items);
     cursor = !Array.isArray(page) && page?.has_more ? page.next_cursor : null;
@@ -55,7 +55,7 @@ async function allRecords(dao) {
   return out;
 }
 
-export default async function reqHandler(req) {
+export default async function reqHandler(req: Request) {
   try {
     const base44 = createClientFromRequest(req);
     const user = await base44.auth.me();
@@ -69,7 +69,7 @@ export default async function reqHandler(req) {
     const only = Array.isArray(body?.entities) && body.entities.length ? new Set(body.entities) : null;
     const limitPerEntity = Number.isInteger(body?.limitPerEntity) && body.limitPerEntity > 0 ? body.limitPerEntity : null;
     const svc = base44.asServiceRole.entities;
-    const report = { mode: apply ? 'apply' : 'dryRun', tenant: null, memberships: [], entities: [], errors: [] };
+    const report: any = { mode: apply ? 'apply' : 'dryRun', tenant: null, memberships: [], entities: [], errors: [] };
 
     // 1. Business record
     const existingTenants = await allRecords(svc.Tenant);
