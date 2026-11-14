@@ -28,7 +28,7 @@
     ]
   },
   "trigger": {
-    "condition": "${ (.trigger.event_type != \"update\" or ((((.trigger.changed_fields // []) - [\"tenant_id\", \"updated_date\"]) | length) > 0)) }",
+    "condition": "${ (.trigger.event_type != \"update\" or (.trigger.changed_fields == null) or ((((.trigger.changed_fields // []) - [\"tenant_id\", \"updated_date\"]) | length) > 0)) }",
     "config": {
       "trigger_type": "entity",
       "events": [

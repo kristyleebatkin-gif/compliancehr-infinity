@@ -10,7 +10,7 @@
         "update"
       ]
     },
-    "condition": "${ (.trigger.event_type != \"update\" or ((((.trigger.changed_fields // []) - [\"tenant_id\", \"updated_date\"]) | length) > 0)) and ((.trigger.data.status | IN(\"Completed\", \"Finalised\", \"Pending Approval\")) and ((.trigger.old_data.status // \"\" | IN(\"Completed\", \"Finalised\", \"Pending Approval\")) | not)) }"
+    "condition": "${ (.trigger.event_type != \"update\" or (.trigger.changed_fields == null) or ((((.trigger.changed_fields // []) - [\"tenant_id\", \"updated_date\"]) | length) > 0)) and ((.trigger.data.status | IN(\"Completed\", \"Finalised\", \"Pending Approval\")) and ((.trigger.old_data.status // \"\" | IN(\"Completed\", \"Finalised\", \"Pending Approval\")) | not)) }"
   },
   "definition": {
     "document": {
