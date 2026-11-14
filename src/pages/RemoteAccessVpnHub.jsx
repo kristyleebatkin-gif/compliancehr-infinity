@@ -83,7 +83,6 @@ export default function RemoteAccessVpnHub() {
   const [editingItem, setEditingItem] = useState(null);
   const [form, setForm] = useState(EMPTY_FORM);
   const [saving, setSaving] = useState(false);
-  const [testingId, setTestingId] = useState(null);
 
   const loadData = useCallback(async () => {
     setLoading(true);
