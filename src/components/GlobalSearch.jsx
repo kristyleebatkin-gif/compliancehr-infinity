@@ -36,7 +36,7 @@ const QUICK_ACTIONS = [
 ];
 
 export default function GlobalSearch() {
-  const { role } = useRole();
+  const { navRole: role } = useRole();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [results, setResults] = useState(EMPTY);

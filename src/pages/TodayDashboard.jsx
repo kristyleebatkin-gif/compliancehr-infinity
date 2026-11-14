@@ -58,7 +58,7 @@ export default function TodayDashboard() {
 }
 
 function TodayWorkspace({ onSecurityPin }) {
-  const { user, role } = useRole();
+  const { user, navRole } = useRole();
   const { data, reload } = useTodayData();
   const wellbeingRef = useRef(null);
   const [theme, setTheme] = useState(() => localStorage.getItem('cs-today-theme') || 'dark');
@@ -66,14 +66,14 @@ function TodayWorkspace({ onSecurityPin }) {
   const screensaver = useScreensaver({ workspace: 'today' });
 
   const visibleKeys = {
-    emails: canAccessNav(role, 'communications'),
-    shifts: canAccessNav(role, 'rostering'),
-    invoices: canAccessNav(role, 'invoicing'),
-    notesOutstanding: canAccessNav(role, 'communications'),
-    ndis: canAccessNav(role, 'ndis-news'),
-    todos: canAccessNav(role, 'tasks'),
-    team: canAccessNav(role, 'our-staff') && canAccessNav(role, 'rostering') && canAccessNav(role, 'communications'),
-    compliance: canAccessNav(role, 'compliance') && canAccessNav(role, 'incidents')
+    emails: canAccessNav(navRole, 'communications'),
+    shifts: canAccessNav(navRole, 'rostering'),
+    invoices: canAccessNav(navRole, 'invoicing'),
+    notesOutstanding: canAccessNav(navRole, 'communications'),
+    ndis: canAccessNav(navRole, 'ndis-news'),
+    todos: canAccessNav(navRole, 'tasks'),
+    team: canAccessNav(navRole, 'our-staff') && canAccessNav(navRole, 'rostering') && canAccessNav(navRole, 'communications'),
+    compliance: canAccessNav(navRole, 'compliance') && canAccessNav(navRole, 'incidents')
   };
 
   useEffect(() => {
