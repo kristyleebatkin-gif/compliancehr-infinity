@@ -22,15 +22,15 @@ export default function TodayHeader({ user, theme, onToggleTheme, started, onSta
   const firstName = (user?.full_name || '').split(' ')[0] || 'there';
 
   return (
-    <header className="flex flex-wrap items-center justify-between gap-3">
-      <div className="min-w-0">
+    <header className="flex min-w-0 flex-wrap items-center justify-between gap-4">
+      <div className="min-w-0 max-w-full">
         <p className="t-muted text-[11px] font-bold uppercase tracking-[0.16em]">{longDate()}</p>
-        <h1 className="t-title mt-1 truncate text-[26px] font-extrabold leading-tight sm:text-[30px]">
+        <h1 className="t-title mt-1 break-words text-[26px] font-extrabold leading-tight sm:text-[30px]">
           {greeting()}, <span className="t-grad-text">{firstName}</span>
         </h1>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="today-header-actions flex min-w-0 max-w-full flex-wrap items-center gap-2" role="group" aria-label="Workspace controls">
         <button type="button" onClick={onStart} className="t-btn t-btn-primary">
           <Play className="h-3.5 w-3.5" />
           {started ? 'Day started' : 'Mark my day started'}
@@ -63,14 +63,15 @@ export default function TodayHeader({ user, theme, onToggleTheme, started, onSta
         <button
           type="button"
           onClick={onToggleTheme}
-          aria-label="Switch theme"
+          aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
           className="t-btn t-btn-ghost !px-2.5"
         >
           {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
         </button>
         <Link
           to="/my-profile"
-          className="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-br from-[#0A2B6D] via-[#5A00D6] to-[#FF2E9A] text-[13px] font-extrabold text-white"
+          aria-label="Open my profile"
+          className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[#0A2B6D] via-[#5A00D6] to-[#FF2E9A] text-[13px] font-extrabold text-white"
         >
           {initials(user?.full_name)}
         </Link>
