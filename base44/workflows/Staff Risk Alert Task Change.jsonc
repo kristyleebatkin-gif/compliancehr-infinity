@@ -2,15 +2,15 @@
   "name": "Staff Risk Alert Task Change",
   "description": "The moment a compliance task is created or changed, scores every staff member's compliance risk and instantly notifies admins in-app for anyone whose risk score exceeds the threshold.",
   "trigger": {
+    "condition": "${ (.trigger.event_type != \"update\" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; . != \"tenant_id\" and . != \"updated_date\")) }",
     "config": {
       "trigger_type": "entity",
-      "entity_name": "TodoTask",
       "events": [
         "create",
         "update"
-      ]
-    },
-    "condition": "${ (.trigger.event_type != \"update\" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; . != \"tenant_id\" and . != \"updated_date\")) }"
+      ],
+      "entity_name": "TodoTask"
+    }
   },
   "definition": {
     "document": {
