@@ -3,7 +3,7 @@ import { CheckCircle2, AlertTriangle, HelpCircle, Ban } from 'lucide-react';
 
 const TONES = {
   ready: { label: 'Ready', className: 'border-emerald-200 bg-emerald-50 text-emerald-800', Icon: CheckCircle2 },
-  complete: { label: 'Done', className: 'border-sky-200 bg-sky-50 text-[#0A2B6D]', Icon: CheckCircle2 },
+  complete: { label: 'Recorded complete', className: 'border-sky-200 bg-sky-50 text-[#0A2B6D]', Icon: CheckCircle2 },
   blocked: { label: 'Blocked', className: 'border-rose-200 bg-rose-50 text-rose-700', Icon: Ban },
   incomplete: { label: 'Unknown', className: 'border-amber-200 bg-amber-50 text-amber-800', Icon: HelpCircle },
 };
