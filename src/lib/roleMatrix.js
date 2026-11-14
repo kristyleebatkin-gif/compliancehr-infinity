@@ -516,10 +516,14 @@ export function createTenantScopedEntitiesProxy(rawEntities, contextResolver, pr
     return { user, tenantId };
   };
 
+  // strictUntagged (release 2, audit CRIT-01): a business-owned record with no business tag is
+  // hidden rather than shown to everyone. Off in release 1 so untagged legacy records stay visible.
+  const strictUntagged = Boolean(proxyOptions?.strictUntagged);
   const filterRecordByTenant = (record, tenantId) => {
     if (!record || !tenantId) return true;
     const recTenant = record.tenant_id || record.data?.tenant_id || null;
-    return !recTenant || recTenant === tenantId;
+    if (!recTenant) return !strictUntagged;
+    return recTenant === tenantId;
   };
 
   const assertRecordMatchesTenant = (record, user, tenantId) => {

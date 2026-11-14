@@ -1,6 +1,8 @@
 import { createClient } from '@base44/sdk';
 import { appParams } from '@/lib/app-params';
 import { createTenantScopedEntitiesProxy } from '@/lib/roleMatrix';
+import { TENANT_ENFORCEMENT_ON } from '@/lib/tenantEnforcement';
+import { BUSINESS_OWNED_ENTITIES } from '@/lib/tenantClassification';
 
 const { appId, token, functionsVersion, appBaseUrl } = appParams;
 
@@ -53,7 +55,13 @@ rawClient.auth.me = async (...args) => {
 };
 
 const scopedEntities = createTenantScopedEntitiesProxy(rawClient.entities, () => activeTenantContext, {
-  knownTenantEntities: ['AuditLog', 'BusinessDetails', 'Notification', 'Shift', 'TenantMembership', 'User'],
+  // Release 1: narrow only the entities that were already tagged. Release 2 (TENANT_ENFORCEMENT_ON):
+  // every business-owned entity is narrowed and untagged records are hidden. Server access rules
+  // remain the real boundary; this is defence in depth.
+  knownTenantEntities: TENANT_ENFORCEMENT_ON
+    ? [...BUSINESS_OWNED_ENTITIES]
+    : ['AuditLog', 'BusinessDetails', 'Notification', 'Shift', 'TenantMembership', 'User'],
+  strictUntagged: TENANT_ENFORCEMENT_ON,
   enableReadCache: true,
   readCacheTtlMs: 15000,
 });
