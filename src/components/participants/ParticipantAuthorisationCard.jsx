@@ -29,7 +29,7 @@ export default function ParticipantAuthorisationCard({ participant, type, onUpda
   };
   return <details open className="min-w-0 space-y-2 rounded-xl border border-border bg-card p-3">
     <summary className="cursor-pointer text-sm font-semibold">{title} <Badge variant="outline">{saved.status || 'Not recorded'}</Badge></summary>
-    <p className="text-xs text-muted-foreground">{saved.recorded_date ? `Logged by ${saved.recorded_by} on ${saved.recorded_date} at ${saved.recorded_time} (Brisbane time)` : 'No consent decision logged. Consent must not be assumed.'}</p>
+    <p className="text-xs text-muted-foreground">{saved.recorded_date ? `Logged by ${saved.recorded_by} on ${saved.recorded_date} at ${saved.recorded_time} (time as recorded)` : 'No consent decision logged. Consent must not be assumed.'}</p>
     {editable ? <><div className="grid gap-2 sm:grid-cols-2">
       <Input aria-label={`${title}: person giving consent`} placeholder="Participant / representative giving consent" maxLength={200} value={form.granted_by || ''} onChange={(e) => set('granted_by', e.target.value)} />
       <Input aria-label={`${title}: authorised person`} placeholder={type === 'sharing' ? 'Person / organisation receiving information' : type === 'medication' ? 'Person / service authorised to assist with medication' : 'Person authorised to act as advocate'} maxLength={200} value={form.authorised_person || ''} onChange={(e) => set('authorised_person', e.target.value)} />

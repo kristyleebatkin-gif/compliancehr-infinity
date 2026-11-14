@@ -109,7 +109,7 @@ export default function StaffAuthorisationCard({ staff, type, onUpdated }) {
       >
         <span style={{ color: symCol }}>◉</span>{' '}
         {saved?.recorded_date
-          ? `Logged by ${saved.recorded_by} on ${saved.recorded_date} at ${saved.recorded_time} (Brisbane time)`
+          ? `Logged by ${saved.recorded_by} on ${saved.recorded_date} at ${saved.recorded_time} (time as recorded)`
           : 'No consent decision logged. Consent must not be assumed.'}
       </p>
       {editable ? (
