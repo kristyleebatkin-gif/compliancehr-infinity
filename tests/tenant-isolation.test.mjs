@@ -131,6 +131,30 @@ test('automation trigger rules use only forms Base44 accepts (no array subtracti
   assert.deepEqual(refused, []);
 });
 
+test('every backend function is limited to one business, apart from the known exceptions', async () => {
+  const dir = new URL('base44/functions/', root);
+  const EXCEPTIONS = new Map([
+    ['tenantMigration', /user\.role !== 'admin'/],
+    ['liveModuleOverview', /resolveTenantContext/],
+    ['updateCompanyBranding', /resolveTenantContext/],
+    ['workspacePin', /owner_user_id/],
+    ['publicSubmissions', /scopedEntities\(base44\.asServiceRole\.entities, business\.tenantId\)/],
+    ['rosterIcsFeed', /scopedEntities\(base44\.asServiceRole\.entities, feedTenant\)/],
+  ]);
+  const problems = [];
+  for (const name of await readdir(dir)) {
+    let src;
+    try { src = await readFile(new URL(`${name}/entry.ts`, dir), 'utf8'); } catch { continue; }
+    if (EXCEPTIONS.has(name)) {
+      if (!EXCEPTIONS.get(name).test(src)) problems.push(`${name}: exception no longer scoped as expected`);
+      continue;
+    }
+    if (!/export default perBusiness\(/.test(src)) problems.push(`${name}: not wrapped with perBusiness`);
+    if (/\bcreateClientFromRequest\(/.test(src)) problems.push(`${name}: uses the unscoped client`);
+  }
+  assert.deepEqual(problems, []);
+});
+
 test('tagging function is owner-only and uses the shared classification', async () => {
   const src = await read('base44/functions/tenantMigration/entry.ts');
   assert.match(src, /user\.role !== 'admin' \|\| !hasApprovedAccess\(user\)/);
