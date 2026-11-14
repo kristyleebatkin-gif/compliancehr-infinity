@@ -10,8 +10,9 @@
     "lint:fix": "eslint . --fix",
     "test": "node --test tests/*.test.mjs src/tests/*.test.mjs",
     "typecheck": "tsc -p ./jsconfig.json --noEmit",
-    "ci:verify": "npm run lint && npm test && npm run build",
-    "preview": "vite preview"
+    "ci:verify": "npm run lint && npm test && npm run test:deno && npm run build",
+    "preview": "vite preview",
+    "test:deno": "deno test --no-config --no-lock --no-check -A tests/deno/"
   },
   "dependencies": {
     "@base44/sdk": "^0.8.61",
