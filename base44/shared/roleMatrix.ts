@@ -217,6 +217,18 @@ export const SPECIALIST_NAV_EXTRAS = {
   'CRM & Marketing Officer': ['crm', 'projects'],
 };
 
+// Roles a manager can give someone (backlog 17.07): the core roles plus the specialist job roles.
+export const ASSIGNABLE_ROLES = [...ALL_ROLES, ...Object.keys(SPECIALIST_NAV_EXTRAS)];
+
+// Full-access roles can only be given, changed or suspended by the owner or a Provider Administrator.
+export const SENIOR_ROLES = ['Provider Administrator', 'Compliance Administrator', 'Management'];
+
+export function canGrantRole(actorRole, role) {
+  if (!ASSIGNABLE_ROLES.includes(role)) return false;
+  if (SENIOR_ROLES.includes(role)) return actorRole === 'admin' || actorRole === 'Provider Administrator';
+  return true;
+}
+
 function opensAsSpecialist(role, navKey) {
   return Boolean(typeof role === 'string' && SPECIALIST_NAV_EXTRAS[role]?.includes(navKey));
 }
