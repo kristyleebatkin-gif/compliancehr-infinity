@@ -112,7 +112,10 @@ test('automations that run on update ignore a change to the business tag alone',
     const wf = JSON.parse(await readFile(new URL(f, dir), 'utf8'));
     const cfg = wf.trigger?.config;
     if (cfg?.trigger_type !== 'entity' || !(cfg.events || []).includes('update')) continue;
-    if (!String(wf.trigger.condition || '').includes('- ["tenant_id", "updated_date"]')) unguarded.push(f);
+    const cond = String(wf.trigger.condition || '');
+    // Base44 refuses array subtraction in trigger conditions, so the guard uses any(...) instead.
+    const guard = '(.trigger.event_type != "update" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; . != "tenant_id" and . != "updated_date"))';
+    if (!cond.startsWith('${ ' + guard) || /\) - \[/.test(cond)) unguarded.push(f);
   }
   assert.deepEqual(unguarded, []);
 });
