@@ -137,6 +137,25 @@
   transform: translateY(-1px);
 }
 
+/* Keep the header usable when controls wrap on phones and tablets. */
+.today-header-actions > :is(button, a) {
+  min-width: 44px;
+  min-height: 44px;
+  flex-shrink: 0;
+}
+
+.today-header-actions > :is(button, a):focus-visible {
+  outline: 3px solid var(--t-text);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .today-shell :is(.t-btn, .t-dock-item, .t-row, .t-radio-toggle) {
+    transition: none;
+    transform: none;
+  }
+}
+
 .t-btn-primary {
   background: linear-gradient(135deg, #0A2B6D 0%, #5a00d6 62%, #ff2e9a 138%);
   color: #ffffff;
