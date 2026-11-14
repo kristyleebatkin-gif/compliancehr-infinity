@@ -103,7 +103,7 @@ export default function ProfileAuditConsentCard({
               profile.audit_consent_recorded_by || 'Not recorded'
             } on ${profile.audit_consent_recorded_date} at ${
               profile.audit_consent_recorded_time || 'Not recorded'
-            } (Sydney time)`
+            } (Brisbane time)`
           : 'No dated consent decision has been logged. Consent must not be assumed.'}
       </p>
       {editable && (

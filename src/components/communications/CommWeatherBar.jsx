@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 import { BUSINESS_TIME_ZONE } from '@/lib/businessTime';
 
-const FALLBACK = { latitude: -33.87, longitude: 151.21 }; // Sydney
+const FALLBACK = { latitude: -27.47, longitude: 153.03 }; // Brisbane
 
 const CODES = {
   0: ['Clear Sky', Sun], 1: ['Mostly Sunny', Sun], 2: ['Partly Cloudy', Cloud], 3: ['Overcast', Cloud],
@@ -105,7 +105,7 @@ export default function CommWeatherBar() {
                 <div className="flex items-center gap-1.5">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#00C6FF] animate-pulse" />
                   <p className="text-[11px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
-                    Live Time (Sydney)
+                    Live Time (Brisbane)
                   </p>
                 </div>
                 <p className="font-mono text-sm sm:text-base font-black leading-tight text-white">

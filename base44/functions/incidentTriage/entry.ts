@@ -32,7 +32,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
 // Work on the local wall-clock time entered in the form (datetime-local, no timezone).
 const parseLocal = (value: string) => {
   const v = String(value || '').trim();
-  // A stored timestamp with a timezone (e.g. ending in Z) is converted to Sydney wall-clock time.
+  // A stored timestamp with a timezone (e.g. ending in Z) is converted to business-local (Brisbane) wall-clock time.
   if (/(Z|[+-]\d{2}:?\d{2})$/.test(v)) {
     const d = new Date(v);
     if (Number.isNaN(d.getTime())) return null;

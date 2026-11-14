@@ -45,7 +45,7 @@ export default async function(req) {
     const heading = () => {
       pdf.setFont('helvetica', 'bold'); pdf.setFontSize(15); pdf.text(title, 40, 40);
       pdf.setFont('helvetica', 'normal'); pdf.setFontSize(9);
-      pdf.text('30 logged app actions | Times shown in Australia/Sydney', 40, 57); y = 80;
+      pdf.text('30 logged app actions | Times shown in Australia/Brisbane', 40, 57); y = 80;
     };
     heading();
     for (let index = 0; index < actions.length; index++) {

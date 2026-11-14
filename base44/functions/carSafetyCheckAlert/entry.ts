@@ -5,7 +5,7 @@ import { BUSINESS_TIME_ZONE } from '../../shared/reminders.ts';
 const norm = (v) => String(v || '').trim().toLowerCase();
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-// Sydney-local date + "HH:MM" to epoch, corrected for DST offsets.
+// Business-local (Brisbane) date + "HH:MM" to epoch, corrected for DST offsets.
 function businessLocalToEpoch(dateStr, timeStr) {
   let ts = Date.parse(`${dateStr}T${timeStr}:00Z`);
   const fmt = new Intl.DateTimeFormat('en-CA', { timeZone: BUSINESS_TIME_ZONE, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false });

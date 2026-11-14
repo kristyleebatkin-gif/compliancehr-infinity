@@ -49,7 +49,7 @@ export const COMMON_PROBLEMS = [
     problem: 'No reminder email for a task, meeting or expiry',
     tag: 'Reminders',
     fix: [
-      'Task and expiry reminders run each morning around 7am Sydney time — they are daily, not instant.',
+      'Task and expiry reminders run each morning around 7am Brisbane time — they are daily, not instant.',
       'Tasks need a due date and a responsible person to be chased; meetings email attendees 24 and 12 hours ahead.',
       'Check the notification bell for alerts that were raised in-app instead of by email.',
     ],

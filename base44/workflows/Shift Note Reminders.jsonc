@@ -1,6 +1,6 @@
 {
   "name": "Shift Note Reminders",
-  "description": "Daily at 7pm Australia/Sydney: employee reminders on days 1-5 after shift end; manager escalation from day 6. Delivery and matching require validation.",
+  "description": "Daily at 7pm Australia/Brisbane: employee reminders on days 1-5 after shift end; manager escalation from day 6. Delivery and matching require validation.",
   "trigger": {
     "condition": null,
     "config": {
@@ -9,7 +9,7 @@
       "schedule_mode": "recurring",
       "cron_expression": "0 19 * * *",
       "one_time_date": null,
-      "timezone": "Australia/Sydney",
+      "timezone": "Australia/Brisbane",
       "interval_value": null,
       "interval_unit": null,
       "interval_anchor": null,

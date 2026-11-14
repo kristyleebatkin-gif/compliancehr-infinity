@@ -5,7 +5,7 @@ import { BUSINESS_TIME_ZONE } from '../../shared/businessTime.ts';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const DONE_STATUSES = ['Completed', 'Cancelled', 'Finalised'];
 
-// Finds compliance tasks that have passed their due date (Sydney time) and are
+// Finds compliance tasks that have passed their due date (Brisbane time) and are
 // not finished, then instantly notifies the assignee, everyone responsible and
 // every admin user — via in-app notification and email — once per task.
 // Called with { task_id } by the instant entity-triggered workflow, or with no

@@ -1,5 +1,5 @@
 import { BUSINESS_TIME_ZONE } from './businessTime.ts';
-// Shared date + pagination helpers for reminder scan functions (Australia/Sydney).
+// Shared date + pagination helpers for reminder scan functions (business time zone, Australia/Brisbane).
 
 export { BUSINESS_TIME_ZONE };
 

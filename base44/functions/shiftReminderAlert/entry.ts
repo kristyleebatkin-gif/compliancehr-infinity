@@ -4,7 +4,7 @@ import { BUSINESS_TIME_ZONE } from '../../shared/businessTime.ts';
 
 const prettyDate = (iso) => new Intl.DateTimeFormat('en-AU', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${iso}T00:00:00Z`));
 
-// Convert a Sydney-local date + time string ("2026-10-12", "07:30") to an epoch timestamp
+// Convert a business-local (Brisbane) date + time string ("2026-10-12", "07:30") to an epoch timestamp
 function businessLocalToEpoch(dateStr, timeStr) {
   let ts = Date.parse(`${dateStr}T${timeStr}:00Z`);
   const fmt = new Intl.DateTimeFormat('en-CA', { timeZone: BUSINESS_TIME_ZONE, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false });

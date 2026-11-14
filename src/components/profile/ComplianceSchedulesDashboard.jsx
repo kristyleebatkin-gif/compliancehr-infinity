@@ -20,7 +20,7 @@ const CADENCES = [
     items: [
       'Immediate real-time notifications for critical incidents, high/critical risks, data breaches and complaints',
       '24-hour NDIS Commission initial notification for reportable incidents & 5-day statutory follow-up report',
-      'Daily executive & compliance summary dispatched at 8:30 AM (Australia/Sydney)',
+      'Daily executive & compliance summary dispatched at 8:30 AM (Australia/Brisbane)',
     ],
   },
   {

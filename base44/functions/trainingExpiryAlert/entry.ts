@@ -16,7 +16,7 @@ export default async function(req) {
     const body = await req.json().catch(() => ({}));
     const dryRun = !!body.dry_run;
 
-    // Certifications that expire exactly 30 days from today (Sydney time)
+    // Certifications that expire exactly 30 days from today (Brisbane time)
     // force_date is a test override (YYYY-MM-DD) to preview a specific alert day
     const targetStr = body.force_date || auDate(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000));
     const dueText = prettyDate(targetStr);
