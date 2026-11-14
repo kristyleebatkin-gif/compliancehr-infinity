@@ -1,5 +1,6 @@
 import { hasApprovedAccess } from '../../shared/appAccess.ts';
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { BUSINESS_TIME_ZONE } from '../../shared/businessTime.ts';
 
 // Read-only ICS feed of the rostering schedule for external calendar apps
 // (Google Calendar, Apple Calendar, Outlook). Protected by a per-user token
@@ -141,13 +142,13 @@ export default async function(req) {
         lines.push(foldLine(`UID:${s.id}-${date}@polite-safe-hire-flow.base44.app`));
         lines.push(`DTSTAMP:${stamp}`);
         if (hasTimes) {
-          lines.push(`DTSTART;TZID=Australia/Sydney:${icsLocalDateTime(date, s.start_time, '00:00')}`);
+          lines.push(`DTSTART;TZID=${BUSINESS_TIME_ZONE}:${icsLocalDateTime(date, s.start_time, '00:00')}`);
           const endSpills = s.end_time <= s.start_time;
-          lines.push(`DTEND;TZID=Australia/Sydney:${icsLocalDateTime(date, s.end_time, '00:00')}`);
+          lines.push(`DTEND;TZID=${BUSINESS_TIME_ZONE}:${icsLocalDateTime(date, s.end_time, '00:00')}`);
           if (endSpills) {
             // Overnight shift: end on the next day.
             lines.pop();
-            lines.push(`DTEND;TZID=Australia/Sydney:${icsLocalDateTime(nextDate(date, 1), s.end_time, '00:00')}`);
+            lines.push(`DTEND;TZID=${BUSINESS_TIME_ZONE}:${icsLocalDateTime(nextDate(date, 1), s.end_time, '00:00')}`);
           }
         } else {
           const end = nextDate(date, 1);

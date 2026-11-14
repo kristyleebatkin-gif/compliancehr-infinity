@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Cloud, CloudRain, Sun, CloudSnow, CloudLightning, CloudFog, Newspaper, Tv, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { BUSINESS_TIME_ZONE } from '@/lib/businessTime';
 
 const FALLBACK_COORDS = { latitude: -19.259, longitude: 146.8169 }; // North QLD / Townsville
 
@@ -105,7 +106,7 @@ export default function SilverScreenSplit() {
     : ['Sunny · 27°C', Sun];
 
   const timeStr = now.toLocaleTimeString('en-AU', {
-    timeZone: 'Australia/Sydney',
+    timeZone: BUSINESS_TIME_ZONE,
     hour: '2-digit',
     minute: '2-digit',
     second: '2-digit',
@@ -126,7 +127,7 @@ export default function SilverScreenSplit() {
           <Tv className="h-2.5 w-2.5" /> Time · Date · Weather · Services
         </span>
         <span className="font-mono text-[9px] font-extrabold">
-          {now.toLocaleDateString('en-AU', { timeZone: 'Australia/Sydney', weekday: 'short', day: 'numeric', month: 'short' })} · {timeStr}
+          {now.toLocaleDateString('en-AU', { timeZone: BUSINESS_TIME_ZONE, weekday: 'short', day: 'numeric', month: 'short' })} · {timeStr}
         </span>
       </div>
 

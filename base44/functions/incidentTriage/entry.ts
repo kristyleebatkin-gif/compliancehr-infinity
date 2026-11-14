@@ -1,5 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
 import { hasAnyRole } from '../../shared/systemAuth.ts';
+import { BUSINESS_TIME_ZONE } from '../../shared/businessTime.ts';
 
 // AI incident triage: SUGGESTS a regulatory assessment for an incident.
 // It never writes to the Incident. A reviewer must accept the suggestion in the
@@ -31,11 +32,11 @@ const pad = (n: number) => String(n).padStart(2, '0');
 // Work on the local wall-clock time entered in the form (datetime-local, no timezone).
 const parseLocal = (value: string) => {
   const v = String(value || '').trim();
-  // A stored timestamp with a timezone (e.g. ending in Z) is converted to Sydney wall-clock time.
+  // A stored timestamp with a timezone (e.g. ending in Z) is converted to business-local (Brisbane) wall-clock time.
   if (/(Z|[+-]\d{2}:?\d{2})$/.test(v)) {
     const d = new Date(v);
     if (Number.isNaN(d.getTime())) return null;
-    const parts = new Intl.DateTimeFormat('en-CA', { timeZone: 'Australia/Sydney', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(d);
+    const parts = new Intl.DateTimeFormat('en-CA', { timeZone: BUSINESS_TIME_ZONE, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(d);
     const g = (t: string) => Number(parts.find((p) => p.type === t)?.value);
     return new Date(Date.UTC(g('year'), g('month') - 1, g('day'), g('hour'), g('minute')));
   }

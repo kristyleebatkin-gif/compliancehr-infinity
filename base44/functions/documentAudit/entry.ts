@@ -1,4 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { BUSINESS_TIME_ZONE } from '../../shared/businessTime.ts';
 
 // Automatic document audit for staff and participant profiles.
 // Triggered by the "Document Audit: Participant/Employee" workflows on every
@@ -156,7 +157,7 @@ export default async function(req) {
     // client did not already record the change.
     if (!actor && person) {
       const stamp = new Intl.DateTimeFormat('en-AU', {
-        timeZone: 'Australia/Sydney', dateStyle: 'medium', timeStyle: 'short', hour12: false,
+        timeZone: BUSINESS_TIME_ZONE, dateStyle: 'medium', timeStyle: 'short', hour12: false,
       }).format(new Date());
       const line = `${stamp} | ${action}: ${title} | by ${performedBy} (${performedByRole})${diff ? ` | ${diff}` : ''}`;
       const entity = base44.asServiceRole.entities[isParticipant ? 'ParticipantProfile' : 'StaffProfile'];

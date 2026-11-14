@@ -83,7 +83,6 @@ export default function RemoteAccessVpnHub() {
   const [editingItem, setEditingItem] = useState(null);
   const [form, setForm] = useState(EMPTY_FORM);
   const [saving, setSaving] = useState(false);
-  const [testingId, setTestingId] = useState(null);
 
   const loadData = useCallback(async () => {
     setLoading(true);
@@ -159,8 +158,8 @@ export default function RemoteAccessVpnHub() {
     } else {
       await base44.entities.RemoteAccessSession.create(form);
       toast({
-        title: 'Remote Access Endpoint Provisioned',
-        description: `${form.title} is now active with Zero-Trust protection.`,
+        title: 'Remote Access Policy Recorded',
+        description: `${form.title} has been added to the access policy register.`,
       });
     }
     setSaving(false);
@@ -187,15 +186,13 @@ export default function RemoteAccessVpnHub() {
     loadData();
   };
 
+  // This hub is a policy register only. It is not connected to a VPN or gateway,
+  // so it must never report a live connection test as passed.
   const handleTestTunnel = (item) => {
-    setTestingId(item.id);
-    setTimeout(() => {
-      setTestingId(null);
-      toast({
-        title: 'Zero-Trust Handshake Verified (14ms)',
-        description: `${item.title}: TLS 1.3 encrypted, MFA token valid, zero VPN client overhead.`,
-      });
-    }, 500);
+    toast({
+      title: 'No live connection test available',
+      description: `${item.title} is a recorded access policy. This hub is not connected to a VPN or security gateway, so the connection has not been tested.`,
+    });
   };
 
   return (
@@ -218,8 +215,12 @@ export default function RemoteAccessVpnHub() {
                 Remote Access Without the Headaches
               </h1>
               <p className="max-w-3xl text-xs sm:text-sm font-semibold text-slate-300">
-                Replace clunky, dropped legacy VPN clients with instant browser-based Zero-Trust access,
-                automatic MFA verification, role-scoped auditor links, and optional managed VPN gateways.
+                Record and review your remote-access and VPN rules: who may connect, how, and with what
+                MFA and encryption requirements.
+              </p>
+              <p className="max-w-3xl rounded-lg border border-[#FF2E9A]/60 px-3 py-1.5 text-[11px] font-bold text-white">
+                Policy register only: this hub is not connected to a VPN or security gateway. Encryption and MFA values
+                below are the requirements you have recorded, not live test results.
               </p>
             </div>
 
@@ -274,13 +275,13 @@ export default function RemoteAccessVpnHub() {
             <div className="rounded-xl border border-[#0072FF]/60 bg-workspace-navy p-3.5">
               <div className="flex items-center justify-between">
                 <span className="text-[11px] font-extrabold uppercase text-[#38BDF8]">
-                  Encryption &amp; MFA Posture
+                  Encryption &amp; MFA Requirement
                 </span>
                 <KeyRound className="h-4 w-4 text-[#00C6FF]" />
               </div>
               <div className="mt-1 text-2xl font-black text-white">TLS 1.3</div>
               <div className="mt-0.5 text-[11px] font-semibold text-slate-300">
-                AES-256 + Identity-Aware Role Gate
+                Default policy requirement (not a live test)
               </div>
             </div>
 
@@ -445,7 +446,7 @@ export default function RemoteAccessVpnHub() {
                         </span>
                         <span>
                           <strong className="text-[#00C6FF]">MFA:</strong>{' '}
-                          {item.mfa_verified !== false ? 'Enforced' : 'Optional'}
+                          {item.mfa_verified !== false ? 'Required by policy' : 'Optional'}
                         </span>
                       </div>
 
@@ -464,7 +465,7 @@ export default function RemoteAccessVpnHub() {
                       className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-[#00C6FF] bg-workspace-navy px-3 text-[11px] font-extrabold text-[#00C6FF] transition hover:bg-workspace-navy"
                     >
                       <Wifi className="h-3.5 w-3.5 text-[#00C6FF]" />
-                      <span>{testingId === item.id ? 'Testing...' : 'Verify Connection'}</span>
+                      <span>Connection test</span>
                     </button>
 
                     <button

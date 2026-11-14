@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useRole } from '@/lib/useRole';
 import { preparePersonalProfileAccess } from '@/lib/personalProfileAccess';
+import { BUSINESS_TIME_ZONE } from '@/lib/businessTime';
 
 export const journeyMilestone = (type = 'Training') => ({ id: crypto.randomUUID(), type, title: '', planned_date: '', completed_date: '', next_due_date: '', responsible: '', notes: '', report: '', documents: [] });
 /* Workplace cycle every staff journey documents: intake, induction, buddy
@@ -40,7 +41,7 @@ export default function useEmployeeJourney(profile, onUpdated) {
       if (answers.length > 90000) throw new Error('Please shorten the journey notes before saving.');
       let updated = profile;
       if (canEditDates && (value.start_date !== (profile.start_date || '') || value.induction_date !== (profile.induction_date || ''))) updated = { ...profile, ...await base44.entities.StaffProfile.update(profile.id, { start_date: value.start_date || null, induction_date: value.induction_date || null }) };
-      const payload = { staff_name: profile.full_name, form_code: 'EMPLOYEE-JOURNEY', answers, completed_by: user.full_name || user.email, completed_date: new Date().toLocaleDateString('en-CA', { timeZone: 'Australia/Sydney' }) };
+      const payload = { staff_name: profile.full_name, form_code: 'EMPLOYEE-JOURNEY', answers, completed_by: user.full_name || user.email, completed_date: new Date().toLocaleDateString('en-CA', { timeZone: BUSINESS_TIME_ZONE }) };
       const record = entry ? await base44.entities.StaffFormEntry.update(entry.id, payload) : await base44.entities.StaffFormEntry.create({ ...payload, staff_id: profile.id, form_type: 'Employee Journey' });
       setEntry({ ...entry, ...payload, ...record }); setSaved(true); setDirty(false);
       if (updated !== profile) await onUpdated?.(updated);

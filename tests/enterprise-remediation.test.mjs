@@ -223,7 +223,24 @@ test('disaster recovery manifest creation, checksum verification, and restore va
   await assert.rejects(() => verifyAndRestoreBackup(tampered, {}), /checksum mismatch/);
 });
 
-test('all 172 organisation-owned entity schemas enforce tenant_id and pass cross-tenant read/write/search/export isolation', async () => {
+// HONEST COVERAGE CHECK (audit CRIT-01): reads the real schema files WITHOUT the in-memory
+// normaliser. It is marked `todo` so it reports the gap on every run without blocking CI.
+// When every organisation-owned schema really declares tenant_id, remove `todo` so it gates releases.
+test('real entity schema files declare tenant_id for every organisation-owned entity', { todo: 'CRIT-01 open: business data isolation not yet implemented in the real schemas' }, async () => {
+  const entitiesDir = new URL('../base44/entities/', import.meta.url);
+  const files = (await readdir(entitiesDir)).filter((f) => f.endsWith('.jsonc'));
+  const missing = [];
+  for (const file of files) {
+    const rawSchema = JSON.parse(await readFile(new URL(file, entitiesDir), 'utf8'));
+    if (SYSTEM_GLOBAL_ENTITIES.includes(rawSchema.name)) continue;
+    if (!(rawSchema.properties && rawSchema.properties.tenant_id)) missing.push(rawSchema.name || file);
+  }
+  assert.equal(missing.length, 0, `${missing.length} of ${files.length} real schemas have no tenant_id: ${missing.slice(0, 15).join(', ')}${missing.length > 15 ? ', ...' : ''}`);
+});
+
+// LOGIC TEST ONLY: checks the frontend tenant proxy against a synthetic in-memory store.
+// Schemas are normalised in memory here, so this does NOT prove the live app isolates data.
+test('tenant proxy logic isolates records in a synthetic in-memory store (not proof of live isolation)', async () => {
   const entitiesDir = new URL('../base44/entities/', import.meta.url);
   const files = (await readdir(entitiesDir)).filter((f) => f.endsWith('.jsonc'));
   assert.ok(files.length >= 170, `Expected at least 170 entity schemas, found ${files.length}`);
@@ -241,7 +258,7 @@ test('all 172 organisation-owned entity schemas enforce tenant_id and pass cross
     orgEntityNames.push(schema.name);
   }
 
-  // Build in-memory multi-tenant store across all 172 organisation-owned entities
+  // Build a synthetic in-memory multi-tenant store across the organisation-owned entity names
   const store = new Map();
   const rawEntities = {};
   for (const entityName of orgEntityNames) {

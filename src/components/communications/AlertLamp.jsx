@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { TabsTrigger } from '@/components/ui/tabs';
 import { Siren, History } from 'lucide-react';
+import { BUSINESS_TIME_ZONE } from '@/lib/businessTime';
 
 const beep = () => {
   try {
@@ -46,7 +47,7 @@ export default function AlertLamp({ kind, className = undefined }) {
 
   useEffect(() => {
     let alive = true;
-    const today = new Date().toLocaleDateString('en-CA', { timeZone: 'Australia/Sydney' });
+    const today = new Date().toLocaleDateString('en-CA', { timeZone: BUSINESS_TIME_ZONE });
     const load = async () => {
       try {
         const c = kind === 'alerts'

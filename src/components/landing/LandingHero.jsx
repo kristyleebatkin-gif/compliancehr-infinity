@@ -127,7 +127,10 @@ export default function LandingHero({ onBookDemo }) {
                   ))}
                 </div>
 
-                {/* 3 Executive Assurance Cards with White Lights */}
+                {/* 3 Executive Assurance Cards with White Lights (illustrative figures) */}
+                <p className="text-[10.5px] font-semibold text-white/80">
+                  Illustrative example figures. Not results from a real provider.
+                </p>
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-3 lg:flex-1">
                   {EXECUTIVE_METRICS.map((kpi) => {
                     const Icon = kpi.icon;

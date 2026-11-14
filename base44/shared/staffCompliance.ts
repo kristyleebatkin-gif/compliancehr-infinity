@@ -1,3 +1,4 @@
+import { BUSINESS_TIME_ZONE } from './businessTime.ts';
 // Shared staff compliance progress computation (onboarding pack completion %).
 // Used by the dashboard flag endpoint and the automated daily flag scan.
 
@@ -11,7 +12,7 @@ const isSkipped = (status) => status === 'Cancelled';
 
 // Returns rows: [{ name, done, total, pct (0-100 or null when no pack), overdue }]
 export async function computeStaffCompliance(service) {
-  const today = new Date().toLocaleDateString('en-CA', { timeZone: 'Australia/Sydney' });
+  const today = new Date().toLocaleDateString('en-CA', { timeZone: BUSINESS_TIME_ZONE });
 
   const [tasksPage, staffPage] = await Promise.all([
     service.entities.TodoTask.filter(

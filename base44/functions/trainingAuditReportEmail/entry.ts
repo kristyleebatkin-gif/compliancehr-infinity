@@ -1,8 +1,8 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 import { jsPDF } from 'npm:jspdf@4.2.1';
 import { MANAGEMENT_ROLES, hasAnyRole } from '../../shared/systemAuth.ts';
+import { BUSINESS_TIME_ZONE } from '../../shared/businessTime.ts';
 
-const SYDNEY = 'Australia/Sydney';
 const DARK = '#1f1438';
 const MUTED = '#6b6b7b';
 const LINE = '#e5e5ea';
@@ -132,7 +132,7 @@ function buildReportPdf(rows, totals, fullyCompliant) {
   doc.setTextColor(MUTED);
   doc.text('Summary of all staff training and certificate expiry dates', 40, 38);
   doc.setFontSize(8);
-  const generated = `Generated: ${new Date().toLocaleString('en-AU', { timeZone: SYDNEY })}`;
+  const generated = `Generated: ${new Date().toLocaleString('en-AU', { timeZone: BUSINESS_TIME_ZONE })}`;
   doc.text(generated, pageW - 40, 39, { align: 'right' });
   doc.setDrawColor(LINE);
   doc.line(40, 44, pageW - 40, 44);
@@ -256,8 +256,8 @@ export default async function(req) {
     }), { valid: 0, soon: 0, expired: 0 });
     const fullyCompliant = rows.filter((r) => r.counts.expired === 0 && r.counts.soon === 0).length;
 
-    const reportPeriod = new Intl.DateTimeFormat('en-AU', { month: 'long', year: 'numeric', timeZone: SYDNEY }).format(new Date());
-    const generatedOn = new Date().toLocaleString('en-AU', { timeZone: SYDNEY });
+    const reportPeriod = new Intl.DateTimeFormat('en-AU', { month: 'long', year: 'numeric', timeZone: BUSINESS_TIME_ZONE }).format(new Date());
+    const generatedOn = new Date().toLocaleString('en-AU', { timeZone: BUSINESS_TIME_ZONE });
 
     if (dryRun) {
       return Response.json({ dry_run: true, recipient, report_period: reportPeriod, staff_count: rows.length, totals, fully_compliant: fullyCompliant });

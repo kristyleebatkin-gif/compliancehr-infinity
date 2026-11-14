@@ -4,8 +4,9 @@ import {
   Cloud, CloudRain, Sun, CloudSnow, CloudLightning, CloudFog,
   CalendarDays, Clock, HeartHandshake, PhoneCall, Users, CalendarRange, Sparkles, ShieldCheck,
 } from 'lucide-react';
+import { BUSINESS_TIME_ZONE } from '@/lib/businessTime';
 
-const FALLBACK = { latitude: -33.87, longitude: 151.21 }; // Sydney
+const FALLBACK = { latitude: -19.28, longitude: 146.78 }; // Currajong, Townsville (Choices North Queensland head office)
 
 const CODES = {
   0: ['Clear Sky', Sun], 1: ['Mostly Sunny', Sun], 2: ['Partly Cloudy', Cloud], 3: ['Overcast', Cloud],
@@ -26,14 +27,14 @@ const ACTIVE_SERVICES = [
 ];
 
 const dateFmt = new Intl.DateTimeFormat('en-AU', {
-  timeZone: 'Australia/Sydney',
+  timeZone: BUSINESS_TIME_ZONE,
   weekday: 'short',
   day: 'numeric',
   month: 'short',
   year: 'numeric',
 });
 const timeFmt = new Intl.DateTimeFormat('en-AU', {
-  timeZone: 'Australia/Sydney',
+  timeZone: BUSINESS_TIME_ZONE,
   hour: '2-digit',
   minute: '2-digit',
   second: '2-digit',
@@ -104,7 +105,7 @@ export default function CommWeatherBar() {
                 <div className="flex items-center gap-1.5">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#00C6FF] animate-pulse" />
                   <p className="text-[11px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
-                    Live Time (Sydney)
+                    Live Time (Brisbane)
                   </p>
                 </div>
                 <p className="font-mono text-sm sm:text-base font-black leading-tight text-white">

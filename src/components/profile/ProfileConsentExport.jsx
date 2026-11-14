@@ -7,7 +7,7 @@ export default function ProfileConsentExport({ profile }) {
   const download = async (format) => {
     setBusy(true); setError('');
     try {
-      const rows = [{ field: 'Audit consent', value: profile.audit_consent_recorded_date ? profile.audit_consent : 'Not recorded' }, { field: 'Recorded by', value: profile.audit_consent_recorded_by }, { field: 'Recorded date (Sydney)', value: profile.audit_consent_recorded_date }, { field: 'Recorded time (Sydney)', value: profile.audit_consent_recorded_time }, { field: 'Consent decision history and reasons', value: String(profile.change_log || '').split('\n').filter((line) => /audit consent:/i.test(line)).join('\n') }];
+      const rows = [{ field: 'Audit consent', value: profile.audit_consent_recorded_date ? profile.audit_consent : 'Not recorded' }, { field: 'Recorded by', value: profile.audit_consent_recorded_by }, { field: 'Recorded date (as recorded)', value: profile.audit_consent_recorded_date }, { field: 'Recorded time (as recorded)', value: profile.audit_consent_recorded_time }, { field: 'Consent decision history and reasons', value: String(profile.change_log || '').split('\n').filter((line) => /audit consent:/i.test(line)).join('\n') }];
       await profileRecordExport('Audit Consent', profile, rows, format);
     } catch (failure) { setError(failure.message); }
     finally { setBusy(false); }

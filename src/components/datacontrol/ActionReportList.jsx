@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { Download, Loader2 } from 'lucide-react';
+import { BUSINESS_TIME_ZONE } from '@/lib/businessTime';
 
 export default function ActionReportList() {
   const [page, setPage] = useState({ items: [] });
@@ -36,7 +37,7 @@ export default function ActionReportList() {
     <p className="text-xs text-muted-foreground">Every 30 logged app actions, a PDF and CSV are generated and stored privately. Includes access events and record changes.</p>
     {error && <p role="alert" className="text-xs text-destructive">{error}</p>}
     {page.items.map((report) => <div key={report.id} className="flex flex-wrap items-center gap-2 rounded-md border border-border p-2">
-      <div className="min-w-0 flex-1"><p className="text-xs font-medium">{report.title}</p><p className="text-xs text-muted-foreground">{report.action_count} actions · {new Date(report.created_date).toLocaleString('en-AU', { timeZone: 'Australia/Sydney' })}</p></div>
+      <div className="min-w-0 flex-1"><p className="text-xs font-medium">{report.title}</p><p className="text-xs text-muted-foreground">{report.action_count} actions · {new Date(report.created_date).toLocaleString('en-AU', { timeZone: BUSINESS_TIME_ZONE })}</p></div>
       {['pdf', 'csv'].map((kind) => <Button key={kind} size="sm" variant="outline" disabled={!!busy || !report[`${kind}_file_uri`]} onClick={() => download(report, kind)}>{busy === `${report.id}-${kind}` ? <Loader2 className="h-3 w-3 animate-spin" /> : <Download className="h-3 w-3" />}{kind.toUpperCase()}</Button>)}
     </div>)}
     {loading && <p role="status" className="text-xs text-muted-foreground">Loading reports...</p>}

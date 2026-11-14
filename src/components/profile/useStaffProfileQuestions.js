@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { EMPLOYEE_FORM_DEFINITIONS } from '@/lib/employeeFormDefinitions';
 import { preparePersonalProfileAccess } from '@/lib/personalProfileAccess';
 import { loadEmployeeForm, syncEmployeeRecord } from '@/lib/employeeRecordBridge';
+import { BUSINESS_TIME_ZONE } from '@/lib/businessTime';
 export default function useStaffProfileQuestions(profile, title, definitionOverride) {
   const definition = definitionOverride || EMPLOYEE_FORM_DEFINITIONS[title];
   const [answers, setAnswers] = useState({}), [entry, setEntry] = useState(null);
@@ -36,7 +37,7 @@ export default function useStaffProfileQuestions(profile, title, definitionOverr
     event.preventDefault(); setSaving(true); setError(''); setSaved(false);
     try {
       const user = await base44.auth.me();
-      const payload = { staff_name: profile.full_name, form_code: definition.code || (title === 'Staff Information Form' ? 'CM-FORM-004' : title === 'Staff Onboarding Form' ? 'CM-FORM-005' : title), answers: JSON.stringify(answers), completed_by: user.full_name || user.email, completed_date: new Date().toLocaleDateString('en-CA', { timeZone: 'Australia/Sydney' }) };
+      const payload = { staff_name: profile.full_name, form_code: definition.code || (title === 'Staff Information Form' ? 'CM-FORM-004' : title === 'Staff Onboarding Form' ? 'CM-FORM-005' : title), answers: JSON.stringify(answers), completed_by: user.full_name || user.email, completed_date: new Date().toLocaleDateString('en-CA', { timeZone: BUSINESS_TIME_ZONE }) };
       if (payload.answers.length > 100000) throw new Error('Please shorten long answers before saving.');
       const record = entry ? await base44.entities.StaffFormEntry.update(entry.id, payload) : await base44.entities.StaffFormEntry.create({ ...payload, staff_id: profile.id, form_type: title });
       setEntry({ ...entry, ...payload, ...record });

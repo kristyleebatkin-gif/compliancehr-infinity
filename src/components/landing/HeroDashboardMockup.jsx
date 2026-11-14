@@ -96,7 +96,7 @@ export default function HeroDashboardMockup() {
               <span className="h-2.5 w-2.5 rounded-full bg-[#0072FF]" />
             </div>
             <span className="text-xs font-bold tracking-wide text-white">
-              Executive &amp; Governance · Row 1 Interactive Role Preview
+              Executive &amp; Governance · Sample screen (illustrative data)
             </span>
           </div>
           <div className="flex items-center gap-2">

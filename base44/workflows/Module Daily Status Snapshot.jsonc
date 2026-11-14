@@ -7,7 +7,7 @@
       "schedule_mode": "recurring",
       "cron_expression": "30 8 * * *",
       "one_time_date": null,
-      "timezone": "Australia/Sydney",
+      "timezone": "Australia/Brisbane",
       "interval_value": null,
       "interval_unit": null,
       "interval_anchor": null,
@@ -16,7 +16,7 @@
       "ends_after_count": null
     }
   },
-  "description": "Daily at 8:30 AM (Australia/Sydney): records a live-status snapshot of every module's register counts for the exportable dashboard log",
+  "description": "Daily at 8:30 AM (Australia/Brisbane): records a live-status snapshot of every module's register counts for the exportable dashboard log",
   "name": "Module Daily Status Snapshot",
   "definition": {
     "document": {

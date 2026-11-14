@@ -1,5 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 import { STAFF_SEND_ROLES, hasAnyRole, hasApprovedAccess } from '../../shared/systemAuth.ts';
+import { BUSINESS_TIME_ZONE } from '../../shared/businessTime.ts';
 
 // Logs one staff/participant action: always in the admin audit trail (AuditLog),
 // and when the action belongs to a person, also on that person's profile change
@@ -29,7 +30,7 @@ export default async function(req) {
     }
 
     const stamp = new Intl.DateTimeFormat('en-AU', {
-      timeZone: 'Australia/Sydney', dateStyle: 'medium', timeStyle: 'short', hour12: false,
+      timeZone: BUSINESS_TIME_ZONE, dateStyle: 'medium', timeStyle: 'short', hour12: false,
     }).format(new Date());
     const performedBy = clean(user.full_name, 200) || clean(user.email, 200) || 'Authenticated user';
 

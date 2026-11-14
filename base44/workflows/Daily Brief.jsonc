@@ -25,7 +25,7 @@
       }
     ]
   },
-  "description": "Daily at 8:30 AM (Australia/Sydney): morning summary brief of expiries, overdue tasks, incidents, risks and unfilled shifts emailed and notified to administrators",
+  "description": "Daily at 8:30 AM (Australia/Brisbane): morning summary brief of expiries, overdue tasks, incidents, risks and unfilled shifts emailed and notified to administrators",
   "trigger": {
     "condition": null,
     "config": {
@@ -34,7 +34,7 @@
       "schedule_mode": "recurring",
       "cron_expression": "30 8 * * *",
       "one_time_date": null,
-      "timezone": "Australia/Sydney",
+      "timezone": "Australia/Brisbane",
       "interval_value": null,
       "interval_unit": null,
       "interval_anchor": null,

@@ -1,10 +1,11 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 import { authorizeSystemCall } from '../../shared/systemAuth.ts';
+import { BUSINESS_TIME_ZONE } from '../../shared/businessTime.ts';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const DONE_STATUSES = ['Completed', 'Cancelled', 'Finalised'];
 
-// Finds compliance tasks that have passed their due date (Sydney time) and are
+// Finds compliance tasks that have passed their due date (Brisbane time) and are
 // not finished, then instantly notifies the assignee, everyone responsible and
 // every admin user — via in-app notification and email — once per task.
 // Called with { task_id } by the instant entity-triggered workflow, or with no
@@ -17,7 +18,7 @@ export default async function(req) {
       return Response.json({ error: 'Unauthorized' }, { status: 401 });
     }
     const service = base44.asServiceRole;
-    const today = new Date().toLocaleDateString('en-CA', { timeZone: 'Australia/Sydney' });
+    const today = new Date().toLocaleDateString('en-CA', { timeZone: BUSINESS_TIME_ZONE });
 
     const userPage = await service.entities.User.list();
     const allUsers = Array.isArray(userPage) ? userPage : userPage.items || [];

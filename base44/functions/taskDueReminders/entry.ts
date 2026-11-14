@@ -13,8 +13,8 @@ export default async function(req) {
     }
     const service = base44.asServiceRole;
 
-    const sydneyToday = auDate(new Date());
-    const tomorrow = addDays(sydneyToday, 1);
+    const businessToday = auDate(new Date());
+    const tomorrow = addDays(businessToday, 1);
 
     const pending = [];
     let cursor = null;

@@ -1,6 +1,6 @@
 {
   "name": "Compliance Task Expiry Alerts",
-  "description": "Daily at 7am (Sydney): alerts staff immediately when their compliance tasks or worker screenings are due or overdue, by email plus in-app notification.",
+  "description": "Daily at 7am (Brisbane): alerts staff immediately when their compliance tasks or worker screenings are due or overdue, by email plus in-app notification.",
   "trigger": {
     "condition": null,
     "config": {
@@ -9,7 +9,7 @@
       "schedule_mode": "recurring",
       "cron_expression": "0 7 * * *",
       "one_time_date": null,
-      "timezone": "Australia/Sydney",
+      "timezone": "Australia/Brisbane",
       "interval_value": null,
       "interval_unit": null,
       "interval_anchor": null,

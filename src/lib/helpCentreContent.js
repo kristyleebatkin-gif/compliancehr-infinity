@@ -18,7 +18,7 @@ export const HELP_ARTICLES = [
     title: 'What runs automatically (automations and reminders)',
     category: 'Automations',
     tags: 'automation, reminders, schedule, daily, email',
-    body: 'The platform runs these for you:\n- NDIS Updates & News: fetched automatically every morning around 7am (Sydney time).\n- Task due reminders: emailed as task due dates approach.\n- Training expiry alerts: emailed before certificates and training lapse.\n- Compliance kit reminders and compliance expiry scans: keep the audit trail current.\n- Shift reminder alerts, details check reminders and follow-up automations run on their schedules.\n\nYou do not need to start anything - just keep dates (due dates, expiries, review dates) accurate on your records.',
+    body: 'The platform runs these for you:\n- NDIS Updates & News: fetched automatically every morning around 7am (Brisbane time).\n- Task due reminders: emailed as task due dates approach.\n- Training expiry alerts: emailed before certificates and training lapse.\n- Compliance kit reminders and compliance expiry scans: keep the audit trail current.\n- Shift reminder alerts, details check reminders and follow-up automations run on their schedules.\n\nYou do not need to start anything - just keep dates (due dates, expiries, review dates) accurate on your records.',
   },
   {
     title: 'Exports and audit evidence from every register',
