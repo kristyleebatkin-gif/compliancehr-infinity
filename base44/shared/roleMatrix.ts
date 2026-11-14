@@ -206,6 +206,21 @@ export const RESTRICTED_EXECUTIVE_KEYS = [
   'analytics',
 ];
 
+// Specialist roles count as Employee for page access, plus the modules their job needs (backlog 17.06).
+// Keyed by the person's actual role. Executive areas (RESTRICTED_EXECUTIVE_KEYS) stay closed to them.
+export const SPECIALIST_NAV_EXTRAS = {
+  'Human Resources Manager': ['staff', 'certificates', 'staff-progress', 'meetings', 'forms', 'checklists', 'volunteering-placements'],
+  'Finance & Accounts Officer': ['invoicing', 'quotes', 'insurance-finance', 'procurement', 'my-payroll'],
+  'Rostering Coordinator': ['staff', 'participants', 'our-participants'],
+  'Quality & Improvement Manager': ['quality', 'review-due', 'suggestions-hub', 'compliance', 'audit-centre', 'safety-insights', 'incident-analytics', 'governance', 'forms', 'checklists', 'certificates'],
+  'Intake Officer': ['participants', 'our-participants', 'crm'],
+  'CRM & Marketing Officer': ['crm', 'projects'],
+};
+
+function opensAsSpecialist(role, navKey) {
+  return Boolean(typeof role === 'string' && SPECIALIST_NAV_EXTRAS[role]?.includes(navKey));
+}
+
 export function canAccessNav(role, navKey) {
   const normalized = normalizeRole(role);
   if (
@@ -217,6 +232,7 @@ export function canAccessNav(role, navKey) {
   if (FULL_ACCESS.includes(normalized)) return true;
   if (normalized === ROLES.AUDITOR) return navKey === 'auditor-portal';
   if (normalized === ROLES.TEAM_LEADER && FINANCIAL_KEYS.includes(navKey)) return false;
+  if (opensAsSpecialist(role, navKey)) return true;
   return Boolean(NAV_PERMISSIONS[navKey]?.includes(normalized));
 }
 
@@ -239,6 +255,7 @@ export function explainNavAccess(role, navKey) {
   if (normalized === ROLES.TEAM_LEADER && FINANCIAL_KEYS.includes(navKey)) {
     return result(false, 'Financial area: closed to the Administration role.');
   }
+  if (opensAsSpecialist(role, navKey)) return result(true, `Part of the ${role} role's work.`);
   const open = NAV_PERMISSIONS[navKey];
   if (!open) return result(false, 'No access rule is set for this module, so only full-access roles open it.');
   if (open.includes(normalized)) return result(true, `Open to ${normalized}.`);
