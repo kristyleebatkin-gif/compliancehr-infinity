@@ -1,0 +1,233 @@
+{
+  "name": "ReferralIntakeLink",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
+    "referral_id": {
+      "type": "string",
+      "title": "Referral Record ID",
+      "description": "The referral this handover belongs to. One referral has one handover."
+    },
+    "referral_number": {
+      "type": "string",
+      "title": "Referral Number"
+    },
+    "case_number": {
+      "type": "string",
+      "title": "Allocated Intake Case Number",
+      "description": "Reserved before the intake case is created, so a retry can find the case again instead of creating a second one."
+    },
+    "intake_case_id": {
+      "type": "string",
+      "title": "Intake Case ID"
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "creating",
+        "created",
+        "linked",
+        "link_pending",
+        "audit_pending"
+      ],
+      "default": "creating",
+      "enumColors": [
+        "gray",
+        "yellow",
+        "green",
+        "red",
+        "purple"
+      ],
+      "title": "Handover State"
+    },
+    "possible_duplicate_of": {
+      "type": "string",
+      "title": "Possible Duplicate Of",
+      "description": "Another open intake case with the same name and date of birth. A review flag only, never merged automatically."
+    },
+    "name_match_review": {
+      "type": "boolean",
+      "title": "Same Name Needs Review",
+      "default": false
+    },
+    "number_conflict": {
+      "type": "boolean",
+      "title": "Case Number Conflict",
+      "default": false
+    },
+    "changed_by": {
+      "type": "string",
+      "title": "Started By"
+    },
+    "last_error": {
+      "type": "string",
+      "title": "Last Error"
+    }
+  },
+  "required": [
+    "referral_id",
+    "case_number",
+    "state"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Intake Officer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Intake Officer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Intake Officer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

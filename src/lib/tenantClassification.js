@@ -159,6 +159,7 @@ export const BUSINESS_OWNED_ENTITIES = Object.freeze([
   'Quote',
   'Receipt',
   'Referral',
+  'ReferralIntakeLink',
   'Register',
   'RegisterNote',
   'RemoteAccessSession',

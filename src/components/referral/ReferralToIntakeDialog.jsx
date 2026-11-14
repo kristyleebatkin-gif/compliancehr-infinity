@@ -2,39 +2,52 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { AlertTriangle, ArrowRight, Loader2 } from 'lucide-react';
+import { AlertTriangle, ArrowRight, Loader2, CheckCircle2 } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { referralIntakeBlockers, startIntakeFromReferral } from '@/lib/referralIntake';
+
+const PENDING_STATES = ['created_link_pending', 'linked_audit_pending'];
 
 export default function ReferralToIntakeDialog({ referral, open, onClose, onCreated }) {
   const { toast } = useToast();
   const [saving, setSaving] = useState(false);
   const [blockers, setBlockers] = useState([]);
-  const [created, setCreated] = useState(null);
+  const [result, setResult] = useState(null);
+
+  const reset = () => {
+    setBlockers([]);
+    setResult(null);
+    setSaving(false);
+  };
 
   const close = () => {
-    setBlockers([]);
-    setCreated(null);
-    setSaving(false);
+    reset();
     onClose();
   };
 
-  const start = async () => {
+  const run = async () => {
+    if (saving) return; // guards a double click while a handover is in flight
     setSaving(true);
     setBlockers([]);
     try {
-      const intakeCase = await startIntakeFromReferral({ referral });
-      setCreated(intakeCase);
-      toast({ title: `Intake case ${intakeCase.case_number} opened`, description: 'The referral is now linked to this intake case.' });
+      const outcome = await startIntakeFromReferral({ referral });
+      setResult(outcome);
+      if (!PENDING_STATES.includes(outcome.state)) {
+        toast({
+          title: outcome.state === 'already_linked' ? 'Already linked' : `Intake case ${outcome.caseNumber} ready`,
+          description: outcome.message,
+        });
+      }
       onCreated?.();
     } catch (error) {
-      setBlockers(error.blockers?.length ? error.blockers : [error.message || 'Intake case could not be created.']);
+      setBlockers(error.blockers?.length ? error.blockers : [error.message || 'The handover failed.']);
     } finally {
       setSaving(false);
     }
   };
 
-  const existingBlockers = created ? [] : referralIntakeBlockers(referral);
+  const existingBlockers = result ? [] : referralIntakeBlockers(referral);
+  const pending = result && PENDING_STATES.includes(result.state);
 
   const carried = referral
     ? [
@@ -55,19 +68,43 @@ export default function ReferralToIntakeDialog({ referral, open, onClose, onCrea
           <DialogTitle>Start intake from referral {referral?.referral_id}</DialogTitle>
         </DialogHeader>
 
-        {created ? (
+        {result ? (
           <div className="space-y-3 text-sm">
-            <p className="rounded-xl border border-emerald-300 bg-emerald-50 p-3 font-semibold text-emerald-900">
-              Intake case {created.case_number} created and linked to this referral.
-            </p>
-            <p className="text-xs text-muted-foreground">
-              Continue in Intake Centre: complete eligibility, consents and documents, then approve and convert to a participant profile.
-            </p>
+            <div
+              className={`flex items-start gap-2 rounded-xl border p-3 text-xs font-semibold ${
+                pending
+                  ? 'border-amber-300 bg-amber-50 text-amber-900'
+                  : 'border-emerald-300 bg-emerald-50 text-emerald-900'
+              }`}
+            >
+              {pending ? <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0" /> : <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0" />}
+              <span>{result.message}</span>
+            </div>
+
+            {(result.possibleDuplicateOf || result.nameMatchReview || result.numberConflict) && (
+              <ul className="list-disc space-y-1 rounded-lg border border-border bg-muted/40 p-3 pl-6 text-xs text-muted-foreground">
+                {result.possibleDuplicateOf && (
+                  <li>Possible duplicate of open case {result.possibleDuplicateOf} (same name and date of birth). Review both before proceeding; nothing was merged.</li>
+                )}
+                {!result.possibleDuplicateOf && result.nameMatchReview && (
+                  <li>Another open case has the same name. A name match is a review flag, not proof it is the same person.</li>
+                )}
+                {result.numberConflict && (
+                  <li>The allocated case number is also held by another record. Report this to an administrator before relying on the number.</li>
+                )}
+              </ul>
+            )}
+
+            {!pending && (
+              <p className="text-xs text-muted-foreground">
+                Continue in Intake Centre: complete eligibility, consents and documents, then approve and convert to a participant profile.
+              </p>
+            )}
           </div>
         ) : (
           <div className="space-y-3 text-sm">
             <p className="text-xs text-muted-foreground">
-              A participant intake case will be created in Draft, carrying the details below. Nothing is sent to the person and no profile is created yet.
+              A participant intake case will be created in Draft from the stored referral. Nothing is sent to the person and no profile is created yet.
             </p>
             <div className="rounded-xl bg-muted/50 p-3 text-xs">
               {carried.length ? carried.map(([label, value]) => (
@@ -77,12 +114,6 @@ export default function ReferralToIntakeDialog({ referral, open, onClose, onCrea
                 </div>
               )) : <span className="text-muted-foreground">No details recorded on this referral yet.</span>}
             </div>
-            {referral?.consent !== 'Consent given' && (
-              <p className="flex items-start gap-2 rounded-lg border border-amber-300 bg-amber-50 p-3 text-xs text-amber-900">
-                <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
-                Client consent is not recorded on this referral. Update the referral to “Consent given” before opening intake.
-              </p>
-            )}
             {existingBlockers.length > 0 && blockers.length === 0 && (
               <ul className="list-disc space-y-1 rounded-lg border border-border bg-muted/40 p-3 pl-6 text-xs text-muted-foreground">
                 {existingBlockers.map((b) => <li key={b}>{b}</li>)}
@@ -97,7 +128,7 @@ export default function ReferralToIntakeDialog({ referral, open, onClose, onCrea
         )}
 
         <DialogFooter className="gap-2">
-          {created ? (
+          {result && !pending ? (
             <>
               <Button variant="outline" onClick={close}>Close</Button>
               <Button asChild>
@@ -106,9 +137,10 @@ export default function ReferralToIntakeDialog({ referral, open, onClose, onCrea
             </>
           ) : (
             <>
-              <Button variant="outline" onClick={close}>Cancel</Button>
-              <Button onClick={start} disabled={saving || existingBlockers.length > 0}>
-                {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : null}Create intake case
+              <Button variant="outline" onClick={close} disabled={saving}>Close</Button>
+              <Button onClick={run} disabled={saving || (!result && existingBlockers.length > 0)}>
+                {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+                {result ? 'Retry handover' : 'Create intake case'}
               </Button>
             </>
           )}
