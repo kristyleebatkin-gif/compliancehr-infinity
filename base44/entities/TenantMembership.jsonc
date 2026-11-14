@@ -110,147 +110,211 @@
   ],
   "rls": {
     "read": {
-      "$or": [
+      "$and": [
         {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "data.user_id": "{{user.id}}"
-        },
-        {
-          "$and": [
-            {
-              "data.organisation_id": "{{user.data.organisation_id}}"
-            },
+          "$or": [
             {
               "user_condition": {
-                "role": "Provider Administrator"
+                "role": "admin"
               }
+            },
+            {
+              "data.user_id": "{{user.id}}"
+            },
+            {
+              "$and": [
+                {
+                  "data.organisation_id": "{{user.data.organisation_id}}"
+                },
+                {
+                  "user_condition": {
+                    "role": "Provider Administrator"
+                  }
+                }
+              ]
+            },
+            {
+              "$and": [
+                {
+                  "data.organisation_id": "{{user.data.organisation_id}}"
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Manager"
+                  }
+                }
+              ]
+            },
+            {
+              "$and": [
+                {
+                  "data.organisation_id": "{{user.data.organisation_id}}"
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Administrator"
+                  }
+                }
+              ]
+            },
+            {
+              "$and": [
+                {
+                  "data.organisation_id": "{{user.data.organisation_id}}"
+                },
+                {
+                  "user_condition": {
+                    "role": "Human Resources Manager"
+                  }
+                }
+              ]
             }
           ]
         },
         {
-          "$and": [
-            {
-              "data.organisation_id": "{{user.data.organisation_id}}"
-            },
+          "$or": [
             {
               "user_condition": {
-                "role": "Compliance Manager"
+                "role": "admin"
               }
-            }
-          ]
-        },
-        {
-          "$and": [
-            {
-              "data.organisation_id": "{{user.data.organisation_id}}"
             },
             {
-              "user_condition": {
-                "role": "Compliance Administrator"
-              }
-            }
-          ]
-        },
-        {
-          "$and": [
-            {
-              "data.organisation_id": "{{user.data.organisation_id}}"
-            },
-            {
-              "user_condition": {
-                "role": "Human Resources Manager"
-              }
+              "data.tenant_id": "{{user.data.tenant_id}}"
             }
           ]
         }
       ]
     },
     "create": {
-      "$or": [
+      "$and": [
         {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "$and": [
-            {
-              "data.organisation_id": "{{user.data.organisation_id}}"
-            },
+          "$or": [
             {
               "user_condition": {
-                "role": "Provider Administrator"
+                "role": "admin"
               }
+            },
+            {
+              "$and": [
+                {
+                  "data.organisation_id": "{{user.data.organisation_id}}"
+                },
+                {
+                  "user_condition": {
+                    "role": "Provider Administrator"
+                  }
+                }
+              ]
+            },
+            {
+              "$and": [
+                {
+                  "data.organisation_id": "{{user.data.organisation_id}}"
+                },
+                {
+                  "user_condition": {
+                    "role": "Human Resources Manager"
+                  }
+                }
+              ]
             }
           ]
         },
         {
-          "$and": [
-            {
-              "data.organisation_id": "{{user.data.organisation_id}}"
-            },
+          "$or": [
             {
               "user_condition": {
-                "role": "Human Resources Manager"
+                "role": "admin"
               }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
             }
           ]
         }
       ]
     },
     "update": {
-      "$or": [
+      "$and": [
         {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "$and": [
-            {
-              "data.organisation_id": "{{user.data.organisation_id}}"
-            },
+          "$or": [
             {
               "user_condition": {
-                "role": "Provider Administrator"
+                "role": "admin"
               }
+            },
+            {
+              "$and": [
+                {
+                  "data.organisation_id": "{{user.data.organisation_id}}"
+                },
+                {
+                  "user_condition": {
+                    "role": "Provider Administrator"
+                  }
+                }
+              ]
+            },
+            {
+              "$and": [
+                {
+                  "data.organisation_id": "{{user.data.organisation_id}}"
+                },
+                {
+                  "user_condition": {
+                    "role": "Human Resources Manager"
+                  }
+                }
+              ]
             }
           ]
         },
         {
-          "$and": [
-            {
-              "data.organisation_id": "{{user.data.organisation_id}}"
-            },
+          "$or": [
             {
               "user_condition": {
-                "role": "Human Resources Manager"
+                "role": "admin"
               }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
             }
           ]
         }
       ]
     },
     "delete": {
-      "$or": [
+      "$and": [
         {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "$and": [
-            {
-              "data.organisation_id": "{{user.data.organisation_id}}"
-            },
+          "$or": [
             {
               "user_condition": {
-                "role": "Provider Administrator"
+                "role": "admin"
               }
+            },
+            {
+              "$and": [
+                {
+                  "data.organisation_id": "{{user.data.organisation_id}}"
+                },
+                {
+                  "user_condition": {
+                    "role": "Provider Administrator"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
             }
           ]
         }

@@ -98,299 +98,363 @@
   ],
   "rls": {
     "read": {
-      "$or": [
+      "$and": [
         {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Provider Administrator"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Management"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Human Resources Manager"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Compliance Manager"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Compliance Administrator"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Quality & Improvement Manager"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Administration"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Team Leader"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Intake Officer"
-          }
-        },
-        {
-          "$and": [
+          "$or": [
             {
               "user_condition": {
-                "role": "Finance & Accounts Officer"
+                "role": "admin"
               }
             },
             {
-              "data.document_type": {
-                "$in": [
-                  "Invoice",
-                  "Quote"
-                ]
+              "user_condition": {
+                "role": "Provider Administrator"
               }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Human Resources Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Team Leader"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Intake Officer"
+              }
+            },
+            {
+              "$and": [
+                {
+                  "user_condition": {
+                    "role": "Finance & Accounts Officer"
+                  }
+                },
+                {
+                  "data.document_type": {
+                    "$in": [
+                      "Invoice",
+                      "Quote"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "$and": [
+                {
+                  "data.library": {
+                    "$ne": null
+                  }
+                },
+                {
+                  "data.library": "{{user.data.personal_staff_library}}"
+                }
+              ]
+            },
+            {
+              "$and": [
+                {
+                  "data.library": {
+                    "$ne": null
+                  }
+                },
+                {
+                  "data.library": "{{user.data.personal_participant_library}}"
+                }
+              ]
             }
           ]
         },
         {
-          "$and": [
+          "$or": [
             {
-              "data.library": {
-                "$ne": null
+              "user_condition": {
+                "role": "admin"
               }
             },
             {
-              "data.library": "{{user.data.personal_staff_library}}"
-            }
-          ]
-        },
-        {
-          "$and": [
-            {
-              "data.library": {
-                "$ne": null
-              }
-            },
-            {
-              "data.library": "{{user.data.personal_participant_library}}"
+              "data.tenant_id": "{{user.data.tenant_id}}"
             }
           ]
         }
       ]
     },
     "create": {
-      "$or": [
+      "$and": [
         {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Provider Administrator"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Management"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Compliance Manager"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Compliance Administrator"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Human Resources Manager"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Quality & Improvement Manager"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Administration"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Intake Officer"
-          }
-        },
-        {
-          "$and": [
+          "$or": [
             {
               "user_condition": {
-                "role": "Finance & Accounts Officer"
+                "role": "admin"
               }
             },
             {
-              "data.document_type": {
-                "$in": [
-                  "Invoice",
-                  "Quote"
-                ]
+              "user_condition": {
+                "role": "Provider Administrator"
               }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Human Resources Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Intake Officer"
+              }
+            },
+            {
+              "$and": [
+                {
+                  "user_condition": {
+                    "role": "Finance & Accounts Officer"
+                  }
+                },
+                {
+                  "data.document_type": {
+                    "$in": [
+                      "Invoice",
+                      "Quote"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "$and": [
+                {
+                  "data.library": {
+                    "$ne": null
+                  }
+                },
+                {
+                  "data.library": "{{user.data.personal_staff_library}}"
+                }
+              ]
+            },
+            {
+              "$and": [
+                {
+                  "data.library": {
+                    "$ne": null
+                  }
+                },
+                {
+                  "data.library": "{{user.data.personal_participant_library}}"
+                }
+              ]
             }
           ]
         },
         {
-          "$and": [
+          "$or": [
             {
-              "data.library": {
-                "$ne": null
+              "user_condition": {
+                "role": "admin"
               }
             },
             {
-              "data.library": "{{user.data.personal_staff_library}}"
-            }
-          ]
-        },
-        {
-          "$and": [
-            {
-              "data.library": {
-                "$ne": null
-              }
-            },
-            {
-              "data.library": "{{user.data.personal_participant_library}}"
+              "data.tenant_id": "{{user.data.tenant_id}}"
             }
           ]
         }
       ]
     },
     "update": {
-      "$or": [
+      "$and": [
         {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Provider Administrator"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Management"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Compliance Manager"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Compliance Administrator"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Human Resources Manager"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Quality & Improvement Manager"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Administration"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Intake Officer"
-          }
-        },
-        {
-          "$and": [
+          "$or": [
             {
-              "data.library": {
-                "$ne": null
+              "user_condition": {
+                "role": "admin"
               }
             },
             {
-              "data.library": "{{user.data.personal_staff_library}}"
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Human Resources Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Intake Officer"
+              }
+            },
+            {
+              "$and": [
+                {
+                  "data.library": {
+                    "$ne": null
+                  }
+                },
+                {
+                  "data.library": "{{user.data.personal_staff_library}}"
+                }
+              ]
+            },
+            {
+              "$and": [
+                {
+                  "data.library": {
+                    "$ne": null
+                  }
+                },
+                {
+                  "data.library": "{{user.data.personal_participant_library}}"
+                }
+              ]
             }
           ]
         },
         {
-          "$and": [
+          "$or": [
             {
-              "data.library": {
-                "$ne": null
+              "user_condition": {
+                "role": "admin"
               }
             },
             {
-              "data.library": "{{user.data.personal_participant_library}}"
+              "data.tenant_id": "{{user.data.tenant_id}}"
             }
           ]
         }
       ]
     },
     "delete": {
-      "$or": [
+      "$and": [
         {
-          "user_condition": {
-            "role": "admin"
-          }
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Human Resources Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            }
+          ]
         },
         {
-          "user_condition": {
-            "role": "Provider Administrator"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Management"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Compliance Manager"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Compliance Administrator"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Human Resources Manager"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Administration"
-          }
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
         }
       ]
     }

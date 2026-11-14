@@ -58,24 +58,88 @@
   ],
   "rls": {
     "read": {
-      "user_condition": {
-        "collaborator_role": "editor"
-      }
+      "$and": [
+        {
+          "user_condition": {
+            "collaborator_role": "editor"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
     },
     "create": {
-      "user_condition": {
-        "collaborator_role": "editor"
-      }
+      "$and": [
+        {
+          "user_condition": {
+            "collaborator_role": "editor"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
     },
     "update": {
-      "user_condition": {
-        "collaborator_role": "editor"
-      }
+      "$and": [
+        {
+          "user_condition": {
+            "collaborator_role": "editor"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
     },
     "delete": {
-      "user_condition": {
-        "collaborator_role": "editor"
-      }
+      "$and": [
+        {
+          "user_condition": {
+            "collaborator_role": "editor"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
     }
   }
 }

@@ -252,282 +252,346 @@
   ],
   "rls": {
     "create": {
-      "$or": [
+      "$and": [
         {
-          "user_condition": {
-            "role": "admin"
-          }
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Team Leader"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Support Worker"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Human Resources Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Rostering Coordinator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "CRM & Marketing Officer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Intake Officer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Participant"
+              }
+            }
+          ]
         },
         {
-          "user_condition": {
-            "role": "Provider Administrator"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Compliance Manager"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Administration"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Team Leader"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Support Worker"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Human Resources Manager"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Rostering Coordinator"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "CRM & Marketing Officer"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Intake Officer"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Participant"
-          }
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
         }
       ]
     },
     "read": {
-      "$or": [
+      "$and": [
         {
-          "$and": [
+          "$or": [
             {
-              "$nor": [
+              "$and": [
                 {
-                  "user_condition": {
-                    "role": "Employee"
-                  }
+                  "$nor": [
+                    {
+                      "user_condition": {
+                        "role": "Employee"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "$or": [
+                    {
+                      "user_condition": {
+                        "role": "admin"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "Provider Administrator"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "Compliance Manager"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "Administration"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "Team Leader"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "Human Resources Manager"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "Auditor"
+                      }
+                    },
+                    {
+                      "created_by_id": "{{user.id}}"
+                    },
+                    {
+                      "data.sender_email": "{{user.email}}"
+                    },
+                    {
+                      "data.recipient_emails": "{{user.email}}"
+                    },
+                    {
+                      "data.entry_kind": {
+                        "$in": [
+                          "Broadcast",
+                          "Team Banter",
+                          "Video Call"
+                        ]
+                      }
+                    }
+                  ]
                 }
               ]
             },
             {
-              "$or": [
+              "$and": [
                 {
                   "user_condition": {
-                    "role": "admin"
+                    "role": "Employee"
                   }
                 },
                 {
-                  "user_condition": {
-                    "role": "Provider Administrator"
-                  }
-                },
-                {
-                  "user_condition": {
-                    "role": "Compliance Manager"
-                  }
-                },
-                {
-                  "user_condition": {
-                    "role": "Administration"
-                  }
-                },
-                {
-                  "user_condition": {
-                    "role": "Team Leader"
-                  }
-                },
-                {
-                  "user_condition": {
-                    "role": "Human Resources Manager"
-                  }
-                },
-                {
-                  "user_condition": {
-                    "role": "Auditor"
-                  }
-                },
-                {
-                  "created_by_id": "{{user.id}}"
-                },
-                {
-                  "data.sender_email": "{{user.email}}"
-                },
-                {
-                  "data.recipient_emails": "{{user.email}}"
-                },
-                {
-                  "data.entry_kind": {
-                    "$in": [
-                      "Broadcast",
-                      "Team Banter",
-                      "Video Call"
-                    ]
-                  }
+                  "$or": [
+                    {
+                      "created_by_id": "{{user.id}}"
+                    },
+                    {
+                      "data.employee_author_id": "{{user.id}}"
+                    },
+                    {
+                      "data.sender_email": "{{user.email}}"
+                    },
+                    {
+                      "data.recipient_emails": "{{user.email}}"
+                    },
+                    {
+                      "data.entry_kind": "Team Banter"
+                    }
+                  ]
                 }
               ]
             }
           ]
         },
         {
-          "$and": [
+          "$or": [
             {
               "user_condition": {
-                "role": "Employee"
+                "role": "admin"
               }
             },
             {
-              "$or": [
-                {
-                  "created_by_id": "{{user.id}}"
-                },
-                {
-                  "data.employee_author_id": "{{user.id}}"
-                },
-                {
-                  "data.sender_email": "{{user.email}}"
-                },
-                {
-                  "data.recipient_emails": "{{user.email}}"
-                },
-                {
-                  "data.entry_kind": "Team Banter"
-                }
-              ]
+              "data.tenant_id": "{{user.data.tenant_id}}"
             }
           ]
         }
       ]
     },
     "update": {
-      "$or": [
+      "$and": [
         {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Provider Administrator"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Compliance Manager"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Administration"
-          }
-        },
-        {
-          "$and": [
+          "$or": [
             {
-              "created_by_id": "{{user.id}}"
+              "user_condition": {
+                "role": "admin"
+              }
             },
             {
-              "$or": [
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "$and": [
                 {
-                  "user_condition": {
-                    "role": "Management"
-                  }
+                  "created_by_id": "{{user.id}}"
                 },
                 {
-                  "user_condition": {
-                    "role": "Team Leader"
-                  }
-                },
-                {
-                  "user_condition": {
-                    "role": "Support Worker"
-                  }
-                },
-                {
-                  "user_condition": {
-                    "role": "Human Resources Manager"
-                  }
-                },
-                {
-                  "user_condition": {
-                    "role": "Rostering Coordinator"
-                  }
-                },
-                {
-                  "user_condition": {
-                    "role": "CRM & Marketing Officer"
-                  }
-                },
-                {
-                  "user_condition": {
-                    "role": "Intake Officer"
-                  }
-                },
-                {
-                  "user_condition": {
-                    "role": "Participant"
-                  }
-                },
-                {
-                  "user_condition": {
-                    "role": "Quality & Improvement Manager"
-                  }
-                },
-                {
-                  "user_condition": {
-                    "role": "Finance & Accounts Officer"
-                  }
-                },
-                {
-                  "user_condition": {
-                    "role": "Auditor"
-                  }
-                },
-                {
-                  "user_condition": {
-                    "role": "Volunteer"
-                  }
-                },
-                {
-                  "user_condition": {
-                    "role": "user"
-                  }
+                  "$or": [
+                    {
+                      "user_condition": {
+                        "role": "Management"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "Team Leader"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "Support Worker"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "Human Resources Manager"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "Rostering Coordinator"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "CRM & Marketing Officer"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "Intake Officer"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "Participant"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "Quality & Improvement Manager"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "Finance & Accounts Officer"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "Auditor"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "Volunteer"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "user"
+                      }
+                    }
+                  ]
                 }
               ]
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
             }
           ]
         }
       ]
     },
     "delete": {
-      "$or": [
+      "$and": [
         {
-          "user_condition": {
-            "role": "admin"
-          }
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            }
+          ]
         },
         {
-          "user_condition": {
-            "role": "Provider Administrator"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "Compliance Manager"
-          }
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
         }
       ]
     }

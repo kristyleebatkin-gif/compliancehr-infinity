@@ -1446,173 +1446,237 @@
   ],
   "rls": {
     "read": {
-      "$or": [
+      "$and": [
         {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "created_by_id": "{{user.id}}"
-        },
-        {
-          "$and": [
+          "$or": [
             {
-              "data.organisation_id": "{{user.data.organisation_id}}"
+              "user_condition": {
+                "role": "admin"
+              }
             },
             {
-              "$or": [
+              "created_by_id": "{{user.id}}"
+            },
+            {
+              "$and": [
                 {
-                  "user_condition": {
-                    "role": "Provider Administrator"
-                  }
+                  "data.organisation_id": "{{user.data.organisation_id}}"
                 },
                 {
-                  "user_condition": {
-                    "role": "Compliance Manager"
-                  }
-                },
-                {
-                  "user_condition": {
-                    "role": "Compliance Administrator"
-                  }
-                },
-                {
-                  "user_condition": {
-                    "role": "Administration"
-                  }
-                },
-                {
-                  "user_condition": {
-                    "role": "Team Leader"
-                  }
-                },
-                {
-                  "user_condition": {
-                    "role": "Support Worker"
-                  }
-                },
-                {
-                  "user_condition": {
-                    "role": "Employee"
-                  }
-                },
-                {
-                  "user_condition": {
-                    "role": "Finance & Accounts Officer"
-                  }
-                },
-                {
-                  "user_condition": {
-                    "role": "Human Resources Manager"
-                  }
-                },
-                {
-                  "user_condition": {
-                    "role": "Rostering Coordinator"
-                  }
-                },
-                {
-                  "user_condition": {
-                    "role": "Quality & Improvement Manager"
-                  }
-                },
-                {
-                  "user_condition": {
-                    "role": "CRM & Marketing Officer"
-                  }
-                },
-                {
-                  "user_condition": {
-                    "role": "Intake Officer"
-                  }
-                },
-                {
-                  "user_condition": {
-                    "role": "Participant"
-                  }
-                },
-                {
-                  "user_condition": {
-                    "role": "Volunteer"
-                  }
+                  "$or": [
+                    {
+                      "user_condition": {
+                        "role": "Provider Administrator"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "Compliance Manager"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "Compliance Administrator"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "Administration"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "Team Leader"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "Support Worker"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "Employee"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "Finance & Accounts Officer"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "Human Resources Manager"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "Rostering Coordinator"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "Quality & Improvement Manager"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "CRM & Marketing Officer"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "Intake Officer"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "Participant"
+                      }
+                    },
+                    {
+                      "user_condition": {
+                        "role": "Volunteer"
+                      }
+                    }
+                  ]
                 }
               ]
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
             }
           ]
         }
       ]
     },
     "create": {
-      "$or": [
+      "$and": [
         {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "$and": [
-            {
-              "data.organisation_id": "{{user.data.organisation_id}}"
-            },
+          "$or": [
             {
               "user_condition": {
-                "role": "Provider Administrator"
+                "role": "admin"
               }
+            },
+            {
+              "$and": [
+                {
+                  "data.organisation_id": "{{user.data.organisation_id}}"
+                },
+                {
+                  "user_condition": {
+                    "role": "Provider Administrator"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
             }
           ]
         }
       ]
     },
     "update": {
-      "$or": [
+      "$and": [
         {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "$and": [
-            {
-              "data.organisation_id": "{{user.data.organisation_id}}"
-            },
+          "$or": [
             {
               "user_condition": {
-                "role": "Provider Administrator"
+                "role": "admin"
               }
+            },
+            {
+              "$and": [
+                {
+                  "data.organisation_id": "{{user.data.organisation_id}}"
+                },
+                {
+                  "user_condition": {
+                    "role": "Provider Administrator"
+                  }
+                }
+              ]
+            },
+            {
+              "$and": [
+                {
+                  "created_by_id": "{{user.id}}"
+                },
+                {
+                  "user_condition": {
+                    "role": "Provider Administrator"
+                  }
+                }
+              ]
             }
           ]
         },
         {
-          "$and": [
-            {
-              "created_by_id": "{{user.id}}"
-            },
+          "$or": [
             {
               "user_condition": {
-                "role": "Provider Administrator"
+                "role": "admin"
               }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
             }
           ]
         }
       ]
     },
     "delete": {
-      "$or": [
+      "$and": [
         {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "$and": [
-            {
-              "data.organisation_id": "{{user.data.organisation_id}}"
-            },
+          "$or": [
             {
               "user_condition": {
-                "role": "Provider Administrator"
+                "role": "admin"
               }
+            },
+            {
+              "$and": [
+                {
+                  "data.organisation_id": "{{user.data.organisation_id}}"
+                },
+                {
+                  "user_condition": {
+                    "role": "Provider Administrator"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
             }
           ]
         }
