@@ -1,4 +1,17 @@
 {
+  "name": "Auto Route: Incidents",
+  "description": "Files every new or updated incident into the Incident Register and escalates new incidents to management",
+  "trigger": {
+    "condition": "${ (.trigger.event_type != \"update\" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; . != \"tenant_id\" and . != \"updated_date\")) }",
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "create",
+        "update"
+      ],
+      "entity_name": "Incident"
+    }
+  },
   "definition": {
     "document": {
       "dsl": "1.0.0",
@@ -26,18 +39,5 @@
         }
       }
     ]
-  },
-  "trigger": {
-    "condition": "${ (.trigger.event_type != \"update\" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; . != \"tenant_id\" and . != \"updated_date\")) }",
-    "config": {
-      "trigger_type": "entity",
-      "events": [
-        "create",
-        "update"
-      ],
-      "entity_name": "Incident"
-    }
-  },
-  "description": "Files every new or updated incident into the Incident Register and escalates new incidents to management",
-  "name": "Auto Route: Incidents"
+  }
 }
