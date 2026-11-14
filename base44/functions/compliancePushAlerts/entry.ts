@@ -1,5 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
 import { authorizeSystemCall } from '../../shared/systemAuth.ts';
+import { BUSINESS_TIME_ZONE } from '../../shared/businessTime.ts';
 
 // Sends native mobile push notifications to staff for:
 //  1. New compliance tasks assigned to them (TodoTask).
@@ -15,7 +16,7 @@ export default async function(req) {
     if (!authorized) return Response.json({ error: 'Forbidden' }, { status: 403 });
     const svc = base44.asServiceRole;
 
-    const auDate = (d) => new Intl.DateTimeFormat('en-CA', { timeZone: 'Australia/Sydney' }).format(d); // YYYY-MM-DD
+    const auDate = (d) => new Intl.DateTimeFormat('en-CA', { timeZone: BUSINESS_TIME_ZONE }).format(d); // YYYY-MM-DD
     const now = new Date();
     const today = auDate(now);
     const soon = auDate(new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000));

@@ -1,8 +1,8 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 import { MANAGEMENT_ROLES, hasAnyRole } from '../../shared/systemAuth.ts';
+import { BUSINESS_TIME_ZONE } from '../../shared/businessTime.ts';
 
-const SYDNEY = 'Australia/Sydney';
-const auDate = (d) => new Intl.DateTimeFormat('en-CA', { timeZone: SYDNEY, year: 'numeric', month: '2-digit', day: '2-digit' }).format(d);
+const auDate = (d) => new Intl.DateTimeFormat('en-CA', { timeZone: BUSINESS_TIME_ZONE, year: 'numeric', month: '2-digit', day: '2-digit' }).format(d);
 const prettyDate = (iso) => new Intl.DateTimeFormat('en-AU', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${iso}T00:00:00Z`));
 
 export default async function(req) {

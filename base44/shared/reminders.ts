@@ -1,13 +1,14 @@
+import { BUSINESS_TIME_ZONE } from './businessTime.ts';
 // Shared date + pagination helpers for reminder scan functions (Australia/Sydney).
 
-export const SYDNEY = 'Australia/Sydney';
+export { BUSINESS_TIME_ZONE };
 
 export const auDate = (d) => new Intl.DateTimeFormat('en-CA', {
-  timeZone: SYDNEY, year: 'numeric', month: '2-digit', day: '2-digit',
+  timeZone: BUSINESS_TIME_ZONE, year: 'numeric', month: '2-digit', day: '2-digit',
 }).format(d);
 
 export const auTime = (d) => new Intl.DateTimeFormat('en-AU', {
-  timeZone: SYDNEY, hour: '2-digit', minute: '2-digit', hour12: false,
+  timeZone: BUSINESS_TIME_ZONE, hour: '2-digit', minute: '2-digit', hour12: false,
 }).format(d);
 
 export const pretty = (iso) => iso

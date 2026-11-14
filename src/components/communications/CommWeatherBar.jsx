@@ -4,6 +4,7 @@ import {
   Cloud, CloudRain, Sun, CloudSnow, CloudLightning, CloudFog,
   CalendarDays, Clock, HeartHandshake, PhoneCall, Users, CalendarRange, Sparkles, ShieldCheck,
 } from 'lucide-react';
+import { BUSINESS_TIME_ZONE } from '@/lib/businessTime';
 
 const FALLBACK = { latitude: -33.87, longitude: 151.21 }; // Sydney
 
@@ -26,14 +27,14 @@ const ACTIVE_SERVICES = [
 ];
 
 const dateFmt = new Intl.DateTimeFormat('en-AU', {
-  timeZone: 'Australia/Sydney',
+  timeZone: BUSINESS_TIME_ZONE,
   weekday: 'short',
   day: 'numeric',
   month: 'short',
   year: 'numeric',
 });
 const timeFmt = new Intl.DateTimeFormat('en-AU', {
-  timeZone: 'Australia/Sydney',
+  timeZone: BUSINESS_TIME_ZONE,
   hour: '2-digit',
   minute: '2-digit',
   second: '2-digit',

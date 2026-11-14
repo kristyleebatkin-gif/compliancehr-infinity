@@ -1,5 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
 import { jsPDF } from 'npm:jspdf@4.2.1';
+import { BUSINESS_TIME_ZONE } from '../../shared/businessTime.ts';
 
 export default async function(req) {
   try {
@@ -49,7 +50,7 @@ export default async function(req) {
     heading();
     for (let index = 0; index < actions.length; index++) {
       const action = actions[index];
-      const when = new Date(action.timestamp || action.created_date).toLocaleString('en-AU', { timeZone: 'Australia/Sydney' });
+      const when = new Date(action.timestamp || action.created_date).toLocaleString('en-AU', { timeZone: BUSINESS_TIME_ZONE });
       const text = `${count - 29 + index}. ${when} | ${action.action || ''}\n${action.entity_type || ''}: ${action.record_title || action.record_id || '-'}\nBy ${action.performed_by || '-'} (${action.performed_by_role || '-'}) | ${action.route || ''}\n${String(action.details || '').slice(0, 1200)}`;
       for (const line of pdf.splitTextToSize(text, 510)) {
         if (y > 785) { pdf.addPage(); heading(); }

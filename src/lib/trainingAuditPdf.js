@@ -1,5 +1,6 @@
 import { jsPDF } from 'jspdf';
 import { drawCompanyBranding, drawDocumentFooter } from '@/lib/companyBranding';
+import { BUSINESS_TIME_ZONE } from '@/lib/businessTime';
 
 const BRAND_PURPLE = '#5B2C83';
 const BRAND_TEAL = '#00A6A6';
@@ -27,7 +28,7 @@ function header(doc, title, subtitle) {
   drawCompanyBranding(doc, pageW - 190, 28, { fontSize: 10, logoSize: 18, maxWidth: 126 });
   doc.setFontSize(8);
   doc.setTextColor(MUTED);
-  const generated = `Generated: ${new Date().toLocaleString('en-AU', { timeZone: 'Australia/Sydney' })}`;
+  const generated = `Generated: ${new Date().toLocaleString('en-AU', { timeZone: BUSINESS_TIME_ZONE })}`;
   doc.text(generated, pageW - 40, 39, { align: 'right' });
 
   doc.setDrawColor(LINE);

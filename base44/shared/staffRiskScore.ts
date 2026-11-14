@@ -1,3 +1,4 @@
+import { BUSINESS_TIME_ZONE } from './businessTime.ts';
 // Per-staff compliance risk scoring, shared by the Staff Detail page threshold
 // alert. Score is 0-100 (higher = clearer); risk points = 100 - score
 // (higher = riskier). The alert fires when risk points exceed the threshold.
@@ -7,12 +8,12 @@ export const RISK_ALERT_THRESHOLD = 40; // alert when risk points exceed this
 
 const PENDING_STATUSES = ['Pending', 'Pending Approval', 'In Progress', 'Open', 'Overdue'];
 
-const sydneyDate = (ts) => new Date(ts).toLocaleDateString('en-CA', { timeZone: 'Australia/Sydney' });
+const businessDate = (ts) => new Date(ts).toLocaleDateString('en-CA', { timeZone: BUSINESS_TIME_ZONE });
 
 // Returns rows: [{ staff_id, name, score, risk_points, overdue_tasks, expired_docs, expired_certs, soon_docs, soon_certs }]
 export async function computeStaffRiskScores(service) {
-  const today = sydneyDate(Date.now());
-  const in30 = sydneyDate(Date.now() + 30 * 86400000);
+  const today = businessDate(Date.now());
+  const in30 = businessDate(Date.now() + 30 * 86400000);
 
   const [tasksPage, docsPage, certsPage, staffPage] = await Promise.all([
     service.entities.TodoTask.filter(

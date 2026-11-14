@@ -1,5 +1,6 @@
 import { employeeRosterIdentity } from './employeeAccess.ts';
 import { hasApprovedAccess } from './appAccess.ts';
+import { BUSINESS_TIME_ZONE } from './businessTime.ts';
 export const escapeRegex = (value) => String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 export const addressedTo = (user) => ({ $or: [{ recipient_emails: user.email.toLowerCase() }, { recipients_json: { $regex: `"email"\\s*:\\s*"${escapeRegex(user.email)}"`, $options: 'i' } }] });
 export const authoredBy = (user) => ({ $or: [{ employee_author_id: user.id }, { created_by_id: user.id }, { sender_email: user.email }] });
@@ -22,7 +23,7 @@ export async function keyPersonnel(base44) {
 }
 export async function saveEmployeeCommunication(base44, user, values) {
   const now = new Date();
-  const record = await base44.asServiceRole.entities.CommunicationEntry.create({ ...values, employee_author_id: user.id, sender_name: user.full_name || user.email, sender_email: user.email, entry_date: values.entry_date || now.toISOString().slice(0, 10), entry_time: values.entry_time || now.toLocaleTimeString('en-AU', { timeZone: 'Australia/Sydney', hour12: false }).slice(0, 5), module: 'Communications' });
+  const record = await base44.asServiceRole.entities.CommunicationEntry.create({ ...values, employee_author_id: user.id, sender_name: user.full_name || user.email, sender_email: user.email, entry_date: values.entry_date || now.toISOString().slice(0, 10), entry_time: values.entry_time || now.toLocaleTimeString('en-AU', { timeZone: BUSINESS_TIME_ZONE, hour12: false }).slice(0, 5), module: 'Communications' });
   await base44.asServiceRole.entities.Register.create({ register_type: 'Communication Register', entry_title: record.subject || record.entry_kind, entry_id: record.id, linked_entity_type: 'CommunicationEntry', linked_entity_id: record.id, status: 'Recorded', recorded_date: record.entry_date, owner: user.full_name || user.email });
   return record;
 }

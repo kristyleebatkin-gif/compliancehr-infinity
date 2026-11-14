@@ -1,14 +1,14 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 import { authorizeSystemCall } from '../../shared/systemAuth.ts';
-import { SYDNEY } from '../../shared/reminders.ts';
+import { BUSINESS_TIME_ZONE } from '../../shared/reminders.ts';
 
 const norm = (v) => String(v || '').trim().toLowerCase();
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 // Sydney-local date + "HH:MM" to epoch, corrected for DST offsets.
-function sydneyLocalToEpoch(dateStr, timeStr) {
+function businessLocalToEpoch(dateStr, timeStr) {
   let ts = Date.parse(`${dateStr}T${timeStr}:00Z`);
-  const fmt = new Intl.DateTimeFormat('en-CA', { timeZone: SYDNEY, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false });
+  const fmt = new Intl.DateTimeFormat('en-CA', { timeZone: BUSINESS_TIME_ZONE, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false });
   for (let i = 0; i < 3; i++) {
     const parts = Object.fromEntries(fmt.formatToParts(new Date(ts)).map((p) => [p.type, p.value]));
     const haveTs = Date.parse(`${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}:00Z`);
@@ -42,7 +42,7 @@ export default async function(req) {
     const to = now + 10 * 60 * 1000; // 5-min cadence with a 10-min window
 
     // Upcoming shifts today with an assigned employee, not cancelled or missed.
-    const today = new Intl.DateTimeFormat('en-CA', { timeZone: SYDNEY, year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(now));
+    const today = new Intl.DateTimeFormat('en-CA', { timeZone: BUSINESS_TIME_ZONE, year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(now));
     const page = await service.entities.Shift.filter({ date: today }, { limit: 500 });
     const upcoming = (page.items || []).filter((s) =>
       s.employee_name && s.date && s.start_time &&
@@ -62,7 +62,7 @@ export default async function(req) {
     const failures = [];
     for (const shift of upcoming) {
       if (alreadySent.has(`car_safety:${shift.id}`)) continue;
-      const startEpoch = sydneyLocalToEpoch(shift.date, shift.start_time);
+      const startEpoch = businessLocalToEpoch(shift.date, shift.start_time);
       if (!(startEpoch >= from && startEpoch < to)) continue;
       const email = emailByName.get(norm(shift.employee_name));
       if (!email || !EMAIL_RE.test(email)) continue;

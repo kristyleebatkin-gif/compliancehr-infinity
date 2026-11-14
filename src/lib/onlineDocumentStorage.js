@@ -1,6 +1,7 @@
 import { base44 } from '@/api/base44Client';
 import { buildBrandedTemplatePdf, getTemplateMeta } from '@/lib/officialFormTemplates';
 import { routeDocument } from '@/lib/documentRouting';
+import { BUSINESS_TIME_ZONE } from '@/lib/businessTime';
 
 export const documentFormKey = (library, title, caseId = '') => `online:${library}:${caseId}:${title}`;
 export const blankOnlineDocument = (answers = {}) => ({ answers: { ...answers }, tableRows: [], name: '', signature: '', confirmed: false });
@@ -26,7 +27,7 @@ export async function saveOnlineDocumentDraft({ record, title, libraryKey, intak
 }
 
 export async function fileOnlineDocument({ title, code, definition, model, user, libraryKey, onFinalize }) {
-  const completedAt = new Date().toLocaleString('en-AU', { timeZone: 'Australia/Sydney' });
+  const completedAt = new Date().toLocaleString('en-AU', { timeZone: BUSINESS_TIME_ZONE });
   const meta = getTemplateMeta(title) || {};
   const doc = await buildBrandedTemplatePdf({
     title, code, subtitle: definition.label || title, ...meta,

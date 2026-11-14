@@ -1,13 +1,13 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 import { MANAGEMENT_ROLES, hasAnyRole } from '../../shared/systemAuth.ts';
+import { BUSINESS_TIME_ZONE } from '../../shared/businessTime.ts';
 
-const SYDNEY = 'Australia/Sydney';
 const prettyDate = (iso) => new Intl.DateTimeFormat('en-AU', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${iso}T00:00:00Z`));
 
 // Convert a Sydney-local date + time string ("2026-10-12", "07:30") to an epoch timestamp
-function sydneyLocalToEpoch(dateStr, timeStr) {
+function businessLocalToEpoch(dateStr, timeStr) {
   let ts = Date.parse(`${dateStr}T${timeStr}:00Z`);
-  const fmt = new Intl.DateTimeFormat('en-CA', { timeZone: SYDNEY, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false });
+  const fmt = new Intl.DateTimeFormat('en-CA', { timeZone: BUSINESS_TIME_ZONE, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false });
   for (let i = 0; i < 3; i++) {
     const parts = Object.fromEntries(fmt.formatToParts(new Date(ts)).map((p) => [p.type, p.value]));
     const haveTs = Date.parse(`${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}:00Z`);
@@ -51,7 +51,7 @@ export default async function(req) {
     for (const shift of shifts) {
       if (shift.status === 'Cancelled' || shift.status === 'Missed') continue;
       if (!shift.employee_name) continue;
-      const startEpoch = sydneyLocalToEpoch(shift.date, shift.start_time);
+      const startEpoch = businessLocalToEpoch(shift.date, shift.start_time);
       if (!(startEpoch >= from && startEpoch < to)) continue;
       const staff = staffByName.get(String(shift.employee_name).toLowerCase());
       const email = (staff?.email || '').trim().toLowerCase();
