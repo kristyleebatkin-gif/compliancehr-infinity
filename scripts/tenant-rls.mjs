@@ -23,7 +23,6 @@ import {
   SHARED_MASTER_TENANT_ID,
 } from '../src/lib/tenantClassification.js';
 
-export const TENANT_RLS_MARKER = '__tenant_lock_v1__';
 const OPS = ['read', 'create', 'update', 'delete'];
 const OWNER = { user_condition: { role: 'admin' } };
 const OWN_BUSINESS = { 'data.tenant_id': '{{user.data.tenant_id}}' };
@@ -45,9 +44,14 @@ export function groupOf(name) {
   return 'platform';
 }
 
-export function isLocked(rule) {
-  return Boolean(rule && Array.isArray(rule.$and) && rule.$and.some((r) => r && r[TENANT_RLS_MARKER] === undefined && r.$comment === TENANT_RLS_MARKER));
+// Only standard RLS operators are written (no marker keys), so Base44 accepts the rules as-is.
+// A rule counts as locked when it is an $and whose last element is exactly the lock.
+export function isLocked(rule, lock) {
+  if (!rule || !Array.isArray(rule.$and) || !rule.$and.length) return false;
+  return JSON.stringify(rule.$and[rule.$and.length - 1]) === JSON.stringify(lock);
 }
+
+export { lockFor };
 
 // Returns a new schema with the business lock added. Idempotent: already-locked ops are left alone.
 export function withTenantRls(schema) {
@@ -57,9 +61,8 @@ export function withTenantRls(schema) {
     const lock = lockFor(group, op);
     if (!lock) continue;
     const existing = rls[op];
-    if (isLocked(existing)) continue;
-    const tagged = { ...lock, $comment: TENANT_RLS_MARKER };
-    rls[op] = existing ? { $and: [existing, tagged] } : { $and: [tagged] };
+    if (isLocked(existing, lock)) continue;
+    rls[op] = existing ? { $and: [existing, lock] } : lock;
   }
   return { ...schema, rls };
 }
