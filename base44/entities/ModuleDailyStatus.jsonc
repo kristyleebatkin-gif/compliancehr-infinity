@@ -2,6 +2,11 @@
   "name": "ModuleDailyStatus",
   "type": "object",
   "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
     "module": {
       "type": "string",
       "title": "Module"

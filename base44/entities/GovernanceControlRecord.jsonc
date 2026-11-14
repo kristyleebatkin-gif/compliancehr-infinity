@@ -2,6 +2,11 @@
   "type": "object",
   "name": "GovernanceControlRecord",
   "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
     "control_type": {
       "type": "string",
       "title": "Control Type",

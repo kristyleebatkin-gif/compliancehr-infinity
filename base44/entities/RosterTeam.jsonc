@@ -2,6 +2,11 @@
   "type": "object",
   "name": "RosterTeam",
   "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
     "name": {
       "type": "string",
       "title": "Team Name"

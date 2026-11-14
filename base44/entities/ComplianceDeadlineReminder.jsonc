@@ -2,6 +2,11 @@
   "name": "ComplianceDeadlineReminder",
   "type": "object",
   "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
     "recipient_id": {
       "type": "string",
       "title": "Recipient User ID"

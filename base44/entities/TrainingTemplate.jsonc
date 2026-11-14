@@ -2,6 +2,11 @@
   "name": "TrainingTemplate",
   "type": "object",
   "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID — \"shared\" for master templates",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
     "name": {
       "type": "string",
       "title": "Template Name"

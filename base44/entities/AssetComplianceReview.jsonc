@@ -2,6 +2,11 @@
   "type": "object",
   "name": "AssetComplianceReview",
   "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
     "review_date": {
       "type": "string",
       "title": "Review Date",

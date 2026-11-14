@@ -2,6 +2,11 @@
   "type": "object",
   "name": "VolunteerInterest",
   "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
     "interest_type": {
       "type": "string",
       "title": "Interest Type",

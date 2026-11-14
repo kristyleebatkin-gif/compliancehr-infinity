@@ -2,6 +2,11 @@
   "name": "IntakeDocument",
   "type": "object",
   "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
     "intake_case_id": {
       "type": "string",
       "title": "Intake Case ID"
