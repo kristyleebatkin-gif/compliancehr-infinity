@@ -1,54 +1,84 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+// Saves a business's own document branding (audit CRIT-04).
+// - The business comes from the signed-in account on the server; a provider_id from the browser
+//   is only accepted if that record belongs to the same business.
+// - Only that business's records are read, changed or deactivated (no "latest record anywhere").
+// - Slogan is optional. The logo must be a file stored in this app.
+// - Platform identity (ComplianceHR Infinity) is not stored here; it lives in code.
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
+import { resolveTenantContext, stampTenant, denied, TENANT_ENFORCEMENT_ON } from '../../shared/tenantContext.ts';
 
 const ADMIN_ROLES = new Set(['admin', 'Provider Administrator']);
+const APP_ID = '6ac9f91f0d82b1f80ec6a25f';
+const ALLOWED_LOGO = [
+  new RegExp(`^https://base44\\.app/api/apps/${APP_ID}/files/`),
+  new RegExp(`^https://media\\.base44\\.com/images/public/${APP_ID}/`),
+];
 
-export default async function(req) {
+// Before enforcement (release 1) existing records have no business tag yet and all belong to the
+// one business in the app, so an untagged record counts as the caller's. After release 2 it must match.
+const belongsTo = (record: any, tenantId: string) =>
+  record && (record.tenant_id === tenantId || (!TENANT_ENFORCEMENT_ON && !record.tenant_id));
+
+async function all(dao: any) {
+  const out: any[] = [];
+  let cursor: string | null = null;
+  do {
+    const page: any = await dao.filter({}, { sort: '-created_date', limit: 200, ...(cursor ? { cursor } : {}) });
+    out.push(...(Array.isArray(page) ? page : page?.items || []));
+    cursor = !Array.isArray(page) && page?.has_more ? page.next_cursor : null;
+  } while (cursor);
+  return out;
+}
+
+export default async function reqHandler(req: Request) {
   try {
     const base44 = createClientFromRequest(req);
-    const actor = await base44.auth.me();
-    if (!actor) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    const body: any = await req.json().catch(() => ({}));
+    const ctx = await resolveTenantContext(base44, body?.tenant_id || null);
+    if (!ctx.ok) return denied(ctx);
+    const actor = ctx.user;
     if (!ADMIN_ROLES.has(actor.role)) return Response.json({ error: 'Provider Administrator access required' }, { status: 403 });
+    const tenantId = ctx.tenantId;
+    const svc = base44.asServiceRole.entities;
 
-    const body = await req.json();
     const companyName = String(body.company_name || '').trim().slice(0, 200);
     const logoUrl = String(body.logo_url || '').trim().slice(0, 3000);
     const slogan = String(body.company_slogan || '').trim().slice(0, 160);
-    if (!companyName) return Response.json({ error: 'Company name is required' }, { status: 400 });
-    if (!slogan) return Response.json({ error: 'Company slogan is required' }, { status: 400 });
-
-    const existing = body.provider_id
-      ? await base44.asServiceRole.entities.Provider.get(String(body.provider_id))
-      : null;
-    const provider = existing
-      ? await base44.asServiceRole.entities.Provider.update(existing.id, {
-        provider_name: companyName,
-        logo_url: logoUrl,
-        document_slogan: slogan,
-        document_branding_active: true,
-      })
-      : await base44.asServiceRole.entities.Provider.create({
-        provider_name: companyName,
-        logo_url: logoUrl,
-        document_slogan: slogan,
-        document_branding_active: true,
-      });
-
-    const businessPage = await base44.asServiceRole.entities.BusinessDetails.list({ sort: '-created_date', limit: 1 });
-    const business = businessPage.items?.[0];
-    if (business) {
-      await base44.asServiceRole.entities.BusinessDetails.update(business.id, { business_name: companyName });
-    } else {
-      await base44.asServiceRole.entities.BusinessDetails.create({ business_name: companyName });
+    if (!companyName) return Response.json({ error: 'Business name is required' }, { status: 400 });
+    if (logoUrl && !ALLOWED_LOGO.some((re) => re.test(logoUrl))) {
+      return Response.json({ error: 'Upload the logo through the app; outside image links are not accepted.' }, { status: 400 });
     }
 
-    const providersPage = await base44.asServiceRole.entities.Provider.filter({}, { sort: '-created_date', limit: 500 });
-    for (const candidate of (providersPage.items || [])) {
-      if (candidate.id !== provider.id && candidate.document_branding_active) {
-        await base44.asServiceRole.entities.Provider.update(candidate.id, { document_branding_active: false });
+    const providers = (await all(svc.Provider)).filter((p) => belongsTo(p, tenantId));
+    let provider = null;
+    if (body.provider_id) {
+      provider = providers.find((p) => p.id === String(body.provider_id)) || null;
+      if (!provider) return Response.json({ error: 'That branding record does not belong to your business.' }, { status: 403 });
+    } else {
+      provider = providers.find((p) => p.document_branding_active) || providers[0] || null;
+    }
+    const before = provider ? { name: provider.provider_name, logo: provider.logo_url, slogan: provider.document_slogan } : null;
+    const fields = stampTenant({ provider_name: companyName, logo_url: logoUrl, document_slogan: slogan, document_branding_active: true }, tenantId);
+    if (provider) {
+      await svc.Provider.update(provider.id, fields);
+      provider = { ...provider, ...fields };
+    } else {
+      provider = await svc.Provider.create(fields);
+    }
+
+    // Only this business's other branding records are switched off.
+    for (const other of providers) {
+      if (other.id !== provider.id && other.document_branding_active) {
+        await svc.Provider.update(other.id, { document_branding_active: false });
       }
     }
 
-    await base44.asServiceRole.entities.AuditLog.create({
+    const business = (await all(svc.BusinessDetails)).find((b) => belongsTo(b, tenantId)) || null;
+    if (business) await svc.BusinessDetails.update(business.id, stampTenant({ business_name: companyName }, tenantId));
+    else await svc.BusinessDetails.create(stampTenant({ business_name: companyName }, tenantId));
+
+    await svc.AuditLog.create(stampTenant({
+      organisation_id: tenantId,
       action: 'Update Company Branding',
       entity_type: 'Provider',
       record_id: provider.id,
@@ -57,14 +87,11 @@ export default async function(req) {
       performed_by_user_id: actor.id,
       performed_by_email: actor.email || '',
       performed_by_role: actor.role,
-      details: `Selected document branding for ${companyName} and updated the name, logo and slogan used across downloadable forms.`,
+      details: JSON.stringify({ before, after: { name: companyName, logo: logoUrl, slogan } }).slice(0, 3000),
       timestamp: new Date().toISOString(),
-    });
-    return Response.json({
-      success: true,
-      provider_id: provider.id,
-      company_slogan: slogan,
-    });
+    }, tenantId));
+
+    return Response.json({ success: true, provider_id: provider.id, company_slogan: slogan, tenant_id: tenantId });
   } catch (error) {
     return Response.json({ error: error instanceof Error ? error.message : 'Branding update failed' }, { status: 500 });
   }
