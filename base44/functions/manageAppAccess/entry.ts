@@ -15,7 +15,7 @@
 //   approve { user_id, role }                reject { user_id }
 //   role { user_id, role }                   suspend { user_id, reason? }
 //   reactivate { user_id, role? }            cancel_invite { id }
-import { perBusiness, createScopedClientFromRequest, accountDirectoryFromRequest } from '../../shared/tenantScope.ts';
+import { perBusiness, createScopedClientFromRequest, accountDirectoryFromRequest, SCOPE_HEADER } from '../../shared/tenantScope.ts';
 import { hasApprovedAccess, canManageAccess, canGrantRole, ASSIGNABLE_ROLES, SENIOR_ROLES } from '../../shared/roleMatrix.ts';
 
 const INVITE_DAYS = 14;
@@ -241,7 +241,7 @@ export default perBusiness(async function (req: Request) {
     const body = await req.json().catch(() => ({}));
     const client = createScopedClientFromRequest(req);
     const directory = accountDirectoryFromRequest(req);
-    return await handleAccess({ client, directory, tenantId: req.headers.get('x-chr-business-scope') || '' }, body);
+    return await handleAccess({ client, directory, tenantId: req.headers.get(SCOPE_HEADER) || '' }, body);
   } catch (error) {
     const status = (error as any)?.status === 403 ? 403 : 500;
     return Response.json({ error: (error as any)?.message || 'Unable to update account access.' }, { status });
