@@ -31,7 +31,7 @@ const BOTTOM_NAV = [
 
 export default function AppLayout() {
   const location = useLocation();
-  const { role, user } = useRole();
+  const { role, navRole, user } = useRole();
   const { toast } = useToast();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
@@ -94,9 +94,9 @@ export default function AppLayout() {
 
   const accountStatus = user?.account_status || (role === 'Pending Approval' ? 'Pending Approval' : 'Active');
 
-  const visiblePrimary = PRIMARY_NAV.filter((item) => canAccessNav(role, item.key));
+  const visiblePrimary = PRIMARY_NAV.filter((item) => canAccessNav(navRole, item.key));
   const visibleNav = visiblePrimary;
-  const visibleBottom = BOTTOM_NAV.filter((item) => canAccessNav(role, item.key));
+  const visibleBottom = BOTTOM_NAV.filter((item) => canAccessNav(navRole, item.key));
 
   useEffect(() => {
     if (!user?.id || accountStatus !== 'Active') return;
