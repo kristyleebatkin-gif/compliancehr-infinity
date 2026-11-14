@@ -2,7 +2,7 @@
   "name": "Auto Next Review",
   "description": "When a performance review is completed, sets the next review date by cadence and creates a follow-up review reminder task",
   "trigger": {
-    "condition": "${ (.trigger.event_type != \"update\" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; . != \"tenant_id\" and . != \"updated_date\")) and (.trigger.data.status == \"Completed\" and not .trigger.data.next_review_date) }",
+    "condition": "${ (.trigger.event_type != \"update\" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; (IN(\"tenant_id\", \"updated_date\", \"created_by_id\", \"created_by\", \"is_sample\") | not))) and (.trigger.data.status == \"Completed\" and not .trigger.data.next_review_date) }",
     "config": {
       "trigger_type": "entity",
       "events": [

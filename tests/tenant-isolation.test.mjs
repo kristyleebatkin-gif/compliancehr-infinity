@@ -114,7 +114,8 @@ test('automations that run on update ignore a change to the business tag alone',
     if (cfg?.trigger_type !== 'entity' || !(cfg.events || []).includes('update')) continue;
     const cond = String(wf.trigger.condition || '');
     // Base44 refuses array subtraction in trigger conditions, so the guard uses any(...) instead.
-    const guard = '(.trigger.event_type != "update" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; . != "tenant_id" and . != "updated_date"))';
+    const guard = '(.trigger.event_type != "update" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; (IN("tenant_id", "updated_date", "created_by_id", "created_by", "is_sample") | not)))';
+    // created_by_id / is_sample: the platform reports these as changed on every API update (seen in the 14 Nov probe).
     if (!cond.startsWith('${ ' + guard) || /\) - \[/.test(cond)) unguarded.push(f);
   }
   assert.deepEqual(unguarded, []);

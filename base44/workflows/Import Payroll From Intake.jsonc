@@ -2,7 +2,7 @@
   "name": "Import Payroll From Intake",
   "description": "When an employee intake case is created or approved, pulls banking, super and TFN details into the HR payroll register",
   "trigger": {
-    "condition": "${ (.trigger.event_type != \"update\" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; . != \"tenant_id\" and . != \"updated_date\")) and (.trigger.data.intake_type == \"Employee\" and (.trigger.event_type == \"create\" or .trigger.data.status == \"Approved\" or .trigger.data.status == \"Converted to Profile\")) }",
+    "condition": "${ (.trigger.event_type != \"update\" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; (IN(\"tenant_id\", \"updated_date\", \"created_by_id\", \"created_by\", \"is_sample\") | not))) and (.trigger.data.intake_type == \"Employee\" and (.trigger.event_type == \"create\" or .trigger.data.status == \"Approved\" or .trigger.data.status == \"Converted to Profile\")) }",
     "config": {
       "trigger_type": "entity",
       "events": [

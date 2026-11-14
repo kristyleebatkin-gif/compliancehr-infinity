@@ -2,7 +2,7 @@
   "name": "Overdue Task Instant Alert",
   "description": "The moment a compliance task is created or changed while already past its due date, instantly alerts the assignee, everyone responsible and all admins.",
   "trigger": {
-    "condition": "${ (.trigger.event_type != \"update\" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; . != \"tenant_id\" and . != \"updated_date\")) and (((.trigger.data.due_date // \"\") != \"\") and ((.trigger.data.status // \"\") != \"Completed\") and ((.trigger.data.status // \"\") != \"Cancelled\") and ((.trigger.data.status // \"\") != \"Finalised\")) }",
+    "condition": "${ (.trigger.event_type != \"update\" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; (IN(\"tenant_id\", \"updated_date\", \"created_by_id\", \"created_by\", \"is_sample\") | not))) and (((.trigger.data.due_date // \"\") != \"\") and ((.trigger.data.status // \"\") != \"Completed\") and ((.trigger.data.status // \"\") != \"Cancelled\") and ((.trigger.data.status // \"\") != \"Finalised\")) }",
     "config": {
       "trigger_type": "entity",
       "events": [

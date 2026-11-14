@@ -2,7 +2,7 @@
   "name": "Auto Route: Internal Audits",
   "description": "Files internal audits into the audit register and auto-creates compliance issues from findings",
   "trigger": {
-    "condition": "${ (.trigger.event_type != \"update\" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; . != \"tenant_id\" and . != \"updated_date\")) }",
+    "condition": "${ (.trigger.event_type != \"update\" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; (IN(\"tenant_id\", \"updated_date\", \"created_by_id\", \"created_by\", \"is_sample\") | not))) }",
     "config": {
       "trigger_type": "entity",
       "events": [

@@ -2,7 +2,7 @@
   "name": "Staff Risk Alert Certificate Change",
   "description": "The moment a staff certificate is created or changed, scores every staff member's compliance risk and instantly notifies admins in-app for anyone whose risk score exceeds the threshold.",
   "trigger": {
-    "condition": "${ (.trigger.event_type != \"update\" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; . != \"tenant_id\" and . != \"updated_date\")) }",
+    "condition": "${ (.trigger.event_type != \"update\" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; (IN(\"tenant_id\", \"updated_date\", \"created_by_id\", \"created_by\", \"is_sample\") | not))) }",
     "config": {
       "trigger_type": "entity",
       "events": [

@@ -2,7 +2,7 @@
   "name": "Task Lifecycle Alerts",
   "description": "Notify assigned app users when tasks are assigned, rescheduled, returned or closed, and notify existing approvers when sign-off is requested.",
   "trigger": {
-    "condition": "${ (.trigger.event_type != \"update\" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; . != \"tenant_id\" and . != \"updated_date\")) and (.trigger.event_type == \"create\" or (.trigger.changed_fields != null and any(.trigger.changed_fields[]; . == \"status\" or . == \"assigned_email\" or . == \"responsible_emails\" or . == \"due_date\"))) }",
+    "condition": "${ (.trigger.event_type != \"update\" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; (IN(\"tenant_id\", \"updated_date\", \"created_by_id\", \"created_by\", \"is_sample\") | not))) and (.trigger.event_type == \"create\" or (.trigger.changed_fields != null and any(.trigger.changed_fields[]; . == \"status\" or . == \"assigned_email\" or . == \"responsible_emails\" or . == \"due_date\"))) }",
     "config": {
       "trigger_type": "entity",
       "events": [
