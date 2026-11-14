@@ -14,7 +14,7 @@ const DARK_NAVY_CHASSIS =
 const APP_DESIGN_COLOURS = ['#0072FF', '#5A00D6', '#FF2E9A', '#A100FF', '#00C6FF'];
 
 export default function AllModulesHub() {
-  const { role } = useRole();
+  const { navRole: role } = useRole();
   const modules = MODULE_DIRECTORY.filter(
     (module) => module.key === 'dashboard' || canAccessNav(role, module.key)
   );
