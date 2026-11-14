@@ -5,7 +5,7 @@ import {
   ReceiptText, Wrench, MapPin, HeartHandshake, Building2, Newspaper, Landmark,
   UserCog, Handshake, BarChart3, Briefcase, ShoppingCart, KanbanSquare,
   ClipboardList, MessageSquare, Lightbulb, LifeBuoy, BookOpen, Bot, ClipboardCheck, Activity, TrendingUp,
-  Sun,
+  Sun, Inbox,
 } from 'lucide-react';
 
 // Single source of truth for every module in the app: the sidebar, bottom nav and
@@ -34,6 +34,7 @@ export const MODULE_DIRECTORY = [
   { key: 'rostering', label: 'Rostering', path: '/rostering', icon: CalendarClock, group: '3. Service Delivery', blurb: 'Shift calendar, patterns, availability, approvals, payroll and ICS feeds.' },
   { key: 'goals', label: 'Goals', path: '/goals', icon: Target, group: '3. Service Delivery', blurb: 'Goals, progress notes grouped by goal, insights and AI coaching.' },
   { key: 'tasks', label: 'Tasks', path: '/tasks', icon: ClipboardList, group: '1. My Workspace', blurb: 'Tasks, board view, reminders, leaderboards and completion records.' },
+  { key: 'approvals', label: 'Approval Inbox', path: '/approvals', icon: Inbox, group: '1. My Workspace', blurb: 'Everything waiting for your sign-off, with signatures and a full record. Nobody approves their own work.' },
   { key: 'programs', label: 'Programs & Events', path: '/programs', icon: Handshake, group: '3. Service Delivery', blurb: 'Programs, events, ad builder, invites and survey collection.' },
   { key: 'frontline-hub', label: 'Frontline Rapid Hub', path: '/frontline-hub', icon: ClipboardCheck, group: '3. Service Delivery', blurb: 'Mobile-first My Day dashboard, Finish My Shift 7-gate check, Voice-to-Text and smart checklists.' },
   { key: 'workforce-presence', label: 'Attendance & Availability', path: '/workforce-presence', icon: Siren, group: '4. Workforce & Training', blurb: 'Unified site attendance, visitor & contractor registers, live occupancy and emergency roll call.' },
@@ -90,6 +91,7 @@ export const NAV_GROUPS = [
       "my-profile",
       "daily-briefing",
       "tasks",
+      "approvals",
       "assistant"
     ]
   },

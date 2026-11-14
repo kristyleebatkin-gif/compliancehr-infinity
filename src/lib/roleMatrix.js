@@ -156,6 +156,7 @@ export const NAV_PERMISSIONS = {
   'auditor-portal': [...FULL_ACCESS, ROLES.AUDITOR],
   feedback: PERSONAL,
   tasks: PERSONAL,
+  approvals: PERSONAL,
   quality: OPERATIONS,
   'review-due': OPERATIONS,
   'suggestions-hub': OPERATIONS,
