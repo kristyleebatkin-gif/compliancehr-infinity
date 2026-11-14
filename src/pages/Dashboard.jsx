@@ -12,15 +12,16 @@ import { useRole } from '@/lib/useRole';
 import ReportGenerator from '@/components/reports/ReportGenerator';
 
 function DashboardSection({ title, description, icon: Icon, children, glass = false }) {
+  const headingId = React.useId();
   return (
-    <section className={glass ? 'executive-glass-surface space-y-3 rounded-2xl border border-header-foreground/20 p-3 shadow-panel sm:p-4' : 'space-y-3 rounded-2xl border border-[#8CCBFF]/70 bg-white/90 p-3 shadow-[0_8px_28px_rgba(10,43,109,0.08)] backdrop-blur-md sm:p-4'}>
+    <section aria-labelledby={headingId} className={glass ? 'executive-glass-surface min-w-0 space-y-4 rounded-2xl border border-header-foreground/20 p-3 shadow-panel sm:p-4' : 'min-w-0 space-y-4 rounded-2xl border border-[#8CCBFF]/70 bg-white/90 p-3 shadow-[0_8px_28px_rgba(10,43,109,0.08)] backdrop-blur-md sm:p-4'}>
       <div className={glass ? 'flex items-start gap-3 border-b border-header-foreground/20 pb-3' : 'flex items-start gap-3 border-b border-[#D9ECFF] pb-3'}>
         <span className={glass ? 'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-header-foreground/20 bg-workspace-navy/70 text-header-foreground backdrop-blur-md' : 'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-[#8CCBFF] bg-[#EAF5FF] text-[#0A2B6D]'}>
           <Icon className="h-5 w-5" />
         </span>
         <div className="min-w-0">
-          <h2 className={glass ? 'text-base font-extrabold text-header-foreground sm:text-lg' : 'text-base font-extrabold text-[#0A2B6D] sm:text-lg'}>{title}</h2>
-          <p className={glass ? 'text-sm font-semibold leading-relaxed text-header-foreground' : 'text-sm font-semibold leading-relaxed text-workspace-navy'}>{description}</p>
+          <h2 id={headingId} className={glass ? 'text-base font-extrabold text-header-foreground sm:text-lg' : 'text-base font-extrabold text-[#0A2B6D] sm:text-lg'}>{title}</h2>
+          <p className={glass ? 'mt-1 max-w-3xl text-sm font-normal leading-relaxed text-header-foreground' : 'mt-1 max-w-3xl text-sm font-normal leading-relaxed text-workspace-navy'}>{description}</p>
         </div>
       </div>
       {children}
@@ -31,11 +32,11 @@ function DashboardSection({ title, description, icon: Icon, children, glass = fa
 function SupportWorkspace() {
   return (
     <div className="grid gap-3 sm:grid-cols-2">
-      <Link to="/help" className="rounded-2xl border border-[#8CCBFF] bg-white/90 p-4 text-sm font-bold text-[#0A2B6D] shadow-sm transition hover:bg-[#EAF5FF]">
+      <Link to="/help" className="rounded-2xl border border-[#8CCBFF] bg-white/90 p-4 text-sm font-bold text-[#0A2B6D] shadow-sm transition-colors hover:bg-[#EAF5FF] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0072FF]">
         Help Centre
         <span className="mt-1 block text-xs font-medium text-[#42608F]">Find help and support for your account.</span>
       </Link>
-      <Link to="/user-guides" className="rounded-2xl border border-[#C7B6FF] bg-white/90 p-4 text-sm font-bold text-[#5A00D6] shadow-sm transition hover:bg-[#F5F0FF]">
+      <Link to="/user-guides" className="rounded-2xl border border-[#C7B6FF] bg-white/90 p-4 text-sm font-bold text-[#5A00D6] shadow-sm transition-colors hover:bg-[#F5F0FF] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#5A00D6]">
         User Guides
         <span className="mt-1 block text-xs font-medium text-[#42608F]">Learn how to use your available workspace.</span>
       </Link>
@@ -82,21 +83,21 @@ export default function Dashboard() {
         icon={LayoutDashboard}
       />
 
-      <div className="flex flex-wrap gap-2">
+      <div role="group" aria-label="Team workspaces" className="grid gap-3 sm:grid-cols-2 xl:max-w-3xl">
         {can('today') && (
           <Link
             to="/today"
-            className="inline-flex items-center gap-1.5 rounded-xl border border-[#8CCBFF] bg-white px-3 py-2 text-[12px] font-bold text-[#0A2B6D] shadow-sm transition hover:bg-[#EAF5FF]"
+            className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-[#8CCBFF] bg-white px-3 py-2 text-sm font-bold text-[#0A2B6D] shadow-sm transition-colors hover:bg-[#EAF5FF] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0072FF]"
           >
-            <Sun className="h-3.5 w-3.5" /> Administration – Lead (Sherelle)
+            <Sun className="h-4 w-4 shrink-0" /> Administration · Sherelle
           </Link>
         )}
         {can('team-leader') && (
           <Link
             to="/team-leader"
-            className="inline-flex items-center gap-1.5 rounded-xl border border-[#C7B6FF] bg-white px-3 py-2 text-[12px] font-bold text-[#5A00D6] shadow-sm transition hover:bg-[#F5F0FF]"
+            className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-[#C7B6FF] bg-white px-3 py-2 text-sm font-bold text-[#5A00D6] shadow-sm transition-colors hover:bg-[#F5F0FF] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#5A00D6]"
           >
-            <Sparkles className="h-3.5 w-3.5" /> Team Leader - Lead (Jamie)
+            <Sparkles className="h-4 w-4 shrink-0" /> Team Leader · Jamie
           </Link>
         )}
       </div>
