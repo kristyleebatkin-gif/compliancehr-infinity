@@ -455,7 +455,7 @@ export default function EnterpriseAiCopilotSuite({ metrics = {}, onRefresh }) {
           </div>
           <div className="flex flex-wrap items-center gap-1.5">
             <Badge className="bg-[#0072FF] text-white text-[10px]">
-              Live Compliance Score: {metrics.ndisScore || 96}%
+              Compliance Score: {typeof metrics.ndisScore === 'number' ? `${metrics.ndisScore}%` : 'Not measured yet'}
             </Badge>
             <Badge className="bg-[#5A00D6] text-white text-[10px]">
               AI Governance Rule: Audited &amp; Reviewable
