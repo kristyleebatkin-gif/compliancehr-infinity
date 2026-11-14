@@ -10,7 +10,7 @@
         "update"
       ]
     },
-    "condition": "${ .trigger.event_type == \"create\" or ((.trigger.changed_fields // []) | any(. == \"status\" or . == \"assigned_email\" or . == \"responsible_emails\" or . == \"due_date\")) }"
+    "condition": "${ (.trigger.event_type != \"update\" or ((((.trigger.changed_fields // []) - [\"tenant_id\", \"updated_date\"]) | length) > 0)) and (.trigger.event_type == \"create\" or ((.trigger.changed_fields // []) | any(. == \"status\" or . == \"assigned_email\" or . == \"responsible_emails\" or . == \"due_date\"))) }"
   },
   "definition": {
     "document": {
