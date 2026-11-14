@@ -82,7 +82,7 @@ export default function UsersTable() {
         {isLoading && <p role="status" className="text-sm text-slate-600">Loading…</p>}
         {failed || (data?.pending_users?.length
           ? data.pending_users.map((u) => <AppUserAccessRow key={u.id} user={u} pending grantableRoles={roles} onChange={refresh} />)
-          : !isLoading && <Empty>All caught up: nobody is waiting for approval.</Empty>)}
+          : !isLoading && <Empty>All caught up — no user accounts are awaiting approval.</Empty>)}
       </Section>
 
       {data?.invitations?.length > 0 && (
