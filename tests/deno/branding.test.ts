@@ -6,17 +6,26 @@ import { handleBranding } from '../../base44/functions/updateCompanyBranding/ent
 type Rec = Record<string, any>;
 const LOGO = 'https://base44.app/api/apps/6ac9f91f0d82b1f80ec6a25f/files/mp/public/x/logo.png';
 
-function fake(user: Rec, seed: { Provider?: Rec[]; BusinessDetails?: Rec[] } = {}) {
-  const db: Record<string, Rec[]> = { Provider: [...(seed.Provider || [])], BusinessDetails: [...(seed.BusinessDetails || [])], AuditLog: [] };
+// Release 2: staff need an active membership of their business (the switch is on).
+const memberOf = (u: Rec) => (u?.id && u?.tenant_id ? [{ id: `m-${u.id}`, user_id: u.id, tenant_id: u.tenant_id, status: 'Active' }] : []);
+const matches = (r: Rec, q: Rec) => Object.entries(q || {}).every(([k, v]) => r[k] === v);
+
+function fake(user: Rec, seed: { Provider?: Rec[]; BusinessDetails?: Rec[]; TenantMembership?: Rec[] } = {}) {
+  const db: Record<string, Rec[]> = {
+    Provider: [...(seed.Provider || [])],
+    BusinessDetails: [...(seed.BusinessDetails || [])],
+    AuditLog: [],
+    TenantMembership: seed.TenantMembership ?? memberOf(user),
+  };
   let n = 0;
   const dao = (name: string) => ({
-    filter: async () => ({ items: [...db[name]].reverse() }),
+    filter: async (q: Rec = {}) => ({ items: [...db[name]].filter((r) => name !== 'TenantMembership' || matches(r, q)).reverse() }),
     create: async (d: Rec) => { const r = { id: `${name}${++n}`, ...d }; db[name].push(r); return r; },
     update: async (id: string, patch: Rec) => { Object.assign(db[name].find((r) => r.id === id)!, patch); },
   });
   return {
     db,
-    client: { auth: { me: async () => user }, asServiceRole: { entities: { Provider: dao('Provider'), BusinessDetails: dao('BusinessDetails'), AuditLog: dao('AuditLog') } } },
+    client: { auth: { me: async () => user }, asServiceRole: { entities: { Provider: dao('Provider'), BusinessDetails: dao('BusinessDetails'), AuditLog: dao('AuditLog'), TenantMembership: dao('TenantMembership') } } },
   };
 }
 const ADMIN_A = { id: 'ua', role: 'Provider Administrator', account_status: 'Active', access_approved: true, tenant_id: 'tenant_a', email: 'a@x.test' };
@@ -54,4 +63,10 @@ Deno.test('slogan is optional; outside logo links are refused', async () => {
 Deno.test('staff without admin role, and unapproved accounts, are refused', async () => {
   assertEquals((await post(fake({ ...ADMIN_A, role: 'Support Worker' }), { company_name: 'X' })).status, 403);
   assertEquals((await post(fake({ ...ADMIN_A, account_status: 'Suspended' }), { company_name: 'X' })).status, 403);
+});
+
+Deno.test('staff without an active membership of their business are refused', async () => {
+  assertEquals((await post(fake(ADMIN_A, { TenantMembership: [] }), { company_name: 'X' })).status, 403);
+  const ended = [{ id: 'm1', user_id: 'ua', tenant_id: 'tenant_a', status: 'Ended' }];
+  assertEquals((await post(fake(ADMIN_A, { TenantMembership: ended }), { company_name: 'X' })).status, 403);
 });
