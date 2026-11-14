@@ -10,6 +10,7 @@
 // Actions (POST body):
 //   { action: "inbox" }                                   -> lists what you can decide, and what you asked for
 //   { action: "decide", id, decision: "approve"|"return", note?, signature? }
+//   { action: "decide", task_id, ... }                    -> same, by task (used by the To-Do board)
 //
 // Task sign-off is the first kind of record. Tasks set to "Pending Approval" anywhere in the app
 // are picked up automatically; requests whose task was signed off or reopened elsewhere are withdrawn.
@@ -125,7 +126,12 @@ export async function handleApprovals(base44: any, req: Request, now = new Date(
     if (decision === 'approve' && signature.length < 2) return Response.json({ error: 'Type your full name to sign.' }, { status: 400 });
     if (decision === 'return' && note.length < 3) return Response.json({ error: 'Say why it is being returned.' }, { status: 400 });
 
-    const request = body.id ? await entities.ApprovalRequest.get(String(body.id)) : null;
+    // The To-Do board signs off by task; find (or create) that task's open request.
+    let request = body.id ? await entities.ApprovalRequest.get(String(body.id)) : null;
+    if (!request && body.task_id) {
+      await syncTaskRequests(entities, now);
+      request = items(await entities.ApprovalRequest.filter({ record_type: 'TodoTask', record_id: String(body.task_id), status: 'Pending' }, { limit: 1 }))[0] || null;
+    }
     if (!request) return Response.json({ error: 'Approval request not found.' }, { status: 404 });
     if (request.status !== 'Pending') return Response.json({ error: `This request is already ${String(request.status).toLowerCase()}.` }, { status: 409 });
     if (!canDecide(user, request)) return Response.json({ error: 'Your role cannot decide this request.' }, { status: 403 });
