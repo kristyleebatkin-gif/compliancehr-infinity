@@ -155,6 +155,19 @@
     "form_file_name": {
       "type": "string",
       "title": "Referral Form File Name"
+    },
+    "intake_case_id": {
+      "type": "string",
+      "title": "Linked Intake Case ID"
+    },
+    "intake_case_number": {
+      "type": "string",
+      "title": "Linked Intake Case Number"
+    },
+    "intake_started_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Intake Started Date"
     }
   },
   "required": [

@@ -1,5 +1,41 @@
 # ComplianceHR Portal — Master To-Do Plan
 
+## Approved 51-module scope — implementation log, 14 November 2026
+
+Scope source: `approved-module-build-scope.md` (owner-authorised, 51 module outcomes + priority journeys A–E). This log is additive; every earlier entry below is retained as dated evidence and is **not** re-stated as current proof.
+
+### Implemented this batch — priority journey A, first leg (module 45 Referrals → module 10 Intake Centre)
+
+Reconciled state before change: `Referral` records could be logged, sent, PDF'd and status-changed, and `IntakeCase` already supported Draft → … → Converted to Profile with profile creation and document mirroring. **The handover between them did not exist** — a referral could not become an intake case, so journey A stopped at the referral register and intake officers re-keyed details by hand.
+
+Now implemented:
+- Referral register **Start intake** action opens a confirmation dialog showing every detail that will be carried across, then creates a participant intake case in Draft (`PIC-####`) and links it to the referral in both directions.
+- Consent gate: blocked unless `consent = Consent given` (no case is created from an unconsented referral).
+- Status gate: referral must be Prepared / Sent / Accepted / In Progress.
+- Duplicate protection: refuses when the referral is already linked, or when an **open** intake case already matches the same name and date of birth.
+- Provenance: case `referral_source` = `Referral <id> — <referrer>` and `referral_date` = today; the referral moves to In Progress with a status-history line plus a `StatusLog` entry naming the case number.
+- Visible result: the register row shows an `Intake PIC-####` badge and the action turns into the linked case number.
+
+Changed files: `base44/entities/Referral.jsonc` (fields `intake_case_id`, `intake_case_number`, `intake_started_date`; all existing fields, required list and RLS preserved verbatim), `src/lib/referralIntake.js` (new), `src/components/referral/ReferralToIntakeDialog.jsx` (new), `src/components/referral/ReferralLog.jsx` (action, badge, dialog mount).
+
+Schema change: three additive optional fields on `Referral`. No data migration, no existing record rewritten, no tenant flag flipped, nothing published.
+
+Verification (source / build / automated only):
+| Command | Result |
+|---|---|
+| `npx vite build` | exit 0, assets emitted |
+| `npx eslint` on the three changed files | exit 0 |
+| `npm test` (42 suites incl. generated access-rule tests re-generated from the edited schema) | 42 pass, 0 fail |
+
+Not verified: browser run of the new dialog. The temporary Provider Administrator account remains behind the approval gate, and security was not bypassed to manufacture a pass. Live record creation, RLS enforcement of the new fields and the referral→intake round trip are therefore **untested live**.
+
+### Module status after this batch (honest)
+- **Implemented with automated evidence:** 45 Referrals (referral → intake handover).
+- **Already present, rechecked in source only:** 10 Intake Centre (case workflow, readiness, documents, conversion to profile), 8 AI Assistant, 16 Users & Permissions, 31 Remote Access & VPN, 49 NDIS Updates (feed sync), 50 Community Council, 51 Help Centre — existing implementations were read, not functionally retested.
+- **Partial / remaining, in dependency order:** journey B (roster → attendance → service note → approved billing), C (incident → investigation → risk control → improvement → effectiveness), D (onboarding → checks → training → shift eligibility), E (document draft → review → approval → acknowledgement → renewal); plus the module-specific gaps listed in the approved scope (e.g. 1 customisable role cards, 6 exceptions with accountable owners, 9 profile vs access separation, 26 printable emergency pack, 30 personal-vs-organisation document boundaries, 41 procurement invoice matching, 46 governance decision-action-evidence links, 47 verified project benefits).
+- **Blocked by setup, not code:** Gmail connector expired; Microsoft/other OAuth providers not authorised; ChatGPT connectors are not app connections. Those paths stay disabled and labelled until the approved organisation owner consents.
+- 51 of 51 modules are **not** complete and are not claimed to be.
+
 ## Audit repair progress — 2 November 2026
 
 All code, typecheck, multi-tenant isolation, orphan reconciliation, and disaster recovery rehearsal gates are verified (`npm run verify:ci` exit 0: build, lint, typecheck with 0 errors, and 21 automated test suites passing).

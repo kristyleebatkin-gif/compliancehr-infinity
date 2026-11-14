@@ -9,8 +9,9 @@ import { useToast } from '@/components/ui/use-toast';
 import { changeStatus } from '@/lib/statusLog';
 import { fetchAllRecords } from '@/lib/csvExport';
 import { buildReferralDocument, downloadReferralDocument } from '@/lib/referralPdf';
-import { Download, Send, UploadCloud, FileText, Pencil, Trash2, Loader2, Eye } from 'lucide-react';
+import { Download, Send, UploadCloud, FileText, Pencil, Trash2, Loader2, Eye, ClipboardList } from 'lucide-react';
 import ReferralSendDialog from './ReferralSendDialog';
+import ReferralToIntakeDialog from './ReferralToIntakeDialog';
 
 const STATUSES = ['Draft', 'Prepared', 'Sent', 'Accepted', 'In Progress', 'Declined', 'Completed'];
 
@@ -28,6 +29,7 @@ export default function ReferralLog({ onEdit }) {
   const [sending, setSending] = useState(null);
   const [viewing, setViewing] = useState(null);
   const [storingId, setStoringId] = useState(null);
+  const [starting, setStarting] = useState(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -107,6 +109,7 @@ export default function ReferralLog({ onEdit }) {
                 <div className="flex flex-wrap items-center gap-1.5">
                   <Badge className={`text-[10px] ${urgencyTone(r.urgency)}`}>{r.urgency}</Badge>
                   <Badge variant="secondary" className="text-[10px]">{r.status}</Badge>
+                  {r.intake_case_number && <Badge variant="outline" className="text-[10px]">Intake {r.intake_case_number}</Badge>}
                 </div>
               </div>
               <div className="mt-3 flex flex-wrap items-center gap-1.5 border-t border-border/60 pt-3">
@@ -121,6 +124,9 @@ export default function ReferralLog({ onEdit }) {
                 </Button>
                 {r.form_file_uri && <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => openStored(r)}><FileText className="h-3 w-3" />Open stored</Button>}
                 <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => setSending(r)}><Send className="h-3 w-3" />Email</Button>
+                <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => setStarting(r)}>
+                  <ClipboardList className="h-3 w-3" />{r.intake_case_number ? `Intake ${r.intake_case_number}` : 'Start intake'}
+                </Button>
                 <div className="ml-auto flex">
                   <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => onEdit(r)}><Pencil className="h-3.5 w-3.5" /></Button>
                   <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => remove(r)}><Trash2 className="h-3.5 w-3.5 text-destructive" /></Button>
@@ -132,6 +138,13 @@ export default function ReferralLog({ onEdit }) {
       )}
 
       <ReferralSendDialog referral={sending} open={!!sending} onClose={() => setSending(null)} onSent={load} />
+
+      <ReferralToIntakeDialog
+        referral={starting}
+        open={!!starting}
+        onClose={() => setStarting(null)}
+        onCreated={load}
+      />
 
       <Dialog open={!!viewing} onOpenChange={(v) => { if (!v) setViewing(null); }}>
         <DialogContent className="max-h-[92vh] overflow-y-auto sm:max-w-lg">
