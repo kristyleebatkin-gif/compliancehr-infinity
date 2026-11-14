@@ -120,6 +120,16 @@ test('automations that run on update ignore a change to the business tag alone',
   assert.deepEqual(unguarded, []);
 });
 
+test('automation trigger rules use only forms Base44 accepts (no array subtraction, no piped any)', async () => {
+  const dir = new URL('base44/workflows/', root);
+  const refused = [];
+  for (const f of (await readdir(dir)).filter((x) => x.endsWith('.jsonc'))) {
+    const cond = String(JSON.parse(await readFile(new URL(f, dir), 'utf8')).trigger?.condition || '');
+    if (/\) - \[/.test(cond) || /\|\s*any\(/.test(cond)) refused.push(f);
+  }
+  assert.deepEqual(refused, []);
+});
+
 test('tagging function is owner-only and uses the shared classification', async () => {
   const src = await read('base44/functions/tenantMigration/entry.ts');
   assert.match(src, /user\.role !== 'admin' \|\| !hasApprovedAccess\(user\)/);
