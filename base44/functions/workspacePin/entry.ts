@@ -89,9 +89,9 @@ function publicState(record: any, now: number) {
   };
 }
 
-export default async function reqHandler(req: Request) {
+// The handler takes the Base44 client as a parameter so it can be tested with an in-memory fake.
+export async function handlePinRequest(base44: any, req: Request, nowMs: number = Date.now()) {
   try {
-    const base44 = createClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
     if (!hasApprovedAccess(user)) return Response.json({ error: 'Account not approved' }, { status: 403 });
@@ -102,7 +102,7 @@ export default async function reqHandler(req: Request) {
     if (!WORKSPACES.has(workspace)) return Response.json({ error: 'Unknown workspace' }, { status: 400 });
 
     const svc = base44.asServiceRole.entities;
-    const now = Date.now();
+    const now = nowMs;
     const page: any = await svc.WorkspaceSecurityPin.filter({ workspace, owner_user_id: user.id }, { sort: '-created_date', limit: 1 });
     let record: any = (Array.isArray(page) ? page : page?.items || [])[0] || null;
     if (!record) {
@@ -255,4 +255,8 @@ export default async function reqHandler(req: Request) {
   } catch (err) {
     return Response.json({ error: String((err as any)?.message || err) }, { status: 500 });
   }
+}
+
+export default function reqHandler(req: Request) {
+  return handlePinRequest(createClientFromRequest(req), req);
 }
