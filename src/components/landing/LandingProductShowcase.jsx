@@ -224,7 +224,7 @@ export default function LandingProductShowcase() {
             tone="navy"
             icon={LayoutDashboard}
             title="Executive Governance & Operational Telemetry"
-            description="Live executive KPIs, statutory SLA monitors, and 6-pillar audit readiness trajectories unified in one command deck."
+            description="Executive KPIs, statutory SLA monitors, and 6-pillar audit readiness trajectories unified in one command deck. Figures shown here are illustrative sample data, not results from a real provider."
             rightTag="5 Executive KPIs + 4 Statutory SLA Monitors"
           />
 
