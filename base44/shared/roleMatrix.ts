@@ -220,6 +220,45 @@ export function canAccessNav(role, navKey) {
   return Boolean(NAV_PERMISSIONS[navKey]?.includes(normalized));
 }
 
+// Explains canAccessNav for one role and one module, in plain words (backlog 17.06).
+// It follows canAccessNav step by step; a test checks the two agree for every role and module.
+export function explainNavAccess(role, navKey) {
+  const normalized = normalizeRole(role);
+  const counts = role && normalized !== role ? ` ${role} counts as ${normalized} for page access.` : '';
+  const result = (allowed, reason) => ({ allowed, effectiveRole: normalized, reason: reason + counts });
+  if (
+    (normalized === ROLES.PARTICIPANT || normalized === ROLES.EMPLOYEE || role === ROLES.VOLUNTEER) &&
+    RESTRICTED_EXECUTIVE_KEYS.includes(navKey)
+  ) {
+    return result(false, 'Executive area: closed to participants, employees and volunteers.');
+  }
+  if (FULL_ACCESS.includes(normalized)) return result(true, 'Full-access role: opens every module.');
+  if (normalized === ROLES.AUDITOR) {
+    return result(navKey === 'auditor-portal', 'Auditors open the Auditor Portal only.');
+  }
+  if (normalized === ROLES.TEAM_LEADER && FINANCIAL_KEYS.includes(navKey)) {
+    return result(false, 'Financial area: closed to the Administration role.');
+  }
+  const open = NAV_PERMISSIONS[navKey];
+  if (!open) return result(false, 'No access rule is set for this module, so only full-access roles open it.');
+  if (open.includes(normalized)) return result(true, `Open to ${normalized}.`);
+  return result(false, `Not open to ${normalized}.`);
+}
+
+// Who can approve task sign-offs in the Approval Inbox. The approvals server function reads this
+// same list, so the Users & Permissions page and the server can never disagree.
+export const TASK_APPROVER_ROLES = [
+  'admin', 'Provider Administrator', 'Compliance Manager', 'Administration',
+  'Team Leader', 'Human Resources Manager', 'Quality & Improvement Manager',
+];
+
+// Actions that the server checks separately from page access (backlog 17.06).
+export const ACTION_PERMISSIONS = [
+  { key: 'task-signoff', label: 'Sign off completed tasks (Approval Inbox)', roles: TASK_APPROVER_ROLES, note: 'Nobody can sign off work they asked for or completed.' },
+  { key: 'manage-access', label: 'Approve accounts and change roles', roles: MANAGEMENT_ROLES, note: 'Account must itself be active and approved.' },
+  { key: 'all-businesses', label: 'See every business (owner access)', roles: ['admin'], note: 'Every other role sees its own business only.' },
+];
+
 export function isAdmin(role) {
   return FULL_ACCESS.includes(normalizeRole(role));
 }

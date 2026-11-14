@@ -22,7 +22,7 @@ export default function PermissionMatrix() {
         Role permission matrix
       </div>
       <p className="mb-2 text-xs text-muted-foreground">
-        Module visibility for the 8 roles currently defined in the app.
+        Module visibility for the {ALL_ROLES.length} roles defined in the app. Other job roles count as one of these: see the Access explorer below.
       </p>
       <div className="matrix-viewport overflow-auto">
         <table className="permission-matrix w-full text-left text-[10px]">

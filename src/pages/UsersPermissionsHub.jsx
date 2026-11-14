@@ -4,6 +4,8 @@ import ModuleShell from '@/components/module/ModuleShell';
 import { Users, ShieldCheck } from 'lucide-react';
 import UsersTable from '@/components/users/UsersTable';
 import PermissionMatrix from '@/components/users/PermissionMatrix';
+import AccessExplorer from '@/components/users/AccessExplorer';
+import { ALL_ROLES } from '@/lib/roles';
 import RecentActionsPanel from '@/components/dashboard/RecentActionsPanel';
 import PlatformCoreGovernanceCommandStrip from '@/components/users/PlatformCoreGovernanceCommandStrip';
 import ReportGenerator from '@/components/reports/ReportGenerator';
@@ -35,7 +37,7 @@ export default function UsersPermissionsHub() {
             </p>
           </div>
           <span className="rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-bold text-[#0A2B6D]">
-            9 Canonical Roles
+            {ALL_ROLES.length} Canonical Roles
           </span>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-9 gap-2.5">
@@ -78,6 +80,7 @@ export default function UsersPermissionsHub() {
             Role-to-Module Permission Matrix
           </div>
           <PermissionMatrix />
+          <AccessExplorer />
         </div>
 
         <RecentActionsPanel />
