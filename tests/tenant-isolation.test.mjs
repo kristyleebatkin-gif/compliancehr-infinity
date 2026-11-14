@@ -155,6 +155,23 @@ test('every backend function is limited to one business, apart from the known ex
   assert.deepEqual(problems, []);
 });
 
+test('automations started by a record change tell the function which business the record belongs to', async () => {
+  const dir = new URL('base44/workflows/', root);
+  const missing = [];
+  for (const f of (await readdir(dir)).filter((x) => x.endsWith('.jsonc'))) {
+    const wf = JSON.parse(await readFile(new URL(f, dir), 'utf8'));
+    if (wf.trigger?.config?.trigger_type !== 'entity') continue;
+    const walk = (o) => {
+      if (Array.isArray(o)) return o.forEach(walk);
+      if (!o || typeof o !== 'object') return;
+      if (o.call === 'invoke_backend_function' && o.with?.args?.tenant_id !== '${ .trigger.data.tenant_id // .trigger.old_data.tenant_id }') missing.push(`${f}: ${o.with?.function_name}`);
+      Object.values(o).forEach(walk);
+    };
+    walk(wf.definition);
+  }
+  assert.deepEqual(missing, []);
+});
+
 test('tagging function is owner-only and uses the shared classification', async () => {
   const src = await read('base44/functions/tenantMigration/entry.ts');
   assert.match(src, /user\.role !== 'admin' \|\| !hasApprovedAccess\(user\)/);
