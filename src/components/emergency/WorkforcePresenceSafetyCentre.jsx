@@ -33,12 +33,12 @@ const ATTENDANCE_9_ROLES = [
   'Service Provider',
 ];
 
+// Choices North Queensland's real sites. Add each new location here until sites
+// move to the business record (per-business settings, audit Stage 2).
+// 'Head Office' is kept so the existing sign-in record from 30 Oct 2026 still filters.
 const SITES = [
-  'Head Office — Sydney CBD',
-  'Parramatta SIL Residence',
-  'Chatswood Aged Care Hub',
-  'Penrith Community Centre',
-  'Wollongong Respite Facility',
+  'Head Office — Unit 5, 14 Keane Street, Currajong QLD 4812',
+  'Head Office',
 ];
 
 const EMERGENCY_EVENTS = [
@@ -403,7 +403,7 @@ export default function WorkforcePresenceSafetyCentre() {
       index: idx + 1,
       visitor_name: e.visitor_name || '',
       attendance_type: e.attendance_type || 'Visitor',
-      site: e.site || 'Head Office — Sydney CBD',
+      site: e.site || SITES[0],
       department: e.department || 'General',
       organisation: e.organisation || 'ComplianceHR Infinity',
       host: e.host || 'Site Coordinator',
