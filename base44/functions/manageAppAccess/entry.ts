@@ -161,7 +161,7 @@ export async function handleAccess(ctx: Ctx, body: any): Promise<Response> {
   const target = await E.User.get(body.user_id);
   const stranger = target ? null : await ctx.directory.getUnlinked(body.user_id);
   if (!target && !stranger) return json({ error: 'User not found.' }, 404);
-  const person = target || stranger;
+  const person = { ...(target || stranger) }; // a copy, so the log records the account as it was before the change
   if (person.role === 'admin') return json({ error: 'The owner account cannot be changed here.' }, 403);
   const touchesSenior = SENIOR_ROLES.includes(person.role) || SENIOR_ROLES.includes(person.previous_role);
   if (touchesSenior && !isOwnerOrPA(actor.role)) return json({ error: 'Only the owner or a Provider Administrator can change a senior account.' }, 403);
