@@ -2,14 +2,14 @@
   "name": "Offboarding Task Pack",
   "description": "When a staff profile is set to Inactive, generates the offboarding task pack (exit, property, access, final pay, handover)",
   "trigger": {
+    "condition": "${ (.trigger.event_type != \"update\" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; . != \"tenant_id\" and . != \"updated_date\")) and (.trigger.data.status == \"Inactive\") }",
     "config": {
       "trigger_type": "entity",
-      "entity_name": "StaffProfile",
       "events": [
         "update"
-      ]
-    },
-    "condition": "${ (.trigger.event_type != \"update\" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; . != \"tenant_id\" and . != \"updated_date\")) and (.trigger.data.status == \"Inactive\") }"
+      ],
+      "entity_name": "StaffProfile"
+    }
   },
   "definition": {
     "document": {
