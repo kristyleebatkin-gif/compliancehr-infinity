@@ -2,15 +2,15 @@
   "name": "30 Completed Task Reports",
   "description": "Record each task once when it is completed, before manager sign-off, and privately save a PDF and CSV after every 30 completions.",
   "trigger": {
+    "condition": "${ (.trigger.event_type != \"update\" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; . != \"tenant_id\" and . != \"updated_date\")) and ((.trigger.data.status | IN(\"Completed\", \"Finalised\", \"Pending Approval\")) and ((.trigger.old_data.status // \"\" | IN(\"Completed\", \"Finalised\", \"Pending Approval\")) | not)) }",
     "config": {
       "trigger_type": "entity",
-      "entity_name": "TodoTask",
       "events": [
         "create",
         "update"
-      ]
-    },
-    "condition": "${ (.trigger.event_type != \"update\" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; . != \"tenant_id\" and . != \"updated_date\")) and ((.trigger.data.status | IN(\"Completed\", \"Finalised\", \"Pending Approval\")) and ((.trigger.old_data.status // \"\" | IN(\"Completed\", \"Finalised\", \"Pending Approval\")) | not)) }"
+      ],
+      "entity_name": "TodoTask"
+    }
   },
   "definition": {
     "document": {
