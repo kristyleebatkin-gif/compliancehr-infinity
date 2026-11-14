@@ -70,3 +70,7 @@ Every open build task from the module-by-module audit is implemented, tested and
 ## Remaining (needs input or a native build)
 
 - Native mobile push notifications — enable once the app is published as a native mobile build.
+
+## Navigation reorganisation — 14 November 2026
+
+Approved 10 task-based groups applied to all 53 current directory entries, including Jamie and Sherelle workspaces. Routes and module keys retained. Sidebar and Quick Access derive group contents from the central directory, filter permitted entries and show current counts. Sidebar groups expand/collapse. Navigation labels simplified. Build, scoped typecheck and 24 root tests passed. Targeted ESLint passed after unused-import cleanup. Browser acceptance and publication remain outstanding. This change does not close the security findings in the 11 November baseline.
