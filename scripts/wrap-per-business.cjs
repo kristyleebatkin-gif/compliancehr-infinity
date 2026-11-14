@@ -4,8 +4,8 @@
 //   node scripts/wrap-per-business.cjs          -> dry run, lists what would change
 //   node scripts/wrap-per-business.cjs --apply  -> rewrites base44/functions/*/entry.ts
 //
-// Skipped on purpose (see SKIP): functions with no data access, the owner-only tagging tool,
-// functions already scoped another way, and the two public functions handled by hand.
+// Skipped on purpose (see SKIP): the owner-only tagging tool, functions already scoped another
+// way, and the two public functions handled by hand. Everything else is wrapped.
 const fs = require('fs');
 const path = require('path');
 const ts = require('typescript');
@@ -32,7 +32,8 @@ for (const name of fs.readdirSync(ROOT).sort()) {
   const src = fs.readFileSync(file, 'utf8');
   if (SKIP.has(name)) { results.push([name, 'skip', SKIP.get(name)]); continue; }
   if (src.includes('perBusiness(')) { results.push([name, 'skip', 'already wrapped']); continue; }
-  if (!/\bentities\b/.test(src)) { results.push([name, 'skip', 'no data access']); continue; }
+  // Every signed-in function is wrapped, including ones that reach data only through shared
+  // helpers (AI usage logging, compliance scores, register stats), so nothing is missed.
   if (!SDK_IMPORT.test(src)) { results.push([name, 'MANUAL', 'unexpected SDK import']); continue; }
   const calls = (src.match(/\bcreateClientFromRequest\(/g) || []).length;
   if (calls !== 1) { results.push([name, 'MANUAL', `createClientFromRequest called ${calls} times`]); continue; }
