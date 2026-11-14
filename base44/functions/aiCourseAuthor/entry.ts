@@ -1,10 +1,10 @@
 import { COMPLIANCE_REVIEW_ROLES, HR_ROLES } from '../../shared/roleMatrix.ts';
 import { authorizeAndLogAiAction } from '../../shared/aiGovernance.ts';
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 
-export default async function(req: Request): Promise<Response> {
+export default perBusiness(async function(req: Request): Promise<Response> {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const body = await req.json().catch(() => ({}));
     const gate = await authorizeAndLogAiAction(base44, {
       feature: 'aiCourseAuthor',
@@ -76,4 +76,4 @@ Return JSON only.`,
   } catch (error: any) {
     return Response.json({ error: error.message }, { status: 500 });
   }
-}
+});

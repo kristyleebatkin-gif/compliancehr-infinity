@@ -1,4 +1,5 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { authorizeSystemCall } from '../../shared/systemAuth.ts';
 import { notifyRoutedManagement } from '../../shared/routedManagementAlerts.ts';
 
@@ -131,7 +132,7 @@ const ROUTES = {
   },
 };
 
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
     const body = await req.json().catch(() => ({}));
     const entity = body.entity;
@@ -141,7 +142,7 @@ export default async function(req) {
       return Response.json({ error: 'Unsupported route' }, { status: 400 });
     }
 
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     if (!(await authorizeSystemCall(base44, body))) {
       return Response.json({ error: 'Unauthorized' }, { status: 401 });
     }
@@ -258,4 +259,4 @@ export default async function(req) {
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
-}
+});

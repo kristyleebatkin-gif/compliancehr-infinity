@@ -1,11 +1,12 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { MANAGEMENT_ROLES, STAFF_SEND_ROLES, hasAnyRole, appContactEmails } from '../../shared/systemAuth.ts';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
 
@@ -48,4 +49,4 @@ export default async function(req) {
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
-}
+});

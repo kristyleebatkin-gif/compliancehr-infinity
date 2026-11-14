@@ -1,4 +1,5 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { authorizeSystemCall } from '../../shared/systemAuth.ts';
 import { BUSINESS_TIME_ZONE } from '../../shared/businessTime.ts';
 
@@ -9,9 +10,9 @@ import { BUSINESS_TIME_ZONE } from '../../shared/businessTime.ts';
 // notified exactly once. Intended to run on an hourly schedule via workflow.
 const APP_URL = 'https://compliancehrinfinity.com';
 
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const authorized = await authorizeSystemCall(base44);
     if (!authorized) return Response.json({ error: 'Forbidden' }, { status: 403 });
     const svc = base44.asServiceRole;
@@ -159,4 +160,4 @@ export default async function(req) {
   } catch (error) {
     return Response.json({ error: error instanceof Error ? error.message : 'Push alert scan failed' }, { status: 500 });
   }
-}
+});

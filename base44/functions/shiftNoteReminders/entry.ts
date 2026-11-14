@@ -1,4 +1,5 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { authorizeSystemCall } from '../../shared/systemAuth.ts';
 import { auDate, addDays, pageItems } from '../../shared/reminders.ts';
 
@@ -6,9 +7,9 @@ const norm = (v) => String(v || '').trim().toLowerCase();
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MANAGERS = new Set(['admin', 'Provider Administrator', 'Compliance Manager', 'Team Leader']);
 
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     if (!(await authorizeSystemCall(base44))) return Response.json({ error: 'Unauthorized' }, { status: 401 });
     const service = base44.asServiceRole;
     const body = await req.json().catch(() => ({}));
@@ -89,4 +90,4 @@ export default async function(req) {
     }
     return Response.json({ ok: failures.length === 0, dry_run: dryRun, checked: due.length, overdue: missing.length, employee_reminders_due: plannedEmployee, manager_cases_due: plannedManager, emails_sent: sent, manager_alerts_created: escalations, failures, matching_limit: 'Legacy notes require a unique employee/participant/date; CommunicationEntry notes need explicit reconciliation.' });
   } catch (error) { return Response.json({ error: String(error?.message || error) }, { status: 500 }); }
-}
+});

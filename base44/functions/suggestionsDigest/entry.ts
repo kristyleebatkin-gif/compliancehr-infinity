@@ -1,4 +1,5 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { REGISTRY } from '../../shared/registerRegistry.ts';
 
 const esc = (v) => String(v ?? '')
@@ -10,9 +11,9 @@ const ALLOWED_ROLES = ['admin', 'Provider Administrator', 'Compliance Manager', 
 // it to the requesting manager (no in-app page): all counts are computed
 // server-side, then a single LLM call turns the live numbers into up to six
 // concrete next actions per module.
-export default async function (req) {
+export default perBusiness(async function (req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
     if (!ALLOWED_ROLES.includes(user.role)) return Response.json({ error: 'Forbidden' }, { status: 403 });
@@ -145,4 +146,4 @@ export default async function (req) {
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
-}
+});

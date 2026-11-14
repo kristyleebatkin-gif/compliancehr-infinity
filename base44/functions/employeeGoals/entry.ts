@@ -1,9 +1,10 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { requireEmployee, approvedEmployeeParticipant } from '../../shared/employeeAccess.ts';
 
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const user = await requireEmployee(base44);
     const text = await req.text();
     if (text.length > 16000) return Response.json({ error: 'Entry is too long.' }, { status: 400 });
@@ -40,4 +41,4 @@ export default async function(req) {
   } catch (error) {
     return Response.json({ error: error.message || 'Goal access could not be checked.' }, { status: 403 });
   }
-}
+});

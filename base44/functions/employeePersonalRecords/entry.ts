@@ -1,9 +1,10 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { requireEmployee, employeeRosterIdentity, employeeDocumentScope } from '../../shared/employeeAccess.ts';
 const TYPES = ['Resume', 'Contract', 'Police Check', 'Blue Card', 'First Aid Certificate', 'CPR Certificate', 'NDIS Worker Screening', "Driver's License", 'Qualifications', 'Reference Check', 'Staff Badge', 'Other'];
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const user = await requireEmployee(base44);
     const text = await req.text();
     if (text.length > 16000) throw new Error('Record is too large.');
@@ -76,4 +77,4 @@ export default async function(req) {
     }
     throw new Error('Unsupported personal-record action.');
   } catch (error) { return Response.json({ error: error.message || 'Personal-record access denied.' }, { status: 403 }); }
-}
+});

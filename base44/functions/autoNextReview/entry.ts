@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 
 const APP_URL = 'https://polite-safe-hire-flow.base44.app';
 
@@ -15,9 +15,9 @@ function nextDateFor(reviewType) {
   }
 }
 
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
     if (user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
@@ -67,4 +67,4 @@ export default async function(req) {
   } catch (error) {
     return Response.json({ error: String(error?.message || error) }, { status: 500 });
   }
-}
+});

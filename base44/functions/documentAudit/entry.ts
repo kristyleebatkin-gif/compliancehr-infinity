@@ -1,4 +1,5 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { BUSINESS_TIME_ZONE } from '../../shared/businessTime.ts';
 
 // Automatic document audit for staff and participant profiles.
@@ -38,9 +39,9 @@ const fmt = (value) => {
 
 const label = (field) => String(field).replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
     if (user.role !== 'admin') return Response.json({ error: 'Admin only' }, { status: 403 });
@@ -169,4 +170,4 @@ export default async function(req) {
   } catch (error) {
     return Response.json({ error: error instanceof Error ? error.message : 'Document audit failed' }, { status: 500 });
   }
-}
+});

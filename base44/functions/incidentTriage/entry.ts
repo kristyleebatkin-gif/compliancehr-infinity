@@ -1,4 +1,5 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { hasAnyRole } from '../../shared/systemAuth.ts';
 import { BUSINESS_TIME_ZONE } from '../../shared/businessTime.ts';
 
@@ -90,9 +91,9 @@ function calculateDeadlines(s: any, awarenessAt: string) {
   return { deadlines: out, notes };
 }
 
-export default async function (req: Request) {
+export default perBusiness(async function (req: Request) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
     if (!hasAnyRole(user, REVIEW_ROLES)) return Response.json({ error: 'Incident review access is required' }, { status: 403 });
@@ -180,4 +181,4 @@ Instructions:
   } catch (error) {
     return Response.json({ error: (error as Error).message || 'AI triage failed' }, { status: 500 });
   }
-}
+});

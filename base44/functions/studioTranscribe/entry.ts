@@ -1,4 +1,5 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { authorizeAndLogAiAction } from '../../shared/aiGovernance.ts';
 import { ALL_ROLES } from '../../shared/roleMatrix.ts';
 
@@ -6,9 +7,9 @@ import { ALL_ROLES } from '../../shared/roleMatrix.ts';
 // The stored file stays private: a short-lived signed URL is sent to the
 // transcription service and only the transcript comes back.
 
-export default async function (req: Request): Promise<Response> {
+export default perBusiness(async function (req: Request): Promise<Response> {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const body = await req.json().catch(() => ({}));
     const fileUri = String(body.file_uri || '').trim();
 
@@ -35,4 +36,4 @@ export default async function (req: Request): Promise<Response> {
   } catch (error: any) {
     return Response.json({ error: error?.message || 'That recording could not be transcribed.' }, { status: 500 });
   }
-}
+});

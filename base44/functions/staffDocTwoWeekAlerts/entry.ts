@@ -1,4 +1,5 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { auDate, pretty, pageItems, addDays } from '../../shared/reminders.ts';
 import { authorizeSystemCall } from '../../shared/systemAuth.ts';
 
@@ -10,9 +11,9 @@ import { authorizeSystemCall } from '../../shared/systemAuth.ts';
 const LOOKAHEAD_DAYS = 14;
 const NOTIF_TYPE = 'Expiry Alert';
 
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const service = base44.asServiceRole;
     const body = await req.json().catch(() => ({}));
     if (!(await authorizeSystemCall(base44, body))) {
@@ -93,4 +94,4 @@ export default async function(req) {
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
-}
+});

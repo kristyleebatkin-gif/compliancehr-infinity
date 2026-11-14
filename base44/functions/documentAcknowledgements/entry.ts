@@ -1,8 +1,9 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { requireEmployee, employeeRosterIdentity, employeeDocumentScope } from '../../shared/employeeAccess.ts';
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     if (!await base44.auth.isAuthenticated()) return Response.json({ error: 'Sign in to continue.' }, { status: 401 });
     const user = await base44.auth.me();
     if (!user || ['Rejected', 'Archived', 'Suspended'].includes(user.account_status)) return Response.json({ error: 'Access denied.' }, { status: 403 });
@@ -39,4 +40,4 @@ export default async function(req) {
     const record = await records.create({ ...own, document_title: document.title || document.form_title || document.document_type || 'Document', document_revision: revision, acknowledged_by_name: user.full_name || user.email, acknowledged_by_email: user.email, acknowledged_by_role: user.role, acknowledged_at: new Date().toISOString(), declaration: 'I confirm that I have read and acknowledge this saved revision of the document.' });
     return Response.json({ record });
   } catch (error) { return Response.json({ error: error.message || 'Unable to access document acknowledgements.' }, { status: 400 }); }
-}
+});

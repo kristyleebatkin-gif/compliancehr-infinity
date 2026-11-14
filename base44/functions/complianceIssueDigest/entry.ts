@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 
 const esc = (v) => String(v ?? '')
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -8,9 +8,9 @@ const DIGEST_ROLES = ['admin', 'Provider Administrator', 'Compliance Manager', '
 
 // Weekly resolution status report: aggregates the Compliance Issues register
 // server-side and emails a branded digest to management roles.
-export default async function (req) {
+export default perBusiness(async function (req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
     if (!ALLOWED_SENDERS.includes(user.role)) return Response.json({ error: 'Forbidden' }, { status: 403 });
@@ -110,4 +110,4 @@ export default async function (req) {
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
-}
+});

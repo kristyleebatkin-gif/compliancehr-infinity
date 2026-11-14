@@ -1,5 +1,6 @@
 import { authorizeSystemCall } from '../../shared/systemAuth.ts';
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { computeStaffCompliance, isFlagged, FLAG_THRESHOLD } from '../../shared/staffCompliance.ts';
 
 const APP_URL = 'https://polite-safe-hire-flow.base44.app';
@@ -9,9 +10,9 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 // pack completion) is below 80%. Records an in-app notification per admin for
 // each currently flagged staff member (deduplicated by message) and emails
 // admins only when a staff member newly drops below the threshold.
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     if (!await authorizeSystemCall(base44)) return Response.json({ error: 'Approved management access required.' }, { status: 403 });
     const service = base44.asServiceRole;
 
@@ -80,7 +81,7 @@ export default async function(req) {
   } catch (error) {
     return Response.json({ error: String(error?.message || error) }, { status: 500 });
   }
-}
+});
 
 function flagMessage(r) {
   return `[Compliance Flag] ${r.name} — ${r.pct}% compliance progress (below ${FLAG_THRESHOLD}%)`;

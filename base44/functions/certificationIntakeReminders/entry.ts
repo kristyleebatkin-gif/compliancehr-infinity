@@ -1,4 +1,5 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { auDate, pretty, pageItems } from '../../shared/reminders.ts';
 import { authorizeSystemCall } from '../../shared/systemAuth.ts';
 
@@ -13,9 +14,9 @@ const NOTIF_TYPE = 'Certification & Intake Reminder';
 const CERT_HORIZON_DAYS = 30;
 const TASK_HORIZON_DAYS = 7;
 
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     if (!(await authorizeSystemCall(base44))) {
       return Response.json({ error: 'Unauthorized' }, { status: 401 });
     }
@@ -150,4 +151,4 @@ export default async function(req) {
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
-}
+});

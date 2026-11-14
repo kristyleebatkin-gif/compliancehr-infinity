@@ -1,13 +1,13 @@
 import { hasApprovedAccess } from '../../shared/appAccess.ts';
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 
 // Daily AI insight for the Communication Centre dashboard.
 // Gathers a lightweight snapshot of team activity and turns it into a short,
 // encouraging insight for the day. Called by the CommDailyInsight panel.
 
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
     if (!hasApprovedAccess(user)) return Response.json({ error: 'Approved account access required.' }, { status: 403 });
@@ -37,4 +37,4 @@ export default async function(req) {
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
-}
+});

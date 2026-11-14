@@ -1,13 +1,14 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { HR_ROLES, hasAnyRole } from '../../shared/systemAuth.ts';
 import { buildStaffBadgePdfBytes, bytesToBase64 } from '../../shared/staffBadge.ts';
 
 // Emails a staff member their name tag. The badge is generated here from the
 // staff profile and the organisation's stored branding, so no caller-supplied
 // file reference is ever accepted or emailed.
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
     if (!hasAnyRole(user, HR_ROLES)) return Response.json({ error: 'Management access required' }, { status: 403 });
@@ -54,4 +55,4 @@ export default async function(req) {
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
-}
+});

@@ -1,5 +1,5 @@
 import { hasApprovedAccess } from '../../shared/appAccess.ts';
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 
 // Updates a staff payroll detail record with a full audit trail: every changed
 // field is logged to the PayrollChangeLog (date, time, who) and administrators
@@ -9,9 +9,9 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
 const PAYROLL_ROLES = ['admin', 'Provider Administrator', 'Administration', 'Finance & Accounts Officer', 'Human Resources Manager'];
 const EMPLOYEE_EDITABLE = ['bsb', 'account_number', 'account_name', 'super_fund_name', 'super_member_number'];
 
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const me = await base44.auth.me().catch(() => null);
     if (!hasApprovedAccess(me)) return Response.json({ error: 'Approved account access required.' }, { status: 403 });
     if (!me) return Response.json({ error: 'Sign in required.' }, { status: 401 });
@@ -85,4 +85,4 @@ export default async function(req) {
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
-}
+});
