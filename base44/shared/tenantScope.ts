@@ -241,7 +241,7 @@ export function createScopedClientFromRequest(req: Request, factory: ClientFacto
 const json = (body: any, status: number) => Response.json(body, { status });
 
 export function perBusiness(
-  handler: (req: Request) => Promise<Response>,
+  handler: (req: Request) => Promise<Response | undefined>,
   factory: ClientFactory = sdkClientFromRequest,
 ) {
   return async function (req: Request): Promise<Response> {
@@ -273,10 +273,11 @@ export function perBusiness(
     }
     if (!targets.length) return json({ error: 'No business to act for.' }, 403);
 
-    const runFor = (tenantId: string) => {
+    const runFor = async (tenantId: string): Promise<Response> => {
       const headers = new Headers(req.headers);
       headers.set(SCOPE_HEADER, tenantId); // always set here, so a browser-sent value is overwritten
-      return handler(new Request(req.url, { method: req.method, headers, body: hasBody ? text : undefined }));
+      const res = await handler(new Request(req.url, { method: req.method, headers, body: hasBody ? text : undefined }));
+      return res instanceof Response ? res : json({ error: 'The function finished without a response.' }, 500);
     };
 
     if (targets.length === 1) return runFor(targets[0]);

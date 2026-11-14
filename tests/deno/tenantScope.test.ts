@@ -191,3 +191,10 @@ Deno.test('scoped client refuses to run without the wrapper', () => {
   try { createScopedClientFromRequest(call({}), clientFor(null)); } catch { threw = true; }
   assertEquals(threw, true);
 });
+
+Deno.test('wrapper: a function that ends without a response is reported as an error', async () => {
+  const w = world(); w.Tenant.rows.splice(1);
+  const f = clientFor({ id: 'o', role: 'admin', tenant_id: A }, w);
+  const res = await perBusiness(async () => undefined, f)(call({}));
+  assertEquals(res.status, 500);
+});
