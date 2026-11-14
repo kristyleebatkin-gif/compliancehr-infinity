@@ -8,6 +8,7 @@ import SoftwareAndSafeBanner from '@/components/safe/SoftwareAndSafeBanner';
 import StaffBadgeCreator from '@/components/safe/StaffBadgeCreator';
 import SecurityPosture from '@/components/safe/SecurityPosture';
 import LiveSecurityEvidence from '@/components/safe/LiveSecurityEvidence';
+import IntegrationStatusCard from '@/components/safe/IntegrationStatusCard';
 import EnterpriseStandardQualityGateSuite from '@/components/compliance/EnterpriseStandardQualityGateSuite';
 import UniversalDataStorageRetentionExportSuite from '@/components/compliance/UniversalDataStorageRetentionExportSuite';
 import { SQUISHED_GRADIENT } from '@/components/safe/ExecutiveWallScene';
@@ -85,6 +86,7 @@ export default function CompanySafe({ embedded = false }) {
         </div>
 
         {openArea.identity && <BusinessIdentityCard />}
+        {openArea.identity && <IntegrationStatusCard />}
         {openArea.evidence && <LiveSecurityEvidence />}
         {openArea.badges && <StaffBadgeCreator />}
         {openArea.registrations && (

@@ -166,6 +166,7 @@ export const NAV_PERMISSIONS = {
   governance: OPERATIONS,
   'human-resources': PERSONAL,
   invoicing: FULL_ACCESS,
+  'connected-workflows': FULL_ACCESS,
   quotes: FULL_ACCESS,
   manual: PERSONAL,
   users: FULL_ACCESS,
