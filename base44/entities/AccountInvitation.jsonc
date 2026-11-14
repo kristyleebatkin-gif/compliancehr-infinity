@@ -1,8 +1,7 @@
-// Backlog 17.07: an invitation records which business asked someone to join, so their first sign-in
-// can be approved and linked to that business. Read and written only by the manageAppAccess function.
 {
   "name": "AccountInvitation",
   "type": "object",
+  "description": "Backlog 17.07: records which business invited an email, so the person's first sign-in can be approved and linked to that business. Read and written only by the manageAppAccess function.",
   "properties": {
     "tenant_id": {
       "type": "string",
