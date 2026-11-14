@@ -180,11 +180,16 @@ test('tagging function is owner-only and uses the shared classification', async 
   assert.match(src, /mode === 'apply'/, 'must default to dry run');
 });
 
-test('release switch is identical in frontend and backend, and stays OFF until live records are tagged', async () => {
+test('release 2: switch is ON and identical in frontend and backend, and every type has the business lock', async () => {
   const front = await read('src/lib/tenantEnforcement.js');
   assert.equal(front, await read('base44/shared/tenantEnforcement.ts'));
-  // Flip to true only in release 2 together with `node scripts/tenant-rls.mjs --apply`; update this test then.
-  assert.match(front, /export const TENANT_ENFORCEMENT_ON = false;/);
+  // Live records were all tagged on 14 Nov 2026 before this was switched on.
+  assert.match(front, /export const TENANT_ENFORCEMENT_ON = true;/);
+  const unlocked = [];
+  for (const schema of await loadSchemas()) {
+    if (JSON.stringify(withTenantRls(schema).rls) !== JSON.stringify(schema.rls)) unlocked.push(schema.name);
+  }
+  assert.deepEqual(unlocked, [], 'run node scripts/tenant-rls.mjs --apply');
 });
 
 test('live dashboard function uses the server business context and per-business snapshots', async () => {

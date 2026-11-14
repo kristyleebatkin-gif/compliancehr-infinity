@@ -178,11 +178,13 @@ for (const actor of [orgAAdmin, orgASupportWorker, orgAFinance, orgAAuditor]) {
 const consentedAudit = {
   id: 'aud-1',
   organisation_id: 'org-a',
+  tenant_id: 'org-a', // release 2: every record carries its business tag
   audit_consent: 'Audit consent received',
 };
 const declinedAudit = {
   id: 'aud-2',
   organisation_id: 'org-a',
+  tenant_id: 'org-a', // release 2: every record carries its business tag
   audit_consent: 'Audit declined',
 };
 assert.equal(evaluateRlsRule(auditLogSchema.rls.read, orgAAuditor, consentedAudit), true);
