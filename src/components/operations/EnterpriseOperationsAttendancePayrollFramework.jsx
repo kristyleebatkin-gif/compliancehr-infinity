@@ -381,7 +381,7 @@ export default function EnterpriseOperationsAttendancePayrollFramework() {
       },
       {
         pillar: 'Service Delivery & Mandatory Shift Docs',
-        metric: 'Not measured yet',
+        metric: '6 Mandatory Shift Outputs Verified',
         status: shiftCalculation.mandatoryDocsComplete ? '100% Complete' : 'Incomplete Blocked',
         rule: 'Shift Note + Progress Note + Service + Goal + Risk + Incident Check',
         storage: 'Participant Profile · NDIS Billing · Document Vault · Company Safe',
@@ -439,15 +439,15 @@ export default function EnterpriseOperationsAttendancePayrollFramework() {
   // 12 Executive Hub Metrics
   const executive12Kpis = [
     { label: '1. Workforce Compliance', value: 'Not measured yet', sub: 'Credentials & Clearances', tone: '#0072FF' },
-    { label: '2. Attendance Compliance', value: 'Not measured yet', sub: 'Sign-In & Clock-In Verified', tone: '#0A2B6D' },
+    { label: '2. Attendance Compliance', value: 'Not measured yet', sub: 'Sign-In & Clock-In', tone: '#0A2B6D' },
     { label: '3. Service Delivery Integrity', value: 'Not measured yet', sub: `${telemetry.shiftNotes} Mandatory Notes`, tone: '#5A00D6' },
-    { label: '4. Payroll Exceptions', value: 'Not measured yet', sub: 'SCHADS 10-Category Audited', tone: '#0072FF' },
+    { label: '4. Payroll Exceptions', value: 'Not measured yet', sub: 'SCHADS categories', tone: '#0072FF' },
     { label: '5. Shift Variances', value: `${shiftCalculation.varianceHours}h`, sub: 'Manager Approval Enforced', tone: '#A100FF' },
     { label: '6. Vehicle Compliance', value: 'Not measured yet', sub: `${telemetry.vehicles} Checks · Rego/Insured`, tone: '#0A2B6D' },
     { label: '7. Medication Compliance', value: 'Not measured yet', sub: 'Competencies & Refreshers', tone: '#5A00D6' },
     { label: '8. Emergency Preparedness', value: 'Not measured yet', sub: `${telemetry.safetyChecks} Kits & Plans Reviewed`, tone: '#0072FF' },
-    { label: '9. Fire Drill Status (6-Mthly)', value: `${telemetry.drills} Logged`, sub: 'All Sites Compliant', tone: '#FF2E9A' },
-    { label: '10. Audit Readiness', value: 'Not measured yet', sub: 'Vault + Company Safe Synced', tone: '#0A2B6D' },
+    { label: '9. Fire Drill Status (6-Mthly)', value: `${telemetry.drills} Logged`, sub: 'Open the emergency register to check', tone: '#FF2E9A' },
+    { label: '10. Audit Readiness', value: 'Not measured yet', sub: 'Vault + Company Safe', tone: '#0A2B6D' },
     { label: '11. NDIS Compliance', value: 'Not measured yet', sub: 'Practice Standards 1–8', tone: '#5A00D6' },
     { label: '12. Aged Care Compliance', value: 'Not measured yet', sub: 'Quality Standards 1–8 & SIRS', tone: '#0072FF' },
   ];
