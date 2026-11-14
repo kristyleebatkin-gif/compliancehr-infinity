@@ -1,13 +1,13 @@
 import { hasApprovedAccess } from '../../shared/appAccess.ts';
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 
 // Action-taking AI troubleshooter: turns a diagnosis into a raised support ticket
 // or an administrator notification, using only bounded inputs from the diagnosis.
 const ADMIN_ROLES = ['admin', 'Provider Administrator', 'Compliance Manager', 'Administration'];
 
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const user = await base44.auth.me();
     if (!hasApprovedAccess(user)) return Response.json({ error: 'Approved account access required.' }, { status: 403 });
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
@@ -72,4 +72,4 @@ export default async function(req) {
   } catch (error) {
     return Response.json({ error: error.message || 'Action failed.' }, { status: 500 });
   }
-}
+});

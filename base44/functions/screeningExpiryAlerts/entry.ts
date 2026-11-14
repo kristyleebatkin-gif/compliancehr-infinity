@@ -1,4 +1,5 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { auDate, auTime, pretty, pageItems } from '../../shared/reminders.ts';
 import { authorizeSystemCall, MANAGEMENT_ROLES } from '../../shared/systemAuth.ts';
 import { sendGmail } from '../../shared/gmailSend.ts';
@@ -15,9 +16,9 @@ const ADMIN_ROLES = MANAGEMENT_ROLES;
 const APP_URL = 'https://polite-safe-hire-flow.base44.app';
 const ENTRY_NOTE_TYPE = 'Screening Expiry Alert';
 
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const service = base44.asServiceRole;
     if (!(await authorizeSystemCall(base44))) {
       return Response.json({ error: 'Unauthorized' }, { status: 401 });
@@ -157,4 +158,4 @@ export default async function(req) {
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
-}
+});

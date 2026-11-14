@@ -1,11 +1,12 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { requireEmployee, approvedEmployeeParticipant, employeeRosterIdentity } from '../../shared/employeeAccess.ts';
 import { addressedTo, authoredBy, personalDiaryScope, keyPersonnel, saveEmployeeCommunication } from '../../shared/employeeCommunicationAccess.ts';
 import { appContactEmails } from '../../shared/systemAuth.ts';
 
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const user = await requireEmployee(base44);
     const text = await req.text();
     if (text.length > 25000) return Response.json({ error: 'Message is too large.' }, { status: 400 });
@@ -107,4 +108,4 @@ export default async function(req) {
   } catch (error) {
     return Response.json({ error: error.message || 'Communication access denied.' }, { status: 403 });
   }
-}
+});

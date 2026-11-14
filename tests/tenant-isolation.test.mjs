@@ -131,6 +131,47 @@ test('automation trigger rules use only forms Base44 accepts (no array subtracti
   assert.deepEqual(refused, []);
 });
 
+test('every backend function is limited to one business, apart from the known exceptions', async () => {
+  const dir = new URL('base44/functions/', root);
+  const EXCEPTIONS = new Map([
+    ['tenantMigration', /user\.role !== 'admin'/],
+    ['liveModuleOverview', /resolveTenantContext/],
+    ['updateCompanyBranding', /resolveTenantContext/],
+    ['workspacePin', /owner_user_id/],
+    ['publicSubmissions', /scopedEntities\(base44\.asServiceRole\.entities, business\.tenantId\)/],
+    ['rosterIcsFeed', /scopedEntities\(base44\.asServiceRole\.entities, feedTenant\)/],
+  ]);
+  const problems = [];
+  for (const name of await readdir(dir)) {
+    let src;
+    try { src = await readFile(new URL(`${name}/entry.ts`, dir), 'utf8'); } catch { continue; }
+    if (EXCEPTIONS.has(name)) {
+      if (!EXCEPTIONS.get(name).test(src)) problems.push(`${name}: exception no longer scoped as expected`);
+      continue;
+    }
+    if (!/export default perBusiness\(/.test(src)) problems.push(`${name}: not wrapped with perBusiness`);
+    if (/\bcreateClientFromRequest\(/.test(src)) problems.push(`${name}: uses the unscoped client`);
+  }
+  assert.deepEqual(problems, []);
+});
+
+test('automations started by a record change tell the function which business the record belongs to', async () => {
+  const dir = new URL('base44/workflows/', root);
+  const missing = [];
+  for (const f of (await readdir(dir)).filter((x) => x.endsWith('.jsonc'))) {
+    const wf = JSON.parse(await readFile(new URL(f, dir), 'utf8'));
+    if (wf.trigger?.config?.trigger_type !== 'entity') continue;
+    const walk = (o) => {
+      if (Array.isArray(o)) return o.forEach(walk);
+      if (!o || typeof o !== 'object') return;
+      if (o.call === 'invoke_backend_function' && o.with?.args?.tenant_id !== '${ .trigger.data.tenant_id // .trigger.old_data.tenant_id }') missing.push(`${f}: ${o.with?.function_name}`);
+      Object.values(o).forEach(walk);
+    };
+    walk(wf.definition);
+  }
+  assert.deepEqual(missing, []);
+});
+
 test('tagging function is owner-only and uses the shared classification', async () => {
   const src = await read('base44/functions/tenantMigration/entry.ts');
   assert.match(src, /user\.role !== 'admin' \|\| !hasApprovedAccess\(user\)/);
@@ -139,11 +180,16 @@ test('tagging function is owner-only and uses the shared classification', async 
   assert.match(src, /mode === 'apply'/, 'must default to dry run');
 });
 
-test('release switch is identical in frontend and backend, and stays OFF until live records are tagged', async () => {
+test('release 2: switch is ON and identical in frontend and backend, and every type has the business lock', async () => {
   const front = await read('src/lib/tenantEnforcement.js');
   assert.equal(front, await read('base44/shared/tenantEnforcement.ts'));
-  // Flip to true only in release 2 together with `node scripts/tenant-rls.mjs --apply`; update this test then.
-  assert.match(front, /export const TENANT_ENFORCEMENT_ON = false;/);
+  // Live records were all tagged on 14 Nov 2026 before this was switched on.
+  assert.match(front, /export const TENANT_ENFORCEMENT_ON = true;/);
+  const unlocked = [];
+  for (const schema of await loadSchemas()) {
+    if (JSON.stringify(withTenantRls(schema).rls) !== JSON.stringify(schema.rls)) unlocked.push(schema.name);
+  }
+  assert.deepEqual(unlocked, [], 'run node scripts/tenant-rls.mjs --apply');
 });
 
 test('live dashboard function uses the server business context and per-business snapshots', async () => {

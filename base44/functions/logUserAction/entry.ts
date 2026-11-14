@@ -1,4 +1,5 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { STAFF_SEND_ROLES, hasAnyRole, hasApprovedAccess } from '../../shared/systemAuth.ts';
 import { BUSINESS_TIME_ZONE } from '../../shared/businessTime.ts';
 
@@ -11,9 +12,9 @@ import { BUSINESS_TIME_ZONE } from '../../shared/businessTime.ts';
 // Writing to a person's profile change log is restricted to trusted staff roles,
 // and the target profile is resolved AND updated through the caller-scoped
 // client, so profile RLS decides who may touch which profile.
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const user = await base44.auth.me().catch(() => null);
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
     if (!hasApprovedAccess(user)) return Response.json({ error: 'Active approved account access is required.' }, { status: 403 });
@@ -94,4 +95,4 @@ export default async function(req) {
   } catch (error) {
     return Response.json({ error: error instanceof Error ? error.message : 'Log action failed' }, { status: 500 });
   }
-}
+});

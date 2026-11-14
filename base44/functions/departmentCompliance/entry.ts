@@ -1,11 +1,11 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 
 // Computes compliance completion per department (staff role group) from
 // employee documents, certificates and training, so the dashboard can show
 // at a glance which areas need attention. Admin/management roles only.
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
     const allowedRoles = ['admin', 'Provider Administrator', 'Compliance Manager', 'Administration', 'Team Leader'];
@@ -65,4 +65,4 @@ export default async function(req) {
   } catch (error) {
     return Response.json({ error: error instanceof Error ? error.message : 'Failed to compute department compliance' }, { status: 500 });
   }
-}
+});

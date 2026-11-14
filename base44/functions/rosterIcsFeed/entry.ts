@@ -1,6 +1,7 @@
 import { hasApprovedAccess } from '../../shared/appAccess.ts';
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 import { BUSINESS_TIME_ZONE } from '../../shared/businessTime.ts';
+import { scopedEntities } from '../../shared/tenantScope.ts';
 
 // Read-only ICS feed of the rostering schedule for external calendar apps
 // (Google Calendar, Apple Calendar, Outlook). Protected by a per-user token
@@ -80,9 +81,14 @@ export default async function(req) {
       return new Response('Feed token expired — regenerate the link in the app', { status: 403 });
     }
 
-    const owner = await base44.asServiceRole.entities.User.get(feed.owner_user_id);
+    // Release 2: everything after the token lookup is limited to the feed's own business.
+    const feedTenant = feed.tenant_id || feed.data?.tenant_id;
+    if (!feedTenant) return new Response('Feed is not linked to a business — regenerate the link in the app', { status: 403 });
+    const entities = scopedEntities(base44.asServiceRole.entities, feedTenant);
+
+    const owner = await entities.User.get(feed.owner_user_id);
     if (!hasApprovedAccess(owner) || !owner.email) return new Response('Feed owner access is inactive', { status: 403 });
-    const matches = await base44.asServiceRole.entities.StaffProfile.filter({ full_name: feed.owner_name }, { limit: 2 });
+    const matches = await entities.StaffProfile.filter({ full_name: feed.owner_name }, { limit: 2 });
     if ((matches.items || []).length !== 1 || String(matches.items[0].email || '').trim().toLowerCase() !== String(owner.email).trim().toLowerCase()) {
       return new Response('Roster identity is ambiguous. Contact an administrator.', { status: 403 });
     }
@@ -91,7 +97,7 @@ export default async function(req) {
     const shifts = [];
     let cursor;
     do {
-      const page = await base44.asServiceRole.entities.Shift.filter(
+      const page = await entities.Shift.filter(
         { status: { $ne: 'Cancelled' }, employee_name: feed.owner_name },
         { sort: 'date', limit: 500, cursor }
       );

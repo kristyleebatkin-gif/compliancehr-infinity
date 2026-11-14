@@ -1,9 +1,10 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { requireEmployee, approvedEmployeeParticipant, employeeRosterIdentity } from '../../shared/employeeAccess.ts';
 
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const user = await requireEmployee(base44);
     const { action, from, to, participant_id, shift_id, cursor } = await req.json();
     if (!['list', 'confirm', 'start', 'finish'].includes(action)) return Response.json({ error: 'Unsupported roster action.' }, { status: 400 });
@@ -45,4 +46,4 @@ export default async function(req) {
   } catch (error) {
     return Response.json({ error: error.message || 'Roster access could not be checked.' }, { status: 403 });
   }
-}
+});

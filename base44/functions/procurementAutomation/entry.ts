@@ -1,4 +1,5 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { notifyProcurementRoles, poVariables } from '../../shared/procurementNotify.ts';
 
 // End-to-end procurement automation, run hourly by the Procurement Automation
@@ -13,9 +14,9 @@ const norm = (s: any) => String(s || '').trim().toLowerCase();
 const sameAmount = (a: any, b: any) => Math.abs(Number(a || 0) - Number(b || 0)) < 0.01;
 const today = () => new Date().toISOString().slice(0, 10);
 
-export default async function(req: Request) {
+export default perBusiness(async function(req: Request) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
     if (user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
@@ -99,4 +100,4 @@ export default async function(req: Request) {
   } catch (error: any) {
     return Response.json({ error: error.message }, { status: 500 });
   }
-}
+});

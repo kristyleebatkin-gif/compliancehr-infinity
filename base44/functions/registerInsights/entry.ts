@@ -1,10 +1,11 @@
 import { hasApprovedAccess } from '../../shared/appAccess.ts';
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { REGISTRY } from '../../shared/registerRegistry.ts';
 
-export default async function (req) {
+export default perBusiness(async function (req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     let user;
     try {
       user = await base44.auth.me();
@@ -84,4 +85,4 @@ export default async function (req) {
     if (status === 403) return Response.json({ error: 'Forbidden' }, { status: 403 });
     return Response.json({ error: 'Unable to load register insights' }, { status: 500 });
   }
-}
+});

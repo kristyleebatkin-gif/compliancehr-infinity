@@ -1,5 +1,5 @@
 import { hasApprovedAccess } from '../../shared/appAccess.ts';
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 
 // Pulls payroll details (bank, super, TFN) from completed employee intake cases
 // and fills them into the HR payroll register for each staff member.
@@ -19,9 +19,9 @@ function parseBanking(text) {
   return out;
 }
 
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const me = await base44.auth.me().catch(() => null);
     if (!hasApprovedAccess(me)) return Response.json({ error: 'Approved account access required.' }, { status: 403 });
     if (!me || !PAYROLL_ROLES.includes(me.role)) {
@@ -105,4 +105,4 @@ export default async function(req) {
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
-}
+});

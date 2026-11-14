@@ -1,9 +1,10 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { ACCESS_ROLES, canManageAccess, hasApprovedAccess } from '../../shared/appAccess.ts';
 
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const actor = await base44.auth.me();
     if (!actor) return Response.json({ error: 'Please sign in.' }, { status: 401 });
     if (!canManageAccess(actor)) return Response.json({ error: 'Approved management access is required.' }, { status: 403 });
@@ -56,4 +57,4 @@ export default async function(req) {
   } catch (error) {
     return Response.json({ error: error.message || 'Unable to update account access.' }, { status: 500 });
   }
-}
+});

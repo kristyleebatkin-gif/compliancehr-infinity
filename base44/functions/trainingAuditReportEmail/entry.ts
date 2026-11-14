@@ -1,4 +1,5 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { jsPDF } from 'npm:jspdf@4.2.1';
 import { MANAGEMENT_ROLES, hasAnyRole } from '../../shared/systemAuth.ts';
 import { BUSINESS_TIME_ZONE } from '../../shared/businessTime.ts';
@@ -204,9 +205,9 @@ function buildReportPdf(rows, totals, fullyCompliant) {
   return doc;
 }
 
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const body = await req.json().catch(() => ({}));
     const dryRun = !!body.dry_run;
     const service = base44.asServiceRole;
@@ -285,4 +286,4 @@ export default async function(req) {
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
-}
+});

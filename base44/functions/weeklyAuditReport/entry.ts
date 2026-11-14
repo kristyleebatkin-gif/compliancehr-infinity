@@ -1,13 +1,14 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { collectComplianceScore, canViewComplianceScore } from '../../shared/complianceScoreCalc.ts';
 
 // Automated weekly compliance audit: snapshots the live compliance score and
 // every monitored control into an AuditReport record, saved directly to the
 // Compliance Hub. Triggered weekly by a scheduled workflow, or on demand with
 // "Generate now" from the Weekly Audit Reports tab.
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
     if (!canViewComplianceScore(user.role)) return Response.json({ error: 'Forbidden' }, { status: 403 });
@@ -68,4 +69,4 @@ export default async function(req) {
   } catch (error) {
     return Response.json({ error: String(error?.message || error) }, { status: 500 });
   }
-}
+});

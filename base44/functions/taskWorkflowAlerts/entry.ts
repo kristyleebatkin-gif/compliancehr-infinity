@@ -1,9 +1,10 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { TASK_APPROVERS, taskEmails, taskAlertPlan } from '../../shared/taskWorkflowAlerts.ts';
 
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Sign in to continue.' }, { status: 401 });
     if (['Suspended', 'Archived', 'Rejected'].includes(user.account_status)) return Response.json({ error: 'Access denied.' }, { status: 403 });
@@ -42,4 +43,4 @@ export default async function(req) {
   } catch (error) {
     return Response.json({ error: error.message || 'Unable to send the task alert.' }, { status: 400 });
   }
-}
+});

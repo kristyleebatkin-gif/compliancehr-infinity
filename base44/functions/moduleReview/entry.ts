@@ -1,5 +1,6 @@
 import { hasApprovedAccess } from '../../shared/appAccess.ts';
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { gatherRegisterStats, statsToPromptLines } from '../../shared/registerStats.ts';
 
 const ALLOWED_ROLES = ['admin', 'Provider Administrator', 'Compliance Manager', 'Administration', 'Quality & Improvement Manager'];
@@ -7,9 +8,9 @@ const ALLOWED_ROLES = ['admin', 'Provider Administrator', 'Compliance Manager', 
 // Full module review for the Suggestions Hub: live register numbers for EVERY
 // module, turned into Visualise / Automate / Refine suggestions, returned as
 // JSON for the in-app page. All counts computed server-side; the LLM only sees numbers.
-export default async function (req) {
+export default perBusiness(async function (req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
     if (!hasApprovedAccess(user)) return Response.json({ error: 'Approved account access required.' }, { status: 403 });
@@ -77,4 +78,4 @@ export default async function (req) {
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
-}
+});

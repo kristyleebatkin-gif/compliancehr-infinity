@@ -1,6 +1,6 @@
 const esc = (v) => String(v ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 import { authorizeSystemCall } from '../../shared/systemAuth.ts';
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 
 // Review & audit aging engine. Runs daily from the "Review Aging Alerts" workflow.
 // Every Risk, Incident, Feedback, Complaint, Issue/Concern, Take 5 and Safety check
@@ -33,9 +33,9 @@ const titleOf = (r) =>
   r.title || r.name || r.risk_name || r.summary || r.subject || r.feedback_type ||
   r.complaint_type || r.check_type || r.issue_type || r.item || 'Untitled record';
 
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     if (!await authorizeSystemCall(base44)) return Response.json({ error: 'Approved management access required.' }, { status: 403 });
     const service = base44.asServiceRole;
     const now = Date.now();
@@ -251,4 +251,4 @@ export default async function(req) {
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
-}
+});

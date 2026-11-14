@@ -27,7 +27,8 @@
             "function_name": "taskCompletionReports",
             "args": {
               "mode": "record",
-              "task_id": "${ .trigger.entity_id }"
+              "task_id": "${ .trigger.entity_id }",
+              "tenant_id": "${ .trigger.data.tenant_id // .trigger.old_data.tenant_id }"
             }
           },
           "then": "settle_completions",
@@ -54,7 +55,8 @@
             "function_name": "taskCompletionReports",
             "args": {
               "mode": "report",
-              "completion_id": "${ .record_completion.completion_id // null }"
+              "completion_id": "${ .record_completion.completion_id // null }",
+              "tenant_id": "${ .trigger.data.tenant_id // .trigger.old_data.tenant_id }"
             }
           },
           "then": "end",

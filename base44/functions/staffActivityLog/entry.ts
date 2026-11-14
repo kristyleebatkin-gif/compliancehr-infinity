@@ -1,4 +1,5 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { MANAGEMENT_ROLES, hasAnyRole } from '../../shared/systemAuth.ts';
 
 // Detailed activity log for one staff profile: every recorded action that
@@ -8,9 +9,9 @@ import { MANAGEMENT_ROLES, hasAnyRole } from '../../shared/systemAuth.ts';
 // because AuditLog records link to a person through several fields, and
 // callers are limited to management roles (plus auditors, matching the
 // AuditLog read rules).
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
     if (!hasAnyRole(user, [...MANAGEMENT_ROLES, 'Auditor'])) {
@@ -49,4 +50,4 @@ export default async function(req) {
   } catch (error) {
     return Response.json({ error: error instanceof Error ? error.message : 'Activity log failed' }, { status: 500 });
   }
-}
+});

@@ -1,4 +1,5 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { authorizeAndLogAiAction } from '../../shared/aiGovernance.ts';
 import { ALL_ROLES } from '../../shared/roleMatrix.ts';
 
@@ -11,9 +12,9 @@ const clip = (value: any, max: number) => String(value ?? '').trim().slice(0, ma
 const VOICE = `You write for ComplianceHR Infinity, an Australian NDIS and aged care provider platform run by Sherelle (Administration Lead).
 Rules: Australian English spelling; warm, clear, professional; no corporate filler; never invent facts, names, figures, dates, legislation or clinical detail; no square-bracket placeholders; keep it practical.`;
 
-export default async function (req: Request): Promise<Response> {
+export default perBusiness(async function (req: Request): Promise<Response> {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const body = await req.json().catch(() => ({}));
     const task = String(body.task || 'chat');
 
@@ -154,4 +155,4 @@ ${transcript}`,
   } catch (error: any) {
     return Response.json({ error: error?.message || 'The assistant could not complete that.' }, { status: 500 });
   }
-}
+});

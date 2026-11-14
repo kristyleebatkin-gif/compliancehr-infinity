@@ -25,7 +25,9 @@
           "call": "invoke_backend_function",
           "with": {
             "function_name": "staffRiskThresholdAlert",
-            "args": {}
+            "args": {
+              "tenant_id": "${ .trigger.data.tenant_id // .trigger.old_data.tenant_id }"
+            }
           },
           "then": "end",
           "x-base44": {

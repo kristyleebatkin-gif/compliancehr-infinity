@@ -1,13 +1,14 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { CONSENT_ROLES, hasAnyRole } from '../../shared/systemAuth.ts';
 import { auDate, auTime } from '../../shared/reminders.ts';
 import { recordParticipantAuthorisation } from '../../shared/participantAuthorisation.ts';
 
 const CONSENT_VALUES = new Set(['Audit consent received', 'Audit declined']);
 
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
     if (!hasAnyRole(user, CONSENT_ROLES) && user.role !== 'Participant') {
@@ -68,4 +69,4 @@ export default async function(req) {
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
-}
+});

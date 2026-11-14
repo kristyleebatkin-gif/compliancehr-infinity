@@ -1,4 +1,5 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { auDate, auTime, pretty, pageItems } from '../../shared/reminders.ts';
 import { authorizeSystemCall } from '../../shared/systemAuth.ts';
 
@@ -11,9 +12,9 @@ const ADMIN_ROLES = ['admin', 'Provider Administrator', 'Compliance Manager', 'A
 const HORIZON_DAYS = 30;
 const NOTIF_TYPE = 'Key Authority Expiry';
 
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const service = base44.asServiceRole;
     const body = await req.json().catch(() => ({}));
     if (!(await authorizeSystemCall(base44, body))) {
@@ -108,4 +109,4 @@ export default async function(req) {
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
-}
+});

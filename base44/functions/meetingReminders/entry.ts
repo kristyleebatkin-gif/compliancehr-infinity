@@ -1,4 +1,5 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { authorizeSystemCall } from '../../shared/systemAuth.ts';
 import { auDate, pretty } from '../../shared/reminders.ts';
 
@@ -8,9 +9,9 @@ const extractEmails = (text) => String(text || '').match(/[^\s,;]+@[^\s,;]+\.[^\
 // Sends a 24-hour and a 12-hour reminder email to every attendee of an
 // upcoming scheduled meeting. Runs hourly from the scheduled workflow; the
 // PushLog dedupe key stops anyone getting the same reminder twice.
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     if (!(await authorizeSystemCall(base44))) {
       return Response.json({ error: 'Unauthorized' }, { status: 401 });
     }
@@ -62,4 +63,4 @@ export default async function(req) {
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
-}
+});

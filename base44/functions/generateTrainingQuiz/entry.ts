@@ -1,9 +1,9 @@
 import { authorizeAndLogAiAction } from '../../shared/aiGovernance.ts';
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const body = await req.json().catch(() => ({}));
     const gate = await authorizeAndLogAiAction(base44, {
       feature: 'generateTrainingQuiz',
@@ -52,4 +52,4 @@ Rules:
   } catch (error) {
     return Response.json({ error: error.message || 'Quiz generation failed.' }, { status: 500 });
   }
-}
+});

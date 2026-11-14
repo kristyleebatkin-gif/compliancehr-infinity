@@ -1,4 +1,5 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { auDate, pretty, addDays, pageItems } from '../../shared/reminders.ts';
 import { authorizeSystemCall } from '../../shared/systemAuth.ts';
 
@@ -6,9 +7,9 @@ const KIT_CHECK_TYPES = ['Natural Disaster Kit Check', 'First Aid Kit Check', 'F
 const SIX_MONTHS_DAYS = 182;
 const ADMIN_ROLES = ['admin', 'Provider Administrator', 'Compliance Manager', 'Administration'];
 
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const body = await req.json().catch(() => ({}));
     if (!(await authorizeSystemCall(base44, body))) {
       return Response.json({ error: 'Unauthorized' }, { status: 401 });
@@ -127,4 +128,4 @@ export default async function(req) {
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
-}
+});

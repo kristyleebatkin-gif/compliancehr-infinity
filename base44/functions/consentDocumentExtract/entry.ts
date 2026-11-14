@@ -1,5 +1,6 @@
 import { hasApprovedAccess } from '../../shared/appAccess.ts';
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+
 import { CONSENT_ROLES, hasAnyRole } from '../../shared/systemAuth.ts';
 import { auDate, auTime } from '../../shared/reminders.ts';
 import { recordParticipantAuthorisation } from '../../shared/participantAuthorisation.ts';
@@ -8,9 +9,9 @@ const TITLE = { sharing: 'Consent to share information', advocacy: 'Consent to a
 const PARTICIPANT_FIELDS = ['phone', 'address', 'date_of_birth', 'emergency_contact', 'emergency_contact_phone', 'ndis_number'];
 const STAFF_FIELDS = ['phone', 'address', 'date_of_birth', 'emergency_contact', 'emergency_contact_phone'];
 
-export default async function(req) {
+export default perBusiness(async function(req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
     if (!hasApprovedAccess(user)) return Response.json({ error: 'Approved account access required.' }, { status: 403 });
@@ -151,4 +152,4 @@ Leave fields blank when the document does not show them. Do not guess or invent 
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
-}
+});
