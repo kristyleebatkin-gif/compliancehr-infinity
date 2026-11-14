@@ -108,6 +108,26 @@ export default async function reqHandler(req: Request) {
       }
     }
 
+    // 2b. Business identity (decision 14 Nov 2026): Choices NQ's documents print its own name.
+    // The existing records were named after the platform; rename them and remove the platform
+    // logo and slogan so Choices NQ shows its own until it uploads its logo.
+    if (!only) {
+      const PLATFORM_NAME = /^compliancehr infinity$/i;
+      report.identity = [];
+      for (const b of await allRecords(svc.BusinessDetails)) {
+        if (b.tenant_id && b.tenant_id !== CHOICES_NQ_TENANT_ID) continue;
+        if (!PLATFORM_NAME.test(String(b.business_name || '').trim()) && !PLATFORM_NAME.test(String(b.trading_name || '').trim())) continue;
+        report.identity.push({ entity: 'BusinessDetails', id: b.id, from: b.business_name, to: CHOICES_NQ.trading_name, action: apply ? 'renamed' : 'would rename' });
+        if (apply) await svc.BusinessDetails.update(b.id, { business_name: CHOICES_NQ.trading_name, trading_name: CHOICES_NQ.trading_name });
+      }
+      for (const p of await allRecords(svc.Provider)) {
+        if (p.tenant_id && p.tenant_id !== CHOICES_NQ_TENANT_ID) continue;
+        if (!PLATFORM_NAME.test(String(p.provider_name || '').trim())) continue;
+        report.identity.push({ entity: 'Provider', id: p.id, from: { name: p.provider_name, logo: p.logo_url, slogan: p.document_slogan }, to: CHOICES_NQ.trading_name, action: apply ? 'renamed; platform logo and slogan removed' : 'would rename; remove platform logo and slogan' });
+        if (apply) await svc.Provider.update(p.id, { provider_name: CHOICES_NQ.trading_name, logo_url: '', document_slogan: '' });
+      }
+    }
+
     // 3. Stamp untagged records
     const targets = [
       ...BUSINESS_OWNED_ENTITIES.map((name) => ({ name, value: CHOICES_NQ_TENANT_ID })),

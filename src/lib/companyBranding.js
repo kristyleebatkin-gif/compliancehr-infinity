@@ -44,10 +44,11 @@ const composeAddress = (business) => [
   [business?.suburb, business?.state, business?.postcode].filter(Boolean).join(' '),
 ].filter(Boolean).join(', ');
 
+// Each business prints its own name (decision 14 Nov 2026: Choices North Queensland's documents show
+// Choices North Queensland; ComplianceHR Infinity appears only in the footer as the platform).
 const sanitizeCompanyName = (val) => {
   const s = String(val || '').trim();
-  if (!s || /choices\s*(nq|north\s*queensland)/i.test(s)) return DEFAULTS.companyName;
-  return s;
+  return s || DEFAULTS.companyName;
 };
 
 const businessToBranding = (business) => ({
