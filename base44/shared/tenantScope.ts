@@ -300,3 +300,43 @@ export function perBusiness(
     return json({ per_business }, worst);
   };
 }
+
+// Accounts that are not yet linked to any business (backlog 17.07).
+//
+// Someone who signs in for the first time has no business yet, so the scoped client cannot see them,
+// and nobody could approve them. This is the one place server code reaches accounts outside its
+// business, and it is kept narrow:
+//   - it lists and returns only accounts with NO business; an account linked to any business is never returned
+//   - emailStatus says only whether an email is free, unlinked, here or elsewhere, never which business
+//   - link() attaches an unlinked account to exactly one business, once; it refuses an account that is already linked
+export type AccountStatus = 'none' | 'unlinked' | 'here' | 'elsewhere';
+
+export function accountDirectory(rawService: any, tenantId: string) {
+  const users = () => rawService.entities.User;
+  const all = async () => {
+    const page = await users().list();
+    return Array.isArray(page) ? page : page?.items || [];
+  };
+  const email = (v: unknown) => String(v ?? '').trim().toLowerCase();
+  return {
+    async unlinked(): Promise<any[]> {
+      return (await all()).filter((u: any) => !tenantOf(u) && u.role !== 'admin');
+    },
+    async getUnlinked(id: string): Promise<any | null> {
+      const u = await users().get(id);
+      return u && !tenantOf(u) && u.role !== 'admin' ? u : null;
+    },
+    async emailStatus(address: string): Promise<AccountStatus> {
+      const found = (await all()).filter((u: any) => email(u.email) === email(address));
+      if (!found.length) return 'none';
+      if (found.some((u: any) => tenantOf(u) === tenantId)) return 'here';
+      if (found.some((u: any) => tenantOf(u))) return 'elsewhere';
+      return 'unlinked';
+    },
+    async link(id: string, changes: Record<string, unknown>) {
+      const u = await users().get(id);
+      if (!u || tenantOf(u) || u.role === 'admin') throw new CrossBusinessError('User');
+      return users().update(id, { ...changes, tenant_id: tenantId });
+    },
+  };
+}
