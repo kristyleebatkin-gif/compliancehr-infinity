@@ -1,0 +1,204 @@
+{
+  "name": "ApprovalRequest",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Tenant ID"
+    },
+    "title": {
+      "type": "string",
+      "title": "What needs approval"
+    },
+    "record_type": {
+      "type": "string",
+      "enum": [
+        "TodoTask"
+      ],
+      "title": "Record type"
+    },
+    "record_id": {
+      "type": "string",
+      "title": "Record ID"
+    },
+    "record_url": {
+      "type": "string",
+      "title": "Open record"
+    },
+    "module": {
+      "type": "string",
+      "title": "Module"
+    },
+    "summary": {
+      "type": "string",
+      "title": "Summary for the approver"
+    },
+    "requested_by_id": {
+      "type": "string",
+      "title": "Requested by (user id)"
+    },
+    "requested_by_name": {
+      "type": "string",
+      "title": "Requested by"
+    },
+    "requested_by_email": {
+      "type": "string",
+      "title": "Requester email"
+    },
+    "requested_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Requested at"
+    },
+    "completed_by_name": {
+      "type": "string",
+      "title": "Work completed by"
+    },
+    "approver_roles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "title": "Roles that may approve"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Decision due"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Pending",
+        "Approved",
+        "Returned",
+        "Withdrawn"
+      ],
+      "enumColors": [
+        "yellow",
+        "green",
+        "red",
+        "gray"
+      ],
+      "default": "Pending",
+      "title": "Status"
+    },
+    "decided_by_id": {
+      "type": "string",
+      "title": "Decided by (user id)"
+    },
+    "decided_by_name": {
+      "type": "string",
+      "title": "Decided by"
+    },
+    "decided_by_email": {
+      "type": "string",
+      "title": "Decider email"
+    },
+    "decided_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Decided at"
+    },
+    "decision_note": {
+      "type": "string",
+      "title": "Decision note"
+    },
+    "signature": {
+      "type": "string",
+      "title": "Typed signature"
+    }
+  },
+  "required": [
+    "title",
+    "record_type",
+    "record_id",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
