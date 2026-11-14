@@ -1,3 +1,4 @@
+import { assertWorkflowAction, readWorkflowRecords, requireWorkflowAdministrator } from '../../shared/workflowSafety.ts';
 import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 import {
   assessBillingBoard,
@@ -29,7 +30,7 @@ const GOVERNANCE_ROLES = [
 ];
 const VIEW_ROLES = [...new Set([...BILLING_ROLES, ...GOVERNANCE_ROLES, 'Team Leader', 'Human Resources Manager'])];
 
-const day = (d: Date) => d.toISOString().slice(0, 10);
+const day = (d: Date) => new Intl.DateTimeFormat('en-CA', { timeZone: 'Australia/Brisbane', year: 'numeric', month: '2-digit', day: '2-digit' }).format(d);
 const shiftDays = (days: number) => {
   const to = new Date();
   const from = new Date(to.getTime() - days * 86400000);
@@ -40,8 +41,7 @@ const json = (body: unknown, status = 200) => Response.json(body, { status });
 const fail = (message: string, status = 400) => json({ error: message }, status);
 
 const listAll = async (dao: any, query: any, options: any) => {
-  const page = await dao.filter(query, options);
-  return page?.items ?? (Array.isArray(page) ? page : []);
+  return await readWorkflowRecords(dao, query, options);
 };
 
 function canView(role: string) {
@@ -78,7 +78,9 @@ async function billingBoard(base44: any, body: any) {
       already_billed: rows.filter((r) => r.state === 'complete').length,
       ready_value: Math.round(rows.filter((r) => r.state === 'ready').reduce((sum, r) => sum + r.amount, 0) * 100) / 100,
     },
-    rows,
+    mode: 'read_only_preview',
+    verification: 'Cross-module evidence review only. This preview does not authorise billing, eligibility, closure or release.',
+    rows: rows.map((row: any) => ({ ...row, state: row.state === 'ready' ? 'incomplete' : row.state, unknowns: [...(row.unknowns || []), 'Workflow acceptance and exact record relationships are pending verification.'] })),
   });
 }
 
@@ -139,7 +141,9 @@ async function incidentBoard(base44: any) {
       awaiting_effectiveness: rows.filter((r: any) => r.blockers.some((b: any) => b.code.startsWith('effectiveness'))).length,
       ready_to_close: rows.filter((r: any) => r.state === 'ready').length,
     },
-    rows,
+    mode: 'read_only_preview',
+    verification: 'Cross-module evidence review only. This preview does not authorise billing, eligibility, closure or release.',
+    rows: rows.map((row: any) => ({ ...row, state: row.state === 'ready' ? 'incomplete' : row.state, unknowns: [...(row.unknowns || []), 'Workflow acceptance and exact record relationships are pending verification.'] })),
   });
 }
 
@@ -156,9 +160,7 @@ async function eligibilityBoard(base44: any, body: any) {
 
   const match = (record: any, profile: any) =>
     text(record.staff_id) === text(profile.id) ||
-    text(record.employee_id) === text(profile.id) ||
-    (text(record.staff_name) && text(record.staff_name).toLowerCase() === text(profile.full_name).toLowerCase()) ||
-    (text(record.employee_name) && text(record.employee_name).toLowerCase() === text(profile.full_name).toLowerCase());
+    text(record.employee_id) === text(profile.id);
 
   const rows = staff
     .filter((profile: any) => !wanted || text(profile.id) === wanted)
@@ -191,7 +193,9 @@ async function eligibilityBoard(base44: any, body: any) {
       ready: rows.filter((r: any) => r.state === 'ready').length,
     },
     note: 'Eligibility is judged only on checks, certificates and training your organisation has recorded. Missing evidence is shown as unknown, never as a pass.',
-    rows,
+    mode: 'read_only_preview',
+    verification: 'Cross-module evidence review only. This preview does not authorise billing, eligibility, closure or release.',
+    rows: rows.map((row: any) => ({ ...row, state: row.state === 'ready' ? 'incomplete' : row.state, unknowns: [...(row.unknowns || []), 'Workflow acceptance and exact record relationships are pending verification.'] })),
   });
 }
 
@@ -204,11 +208,11 @@ async function documentBoard(base44: any, user: any) {
   const mine = new Set(
     acknowledgements
       .filter((a: any) => text(a.staff_user_id) === text(user.id) || (user.email && text(a.staff_email) === text(user.email)))
-      .map((a: any) => text(a.policy_id)),
+      .map((a: any) => JSON.stringify([text(a.policy_id), text(a.policy_version)])),
   );
 
   const rows = documents.map((doc: any) => {
-    const acknowledged = mine.has(text(doc.document_id)) || mine.has(text(doc.id));
+    const acknowledged = mine.has(JSON.stringify([text(doc.document_id), text(doc.version)])) || mine.has(JSON.stringify([text(doc.id), text(doc.version)]));
     const gate = assessDocumentRelease({ document: doc, acknowledged });
     return {
       document_id: text(doc.id),
@@ -235,7 +239,9 @@ async function documentBoard(base44: any, user: any) {
       not_releasable: rows.filter((r: any) => r.state === 'blocked').length,
       acknowledged: rows.filter((r: any) => r.state === 'complete').length,
     },
-    rows,
+    mode: 'read_only_preview',
+    verification: 'Cross-module evidence review only. This preview does not authorise billing, eligibility, closure or release.',
+    rows: rows.map((row: any) => ({ ...row, state: row.state === 'ready' ? 'incomplete' : row.state, unknowns: [...(row.unknowns || []), 'Workflow acceptance and exact record relationships are pending verification.'] })),
   });
 }
 
@@ -434,11 +440,13 @@ export default perBusiness(async function (req) {
     const base44 = createScopedClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) return fail('Unauthorized', 401);
+    await requireWorkflowAdministrator(base44, user);
     if (!canView(user.role)) return fail('Your role cannot view connected workflow gates.', 403);
 
     const body = (await req.json().catch(() => ({}))) as any;
     const action = text(body.action) || 'assess';
     const journey = text(body.journey).toLowerCase();
+    assertWorkflowAction(action);
 
     if (action === 'assess') {
       if (journey === 'b') {
@@ -458,6 +466,6 @@ export default perBusiness(async function (req) {
 
     return fail('Unknown action.', 400);
   } catch (error) {
-    return fail((error as Error).message || 'The connected workflow check failed.', 500);
+    return fail((error as Error).message || 'The connected workflow check failed.', [403, 503].includes((error as any)?.status) ? (error as any).status : 500);
   }
 });

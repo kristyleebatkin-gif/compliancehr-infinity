@@ -9,27 +9,22 @@ import RosterEligibilityGate from '@/components/workflows/RosterEligibilityGate'
 import DocumentReleaseGate from '@/components/workflows/DocumentReleaseGate';
 
 const BILLING_ROLES = ['admin', 'Provider Administrator', 'Finance & Accounts Officer', 'Administration'];
-const GOVERNANCE_ROLES = [
-  'admin',
-  'Provider Administrator',
-  'Compliance Manager',
-  'Compliance Administrator',
-  'Management',
-  'Quality & Improvement Manager',
-];
+
 
 export default function ConnectedWorkflows() {
   const { role } = useRole();
   const canBill = BILLING_ROLES.includes(role);
-  const canGovern = GOVERNANCE_ROLES.includes(role);
 
   return (
     <ModuleShell
       icon={Link2}
       moduleKey="connected-workflows"
       title="Connected Workflows"
-      subtitle="Cross-module gates that only pass when the record behind them actually holds up."
+      subtitle="Review linked records and evidence gaps. Preview checks require end-to-end verification."
     >
+      <p role="status" className="my-3 rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-blue-950">
+        Read-only preview. New invoice, corrective-action, acknowledgement and revision actions are disabled pending identity, transaction and version verification. Existing module workflows remain available.
+      </p>
       <Tabs defaultValue={canBill ? 'billing' : 'incident'} className="mt-1">
         <TabsList className="flex w-full flex-wrap gap-1">
           {canBill && (
@@ -50,17 +45,17 @@ export default function ConnectedWorkflows() {
 
         {canBill && (
           <TabsContent value="billing" className="mt-3">
-            <BillingExceptionBoard canBill={canBill} />
+            <BillingExceptionBoard canBill={false} />
           </TabsContent>
         )}
         <TabsContent value="incident" className="mt-3">
-          <IncidentFollowUpGate canAct={canGovern} />
+          <IncidentFollowUpGate canAct={false} />
         </TabsContent>
         <TabsContent value="eligibility" className="mt-3">
           <RosterEligibilityGate />
         </TabsContent>
         <TabsContent value="documents" className="mt-3">
-          <DocumentReleaseGate canGovern={canGovern} />
+          <DocumentReleaseGate canGovern={false} />
         </TabsContent>
       </Tabs>
     </ModuleShell>

@@ -17,6 +17,8 @@ export default function IncidentFollowUpRow({ row, onAddAction }) {
         {row.state !== 'complete' && (
           <button
             type="button"
+            disabled
+            title="New workflow actions await verification"
             onClick={() => onAddAction(row)}
             className="rounded-md border border-[#0072FF]/40 bg-white px-2 py-1 text-[11px] font-bold text-[#0A2B6D] hover:bg-[#F5F0FF]"
           >

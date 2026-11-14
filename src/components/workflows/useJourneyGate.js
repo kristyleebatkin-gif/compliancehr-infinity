@@ -16,7 +16,8 @@ export default function useJourneyGate(journey, params = {}) {
         setError(res.data.error);
         setData(null);
       } else {
-        setData(res?.data || null);
+        if (!res?.data?.ok || !Array.isArray(res.data.rows)) throw new Error('Workflow response could not be verified.');
+        setData(res.data);
       }
     } catch (err) {
       setError(err?.response?.data?.error || err?.message || 'The check could not be loaded.');
@@ -35,11 +36,13 @@ export default function useJourneyGate(journey, params = {}) {
 
 /** Runs a write action through the same server gate and returns its payload. */
 export async function runGateAction(action, payload = {}) {
+  if (action !== 'assess') return { ok: false, error: 'New workflow actions remain disabled pending verification.' };
   try {
     const res = await base44.functions.invoke('connectedJourneyGate', { action, ...payload });
     const body = res?.data || {};
     if (body.error) return { ok: false, error: body.error, ...body };
-    return { ok: true, ...body };
+    if (body.ok !== true) return { ok: false, error: 'The action result could not be verified.' };
+    return body;
   } catch (err) {
     return { ok: false, error: err?.response?.data?.error || err?.message || 'The action could not be completed.' };
   }
