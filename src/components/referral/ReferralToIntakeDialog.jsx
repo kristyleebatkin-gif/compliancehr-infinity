@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { AlertTriangle, ArrowRight, Loader2, CheckCircle2 } from 'lucide-react';
+import { AlertTriangle, ArrowRight, Loader2, CheckCircle2, Lock } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
-import { referralIntakeBlockers, startIntakeFromReferral } from '@/lib/referralIntake';
+import {
+  HANDOVER_ENABLED,
+  HANDOVER_PENDING_MESSAGE,
+  referralIntakeBlockers,
+  startIntakeFromReferral,
+} from '@/lib/referralIntake';
 
 const PENDING_STATES = ['created_link_pending', 'linked_audit_pending'];
 
@@ -20,13 +25,24 @@ export default function ReferralToIntakeDialog({ referral, open, onClose, onCrea
     setSaving(false);
   };
 
+  // Never close over a request that is still running: a half-finished handover has to
+  // be seen, not hidden behind a closed dialog.
   const close = () => {
+    if (saving) return;
     reset();
     onClose();
   };
 
+  // Opening again starts clean, so an earlier outcome can never be read as a new one.
+  useEffect(() => {
+    if (open) {
+      setBlockers([]);
+      setResult(null);
+    }
+  }, [open]);
+
   const run = async () => {
-    if (saving) return; // guards a double click while a handover is in flight
+    if (saving || !HANDOVER_ENABLED) return;
     setSaving(true);
     setBlockers([]);
     try {
@@ -63,10 +79,22 @@ export default function ReferralToIntakeDialog({ referral, open, onClose, onCrea
 
   return (
     <Dialog open={open} onOpenChange={(v) => { if (!v) close(); }}>
-      <DialogContent className="max-h-[92vh] overflow-y-auto sm:max-w-lg">
+      <DialogContent
+        className="max-h-[92vh] overflow-y-auto sm:max-w-lg"
+        onEscapeKeyDown={(event) => { if (saving) event.preventDefault(); }}
+        onPointerDownOutside={(event) => { if (saving) event.preventDefault(); }}
+        onInteractOutside={(event) => { if (saving) event.preventDefault(); }}
+      >
         <DialogHeader>
           <DialogTitle>Start intake from referral {referral?.referral_id}</DialogTitle>
         </DialogHeader>
+
+        {!HANDOVER_ENABLED && (
+          <div className="flex items-start gap-2 rounded-xl border border-amber-300 bg-amber-50 p-3 text-xs font-semibold text-amber-900">
+            <Lock className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+            <span>{HANDOVER_PENDING_MESSAGE} Log referrals and their correspondence as usual; only this handover step is paused.</span>
+          </div>
+        )}
 
         {result ? (
           <div className="space-y-3 text-sm">
@@ -130,7 +158,7 @@ export default function ReferralToIntakeDialog({ referral, open, onClose, onCrea
         <DialogFooter className="gap-2">
           {result && !pending ? (
             <>
-              <Button variant="outline" onClick={close}>Close</Button>
+              <Button variant="outline" onClick={close} disabled={saving}>Close</Button>
               <Button asChild>
                 <Link to="/intake/participant"><ArrowRight className="h-4 w-4" />Open Intake Centre</Link>
               </Button>
@@ -138,9 +166,13 @@ export default function ReferralToIntakeDialog({ referral, open, onClose, onCrea
           ) : (
             <>
               <Button variant="outline" onClick={close} disabled={saving}>Close</Button>
-              <Button onClick={run} disabled={saving || (!result && existingBlockers.length > 0)}>
+              <Button
+                onClick={run}
+                disabled={saving || !HANDOVER_ENABLED || (!result && existingBlockers.length > 0)}
+                title={HANDOVER_ENABLED ? undefined : HANDOVER_PENDING_MESSAGE}
+              >
                 {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-                {result ? 'Retry handover' : 'Create intake case'}
+                {!HANDOVER_ENABLED ? 'Handover paused' : result ? 'Retry handover' : 'Create intake case'}
               </Button>
             </>
           )}
