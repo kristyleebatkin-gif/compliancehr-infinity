@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Zap, ArrowRight, Cpu, LayoutGrid, Heart, Layers } from 'lucide-react';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import { PRIMARY_11_OS_NAV, FOCUSED_5_PILLAR_NAV } from '@/components/ObsidianSidebarRemote';
+import { useRole } from '@/lib/useRole';
 import { useAuth } from '@/lib/AuthContext';
 import EnterpriseFloatingWorkspaceDock from '@/components/EnterpriseFloatingWorkspaceDock';
 import '@/components/executive/executiveGlass.css';
@@ -16,11 +17,12 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
   const location = useLocation();
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
+  const { can, role, user } = useRole();
   const [remoteMode, setRemoteMode] = useState(
     () => localStorage.getItem('chr-active-remote-mode') || 'os11'
   );
   const [selectedPillarId, setSelectedPillarId] = useState(
-    () => localStorage.getItem('chr-active-remote-pillar') || 'dashboard-executive'
+    () => localStorage.getItem('chr-active-remote-pillar') || 'my-workspace'
   );
   const prevPathnameRef = useRef(location.pathname);
 
@@ -33,10 +35,10 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
     () =>
       MODULE_DIRECTORY.filter(
         (m) =>
-          !(m.key === 'staff-progress' && MODULE_DIRECTORY.some((e) => e.key === 'staff')) &&
+          can(m.key) && !(m.key === 'staff-progress' && MODULE_DIRECTORY.some((e) => e.key === 'staff')) &&
           !['company-safe', 'universal-storage', 'registers', 'record-intelligence'].includes(m.key)
       ),
-    []
+    [role, user]
   );
 
   const sourceSections = useMemo(() => {
@@ -62,7 +64,7 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
 
     const baseList = remoteMode === 'pillars5' ? FOCUSED_5_PILLAR_NAV : PRIMARY_11_OS_NAV;
     return baseList.map((pillar, colourIndex) => {
-      const enrichedChildren = pillar.children.map((ch) => {
+      const enrichedChildren = pillar.children.filter((child) => allAccessibleModules.some((module) => module.path === child.path)).map((ch) => {
         const dirMatch = MODULE_DIRECTORY.find((m) => m.path === ch.path);
         return {
           key: dirMatch?.key || `${ch.path}-${ch.label}`,
@@ -75,10 +77,11 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
 
       return {
         ...pillar,
+        path: enrichedChildren[0]?.path,
         colourIndex,
         modules: enrichedChildren,
       };
-    });
+    }).filter((group) => group.modules.length);
   }, [remoteMode, allAccessibleModules]);
 
   useEffect(() => {
@@ -181,8 +184,8 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
                 <div className="flex max-w-full flex-wrap items-center gap-0.5 rounded-full bg-workspace-navy/80 p-0.5 backdrop-blur-md">
                   {[
                     { id: 'pillars5', label: '5 Pillars' },
-                    { id: 'os11', label: '13 Channels' },
-                    { id: 'all', label: 'All 45' },
+                    { id: 'os11', label: '10 Groups' },
+                    { id: 'all', label: `All ${allAccessibleModules.length}` },
                   ].map((m) => (
                     <button
                       key={m.id}

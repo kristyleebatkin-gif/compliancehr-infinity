@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import BrandLogoLockup from '@/components/common/BrandLogoLockup';
-import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
+import { MODULE_DIRECTORY, NAV_GROUPS, buildNavigationGroups } from '@/lib/moduleDirectory';
 import { useAuth } from '@/lib/AuthContext';
 import {
   LogOut, LayoutDashboard, ClipboardList,
@@ -17,300 +17,23 @@ const DARK_NAVY_CHASSIS = 'linear-gradient(165deg, #0A2B6D 0%, #0A2B6D 55%, #5A0
 // Strict repeating symbol & square indicator sequence: Blue, Purple, Pink, Blue, Purple, Pink...
 const SYMBOL_COLOR_SEQUENCE = ['#0072FF', '#A855F7', '#FF2E9A'];
 
-// Permanent 13-Group Architectural Map (Single Source of Truth, Zero Duplicates)
-export const PRIMARY_11_OS_NAV = [
-  {
-    id: 'dashboard-executive',
-    label: '1. Dashboard',
-    sub: 'Executive Dashboard, Subscriptions, Communication, Mailbox & Live Roster',
-    path: '/dashboard',
-    icon: LayoutDashboard,
-    status: 'LIVE',
-    children: [
-      { label: 'Dashboard', path: '/dashboard', sub: 'Executive Dashboard, Subscriptions & Command', icon: LayoutDashboard },
-      { label: 'Administration – Lead (Sherelle)', path: '/today', sub: 'Daily operations workspace', icon: Sun },
-      { label: 'Team Leader - Lead (Jamie)', path: '/team-leader', sub: 'Team leader mobile workspace', icon: Smartphone },
-      { label: 'Communication', path: '/communications', sub: 'Unified Communication, Mailbox & Roster', icon: Megaphone },
-      { label: 'Daily Briefing', path: '/briefing', sub: 'Morning operational briefing' },
-      { label: 'Meetings', path: '/meetings', sub: 'Agendas, minutes & action items' },
-      { label: 'Feedback & Surveys', path: '/feedback', sub: 'Complaints, compliments & surveys' },
-      { label: 'Notifications', path: '/notifications', sub: 'Live alerts, reminders & escalations' },
-      { label: 'Operations Centre', path: '/operations-centre', sub: 'Master operations & control deck' },
-      { label: 'Suggestions Hub', path: '/suggestions', sub: 'Continuous improvement ideas' },
-      { label: 'AI Assistant', path: '/assistant', sub: '24/7 compliance & HR copilot' },
-    ],
-  },
-  {
-    id: 'people-intake-profiles',
-    label: '2. People & 360° Profiles',
-    sub: 'Profiles, Intake, Visual Boards, Contacts & Users',
-    path: '/our-employees',
-    icon: Users,
-    status: 'READY',
-    children: [
-      { label: 'My Profile', path: '/my-profile', sub: 'Personal profile, work & docs' },
-      { label: 'Intake Centre', path: '/intake', sub: 'Participant & staff onboarding' },
-      { label: 'Employee Profiles', path: '/our-employees', sub: '360° staff directory & files' },
-      { label: 'Participant Profiles', path: '/our-participants', sub: '360° participant care folders' },
-      { label: 'Visual Boards', path: '/visual-boards', sub: 'Accessible visual routines & AAC' },
-      { label: 'Key Personnel Contacts', path: '/key-contacts', sub: 'Key personnel & emergency directory' },
-      { label: 'Volunteering & Placements', path: '/volunteers', sub: 'Volunteer screening & placements' },
-      { label: 'Users & Permissions', path: '/users', sub: 'Role matrix & access control' },
-    ],
-  },
-  {
-    id: 'communications-workforce',
-    label: '3. Service Delivery & Roster',
-    sub: 'Rostering, Goals, Tasks, Meetings & Programs',
-    path: '/rostering',
-    icon: ClipboardList,
-    status: 'LIVE',
-    children: [
-      { label: 'Rostering', path: '/rostering', sub: 'Shifts, coverage & availability' },
-      { label: 'Goals', path: '/goals', sub: 'Participant & staff goal tracking' },
-      { label: 'Tasks & To-Do', path: '/tasks', sub: 'Merged shared to-do & sign-off board' },
-      { label: 'Programs & Events', path: '/programs', sub: 'Community programs & calendar' },
-      { label: 'Frontline Rapid Hub', path: '/frontline-hub', sub: '60-second mobile field actions' },
-      { label: 'Workforce Presence Centre', path: '/workforce-presence', sub: 'Live sign-in & emergency roll call' },
-    ],
-  },
-  {
-    id: 'incidents-risk-safety',
-    label: '4. Incidents, Risk & Safety',
-    sub: 'Incidents, Analytics, Risks, Emergency & MSDS',
-    path: '/incidents',
-    icon: ShieldAlert,
-    status: 'GUARDED',
-    children: [
-      { label: 'Incident Clinic', path: '/incidents', sub: 'NDIS & SIRS reportable triage' },
-      { label: 'Incident Analytics', path: '/incident-analytics', sub: 'Root-cause & trend intelligence' },
-      { label: 'Risk Reporting', path: '/risks', sub: 'Risk register, hazards & Take-5' },
-      { label: 'Emergency Response', path: '/emergency-response', sub: 'Drills, plans & visitor log' },
-      { label: 'Equipment Manuals & MSDS', path: '/equipment-manuals', sub: 'Safety data sheets & manuals' },
-    ],
-  },
-  {
-    id: 'compliance-quality-evidence',
-    label: '5. Compliance & Evidence',
-    sub: 'Compliance, Analytics, Auditor, Vault & Company Safe',
-    path: '/compliance',
-    icon: ShieldCheck,
-    status: 'VERIFIED',
-    children: [
-      { label: 'Compliance & Evidence', path: '/compliance', sub: 'Merged Compliance Centre, Business Analytics & 356 checks' },
-      { label: 'Auditor Portal', path: '/auditor-portal', sub: 'Read-only external auditor view' },
-      { label: 'Document Vault', path: '/documents', sub: 'Document Vault, Smart Vault, Company Safe & 45 Master Registers' },
-      { label: 'Remote Access & VPN', path: '/remote-access', sub: 'Zero-trust remote access without headaches' },
-      { label: 'Quality & Improvement', path: '/quality', sub: 'Continuous improvement & CAPA' },
-      { label: 'Checklists', path: '/checklists', sub: 'Operational & audit checklists' },
-      { label: 'Review Due Board', path: '/review-due', sub: 'Upcoming scheduled reviews' },
-      { label: 'Evidence & User Success Hub', path: '/user-success', sub: 'Evidence-first verification' },
-    ],
-  },
-  {
-    id: 'training-capability',
-    label: '6. Training & Credentials',
-    sub: 'Training Centre, Certificates, LMS & Skills Matrix',
-    path: '/training',
-    icon: ClipboardList,
-    status: 'READY',
-    children: [
-      { label: 'Training Centre', path: '/training', sub: 'LMS courses, quizzes & matrix' },
-      { label: 'Certificates', path: '/certificates', sub: 'Staff credentials & expiry alerts' },
-    ],
-  },
-  {
-    id: 'finance-commercial',
-    label: '7. Finance & Commercial',
-    sub: 'Invoicing, Quotes, Receipts, Procurement & Assets',
-    path: '/invoicing',
-    icon: BarChart3,
-    status: 'READY',
-    children: [
-      { label: 'Invoicing Centre', path: '/invoicing', sub: 'NDIS claims & bank reconciliation' },
-      { label: 'Quote Centre', path: '/quotes', sub: 'Service quotes & agreements' },
-      { label: 'Receipt Hub', path: '/receipts', sub: 'Expense scanner & reimbursements' },
-      { label: 'Procurement', path: '/procurement', sub: 'Purchase orders & suppliers' },
-      { label: 'Asset Management', path: '/assets', sub: 'Fleet, equipment & maintenance' },
-    ],
-  },
-  {
-    id: 'human-resources',
-    label: '8. Human Resources',
-    sub: 'HR Hub, Contracts, Reviews, Leave & Onboarding',
-    path: '/hr',
-    icon: Users,
-    status: 'READY',
-    children: [
-      { label: 'HR Hub', path: '/hr', sub: 'Contracts, appraisals & payroll' },
-    ],
-  },
-  {
-    id: 'crm-growth-relationships',
-    label: '9. CRM & Referrals',
-    sub: 'CRM & Leads, Referrals & Provider Relationships',
-    path: '/crm',
-    icon: Megaphone,
-    status: 'LIVE',
-    children: [
-      { label: 'CRM & Leads', path: '/crm', sub: 'Enquiries, leads & partnerships' },
-      { label: 'Referrals', path: '/referrals', sub: 'Inbound & outbound referrals' },
-    ],
-  },
-  {
-    id: 'governance-strategy',
-    label: '10. Governance & Strategy',
-    sub: 'Governance Layer, Projects, Board Packs & KPIs',
-    path: '/governance',
-    icon: Cpu,
-    status: 'VERIFIED',
-    children: [
-      { label: 'Governance Layer', path: '/governance', sub: 'Delegations, lifecycle & board packs' },
-      { label: 'Projects Hub', path: '/projects', sub: 'Strategic projects & milestones' },
-    ],
-  },
-  {
-    id: 'ndis-regulatory',
-    label: '11. NDIS & Regulatory',
-    sub: 'NDIS Provider Portal, Practice Standards & News',
-    path: '/ndis-portal',
-    icon: ShieldCheck,
-    status: 'SYNCED',
-    children: [
-      { label: 'NDIS Provider Portal', path: '/ndis-portal', sub: 'Registration groups & KPIs' },
-      { label: 'NDIS Updates & News', path: '/ndis-updates', sub: 'Price guide & regulatory alerts' },
-    ],
-  },
-  {
-    id: 'community-support-services',
-    label: '12. Community & Council',
-    sub: 'Community Council Hub, Networks & Accessibility',
-    path: '/community-council',
-    icon: FolderOpen,
-    status: 'READY',
-    children: [
-      { label: 'Community Council Hub', path: '/community-council', sub: 'Local council programs & events' },
-    ],
-  },
-  {
-    id: 'help-knowledge-support',
-    label: '13. Help & Documentation',
-    sub: 'Help Centre & System Support',
-    path: '/help',
-    icon: Settings,
-    status: 'ONLINE',
-    children: [
-      { label: 'Help Centre', path: '/help', sub: 'AI troubleshooter & support tickets' },
-    ],
-  },
-];
+// Keep legacy export names and stored modes compatible; derive contents centrally.
+export const PRIMARY_11_OS_NAV = buildNavigationGroups();
+export const FOCUSED_5_PILLAR_NAV = buildNavigationGroups(MODULE_DIRECTORY, [
+  { id: 'pillar-today', label: '1. My Workspace', keys: NAV_GROUPS[0].keys },
+  { id: 'pillar-people', label: '2. People & Service Delivery', keys: [...NAV_GROUPS[1].keys, ...NAV_GROUPS[2].keys] },
+  { id: 'pillar-workforce', label: '3. Workforce & Communication', keys: [...NAV_GROUPS[3].keys, ...NAV_GROUPS[4].keys] },
+  { id: 'pillar-safety', label: '4. Safety, Quality & Evidence', keys: [...NAV_GROUPS[5].keys, ...NAV_GROUPS[6].keys] },
+  { id: 'pillar-audit', label: '5. Business & Administration', keys: [...NAV_GROUPS[7].keys, ...NAV_GROUPS[8].keys, ...NAV_GROUPS[9].keys] },
+]);
 
-export const FOCUSED_5_PILLAR_NAV = [
-  {
-    id: 'pillar-today',
-    label: '1. Dashboard',
-    sub: 'Executive Dashboard, Subscriptions, Communication, Mailbox & Live Roster',
-    path: '/dashboard',
-    icon: LayoutDashboard,
-    status: 'LIVE',
-    children: [
-      { label: 'Dashboard', path: '/dashboard', sub: 'Executive Dashboard, Subscriptions & Command', icon: LayoutDashboard },
-      { label: 'Administration – Lead (Sherelle)', path: '/today', sub: 'Daily operations workspace', icon: Sun },
-      { label: 'Team Leader - Lead (Jamie)', path: '/team-leader', sub: 'Team leader mobile workspace', icon: Smartphone },
-      { label: 'Communication', path: '/communications', sub: 'Unified Communication, Mailbox & Roster', icon: Megaphone },
-      { label: 'Daily Briefing', path: '/briefing', sub: 'Morning operational briefing' },
-      { label: 'Meetings', path: '/meetings', sub: 'Agendas, minutes & action items' },
-      { label: 'Feedback & Surveys', path: '/feedback', sub: 'Complaints, compliments & surveys' },
-      { label: 'Notifications', path: '/notifications', sub: 'Live alerts, reminders & escalations' },
-      { label: 'Operations Centre', path: '/operations-centre', sub: 'Master operations & control deck' },
-      { label: 'Suggestions Hub', path: '/suggestions', sub: 'Continuous improvement ideas' },
-      { label: 'AI Assistant', path: '/assistant', sub: 'Compliance & HR intelligence copilot' },
-      { label: 'Tasks & To-Do', path: '/tasks', sub: 'Merged shared to-do & sign-off board' },
-    ],
-  },
-  {
-    id: 'pillar-people',
-    label: '2. People & Care',
-    sub: 'Participants, Intake, Goals, Roster & Community',
-    path: '/our-participants',
-    icon: Users,
-    status: 'READY',
-    children: [
-      { label: 'Participant Profiles', path: '/our-participants', sub: '360° participant care folders' },
-      { label: 'Intake Centre', path: '/intake', sub: 'Participant & staff onboarding' },
-      { label: 'Rostering', path: '/rostering', sub: 'Shifts, clearances & coverage' },
-      { label: 'Goals', path: '/goals', sub: 'Participant & staff goal tracking' },
-      { label: 'Visual Boards', path: '/visual-boards', sub: 'Accessible visual routines & AAC' },
-      { label: 'Programs & Events', path: '/programs', sub: 'Community programs & calendar' },
-      { label: 'Frontline Rapid Hub', path: '/frontline-hub', sub: '60-second mobile field actions' },
-      { label: 'CRM & Leads', path: '/crm', sub: 'Enquiries, leads & partnerships' },
-      { label: 'Referrals', path: '/referrals', sub: 'Inbound & outbound referrals' },
-      { label: 'Community Council Hub', path: '/community-council', sub: 'Local council programs & events' },
-    ],
-  },
-  {
-    id: 'pillar-workforce',
-    label: '3. Workforce & HR',
-    sub: 'Employees, Clearances, Training, HR, Presence & Users',
-    path: '/our-employees',
-    icon: ClipboardList,
-    status: 'READY',
-    children: [
-      { label: 'My Profile', path: '/my-profile', sub: 'Personal profile, work & docs' },
-      { label: 'Employee Profiles', path: '/our-employees', sub: '360° staff directory & files' },
-      { label: 'HR Hub', path: '/hr', sub: 'Contracts, appraisals & payroll' },
-      { label: 'Training Centre', path: '/training', sub: 'LMS courses, quizzes & matrix' },
-      { label: 'Certificates', path: '/certificates', sub: 'Credentials & expiry alerts' },
-      { label: 'Workforce Presence Centre', path: '/workforce-presence', sub: 'Live sign-in & roll call' },
-      { label: 'Volunteering & Placements', path: '/volunteers', sub: 'Volunteer screening & placements' },
-      { label: 'Key Personnel Contacts', path: '/key-contacts', sub: 'Key personnel & emergency directory' },
-      { label: 'Users & Permissions', path: '/users', sub: 'Role matrix & access control' },
-    ],
-  },
-  {
-    id: 'pillar-safety',
-    label: '4. Safety, Risk & Quality',
-    sub: 'Incidents, Risks, Continuous Improvement & Emergency',
-    path: '/incidents',
-    icon: ShieldAlert,
-    status: 'GUARDED',
-    children: [
-      { label: 'Incident Clinic', path: '/incidents', sub: 'NDIS 24h/5d & SIRS triage' },
-      { label: 'Incident Analytics', path: '/incident-analytics', sub: 'Root-cause & trend intelligence' },
-      { label: 'Risk Reporting', path: '/risks', sub: 'Risk register, hazards & Take-5' },
-      { label: 'Quality & Improvement', path: '/quality', sub: 'Closed-loop CAPA register' },
-      { label: 'Emergency Response', path: '/emergency-response', sub: 'Drills, plans & roll call' },
-      { label: 'Equipment Manuals & MSDS', path: '/equipment-manuals', sub: 'Safety data sheets & manuals' },
-    ],
-  },
-  {
-    id: 'pillar-audit',
-    label: '5. Audit, Governance & Finance',
-    sub: 'Compliance, Analytics, Vault & Safe, NDIS & Finance',
-    path: '/compliance',
-    icon: ShieldCheck,
-    status: 'VERIFIED',
-    children: [
-      { label: 'Compliance & Evidence', path: '/compliance', sub: 'Merged Compliance Centre, Business Analytics & 356 checks' },
-      { label: 'Auditor Portal', path: '/auditor-portal', sub: 'Consent-verified auditor view' },
-      { label: 'Document Vault', path: '/documents', sub: 'Document Vault, Smart Vault, Company Safe & 45 Master Registers' },
-      { label: 'Remote Access & VPN', path: '/remote-access', sub: 'Zero-trust remote access without headaches' },
-      { label: 'Governance Layer', path: '/governance', sub: 'Delegations, lifecycle & board packs' },
-      { label: 'Checklists', path: '/checklists', sub: 'Operational & audit checklists' },
-      { label: 'Review Due Board', path: '/review-due', sub: 'Upcoming scheduled reviews' },
-      { label: 'Evidence & User Success Hub', path: '/user-success', sub: 'Evidence-first verification' },
-      { label: 'NDIS Provider Portal', path: '/ndis-portal', sub: 'Registration groups & KPIs' },
-      { label: 'NDIS Updates & News', path: '/ndis-updates', sub: 'Price guide & regulatory alerts' },
-      { label: 'Invoicing & Finance', path: '/invoicing', sub: 'NDIS claims & financial controls' },
-      { label: 'Quote Centre', path: '/quotes', sub: 'Service quotes & agreements' },
-      { label: 'Receipt Hub', path: '/receipts', sub: 'Expense scanner & reimbursements' },
-      { label: 'Procurement', path: '/procurement', sub: 'Purchase orders & suppliers' },
-      { label: 'Asset Management', path: '/assets', sub: 'Fleet, equipment & maintenance' },
-      { label: 'Projects Hub', path: '/projects', sub: 'Strategic projects & milestones' },
-      { label: 'Help Centre', path: '/help', sub: 'AI troubleshooter & support tickets' },
-    ],
-  },
-];
+function restrictGroups(groups, modules) {
+  const paths = new Set(modules.map((module) => module.path));
+  return groups.map((group) => {
+    const children = group.children.filter((child) => paths.has(child.path));
+    return children.length ? { ...group, children, path: children[0].path } : null;
+  }).filter(Boolean);
+}
 
 export default function ObsidianSidebarRemote({
   visiblePrimary,
@@ -323,14 +46,16 @@ export default function ObsidianSidebarRemote({
   const { isAuthenticated } = useAuth();
   const [navMode, setNavMode] = useState(() => localStorage.getItem('chr-active-remote-mode') || 'os11');
   const [selectedPillarId, setSelectedPillarId] = useState(
-    () => localStorage.getItem('chr-active-remote-pillar') || 'dashboard-executive'
+    () => localStorage.getItem('chr-active-remote-pillar') || 'my-workspace'
   );
   const prevPathnameRef = useRef(location.pathname);
+  const [collapsedGroups, setCollapsedGroups] = useState({});
 
   React.useEffect(() => {
     if (prevPathnameRef.current === location.pathname) return;
     prevPathnameRef.current = location.pathname;
-    const list = navMode === 'pillars5' ? FOCUSED_5_PILLAR_NAV : PRIMARY_11_OS_NAV;
+    setCollapsedGroups({});
+    const list = navMode === 'pillars5' ? focusedGroups : primaryGroups;
     const currentStillMatches = list.some(
       (p) =>
         p.id === selectedPillarId &&
@@ -369,6 +94,7 @@ export default function ObsidianSidebarRemote({
   };
 
   const openMajorSectionInMainView = (pillar, modeOverride, shouldNavigate = true) => {
+    if (!pillar) return;
     const activeMode = modeOverride || navMode;
     setSelectedPillarId(pillar.id);
     localStorage.setItem('chr-active-remote-pillar', pillar.id);
@@ -386,7 +112,7 @@ export default function ObsidianSidebarRemote({
   };
 
   const sourceList =
-    Array.isArray(visiblePrimary) && visiblePrimary.length > 0
+    Array.isArray(visiblePrimary)
       ? visiblePrimary
       : MODULE_DIRECTORY;
 
@@ -403,6 +129,9 @@ export default function ObsidianSidebarRemote({
       !(item.key === 'staff-progress' && sourceList.some((entry) => entry.key === 'staff')) &&
       !['company-safe', 'universal-storage', 'registers', 'record-intelligence'].includes(item.key)
   );
+
+  const primaryGroups = restrictGroups(PRIMARY_11_OS_NAV, modules);
+  const focusedGroups = restrictGroups(FOCUSED_5_PILLAR_NAV, modules);
 
   return (
     <div
@@ -434,11 +163,11 @@ export default function ObsidianSidebarRemote({
               onClick={() => {
                 setNavMode('pillars5');
                 const match =
-                  FOCUSED_5_PILLAR_NAV.find(
+                  focusedGroups.find(
                     (p) =>
                       location.pathname === p.path ||
                       p.children.some((c) => location.pathname === c.path || location.pathname.startsWith(`${c.path}/`))
-                  ) || FOCUSED_5_PILLAR_NAV[0];
+                  ) || focusedGroups[0];
                 openMajorSectionInMainView(match, 'pillars5', false);
               }}
               className={`min-h-[26px] min-w-0 whitespace-nowrap rounded-[6px] px-0.5 py-0.5 text-[10px] font-extrabold tracking-tight text-white transition-all ${
@@ -456,11 +185,11 @@ export default function ObsidianSidebarRemote({
               onClick={() => {
                 setNavMode('os11');
                 const match =
-                  PRIMARY_11_OS_NAV.find(
+                  primaryGroups.find(
                     (p) =>
                       location.pathname === p.path ||
                       p.children.some((c) => location.pathname === c.path || location.pathname.startsWith(`${c.path}/`))
-                  ) || PRIMARY_11_OS_NAV[0];
+                  ) || primaryGroups[0];
                 openMajorSectionInMainView(match, 'os11', false);
               }}
               className={`min-h-[26px] min-w-0 whitespace-nowrap rounded-[6px] px-0.5 py-0.5 text-[10px] font-extrabold tracking-tight text-white transition-all ${
@@ -471,7 +200,7 @@ export default function ObsidianSidebarRemote({
                 color: '#FFFFFF',
               }}
             >
-              ◉ 13 Channels
+              ◉ 10 Groups
             </button>
             <button
               type="button"
@@ -492,7 +221,7 @@ export default function ObsidianSidebarRemote({
                 color: '#FFFFFF',
               }}
             >
-              ◉ All 45
+              ◉ All {modules.length}
             </button>
           </div>
         </div>
@@ -514,7 +243,7 @@ export default function ObsidianSidebarRemote({
             };
 
             if (navMode === 'os11' || navMode === 'pillars5') {
-              const list = navMode === 'pillars5' ? FOCUSED_5_PILLAR_NAV : PRIMARY_11_OS_NAV;
+              const list = navMode === 'pillars5' ? focusedGroups : primaryGroups;
               return list.map((pillar) => {
                 const Icon = pillar.icon;
                 const symColor = nextSymbolColor();
@@ -527,8 +256,11 @@ export default function ObsidianSidebarRemote({
                   <div key={pillar.id}>
                     <button
                       type="button"
-                      onClick={() => openMajorSectionInMainView(pillar)}
-                      aria-pressed={selectedPillarId === pillar.id}
+                      onClick={() => {
+                        setCollapsedGroups((previous) => ({ ...previous, [pillar.id]: !(previous[pillar.id] ?? !pillarActive) }));
+                        openMajorSectionInMainView(pillar, undefined, false);
+                      }}
+                      aria-expanded={!(collapsedGroups[pillar.id] ?? !pillarActive)}
                       title={pillar.label}
                       className={`group block w-full text-left rounded-lg p-[1.5px] transition-all duration-150 focus-visible:outline-none ${
                         pillarActive
@@ -579,7 +311,7 @@ export default function ObsidianSidebarRemote({
                       </div>
                     </button>
 
-                    {pillar.children?.length > 0 && (
+                    {!(collapsedGroups[pillar.id] ?? !pillarActive) && pillar.children?.length > 0 && (
                       <div className="mt-1 space-y-1 pl-2 border-l-2 border-[#A855F7]/70">
                         {pillar.children.map((child, cIdx) => {
                           const childSymColor = nextSymbolColor();
