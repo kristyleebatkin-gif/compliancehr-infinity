@@ -61,7 +61,7 @@ export function withTenantRls(schema) {
     const lock = lockFor(group, op);
     if (!lock) continue;
     const existing = rls[op];
-    if (isLocked(existing, lock)) continue;
+    if (isLocked(existing, lock) || JSON.stringify(existing) === JSON.stringify(lock)) continue;
     rls[op] = existing ? { $and: [existing, lock] } : lock;
   }
   return { ...schema, rls };
