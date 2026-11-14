@@ -30,9 +30,9 @@ async function all(dao: any) {
   return out;
 }
 
-export default async function reqHandler(req: Request) {
+// Takes the Base44 client as a parameter so tests can run it against an in-memory fake.
+export async function handleBranding(base44: any, req: Request) {
   try {
-    const base44 = createClientFromRequest(req);
     const body: any = await req.json().catch(() => ({}));
     const ctx = await resolveTenantContext(base44, body?.tenant_id || null);
     if (!ctx.ok) return denied(ctx);
@@ -95,4 +95,8 @@ export default async function reqHandler(req: Request) {
   } catch (error) {
     return Response.json({ error: error instanceof Error ? error.message : 'Branding update failed' }, { status: 500 });
   }
+}
+
+export default function reqHandler(req: Request) {
+  return handleBranding(createClientFromRequest(req), req);
 }
