@@ -2,6 +2,11 @@
   "type": "object",
   "name": "PushLog",
   "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
     "key": {
       "type": "string",
       "title": "Dedupe Key"

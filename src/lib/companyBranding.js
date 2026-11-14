@@ -1,6 +1,20 @@
-import { base44 } from '@/api/base44Client';
+import { base44, getClientTenantContext } from '@/api/base44Client';
+import { TENANT_ENFORCEMENT_ON } from '@/lib/tenantEnforcement';
 
-const STORAGE_KEY = 'compliancehr_company_branding';
+// Audit CRIT-04: the browser cache is kept per business and cleared on sign-out, so one
+// business's name or logo can never show on another business's screens or documents.
+const STORAGE_PREFIX = 'compliancehr_company_branding';
+const storageKey = () => `${STORAGE_PREFIX}:${getClientTenantContext()?.tenantId || 'none'}`;
+
+export function clearCompanyBrandingCache() {
+  try {
+    Object.keys(localStorage)
+      .filter((key) => key === STORAGE_PREFIX || key.startsWith(`${STORAGE_PREFIX}:`))
+      .forEach((key) => localStorage.removeItem(key));
+  } catch {
+    // Storage may be unavailable (private mode); nothing to clear.
+  }
+}
 export const COMPLIANCE_HR_FOOTER = 'ComplianceHR Infinity | Complete Control. Greater Confidence. Brighter Success.';
 export const OFFICIAL_LOGO_WITH_SLOGAN_URL = 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/4f9e398f4_generated_image.png';
 export const COMPANY_LOGO_URL = OFFICIAL_LOGO_WITH_SLOGAN_URL;
@@ -17,10 +31,12 @@ const DEFAULTS = {
   slogan: 'Complete Control. Greater Confidence. Brighter Success.',
   logoUrl: OFFICIAL_LOGO_WITH_SLOGAN_URL,
   logoDataUrl: '',
-  addressLine: 'U5/14 Keane Street, Currajong, QLD, 4812',
-  abn: '11769681650',
-  phone: '0402 165 668',
-  email: 'kristyleebatkin@live.com.au',
+  // Contact details always come from the business's own Business Details record;
+  // no business's address, ABN, phone or email is built into the app.
+  addressLine: '',
+  abn: '',
+  phone: '',
+  email: '',
 };
 
 const composeAddress = (business) => [
@@ -28,10 +44,11 @@ const composeAddress = (business) => [
   [business?.suburb, business?.state, business?.postcode].filter(Boolean).join(' '),
 ].filter(Boolean).join(', ');
 
+// Each business prints its own name (decision 14 Nov 2026: Choices North Queensland's documents show
+// Choices North Queensland; ComplianceHR Infinity appears only in the footer as the platform).
 const sanitizeCompanyName = (val) => {
   const s = String(val || '').trim();
-  if (!s || /choices\s*(nq|north\s*queensland)/i.test(s)) return DEFAULTS.companyName;
-  return s;
+  return s || DEFAULTS.companyName;
 };
 
 const businessToBranding = (business) => ({
@@ -58,16 +75,19 @@ async function logoUrlToDataUrl(url) {
 
 export function getCompanyBranding() {
   try {
-    const branding = { ...DEFAULTS, ...JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}') };
+    const branding = { ...DEFAULTS, ...JSON.parse(localStorage.getItem(storageKey()) || '{}') };
     branding.companyName = sanitizeCompanyName(branding.companyName);
     if (!branding.logoUrl || LEGACY_LOGO_URLS.has(branding.logoUrl)) {
       branding.logoUrl = OFFICIAL_LOGO_WITH_SLOGAN_URL;
     }
     // Older caches stored the slogan with the brand name prefixed; drop it so
     // documents never print the name twice.
-    branding.slogan = String(branding.slogan || '')
-      .replace(/^ComplianceHR (Infinity|Infinitely)\s*[|·]\s*/i, '')
-      .trim() || DEFAULTS.slogan;
+    // A business may choose to have no slogan (stored as ''); only a missing value uses the default.
+    branding.slogan = branding.slogan === ''
+      ? ''
+      : String(branding.slogan || '')
+        .replace(/^ComplianceHR (Infinity|Infinitely)\s*[|·]\s*/i, '')
+        .trim() || DEFAULTS.slogan;
     return branding;
   } catch {
     return DEFAULTS;
@@ -81,7 +101,7 @@ export function hasConfiguredCompanyBranding() {
 
 export function cacheCompanyBranding(branding) {
   const value = { ...getCompanyBranding(), ...branding };
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(value));
+  try { localStorage.setItem(storageKey(), JSON.stringify(value)); } catch { /* storage unavailable */ }
   return value;
 }
 
@@ -91,15 +111,20 @@ export async function loadCompanyBranding() {
   // Branding lookups must never fail an export: roles without Provider or
   // Business Details read access fall back to the cached branding.
   try {
+    // Once business separation is on, only the signed-in account's own business records are read.
+    const tenantId = getClientTenantContext()?.tenantId || null;
+    const own = (query = {}) => (TENANT_ENFORCEMENT_ON && tenantId ? { ...query, tenant_id: tenantId } : query);
     [providerPage, businessPage] = await Promise.all([
-      base44.entities.Provider.filter({ document_branding_active: true }, { sort: '-created_date', limit: 1 }),
-      base44.entities.BusinessDetails.list({ sort: '-created_date', limit: 1 }),
+      base44.entities.Provider.filter(own({ document_branding_active: true }), { sort: '-created_date', limit: 1 }),
+      base44.entities.BusinessDetails.filter(own(), { sort: '-created_date', limit: 1 }),
     ]);
   } catch {
     return { ...getCompanyBranding(), providerId: '' };
   }
   let provider = providerPage.items?.[0] || null;
-  if (!provider) {
+  if (!provider && !TENANT_ENFORCEMENT_ON) {
+    // Release 1 only: before records carry a business tag there is one business, so its latest
+    // Provider record is its own. After release 2 there is no cross-business fallback.
     const fallback = await base44.entities.Provider.list({ sort: '-created_date', limit: 1 });
     provider = fallback.items?.[0] || null;
   }
@@ -117,7 +142,7 @@ export async function loadCompanyBranding() {
   return {
     ...cacheCompanyBranding({
       companyName: businessBranding.companyName || provider?.provider_name || DEFAULTS.companyName,
-      slogan: provider?.document_slogan || DEFAULTS.slogan,
+      slogan: provider ? String(provider.document_slogan ?? '').trim() : DEFAULTS.slogan,
       logoUrl: provider?.logo_url || getCompanyBranding().logoUrl || '',
       logoDataUrl,
       addressLine: businessBranding.addressLine,
@@ -140,7 +165,7 @@ export async function saveCompanyBranding({
   const response = await base44.functions.invoke('updateCompanyBranding', {
     provider_id: providerId || '',
     company_name: payload.provider_name,
-    company_slogan: slogan?.trim() || DEFAULTS.slogan,
+    company_slogan: slogan?.trim() || '',
     logo_url: payload.logo_url,
   });
   if (response.data?.error) throw new Error(response.data.error);
@@ -156,7 +181,7 @@ export async function saveCompanyBranding({
   return {
     ...cacheCompanyBranding({
       companyName: payload.provider_name,
-      slogan: slogan?.trim() || DEFAULTS.slogan,
+      slogan: String(slogan ?? '').trim(),
       logoUrl: payload.logo_url,
       logoDataUrl: cachedLogoDataUrl,
     }),
@@ -199,9 +224,11 @@ export function drawCompanyBranding(doc, x, y, { fontSize = 16, logoSize = 30, m
   let bottomY = y + (nameLines.length - 1) * fontSize * 1.2 + 15;
   const sloganSize = Math.max(7.5, fontSize * 0.5);
   doc.setFont('helvetica', 'normal'); doc.setFontSize(sloganSize); doc.setTextColor(71, 85, 105);
-  const sloganLines = doc.splitTextToSize(branding.slogan, availableWidth);
-  doc.text(sloganLines, textX, bottomY, { lineHeightFactor: 1.35 });
-  bottomY += sloganLines.length * sloganSize * 1.35 + 4;
+  if (branding.slogan) {
+    const sloganLines = doc.splitTextToSize(branding.slogan, availableWidth);
+    doc.text(sloganLines, textX, bottomY, { lineHeightFactor: 1.35 });
+    bottomY += sloganLines.length * sloganSize * 1.35 + 4;
+  }
   if (branding.addressLine) {
     doc.setFontSize(7); doc.setTextColor(100, 116, 139);
     const addressLines = doc.splitTextToSize(branding.addressLine, availableWidth);
@@ -245,7 +272,8 @@ export function drawDocumentFooter(doc, {
   const descriptor = [confidential, docType && docType !== title && docType, title, code && `(${code})`].filter(Boolean).join(' | ');
   const branding = getCompanyBranding();
   const footerTextX = branding.logoDataUrl ? margin + 24 : margin;
-  const slogan = branding.slogan || 'Complete Control. Greater Confidence. Brighter Success.';
+  // The footer is the platform's own identity, so it always uses the ComplianceHR slogan.
+  const slogan = COMPANY_SLOGAN;
 
   for (let page = 1; page <= pages; page += 1) {
     doc.setPage(page);

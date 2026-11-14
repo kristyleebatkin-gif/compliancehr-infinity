@@ -2,6 +2,11 @@
   "type": "object",
   "name": "HrTemplate",
   "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID — \"shared\" for master templates",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
     "title": {
       "type": "string",
       "title": "Template Title"

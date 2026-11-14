@@ -2,6 +2,11 @@
   "type": "object",
   "name": "ChecklistDocument",
   "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID — \"shared\" for master templates",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
     "template_key": {
       "type": "string",
       "title": "Template Key"

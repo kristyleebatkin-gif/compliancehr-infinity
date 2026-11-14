@@ -2,6 +2,11 @@
   "name": "EmergencyDrill",
   "type": "object",
   "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
     "title": {
       "type": "string",
       "title": "Drill Title"

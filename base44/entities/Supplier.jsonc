@@ -2,6 +2,11 @@
   "name": "Supplier",
   "type": "object",
   "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
     "name": {
       "type": "string",
       "title": "Supplier Name"

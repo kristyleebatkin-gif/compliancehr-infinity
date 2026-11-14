@@ -2,6 +2,11 @@
   "type": "object",
   "name": "FinanceRecord",
   "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
     "transaction_date": {
       "type": "string",
       "title": "Transaction Date",

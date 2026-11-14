@@ -2,6 +2,11 @@
   "type": "object",
   "name": "StaffLetter",
   "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
     "staff_id": {
       "type": "string",
       "title": "Employee"

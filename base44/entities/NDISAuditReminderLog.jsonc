@@ -2,6 +2,11 @@
   "type": "object",
   "name": "NDISAuditReminderLog",
   "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
     "audit_id": {
       "type": "string",
       "title": "Audit Record"

@@ -9,7 +9,7 @@
         "update"
       ]
     },
-    "condition": "${ .trigger.data.status == \"Inactive\" }"
+    "condition": "${ (.trigger.event_type != \"update\" or (.trigger.changed_fields == null) or ((((.trigger.changed_fields // []) - [\"tenant_id\", \"updated_date\"]) | length) > 0)) and (.trigger.data.status == \"Inactive\") }"
   },
   "definition": {
     "document": {

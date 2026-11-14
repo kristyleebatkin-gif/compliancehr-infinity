@@ -2,6 +2,11 @@
   "name": "PayrollChangeLog",
   "type": "object",
   "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
     "payroll_detail_id": {
       "type": "string",
       "title": "Payroll Detail"

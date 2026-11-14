@@ -2,6 +2,11 @@
   "type": "object",
   "name": "NDISRegistrationGroup",
   "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
     "registration_profile_id": {
       "type": "string",
       "title": "Registration Profile"

@@ -2,6 +2,11 @@
   "type": "object",
   "name": "ImprovementReview",
   "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
     "improvement_id": {
       "type": "string",
       "title": "Improvement ID"

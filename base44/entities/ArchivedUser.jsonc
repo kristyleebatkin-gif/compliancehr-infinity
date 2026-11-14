@@ -2,6 +2,11 @@
   "type": "object",
   "name": "ArchivedUser",
   "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
     "user_id": {
       "type": "string",
       "title": "User ID"

@@ -10,7 +10,7 @@
         "update"
       ]
     },
-    "condition": "${ .trigger.data.intake_type == \"Employee\" and (.trigger.event_type == \"create\" or .trigger.data.status == \"Approved\" or .trigger.data.status == \"Converted to Profile\") }"
+    "condition": "${ (.trigger.event_type != \"update\" or (.trigger.changed_fields == null) or ((((.trigger.changed_fields // []) - [\"tenant_id\", \"updated_date\"]) | length) > 0)) and (.trigger.data.intake_type == \"Employee\" and (.trigger.event_type == \"create\" or .trigger.data.status == \"Approved\" or .trigger.data.status == \"Converted to Profile\")) }"
   },
   "definition": {
     "document": {

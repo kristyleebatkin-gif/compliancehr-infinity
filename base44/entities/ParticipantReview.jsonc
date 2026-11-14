@@ -2,6 +2,11 @@
   "type": "object",
   "name": "ParticipantReview",
   "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
     "participant_id": {
       "type": "string",
       "title": "Participant"

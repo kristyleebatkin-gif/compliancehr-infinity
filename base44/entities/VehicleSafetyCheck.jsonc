@@ -2,6 +2,11 @@
   "type": "object",
   "name": "VehicleSafetyCheck",
   "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
     "shift_id": {
       "type": "string",
       "title": "Linked Shift"

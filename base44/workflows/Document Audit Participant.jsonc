@@ -1,7 +1,7 @@
 {
   "description": "Automatically records who changed, created or deleted a participant profile document and when, into the central audit log and the participant's profile audit trail.",
   "trigger": {
-    "condition": null,
+    "condition": "${ (.trigger.event_type != \"update\" or (.trigger.changed_fields == null) or ((((.trigger.changed_fields // []) - [\"tenant_id\", \"updated_date\"]) | length) > 0)) }",
     "config": {
       "trigger_type": "entity",
       "events": [

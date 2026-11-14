@@ -1,4 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
+import { resolveTenantContext, scopeQuery, stampTenant, denied, TENANT_ENFORCEMENT_ON } from '../../shared/tenantContext.ts';
 
 const ALLOWED_ROLES = [
   'admin',
@@ -39,12 +40,21 @@ const SPECS = [
   { key: 'hr', title: 'HR Hub', entity: 'LeaveRequest', groupBy: 'status', counts: ['PerformanceReview'] },
 ];
 
-export default async function reqHandler(req) {
+// Business-local date (YYYY-MM-DD) for the snapshot key.
+const localDate = (timeZone: string) =>
+  new Intl.DateTimeFormat('en-CA', { timeZone, year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+
+export default async function reqHandler(req: Request) {
   try {
     const base44 = createClientFromRequest(req);
-    const user = await base44.auth.me();
-    if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    const body: any = await req.json().catch(() => ({}));
+    // Audit CRIT-02: one server-derived business context with the canonical active/approved check.
+    const ctx = await resolveTenantContext(base44, body?.tenantId || null);
+    if (!ctx.ok) return denied(ctx);
+    const user = ctx.user;
     if (!ALLOWED_ROLES.includes(user.role)) return Response.json({ error: 'Forbidden' }, { status: 403 });
+    const tenantId = ctx.tenantId;
+    const q = (query: any = {}) => scopeQuery(query, tenantId);
 
     const jobs = [];
     SPECS.forEach((spec, index) => {
@@ -53,13 +63,13 @@ export default async function reqHandler(req) {
           index,
           kind: 'agg',
           field: spec.groupBy,
-          run: () => base44.asServiceRole.entities[spec.entity].aggregate({ query: {}, groupBy: spec.groupBy }),
+          run: () => base44.asServiceRole.entities[spec.entity].aggregate({ query: q(), groupBy: spec.groupBy }),
         });
       } else {
-        jobs.push({ index, kind: 'count', run: () => base44.asServiceRole.entities[spec.entity].count({}) });
+        jobs.push({ index, kind: 'count', run: () => base44.asServiceRole.entities[spec.entity].count(q()) });
       }
       (spec.counts || []).forEach((entityName) => {
-        jobs.push({ index, kind: 'count2', entity: entityName, run: () => base44.asServiceRole.entities[entityName].count({}) });
+        jobs.push({ index, kind: 'count2', entity: entityName, run: () => base44.asServiceRole.entities[entityName].count(q()) });
       });
     });
 
@@ -86,24 +96,27 @@ export default async function reqHandler(req) {
     }
 
     // Daily live status snapshot — one row per module per day (the exportable log)
-    const today = new Date().toISOString().slice(0, 10);
+    // Snapshot date in the business's own time zone; one row per business per module per day.
+    const today = localDate('Australia/Brisbane');
     const capturedAt = new Date().toISOString();
-    const snapshotRows = SPECS.map((spec, index) => ({
+    const snapshotRows = SPECS.map((spec, index) => stampTenant({
       module: spec.title,
       snapshot_date: today,
       total: acc[index].total,
       breakdown_json: JSON.stringify(acc[index].breakdown),
       captured_at: capturedAt,
-    }));
+    }, tenantId));
     let snapshotError = null;
     try {
-      await base44.asServiceRole.entities.ModuleDailyStatus.upsert(snapshotRows, { key: ['module', 'snapshot_date'] });
+      await base44.asServiceRole.entities.ModuleDailyStatus.upsert(snapshotRows, { key: ['tenant_id', 'module', 'snapshot_date'] });
     } catch (error) {
       snapshotError = error.message;
     }
 
     return Response.json({
       generated_at: capturedAt,
+      tenant_id: tenantId,
+      business_scoped: TENANT_ENFORCEMENT_ON,
       snapshot_error: snapshotError,
       modules: SPECS.map((spec, index) => ({
         key: spec.key,
