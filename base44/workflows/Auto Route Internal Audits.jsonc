@@ -1,4 +1,17 @@
 {
+  "name": "Auto Route: Internal Audits",
+  "description": "Files internal audits into the audit register and auto-creates compliance issues from findings",
+  "trigger": {
+    "condition": "${ (.trigger.event_type != \"update\" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; . != \"tenant_id\" and . != \"updated_date\")) }",
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "create",
+        "update"
+      ],
+      "entity_name": "InternalAudit"
+    }
+  },
   "definition": {
     "document": {
       "dsl": "1.0.0",
@@ -26,18 +39,5 @@
         }
       }
     ]
-  },
-  "trigger": {
-    "condition": "${ (.trigger.event_type != \"update\" or .trigger.changed_fields == null or any(.trigger.changed_fields[]; . != \"tenant_id\" and . != \"updated_date\")) }",
-    "config": {
-      "trigger_type": "entity",
-      "events": [
-        "create",
-        "update"
-      ],
-      "entity_name": "InternalAudit"
-    }
-  },
-  "description": "Files internal audits into the audit register and auto-creates compliance issues from findings",
-  "name": "Auto Route: Internal Audits"
+  }
 }
