@@ -34,7 +34,7 @@ export default function TaskLeaderboard({ compact = true }) {
           const taskPage = await base44.entities.TodoTask.filter(filter, {
             limit: 500,
             cursor,
-            fields: ['responsible', 'completed_date', 'time_taken_minutes', 'title', 'module']
+            fields: ['responsible', 'responsible_emails', 'completed_date', 'time_taken_minutes', 'title', 'module']
           });
           if (!Array.isArray(taskPage?.items)) throw new Error('Unexpected task leaderboard response.');
           rows.push(...taskPage.items);
@@ -69,16 +69,29 @@ export default function TaskLeaderboard({ compact = true }) {
       const completed = t.completed_date ? new Date(`${t.completed_date}T12:00:00`) : null;
       return completed && completed >= start && completed <= end;
     });
+    // Scoring rule (audit HIGH-04, documented): each person listed as responsible on a task that is
+    // Completed or Finalised within the season earns 1 point, once per task. People are matched by
+    // their email address where the task has one (stable even if two staff share a name), else by name.
+    // Equal points share a rank (1, 1, 3), so a tie is never broken by list order.
     const scores = new Map();
     seasonTasks.forEach((task) => {
-      (task.responsible || []).forEach((name) => {
-        const entry = scores.get(name) || { name, points: 0, tasks: [], fastest: null, slowest: null };
+      const names = task.responsible || [];
+      const emails = task.responsible_emails || [];
+      const seen = new Set();
+      names.forEach((name, i) => {
+        const email = String(emails[i] || '').trim().toLowerCase();
+        const key = email || `name:${String(name).trim().toLowerCase()}`;
+        if (!name || seen.has(key)) return;
+        seen.add(key);
+        const entry = scores.get(key) || { key, name, points: 0, tasks: [], fastest: null, slowest: null };
         entry.points += 1;
         entry.tasks.push(task);
-        scores.set(name, entry);
+        scores.set(key, entry);
       });
     });
-    return { year, board: [...scores.values()].sort((a, b) => b.points - a.points) };
+    const sorted = [...scores.values()].sort((a, b) => b.points - a.points || a.name.localeCompare(b.name));
+    sorted.forEach((entry, i) => { entry.rank = i > 0 && sorted[i - 1].points === entry.points ? sorted[i - 1].rank : i + 1; });
+    return { year, board: sorted };
   }, [tasks, settings.season_start, settings.season_end]);
 
   const endAt = new Date(settings.season_end);
@@ -140,11 +153,11 @@ export default function TaskLeaderboard({ compact = true }) {
         ) : (
           <div className="space-y-1 max-h-28 overflow-y-auto pr-1">
             {season.board.slice(0, expanded ? 8 : 3).map((entry, idx) => {
-              const rank = idx + 1;
+              const rank = entry.rank || idx + 1;
               const character = characterFor(entry.name);
               return (
                 <div
-                  key={entry.name}
+                  key={entry.key || entry.name}
                   className="flex items-center justify-between rounded-lg border border-white/30 bg-[#16447A] px-2.5 py-1 text-[11px] text-white"
                 >
                   <span className="truncate font-bold text-white">
