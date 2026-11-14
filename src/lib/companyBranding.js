@@ -1,6 +1,20 @@
-import { base44 } from '@/api/base44Client';
+import { base44, getClientTenantContext } from '@/api/base44Client';
+import { TENANT_ENFORCEMENT_ON } from '@/lib/tenantEnforcement';
 
-const STORAGE_KEY = 'compliancehr_company_branding';
+// Audit CRIT-04: the browser cache is kept per business and cleared on sign-out, so one
+// business's name or logo can never show on another business's screens or documents.
+const STORAGE_PREFIX = 'compliancehr_company_branding';
+const storageKey = () => `${STORAGE_PREFIX}:${getClientTenantContext()?.tenantId || 'none'}`;
+
+export function clearCompanyBrandingCache() {
+  try {
+    Object.keys(localStorage)
+      .filter((key) => key === STORAGE_PREFIX || key.startsWith(`${STORAGE_PREFIX}:`))
+      .forEach((key) => localStorage.removeItem(key));
+  } catch {
+    // Storage may be unavailable (private mode); nothing to clear.
+  }
+}
 export const COMPLIANCE_HR_FOOTER = 'ComplianceHR Infinity | Complete Control. Greater Confidence. Brighter Success.';
 export const OFFICIAL_LOGO_WITH_SLOGAN_URL = 'https://media.base44.com/images/public/6ac9f91f0d82b1f80ec6a25f/4f9e398f4_generated_image.png';
 export const COMPANY_LOGO_URL = OFFICIAL_LOGO_WITH_SLOGAN_URL;
@@ -17,10 +31,12 @@ const DEFAULTS = {
   slogan: 'Complete Control. Greater Confidence. Brighter Success.',
   logoUrl: OFFICIAL_LOGO_WITH_SLOGAN_URL,
   logoDataUrl: '',
-  addressLine: 'U5/14 Keane Street, Currajong, QLD, 4812',
-  abn: '11769681650',
-  phone: '0402 165 668',
-  email: 'kristyleebatkin@live.com.au',
+  // Contact details always come from the business's own Business Details record;
+  // no business's address, ABN, phone or email is built into the app.
+  addressLine: '',
+  abn: '',
+  phone: '',
+  email: '',
 };
 
 const composeAddress = (business) => [
@@ -58,7 +74,7 @@ async function logoUrlToDataUrl(url) {
 
 export function getCompanyBranding() {
   try {
-    const branding = { ...DEFAULTS, ...JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}') };
+    const branding = { ...DEFAULTS, ...JSON.parse(localStorage.getItem(storageKey()) || '{}') };
     branding.companyName = sanitizeCompanyName(branding.companyName);
     if (!branding.logoUrl || LEGACY_LOGO_URLS.has(branding.logoUrl)) {
       branding.logoUrl = OFFICIAL_LOGO_WITH_SLOGAN_URL;
@@ -81,7 +97,7 @@ export function hasConfiguredCompanyBranding() {
 
 export function cacheCompanyBranding(branding) {
   const value = { ...getCompanyBranding(), ...branding };
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(value));
+  try { localStorage.setItem(storageKey(), JSON.stringify(value)); } catch { /* storage unavailable */ }
   return value;
 }
 
@@ -91,15 +107,20 @@ export async function loadCompanyBranding() {
   // Branding lookups must never fail an export: roles without Provider or
   // Business Details read access fall back to the cached branding.
   try {
+    // Once business separation is on, only the signed-in account's own business records are read.
+    const tenantId = getClientTenantContext()?.tenantId || null;
+    const own = (query = {}) => (TENANT_ENFORCEMENT_ON && tenantId ? { ...query, tenant_id: tenantId } : query);
     [providerPage, businessPage] = await Promise.all([
-      base44.entities.Provider.filter({ document_branding_active: true }, { sort: '-created_date', limit: 1 }),
-      base44.entities.BusinessDetails.list({ sort: '-created_date', limit: 1 }),
+      base44.entities.Provider.filter(own({ document_branding_active: true }), { sort: '-created_date', limit: 1 }),
+      base44.entities.BusinessDetails.filter(own(), { sort: '-created_date', limit: 1 }),
     ]);
   } catch {
     return { ...getCompanyBranding(), providerId: '' };
   }
   let provider = providerPage.items?.[0] || null;
-  if (!provider) {
+  if (!provider && !TENANT_ENFORCEMENT_ON) {
+    // Release 1 only: before records carry a business tag there is one business, so its latest
+    // Provider record is its own. After release 2 there is no cross-business fallback.
     const fallback = await base44.entities.Provider.list({ sort: '-created_date', limit: 1 });
     provider = fallback.items?.[0] || null;
   }
@@ -140,7 +161,7 @@ export async function saveCompanyBranding({
   const response = await base44.functions.invoke('updateCompanyBranding', {
     provider_id: providerId || '',
     company_name: payload.provider_name,
-    company_slogan: slogan?.trim() || DEFAULTS.slogan,
+    company_slogan: slogan?.trim() || '',
     logo_url: payload.logo_url,
   });
   if (response.data?.error) throw new Error(response.data.error);
