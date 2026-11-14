@@ -1,5 +1,32 @@
 # ComplianceHR Portal — Master To-Do Plan
 
+## Current implementation checkpoint — 14 November 2026, final review
+
+This section supersedes earlier claims that the new cross-module actions are enabled or verified. All 51 requested module outcomes remain accepted in APPROVED_MODULE_BUILD_SCOPE.md; full completion has NOT been achieved.
+
+Implemented and saved:
+- Referral server handover logic, consent/status checks, recovery ledger and behaviour tests. Public handover disabled before data access: atomic concurrency and unambiguous source linkage unresolved. Existing referral functions remain available.
+- Operations Centre auxiliary /connected-workflows evidence-review screen: billing exceptions, incident follow-up, recorded workforce checks and document release. READ-ONLY PREVIEW, not a new module. No preview result authorises billing, eligibility, closure or release.
+- All new workflow mutations denied server-side with 503 and visibly disabled. Invoice/shift marking needs atomic duplicate protection; acknowledgement/revision needs exact-version/runtime acceptance. Not released.
+- New function reads require active/approved Provider Administrator or admin, matching server scope and active dated membership. Staff matching uses stable IDs, document acknowledgement comparisons use exact versions, and complete positional SDK pagination fails on malformed/repeated/over-limit scans.
+- Company Safe connection-status card refuses credential retrieval unless APP_CONNECTOR_OWNER_TENANT_ID independently matches the verified business. Unbound connections show verification-required. Credential availability is not a tested provider integration. No provider errors/configuration details returned.
+- Frontend/backend role sources match. Jamie/Sherelle roles unchanged.
+
+Verification:
+- npm run lint: exit 0.
+- npm run typecheck: exit 0 (configured frontend scope, not full backend).
+- npm run build: exit 0.
+- npm test: 42 passed, 0 failed.
+- npm run test:deno: 93 passed, 0 failed (existing --no-check configuration).
+- 9 new workflow-safety tests: pre-read denial, membership/scope, connector ownership, disabled writes, complete/malformed/repeated pagination.
+- Browser acceptance not passed: temporary Provider Administrator blocked by approval setup.
+- Builder ran negative live endpoint checks; no successful live write claimed. Proposed real-incident test declined. No payroll, payment, external send, production schedule or publication.
+
+53 central-directory modules inventoried (original 51 plus two pre-existing staff workspaces). Matrix route/file presence is not render/functional verification. Auxiliary preview does not increase module count.
+
+Remaining: transaction/concurrency and source-identity fixes; exact-version acceptance; real tenant A/B and browser/device/accessibility tests; verified connection owners/accounts; expired Gmail reconnection and selected provider setup; outstanding per-module features. Current source tenant release flags observed ON, which does not prove production isolation. No live migration performed here.
+
+
 ## Approved 51-module scope — implementation log, 14 November 2026
 
 Scope source: `approved-module-build-scope.md` (owner-authorised, 51 module outcomes + priority journeys A–E). This log is additive; every earlier entry below is retained as dated evidence and is **not** re-stated as current proof.

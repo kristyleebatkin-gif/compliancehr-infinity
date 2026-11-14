@@ -181,7 +181,7 @@ const AuthenticatedApp = () => {
           <Route path="/participants/:id" element={<LegacyProfileRedirect kind="participant" />} />
           <Route path="/risks" element={<RoleGate navKey="risks"><Risks /></RoleGate>} />
           <Route path="/risk-chemical-dashboard" element={<RoleGate navKey="risks"><RiskChemicalDashboard /></RoleGate>} />
-          <Route path="/connected-workflows" element={<RoleGate navKey="connected-workflows"><ConnectedWorkflows /></RoleGate>} />
+          <Route path="/connected-workflows" element={<RoleGate navKey="operations-centre"><ConnectedWorkflows /></RoleGate>} />
 
           <Route path="/feedback" element={<RoleGate navKey="feedback"><Feedback /></RoleGate>} />
           <Route path="/checklists" element={<RoleGate navKey="checklists"><Checklists /></RoleGate>} />

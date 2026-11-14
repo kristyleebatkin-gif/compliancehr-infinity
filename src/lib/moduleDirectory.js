@@ -5,7 +5,7 @@ import {
   ReceiptText, Wrench, MapPin, HeartHandshake, Building2, Newspaper, Landmark,
   UserCog, Handshake, BarChart3, Briefcase, ShoppingCart, KanbanSquare,
   ClipboardList, MessageSquare, Lightbulb, LifeBuoy, BookOpen, Bot, ClipboardCheck, Activity, TrendingUp,
-  Sun, Link2,
+  Sun,
 } from 'lucide-react';
 
 // Single source of truth for every module in the app: the sidebar, bottom nav and
@@ -57,7 +57,6 @@ export const MODULE_DIRECTORY = [
   { key: 'certificates', label: 'Certificates', path: '/certificates', icon: BadgeCheck, group: '4. Workforce & Training', blurb: 'Participant journey, staff journey, employee recognition leaderboard and my certificates in one place.' },
 
   { key: 'invoicing', label: 'Invoicing Centre', path: '/invoicing', icon: FileSpreadsheet, group: '8. Finance, Assets & Growth', blurb: 'NDIS invoicing, funding management, revenue intelligence and payroll reports.' },
-  { key: 'connected-workflows', label: 'Connected Workflows', path: '/connected-workflows', icon: Link2, group: '8. Finance, Assets & Growth', blurb: 'Journey gates: billing exceptions, incident follow-up and effectiveness, shift eligibility, document release and acknowledgement.' },
   { key: 'quotes', label: 'Quote Centre', path: '/quotes', icon: Landmark, group: '8. Finance, Assets & Growth', blurb: 'Quotes, live branded preview, win-rate analytics and re-issue workflows.' },
   { key: 'receipts', label: 'Receipt Hub', path: '/receipts', icon: ReceiptText, group: '8. Finance, Assets & Growth', blurb: 'Receipt scanning to PDF, reconciliation, reimbursement and exports.' },
   { key: 'procurement', label: 'Procurement', path: '/procurement', icon: ShoppingCart, group: '8. Finance, Assets & Growth', blurb: 'Suppliers, purchase orders, receipts-to-assets and stock tracking.' },

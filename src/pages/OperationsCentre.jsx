@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import ExecutiveOperationsCentre from '@/components/operations/ExecutiveOperationsCentre';
 import EnterpriseOperationsAttendancePayrollFramework from '@/components/operations/EnterpriseOperationsAttendancePayrollFramework';
@@ -38,6 +39,9 @@ export default function OperationsCentre() {
           </p>
         </div>
 
+        <Link to="/connected-workflows" className="mt-3 inline-flex rounded-lg border border-sky-200 bg-sky-50 px-3 py-2 text-sm font-semibold text-blue-950">
+          Review connected workflow evidence (read-only preview)
+        </Link>
         <div
           role="tablist"
           aria-label="Operations workspaces"

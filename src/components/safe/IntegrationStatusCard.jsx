@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Loader2, RefreshCw, PlugZap, ShieldQuestion } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
@@ -75,6 +76,7 @@ export default function IntegrationStatusCard() {
         </div>
       )}
 
+      <Link to="/connected-workflows" className="mt-3 inline-block text-sm font-semibold text-blue-900 underline">Review connected workflow evidence</Link>
       <p className="mt-2 flex items-start gap-1.5 text-[11px] text-muted-foreground">
         <ShieldQuestion className="mt-0.5 h-3.5 w-3.5 shrink-0" />
         {data?.method || 'Status comes from the platform connector SDK. No provider API is called, no message is sent and no credential is shown.'}

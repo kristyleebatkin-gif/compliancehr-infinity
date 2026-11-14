@@ -18,7 +18,7 @@ export default function ConnectedWorkflows() {
   return (
     <ModuleShell
       icon={Link2}
-      moduleKey="connected-workflows"
+      moduleKey="operations-centre"
       title="Connected Workflows"
       subtitle="Review linked records and evidence gaps. Preview checks require end-to-end verification."
     >
