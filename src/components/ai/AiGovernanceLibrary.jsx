@@ -1,0 +1,9 @@
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import catalogue from '@/lib/aiGovernanceCatalogue.json';
+export default function AiGovernanceLibrary({kind,records,onAdopt}){
+ const [search,setSearch]=useState(''),[busy,setBusy]=useState(''),[error,setError]=useState('');
+ const rows=catalogue[kind].filter(r=>JSON.stringify(r).toLowerCase().includes(search.toLowerCase()));
+ const adopt=async r=>{setBusy(r.code);setError('');try{await onAdopt('AiGovernanceRecord',r);}catch(e){setError(e.message);}finally{setBusy('');}};
+ return <section className="space-y-3"><p className="text-sm">{catalogue[kind].length} proposed templates. Adoption creates an organisation draft; effectiveness and residual risk remain unassessed until human testing and review.</p><label className="grid gap-1 text-sm font-bold">Search catalogue<input className="rounded border border-input p-2 font-normal" value={search} onChange={e=>setSearch(e.target.value)}/></label>{error&&<p role="alert">{error}</p>}<div className="grid gap-3 lg:grid-cols-2">{rows.map(r=>{const adopted=records.some(x=>x.code===r.code);return <article key={r.code} className="space-y-2 rounded-xl border border-border bg-white p-4"><h3 className="font-bold">{r.code} · {r.title}</h3><p className="text-sm">{r.description}</p><dl className="text-sm"><dt className="font-bold">Owner / frequency</dt><dd>{r.owner} · {r.frequency||'Before activation and scheduled review'}</dd><dt className="mt-2 font-bold">{kind==='controls'?'Effectiveness measure':'Treatment'}</dt><dd>{r.measure}</dd><dt className="mt-2 font-bold">Risk / references</dt><dd>{r.risk} {r.source_ref||''}</dd></dl><Button variant="outline" disabled={!!busy||adopted} onClick={()=>adopt(r)}>{adopted?'Draft in your register':busy===r.code?'Saving…':'Adopt as draft'}</Button></article>;})}</div></section>;
+}
