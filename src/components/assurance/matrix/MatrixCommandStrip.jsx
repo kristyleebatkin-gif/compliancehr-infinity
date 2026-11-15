@@ -13,10 +13,10 @@ export default function MatrixCommandStrip({ enterprise, counts }) {
   const values = { ...counts, percent: enterprise.percent };
   const hints = {
     rating: enterprise.rating.label,
-    assuredHint: `${counts.exception} exception · ${counts.pending} pending verification`,
-    gapHint: `${counts.missing} no evidence · ${counts.unmapped} not mapped`,
-    findingHint: `${counts.criticalFindings} on critical checkpoints`,
-    actionHint: 'Corrective actions awaiting closure',
+    assuredHint: `${counts.unassessed} draft checkpoints awaiting assessment`,
+    gapHint: 'Evidence assessment is not connected',
+    findingHint: 'Findings assessment is not connected',
+    actionHint: 'Action assessment is not connected',
   };
 
   return (
@@ -30,7 +30,7 @@ export default function MatrixCommandStrip({ enterprise, counts }) {
               <Icon className={`h-4 w-4 shrink-0 ${tile.tone}`} />
             </div>
             <div className="mt-1.5 text-2xl font-extrabold leading-none text-foreground">
-              {values[tile.key] ?? 0}{tile.suffix || ''}
+              {values[tile.key] == null ? 'Not assessed' : `${values[tile.key]}${tile.suffix || ''}`} 
             </div>
             <div className="mt-1.5 text-[11px] font-semibold leading-snug text-muted-foreground">{hints[tile.hint]}</div>
           </div>

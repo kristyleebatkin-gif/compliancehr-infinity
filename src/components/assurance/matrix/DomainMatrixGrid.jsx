@@ -7,7 +7,7 @@ export default function DomainMatrixGrid({ domains = [], activeDomain = 'All', o
       <div className="border-b border-border px-4 py-3">
         <h2 className="text-sm font-extrabold text-foreground">Domain scorecard</h2>
         <p className="text-xs text-muted-foreground">
-          Weighted compliance per audit domain. Critical checkpoints carry five times the weight of informational ones.
+          Draft catalogue domains. Compliance remains unavailable until applicability and checkpoint results are reviewed.
         </p>
       </div>
       <div className="divide-y divide-border">
@@ -24,7 +24,7 @@ export default function DomainMatrixGrid({ domains = [], activeDomain = 'All', o
             <div className="flex flex-wrap items-center justify-between gap-2">
               <span className="text-sm font-bold text-foreground">{domain.domain}</span>
               <span className={cn('rounded-full border px-2 py-0.5 text-[11px] font-bold', domain.rating.tone)}>
-                {domain.percent}% · {domain.rating.label}
+                {domain.percent == null ? domain.rating.label : `${domain.percent}% · ${domain.rating.label}`} 
               </span>
             </div>
             <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
@@ -33,15 +33,15 @@ export default function DomainMatrixGrid({ domains = [], activeDomain = 'All', o
                   'h-full rounded-full',
                   domain.percent >= 90 ? 'bg-safe' : domain.percent >= 70 ? 'bg-warning' : 'bg-danger'
                 )}
-                style={{ width: `${Math.min(domain.percent, 100)}%` }}
+                style={{ width: `${Math.min(domain.percent ?? 0, 100)}%` }}
               />
             </div>
             <div className="flex flex-wrap gap-x-4 gap-y-1 text-[11px] font-semibold text-muted-foreground">
               <span>{domain.first} – {domain.last}</span>
               <span>{domain.count} checkpoints</span>
               <span>{domain.assured} assured</span>
-              <span>{domain.exceptions} exceptions</span>
-              <span>{domain.missing} without evidence</span>
+              <span>Assessment not connected</span>
+              
             </div>
           </button>
         ))}

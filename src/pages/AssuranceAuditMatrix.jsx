@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { Layers } from 'lucide-react';
 import ModuleShell from '@/components/module/ModuleShell';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { AUDIT_CHECKPOINTS, CONTROLS, EVIDENCE_REQUIREMENTS, INDICATORS, catalogueSummary } from '@/lib/masterAssuranceCatalogue';
+import { CONTROLS, EVIDENCE_REQUIREMENTS, INDICATORS, catalogueSummary } from '@/lib/masterAssuranceCatalogue';
 import { resolveAuditMatrix } from '@/lib/auditMatrixScoring';
 import MatrixCommandStrip from '@/components/assurance/matrix/MatrixCommandStrip';
 import DomainMatrixGrid from '@/components/assurance/matrix/DomainMatrixGrid';

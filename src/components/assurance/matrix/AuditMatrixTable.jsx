@@ -74,7 +74,7 @@ export default function AuditMatrixTable({ rows = [], domain = 'All', onDomainCh
             value={state}
             onChange={(event) => reset(setState)(event.target.value)}
             className="h-9 rounded-md border border-input bg-card px-2 text-sm font-semibold text-foreground"
-            aria-label="Filter by live status"
+            aria-label="Filter by assessment status"
           >
             <option value="All">All statuses</option>
             {MATRIX_STATE_ORDER.map((key) => (
@@ -97,7 +97,7 @@ export default function AuditMatrixTable({ rows = [], domain = 'All', onDomainCh
                 <th className="px-3 py-2">Control</th>
                 <th className="px-3 py-2">Evidence requirement</th>
                 <th className="px-3 py-2">Criticality</th>
-                <th className="px-3 py-2">Live status</th>
+                <th className="px-3 py-2">Assessment status</th>
                 <th className="px-3 py-2">Score</th>
               </tr>
             </thead>
@@ -108,7 +108,7 @@ export default function AuditMatrixTable({ rows = [], domain = 'All', onDomainCh
                   className="cursor-pointer align-top hover:bg-muted/60"
                   onClick={() => onSelect?.(row)}
                 >
-                  <td className="px-3 py-2 text-xs font-bold text-brand">{row.audit_code}</td>
+                  <td className="px-3 py-2 text-xs font-bold text-brand"><button type="button" onClick={() => onSelect?.(row)} className="underline">{row.audit_code}</button></td>
                   <td className="px-3 py-2">
                     <div className="text-sm font-semibold text-foreground">{row.audit_name}</div>
                     <div className="text-[11px] font-medium text-muted-foreground">
@@ -137,8 +137,8 @@ export default function AuditMatrixTable({ rows = [], domain = 'All', onDomainCh
                     )}
                   </td>
                   <td className="px-3 py-2 text-xs font-bold text-foreground">
-                    {row.achieved_points}/{row.weighting}
-                    <div className="text-[11px] font-medium text-muted-foreground">{row.compliance_percentage}%</div>
+                    {row.achieved_points == null ? 'Not assessed' : `${row.achieved_points}/${row.weighting}`} 
+                    <div className="text-[11px] font-medium text-muted-foreground">{row.compliance_percentage == null ? '' : `${row.compliance_percentage}%`} </div>
                   </td>
                 </tr>
               ))}
