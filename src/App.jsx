@@ -25,6 +25,9 @@ import ComplianceHub from '@/pages/ComplianceHub';
 import EvidenceOS from '@/pages/EvidenceOS';
 import AiIntelligenceOS from '@/pages/AiIntelligenceOS';
 import KnowledgeGraphOS from '@/pages/KnowledgeGraphOS';
+import ClinicalOS from '@/pages/ClinicalOS';
+import BoardCeo from '@/pages/BoardCeo';
+import ApprovalEngine from '@/pages/ApprovalEngine';
 import AuditorsPortal from '@/pages/AuditorsPortal';
 import DailyBriefing from '@/pages/DailyBriefing';
 import Documents from '@/pages/Documents';
@@ -168,6 +171,8 @@ const AuthenticatedApp = () => {
           <Route path="/evidence" element={<RoleGate navKey="evidence"><EvidenceOS /></RoleGate>} />
           <Route path="/ai-os" element={<RoleGate navKey="ai-os"><AiIntelligenceOS /></RoleGate>} />
           <Route path="/knowledge-graph" element={<RoleGate navKey="knowledge-graph"><KnowledgeGraphOS /></RoleGate>} />
+          <Route path="/clinical-os" element={<RoleGate navKey="clinical-os"><ClinicalOS /></RoleGate>} />
+          <Route path="/board-ceo" element={<RoleGate navKey="board-ceo"><BoardCeo /></RoleGate>} />
           <Route path="/auditor-portal" element={<RoleGate navKey="auditor-portal"><AuditorsPortal /></RoleGate>} />
           <Route path="/briefing" element={<RoleGate navKey="daily-briefing"><DailyBriefing /></RoleGate>} />
           <Route path="/documents" element={<RoleGate navKey="documents"><Documents /></RoleGate>} />
@@ -192,6 +197,7 @@ const AuthenticatedApp = () => {
           <Route path="/risk-chemical-dashboard" element={<RoleGate navKey="risks"><RiskChemicalDashboard /></RoleGate>} />
           <Route path="/connected-workflows" element={<RoleGate navKey="operations-centre"><ConnectedWorkflows /></RoleGate>} />
           <Route path="/approvals" element={<RoleGate navKey="approvals"><ApprovalInbox /></RoleGate>} />
+          <Route path="/approval-engine" element={<RoleGate navKey="approval-engine"><ApprovalEngine /></RoleGate>} />
 
           <Route path="/feedback" element={<RoleGate navKey="feedback"><Feedback /></RoleGate>} />
           <Route path="/checklists" element={<RoleGate navKey="checklists"><Checklists /></RoleGate>} />

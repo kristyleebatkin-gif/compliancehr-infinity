@@ -5,7 +5,7 @@ import {
   ReceiptText, Wrench, MapPin, HeartHandshake, Building2, Newspaper, Landmark,
   UserCog, Handshake, BarChart3, Briefcase, ShoppingCart, KanbanSquare,
   ClipboardList, MessageSquare, Lightbulb, LifeBuoy, BookOpen, Bot, ClipboardCheck, Activity, TrendingUp,
-  Sun, Inbox, Layers, FileCheck2, Network,
+  Sun, Inbox, Layers, FileCheck2, Network, Stethoscope, Crown, GitBranch,
 } from 'lucide-react';
 
 // Single source of truth for every module in the app: the sidebar, bottom nav and
@@ -50,6 +50,9 @@ const CANONICAL_MODULES = [
   { key: 'evidence', label: 'Evidence OS', path: '/evidence', icon: FileCheck2, group: '7. Compliance, Quality & Documents', blurb: 'The assurance chain: every control traced from standard to evidence to finding, with coverage scoring and verified evidence only.' },
   { key: 'ai-os', label: 'AI Intelligence OS', path: '/ai-os', icon: Sparkles, group: '7. Compliance, Quality & Documents', blurb: 'Governed copilots over the registers, with explainable recommendations, confidence scoring and an AI audit trail.' },
   { key: 'knowledge-graph', label: 'Knowledge Graph OS', path: '/knowledge-graph', icon: Network, group: '7. Compliance, Quality & Documents', blurb: 'Every register in one graph: typed relationships, the 14-stage compliance DNA and per-standard traceability scored from the records you hold.' },
+  { key: 'clinical-os', label: 'Clinical & Allied Health OS', path: '/clinical-os', icon: Stethoscope, group: '3. Service Delivery', blurb: 'Care plans, review dates, consent, restrictive practice and allied health referrals in one clinical register.' },
+  { key: 'board-ceo', label: 'Board & CEO Copilots', path: '/board-ceo', icon: Crown, group: '9. Governance & Operations', blurb: 'Board and CEO assurance briefings from the recorded position, with the resolutions that record what was decided.' },
+  { key: 'approval-engine', label: 'Approval Chains', path: '/approval-engine', icon: GitBranch, group: '1. My Workspace', blurb: 'Up to five signed levels per decision: expenditure, policy, risk acceptance, clinical and access approvals.' },
   { key: 'auditor-portal', label: 'Auditor Portal', path: '/auditor-portal', icon: ClipboardCheck, group: '7. Compliance, Quality & Documents', blurb: 'Live read-only collaboration view for auditors: evidence, audits, corrective actions and observations.' },
   { key: 'documents', label: 'Documents & Policies', path: '/documents', icon: FolderOpen, group: '7. Compliance, Quality & Documents', blurb: 'Every Document, 45 Master Registers, Universal Storage & Export, Record Intelligence, 2026 Templates & Company Safe.' },
   { key: 'remote-access', label: 'Remote Access', path: '/remote-access', icon: ShieldCheck, group: '10. Administration & Help', blurb: 'Remote access without the headaches: Zero-Trust browser access, MFA perimeter and managed VPN rules.' },
@@ -104,6 +107,7 @@ export const NAV_GROUPS = [
       "daily-briefing",
       "tasks",
       "approvals",
+      "approval-engine",
       "communications",
       "feedback",
       "community-council"
@@ -124,6 +128,7 @@ export const NAV_GROUPS = [
     "keys": [
       "governance",
       "projects",
+      "board-ceo",
       "meetings",
       "key-contacts",
       "operations-centre"
@@ -189,11 +194,12 @@ export const NAV_GROUPS = [
   },
   {
     "id": "clinical-governance-os",
-    "label": "Clinical Governance OS",
+    "label": "Clinical & Allied Health OS",
     "parent": "Operating Systems",
-    "keys": [],
-    "planned": true,
-    "description": "Release 8 — clinical risk, supervision and review workflows are planned."
+    "keys": [
+      "clinical-os"
+    ],
+    "description": "Care plans, review dates, consent, restrictive practice, allied health referrals and the clinical copilots over them."
   },
   {
     "id": "allied-health-os",

@@ -1,0 +1,47 @@
+{
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "autonomous_agent_pass",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "run_agent_pass": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "agentRuntime",
+            "args": {
+              "action": "run_all"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Run the autonomous agent pass",
+            "description": "Drafts recommendations awaiting human review"
+          }
+        }
+      }
+    ]
+  },
+  "description": "Runs every active autonomous agent over the assurance registers each morning and files its advisory recommendations for human review.",
+  "name": "Autonomous Agent Pass",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 6 * * *",
+      "one_time_date": null,
+      "timezone": "Australia/Brisbane",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  }
+}

@@ -1,5 +1,3 @@
-import { useAuth } from '@/lib/AuthContext';
-import { hasApprovedAccess, canAccessNav } from '@/lib/roles';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ModuleShell from '@/components/module/ModuleShell';
@@ -11,14 +9,9 @@ import ComplianceDnaMatrix from '@/components/graph/ComplianceDnaMatrix';
 import GraphExplorerPanel from '@/components/graph/GraphExplorerPanel';
 import TraceabilityPanel from '@/components/graph/TraceabilityPanel';
 import LinkRegisterPanel from '@/components/graph/LinkRegisterPanel';
+import GraphCanvas from '@/components/graph/GraphCanvas';
 
 export default function KnowledgeGraphOS() {
-  const { user } = useAuth();
-  if (!hasApprovedAccess(user) || !canAccessNav(user?.role, 'knowledge-graph')) return <p role="alert">Approved knowledge graph access required.</p>;
-  const key = JSON.stringify([user.id, user.tenant_id || user.data?.tenant_id, user.role, user.account_status, user.access_approved]);
-  return <GraphWorkspace key={key} />;
-}
-function GraphWorkspace() {
   const [data, setData] = useState(null);
   const [error, setError] = useState('');
   const [tab, setTab] = useState('command');
@@ -53,7 +46,7 @@ function GraphWorkspace() {
       <ModuleShell
         moduleKey="knowledge-graph"
         title="Knowledge Graph OS"
-        subtitle="Explore authorised register relationships and inspect recorded traceability references."
+        subtitle="One graph over every register: the 23 typed relationships and the 14-stage chain from regulation to outcome, scored from the records you actually hold."
         icon={Network}
       />
 
@@ -71,6 +64,7 @@ function GraphWorkspace() {
         <Tabs value={tab} onValueChange={setTab}>
           <TabsList className="flex h-auto flex-wrap gap-1.5">
             <TabsTrigger value="command">Graph command</TabsTrigger>
+            <TabsTrigger value="canvas">Graph canvas</TabsTrigger>
             <TabsTrigger value="explorer">Graph explorer</TabsTrigger>
             <TabsTrigger value="traceability">Traceability chains</TabsTrigger>
             <TabsTrigger value="links">Links register</TabsTrigger>
@@ -79,6 +73,10 @@ function GraphWorkspace() {
           <TabsContent value="command" className="mt-4 space-y-3">
             <GraphCommandStrip health={health} />
             <ComplianceDnaMatrix rows={dna} />
+          </TabsContent>
+
+          <TabsContent value="canvas" className="mt-4">
+            <GraphCanvas graph={graph} />
           </TabsContent>
 
           <TabsContent value="explorer" className="mt-4">

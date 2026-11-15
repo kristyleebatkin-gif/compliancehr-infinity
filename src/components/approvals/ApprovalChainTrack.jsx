@@ -1,5 +1,5 @@
 import React from 'react';
-import { Check, Circle } from 'lucide-react';
+import { Check } from 'lucide-react';
 import { stagesOf, decisionsOf } from '@/lib/approvalChain';
 
 // The five-level ladder for one request: each stage shows its number, who decides it, and
