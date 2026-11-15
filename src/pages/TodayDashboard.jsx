@@ -1,3 +1,4 @@
+import WorkspaceNavigationTools from '@/components/WorkspaceNavigationTools';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import '@/components/today/today.css';
 import { useRole } from '@/lib/useRole';
@@ -117,6 +118,7 @@ function TodayWorkspace({ onSecurityPin }) {
 
   return (
     <div className="today-shell" data-theme={theme}>
+      <WorkspaceNavigationTools />
       <div className="mx-auto flex w-full max-w-[1480px] items-start gap-4 px-3 pb-24 pt-4 sm:px-5 min-[1640px]:max-w-[1680px]">
         <TodaySidebar
           plan={plan}

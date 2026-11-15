@@ -16,7 +16,7 @@ export const FOCUSED_5_PILLAR_NAV = buildNavigationGroups(MODULE_DIRECTORY, [
   { id: 'pillar-audit', label: '5. Business & Administration', keys: [...NAV_GROUPS[7].keys, ...NAV_GROUPS[8].keys, ...NAV_GROUPS[9].keys] },
 ]);
 
-export default function ObsidianSidebarRemote({ visiblePrimary, isActive: isActiveProp, navLabel = (item) => item.label, onLogout }) {
+export default function ObsidianSidebarRemote({ visiblePrimary, isActive: isActiveProp, navLabel = (item) => item.label, onLogout, onDirectory }) {
   const location = useLocation();
   const { can } = useRole();
   const modules = (visiblePrimary || MODULE_DIRECTORY).filter((item) => can(item.key));
@@ -31,7 +31,7 @@ export default function ObsidianSidebarRemote({ visiblePrimary, isActive: isActi
   return <div className="preserve-island-theme flex min-h-full w-full flex-col bg-[#0A2B6D] text-white">
     <div className="h-1 bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A]" />
     <Link to="/dashboard" aria-label="ComplianceHR Infinity home" className="flex justify-center px-3 py-4"><BrandLogoLockup size="xs" theme="dark" showSlogan compactSlogan /></Link>
-    <button type="button" onClick={() => window.dispatchEvent(new CustomEvent('chr-open-module-directory'))} className="mx-3 mb-3 flex min-h-11 items-center gap-2 rounded-lg border border-white/30 px-3 text-left text-sm font-bold"><LayoutGrid size={18} />Find a module ({modules.length})</button>
+    <button type="button" onClick={() => { onDirectory?.(); window.dispatchEvent(new CustomEvent('chr-open-module-directory')); }} className="mx-3 mb-3 flex min-h-11 items-center gap-2 rounded-lg border border-white/30 px-3 text-left text-sm font-bold"><LayoutGrid size={18} />Find a module ({modules.length})</button>
     <nav aria-label="Workspace navigation" className="flex-1 space-y-2 px-3 pb-4">
       {groups.map((group, index) => {
         const open = expanded[group.id] ?? (group.id === activeGroup || group.id === 'my-workspace');

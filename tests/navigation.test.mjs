@@ -42,6 +42,8 @@ test('active module matching respects path boundaries', () => {
   assert.equal(matchesModulePath('/incidents/123', '/incidents'), true);
   assert.equal(matchesModulePath('/incident-analytics', '/incidents'), false);
   assert.equal(matchesModulePath('/tasks-old', '/tasks'), false);
+  assert.equal(matchesModulePath('/roster', '/rostering'), true);
+  assert.equal(matchesModulePath('/staff/123', '/our-employees'), true);
 });
 test('role homes use existing permissions and pending accounts remain gated', () => {
   const approved = (role) => ({ role, account_status: 'Active', access_approved: true });

@@ -138,7 +138,7 @@ export default function AppLayout() {
         setNotifOpen(false);
         setUserMenuOpen(false);
         setMobileOpen(false);
-          }
+      }
     };
     window.addEventListener('keydown', closeMenus);
     return () => window.removeEventListener('keydown', closeMenus);
@@ -184,6 +184,7 @@ export default function AppLayout() {
       isActive={isActive}
       navLabel={navLabel}
       currentLabel={currentLabel}
+      onDirectory={() => setMobileOpen(false)}
       onLogout={handleLogout}
     />
   );
@@ -334,7 +335,7 @@ export default function AppLayout() {
           )}
 
           <WorkspaceNavigationTools />
-          <div className="max-h-[35vh] overflow-y-auto lg:hidden">
+          <div className="max-h-[35vh] overflow-y-auto lg:hidden [@media(pointer:coarse)]:block">
             <QuickAppBar workspaceView={workspaceView} onSwitchWorkspaceView={switchWorkspaceView} />
           </div>
 

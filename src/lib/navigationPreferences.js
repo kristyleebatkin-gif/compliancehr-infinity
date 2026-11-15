@@ -16,5 +16,8 @@ export function readNavigation(storage, scope, allowedKeys) {
   } catch { return { favourites: [], recent: [] }; }
 }
 export function matchesModulePath(pathname, path) {
-  return pathname === path || (path !== '/' && pathname.startsWith(path + '/'));
+  const aliases = { '/roster': '/rostering', '/shifts': '/rostering', '/participants': '/our-participants', '/staff': '/our-employees', '/contacts': '/key-contacts' };
+  const base = '/' + pathname.split('/')[1];
+  const canonical = aliases[base] ? aliases[base] + pathname.slice(base.length) : pathname;
+  return canonical === path || (path !== '/' && canonical.startsWith(path + '/')); 
 }
