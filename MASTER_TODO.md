@@ -1,5 +1,36 @@
 # ComplianceHR Portal — Master To-Do Plan
 
+## Enterprise Master V2.0 scope and traceability review — 15 November 2026 (Brisbane)
+
+Latest owner direction: Master Enterprise AI Build Prompt, Ultimate All-in-One, Version 2.0.
+This supersedes the earlier catalogue scope. The prior twelve-phase implementation sequence remains the delivery order. FULL PLATFORM BUILD REMAINS OPEN.
+
+Implemented:
+- Enterprise OS → Master scope V2: searchable 30-group catalogue, reserved ranges 001–1500; 46 proposed roles, 16 workspace elements, 40 required outputs per defined module, 19 engines, 13 foundation services, AI/evidence/security/design/integration/database/API requirements and architecture boundaries.
+- Ranges are explicitly scope reservations, not named or implemented modules. No role grants, new workspaces, database migrations, provider connections or regulatory claims are implied.
+- Enterprise OS → Evidence traceability: existing GovernanceObject source only, approved active business-scoped access before reads, server RLS retained, explicit tenant filter, first 200 non-archived records with truncation disclosure.
+- Resolves only exact IDs or unique governance object codes from the accessible sample. Missing, unresolved, ambiguous, self-referencing and wrong-stage links are distinguished. No fuzzy links, raw private evidence locations or evidence notes returned.
+- Search, needs-attention filter, selected-record relationship view, refresh/error/empty/loading states and formula-safe displayed-row metadata CSV export.
+- Scope and attempt keys hide stale results when identity, tenant, role, approval or refresh changes. Source/unit evidence only; live identity switching remains unverified.
+- Roadmap now has twelve phases and 29 planned OS, adding explicit Digital Twin scope, separate AI Governance/Accreditation and foundational cyber/privacy requirements. Existing capabilities retained.
+- Latest legislation-to-board traceability, V2 role/workspace requirements and shared engines incorporated into roadmap configuration. Existing downloadable ten-report review ZIP includes the V2 catalogue and forty-output checklist.
+- PostgreSQL, Prisma, UUID conversions, triggers, GraphQL and integrations remain requested architecture targets; current Base44 runtime and record IDs retained.
+
+Final source verification:
+- npm run ci:verify: exit 0 — lint; 94 JavaScript tests passed / 0 failed; 123 Deno tests passed / 0 failed; Vite build.
+- npm run typecheck: exit 0 in existing configured scope (checkJs false; Deno tests use no-check). This is not complete application/backend type assurance.
+- git diff 2793248889593948d68650eb58bebcde3c90d0c2 --check: exit 0.
+- Ten new tests cover scoped denial, exact-reference matching, private metadata projection, duplicate/stage/self-link handling, malformed and cross-tenant rejection, bounded/cursor results, unavailable vs empty, twelve-phase dependencies, all requested roles, contiguous catalogue ranges and output requirements.
+- Preview connector returned the existing app preview. Authenticated browser, mobile/tablet, live tenant A/B, E2E, accessibility and stated percentage coverage targets were NOT verified. Earlier runtime acceptance blockers remain open.
+
+Limits:
+This is a scope/roadmap alignment and bounded governance-reference review. It is not the full evidence graph, exact-version verification, complete legislation-to-board chain, 1,500 modules, every-module documentation, SQL/Prisma/OpenAPI generation, dedicated workspaces, clinical systems, data warehouse, digital twin or production-ready enterprise transformation. These requirements remain open and require complete vertical implementation and acceptance.
+
+Before checkpoint: 6af950112be2e091ba311f17; source commit 2793248889593948d68650eb58bebcde3c90d0c2.
+Final checkpoint requested after this entry: Enterprise Master V2 — catalogue, roadmap and scoped traceability review.
+No production publication, live record changes, role changes or external sends.
+
+
 ## Direct Base44 edit — Executive OS continuation, 15 November 2026
 
 Owner requested continuing edits directly in Base44. Existing app, routes, branding and source frameworks retained.
