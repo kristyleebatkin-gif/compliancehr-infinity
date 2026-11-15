@@ -1,5 +1,9 @@
 # AGENTS.md
 
+## Controlling product specification
+
+Read `COMPLIANCEHR_INFINITY_MASTER_PROMPT.md` as the single current master product specification. Earlier blueprints are historical context; preserve their implemented capabilities. Use `MASTER_TODO.md` for evidence-based progress and unresolved release gates. Catalogue targets are not verified regulatory mappings or completion claims.
+
 ## Project Context
 
 This is a Base44 app repository. Treat it as user-owned application code, keep changes focused on the user's request, and preserve existing project conventions.
