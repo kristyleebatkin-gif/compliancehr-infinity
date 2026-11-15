@@ -49,6 +49,7 @@ const CANONICAL_MODULES = [
   { key: 'compliance', label: 'Compliance & Evidence', path: '/compliance', icon: ShieldCheck, group: '7. Compliance, Quality & Documents', blurb: 'Merged Compliance Centre, Business Analytics, checklists, audit management, file matrices, KPIs and board exports.' },
   { key: 'evidence', label: 'Evidence OS', path: '/evidence', icon: FileCheck2, group: '7. Compliance, Quality & Documents', blurb: 'The assurance chain: every control traced from standard to evidence to finding, with coverage scoring and verified evidence only.' },
   { key: 'assurance-matrix', label: 'Assurance Audit Matrix', path: '/assurance-matrix', icon: Layers, group: '7. Compliance, Quality & Documents', blurb: '356 audit checkpoints traced to 150 indicators, 50 controls and 350 evidence requirements, scored from the live registers with weighted criticality and compliance ratings.' },
+  { key: 'workflow-studio', label: 'Workflow Studio', path: '/workflows', icon: GitBranch, group: '9. Governance & Operations', blurb: 'The orchestration layer: 33 node types, enterprise templates, a graph designer with validation, a runtime engine that assigns each step by role, enforces SLAs and records every action.' },
   { key: 'ai-os', label: 'AI Intelligence OS', path: '/ai-os', icon: Sparkles, group: '7. Compliance, Quality & Documents', blurb: 'Governed copilots over the registers, with explainable recommendations, confidence scoring and an AI audit trail.' },
   { key: 'knowledge-graph', label: 'Knowledge Graph OS', path: '/knowledge-graph', icon: Network, group: '7. Compliance, Quality & Documents', blurb: 'Every register in one graph: typed relationships, the 14-stage compliance DNA and per-standard traceability scored from the records you hold.' },
   { key: 'clinical-os', label: 'Clinical & Allied Health OS', path: '/clinical-os', icon: Stethoscope, group: '3. Service Delivery', blurb: 'Care plans, review dates, consent, restrictive practice and allied health referrals in one clinical register.' },
@@ -128,6 +129,7 @@ export const NAV_GROUPS = [
     "parent": "Operating Systems",
     "keys": [
       "governance",
+      "workflow-studio",
       "projects",
       "board-ceo",
       "meetings",

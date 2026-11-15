@@ -1,0 +1,323 @@
+{
+  "name": "WorkflowInstance",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
+    "definition_id": {
+      "type": "string",
+      "title": "Workflow Definition ID"
+    },
+    "definition_code": {
+      "type": "string",
+      "title": "Workflow Code"
+    },
+    "definition_name": {
+      "type": "string",
+      "title": "Workflow Name"
+    },
+    "workflow_type": {
+      "type": "string",
+      "title": "Workflow Type"
+    },
+    "domain": {
+      "type": "string",
+      "title": "Operating System"
+    },
+    "state": {
+      "type": "string",
+      "title": "State",
+      "enum": [
+        "Running",
+        "Waiting",
+        "Paused",
+        "Escalated",
+        "Completed",
+        "Failed",
+        "Cancelled"
+      ],
+      "enumColors": [
+        "blue",
+        "yellow",
+        "gray",
+        "pink",
+        "green",
+        "red",
+        "gray"
+      ],
+      "default": "Running"
+    },
+    "current_node_id": {
+      "type": "string",
+      "title": "Current Node ID"
+    },
+    "current_node_label": {
+      "type": "string",
+      "title": "Current Step"
+    },
+    "current_node_type": {
+      "type": "string",
+      "title": "Current Node Type"
+    },
+    "current_step": {
+      "type": "number",
+      "title": "Step Number",
+      "default": 1
+    },
+    "task_kind": {
+      "type": "string",
+      "title": "Open Task Kind"
+    },
+    "task_label": {
+      "type": "string",
+      "title": "Open Task"
+    },
+    "task_role": {
+      "type": "string",
+      "title": "Task Role"
+    },
+    "assigned_role": {
+      "type": "string",
+      "title": "Assigned Role"
+    },
+    "assigned_to": {
+      "type": "string",
+      "title": "Assigned To"
+    },
+    "steps_json": {
+      "type": "string",
+      "title": "Steps Log (JSON)"
+    },
+    "context_label": {
+      "type": "string",
+      "title": "What this run is about"
+    },
+    "priority": {
+      "type": "string",
+      "title": "Priority",
+      "enum": [
+        "Low",
+        "Medium",
+        "High",
+        "Critical"
+      ],
+      "enumColors": [
+        "gray",
+        "yellow",
+        "red",
+        "red"
+      ],
+      "default": "Medium"
+    },
+    "sla_hours": {
+      "type": "number",
+      "title": "SLA (hours)",
+      "default": 72
+    },
+    "due_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Due At"
+    },
+    "sla_state": {
+      "type": "string",
+      "title": "SLA State",
+      "enum": [
+        "On track",
+        "Due soon",
+        "Breached",
+        "Closed"
+      ],
+      "enumColors": [
+        "green",
+        "yellow",
+        "red",
+        "gray"
+      ],
+      "default": "On track"
+    },
+    "evidence_count": {
+      "type": "number",
+      "title": "Evidence Records",
+      "default": 0
+    },
+    "approval_count": {
+      "type": "number",
+      "title": "Approvals Recorded",
+      "default": 0
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Started At"
+    },
+    "started_by": {
+      "type": "string",
+      "title": "Started By"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Completed At"
+    },
+    "last_action_by": {
+      "type": "string",
+      "title": "Last Action By"
+    },
+    "last_action_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Last Action At"
+    },
+    "last_action_note": {
+      "type": "string",
+      "title": "Last Action Note"
+    },
+    "escalated_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Escalated At"
+    },
+    "escalation_reason": {
+      "type": "string",
+      "title": "Escalation Reason"
+    }
+  },
+  "required": [
+    "definition_name",
+    "state"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Team Leader"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

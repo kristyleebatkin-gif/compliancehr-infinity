@@ -1,0 +1,297 @@
+{
+  "name": "WorkflowDefinition",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
+    "code": {
+      "type": "string",
+      "title": "Workflow Code"
+    },
+    "name": {
+      "type": "string",
+      "title": "Workflow Name"
+    },
+    "workflow_type": {
+      "type": "string",
+      "title": "Workflow Type",
+      "enum": [
+        "Board Resolution",
+        "Strategic Review",
+        "Policy Approval",
+        "Executive Review",
+        "Compliance Assessment",
+        "Policy Review",
+        "Corrective Action",
+        "Compliance Audit",
+        "Internal Audit",
+        "External Audit",
+        "Audit Follow Up",
+        "Audit Closure",
+        "Risk Assessment",
+        "Risk Review",
+        "Risk Escalation",
+        "Recruitment",
+        "Onboarding",
+        "Credentialing",
+        "Performance Review",
+        "Offboarding",
+        "Incident Management",
+        "Complaints Management",
+        "Restrictive Practices",
+        "Feedback Management",
+        "SIRS",
+        "Clinical Escalation",
+        "Care Plan Review",
+        "Medication Review",
+        "Referral Management",
+        "Assessment Review",
+        "Care Planning",
+        "Clinical Supervision"
+      ],
+      "default": "Compliance Assessment",
+      "enumColors": [
+        "purple",
+        "purple",
+        "purple",
+        "purple",
+        "blue",
+        "blue",
+        "blue",
+        "blue",
+        "pink",
+        "pink",
+        "pink",
+        "pink",
+        "yellow",
+        "yellow",
+        "yellow",
+        "green",
+        "green",
+        "green",
+        "green",
+        "green",
+        "red",
+        "red",
+        "red",
+        "red",
+        "gray",
+        "gray",
+        "gray",
+        "gray",
+        "purple",
+        "purple",
+        "purple",
+        "purple"
+      ]
+    },
+    "domain": {
+      "type": "string",
+      "title": "Operating System",
+      "description": "Which OS the workflow serves, e.g. NDIS OS or Governance OS."
+    },
+    "description": {
+      "type": "string",
+      "title": "Description"
+    },
+    "state": {
+      "type": "string",
+      "title": "State",
+      "enum": [
+        "Draft",
+        "Validated",
+        "Published",
+        "Archived"
+      ],
+      "enumColors": [
+        "gray",
+        "blue",
+        "green",
+        "gray"
+      ],
+      "default": "Draft"
+    },
+    "version": {
+      "type": "number",
+      "title": "Version",
+      "default": 1
+    },
+    "template_code": {
+      "type": "string",
+      "title": "Source Template"
+    },
+    "nodes_json": {
+      "type": "string",
+      "title": "Nodes (JSON)",
+      "description": "The workflow graph: ordered nodes with their type, owner role, SLA and next node."
+    },
+    "validation_json": {
+      "type": "string",
+      "title": "Validation Result (JSON)"
+    },
+    "sla_hours": {
+      "type": "number",
+      "title": "Target Completion (hours)",
+      "default": 72
+    },
+    "owner_role": {
+      "type": "string",
+      "title": "Process Owner"
+    },
+    "standard_refs": {
+      "type": "string",
+      "title": "Standards Mapped"
+    },
+    "evidence_refs": {
+      "type": "string",
+      "title": "Evidence Requirements"
+    },
+    "published_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Published At"
+    },
+    "published_by": {
+      "type": "string",
+      "title": "Published By"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "code",
+    "name",
+    "workflow_type",
+    "state"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Team Leader"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

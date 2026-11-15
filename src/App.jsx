@@ -48,6 +48,7 @@ import Certificates from '@/pages/Certificates';
 import Risks from '@/pages/Risks';
 import RiskChemicalDashboard from '@/pages/RiskChemicalDashboard';
 import ConnectedWorkflows from '@/pages/ConnectedWorkflows';
+import WorkflowStudio from '@/pages/WorkflowStudio';
 import ApprovalInbox from '@/pages/ApprovalInbox';
 import EnterpriseOS from '@/pages/EnterpriseOS';
 
@@ -198,6 +199,7 @@ const AuthenticatedApp = () => {
           <Route path="/risks" element={<RoleGate navKey="risks"><Risks /></RoleGate>} />
           <Route path="/risk-chemical-dashboard" element={<RoleGate navKey="risks"><RiskChemicalDashboard /></RoleGate>} />
           <Route path="/connected-workflows" element={<RoleGate navKey="operations-centre"><ConnectedWorkflows /></RoleGate>} />
+          <Route path="/workflows" element={<RoleGate navKey="compliance"><WorkflowStudio /></RoleGate>} />
           <Route path="/approvals" element={<RoleGate navKey="approvals"><ApprovalInbox /></RoleGate>} />
           <Route path="/approval-engine" element={<RoleGate navKey="approval-engine"><ApprovalEngine /></RoleGate>} />
 
