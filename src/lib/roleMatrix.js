@@ -146,6 +146,7 @@ export const NAV_PERMISSIONS = {
   compliance: OPERATIONS,
   evidence: OPERATIONS,
   'ai-os': COMPLIANCE_REVIEW_ROLES,
+  'knowledge-graph': COMPLIANCE_REVIEW_ROLES,
   'clinical-os': OPERATIONS,
   'board-ceo': FULL_ACCESS,
   'approval-engine': PERSONAL,
