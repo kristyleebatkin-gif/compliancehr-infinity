@@ -13,8 +13,8 @@ export default function StudioCommandStrip({ summary }) {
   const hints = {
     openHint: `${summary.open} open · ${summary.failed} failed`,
     approvalHint: 'Waiting on a named approver',
-    breachHint: `${summary.slaCompliance}% of runs inside SLA`,
-    completionHint: `${summary.completed} completed · ${summary.averageHours}h average`,
+    breachHint: 'Historical SLA compliance not yet verified',
+    completionHint: `${summary.completed} completed · ${summary.averageHours === null ? 'duration unavailable' : `${summary.averageHours}h average`}`,
     escalationHint: 'Raised above the assigned role',
   };
 
@@ -29,7 +29,7 @@ export default function StudioCommandStrip({ summary }) {
               <Icon className={`h-4 w-4 shrink-0 ${tile.tone}`} />
             </div>
             <div className="mt-1.5 text-2xl font-extrabold leading-none text-foreground">
-              {summary[tile.key] ?? 0}{tile.suffix || ''}
+              {summary[tile.key] ?? 'Unavailable'}{summary[tile.key] == null ? '' : tile.suffix || ''}
             </div>
             <div className="mt-1.5 text-[11px] font-semibold leading-snug text-muted-foreground">{hints[tile.hint]}</div>
           </div>
