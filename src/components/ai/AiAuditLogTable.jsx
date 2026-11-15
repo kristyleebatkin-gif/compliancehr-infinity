@@ -16,7 +16,7 @@ export default function AiAuditLogTable({ interactions, onFlag }) {
       <EmptyState
         icon={History}
         title="No AI activity recorded"
-        message="Every copilot run writes an immutable audit entry: who asked, which agent, how many records were read, the confidence returned and how long it took."
+        message="Every copilot run writes an recorded audit entry: who asked, which agent, how many records were read, the confidence returned and how long it took."
         modulePath="Compliance"
         createLabel="Run a copilot review"
         createHref="/ai-os"
@@ -54,7 +54,7 @@ export default function AiAuditLogTable({ interactions, onFlag }) {
                 <td className="align-top text-xs font-semibold text-foreground">{entry.user_email || '—'}</td>
                 <td className="align-top">
                   <span className={`inline-block rounded-full border px-2 py-0.5 text-[11px] font-bold ${band.chip}`}>
-                    {entry.confidence ?? 0}%
+                    {entry.confidence == null ? 'Uncalibrated' : `${entry.confidence}% (unvalidated)`}
                   </span>
                 </td>
                 <td className="align-top text-xs font-semibold text-foreground">{entry.source_count ?? 0}</td>
