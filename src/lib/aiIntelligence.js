@@ -62,7 +62,7 @@ export const COPILOT_ACTIONS = [
   {
     key: 'audit_readiness',
     label: 'Audit readiness',
-    description: 'Scores readiness and lists what an assessor would ask for next.',
+    description: 'Reviews the bounded evidence position and drafts questions for human review.',
   },
   {
     key: 'risk_review',
@@ -72,26 +72,20 @@ export const COPILOT_ACTIONS = [
 ];
 
 export function confidenceBand(value) {
-  const score = Number(value);
+  const score = value === null || value === undefined || value === '' ? NaN : Number(value);
   if (!Number.isFinite(score)) return { label: 'Not scored', chip: 'border-border bg-muted text-foreground' };
   if (score >= 85) return { label: 'High confidence', chip: 'border-safe/40 bg-safe/10 text-safe' };
   if (score >= 65) return { label: 'Moderate confidence', chip: 'border-warning/40 bg-warning/15 text-warning' };
   return { label: 'Low confidence', chip: 'border-danger/40 bg-danger/15 text-danger' };
 }
 
-const average = (values) => {
-  const usable = values.filter((value) => Number.isFinite(Number(value)));
-  if (!usable.length) return null;
-  return Math.round(usable.reduce((sum, value) => sum + Number(value), 0) / usable.length);
-};
-
 export function summariseAi({ interactions = [], recommendations = [], agents = [], prompts = [] } = {}) {
-  const decided = recommendations.filter((item) => item.status === 'Accepted' || item.status === 'Rejected');
+  const decided = recommendations.filter((item) => ['Accepted','Rejected','Implemented'].includes(item.status));
   const accepted = recommendations.filter((item) => item.status === 'Accepted' || item.status === 'Implemented');
 
   return {
     runs: interactions.length,
-    avgConfidence: average(interactions.map((item) => item.confidence)),
+    avgConfidence: null, // No task-specific confidence calibration has been accepted.
     flagged: interactions.filter((item) => item.flagged).length,
     overrides: interactions.filter((item) => item.override).length,
     flaggedRate: interactions.length
@@ -99,7 +93,7 @@ export function summariseAi({ interactions = [], recommendations = [], agents = 
       : null,
     awaiting: recommendations.filter((item) => item.status === 'Awaiting review').length,
     accepted: accepted.length,
-    acceptanceRate: decided.length ? Math.round((accepted.filter((item) => item.status !== 'Implemented').length / decided.length) * 100) : null,
+    acceptanceRate: decided.length ? Math.round((accepted.length / decided.length) * 100) : null,
     activeAgents: agents.filter((agent) => agent.status === 'Active').length,
     totalAgents: agents.length,
     approvedPrompts: prompts.filter((prompt) => prompt.status === 'Approved').length,
@@ -118,3 +112,17 @@ export function recommendationsByModule(recommendations = []) {
     .map(([module, count]) => ({ module, count }))
     .sort((a, b) => b.count - a.count);
 }
+
+export const SPECIALIST_ACTIONS = [
+ ['policy_review','Policy Copilot','Draft policy review questions from recorded obligations.'],
+ ['standards_review','Standards Copilot','Inspect recorded mappings; verify legal interpretation with an authorised specialist.'],
+ ['quality_review','Quality Copilot','Find assurance improvement opportunities.'],
+ ['workforce_review','Workforce Copilot','Review workforce assurance metadata; credential clearance stays with a human.'],
+ ['clinical_review','Clinical Governance Copilot','Review governance metadata; no diagnosis or treatment advice.'],
+ ['allied_health_review','Allied Health Copilot','Review allied health assurance metadata and source gaps.'],
+ ['incident_review','Incident Copilot','Review assurance links; statutory reportability stays in the incident workflow.'],
+ ['board_review','Board Copilot','Draft a source-linked board assurance summary.'],
+ ['ceo_review','CEO Copilot','Draft an executive assurance briefing.'],
+ ['executive_review','Executive Copilot','Summarise authorised assurance data and limitations.'],
+].map(([key,label,description])=>({key,label,description}));
+export const ALL_COPILOT_ACTIONS = [...COPILOT_ACTIONS,...SPECIALIST_ACTIONS];
