@@ -1,5 +1,83 @@
 # ComplianceHR Portal — Master To-Do Plan
 
+## Direct Base44 edit — Executive OS continuation, 15 November 2026
+
+Owner requested continuing edits directly in Base44. Existing app, routes, branding and source frameworks retained.
+
+Saved changes:
+- Executive metric queries now explicitly require the approved active user's assigned business and operation access before reads. Every count includes tenant_id. Canonical module permissions replace local role-list drift; server RLS remains the authority.
+- Query cache keys include business, role, account status and approval; changed identities cannot reuse previous business counts. Invalid/negative/failed counts remain Unavailable, while real zero stays zero.
+- Executive dashboard views use a validated view query parameter; embedded dashboard tabs retain local selection. Existing unrelated query parameters retained. Added Refresh, Brisbane refresh time, Enterprise OS link and board-assurance drilldown.
+- No accounts, roles, schemas, live records, disabled workflow gates or publication state changed.
+
+Verification: npm run ci:verify exit 0 (lint, JavaScript tests, 117 Deno tests, Vite build); npm run typecheck exit 0 (existing configured scope); git diff --check exit 0. Five new tests cover pre-read denial, explicit business/cutoff filters, failed/malformed counts, identity-cache keys and invalid views/dates. Authenticated browser/device and live tenant A/B acceptance remain unverified; full Enterprise vNext remains open.
+
+Before checkpoint: 6af91fec3f86f688bd4686e2; commit cea5a4c9769bd836422492b9b5f9767ab054ac96.
+Final checkpoint name: Executive OS — scoped metrics, refresh and board assurance navigation.
+
+## Enterprise vNext alignment — 15 November 2026 (Australia/Brisbane)
+
+Owner supplied the eight-phase Enterprise Platform Alignment Update. Full prompt passed unchanged to the existing Base44 app. The full enterprise transformation remains OPEN.
+
+Implemented and reviewed:
+- Enterprise OS console at /enterprise-os: 15 operating-system source maps, 30 proposed role mappings, gaps, candidate schema/API plans and roadmap. Source-present labels deliberately do not claim working/accepted systems.
+- Ten-report downloadable ZIP available from the console; a review/planning package, not a deployable full enterprise transformation.
+- Board assurance review at /governance?tab=board-assurance uses existing GovernanceObject. Identifies missing owner/date/evidence references and overdue review dates. CSV exports displayed rows only through existing formula-safe exporter. Maximum 200 records with explicit truncation notice. References are not verified evidence or BoardResolution approval.
+- Governance tab selection now follows URL changes, including back/forward and links within the page.
+- Fixed builder-introduced frontend/backend roleMatrix divergence. No user roles were granted or promoted.
+- Register reads require approved identity, explicit tenant and module/source permission. Missing/failed/invalid counts display Unavailable; denied sources display Restricted. Identity-scoped render state hides prior account/tenant data immediately while reloading. Navigation links filtered by current role.
+- Participant role mapping corrected to existing personal profile; dedicated participant workspace remains partial.
+
+Verification on final code:
+- npm run ci:verify: exit 0 (lint, 76 JavaScript tests passed / 0 failed, 117 Deno tests passed / 0 failed, Vite build).
+- npm run typecheck: configured frontend scope; result recorded in session output. Existing checkJs false and Deno --no-check mean this is not full source type verification.
+- git diff --check against starting commit: result recorded in session output.
+- Six new behavior tests: pre-read denial, scoped counts and numeric response validation, metadata projection and review warnings, malformed/cross-tenant rejection, bounded/truncated review, identity-scope keys.
+- Authenticated browser, mobile/iPad, WCAG AA and live tenant A/B acceptance NOT verified. Earlier preview blank-screen blocker not closed by build/test results.
+
+Restore point before work: 6af91b0cc45579e8ae18bab4; commit 3dd7baf6f52e5d15d89cd41fe0c9525a10a57fc8.
+Final checkpoint requested after this register update: Enterprise vNext — reviewed console, assurance review and report package.
+
+Remaining: full audited schema contracts and safe migrations; dedicated OS workflows and all nine workspace elements; role/permission reconciliation; BoardResolution lifecycle and exact evidence/version validation; domain APIs; clinical/allied health/aged care workflows; specialist copilots; scheduled reporting; runtime/device/security acceptance. Candidate schema names are planning proposals, not proof a new table is required. Existing disabled workflow gates remain unchanged. No production publication, record migrations, live data creation, external sends or production schedules performed.
+
+## Enterprise transformation V3 — 15 November 2026 (Australia/Brisbane)
+
+Owner supplied Enterprise Implementation Plan V3.0 and requested building it in the existing app with ComplianceHR App Specialists. Master sequence recorded in ENTERPRISE_IMPLEMENTATION_PLAN_V3.md. The ten-release program remains open; this batch implements part of Release 1.
+
+Implemented in this batch:
+- Shared directory reorganised into AI Core, My Workspace, Operating Systems (Governance, Compliance, Risk, Audit, Workforce, Clinical Governance, Allied Health), Enterprise Registers, Reports & Analytics, Administration.
+- All 54 existing canonical module IDs/paths retained. Existing /analytics route added to the directory, yielding 55 discoverable workspaces; no replacement module or new business entity created.
+- Operating System groups use existing permitted modules. Permission-filtered shortcuts open existing Audit Management, Master Registers, Allied Health Catalogue and Executive Dashboards. Shortcut visibility derives from its canonical module's existing permission; empty restricted groups are removed.
+- Clinical Governance visibly marked Planned / Release 8 for operations-authorised accounts; no active clinical route fabricated. Allied Health identifies current participant/support workspaces and the outstanding discipline workflows. Existing five-pillar iPad grouping retained through legacy exports; new primary grouping reuses current directory.
+- Global search now queries existing Audit, AuditEvidenceFile, TrainingModule, BusinessProject and GovernanceObject in addition to previous sources. It searches governance records, not a newly implemented Board Papers subsystem.
+- Search adapter requires user ID, assigned business, active status and explicit approval before record queries. Each query includes tenant_id, bounded result size and projected fields. Existing tenant-scoped SDK client and server RLS remain the boundary; this batch does not assert new or live-verified isolation.
+- Array and cursor-page SDK responses accepted. Regex metacharacters escaped. Forbidden sources not queried. Failed/malformed sources shown as incomplete search with Retry; successful partial results retained. Raw errors and non-projected fields never appear in returned results.
+- Search state is scoped by user, business, role, status and approval so a changed identity cannot display the prior identity's results. This is source/unit evidence; live browser identity switching remains unverified.
+- Jamie/Sherelle accounts, all roles, backend enforcement, release switches, business data, record IDs, document relationships and existing disabled workflow gates unchanged.
+
+Verification after code changes:
+| Check | Result |
+|---|---|
+| npm run lint | exit 0 |
+| npm run typecheck | exit 0; existing configured scope, checkJs false; does not type-verify new src/lib helper or full backend |
+| npm run build | exit 0 |
+| npm test | exit 0; 70 passed, 0 failed, including 8 new V3 tests |
+| git diff b4026a1ed7952f18b212e7a563c0a0805d5e4c17 --check | exit 0 |
+| Preview URL API | returned preview URL successfully |
+| Browser acceptance | NOT PASSED: preview remained blank in initial and fresh verification tabs. No positive signed-in signal. Console showed bridge/no-parent and Tailwind warnings, no actionable application exception. Sandbox Vite log showed startup and HMR deprecation only. Cause remains unresolved. |
+
+New tests exercise rejected accounts before reads; identity-scope changes; denied-source exclusion; tenant filters, escaping and projection; partial failures/malformed responses; SDK response variants/caps; restricted navigation/shortcut visibility; enterprise-name module search. Existing route/group test proves each canonical workspace still has one home and a registered route. Synthetic tests are not production authorization proof.
+
+Source restore point before work: 6af902c627fbabe27cf4c9e5, commit b4026a1ed7952f18b212e7a563c0a0805d5e4c17.
+Final named checkpoint: V3 foundation — enterprise navigation and honest scoped search (ID returned in session completion).
+No deployment/publication, migration, live data creation, permission grants or external sends.
+
+Open work:
+- Release 1: full delegated/temporary/auditor-access and approval-authority engine acceptance; API gateway contract; logging framework completion; Board Papers-specific search; live tenant A/B and denied-access tests; authenticated browser/mobile/iPad acceptance; resolve preview blank rendering.
+- Releases 2–10: execute the recorded master sequence, reconciling existing implementations first. The document, navigation headings and catalogue are not evidence of completed operating systems.
+- Carry forward all earlier blockers and module requirements below; none are closed solely by this batch.
+
+
 ## Navigation build — 15 November 2026 (Australia/Brisbane)
 
 Scope: owner requested implementation of the navigation plan. Saved in the existing app; no publication performed.
@@ -641,3 +719,13 @@ Still required before production approval:
 - [ ] Verify real dashboard counts, exact deep links, exports and operational actions in the preview.
 - [ ] Merge the dashboard branch to main and publish only after owner approval.
 - [ ] Owner decision: confirm which approved role should access Invoicing (including Sherelle's Administration/Finance responsibilities). Align navigation permissions with entity RLS and add approved/denied runtime tests before exposing invoice actions. No access expansion was made in the dashboard polish batch.
+
+## Enterprise modular expansion alignment — 15 November 2026
+
+- Owner's ten-phase master plan is now the current delivery sequence. V3 prior scope and existing gap findings are preserved.
+- Added `src/lib/enterprisePhases.js`: 10 phases, 28 system/layer scopes, 15 shared engines, 18 required role workspaces, register/feature requirements, dependencies, release gates, evidence chain and digital-twin scope. All are target requirements, not completion claims.
+- Added an interactive phase selector to Enterprise OS → Roadmap with per-phase requirements and existing source reuse candidates. Existing inventory now says source present instead of working.
+- Updated the existing review ZIP's implementation-roadmap report and saved `ENTERPRISE_MODULAR_EXPANSION_PLAN.md` from the same model. Security/privacy/tenant isolation and AI oversight apply from foundation; specialist expansion remains in phases 8 and 10.
+- Before checkpoint: `6af9212339d7d28f841863e1`, commit `9ebac14ce6a8e0a2794c27af805666011454c324`.
+- Verification: `npm run ci:verify` exit 0 (lint, Node tests, 117 Deno tests, Vite build); `npm run typecheck` exit 0; model integrity checks exit 0 (dependency order, existing OS source IDs and generated-plan/export parity). `git diff --check` exit 0.
+- Preview returned successfully. Authenticated browser interaction, responsive/accessibility acceptance and live tenant A/B acceptance were not performed in this batch. No new entity models, role grants, operational workflows or production publication. Full implementation of the ten phases remains open, beginning with Phase 1's evidence/obligation/control and policy-lifecycle acceptance.

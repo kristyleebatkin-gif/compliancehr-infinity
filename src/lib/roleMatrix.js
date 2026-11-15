@@ -125,6 +125,7 @@ export const NAV_PERMISSIONS = {
   today: ['admin', ROLES.ADMIN, ROLES.TEAM_LEADER],
   'team-leader': ['admin', ROLES.ADMIN, ROLES.TEAM_LEADER],
   'operations-centre': OPERATIONS,
+  'enterprise-os': OPERATIONS,
   notifications: PERSONAL,
   assistant: PERSONAL,
   help: [...PERSONAL, ROLES.GUEST, ROLES.VOLUNTEER],

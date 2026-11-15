@@ -42,6 +42,7 @@ import Risks from '@/pages/Risks';
 import RiskChemicalDashboard from '@/pages/RiskChemicalDashboard';
 import ConnectedWorkflows from '@/pages/ConnectedWorkflows';
 import ApprovalInbox from '@/pages/ApprovalInbox';
+import EnterpriseOS from '@/pages/EnterpriseOS';
 
 import Feedback from '@/pages/Feedback';
 import Checklists from '@/pages/Checklists';
@@ -146,6 +147,7 @@ const AuthenticatedApp = () => {
         <Route path="/second-screen" element={<SecondScreen />} />
         <Route element={<AppLayout />}>
           <Route path="/dashboard" element={<RoleGate navKey="dashboard"><Dashboard /></RoleGate>} />
+          <Route path="/enterprise-os" element={<RoleGate navKey="enterprise-os"><EnterpriseOS /></RoleGate>} />
           <Route path="/executive-dashboards" element={<RoleGate navKey="analytics"><ExecutiveDashboards /></RoleGate>} />
           <Route path="/operations-centre" element={<RoleGate navKey="operations-centre"><OperationsCentre /></RoleGate>} />
           <Route path="/my-work" element={<Navigate to="/my-profile?tab=work" replace />} />

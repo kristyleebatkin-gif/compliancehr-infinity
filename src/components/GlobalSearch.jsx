@@ -4,42 +4,37 @@ import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import { useRole } from '@/lib/useRole';
-import { canAccessNav } from '@/lib/roles';
+import { emptySearchResults, searchIdentity, searchModules, searchEnterprise } from '@/lib/enterpriseSearch';
 import {
   Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator,
 } from '@/components/ui/command';
 import { Search, X, Loader2, Users, Heart, FolderOpen, ClipboardList, Zap, Plus } from 'lucide-react';
 
-const EMPTY = {
-  modules: [],
-  staff: [],
-  participants: [],
-  documents: [],
-  tasks: [],
-  incidents: [],
-  risks: [],
-  policies: [],
-  goals: [],
-  assets: [],
-};
+const EMPTY = emptySearchResults();
 
 const QUICK_ACTIONS = [
   { id: 'qa-onboarding', label: 'Open 5-Step Provider Setup Checklist', event: 'chr-open-onboarding-checklist', hint: 'Guided activation & readiness' },
   { id: 'qa-incident', label: 'New Incident Report (24h/5d SIRS)', path: '/incidents/new', hint: 'Report & auto-escalate CAPA' },
-  { id: 'qa-roster', label: 'Schedule Screened Roster Shift', path: '/roster', hint: '100-point worker screening gate' },
+  { id: 'qa-roster', label: 'Schedule Screened Roster Shift', path: '/roster', hint: 'Open roster workspace' },
   { id: 'qa-participant', label: 'New Participant Intake', path: '/intake/participant', hint: 'Onboard a participant' },
   { id: 'qa-employee', label: 'New Employee Intake', path: '/intake/employee', hint: 'Onboard an employee' },
   { id: 'qa-auditor', label: 'Preview External Auditor Portal', path: '/auditor-portal', hint: 'Consent-gated evidence view' },
   { id: 'qa-ai', label: 'Ask Infinity AI Copilot', path: '/assistant', hint: 'Instant NDIS & HR intelligence' },
-  { id: 'qa-compliance', label: 'Compliance & Audit Centre', path: '/compliance', hint: '356 checkpoints & readiness' },
+  { id: 'qa-compliance', label: 'Compliance & Audit Centre', path: '/compliance', hint: 'Assessments, evidence and audits' },
   { id: 'qa-dashboard', label: 'Go to Executive Dashboard', path: '/dashboard', hint: 'Live overview' },
 ];
 
 export default function GlobalSearch() {
-  const { navRole: role } = useRole();
+  const { navRole: role, user, can } = useRole();
+  const scope = searchIdentity(user);
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
-  const [results, setResults] = useState(EMPTY);
+  const [searchState, setSearchState] = useState({ scope: null, results: EMPTY, unavailable: [], blocked: false });
+  const [retry, setRetry] = useState(0);
+  const results = searchState.scope === scope ? searchState.results : EMPTY;
+  const unavailable = searchState.scope === scope ? searchState.unavailable : [];
+  const blocked = searchState.scope === scope && searchState.blocked;
+  const setResults = (next) => setSearchState({ scope, results: next, unavailable: [], blocked: false });
   const [searching, setSearching] = useState(false);
   const inputRef = useRef(null);
   const navigate = useNavigate();
@@ -81,52 +76,26 @@ export default function GlobalSearch() {
   useEffect(() => {
     if (!open) return;
     let cancelled = false;
-    const visibleModules = MODULE_DIRECTORY.filter((module) => canAccessNav(role, module.key));
     const term = query.trim();
-    if (term.length < 2) {
-      setResults({ ...EMPTY, modules: visibleModules.filter(() => !term) });
+    const modules = searchModules(MODULE_DIRECTORY, term, can);
+    setSearchState({ scope, results: { ...EMPTY, modules }, unavailable: [], blocked: !scope });
+    if (term.length < 2 || !scope) {
       setSearching(false);
       return;
     }
-    setResults({ ...EMPTY, modules: visibleModules.filter((module) => module.label.toLowerCase().includes(term.toLowerCase()) || (module.blurb || '').toLowerCase().includes(term.toLowerCase())).slice(0, 6) });
     setSearching(true);
     const timer = setTimeout(async () => {
-      const esc = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const rx = { $regex: esc, $options: 'i' };
       try {
-        const [staff, participants, employeeDocs, participantDocs, tasks, incidents, risks, policies, goals, assets] = await Promise.all([
-          !canAccessNav(role, 'our-staff') ? Promise.resolve({ items: [] }) : base44.entities.StaffProfile.filter({ $or: [{ full_name: rx }, { position: rx }] }, { limit: 5, fields: ['id', 'full_name', 'position'] }).catch(() => ({ items: [] })),
-          !canAccessNav(role, 'our-participants') ? Promise.resolve({ items: [] }) : base44.entities.ParticipantProfile.filter({ $or: [{ full_name: rx }, { ndis_number: rx }] }, { limit: 5, fields: ['id', 'full_name', 'status'] }).catch(() => ({ items: [] })),
-          !canAccessNav(role, 'documents') ? Promise.resolve({ items: [] }) : base44.entities.EmployeeDocument.filter({ title: rx }, { limit: 5, fields: ['id', 'title', 'document_type'] }).catch(() => ({ items: [] })),
-          !canAccessNav(role, 'documents') ? Promise.resolve({ items: [] }) : base44.entities.ParticipantDocument.filter({ title: rx }, { limit: 5, fields: ['id', 'title', 'document_type'] }).catch(() => ({ items: [] })),
-          !canAccessNav(role, 'tasks') ? Promise.resolve({ items: [] }) : base44.entities.TodoTask.filter({ $or: [{ title: rx }, { assigned_to: rx }] }, { limit: 5, fields: ['id', 'title', 'status', 'assigned_to'] }).catch(() => ({ items: [] })),
-          !canAccessNav(role, 'incidents') ? Promise.resolve({ items: [] }) : base44.entities.Incident.filter({ $or: [{ title: rx }, { location: rx }] }, { limit: 5, fields: ['id', 'title', 'severity', 'status'] }).catch(() => ({ items: [] })),
-          !canAccessNav(role, 'risks') ? Promise.resolve({ items: [] }) : base44.entities.Risk.filter({ $or: [{ title: rx }, { category: rx }] }, { limit: 5, fields: ['id', 'title', 'rating', 'status'] }).catch(() => ({ items: [] })),
-          !canAccessNav(role, 'compliance') ? Promise.resolve({ items: [] }) : base44.entities.Policy.filter({ $or: [{ document_name: rx }, { category: rx }] }, { limit: 5, fields: ['id', 'document_name', 'category', 'status'] }).catch(() => ({ items: [] })),
-          !canAccessNav(role, 'goals') ? Promise.resolve({ items: [] }) : base44.entities.Goal.filter({ title: rx }, { limit: 5, fields: ['id', 'title', 'status'] }).catch(() => ({ items: [] })),
-          !canAccessNav(role, 'assets') ? Promise.resolve({ items: [] }) : base44.entities.Asset.filter({ $or: [{ name: rx }, { category: rx }] }, { limit: 5, fields: ['id', 'name', 'category'] }).catch(() => ({ items: [] })),
-        ]);
-        if (cancelled) return;
-        setResults({
-          modules: visibleModules.filter((m) => m.label.toLowerCase().includes(term.toLowerCase()) || (m.blurb || '').toLowerCase().includes(term.toLowerCase())).slice(0, 6),
-          staff: staff.items || [],
-          participants: participants.items || [],
-          documents: [...(employeeDocs.items || []), ...(participantDocs.items || [])].slice(0, 5),
-          tasks: tasks.items || [],
-          incidents: incidents.items || [],
-          risks: risks.items || [],
-          policies: policies.items || [],
-          goals: goals.items || [],
-          assets: assets.items || [],
-        });
-      } catch (error) {
-        console.error(error);
+        const response = await searchEnterprise({ entities: base44.entities, term, can, user });
+        if (!cancelled) setSearchState({ scope, ...response, results: { ...response.results, modules } });
+      } catch {
+        if (!cancelled) setSearchState({ scope, results: { ...EMPTY, modules }, unavailable: ['Organisation search'], blocked: false });
       } finally {
         if (!cancelled) setSearching(false);
       }
     }, 250);
     return () => { cancelled = true; clearTimeout(timer); };
-  }, [query, open, role]);
+  }, [query, open, role, scope, retry]);
 
   const go = (path) => {
     setOpen(false);
@@ -139,12 +108,12 @@ export default function GlobalSearch() {
     'qa-ai': 'assistant', 'qa-compliance': 'compliance', 'qa-dashboard': 'dashboard',
   };
   const quickActions = QUICK_ACTIONS.filter((action) =>
-    canAccessNav(role, actionKeys[action.id]) &&
+    can(actionKeys[action.id]) &&
     (query.trim().length < 2 || action.label.toLowerCase().includes(query.trim().toLowerCase()))
   );
-  const modules = results.modules.filter((module) => canAccessNav(role, module.key));
+  const modules = results.modules.filter((module) => can(module.key));
 
-  const hasResults = quickActions.length > 0 || ['modules', 'staff', 'participants', 'documents', 'tasks', 'incidents', 'risks', 'policies', 'goals', 'assets'].some((k) => (results[k] || []).length > 0);
+  const hasResults = quickActions.length > 0 || ['modules', 'staff', 'participants', 'documents', 'tasks', 'incidents', 'risks', 'policies', 'goals', 'assets', 'audits', 'evidence', 'training', 'projects', 'governance'].some((k) => (results[k] || []).length > 0);
 
   return (
     <>
@@ -169,15 +138,20 @@ export default function GlobalSearch() {
                 value={query}
                 onValueChange={setQuery}
                 autoFocus
-                placeholder="Search people, documents, tasks, modules or run an action…"
+                placeholder="Search people, audits, evidence, training, projects…"
               />
               {searching && (
                 <div className="flex items-center gap-2 px-4 pt-2 text-[11px] text-foreground/40">
                   <Loader2 className="h-3 w-3 animate-spin text-brand" /> Searching the organisation…
                 </div>
               )}
+              {blocked && query.trim().length >= 2 && <p role="status" className="px-4 py-2 text-sm text-[#0A2B6D]">Organisation search requires an active approved account with a business assigned.</p>}
+              {!!unavailable.length && <div role="status" className="px-4 py-2 text-sm text-[#0A2B6D]">
+                <p>Search is incomplete. Unavailable: {unavailable.join(', ')}.</p>
+                <button type="button" onClick={() => setRetry((value) => value + 1)} className="mt-1 min-h-11 font-bold text-[#0072FF]">Retry search</button>
+              </div>}
               <CommandList className="max-h-[22rem]">
-                {!hasResults && query.trim().length >= 2 && !searching && (
+                {!hasResults && query.trim().length >= 2 && !searching && !blocked && !unavailable.length && (
                   <CommandEmpty>No matches for “{query.trim()}”</CommandEmpty>
                 )}
                 {quickActions.length > 0 && (
@@ -313,6 +287,18 @@ export default function GlobalSearch() {
                     ))}
                   </CommandGroup>
                 )}
+                {[
+                  { key: 'audits', label: 'Audits', path: '/compliance?tab=audits' },
+                  { key: 'evidence', label: 'Evidence', path: '/compliance' },
+                  { key: 'training', label: 'Training', path: '/training' },
+                  { key: 'projects', label: 'Projects', path: '/projects' },
+                  { key: 'governance', label: 'Governance records', path: '/governance' },
+                ].map((source) => results[source.key]?.length > 0 && <CommandGroup key={source.key} heading={source.label}>
+                  {results[source.key].map((record) => <CommandItem key={record.id} value={source.key + '-' + record.id} onSelect={() => go(source.path)}>
+                    <FolderOpen className="text-brand" /><span className="font-medium">{record.title || record.name}</span>
+                    <span className="ml-auto text-[11px] text-foreground/60">{record.status || record.standard || record.record_type || 'Open workspace'}</span>
+                  </CommandItem>)}
+                </CommandGroup>)}
               </CommandList>
               <div className="flex items-center justify-between border-t px-4 py-2 text-[11px] text-foreground/40">
                 <span className="flex items-center gap-1"><Zap className="h-3 w-3" /> ↑↓ to navigate · Enter to open</span>
