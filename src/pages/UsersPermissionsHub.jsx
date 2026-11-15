@@ -5,6 +5,7 @@ import { Users, ShieldCheck } from 'lucide-react';
 import UsersTable from '@/components/users/UsersTable';
 import PermissionMatrix from '@/components/users/PermissionMatrix';
 import AccessExplorer from '@/components/users/AccessExplorer';
+import AccessReviewPanel from '@/components/users/AccessReviewPanel';
 import { ALL_ROLES } from '@/lib/roles';
 import RecentActionsPanel from '@/components/dashboard/RecentActionsPanel';
 import PlatformCoreGovernanceCommandStrip from '@/components/users/PlatformCoreGovernanceCommandStrip';
@@ -72,6 +73,7 @@ export default function UsersPermissionsHub() {
             User Account Approvals &amp; Role Assignments
           </div>
           <UsersTable />
+          <AccessReviewPanel />
 
           <div className="flex items-center gap-2 text-sm font-extrabold text-[#0A2B6D]">
             <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#0A2B6D] text-white shadow-2xs">
