@@ -6,21 +6,140 @@ import { MODULE_DIRECTORY, NAV_GROUPS, buildNavigationGroups } from '@/lib/modul
 import { useRole } from '@/lib/useRole';
 import { matchesModulePath } from '@/lib/navigationPreferences';
 
+// Approved task-based navigation: each module has exactly one home.
+const LEGACY_NAV_GROUPS = [
+  {
+    "id": "my-workspace",
+    "label": "1. My Workspace",
+    "keys": [
+      "dashboard",
+      "today",
+      "team-leader",
+      "my-profile",
+      "daily-briefing",
+      "tasks",
+      "approvals",
+      "assistant"
+    ]
+  },
+  {
+    "id": "people-intake",
+    "label": "2. People & Intake",
+    "keys": [
+      "intake",
+      "our-participants",
+      "our-staff",
+      "key-contacts",
+      "community-referral",
+      "volunteering-placements"
+    ]
+  },
+  {
+    "id": "service-delivery",
+    "label": "3. Service Delivery",
+    "keys": [
+      "rostering",
+      "goals",
+      "programs",
+      "frontline-hub",
+      "visual-boards"
+    ]
+  },
+  {
+    "id": "workforce-training",
+    "label": "4. Workforce & Training",
+    "keys": [
+      "human-resources",
+      "workforce-presence",
+      "training",
+      "certificates"
+    ]
+  },
+  {
+    "id": "communication-engagement",
+    "label": "5. Communication & Engagement",
+    "keys": [
+      "communications",
+      "meetings",
+      "feedback",
+      "community-council"
+    ]
+  },
+  {
+    "id": "incidents-risk-safety",
+    "label": "6. Incidents, Risk & Safety",
+    "keys": [
+      "incidents",
+      "incident-analytics",
+      "risks",
+      "emergency-response",
+      "equipment-manuals"
+    ]
+  },
+  {
+    "id": "compliance-quality-documents",
+    "label": "7. Compliance, Quality & Documents",
+    "keys": [
+      "compliance",
+      "auditor-portal",
+      "documents",
+      "quality",
+      "checklists",
+      "review-due",
+      "user-success",
+      "ndis-provider"
+    ]
+  },
+  {
+    "id": "finance-assets-growth",
+    "label": "8. Finance, Assets & Growth",
+    "keys": [
+      "invoicing",
+      "quotes",
+      "receipts",
+      "procurement",
+      "assets",
+      "crm"
+    ]
+  },
+  {
+    "id": "governance-operations",
+    "label": "9. Governance & Operations",
+    "keys": [
+      "governance",
+      "operations-centre",
+      "projects",
+      "suggestions-hub"
+    ]
+  },
+  {
+    "id": "administration-help",
+    "label": "10. Administration & Help",
+    "keys": [
+      "users",
+      "remote-access",
+      "ndis-news",
+      "help"
+    ]
+  }
+];
+
+
 // Legacy exports are kept for the existing iPad Quick Access.
 export const PRIMARY_11_OS_NAV = buildNavigationGroups();
 export const FOCUSED_5_PILLAR_NAV = buildNavigationGroups(MODULE_DIRECTORY, [
-  { id: 'pillar-today', label: '1. My Workspace', keys: NAV_GROUPS[0].keys },
-  { id: 'pillar-people', label: '2. People & Service Delivery', keys: [...NAV_GROUPS[1].keys, ...NAV_GROUPS[2].keys] },
-  { id: 'pillar-workforce', label: '3. Workforce & Communication', keys: [...NAV_GROUPS[3].keys, ...NAV_GROUPS[4].keys] },
-  { id: 'pillar-safety', label: '4. Safety, Quality & Evidence', keys: [...NAV_GROUPS[5].keys, ...NAV_GROUPS[6].keys] },
-  { id: 'pillar-audit', label: '5. Business & Administration', keys: [...NAV_GROUPS[7].keys, ...NAV_GROUPS[8].keys, ...NAV_GROUPS[9].keys] },
+  { id: 'pillar-today', label: '1. My Workspace', keys: LEGACY_NAV_GROUPS[0].keys },
+  { id: 'pillar-people', label: '2. People & Service Delivery', keys: [...LEGACY_NAV_GROUPS[1].keys, ...LEGACY_NAV_GROUPS[2].keys] },
+  { id: 'pillar-workforce', label: '3. Workforce & Communication', keys: [...LEGACY_NAV_GROUPS[3].keys, ...LEGACY_NAV_GROUPS[4].keys] },
+  { id: 'pillar-safety', label: '4. Safety, Quality & Evidence', keys: [...LEGACY_NAV_GROUPS[5].keys, ...LEGACY_NAV_GROUPS[6].keys] },
+  { id: 'pillar-audit', label: '5. Business & Administration', keys: [...LEGACY_NAV_GROUPS[7].keys, ...LEGACY_NAV_GROUPS[8].keys, ...LEGACY_NAV_GROUPS[9].keys] },
 ]);
 
 export default function ObsidianSidebarRemote({ visiblePrimary, isActive: isActiveProp, navLabel = (item) => item.label, onLogout, onDirectory }) {
   const location = useLocation();
   const { can } = useRole();
   const modules = (visiblePrimary || MODULE_DIRECTORY).filter((item) => can(item.key));
-  const groups = buildNavigationGroups(modules);
+  const groups = buildNavigationGroups(modules, NAV_GROUPS, { includePlanned: can('operations-centre') });
   const isActive = isActiveProp || ((path) => matchesModulePath(location.pathname, path));
   const activeGroup = groups.find((group) => group.children.some((item) => isActive(item.path)))?.id;
   const [expanded, setExpanded] = useState({});
@@ -36,12 +155,14 @@ export default function ObsidianSidebarRemote({ visiblePrimary, isActive: isActi
       {groups.map((group, index) => {
         const open = expanded[group.id] ?? (group.id === activeGroup || group.id === 'my-workspace');
         const colour = ['#0072FF', '#A855F7', '#FF2E9A'][index % 3];
-        return <section key={group.id}>
+        return <section key={group.id} className={group.parent ? 'ml-2 border-l border-white/20 pl-2' : ''}>
+          {group.parent && groups[index - 1]?.parent !== group.parent && <h2 className="mb-2 text-xs font-bold uppercase tracking-widest text-white/80">{group.parent}</h2>}
           <button type="button" aria-expanded={open} aria-controls={'nav-group-' + group.id} onClick={() => setExpanded((previous) => ({ ...previous, [group.id]: !open }))} className="flex min-h-11 w-full items-center justify-between gap-2 rounded-lg border border-white/20 px-3 py-2 text-left text-sm font-bold focus-visible:ring-2 focus-visible:ring-white" style={{ borderLeft: '3px solid ' + colour }}>
-            <span>{group.label}</span><ChevronDown size={16} className={open ? 'shrink-0 rotate-180' : 'shrink-0'} />
+            <span>{group.label}{group.planned && <span className="ml-2 text-xs font-normal">Planned</span>}</span><ChevronDown size={16} className={open ? 'shrink-0 rotate-180' : 'shrink-0'} />
           </button>
           <div id={'nav-group-' + group.id} hidden={!open} className="space-y-1 pt-1">
-            {group.children.map((item) => { const Icon = item.icon; const active = isActive(item.path); return <Link key={item.key} to={item.path} aria-current={active ? 'page' : undefined} className={'flex min-h-11 items-center gap-2 rounded-lg px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-white ' + (active ? 'bg-[#0072FF] font-bold text-white' : 'text-white/90 hover:bg-white/10')}><Icon size={17} className="shrink-0" aria-hidden="true" /><span className="min-w-0 break-words">{navLabel(item)}</span></Link>; })}
+            {group.description && <p className="px-3 py-2 text-xs text-white/80">{group.description}</p>}
+            {group.children.map((item) => { const Icon = item.icon; const active = item.path.includes('?') ? location.pathname + location.search === item.path : isActive(item.path); return <Link key={item.key} to={item.path} aria-current={active ? 'page' : undefined} className={'flex min-h-11 items-center gap-2 rounded-lg px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-white ' + (active ? 'bg-[#0072FF] font-bold text-white' : 'text-white/90 hover:bg-white/10')}><Icon size={17} className="shrink-0" aria-hidden="true" /><span className="min-w-0 break-words">{navLabel(item)}</span></Link>; })}
           </div>
         </section>;
       })}
