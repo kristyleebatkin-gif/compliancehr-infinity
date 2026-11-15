@@ -1,4 +1,5 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
+import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
+import { hasApprovedAccess } from '../../shared/appAccess.ts';
 
 const ALLOWED_ROLES = [
   'admin',
@@ -150,17 +151,20 @@ function buildContext(controls, evidence, findings, standards) {
   };
 }
 
-export default async function (req) {
+export default perBusiness(async function (req) {
   try {
-    const base44 = createClientFromRequest(req);
+    const base44 = createScopedClientFromRequest(req);
     const user = await base44.auth.me().catch((e) => (e.status === 401 ? null : Promise.reject(e)));
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
 
-    if (!ALLOWED_ROLES.includes(user.role)) {
+    if (!hasApprovedAccess(user) || !ALLOWED_ROLES.includes(user.role)) {
       return Response.json({ error: 'You do not have access to the AI copilots.' }, { status: 403 });
     }
 
     const body = await req.json().catch(() => ({}));
+    if (user.role === 'admin' && body.tenant_id !== base44.businessId) {
+      return Response.json({ error: 'Choose one business before running a review.' }, { status: 400 });
+    }
     const review = REVIEWS[body.action];
     if (!review) {
       return Response.json({ error: 'Choose a review the copilot can run.' }, { status: 400 });
@@ -168,7 +172,7 @@ export default async function (req) {
     const question = clip(typeof body.question === 'string' ? body.question : '', 500).trim();
 
     const startedAt = Date.now();
-    const tenantId = user?.data?.tenant_id || '';
+    const tenantId = base44.businessId;
 
     const [standardsPage, controlsPage, evidencePage, findingsPage] = await Promise.all([
       base44.entities.RegulatoryStandard.filter({}, { limit: 60, sort: 'standard_code' }),
@@ -306,4 +310,4 @@ export default async function (req) {
   } catch (error) {
     return Response.json({ error: error.message || 'The copilot could not complete this review.' }, { status: 500 });
   }
-}
+});

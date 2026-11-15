@@ -40,6 +40,11 @@ export const SHARED_WITH_COPIES_ENTITIES = Object.freeze([
 
 // Business-owned: every record carries the owning business's tenant_id.
 export const BUSINESS_OWNED_ENTITIES = Object.freeze([
+  'AiAgent',
+  'AiInteraction',
+  'AiPrompt',
+  'AiRecommendation',
+  'KnowledgeLink',
   'AssuranceEvidence',
   'AssuranceFinding',
   'ComplianceControl',

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { base44 } from '@/api/base44Client';
+import { base44, getClientTenantContext } from '@/api/base44Client';
 import { COPILOT_ACTIONS } from '@/lib/aiIntelligence';
 import AiResponseReport from '@/components/ai/AiResponseReport';
 
@@ -23,7 +23,9 @@ export default function CopilotRunDialog({ open, onClose, onComplete, initialAct
     setRunning(true);
     setError('');
     try {
-      const response = await base44.functions.invoke('aiCopilot', { action, question });
+      const tenantId = getClientTenantContext().tenantId;
+      if (!tenantId) throw new Error('Choose a business before running a review.');
+      const response = await base44.functions.invoke('aiCopilot', { action, question, tenant_id: tenantId });
       setResult(response.data);
       if (onComplete) onComplete();
     } catch (invokeError) {
