@@ -1,255 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, ArrowRight, Calendar, Layers, Users } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import BrandLogoLockup from '@/components/common/BrandLogoLockup';
 
-const WORKSPACE_VIEWS = [
-  { id: 'both', label: 'Both Views', Icon: Layers },
-];
+const LINKS = [['Platform', '#blueprint'], ['Solutions', '#solution'], ['Pricing', '#pricing'], ['About', '#about'], ['FAQs', '#faq']];
 
-const NAV_LINKS = [
-  ['Dashboard', '#showcase'],
-  ['Pillars', '#solution'],
-  ['Why Us', '#why-choose'],
-  ['How It Works', '#how-it-works'],
-  ['Reviews', '#testimonials'],
-  ['Pricing', '#pricing'],
-  ['46 Modules', '#blueprint'],
-  ['FAQ', '#faq'],
-];
-
-const WORKSPACE_ROUTES = [
-  ['Live Executive Dashboard', '/dashboard'],
-  ['45 Master Registers Hub', '/registers'],
-  ['User Success & Evidence Hub', '/user-success'],
-  ['Record Intelligence Hub', '/record-intelligence'],
-  ['Frontline Rapid Hub', '/frontline-hub'],
-  ['Workforce Presence & Safety', '/workforce-presence'],
-  ['Universal Storage Hub', '/universal-storage'],
-  ['Document Vault', '/documents'],
-  ['Company Safe', '/company-safe'],
-  ['Compliance Centre', '/compliance'],
-  ['Operations Centre', '/operations-centre'],
-  ['Connect AI Agent (MCP)', '/connect'],
-];
-
-export default function LandingNav({ onBookDemo, showLiveDashboard = true, onToggleLiveDashboard }) {
+export default function LandingNav({ onBookDemo }) {
   const [open, setOpen] = useState(false);
-  const [workspaceMenuOpen, setWorkspaceMenuOpen] = useState(false);
-  const [collapsedHeader, setCollapsedHeader] = useState(false);
-  const [manualOverride, setManualOverride] = useState(null);
-  const [workspaceView, setWorkspaceView] = useState(() => localStorage.getItem('chr-workspace-view-mode') || 'both');
-
-  const switchWorkspaceView = (mode) => {
-    setWorkspaceView(mode);
-    localStorage.setItem('chr-workspace-view-mode', mode);
-    window.dispatchEvent(new CustomEvent('chr-view-mode-change', { detail: { mode } }));
-  };
-
   useEffect(() => {
-    const onScroll = () => {
-      if (manualOverride !== null) return;
-      if (window.scrollY > 80) setCollapsedHeader(true);
-      else if (window.scrollY < 30) setCollapsedHeader(false);
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, [manualOverride]);
-
-  const toggleHeaderCollapse = () => {
-    setCollapsedHeader((prev) => {
-      const next = !prev;
-      setManualOverride(next);
-      return next;
-    });
-  };
-
-  return (
-    <header
-      id="top-landing"
-      className="sticky top-0 z-40 w-full bg-[#0A2B6D]/95 shadow-sm transition-all duration-200"
-    >
-      {/* Top App-Design Gradient Strip — aligned flush with navigation remote */}
-      <div
-        className="h-1.5 w-full"
-        style={{
-          background:
-            'linear-gradient(120deg, #00C6FF 0%, #0072FF 25%, #5A00D6 55%, #FF2E9A 100%)',
-        }}
-      />
-
-      {/* Collapsible Dark Blue Header Section Above Dashboard */}
-      {collapsedHeader ? (
-        <div className="mx-auto flex max-w-[1440px] items-center justify-between bg-[#0A2B6D]/95 px-4 py-1 sm:px-6 lg:px-8">
-          <Link to="/" className="flex items-center gap-1.5 text-xs font-extrabold">
-            <span style={{ color: '#00C6FF' }}>Compliance</span>
-            <span style={{ color: '#FF2E9A' }}>HR Infinity</span>
-          </Link>
-          <button
-            type="button"
-            onClick={toggleHeaderCollapse}
-            className="inline-flex min-h-8 sm:min-h-0 sm:h-[24px] items-center gap-1 rounded-md px-3 text-[10px] font-extrabold text-white shadow-2xs transition"
-            style={{ backgroundColor: '#FF2E9A' }}
-          >
-            <span>Expand Header</span>
-          </button>
-        </div>
-      ) : (
-        <div className="mx-auto flex max-w-[1440px] flex-col items-center justify-center gap-0.5 bg-[#0A2B6D]/95 px-2 pt-1 pb-0.5 sm:px-4 md:flex-row md:flex-wrap md:items-end md:gap-3 lg:px-6">
-          {/* Top / Centre: Larger Business Logo + Name + Slogan */}
-          <Link
-            to="/"
-            className="inline-flex max-w-full shrink-0 flex-col items-center justify-end text-center"
-            aria-label="ComplianceHR Infinity home"
-          >
-            <BrandLogoLockup size="md" theme="dark" showSlogan compactSlogan />
-          </Link>
-
-          {/* Single Row Under Logo: Sign In, Book Demo, Participant Profiles, Both Views & Start Free */}
-          <div className="flex w-full max-w-full flex-wrap items-end justify-center gap-1.5 py-0.5 md:w-auto md:shrink-0">
-            <div className="flex shrink-0 flex-col items-center gap-1">
-              <button
-                type="button"
-                className="xl:hidden inline-flex items-center justify-center rounded-lg border border-[#00C6FF] bg-[#0A2B6D]/95 p-1 text-[#00C6FF]"
-                aria-label={open ? 'Close menu' : 'Open menu'}
-                aria-expanded={open}
-                onClick={() => setOpen(!open)}
-              >
-                {open ? <X className="h-3.5 w-3.5" /> : <Menu className="h-3.5 w-3.5" />}
-              </button>
-              <Link
-                to="/login"
-                className="inline-flex min-h-8 sm:min-h-0 sm:h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/20 px-2.5 text-[10px] font-extrabold text-workspace-navy shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90"
-                style={{ backgroundColor: '#00C6FF' }}
-              >
-                Sign In
-              </Link>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => onBookDemo && onBookDemo('Book a Personal Demo')}
-              className="inline-flex min-h-8 sm:min-h-0 sm:h-[24px] shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-lg border border-[#00C6FF]/50 px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(0,114,255,0.55)] transition hover:opacity-90"
-              style={{ backgroundColor: '#0072FF' }}
-            >
-              <Calendar className="h-3 w-3 shrink-0" style={{ color: '#00C6FF' }} />
-              <span>Book Demo</span>
-            </button>
-
-            <Link
-              to="/our-participants"
-              className="inline-flex min-h-8 sm:min-h-0 sm:h-[24px] shrink-0 items-center justify-center gap-1 rounded-full border border-[#00C6FF] bg-[#0072FF] px-3 text-[10px] font-extrabold uppercase tracking-wide text-white shadow-[0_0_10px_rgba(0,114,255,0.5)] transition hover:opacity-95"
-            >
-              <Users className="h-3 w-3 shrink-0 text-[#00C6FF]" />
-              <span className="whitespace-nowrap">Participant Profiles</span>
-            </Link>
-
-            {WORKSPACE_VIEWS.map(({ id, label, Icon }) => {
-              const selected = workspaceView === id;
-              return (
-                <button
-                  key={id}
-                  type="button"
-                  onClick={() => switchWorkspaceView(id)}
-                  aria-pressed={selected}
-                  title={label}
-                  className="inline-flex min-h-8 sm:min-h-0 sm:h-[24px] shrink-0 items-center justify-center gap-1 rounded-full border px-3 text-[10px] font-extrabold tracking-wide shadow-[0_0_10px_rgba(0,198,255,0.5)] transition-all hover:opacity-95"
-                  style={{
-                    background: 'linear-gradient(90deg, #00C6FF 0%, #0072FF 50%, #FF2E9A 100%)',
-                    borderColor: '#00C6FF',
-                    color: '#FFFFFF',
-                  }}
-                >
-                  <Icon className="h-3 w-3 shrink-0" style={{ color: '#00C6FF' }} />
-                  <span className="whitespace-nowrap uppercase">{label}</span>
-                </button>
-              );
-            })}
-
-            <Link
-              to="/register"
-              className="inline-flex min-h-8 sm:min-h-0 sm:h-[24px] shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-lg border border-white/25 px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(255,46,154,0.55)] transition hover:opacity-90"
-              style={{ backgroundColor: '#FF2E9A' }}
-            >
-              <span>Start Free</span>
-              <ArrowRight className="h-3 w-3 shrink-0 text-white" />
-            </Link>
-
-          </div>
-        </div>
-      )}
-
-      {/* Continuous App-Design Gradient Divider Line aligned with remote */}
-      <div
-        className="h-[3px] w-full"
-        style={{
-          background:
-            'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
-        }}
-      />
-
-      {open && (
-        <nav
-          aria-label="Mobile navigation"
-          className="xl:hidden border-t border-slate-200 bg-white px-4 py-4 space-y-3"
-        >
-          <div className="grid grid-cols-2 gap-2">
-            {NAV_LINKS.map(([label, href]) => (
-              <a
-                key={href}
-                href={href}
-                onClick={() => setOpen(false)}
-                className="rounded-lg border border-slate-200 bg-slate-50/70 px-3 py-2 text-sm sm:text-xs font-semibold text-[#0A2B6D]"
-              >
-                {label}
-              </a>
-            ))}
-          </div>
-          <div className="border-t border-slate-100 pt-2">
-            <div className="mb-1.5 text-xs font-bold uppercase tracking-wider text-[#5A00D6]">
-              Quick Workspaces
-            </div>
-            <div className="grid grid-cols-2 gap-1.5">
-              {WORKSPACE_ROUTES.slice(0, 6).map(([label, path]) => (
-                <Link
-                  key={path}
-                  to={path}
-                  onClick={() => setOpen(false)}
-                  className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-sm sm:text-xs font-semibold text-[#0A2B6D]"
-                >
-                  {label}
-                </Link>
-              ))}
-            </div>
-          </div>
-          <div className="flex flex-wrap items-center gap-2 pt-1">
-            <button
-              type="button"
-              onClick={() => {
-                setOpen(false);
-                if (onBookDemo) onBookDemo('Book a Personal Demo');
-              }}
-              className="flex-1 rounded-lg border border-[#0A2B6D] bg-white px-3 py-2 text-center text-xs font-bold text-[#0A2B6D]"
-            >
-              Book a Demo
-            </button>
-            <Link
-              to="/connect"
-              onClick={() => setOpen(false)}
-              className="flex-1 rounded-lg border border-[#5A00D6] bg-[#F5F0FF] px-3 py-2 text-center text-xs font-bold text-[#5A00D6]"
-            >
-              Connect AI
-            </Link>
-            <Link
-              to="/login"
-              onClick={() => setOpen(false)}
-              className="flex-1 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-center text-xs font-semibold text-[#0A2B6D]"
-            >
-              Sign In
-            </Link>
-          </div>
-        </nav>
-      )}
-    </header>
-  );
+    const close = (event) => { if (event.key === 'Escape') setOpen(false); };
+    window.addEventListener('keydown', close);
+    return () => window.removeEventListener('keydown', close);
+  }, []);
+  return <header id="top-landing" className="sticky top-0 z-40 bg-[#0A2B6D]/95 text-white backdrop-blur-md">
+    <a href="#landing-content" className="sr-only focus:not-sr-only focus:block focus:bg-white focus:p-3 focus:text-[#0A2B6D]">Skip to content</a>
+    <div className="h-1 bg-gradient-to-r from-[#0072FF] via-[#5A00D6] to-[#FF2E9A]" />
+    <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6">
+      <Link to="/" aria-label="ComplianceHR Infinity home" className="max-w-[200px]"><BrandLogoLockup size="xs" theme="dark" showSlogan compactSlogan /></Link>
+      <nav aria-label="Public navigation" className="hidden items-center gap-1 xl:flex">
+        {LINKS.map(([label, href]) => <a key={href} href={href} className="rounded-lg px-3 py-3 text-sm font-semibold hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-white">{label}</a>)}
+      </nav>
+      <div className="flex flex-wrap items-center gap-2">
+        <Link to="/login" className="rounded-lg border border-white/40 px-3 py-3 text-sm font-semibold">Sign In</Link>
+        <button type="button" onClick={() => onBookDemo?.('Book a Personal Demo')} className="rounded-lg bg-[#0072FF] px-3 py-3 text-sm font-bold text-white">Book Demo</button>
+        <Link to="/register" className="hidden rounded-lg bg-[#FF2E9A] px-3 py-3 text-sm font-bold text-white sm:inline-flex">Start Free Trial</Link>
+        <button type="button" aria-label={open ? 'Close menu' : 'Open menu'} aria-controls="public-mobile-menu" aria-expanded={open} onClick={() => setOpen(!open)} className="rounded-lg border border-white/40 p-3 xl:hidden">{open ? <X size={20} /> : <Menu size={20} />}</button>
+      </div>
+    </div>
+    <nav id="public-mobile-menu" aria-label="Mobile public navigation" hidden={!open} className="border-t border-white/20 px-4 py-3 xl:hidden">
+      <div className="grid grid-cols-2 gap-2">{LINKS.map(([label, href]) => <a key={href} href={href} onClick={() => setOpen(false)} className="rounded-lg px-3 py-3 text-sm font-semibold hover:bg-white/10">{label}</a>)}
+        <Link to="/register" className="rounded-lg bg-[#FF2E9A] px-3 py-3 text-sm font-bold">Start Free Trial</Link>
+      </div>
+    </nav>
+  </header>;
 }
