@@ -528,6 +528,10 @@ Generate:
 ```
 Build everything to enterprise production standards with complete traceability, versioning, auditability, evidence-first compliance management, NDIS alignment, Aged Care alignment, Allied Health governance, executive assurance, board assurance, and ComplianceHR Infinity architecture principles.
 
+## Phase 11 workflow extension
+
+The owner Phase 11 specification is preserved in `PHASE11_OWNER_SPECIFICATION.md`. The detailed design, 48 logical contracts, 22 screen contracts, permission/integration/release matrices and 336 acceptance stories are in `PHASE11_WORKFLOW_STUDIO_DESIGN.md`; the backlog is also `PHASE11_WORKFLOW_BACKLOG.csv`. These are design targets, not completed production capabilities. Track evidence and release gates in MASTER_TODO.md. Existing workflowSafety gates remain in force.
+
 ## Implementation interpretation
 
 - Catalogue entries and generated relationships are Draft proposals until reviewed against applicable, current official sources. Numbered codes are internal identifiers, not regulator-issued requirements.
