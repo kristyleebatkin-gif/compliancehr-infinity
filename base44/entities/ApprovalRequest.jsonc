@@ -13,7 +13,8 @@
     "record_type": {
       "type": "string",
       "enum": [
-        "TodoTask"
+        "TodoTask",
+        "AccessRequest"
       ],
       "title": "Record type"
     },
@@ -32,6 +33,14 @@
     "summary": {
       "type": "string",
       "title": "Summary for the approver"
+    },
+    "requested_role": {
+      "type": "string",
+      "title": "Role asked for (access requests)"
+    },
+    "current_role": {
+      "type": "string",
+      "title": "Role when asked (access requests)"
     },
     "requested_by_id": {
       "type": "string",

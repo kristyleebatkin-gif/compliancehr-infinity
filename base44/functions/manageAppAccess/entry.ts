@@ -17,6 +17,7 @@
 //   reactivate { user_id, role? }            cancel_invite { id }
 import { perBusiness, createScopedClientFromRequest, accountDirectoryFromRequest, SCOPE_HEADER } from '../../shared/tenantScope.ts';
 import { hasApprovedAccess, canManageAccess, canGrantRole, ASSIGNABLE_ROLES, SENIOR_ROLES } from '../../shared/roleMatrix.ts';
+import { syncMembership as syncMembershipShared } from '../../shared/accessChanges.ts';
 
 const INVITE_DAYS = 14;
 const items = (page: any) => (Array.isArray(page) ? page : page?.items || []);
@@ -50,14 +51,8 @@ export async function handleAccess(ctx: Ctx, body: any): Promise<Response> {
     });
 
   const membershipOf = async (userId: string) => items(await E.TenantMembership.filter({ user_id: userId }))[0] || null;
-  const syncMembership = async (user: any, fields: Record<string, unknown>) => {
-    const existing = await membershipOf(user.id);
-    if (existing) return E.TenantMembership.update(existing.id, fields);
-    return E.TenantMembership.create({
-      organisation_id: ctx.tenantId, user_id: user.id, user_email: user.email || '', starts_on: today,
-      invited_by_user_id: actor.id, membership_role: 'Employee', status: 'Active', ...fields,
-    });
-  };
+  const syncMembership = (user: any, fields: Record<string, unknown>) =>
+    syncMembershipShared(E, user, fields, { tenantId: ctx.tenantId, actorId: actor.id, today });
   const pendingInvites = async () => {
     const own = items(await E.AccountInvitation.filter({ status: 'Pending' }));
     const portal = items(await E.ProfilePortalInvitation.filter({ status: 'Pending' }));
