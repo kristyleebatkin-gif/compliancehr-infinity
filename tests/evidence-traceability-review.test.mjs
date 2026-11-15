@@ -63,5 +63,5 @@ test('latest master sequence has 12 dependency-ordered phases, 29 planned OS and
   assert.equal(new Set(systems.map(system => system.name)).size, 29);
   for (const role of ['Platform Owner', 'Board Member', 'CEO', 'General Manager', 'Compliance Manager', 'Quality Manager', 'Risk Manager', 'Audit Manager', 'HR Manager', 'Learning Manager', 'Clinical Governance Lead', 'Allied Health Manager', 'Practitioner', 'Team Leader', 'Service Manager', 'Finance Manager', 'IT Manager', 'Participant', 'External Auditor']) assert.ok(REQUIRED_WORKSPACES.includes(role), role);
   assert.ok(SHARED_ENGINES.includes('Relationship'));
-  assert.equal(EVIDENCE_CHAIN[0], 'Standard'); assert.equal(EVIDENCE_CHAIN.at(-1), 'Board Oversight');
+  assert.equal(EVIDENCE_CHAIN[0], 'Legislation'); assert.equal(EVIDENCE_CHAIN.at(-1), 'Board Reporting');
 });
