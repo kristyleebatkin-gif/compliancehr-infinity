@@ -1,12 +1,11 @@
 # ComplianceHR Infinity — Enterprise vNext Audit and Architecture
 
-Audit date: 15 November 2026 · Database: Production · App: 6ac9f91f0d82b1f80ec6a25f
+Audit date: 15 November 2026 · Scope: source inventory; production data not audited · App: 6ac9f91f0d82b1f80ec6a25f
 Architecture model: `src/lib/enterpriseOS.js` · Role workspaces: `src/lib/enterpriseRoleWorkspaces.js`
 Live console: `/enterprise-os`
 
 This document records what the platform actually contains, what the fifteen operating systems cover, and
-what is still missing. Nothing was removed to produce it. A capability is only marked working when a real
-module, register or backend function backs it.
+what is still missing. Nothing was removed to produce it. Source-present means a mapped module or register exists. Functional completion, live permissions, WCAG AA and compliance acceptance are NOT established by this inventory.
 
 ---
 
@@ -25,7 +24,7 @@ module, register or backend function backs it.
 
 ### Existing systems reused by the operating layer
 
-- Identity and access: approved-account gate, role matrix, tenant scoping, RLS on every entity, MFA.
+- Identity and access: approved-account gate, role matrix, tenant scoping, RLS and MFA source present; enforcement requires authenticated acceptance.
 - Evidence and documents: document vault, universal storage, register hub, document control, acknowledgements.
 - Work and approvals: tasks, shared to-do, approval inbox with server-side sign-off validation.
 - Automation: 67 workflows, scheduled reminder scans, notification and push delivery logs.
@@ -50,14 +49,14 @@ module, register or backend function backs it.
 `/enterprise-os` is the authoritative view of the architecture. It shows:
 
 - 15 operating systems in the directed priority order, each with capability-by-capability coverage.
-- For each: the modules that serve it, live register counts (read from the database, permission-filtered),
+- For each: the modules that serve it, authorised register counts when available; failed queries show Unavailable,
   the notes explaining every partial capability, and the gaps still to build.
 - 30 role workspaces mapped to the page that serves each role, with honest stop-gap notes.
 - The platform audit, schema plan, API plan and the full gap register.
 - The roadmap and the ten final deliverables.
 
-Coverage is calculated, never asserted: **working** counts a live capability, **partial** counts half, and the
-percentage on each card is derived from the capability list.
+Coverage is calculated, never asserted: **source present** counts a mapped capability, **partial** counts half, and the
+percentage on each card is a source-mapping score, not a completion or compliance percentage.
 
 ---
 
@@ -92,7 +91,7 @@ managers have no site-scoped dashboard; family representatives have no represent
 ## 4. Database expansion plan (Phase 4)
 
 Existing schemas already cover governance, compliance, audit, risk, quality, workforce, NDIS, finance,
-automation logs and reporting records — they are extended, never duplicated. The schemas genuinely absent:
+automation logs and reporting records — they are extended, never duplicated. Candidate additions requiring reconciliation against existing generic schemas:
 
 | Schema | Entities to add |
 | --- | --- |
@@ -126,13 +125,13 @@ and tested.
 
 Layers, bottom to top:
 
-1. **Data** — 181 entity schemas with tenant and RLS rules on each.
+1. **Data** — 181 entity schemas requiring tenant and RLS acceptance; all-entity enforcement has not been verified in this batch.
 2. **Server logic** — 114 backend functions, including role-gated workflow checks.
 3. **Automation** — 67 workflows for scheduled scans, reminders and escalations.
 4. **Operating systems** — the fifteen OS groupings, each a set of capabilities backed by modules.
 5. **Role workspaces** — 30 roles mapped to the page that serves them.
 6. **Presentation** — shared design system: navy/indigo/purple/magenta gradients, white cards, consistent
-   tables, WCAG AA contrast, desktop-first with mobile and tablet layouts.
+   tables; WCAG AA, mobile and tablet acceptance remain unverified.
 
 ---
 
@@ -159,3 +158,12 @@ Next, in the directed priority order:
 Each release follows the same assurance chain: legislation → standard → requirement → obligation → control →
 evidence → assessment → review → audit → finding → corrective action → verification → executive assurance →
 board assurance.
+
+
+## Verification and implementation extension
+
+The builder initially produced the console and source mappings only; it did not implement the full enterprise transformation. Its first verification failed because the frontend and backend permission matrices diverged. The review restored parity, explicitly scoped register-count queries by business, blocked unapproved identities and separated unavailable counts from denied access. Source-present badges replace unsupported Working claims. Role mappings do not create roles or certify nine-element workspaces.
+
+Added a board assurance review at `/governance?tab=board-assurance` using existing GovernanceObject records. Shows missing owners, missing/overdue review dates and missing evidence references; exports only displayed metadata to CSV with the existing formula-safe exporter. Bounded to 200 records with a truncation notice. Recorded references do not prove document validity, exact versions, decisions or approval. This is a governance review surface, not a completed BoardResolution lifecycle.
+
+The platform still requires the full database-field audit, authenticated tenant A/B acceptance, dedicated role workspaces, domain APIs, clinical workflows, report scheduling, specialist copilots and remaining OS implementations. No new entity migrations, permission grants, external sends, production schedules or publication were performed.

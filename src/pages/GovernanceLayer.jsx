@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useSearchParams } from 'react-router-dom';
 import ModuleShell from '@/components/module/ModuleShell';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ShieldCheck } from 'lucide-react';
@@ -17,10 +18,11 @@ import NdisAuditPack from '@/components/governance/NdisAuditPack';
 import CareSphereSmeGarmSuite from '@/components/enterprise/CareSphereSmeGarmSuite';
 
 export default function GovernanceLayer() {
-  const [tab, setTab] = useState(() => {
-    const requested = new URLSearchParams(window.location.search).get('tab');
-    return ['board-assurance', 'sme-garm', 'lifecycle', 'objects', 'document-control', 'delegations', 'acknowledgements', 'registers', 'links', 'standards', 'evidence-chain', 'assurance', 'audit-pack'].includes(requested) ? requested : 'sme-garm';
-  });
+  const [searchParams, setSearchParams] = useSearchParams();
+  const requested = searchParams.get('tab');
+  const validTabs = ['board-assurance', 'sme-garm', 'lifecycle', 'objects', 'document-control', 'delegations', 'acknowledgements', 'registers', 'links', 'standards', 'evidence-chain', 'assurance', 'audit-pack'];
+  const tab = validTabs.includes(requested) ? requested : 'sme-garm';
+  const setTab = value => setSearchParams({ tab: value });
 
   return (
     <div className="mx-auto w-full max-w-[1440px] space-y-4">
