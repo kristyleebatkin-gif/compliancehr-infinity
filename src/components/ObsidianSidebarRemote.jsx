@@ -141,7 +141,8 @@ export default function ObsidianSidebarRemote({ visiblePrimary, isActive: isActi
   const modules = (visiblePrimary || MODULE_DIRECTORY).filter((item) => can(item.key));
   const groups = buildNavigationGroups(modules, NAV_GROUPS, { includePlanned: can('operations-centre') });
   const isActive = isActiveProp || ((path) => matchesModulePath(location.pathname, path));
-  const activeGroup = groups.find((group) => group.children.some((item) => isActive(item.path)))?.id;
+  const activeGroup = groups.find((group) => group.children.some((item) => item.path.includes('?') && location.pathname + location.search === item.path))?.id
+    || groups.find((group) => group.children.some((item) => isActive(item.path)))?.id;
   const [expanded, setExpanded] = useState({});
   useEffect(() => {
     if (activeGroup) setExpanded((previous) => ({ ...previous, [activeGroup]: true }));
