@@ -92,7 +92,7 @@ export default function EnterpriseBelowFooterSuite({ onBookDemo }) {
             </h2>
 
             <p className="w-full text-xs sm:text-[13px] font-semibold leading-snug text-white/90">
-              Every module is engineered with Row-Level Security, server-verified audit logging, real-time statutory countdown clocks, and one-click evidence packs across all 46 connected workspaces.
+              Every module is engineered with Row-Level Security, server-verified audit logging, real-time statutory countdown clocks, and one-click evidence packs across the connected workspaces.
             </p>
 
             <div className="flex flex-wrap items-center justify-between gap-2 pt-1">

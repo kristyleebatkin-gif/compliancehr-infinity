@@ -37,7 +37,6 @@ export default function AppLayout() {
   const { role, navRole, user } = useRole();
   const { toast } = useToast();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [moreOpen, setMoreOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
@@ -98,7 +97,6 @@ export default function AppLayout() {
   const accountStatus = user?.account_status || (role === 'Pending Approval' ? 'Pending Approval' : 'Active');
 
   const visiblePrimary = PRIMARY_NAV.filter((item) => canAccessNav(navRole, item.key));
-  const visibleNav = visiblePrimary;
   const visibleBottom = BOTTOM_NAV.filter((item) => canAccessNav(navRole, item.key));
 
   useEffect(() => {
@@ -121,7 +119,6 @@ export default function AppLayout() {
 
   useEffect(() => {
     setMobileOpen(false);
-    setMoreOpen(false);
     setUserMenuOpen(false);
     setNotifOpen(false);
     if (user?.id && accountStatus === 'Active' && role !== 'Archived') {
@@ -141,8 +138,7 @@ export default function AppLayout() {
         setNotifOpen(false);
         setUserMenuOpen(false);
         setMobileOpen(false);
-        setMoreOpen(false);
-      }
+          }
     };
     window.addEventListener('keydown', closeMenus);
     return () => window.removeEventListener('keydown', closeMenus);
@@ -405,42 +401,7 @@ export default function AppLayout() {
           </button>
         </nav>
 
-        {moreOpen && (
-          <div className="fixed inset-0 z-50 md:hidden">
-            <div className="absolute inset-0 bg-foreground/40" onClick={() => setMoreOpen(false)} />
-            <div className="absolute bottom-0 left-0 right-0 max-h-[75vh] overflow-y-auto rounded-t-2xl bg-white p-4 pb-8">
-              <div className="mb-3 flex items-center justify-between border-b border-slate-100 pb-2.5">
-                <div className="text-base font-extrabold text-[#0A2B6D]">All Enterprise Modules</div>
-                <button onClick={() => setMoreOpen(false)} className="rounded-lg p-1.5 hover:bg-slate-100">
-                  <X className="h-5 w-5 text-[#0A2B6D]" />
-                </button>
-              </div>
-              <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
-                {visibleNav
-                  .filter((i) => !BOTTOM_NAV.some((b) => b.path === i.path))
-                  .map((item) => {
-                    const Icon = item.icon;
-                    const modColor = moduleKeyColour(item.key);
-                    return (
-                      <Link
-                        key={item.path}
-                        to={item.path}
-                        className="flex items-center gap-2.5 rounded-xl border border-slate-200 bg-white p-3 text-left text-xs font-bold text-[#0A2B6D] shadow-2xs transition hover:border-[#0072FF]"
-                      >
-                        <span
-                          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
-                          style={{ background: modColor }}
-                        >
-                          <Icon className="h-4 w-4 text-white" style={{ color: '#FFFFFF' }} />
-                        </span>
-                        <span className="break-words leading-snug">{navLabel(item)}</span>
-                      </Link>
-                    );
-                  })}
-              </div>
-            </div>
-          </div>
-        )}
+
       </div>
     </div>
   );

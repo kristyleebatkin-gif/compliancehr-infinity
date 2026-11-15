@@ -46,6 +46,11 @@ export default function WorkspaceNavigationTools() {
     } catch { setStorageUnavailable(true); }
   }, [preferences, scope, keys]);
 
+  useEffect(() => {
+    const show = () => { setQuery(''); setGroup(''); setOpen(true); };
+    window.addEventListener('chr-open-module-directory', show);
+    return () => window.removeEventListener('chr-open-module-directory', show);
+  }, []);
   useEffect(() => { setOpen(false); }, [location.pathname, location.search, scope, navRole]);
   const favourites = preferences.scope === scope ? cleanModuleKeys(preferences.favourites, keys) : [];
   const recent = preferences.scope === scope ? cleanModuleKeys(preferences.recent, keys, 5) : [];
