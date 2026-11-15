@@ -24,7 +24,7 @@ export default function DomainMatrixGrid({ domains = [], activeDomain = 'All', o
             <div className="flex flex-wrap items-center justify-between gap-2">
               <span className="text-sm font-bold text-foreground">{domain.domain}</span>
               <span className={cn('rounded-full border px-2 py-0.5 text-[11px] font-bold', domain.rating.tone)}>
-                {domain.percent == null ? domain.rating.label : `${domain.percent}% · ${domain.rating.label}`} 
+                {domain.percent == null ? domain.rating.label : `${domain.percent}% · ${domain.rating.label}`}
               </span>
             </div>
             <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
@@ -41,7 +41,7 @@ export default function DomainMatrixGrid({ domains = [], activeDomain = 'All', o
               <span>{domain.count} checkpoints</span>
               <span>{domain.assured} assured</span>
               <span>Assessment not connected</span>
-              
+
             </div>
           </button>
         ))}

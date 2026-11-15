@@ -30,7 +30,7 @@ export default function MatrixCommandStrip({ enterprise, counts }) {
               <Icon className={`h-4 w-4 shrink-0 ${tile.tone}`} />
             </div>
             <div className="mt-1.5 text-2xl font-extrabold leading-none text-foreground">
-              {values[tile.key] == null ? 'Not assessed' : `${values[tile.key]}${tile.suffix || ''}`} 
+              {values[tile.key] == null ? 'Not assessed' : `${values[tile.key]}${tile.suffix || ''}`}
             </div>
             <div className="mt-1.5 text-[11px] font-semibold leading-snug text-muted-foreground">{hints[tile.hint]}</div>
           </div>

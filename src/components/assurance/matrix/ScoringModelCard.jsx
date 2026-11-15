@@ -14,8 +14,8 @@ export default function ScoringModelCard() {
             <tr className="border-b border-border">
               <th className="px-2 py-1.5">Criticality</th>
               <th className="px-2 py-1.5">Score</th>
-              
-              
+
+
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
@@ -25,8 +25,8 @@ export default function ScoringModelCard() {
                   <span className={cn('rounded-full border px-2 py-0.5 text-[11px] font-bold', config.tone)}>{label}</span>
                 </td>
                 <td className="px-2 py-1.5 text-sm font-bold text-foreground">{config.score}</td>
-                
-                
+
+
               </tr>
             ))}
           </tbody>

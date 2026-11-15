@@ -137,7 +137,7 @@ export default function AuditMatrixTable({ rows = [], domain = 'All', onDomainCh
                     )}
                   </td>
                   <td className="px-3 py-2 text-xs font-bold text-foreground">
-                    {row.achieved_points == null ? 'Not assessed' : `${row.achieved_points}/${row.weighting}`} 
+                    {row.achieved_points == null ? 'Not assessed' : `${row.achieved_points}/${row.weighting}`}
                     <div className="text-[11px] font-medium text-muted-foreground">{row.compliance_percentage == null ? '' : `${row.compliance_percentage}%`} </div>
                   </td>
                 </tr>
