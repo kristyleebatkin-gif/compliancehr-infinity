@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ModuleShell from '@/components/module/ModuleShell';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ShieldCheck } from 'lucide-react';
+import BoardAssuranceReview from '@/components/governance/BoardAssuranceReview';
 import LifecycleChain from '@/components/governance/LifecycleChain';
 import GovernanceObjectRegister from '@/components/governance/GovernanceObjectRegister';
 import DocumentControlRegister from '@/components/governance/DocumentControlRegister';
@@ -18,7 +19,7 @@ import CareSphereSmeGarmSuite from '@/components/enterprise/CareSphereSmeGarmSui
 export default function GovernanceLayer() {
   const [tab, setTab] = useState(() => {
     const requested = new URLSearchParams(window.location.search).get('tab');
-    return ['sme-garm', 'lifecycle', 'objects', 'document-control', 'delegations', 'acknowledgements', 'registers', 'links', 'standards', 'evidence-chain', 'assurance', 'audit-pack'].includes(requested) ? requested : 'sme-garm';
+    return ['board-assurance', 'sme-garm', 'lifecycle', 'objects', 'document-control', 'delegations', 'acknowledgements', 'registers', 'links', 'standards', 'evidence-chain', 'assurance', 'audit-pack'].includes(requested) ? requested : 'sme-garm';
   });
 
   return (
@@ -33,6 +34,7 @@ export default function GovernanceLayer() {
       <Tabs value={tab} onValueChange={setTab}>
         <TabsList className="flex h-auto flex-wrap gap-1.5">
           <TabsTrigger value="sme-garm">SME-GARM Command Suite</TabsTrigger>
+          <TabsTrigger value="board-assurance">Board assurance review</TabsTrigger>
           <TabsTrigger value="lifecycle">Lifecycle Chain</TabsTrigger>
           <TabsTrigger value="objects">Universal Objects</TabsTrigger>
           <TabsTrigger value="document-control">Document Control</TabsTrigger>
@@ -49,6 +51,8 @@ export default function GovernanceLayer() {
         <TabsContent value="sme-garm" className="mt-4">
           <CareSphereSmeGarmSuite />
         </TabsContent>
+
+        <TabsContent value="board-assurance" className="mt-4"><BoardAssuranceReview /></TabsContent>
 
         <TabsContent value="lifecycle" className="mt-4">
           <LifecycleChain onOpenObjects={() => setTab('objects')} />

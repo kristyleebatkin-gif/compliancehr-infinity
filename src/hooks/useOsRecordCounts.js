@@ -13,7 +13,7 @@ export default function useOsRecordCounts(registers = []) {
   useEffect(() => {
     let cancelled = false;
     const allowedEntities = new Set(OPERATING_SYSTEMS
-      .filter(os => os.moduleKeys.some(moduleKey => canAccessNav(user?.role, moduleKey)))
+      .filter(os => (['executive', 'reporting'].includes(os.id) ? canAccessNav(user?.role, 'analytics') : os.moduleKeys.some(moduleKey => canAccessNav(user?.role, moduleKey))))
       .flatMap(os => os.registers.map(item => item.entity)));
     readRegisterCounts({ entities: base44.entities, registers, user, allowedEntities })
       .then(counts => { if (!cancelled) setState({ key, counts }); });

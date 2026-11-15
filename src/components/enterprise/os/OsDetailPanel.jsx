@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { ArrowUpRight, CircleSlash, CircleDot, CheckCircle2 } from 'lucide-react';
 import CoverageBadge from '@/components/enterprise/os/CoverageBadge';
 import useOsRecordCounts from '@/hooks/useOsRecordCounts';
+import { useAuth } from '@/lib/AuthContext';
+import { canAccessNav } from '@/lib/roleMatrix';
 import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import { osCoverage } from '@/lib/enterpriseOS';
 
@@ -11,11 +13,13 @@ const ICON_COLOURS = { live: '#0B6B45', partial: '#8A4B00', gap: '#8A1230' };
 
 /** @param {any} props */
 export default function OsDetailPanel({ os }) {
+  const { user } = useAuth();
+  const canOpen = path => MODULE_DIRECTORY.some(module => canAccessNav(user?.role, module.key) && (path === module.path || path?.startsWith(module.path + '?'))) || (path === '/executive-dashboards' && canAccessNav(user?.role, 'analytics'));
   const coverage = osCoverage(os);
   const counts = useOsRecordCounts(os.registers || []);
   const modules = (os.moduleKeys || [])
     .map((key) => MODULE_DIRECTORY.find((module) => module.key === key))
-    .filter(Boolean);
+    .filter(module => module && canAccessNav(user?.role, module.key));
 
   return (
     <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-2xs">
@@ -47,7 +51,7 @@ export default function OsDetailPanel({ os }) {
                     {capability.note && (
                       <p className="mt-0.5 text-[11px] leading-snug text-[#0A2B6D]/70">{capability.note}</p>
                     )}
-                    {capability.to && (
+                    {capability.to && canOpen(capability.to) && (
                       <Link
                         to={capability.to}
                         className="mt-0.5 inline-flex items-center gap-1 text-[11px] font-bold text-[#0072FF] hover:text-[#5A00D6]"
@@ -101,7 +105,7 @@ export default function OsDetailPanel({ os }) {
                         {register.label}
                       </dt>
                       <dd className="text-lg font-extrabold leading-tight text-[#0A2B6D]">
-                        {counts === null ? '—' : value === null || value === undefined ? 'No access' : value}
+                        {counts === null ? 'Loading…' : value?.status === 'ready' ? value.value : value?.status === 'restricted' ? 'Restricted' : 'Unavailable'}
                       </dd>
                     </div>
                   );

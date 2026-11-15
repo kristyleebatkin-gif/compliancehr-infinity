@@ -1,12 +1,17 @@
 import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, Search } from 'lucide-react';
+import { useAuth } from '@/lib/AuthContext';
+import { canAccessNav } from '@/lib/roleMatrix';
+import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import CoverageBadge from '@/components/enterprise/os/CoverageBadge';
 import { Input } from '@/components/ui/input';
 import { ROLE_WORKSPACES, WORKSPACE_COUNTS, WORKSPACE_ELEMENTS } from '@/lib/enterpriseRoleWorkspaces';
 
 /** @param {any} props */
 export default function RoleWorkspaceTable() {
+  const { user } = useAuth();
+  const canOpen = path => MODULE_DIRECTORY.some(module => module.path === path && canAccessNav(user?.role, module.key)) || (path === '/executive-dashboards' && canAccessNav(user?.role, 'analytics'));
   const [query, setQuery] = useState('');
 
   const rows = useMemo(() => {
@@ -69,7 +74,7 @@ export default function RoleWorkspaceTable() {
                   <p className="text-[11px] font-semibold uppercase tracking-wide text-[#5A00D6]">{item.group}</p>
                 </td>
                 <td className="border-b border-slate-100 px-3 py-2">
-                  {item.status === 'gap' ? (
+                  {item.status === 'gap' || !canOpen(item.route) ? (
                     <span className="text-xs font-semibold text-[#0A2B6D]/70">{item.workspace} (shared stop-gap)</span>
                   ) : (
                     <Link
