@@ -1,5 +1,28 @@
 # ComplianceHR Portal — Master To-Do Plan
 
+## Navigation build — 15 November 2026 (Australia/Brisbane)
+
+Scope: owner requested implementation of the navigation plan. Saved in the existing app; no publication performed.
+
+Implemented:
+- Public header: Platform, Solutions, Pricing, About, FAQs; Sign In, Book Demo and Start Free Trial. Mobile disclosure with Escape handling; public footer uses actual public destinations. Privacy/Terms destinations were not invented where no existing routes were established.
+- Removed operational sidebar and Quick Access from the public landing layout. Public catalogue reuses MODULE_DIRECTORY and NAV_GROUPS: currently 54 workspaces / 10 groups. Search, group filtering, empty results and sign-in return destinations replace the old independent catalogue metadata and unverified per-module status badges.
+- Shared expandable workspace sidebar preserves existing keys/routes/exports. Permission filtering is retained; module labels wrap, current links have aria-current, and route aliases match canonical navigation.
+- Shared workspace tools: permitted module search, groups, breadcrumbs, account/help/notifications, up to 12 favourites and five recent module keys. Local preferences are namespaced by user plus tenant, exclude record URLs/names, tolerate malformed or blocked storage, and filter revoked/unknown keys. This is synthetic/unit evidence, not proof of live tenant isolation.
+- Tools are included in AppLayout and both existing staff workspaces; Team Leader uses a compact version. Mobile navigation uses the existing Radix dialog for modal focus management; Escape closes it. Existing iPad Quick Access remains available on tablet/coarse-pointer devices. Duplicate subscription/sign-in marketing links removed from the signed-in header/Quick Access.
+- Role-based home selection uses existing approved-account and navigation permissions. Staff workspace menu labels are generic; user identities and roles are unchanged. Protected-route redirect retains requested destination through the existing safeReturnTo login helper.
+- Public module-count displays derive from the central directory or omit stale fixed counts. Existing branding, 360 frameworks, record IDs, business data and backend authorization were preserved by this work.
+
+Verification (final run, after all code edits):
+- npm run lint: exit 0.
+- npm run typecheck: exit 0 (configured scope).
+- npm run build: exit 0.
+- npm test: 62 passed, 0 failed, including six new navigation tests for route/group coverage, restricted groups, malformed/revoked shortcut keys, user/tenant namespace separation, active-path boundaries/aliases, and permitted role homes.
+- Browser preview attempted at the connected Base44 editor URL; it remained on Loading app data. Visual acceptance, actual mobile/iPad interaction, authenticated favourites/recents, end-to-end login return and live tenant A/B testing are NOT verified.
+- No backend changes were authored in this navigation task. Comparison with the starting checkpoint also contains independently saved approval/access-request changes; those were preserved and must not be attributed to this navigation work.
+- Pre-change restore point: 6af8f6d14833bfc7354ac1a3, commit cc4b612f831359faccda7b9474b207676af9c844.
+- Final named checkpoint: Navigation build — public menu, shared directory and personal shortcuts (record returned checkpoint ID in the session completion).
+
 ## Current implementation checkpoint — 14 November 2026, final review
 
 This section supersedes earlier claims that the new cross-module actions are enabled or verified. All 51 requested module outcomes remain accepted in APPROVED_MODULE_BUILD_SCOPE.md; full completion has NOT been achieved.
