@@ -10,9 +10,9 @@ export default function WorkflowAnalytics({ instances = [] }) {
     <div className="space-y-3">
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {[
-          { label: 'Completion rate', value: `${summary.completionRate}%`, hint: `${summary.completed} of ${summary.total} runs closed` },
-          { label: 'SLA compliance', value: `${summary.slaCompliance}%`, hint: `${summary.breaches} breach(es) recorded` },
-          { label: 'Average duration', value: `${summary.averageHours}h`, hint: 'From start to completion' },
+          { label: 'Completion rate', value: summary.completionRate === null ? 'Unavailable' : `${summary.completionRate}%`, hint: `${summary.completed} of ${summary.total} runs closed` },
+          { label: 'SLA compliance', value: 'Unavailable', hint: `${summary.breaches} breach(es) recorded` },
+          { label: 'Average duration', value: summary.averageHours === null ? 'Unavailable' : `${summary.averageHours}h`, hint: 'From start to completion' },
           { label: 'Open work', value: summary.open, hint: `${summary.waitingApproval} awaiting approval` },
         ].map((tile) => (
           <div key={tile.label} className="rounded-xl border border-border bg-card p-4 shadow-2xs">
