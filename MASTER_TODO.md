@@ -1,5 +1,30 @@
 # ComplianceHR Portal — Master To-Do Plan
 
+## Enterprise vNext alignment — 15 November 2026 (Australia/Brisbane)
+
+Owner supplied the eight-phase Enterprise Platform Alignment Update. Full prompt passed unchanged to the existing Base44 app. The full enterprise transformation remains OPEN.
+
+Implemented and reviewed:
+- Enterprise OS console at /enterprise-os: 15 operating-system source maps, 30 proposed role mappings, gaps, candidate schema/API plans and roadmap. Source-present labels deliberately do not claim working/accepted systems.
+- Ten-report downloadable ZIP available from the console; a review/planning package, not a deployable full enterprise transformation.
+- Board assurance review at /governance?tab=board-assurance uses existing GovernanceObject. Identifies missing owner/date/evidence references and overdue review dates. CSV exports displayed rows only through existing formula-safe exporter. Maximum 200 records with explicit truncation notice. References are not verified evidence or BoardResolution approval.
+- Governance tab selection now follows URL changes, including back/forward and links within the page.
+- Fixed builder-introduced frontend/backend roleMatrix divergence. No user roles were granted or promoted.
+- Register reads require approved identity, explicit tenant and module/source permission. Missing/failed/invalid counts display Unavailable; denied sources display Restricted. Identity-scoped render state hides prior account/tenant data immediately while reloading. Navigation links filtered by current role.
+- Participant role mapping corrected to existing personal profile; dedicated participant workspace remains partial.
+
+Verification on final code:
+- npm run ci:verify: exit 0 (lint, 76 JavaScript tests passed / 0 failed, 117 Deno tests passed / 0 failed, Vite build).
+- npm run typecheck: configured frontend scope; result recorded in session output. Existing checkJs false and Deno --no-check mean this is not full source type verification.
+- git diff --check against starting commit: result recorded in session output.
+- Six new behavior tests: pre-read denial, scoped counts and numeric response validation, metadata projection and review warnings, malformed/cross-tenant rejection, bounded/truncated review, identity-scope keys.
+- Authenticated browser, mobile/iPad, WCAG AA and live tenant A/B acceptance NOT verified. Earlier preview blank-screen blocker not closed by build/test results.
+
+Restore point before work: 6af91b0cc45579e8ae18bab4; commit 3dd7baf6f52e5d15d89cd41fe0c9525a10a57fc8.
+Final checkpoint requested after this register update: Enterprise vNext — reviewed console, assurance review and report package.
+
+Remaining: full audited schema contracts and safe migrations; dedicated OS workflows and all nine workspace elements; role/permission reconciliation; BoardResolution lifecycle and exact evidence/version validation; domain APIs; clinical/allied health/aged care workflows; specialist copilots; scheduled reporting; runtime/device/security acceptance. Candidate schema names are planning proposals, not proof a new table is required. Existing disabled workflow gates remain unchanged. No production publication, record migrations, live data creation, external sends or production schedules performed.
+
 ## Enterprise transformation V3 — 15 November 2026 (Australia/Brisbane)
 
 Owner supplied Enterprise Implementation Plan V3.0 and requested building it in the existing app with ComplianceHR App Specialists. Master sequence recorded in ENTERPRISE_IMPLEMENTATION_PLAN_V3.md. The ten-release program remains open; this batch implements part of Release 1.
