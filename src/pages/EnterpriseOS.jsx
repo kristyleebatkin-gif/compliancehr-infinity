@@ -10,6 +10,7 @@ import RoleWorkspaceTable from '@/components/enterprise/os/RoleWorkspaceTable';
 import PlatformAuditPanel from '@/components/enterprise/os/PlatformAuditPanel';
 import RoadmapPanel from '@/components/enterprise/os/RoadmapPanel';
 import EvidenceTraceabilityReview from '@/components/enterprise/os/EvidenceTraceabilityReview';
+import EnterpriseMasterScope from '@/components/enterprise/os/EnterpriseMasterScope';
 import { OPERATING_SYSTEMS, OS_BY_ID, PLATFORM_COVERAGE, PLATFORM_AUDIT } from '@/lib/enterpriseOS';
 import { ROLE_WORKSPACES } from '@/lib/enterpriseRoleWorkspaces';
 
@@ -59,6 +60,7 @@ export default function EnterpriseOS() {
           <TabsTrigger value="traceability">Evidence traceability</TabsTrigger>
           <TabsTrigger value="audit">Platform audit</TabsTrigger>
           <TabsTrigger value="roadmap">Roadmap</TabsTrigger>
+          <TabsTrigger value="master-scope">Master scope V2</TabsTrigger>
         </TabsList>
 
         <TabsContent value="systems" className="mt-3 space-y-3">
@@ -80,6 +82,10 @@ export default function EnterpriseOS() {
 
         <TabsContent value="audit" className="mt-3">
           <PlatformAuditPanel />
+        </TabsContent>
+
+        <TabsContent value="master-scope" className="mt-3">
+          <EnterpriseMasterScope />
         </TabsContent>
 
         <TabsContent value="roadmap" className="mt-3">
