@@ -216,7 +216,7 @@ export default perBusiness(async function (req: Request) {
     }
 
     if (action === 'run') {
-      const agents = await autonomousAgents(base44, tenantId);
+      const agents = await ensureAgent(base44, tenantId);
       const agentId = str(body.agent_id);
       const agent = agentId ? agents.find((row: any) => row.id === agentId) : agents[0];
       if (!agent) return Response.json({ error: 'No autonomous agent is registered for this business yet.' }, { status: 404 });
