@@ -348,6 +348,22 @@ export function validateWorkflow(nodes = []) {
     });
   }
 
+  const canEnd = new Set(ends.map(n => n.id));
+  let changed = true;
+  while (changed) {
+    changed = false;
+    nodes.forEach(n => {
+      const targets = n.type === 'DECISION' ? [n.yes_next, n.no_next] : [n.next];
+      if (!canEnd.has(n.id) && targets.some(id => canEnd.has(id))) { canEnd.add(n.id); changed = true; }
+    });
+  }
+  nodes.forEach(n => {
+    if (reachable.has(n.id) && !canEnd.has(n.id)) errors.push(`"${n.label}" has no route to an end node.`);
+    if (n.sla_hours != null && (!Number.isFinite(Number(n.sla_hours)) || Number(n.sla_hours) < 0)) errors.push(`"${n.label}" needs a non-negative finite SLA target.`);
+    if (NODE_META[n.type]?.human && !String(n.role || '').trim()) warnings.push(`"${n.label}" needs a canonical assignment policy before publication.`);
+    if (!NODE_META[n.type]?.human && !['START', 'END'].includes(n.type)) warnings.push(`"${n.label}" requires a verified runtime adapter.`);
+  });
+
   if (!nodes.some((item) => ['EVIDENCE_UPLOAD', 'EVIDENCE_REQUEST', 'EVIDENCE_VALIDATION'].includes(item.type))) {
     warnings.push('No evidence node: this run will not leave an evidence record.');
   }
