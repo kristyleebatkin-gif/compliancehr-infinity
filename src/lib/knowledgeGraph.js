@@ -1,4 +1,5 @@
 import { base44 } from '@/api/base44Client';
+import { hasApprovedAccess, canAccessNav } from '@/lib/roles';
 
 const PAGE_LIMIT = 500;
 
@@ -7,7 +8,7 @@ export const RELATIONSHIPS = [
   'HAS_STANDARD', 'HAS_OBLIGATION', 'HAS_REQUIREMENT', 'REQUIRES', 'REFERENCES',
   'IMPLEMENTED_BY', 'SUPPORTED_BY', 'LINKED_TO', 'MITIGATED_BY', 'PRODUCES', 'GENERATES',
   'CREATES', 'ASSIGNED_TO', 'EVIDENCES', 'AUDITED_BY', 'VALIDATED_BY', 'APPROVED_BY',
-  'REPORTS_TO', 'MANAGED_BY', 'GOVERNS', 'MONITORED_BY', 'OWNED_BY', 'RELATES_TO',
+  'REPORTS_TO', 'MANAGED_BY', 'GOVERNS', 'MONITORED_BY', 'OWNED_BY', 'RELATES_TO', 'REQUIRES_EVIDENCE', 'HAS_FINDING', 'MITIGATES', 'OWNS', 'REPORTED_TO',
 ];
 
 /** The canonical compliance traceability chain. */
@@ -120,12 +121,14 @@ const codeList = (value) =>
 /** Load every register the graph covers, plus any recorded links. */
 export async function loadGraphUniverse(client = base44) {
   const user = await client.auth.me();
+  if (!hasApprovedAccess(user) || !canAccessNav(user.role, 'knowledge-graph')) throw new Error('Approved knowledge graph access required.');
   const tenantId = user?.tenant_id || user?.data?.tenant_id;
   if (!tenantId) throw new Error('Choose a business before loading the knowledge graph.');
   const read = async (entity, query) => {
     const page = await client.entities[entity].filter(query, { limit: PAGE_LIMIT });
     const items = Array.isArray(page) ? page : page?.items;
     if (!Array.isArray(items)) throw new Error(`${entity} returned an unavailable register.`);
+    if (items.some(row => row.tenant_id !== tenantId)) throw new Error('Graph scope mismatch.');
     return { items, truncated: items.length >= PAGE_LIMIT || Boolean(page?.has_more || page?.next_cursor) };
   };
   // A failed register must not masquerade as an empty register or a broken chain.

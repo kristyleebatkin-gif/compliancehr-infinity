@@ -1,3 +1,5 @@
+import { useAuth } from '@/lib/AuthContext';
+import { hasApprovedAccess, canAccessNav } from '@/lib/roles';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ModuleShell from '@/components/module/ModuleShell';
@@ -11,6 +13,12 @@ import TraceabilityPanel from '@/components/graph/TraceabilityPanel';
 import LinkRegisterPanel from '@/components/graph/LinkRegisterPanel';
 
 export default function KnowledgeGraphOS() {
+  const { user } = useAuth();
+  if (!hasApprovedAccess(user) || !canAccessNav(user?.role, 'knowledge-graph')) return <p role="alert">Approved knowledge graph access required.</p>;
+  const key = JSON.stringify([user.id, user.tenant_id || user.data?.tenant_id, user.role, user.account_status, user.access_approved]);
+  return <GraphWorkspace key={key} />;
+}
+function GraphWorkspace() {
   const [data, setData] = useState(null);
   const [error, setError] = useState('');
   const [tab, setTab] = useState('command');
@@ -45,7 +53,7 @@ export default function KnowledgeGraphOS() {
       <ModuleShell
         moduleKey="knowledge-graph"
         title="Knowledge Graph OS"
-        subtitle="One graph over every register: the 23 typed relationships and the 14-stage chain from regulation to outcome, scored from the records you actually hold."
+        subtitle="Explore authorised register relationships and inspect recorded traceability references."
         icon={Network}
       />
 
