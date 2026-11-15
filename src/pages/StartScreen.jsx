@@ -1,20 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { base44 } from '@/api/base44Client';
+import { useAuth } from '@/lib/AuthContext';
+import { navigationHome } from '@/lib/navigationHome';
 import Landing from '@/pages/Landing';
 
-// Signed-in teams start in the Communication Dashboard; visitors still get the
-// public landing page.
 export default function StartScreen() {
-  const [authed, setAuthed] = useState(null);
-
-  useEffect(() => {
-    base44.auth
-      .isAuthenticated()
-      .then(setAuthed)
-      .catch(() => setAuthed(false));
-  }, []);
-
-  if (authed === null) return null;
-  return authed ? <Navigate to="/communications" replace /> : <Landing />;
+  const { user, isAuthenticated, isLoadingAuth, authChecked } = useAuth();
+  if (isLoadingAuth || !authChecked) return <p role="status" className="p-6">Loading workspace…</p>;
+  return isAuthenticated && user ? <Navigate to={navigationHome(user)} replace /> : <Landing />;
 }
