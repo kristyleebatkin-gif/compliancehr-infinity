@@ -119,128 +119,30 @@
           ]
         },
         {
-          "$or": [
-            {
-              "user_condition": {
-                "role": "admin"
-              }
-            },
-            {
-              "data.tenant_id": "{{user.data.tenant_id}}"
-            }
-          ]
+          "data.tenant_id": "{{user.data.tenant_id}}"
+        },
+        {
+          "user_condition": {
+            "account_status": "Active",
+            "access_approved": true
+          }
         }
       ]
     },
     "create": {
-      "$and": [
-        {
-          "$or": [
-            {
-              "user_condition": {
-                "role": "admin"
-              }
-            },
-            {
-              "user_condition": {
-                "role": "Provider Administrator"
-              }
-            },
-            {
-              "user_condition": {
-                "role": "Compliance Manager"
-              }
-            },
-            {
-              "user_condition": {
-                "role": "Compliance Administrator"
-              }
-            }
-          ]
-        },
-        {
-          "$or": [
-            {
-              "user_condition": {
-                "role": "admin"
-              }
-            },
-            {
-              "data.tenant_id": "{{user.data.tenant_id}}"
-            }
-          ]
-        }
-      ]
+      "user_condition": {
+        "role": "__server_only__"
+      }
     },
     "update": {
-      "$and": [
-        {
-          "$or": [
-            {
-              "user_condition": {
-                "role": "admin"
-              }
-            },
-            {
-              "user_condition": {
-                "role": "Provider Administrator"
-              }
-            },
-            {
-              "user_condition": {
-                "role": "Compliance Manager"
-              }
-            },
-            {
-              "user_condition": {
-                "role": "Compliance Administrator"
-              }
-            }
-          ]
-        },
-        {
-          "$or": [
-            {
-              "user_condition": {
-                "role": "admin"
-              }
-            },
-            {
-              "data.tenant_id": "{{user.data.tenant_id}}"
-            }
-          ]
-        }
-      ]
+      "user_condition": {
+        "role": "__server_only__"
+      }
     },
     "delete": {
-      "$and": [
-        {
-          "$or": [
-            {
-              "user_condition": {
-                "role": "admin"
-              }
-            },
-            {
-              "user_condition": {
-                "role": "Provider Administrator"
-              }
-            }
-          ]
-        },
-        {
-          "$or": [
-            {
-              "user_condition": {
-                "role": "admin"
-              }
-            },
-            {
-              "data.tenant_id": "{{user.data.tenant_id}}"
-            }
-          ]
-        }
-      ]
+      "user_condition": {
+        "role": "__server_only__"
+      }
     }
   }
 }
