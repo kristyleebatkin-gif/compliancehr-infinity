@@ -15,7 +15,13 @@ This is the master sequence for the next major evolution. It extends the existin
 - Schema counts are planning estimates, not instructions to create duplicate entities. Inventory and reconcile existing schemas before extending them.
 - REST, GraphQL and webhook contracts are targets; no endpoint is considered implemented until authenticated, tenant-isolated, validated and tested.
 
-## Current delivery sequence
+## Latest master scope — 15 November 2026
+
+The owner's Enterprise Master Build prompt followed by Master Enterprise AI Build Prompt V2.0 supersedes the earlier catalogue and traceability scope. The current twelve-phase order is defined in src/lib/enterprisePhases.js; the V2.0 catalogue and requirements are defined in src/lib/enterpriseMasterScope.js and shown in Enterprise OS → Master scope V2.
+
+Thirty groups reserve 1,500 numbers. They are not individual module definitions or delivery claims. All forty outputs per module and requested SQL/Prisma/API contracts remain subject to implementation and review. Current Base44 architecture and record IDs are preserved. See the latest MASTER_TODO.md entry for implemented changes, verification and remaining acceptance.
+
+## Earlier delivery sequence (superseded by the latest master scope)
 
 The owner’s Enterprise Modular Expansion & Phased Implementation Master Plan of 15 November 2026 now governs the phase order. See ENTERPRISE_MODULAR_EXPANSION_PLAN.md and Enterprise OS → Roadmap for all ten phases, shared engines, register requirements and acceptance gates. The V3 sequence below is retained as prior scope; it does not override the newer phase order. Existing unmet requirements remain open.
 
