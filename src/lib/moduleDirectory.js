@@ -79,7 +79,7 @@ const CANONICAL_MODULES = [
   { key: 'help', label: 'Help Centre', path: '/help', icon: LifeBuoy, group: '10. Administration & Help', blurb: 'Support centre, AI troubleshooter, system health and support desk.' },
 ];
 
-// App// Version 3.0 navigation reuses existing modules and routes. Shortcuts do not grant access.
+// Version 3.0 navigation reuses existing modules and routes. Shortcuts do not grant access.
 export const NAV_GROUPS = [
   {
     "id": "ai-core",
@@ -255,13 +255,15 @@ export const MODULE_DIRECTORY = [...CANONICAL_MODULES,
   { key: 'analytics', label: 'Reports & Analytics', path: '/analytics', icon: BarChart3, blurb: 'Existing reporting and analytics workspace.' },
 ].map((module) => ({ ...module, group: NAV_GROUPS.find((group) => group.keys.includes(module.key))?.label || module.group }));
 
-export function buildNavigationGroups(directory = MODULE_DIRECTORY, groups = NAV_GROUPS) {
+export function buildNavigationGroups(directory = MODULE_DIRECTORY, groups = NAV_GROUPS, { includePlanned = false } = {}) {
   const byKey = new Map(directory.map((module) => [module.key, module]));
   return groups.map((group) => {
     const children = group.keys.map((key) => byKey.get(key)).filter(Boolean)
       .map((module) => ({ ...module, sub: module.blurb }));
-    if (!children.length) return null;
-    return { ...group, path: children[0].path, icon: children[0].icon,
-      sub: children.map((module) => module.label).join(', '), children };
+    const shortcuts = (group.shortcuts || []).filter((item) => byKey.has(item.permissionKey))
+      .map((item) => ({ ...item, icon: byKey.get(item.permissionKey).icon, sub: 'Open existing workspace' }));
+    if (!children.length && !shortcuts.length && !(includePlanned && group.planned)) return null;
+    return { ...group, path: children[0]?.path || shortcuts[0]?.path, icon: children[0]?.icon || shortcuts[0]?.icon,
+      sub: group.description || children.map((module) => module.label).join(', '), children: [...children, ...shortcuts] };
   }).filter(Boolean);
 }
