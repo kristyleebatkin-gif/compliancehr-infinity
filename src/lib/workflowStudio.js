@@ -161,8 +161,8 @@ export const WORKFLOW_TEMPLATES = [
       node('start', 'START', 'Serious incident identified', { next: 'identify' }),
       node('identify', 'TASK', 'Assess priority and preserve the scene', { role: 'Registered Nurse', sla: 4, next: 'notify' }),
       node('notify', 'DECISION', 'Is this a Priority 1 incident?', { role: 'Clinical Governance Lead', sla: 4, yes: 'priority1', no: 'standard' }),
-      node('priority1', 'TASK', 'Notify the Commission within 24 hours', { role: 'Compliance Manager', sla: 12, next: 'evidence' }),
-      node('standard', 'TASK', 'Notify and record within five business days', { role: 'Compliance Manager', sla: 40, next: 'evidence' }),
+      node('priority1', 'TASK', 'Confirm applicable notification deadline and notify', { role: 'Compliance Manager', sla: 12, next: 'evidence' }),
+      node('standard', 'TASK', 'Confirm applicable notification deadline and record', { role: 'Compliance Manager', sla: 40, next: 'evidence' }),
       node('evidence', 'EVIDENCE_UPLOAD', 'Upload the notification and investigation notes', { role: 'Compliance Manager', sla: 24, next: 'approve' }),
       node('approve', 'CEO_APPROVAL', 'Executive sign-off on the response', { role: 'CEO', sla: 24, next: 'close' }),
       node('close', 'END', 'SIRS response closed'),
@@ -302,6 +302,7 @@ export function graphFromJson(value) {
 }
 
 export function validateWorkflow(nodes = []) {
+  if (!Array.isArray(nodes) || nodes.length > 120 || nodes.some(n => !n || typeof n !== 'object')) return { valid: false, errors: ['A graph needs up to 120 valid nodes.'], warnings: [] };
   const errors = [];
   const warnings = [];
   const ids = new Set();
@@ -373,7 +374,7 @@ export function humanNodes(nodes = []) {
 export function summariseInstances(instances = []) {
   const open = instances.filter((row) => ['Running', 'Waiting', 'Paused', 'Escalated'].includes(row.state));
   const completed = instances.filter((row) => row.state === 'Completed');
-  const closed = instances.filter((row) => row.completed_at);
+  const closed = completed.filter((row) => row.completed_at);
   const durations = closed
     .map((row) => (new Date(row.completed_at).getTime() - new Date(row.started_at).getTime()) / 3600000)
     .filter((hours) => Number.isFinite(hours) && hours >= 0);
@@ -387,11 +388,10 @@ export function summariseInstances(instances = []) {
     failed: instances.filter((row) => row.state === 'Failed').length,
     breaches: instances.filter((row) => row.sla_state === 'Breached').length,
     waitingApproval: open.filter((row) => /approval|sign-off/i.test(row.task_kind || '')).length,
-    completionRate: instances.length ? Math.round((completed.length / instances.length) * 100) : 0,
-    slaCompliance: instances.length
-      ? Math.round(((instances.length - instances.filter((row) => row.sla_state === 'Breached').length) / instances.length) * 100)
-      : 100,
-    averageHours: durations.length ? Math.round((durations.reduce((sum, value) => sum + value, 0) / durations.length) * 10) / 10 : 0,
+    completionRate: instances.length ? Math.round((completed.length / instances.length) * 100) : null,
+    // A mutable current SLA flag cannot prove historical compliance.
+    slaCompliance: null,
+    averageHours: durations.length ? Math.round((durations.reduce((sum, value) => sum + value, 0) / durations.length) * 10) / 10 : null,
   };
 }
 
