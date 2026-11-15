@@ -6,7 +6,7 @@ const tiles = [
   { key: 'nodes', label: 'Graph objects', icon: Network, tone: '#0A2B6D' },
   { key: 'edges', label: 'Typed links', icon: Share2, tone: '#0072FF' },
   { key: 'relationships', label: 'Relationship types in use', icon: Layers, tone: '#5A00D6' },
-  { key: 'chains', label: 'Standards traced end to end', icon: Route, tone: '#0072FF' },
+  { key: 'chains', label: 'Standards with all stages represented', icon: Route, tone: '#0072FF' },
   { key: 'orphans', label: 'Objects standing alone', icon: AlertTriangle, tone: '#FF2E9A' },
 ];
 
@@ -22,8 +22,8 @@ export default function GraphCommandStrip({ health }) {
     nodes: 'Records the graph can see across every register it covers.',
     edges: `${health.derivedCount} derived from record fields · ${health.recordedCount} recorded by hand`,
     relationships: 'The specification defines 23 typed relationships.',
-    chains: `Average chain completeness ${health.averageChain}%`,
-    orphans: 'Nothing references them, so an assessor cannot trace them.',
+    chains: `Average stage representation ${health.averageChain}%`,
+    orphans: 'No relationship is resolved within the loaded graph.',
   };
 
   return (

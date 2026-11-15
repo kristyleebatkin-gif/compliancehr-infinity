@@ -20,8 +20,7 @@ export default function TraceabilityPanel({ traces }) {
         <div className="max-w-3xl">
           <p className="text-sm font-extrabold text-[#0A2B6D]">Trace one standard, stage by stage</p>
           <p className="text-[11px] font-semibold text-[#0A2B6D]/75">
-            Sorted worst first. Each break is the exact point where an assessor cannot follow the chain from the
-            regulation to the outcome using the records you hold today.
+            Sorted by stage representation. A break means no reference was resolved in this graph; it does not establish non-compliance. Declared text is not a verified relationship.
           </p>
         </div>
         <Button size="sm" variant={onlyBroken ? 'default' : 'outline'} onClick={() => setOnlyBroken((value) => !value)}>
@@ -31,7 +30,7 @@ export default function TraceabilityPanel({ traces }) {
 
       {visible.length === 0 ? (
         <p className="rounded-xl border-2 border-dashed border-[#C084FC] bg-[#F5F0FF] p-4 text-center text-xs font-bold text-[#0A2B6D]">
-          No standards in the register yet, so there is no chain to trace. Standards are seeded in the Evidence OS.
+          No standards match this view. Check the filter or the Evidence OS register.
         </p>
       ) : (
         <div className="space-y-2">

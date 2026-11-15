@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ModuleShell from '@/components/module/ModuleShell';
 import { Loader2, Network } from 'lucide-react';
-import { base44 } from '@/api/base44Client';
+import { Button } from '@/components/ui/button';
 import { buildGraph, dnaCoverage, graphHealth, loadGraphUniverse, nodeKey, traceStandard } from '@/lib/knowledgeGraph';
 import GraphCommandStrip from '@/components/graph/GraphCommandStrip';
 import ComplianceDnaMatrix from '@/components/graph/ComplianceDnaMatrix';
@@ -12,18 +12,20 @@ import LinkRegisterPanel from '@/components/graph/LinkRegisterPanel';
 
 export default function KnowledgeGraphOS() {
   const [data, setData] = useState(null);
-  const [tenantId, setTenantId] = useState('');
+  const [error, setError] = useState('');
   const [tab, setTab] = useState('command');
 
   const load = useCallback(async () => {
-    const universe = await loadGraphUniverse();
-    setData(universe);
+    setError('');
+    setData(null);
+    try {
+      setData(await loadGraphUniverse());
+    } catch (err) {
+      setError(err?.message || 'The graph could not load.');
+    }
   }, []);
 
   useEffect(() => { load(); }, [load]);
-  useEffect(() => {
-    base44.auth.me().then((me) => setTenantId(me?.data?.tenant_id || '')).catch(() => {});
-  }, []);
 
   const graph = useMemo(() => (data ? buildGraph(data.recordsByType, data.links) : null), [data]);
   const traces = useMemo(() => {
@@ -47,9 +49,17 @@ export default function KnowledgeGraphOS() {
         icon={Network}
       />
 
-      {!graph ? (
+      {error ? (
+        <div role="alert" className="rounded-xl border border-[#FF2E9A] bg-white p-4 text-primary">
+          <p>Graph unavailable: {error}</p>
+          <Button onClick={load} variant="outline" className="mt-2">Retry</Button>
+        </div>
+      ) : !graph ? (
         <div className="flex justify-center py-16"><Loader2 className="h-6 w-6 animate-spin text-primary" /></div>
       ) : (
+        <div className="space-y-3">
+        <p className="text-xs text-primary">Reference coverage for the loaded records only. This is not a compliance score or proof of a continuous, verified evidence chain. Findings and corrective actions may be inapplicable to a clean audit.</p>
+        {data.truncated && <p role="status" className="rounded-xl border border-[#FF2E9A] bg-white p-3 text-xs text-primary">Partial graph: at least one register reached the 500-record limit. Counts and coverage apply to this loaded subset.</p>}
         <Tabs value={tab} onValueChange={setTab}>
           <TabsList className="flex h-auto flex-wrap gap-1.5">
             <TabsTrigger value="command">Graph command</TabsTrigger>
@@ -75,11 +85,12 @@ export default function KnowledgeGraphOS() {
             <LinkRegisterPanel
               links={data.links}
               recordsByType={data.recordsByType}
-              tenantId={tenantId}
+              tenantId={data.tenantId}
               onChanged={load}
             />
           </TabsContent>
         </Tabs>
+        </div>
       )}
     </div>
   );

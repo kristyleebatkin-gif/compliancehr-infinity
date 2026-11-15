@@ -118,22 +118,27 @@ const codeList = (value) =>
   text(value).split(/[,;|\n]+/).map((entry) => normCode(entry)).filter((entry) => entry.length > 1);
 
 /** Load every register the graph covers, plus any recorded links. */
-export async function loadGraphUniverse() {
-  const [entries, links] = await Promise.all([
-    Promise.all(
-      NODE_TYPES.map(async (type) => {
-        const page = await base44.entities[type.entity]
-          .filter({}, { limit: PAGE_LIMIT })
-          .catch(() => ({ items: [] }));
-        return [type.key, page.items || []];
-      })
-    ),
-    base44.entities.KnowledgeLink.filter({ status: 'Active' }, { limit: 500 }).catch(() => ({ items: [] })),
-  ]);
+export async function loadGraphUniverse(client = base44) {
+  const user = await client.auth.me();
+  const tenantId = user?.tenant_id || user?.data?.tenant_id;
+  if (!tenantId) throw new Error('Choose a business before loading the knowledge graph.');
+  const read = async (entity, query) => {
+    const page = await client.entities[entity].filter(query, { limit: PAGE_LIMIT });
+    const items = Array.isArray(page) ? page : page?.items;
+    if (!Array.isArray(items)) throw new Error(`${entity} returned an unavailable register.`);
+    return { items, truncated: items.length >= PAGE_LIMIT || Boolean(page?.has_more || page?.next_cursor) };
+  };
+  // A failed register must not masquerade as an empty register or a broken chain.
+  const pages = await Promise.all(NODE_TYPES.map(async (type) => ({
+    key: type.key,
+    ...(await read(type.entity, { tenant_id: tenantId })),
+  })));
+  const links = await read('KnowledgeLink', { tenant_id: tenantId, status: 'Active' });
   return {
-    recordsByType: Object.fromEntries(entries),
-    links: links.items || [],
-    linkError: !Array.isArray(links.items),
+    tenantId,
+    recordsByType: Object.fromEntries(pages.map((page) => [page.key, page.items])),
+    links: links.items,
+    truncated: links.truncated || pages.some((page) => page.truncated),
   };
 }
 
@@ -167,15 +172,15 @@ function deriveEdges(recordsByType) {
 
   controls.forEach((control) => {
     const standard = (control.standard_id && standardById.get(control.standard_id))
-      || (standardsByCode.get(normCode(control.standard_code)) || [])[0];
+      || (standardsByCode.get(normCode(control.standard_code)) || []).filter((row) => row.framework === control.framework).filter((row, _, rows) => rows.length === 1)[0];
     if (standard) {
-      edges.push(edge('control', control.id, 'standard', standard.id, 'IMPLEMENTED_BY', 'Implements this standard', 100));
+      edges.push(edge('control', control.id, 'standard', standard.id, 'REFERENCES', 'References this standard', 100));
     }
     const reference = norm(control.policy_reference);
     if (reference.length < 4) return;
     policies.forEach((policy) => {
       const name = norm(policy.document_name);
-      if (name.length > 4 && (reference.includes(name) || name.includes(reference))) {
+      if (name.length > 4 && reference === name) {
         edges.push(edge('control', control.id, 'policy', policy.id, 'REFERENCES', 'Names this policy', 70));
       }
     });
@@ -200,7 +205,7 @@ function deriveEdges(recordsByType) {
     const scope = text(audit.framework_standard).toUpperCase();
     if (scope.length < 2) return;
     (standardsByCode.get(scope) || []).forEach((standard) => {
-      edges.push(edge('audit', audit.id, 'standard', standard.id, 'AUDITED_BY', 'Audits this standard', 80));
+      edges.push(edge('audit', audit.id, 'standard', standard.id, 'REFERENCES', 'Audits this standard', 80));
     });
     if (audit.linked_improvement_action_id) {
       edges.push(edge('audit', audit.id, 'capa', audit.linked_improvement_action_id, 'CREATES', 'Creates this corrective action', 100));

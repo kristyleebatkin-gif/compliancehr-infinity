@@ -7,12 +7,16 @@ import NewLinkDialog from '@/components/graph/NewLinkDialog';
 export default function LinkRegisterPanel({ links, recordsByType, tenantId, onChanged }) {
   const [open, setOpen] = useState(false);
   const [busyId, setBusyId] = useState('');
+  const [error, setError] = useState('');
 
   const remove = async (id) => {
+    setError('');
     setBusyId(id);
     try {
       await base44.entities.KnowledgeLink.delete(id);
-      onChanged();
+      await onChanged();
+    } catch (err) {
+      setError(err?.message || 'The link could not be removed.');
     } finally {
       setBusyId('');
     }
@@ -20,12 +24,13 @@ export default function LinkRegisterPanel({ links, recordsByType, tenantId, onCh
 
   return (
     <div className="space-y-3">
+      {error && <p role="alert" className="text-primary">{error}</p>}
       <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-slate-200 bg-white p-3 shadow-2xs">
         <div className="max-w-3xl">
           <p className="text-sm font-extrabold text-[#0A2B6D]">Links register · {links.length} recorded</p>
           <p className="text-[11px] font-semibold text-[#0A2B6D]/75">
             Links derived from record fields are calculated on the fly and are not stored here. Anything stored in this
-            register is a deliberate connection you have made, and the graph treats it as evidence of the relationship.
+            register is a deliberate connection you have made, and the graph displays it as a declared relationship requiring review.
           </p>
         </div>
         <Button size="sm" onClick={() => setOpen(true)}><Plus className="h-3.5 w-3.5" />New link</Button>
