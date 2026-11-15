@@ -18,7 +18,7 @@ export default function WorkflowLibrary({ definitions = [], busy = false, onCrea
         <div className="border-b border-border px-4 py-3">
           <h2 className="text-sm font-extrabold text-foreground">Start from an enterprise template</h2>
           <p className="text-xs text-muted-foreground">
-            Each template ships a validated graph with evidence, approval and SLA steps already in place.
+            Illustrative draft graphs. Standards, evidence references, roles and timing require review before operational use.
           </p>
         </div>
         <div className="grid gap-3 p-3 sm:grid-cols-2 xl:grid-cols-3">
@@ -38,7 +38,7 @@ export default function WorkflowLibrary({ definitions = [], busy = false, onCrea
                 </p>
               </div>
               <Button size="sm" className="mt-2" disabled={busy} onClick={() => onCreate?.(template)}>
-                <FilePlus2 className="mr-1.5 h-4 w-4" /> Add to my workflows
+                <FilePlus2 className="mr-1.5 h-4 w-4" /> Open local draft
               </Button>
             </article>
           ))}
@@ -49,7 +49,7 @@ export default function WorkflowLibrary({ definitions = [], busy = false, onCrea
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border px-4 py-3">
           <div>
             <h2 className="text-sm font-extrabold text-foreground">My workflows</h2>
-            <p className="text-xs text-muted-foreground">Draft, validate and publish here. Only a published workflow can be run.</p>
+            <p className="text-xs text-muted-foreground">Review stored definitions. Publication and execution are gated.</p>
           </div>
           <span className="text-[11px] font-bold text-muted-foreground">{definitions.length} definition(s)</span>
         </div>
@@ -73,21 +73,21 @@ export default function WorkflowLibrary({ definitions = [], busy = false, onCrea
                 <Button size="sm" variant="outline" onClick={() => onOpen?.(definition)}>
                   <PencilRuler className="mr-1.5 h-4 w-4" /> Design
                 </Button>
-                <Button size="sm" variant="outline" disabled={busy} onClick={() => onClone?.(definition)}>
+                <Button size="sm" variant="outline" disabled onClick={() => onClone?.(definition)}>
                   <Copy className="mr-1.5 h-4 w-4" /> Clone
                 </Button>
                 {definition.state !== 'Published' && definition.state !== 'Archived' && (
-                  <Button size="sm" variant="outline" disabled={busy} onClick={() => onPublish?.(definition)}>
+                  <Button size="sm" variant="outline" disabled onClick={() => onPublish?.(definition)}>
                     <Upload className="mr-1.5 h-4 w-4" /> Publish
                   </Button>
                 )}
                 {definition.state === 'Published' && (
-                  <Button size="sm" disabled={busy} onClick={() => onStart?.(definition)}>
+                  <Button size="sm" disabled onClick={() => onStart?.(definition)}>
                     <Play className="mr-1.5 h-4 w-4" /> Start run
                   </Button>
                 )}
                 {definition.state !== 'Archived' && (
-                  <Button size="sm" variant="ghost" disabled={busy} onClick={() => onArchive?.(definition)}>
+                  <Button size="sm" variant="ghost" disabled onClick={() => onArchive?.(definition)}>
                     <Archive className="mr-1.5 h-4 w-4" /> Archive
                   </Button>
                 )}
