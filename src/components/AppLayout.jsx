@@ -7,7 +7,7 @@ import { useRole } from '@/lib/useRole';
 import { canAccessNav, ROLES } from '@/lib/roles';
 import { MODULE_DIRECTORY as PRIMARY_NAV } from '@/lib/moduleDirectory';
 import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
-import { Menu, X, ChevronDown, MoreHorizontal, ShieldQuestion,
+import { Menu, ChevronDown, MoreHorizontal, ShieldQuestion,
   LayoutDashboard, Users, Heart, GraduationCap, ShieldCheck,
 } from 'lucide-react';
 import QuickAppBar from '@/components/QuickAppBar';
