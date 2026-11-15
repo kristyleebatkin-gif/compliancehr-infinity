@@ -1,16 +1,16 @@
 // Owner-directed implementation sequence, 15 November 2026.
 // Requirements describe target scope; source mappings never establish acceptance.
-export const EVIDENCE_CHAIN = ['Evidence', 'Compliance', 'Risk', 'Quality', 'Governance', 'Strategy', 'Intelligence'];
-export const PLATFORM_REQUIREMENTS = ['Multi-tenant architecture', 'Organisation management', 'Service management', 'Location management', 'User management', 'Role-based permissions', 'Authentication and SSO', 'MFA', 'Global search', 'Notification centre', 'Mobile framework', 'Router Remote navigation', 'Enterprise design system'];
-export const SHARED_ENGINES = ['Workflow', 'Task', 'Approval', 'Evidence', 'Audit', 'Reporting', 'Automation', 'AI', 'Search', 'Security', 'Notification', 'Provenance', 'Versioning', 'Document Management', 'Data Warehouse'];
-export const REQUIRED_WORKSPACES = ['Platform Owner', 'Board Member', 'CEO', 'General Manager', 'Compliance Manager', 'Quality Manager', 'Risk Manager', 'Audit Manager', 'Clinical Governance Lead', 'HR Manager', 'Service Manager', 'Team Leader', 'Practitioner', 'Support Coordinator', 'Finance Manager', 'IT Manager', 'Participant', 'External Auditor'];
-export const WORKSPACE_ELEMENTS = ['Dashboard', 'Notifications', 'Tasks', 'Reports', 'Registers', 'KPIs', 'AI Assistant', 'Mobile Experience'];
+export const EVIDENCE_CHAIN = ['Standard', 'Requirement', 'Obligation', 'Control', 'Policy', 'Procedure', 'Evidence', 'Audit', 'Finding', 'Action', 'Improvement', 'Report', 'Executive Dashboard', 'Board Oversight'];
+export const PLATFORM_REQUIREMENTS = ['Multi-tenant architecture', 'Organisation management', 'Service management', 'Location management', 'User management', 'Role-based permissions', 'Attribute-based permissions', 'Session management', 'Encryption', 'Audit logging', 'Enterprise reporting', 'AI Core', 'Authentication and SSO', 'MFA', 'Global search', 'Notification centre', 'Mobile framework', 'Router Remote navigation', 'Enterprise design system'];
+export const SHARED_ENGINES = ['Workflow', 'Task', 'Approval', 'Evidence', 'Audit', 'Reporting', 'Automation', 'AI', 'Search', 'Security', 'Notification', 'Provenance', 'Versioning', 'Document Management', 'Relationship', 'Data Warehouse'];
+export const REQUIRED_WORKSPACES = ['Platform Owner', 'Board Member', 'CEO', 'General Manager', 'Compliance Manager', 'Quality Manager', 'Risk Manager', 'Audit Manager', 'Learning Manager', 'Allied Health Manager', 'Clinical Governance Lead', 'HR Manager', 'Service Manager', 'Team Leader', 'Practitioner', 'Support Coordinator', 'Finance Manager', 'IT Manager', 'Participant', 'External Auditor'];
+export const WORKSPACE_ELEMENTS = ['Dashboard', 'Notifications', 'Tasks', 'Reports', 'Registers', 'KPIs', 'AI Assistant', 'Actions', 'Mobile Experience'];
 export const AI_ASSISTANTS = ['Compliance', 'Audit', 'Risk', 'Policy', 'Workforce', 'Clinical', 'Board', 'Quality', 'Incident', 'Strategic Planning'];
 export const CLINICAL_DISCIPLINES = ['Occupational Therapy', 'Speech Pathology', 'Physiotherapy', 'Psychology', 'Social Work', 'Exercise Physiology'];
 export const DIGITAL_TWIN_RECORDS = ['Standards', 'Obligations', 'Controls', 'Policies', 'Procedures', 'Risks', 'Audits', 'Findings', 'Incidents', 'Complaints', 'Workforce Records', 'Clinical Records', 'Strategic Objectives', 'Contracts', 'Vendors', 'Accreditation Requirements', 'Evidence'];
 export const RELEASE_GATES = ['Reconcile existing entities, routes and evidence links before adding resources.', 'Verify approved-role access and tenant isolation on the server, including denied access.', 'Verify a complete workflow with exact evidence versions, provenance and approval authority.', 'Test loading, empty, error, export, mobile and keyboard behaviour.', 'Record acceptance evidence and a restorable checkpoint; record publication separately.'];
 const system = (name, sourceIds, registers, features, frameworks = []) => ({ name, sourceIds, registers, features, frameworks });
-export const ENTERPRISE_PHASES = [
+const PREVIOUS_ENTERPRISE_PHASES = [
   { id: 1, title: 'Compliance Foundation', dependsOn: [], gate: 'Reconcile obligation–control–evidence relationships, scoring denominators, evidence versions and policy approval lifecycle. Verify the five executive indicators with authorised real records.',
     systems: [
       system('Compliance OS', ['compliance'], ['Standards', 'Practice Standards', 'Compliance Obligations', 'Legislative', 'Regulatory', 'Control', 'Compliance Assessments'], ['Standards mapping', 'Obligation management', 'Compliance monitoring', 'Control management', 'Compliance scoring', 'Compliance dashboards', 'AI compliance guidance']),
@@ -70,8 +70,35 @@ export const ENTERPRISE_PHASES = [
       system('Accreditation OS', ['compliance', 'audit', 'aged-care', 'ndis'], [], ['Accreditation workspaces', 'Gap assessments', 'Evidence mapping', 'Auditor portals', 'Accreditation readiness scoring'], ['NDIS Practice Standards', 'Aged Care Quality Standards', 'ISO 9001', 'ISO 27001', 'HSQF', 'NSQHS']),
     ] },
 ];
+// Latest owner master prompt supersedes the earlier ten-phase sequence.
+// Previous capabilities remain in their matching phase; planned scope is never marked delivered.
+const previous = id => PREVIOUS_ENTERPRISE_PHASES.find(phase => phase.id === id);
+const move = (id, title, oldId, dependsOn) => ({ ...previous(oldId), id, title, dependsOn });
+export const ENTERPRISE_PHASES = [
+  { ...move(1, 'Platform Foundation', 8, []),
+    gate: 'Verify multi-tenant identity, RBAC and ABAC, MFA/SSO, session controls, encryption, audit logging, authorised search, shared engines and responsive accessibility before dependent workflows are accepted. Reconcile existing entity fields and SDK contracts; do not generate duplicate schemas to meet a target count.' },
+  move(2, 'Compliance Foundation', 1, [1]),
+  move(3, 'Audit & Risk', 2, [1, 2]),
+  move(4, 'Workforce Governance', 3, [1, 2, 3]),
+  move(5, 'Operational Governance', 4, [1, 2, 3, 4]),
+  move(6, 'Board & Strategy', 5, [1, 2, 3, 5]),
+  move(7, 'Clinical Governance', 6, [1, 2, 3, 4, 5]),
+  move(8, 'Commercial Governance', 7, [1, 2, 3, 6]),
+  move(9, 'Enterprise Intelligence', 9, [1, 2, 3, 4, 5, 6, 7, 8]),
+  { id: 10, title: 'AI Governance', dependsOn: [1, 2, 6, 9],
+    gate: 'Verify model, prompt and AI risk inventories, versioned approvals, authorised retrieval, responsible AI monitoring and audit logs. Framework names do not establish certification.',
+    systems: [{ ...previous(10).systems[0], registers: ['AI', 'Prompt', 'Model', 'AI Risk', 'AI Assessment'],
+      features: [...previous(10).systems[0].features, 'Prompt versioning', 'Model register', 'AI audit logs'] }] },
+  { id: 11, title: 'Accreditation', dependsOn: [1, 2, 3, 7, 9, 10],
+    gate: 'Verify applicable standards, gap assessments, accreditation plans, exact evidence versions and consent-scoped auditor access before reporting readiness.',
+    systems: [previous(10).systems[1]] },
+  { id: 12, title: 'Enterprise Digital Twin', dependsOn: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    gate: 'Verify typed, authorised relationships across all operating systems, evidence versions, provenance, warehouse reconciliation and scenario assumptions. Record links and source mappings alone are not a digital twin.',
+    systems: [system('Digital Twin OS', ['evidence', 'reporting', 'executive'], [],
+      ['Unified evidence graph', 'Enterprise relationship model', 'Versioned provenance', 'Enterprise data warehouse', 'Scenario analysis', 'Complete standard-to-board traceability'])] },
+];
 export function enterprisePhaseMarkdown() {
-  return '# Enterprise Modular Expansion & Phased Implementation Master Plan\n\nOwner direction: 15 November 2026. Target requirements, not delivery claims.\n\n' +
+  return '# Enterprise Master Build — Twelve-Phase Implementation Plan\n\nOwner direction: 15 November 2026. Target requirements, not delivery claims.\n\n' +
     EVIDENCE_CHAIN.join(' → ') + '\n\n## Enterprise foundation\n' + PLATFORM_REQUIREMENTS.map(x => '- ' + x).join('\n') +
     '\n\n## Shared engines\n' + SHARED_ENGINES.join(', ') +
     '\n\n' + ENTERPRISE_PHASES.map(p => '## Phase ' + p.id + ' — ' + p.title + '\nDependencies: ' + (p.dependsOn.join(', ') || 'Foundation acceptance') + '\n\n' + p.systems.map(s => '### ' + s.name + '\nRegisters: ' + (s.registers.join(', ') || 'Reconcile existing registers') + '\nFeatures: ' + s.features.join('; ') + (s.frameworks.length ? '\nFramework targets: ' + s.frameworks.join(', ') : '')).join('\n\n') + (p.indicators ? '\n\nExecutive indicators: ' + p.indicators.join(', ') : '') + '\n\nAcceptance: ' + p.gate).join('\n\n') +
