@@ -59,7 +59,7 @@ export default function RecommendationQueue({ recommendations, onStatusChange })
                 </td>
                 <td className="align-top">
                   <span className={`inline-block rounded-full border px-2 py-0.5 text-[11px] font-bold ${band.chip}`}>
-                    {item.confidence ?? 0}%
+                    {item.confidence == null ? 'Uncalibrated' : `${item.confidence}% (unvalidated)`}
                   </span>
                 </td>
                 <td className="align-top">
