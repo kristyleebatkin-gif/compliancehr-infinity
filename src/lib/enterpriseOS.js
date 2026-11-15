@@ -400,7 +400,7 @@ export const DELIVERABLES = [
   { label: 'Missing modules list', where: 'Gap register', state: 'live' },
   { label: 'Missing workspaces list', where: 'Role workspaces tab', state: 'live' },
   { label: 'Implementation roadmap', where: 'Roadmap tab', state: 'live' },
-  { label: 'Enterprise upgrade package', where: 'Roadmap tab — release sequence', state: 'partial' },
+  { label: 'Enterprise upgrade package', where: 'Download review package (ZIP); full implementation remains open', state: 'partial' },
 ];
 
 export const SCHEMA_PLAN = [

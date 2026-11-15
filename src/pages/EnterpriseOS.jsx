@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { downloadEnterpriseReviewPackage } from '@/lib/enterpriseReportPackage';
+import { Button } from '@/components/ui/button';
 import { Layers } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -20,6 +22,13 @@ const SUMMARY = [
 ];
 
 export default function EnterpriseOS() {
+  const [exporting, setExporting] = useState(false);
+  const [exportError, setExportError] = useState(false);
+  const exportPackage = async () => {
+    setExporting(true); setExportError(false);
+    try { await downloadEnterpriseReviewPackage(); } catch { setExportError(true); }
+    finally { setExporting(false); }
+  };
   const [osId, setOsId] = useState(OPERATING_SYSTEMS[0].id);
   const selected = OS_BY_ID[osId] || OPERATING_SYSTEMS[0];
 
@@ -30,6 +39,8 @@ export default function EnterpriseOS() {
         subtitle="The Enterprise vNext operating layer: every operating system, the modules that serve it, live registers, and the gaps still to build."
         icon={Layers}
       />
+
+      <div><Button disabled={exporting} onClick={exportPackage}>{exporting ? 'Preparing package…' : 'Download review package (ZIP)'}</Button><p className="mt-1 text-xs text-[#0A2B6D]">Ten architecture and planning reports. Source mappings remain subject to functional and security acceptance.</p>{exportError && <p role="alert">Package could not be generated. Please retry.</p>}</div>
 
       <dl className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
         {SUMMARY.map((item) => (
