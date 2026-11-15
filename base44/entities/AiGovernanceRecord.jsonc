@@ -1,0 +1,124 @@
+{
+  "name": "AiGovernanceRecord",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string"
+    },
+    "code": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "record_type": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "risk": {
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "frequency": {
+      "type": "string"
+    },
+    "measure": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "source_ref": {
+      "type": "string"
+    },
+    "review_due": {
+      "type": "string"
+    },
+    "configuration": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "title",
+    "record_type"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            }
+          ]
+        },
+        {
+          "data.tenant_id": "{{user.data.tenant_id}}"
+        },
+        {
+          "user_condition": {
+            "account_status": "Active",
+            "access_approved": true
+          }
+        }
+      ]
+    },
+    "create": {
+      "user_condition": {
+        "role": "__server_only__"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "__server_only__"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "__server_only__"
+      }
+    }
+  }
+}
