@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { base44, getClientTenantContext } from '@/api/base44Client';
-import { COPILOT_ACTIONS } from '@/lib/aiIntelligence';
+import { base44 } from '@/api/base44Client';
+import { ALL_COPILOT_ACTIONS as COPILOT_ACTIONS } from '@/lib/aiIntelligence';
 import AiResponseReport from '@/components/ai/AiResponseReport';
 
-export default function CopilotRunDialog({ open, onClose, onComplete, initialAction }) {
+export default function CopilotRunDialog({ open, onClose, onComplete, initialAction, tenantId }) {
   const [action, setAction] = useState(initialAction || COPILOT_ACTIONS[0].key);
   const [question, setQuestion] = useState('');
   const [running, setRunning] = useState(false);
@@ -23,8 +23,6 @@ export default function CopilotRunDialog({ open, onClose, onComplete, initialAct
     setRunning(true);
     setError('');
     try {
-      const tenantId = getClientTenantContext().tenantId;
-      if (!tenantId) throw new Error('Choose a business before running a review.');
       const response = await base44.functions.invoke('aiCopilot', { action, question, tenant_id: tenantId });
       setResult(response.data);
       if (onComplete) onComplete();
@@ -58,8 +56,8 @@ export default function CopilotRunDialog({ open, onClose, onComplete, initialAct
         ) : (
           <div className="space-y-3">
             <div className="space-y-1.5">
-              <label className="text-xs font-extrabold text-foreground">Review type</label>
-              <select
+              <label htmlFor="ai-review-type" className="text-xs font-extrabold text-foreground">Review type</label>
+              <select id="ai-review-type"
                 value={action}
                 onChange={(event) => setAction(event.target.value)}
                 className="h-9 w-full rounded-md border border-input bg-background px-2.5 text-sm text-foreground"
@@ -74,8 +72,8 @@ export default function CopilotRunDialog({ open, onClose, onComplete, initialAct
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-extrabold text-foreground">What should the copilot focus on? (optional)</label>
-              <textarea
+              <label htmlFor="ai-review-focus" className="text-xs font-extrabold text-foreground">What should the copilot focus on? (optional)</label>
+              <textarea id="ai-review-focus"
                 value={question}
                 onChange={(event) => setQuestion(event.target.value)}
                 rows={3}
