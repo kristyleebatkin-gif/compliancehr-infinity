@@ -1,4 +1,5 @@
 import React from 'react';
+import PhasedImplementationPanel from './PhasedImplementationPanel';
 import { Link } from 'react-router-dom';
 import CoverageBadge from '@/components/enterprise/os/CoverageBadge';
 import { DELIVERABLES, ENTERPRISE_GAPS, OPERATING_SYSTEMS, osCoverage, osStatus } from '@/lib/enterpriseOS';
@@ -6,12 +7,12 @@ import { DELIVERABLES, ENTERPRISE_GAPS, OPERATING_SYSTEMS, osCoverage, osStatus 
 /** @param {any} props */
 export default function RoadmapPanel() {
   return (
-    <div className="space-y-3">
+    <div className="space-y-3">\n      <PhasedImplementationPanel />
       <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-2xs">
-        <h2 className="text-lg font-extrabold leading-tight text-[#0A2B6D]">Implementation roadmap</h2>
+        <h2 className="text-lg font-extrabold leading-tight text-[#0A2B6D]">Existing source capability inventory</h2>
         <p className="mt-1 max-w-3xl text-sm leading-relaxed text-[#0A2B6D]/75">
-          Priority order as directed. A release is not marked delivered until its capabilities stop showing
-          gaps on the audit tab.
+          The ten-phase sequence above governs delivery. This inventory retains the earlier source mappings;
+          source coverage alone does not establish release acceptance.
         </p>
 
         <ol className="mt-3 space-y-1.5">
@@ -30,7 +31,7 @@ export default function RoadmapPanel() {
                 </div>
                 <div className="flex flex-wrap items-center gap-1.5">
                   <span className="text-[11px] font-semibold text-[#0A2B6D]/75">
-                    {coverage.live} of {coverage.total} capabilities working
+                    {coverage.live} of {coverage.total} capabilities with source
                   </span>
                   <CoverageBadge state={osStatus(os)} />
                 </div>
@@ -60,9 +61,9 @@ export default function RoadmapPanel() {
         </section>
 
         <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-2xs">
-          <h3 className="text-sm font-extrabold text-[#0A2B6D]">Next build order</h3>
+          <h3 className="text-sm font-extrabold text-[#0A2B6D]">Earlier gap register</h3>
           <p className="mt-1 text-xs leading-relaxed text-[#0A2B6D]/75">
-            The highest-priority gaps, in the order they unblock the rest of the architecture.
+            Existing findings are retained for reconciliation within the ten-phase delivery sequence.
           </p>
           <ol className="mt-2 space-y-1.5">
             {ENTERPRISE_GAPS.slice(0, 8).map((item, index) => (
