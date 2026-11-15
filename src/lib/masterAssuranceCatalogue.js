@@ -2,9 +2,9 @@
 // audit checkpoints, each with a fixed code so every register row can be traced
 // Standard -> Indicator -> Control -> Audit checkpoint -> Evidence -> Finding.
 //
-// The catalogues are reference data (the obligation library). Live compliance is
-// never stored here — it is resolved from real register records in
-// auditMatrixScoring.js, so nothing on screen can claim an unearned score.
+// Draft internal catalogue proposals. Generated associations, criticality and
+// review cycles require human validation. They are not regulator-issued
+// requirements or assessed evidence and cannot establish compliance.
 
 export const CRITICALITY = {
   Critical: { score: 5, tone: 'border-danger/50 bg-danger/15 text-danger' },
@@ -552,8 +552,6 @@ export const AUDIT_CHECKPOINTS = AUDIT_BANDS.flatMap((band) => {
     const check = CHECK_CYCLE[Math.floor(offset / band.topics.length) % CHECK_CYCLE.length];
     const criticality = CRITICALITY_CYCLE[offset % CRITICALITY_CYCLE.length];
     const weighting = CRITICALITY[criticality].score;
-    const inherent = Math.min(100, 40 + weighting * 10 + (offset % 4) * 3);
-    const residual = Math.max(8, inherent - 15 - (offset % 5) * 4);
     const indicator = pickFromBand(band.indicators, offset, INDICATORS_BY_BAND);
     const evidence = pickFromBand(band.evidence, offset, EVIDENCE_BY_BAND);
     const controlCode = band.controls[offset % band.controls.length];
@@ -579,13 +577,16 @@ export const AUDIT_CHECKPOINTS = AUDIT_BANDS.flatMap((band) => {
       evidence_id: evidence?.id || '',
       evidence_code: evidence?.code || '',
       evidence_name: evidence?.name || '',
-      standard_code: standard.code,
-      standard_name: standard.name,
-      risk_id: `RSK-${pad(number)}`,
-      risk_rating: criticality,
+      standard_code: null,
+      standard_name: null,
+      proposed_standard_reference: `${standard.code} — ${standard.name}`,
+      catalogue_status: 'Draft',
+      mapping_status: 'Unverified proposal',
+      risk_id: null,
+      risk_rating: null,
       criticality,
-      inherent_risk_score: inherent,
-      residual_risk_score: residual,
+      inherent_risk_score: null,
+      residual_risk_score: null,
       weighting,
       max_score: maxScore,
       pass_score: Math.round(maxScore * 0.9),
@@ -594,8 +595,12 @@ export const AUDIT_CHECKPOINTS = AUDIT_BANDS.flatMap((band) => {
       owner_role: band.owner,
       reviewer_role: band.reviewer,
       approver_role: band.approver,
-      audit_status: 'Scheduled',
+      audit_status: 'Not scheduled',
       compliance_status: 'Not assessed',
+      audit_date: null, audit_period_start: null, audit_period_end: null,
+      evidence_review_date: null, finding_date: null, corrective_action_due_date: null,
+      verification_date: null, closure_date: null, next_review_date: null, next_audit_date: null,
+      created_at: null, updated_at: null,
     };
   });
 });

@@ -1,9 +1,7 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Loader2, Layers } from 'lucide-react';
+import React, { useMemo, useState } from 'react';
+import { Layers } from 'lucide-react';
 import ModuleShell from '@/components/module/ModuleShell';
-import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { base44 } from '@/api/base44Client';
 import { AUDIT_CHECKPOINTS, CONTROLS, EVIDENCE_REQUIREMENTS, INDICATORS, catalogueSummary } from '@/lib/masterAssuranceCatalogue';
 import { resolveAuditMatrix } from '@/lib/auditMatrixScoring';
 import MatrixCommandStrip from '@/components/assurance/matrix/MatrixCommandStrip';
@@ -13,47 +11,12 @@ import TraceabilityChainDrawer from '@/components/assurance/matrix/TraceabilityC
 import CatalogueTable from '@/components/assurance/matrix/CatalogueTable';
 import ScoringModelCard from '@/components/assurance/matrix/ScoringModelCard';
 
-const REGISTER_LIMIT = 500;
-
-async function loadRegister(entity) {
-  const page = await base44.entities[entity].filter({}, { limit: REGISTER_LIMIT });
-  const items = page?.items || [];
-  return { items, truncated: Boolean(page?.has_more) };
-}
-
 export default function AssuranceAuditMatrix() {
-  const [data, setData] = useState(null);
-  const [error, setError] = useState('');
   const [domain, setDomain] = useState('All');
   const [selected, setSelected] = useState(null);
   const [tab, setTab] = useState('command');
 
-  const load = useCallback(async () => {
-    setError('');
-    setData(null);
-    try {
-      const [controls, evidence, findings] = await Promise.all([
-        loadRegister('ComplianceControl'),
-        loadRegister('AssuranceEvidence'),
-        loadRegister('AssuranceFinding'),
-      ]);
-      setData({
-        controls: controls.items,
-        evidence: evidence.items,
-        findings: findings.items,
-        truncated: controls.truncated || evidence.truncated || findings.truncated,
-      });
-    } catch (err) {
-      setError(err?.message || 'The audit matrix could not load.');
-    }
-  }, []);
-
-  useEffect(() => { load(); }, [load]);
-
-  const matrix = useMemo(
-    () => (data ? resolveAuditMatrix({ controls: data.controls, evidence: data.evidence, findings: data.findings }) : null),
-    [data]
-  );
+  const matrix = useMemo(() => resolveAuditMatrix(), []);
 
   const priorityGaps = useMemo(() => {
     if (!matrix) return [];
@@ -71,18 +34,10 @@ export default function AssuranceAuditMatrix() {
       <ModuleShell
         moduleKey="assurance-matrix"
         title="Assurance Audit Matrix"
-        subtitle={`${counters.audits} audit checkpoints traced to ${counters.indicators} indicators, ${counters.controls} controls and ${counters.evidence} evidence requirements — scored only from the records your registers actually hold.`}
+        subtitle={`${counters.audits} audit checkpoints traced to ${counters.indicators} indicators, ${counters.controls} controls and ${counters.evidence} evidence requirements — draft internal catalogue proposals awaiting mapping and assessment.`}
         icon={Layers}
       />
 
-      {error ? (
-        <div role="alert" className="rounded-xl border border-[#FF2E9A] bg-white p-4 text-primary">
-          <p>Matrix unavailable: {error}</p>
-          <Button onClick={load} variant="outline" className="mt-2">Retry</Button>
-        </div>
-      ) : !matrix ? (
-        <div className="flex justify-center py-16"><Loader2 className="h-6 w-6 animate-spin text-primary" /></div>
-      ) : (
         <Tabs value={tab} onValueChange={setTab}>
           <TabsList className="flex h-auto flex-wrap gap-1.5">
             <TabsTrigger value="command">Command</TabsTrigger>
@@ -99,8 +54,8 @@ export default function AssuranceAuditMatrix() {
               <DomainMatrixGrid domains={matrix.byDomain} activeDomain={domain} onSelect={setDomain} />
               <div className="overflow-hidden rounded-xl border border-border bg-card shadow-2xs">
                 <div className="border-b border-border px-4 py-3">
-                  <h2 className="text-sm font-extrabold text-foreground">Priority checkpoints</h2>
-                  <p className="text-xs text-muted-foreground">Critical first, then the lowest scoring. Open one to see its full traceability chain.</p>
+                  <h2 className="text-sm font-extrabold text-foreground">Proposed review priorities</h2>
+                  <p className="text-xs text-muted-foreground">Proposed criticality order. Open a checkpoint to inspect its draft relationships.</p>
                 </div>
                 <div className="divide-y divide-border">
                   {priorityGaps.map((row) => (
@@ -129,9 +84,7 @@ export default function AssuranceAuditMatrix() {
               </div>
             </div>
             <p className="text-xs text-primary">
-              Reference coverage for the loaded registers. A checkpoint only reads Assured when a control is mapped, evidence is verified and
-              in date, and no finding is open. Counts cover this loaded subset.
-              {data.truncated && ' At least one register reached the 500-record limit.'}
+              Draft catalogue only. Generated names, criticalities, review cycles and relationships require validation. Live assessment, evidence-version verification, applicability and signed assurance are not connected. No compliance score is available.
             </p>
           </TabsContent>
 
@@ -142,7 +95,7 @@ export default function AssuranceAuditMatrix() {
           <TabsContent value="indicators" className="mt-4">
             <CatalogueTable
               title={`Indicator catalogue · ${INDICATORS.length} indicators`}
-              description="Every obligation is measured by an indicator, grouped in the ten indicator domains."
+              description="Draft indicator proposals grouped in ten internal domains; validate applicability and current regulatory sources."
               rows={INDICATORS}
               searchKeys={['code', 'name', 'domain']}
               columns={[
@@ -156,7 +109,7 @@ export default function AssuranceAuditMatrix() {
           <TabsContent value="controls" className="mt-4">
             <CatalogueTable
               title={`Control catalogue · ${CONTROLS.length} enterprise controls`}
-              description="The controls that operationalise each indicator, from rights through to technology governance."
+              description="Draft control proposals from rights through to technology governance; relationships require review."
               rows={CONTROLS}
               searchKeys={['code', 'name', 'group']}
               columns={[
@@ -170,7 +123,7 @@ export default function AssuranceAuditMatrix() {
           <TabsContent value="evidence" className="mt-4">
             <CatalogueTable
               title={`Evidence catalogue · ${EVIDENCE_REQUIREMENTS.length} evidence requirements`}
-              description="What must exist and be current for each control to count as assured."
+              description="Draft evidence requirement proposals; generated subjects require review before use in an audit."
               rows={EVIDENCE_REQUIREMENTS}
               searchKeys={['code', 'name']}
               columns={[
@@ -184,7 +137,6 @@ export default function AssuranceAuditMatrix() {
             <ScoringModelCard />
           </TabsContent>
         </Tabs>
-      )}
 
       <TraceabilityChainDrawer row={selected} onClose={() => setSelected(null)} />
     </div>
