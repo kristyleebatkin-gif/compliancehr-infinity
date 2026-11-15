@@ -111,7 +111,8 @@ export default perBusiness(async function (req: Request) {
       const ownRequest = chain.requested_by_id === user.id
         || (chain.requested_by_email && String(chain.requested_by_email).toLowerCase() === String(user.email || '').toLowerCase());
       if (ownRequest) return Response.json({ error: 'You cannot decide your own request. Another approver must decide it.' }, { status: 403 });
-      const decision = body.decision === 'return' ? 'return' : 'approve';
+      if (!['return', 'approve'].includes(body.decision)) return Response.json({ error: 'Choose approve or return.' }, { status: 400 });
+      const decision = body.decision;
       const note = str(body.note).slice(0, 1000);
       const signature = str(body.signature).slice(0, 120);
       if (decision === 'approve' && signature.length < 2) return Response.json({ error: 'Type your full name to sign the approval.' }, { status: 400 });

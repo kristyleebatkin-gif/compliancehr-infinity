@@ -26,13 +26,16 @@ export default function ClinicalOS() {
     setLoading(true);
     setError('');
     try {
-      const scope = tenantId ? { tenant_id: tenantId } : {};
+      if (!tenantId) throw new Error('Choose a business before opening clinical records.');
+      const scope = { tenant_id: tenantId };
       const [planPage, referralPage] = await Promise.all([
         base44.entities.CarePlan.filter(scope, { sort: '-created_date', limit: 200 }),
         base44.entities.AlliedHealthReferral.filter(scope, { sort: '-created_date', limit: 200 }),
       ]);
-      setPlans(planPage?.items || []);
-      setReferrals(referralPage?.items || []);
+      const rows = page => Array.isArray(page) ? page : page?.items;
+      if (!Array.isArray(rows(planPage)) || !Array.isArray(rows(referralPage))) throw new Error('Clinical registers unavailable.');
+      setPlans(rows(planPage));
+      setReferrals(rows(referralPage));
     } catch (err) {
       setError(err?.message || 'The clinical registers could not load.');
     } finally {
@@ -64,7 +67,7 @@ export default function ClinicalOS() {
         <p role="status" className="flex items-center gap-2 p-4 text-sm text-muted-foreground"><Loader2 className="h-4 w-4 animate-spin" />Loading the clinical registers…</p>
       )}
 
-      <Tabs defaultValue="command">
+      {!error && !loading && <Tabs defaultValue="command">
         <TabsList className="flex h-auto flex-wrap justify-start gap-1.5" aria-label="Clinical OS views">
           <TabsTrigger value="command">Command centre</TabsTrigger>
           <TabsTrigger value="plans">Care plans</TabsTrigger>
@@ -140,7 +143,7 @@ export default function ClinicalOS() {
             <Link to="/incidents" className="rounded-xl border border-border bg-card p-4 text-sm font-bold text-foreground hover:border-primary">Incidents · clinical incident follow-up</Link>
           </div>
         </TabsContent>
-      </Tabs>
+      </Tabs>}
     </div>
   );
 }

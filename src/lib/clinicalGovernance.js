@@ -23,6 +23,7 @@ export const DISCIPLINES = [
   'Dietetics',
   'Nursing',
   'Social Work',
+  'Exercise Physiology',
   'Other',
 ];
 
@@ -30,7 +31,7 @@ export const REFERRAL_STATUSES = ['Draft', 'Sent', 'Accepted', 'Scheduled', 'Com
 export const URGENCIES = ['Routine', 'Priority', 'Urgent'];
 
 const OPEN_REFERRAL = ['Sent', 'Accepted', 'Scheduled'];
-const TODAY = () => new Date().toISOString().slice(0, 10);
+const TODAY = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'Australia/Brisbane', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
 
 export function daysUntil(date) {
   if (!date) return null;
