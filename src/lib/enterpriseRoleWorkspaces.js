@@ -44,7 +44,7 @@ export const ROLE_WORKSPACES = [
   { role: 'Exercise Physiologist', group: 'Allied health', route: '/frontline-hub', workspace: 'Frontline Rapid Hub', status: 'gap', note: 'No clinical note, assessment or treatment plan workspace.' },
   { role: 'Support Worker', group: 'Service delivery', route: '/frontline-hub', workspace: 'Frontline Rapid Hub', status: 'live', note: 'Shift start, authorised support information, notes and reporting.' },
   { role: 'Administration Officer', group: 'Operations', route: '/today', workspace: 'Administration Workspace', status: 'live', note: 'Brief, emails, roster, invoices, compliance jobs and to-dos.' },
-  { role: 'Participant', group: 'Participant', route: '/', workspace: 'Participant Home', status: 'live', note: 'Own goals, documents, boards and feedback.' },
+  { role: 'Participant', group: 'Participant', route: '/my-profile', workspace: 'My Profile', status: 'partial', note: 'Personal profile exists; dedicated participant workspace acceptance remains open.' },
   { role: 'Family Representative', group: 'Participant', route: '/our-participants', workspace: 'Participant Profiles', status: 'partial', note: 'No representative-scoped view of a participant record.' },
 ];
 

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const TONES = {
-  live: { label: 'Working', className: 'bg-[#E7F7EF] text-[#0B6B45] border-[#A9E3C6]' },
+  live: { label: 'Source present', className: 'bg-[#E7F7EF] text-[#0B6B45] border-[#A9E3C6]' },
   partial: { label: 'Partial', className: 'bg-[#FFF4E5] text-[#8A4B00] border-[#FFD8A8]' },
   gap: { label: 'Gap', className: 'bg-[#FFE9EF] text-[#8A1230] border-[#FFC2D1]' },
 };

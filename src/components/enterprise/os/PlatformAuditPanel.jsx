@@ -28,12 +28,11 @@ export default function PlatformAuditPanel() {
           <div>
             <h2 className="text-lg font-extrabold leading-tight text-[#0A2B6D]">Platform audit</h2>
             <p className="mt-1 text-sm leading-relaxed text-[#0A2B6D]/75">
-              Counted from the live repository on {PLATFORM_AUDIT.auditedOn}. Nothing was removed to produce
-              these numbers, and no capability is marked working without a module or register behind it.
+              Source inventory recorded on {PLATFORM_AUDIT.auditedOn}. Source presence and mapping scores do not prove functional completion, compliance, accessibility or live permission enforcement.
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-1.5">
-            <CoverageBadge state="live" label="Working" count={PLATFORM_COVERAGE.live} />
+            <CoverageBadge state="live" label="Source present" count={PLATFORM_COVERAGE.live} />
             <CoverageBadge state="partial" label="Partial" count={PLATFORM_COVERAGE.partial} />
             <CoverageBadge state="gap" label="Gap" count={PLATFORM_COVERAGE.gap} />
           </div>
@@ -55,7 +54,7 @@ export default function PlatformAuditPanel() {
           <table className="w-full min-w-[560px] border-separate border-spacing-0 text-sm">
             <thead>
               <tr>
-                {['Operating system', 'Working', 'Partial', 'Gap', 'Coverage'].map((heading) => (
+                {['Operating system', 'Source present', 'Partial', 'Gap', 'Coverage'].map((heading) => (
                   <th
                     key={heading}
                     scope="col"
@@ -81,7 +80,7 @@ export default function PlatformAuditPanel() {
                           <div
                             className="h-full rounded-full"
                             style={{
-                              width: `${Math.max(coverage.percent, 3)}%`,
+                              width: `${coverage.percent}%`,
                               background: 'linear-gradient(90deg, #0072FF 0%, #5A00D6 70%, #FF2E9A 100%)',
                             }}
                           />

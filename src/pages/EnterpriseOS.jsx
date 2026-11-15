@@ -12,7 +12,7 @@ import { ROLE_WORKSPACES } from '@/lib/enterpriseRoleWorkspaces';
 
 const SUMMARY = [
   { label: 'Operating systems', value: OPERATING_SYSTEMS.length },
-  { label: 'Capabilities working', value: PLATFORM_COVERAGE.live },
+  { label: 'Capabilities with source', value: PLATFORM_COVERAGE.live },
   { label: 'Capabilities partial', value: PLATFORM_COVERAGE.partial },
   { label: 'Capabilities missing', value: PLATFORM_COVERAGE.gap },
   { label: 'Role workspaces mapped', value: ROLE_WORKSPACES.length },
@@ -41,7 +41,7 @@ export default function EnterpriseOS() {
       </dl>
 
       <Tabs defaultValue="systems">
-        <TabsList aria-label="Enterprise OS views">
+        <TabsList aria-label="Enterprise OS views" className="flex h-auto flex-wrap gap-1">
           <TabsTrigger value="systems">Operating systems</TabsTrigger>
           <TabsTrigger value="workspaces">Role workspaces</TabsTrigger>
           <TabsTrigger value="audit">Platform audit</TabsTrigger>

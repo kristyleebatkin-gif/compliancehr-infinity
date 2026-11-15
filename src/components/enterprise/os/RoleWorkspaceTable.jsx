@@ -23,8 +23,8 @@ export default function RoleWorkspaceTable() {
         <div>
           <h2 className="text-lg font-extrabold leading-tight text-[#0A2B6D]">Enterprise role workspaces</h2>
           <p className="mt-1 max-w-3xl text-sm leading-relaxed text-[#0A2B6D]/75">
-            Every workspace is measured against the nine required elements: {WORKSPACE_ELEMENTS.join(', ')}.
-            A role only appears here if a real page can serve it today.
+            Target elements for each workspace: {WORKSPACE_ELEMENTS.join(', ')}.
+            Mappings are proposed reuse of existing pages. Role grants and acceptance of all nine elements remain unverified.
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-1.5">

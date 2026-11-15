@@ -35,18 +35,18 @@ export default function OsCard({ os, active = false, onSelect }) {
       <div
         className="mt-2.5 h-1.5 w-full overflow-hidden rounded-full bg-slate-100"
         role="img"
-        aria-label={`${coverage.percent}% of capabilities working`}
+        aria-label={`${coverage.percent}% of source mapping score (unverified)`}
       >
         <div
           className="h-full rounded-full"
           style={{
-            width: `${Math.max(coverage.percent, 3)}%`,
+            width: `${coverage.percent}%`,
             background: 'linear-gradient(90deg, #0072FF 0%, #5A00D6 70%, #FF2E9A 100%)',
           }}
         />
       </div>
       <p className="mt-1.5 text-[11px] font-semibold text-[#0A2B6D]/80">
-        {coverage.live} working · {coverage.partial} partial · {coverage.gap} gaps
+        {coverage.live} with source · {coverage.partial} partial · {coverage.gap} gaps
       </p>
     </button>
   );

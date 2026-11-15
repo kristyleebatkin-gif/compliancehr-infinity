@@ -1,11 +1,11 @@
 // Enterprise vNext architecture model — single source of truth for the Operating System layer.
 // Every capability is tagged with what genuinely exists today:
-//   live    — a working module, register or function backs it
+//   live    — source mapping exists; runtime and full requirement acceptance unverified
 //   partial — something exists but does not yet cover the full capability
 //   gap     — no build yet; listed so it cannot be quietly forgotten
 // This file holds no fabricated metrics. Live record counts are read from the database.
 
-import { MODULE_DIRECTORY, NAV_GROUPS } from '@/lib/moduleDirectory';
+import { MODULE_DIRECTORY, NAV_GROUPS } from './moduleDirectory.js';
 
 // Platform audit snapshot (counted from the repository on the audit date).
 export const PLATFORM_AUDIT = {
@@ -20,7 +20,7 @@ export const PLATFORM_AUDIT = {
 };
 
 export const COVERAGE = {
-  live: { label: 'Working', tone: 'live' },
+  live: { label: 'Source present', tone: 'live' },
   partial: { label: 'Partial', tone: 'partial' },
   gap: { label: 'Gap', tone: 'gap' },
 };
@@ -42,7 +42,7 @@ export const OPERATING_SYSTEMS = [
       cap('Financial and compliance indicators', 'live', '/analytics'),
       cap('AI executive insights', 'live', '/assistant'),
       cap('Action tracking to sign-off', 'live', '/approvals'),
-      cap('Board-level assurance chain export', 'partial', '/compliance', 'Assurance chain is assembled from existing evidence; no single board assurance register yet.'),
+      cap('Board-level assurance chain export', 'partial', '/governance?tab=board-assurance', 'Assurance chain is assembled from existing evidence; no single board assurance register yet.'),
     ],
     registers: [
       { entity: 'ExecutiveScoreSnapshot', label: 'Executive score snapshots' },
@@ -319,7 +319,7 @@ export const OPERATING_SYSTEMS = [
     label: 'Automation OS',
     priority: 14,
     summary: 'Workflow engine, alerts, escalations, approvals and background processing.',
-    moduleKeys: ['connected-workflows', 'approvals', 'notifications', 'tasks'],
+    moduleKeys: ['operations-centre', 'approvals', 'notifications', 'tasks'],
     capabilities: [
       cap('Workflow engine and schedules', 'live', '/connected-workflows'),
       cap('Alerts, reminders and escalations', 'live', '/notifications'),
