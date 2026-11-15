@@ -1,0 +1,202 @@
+{
+  "name": "AccessReview",
+  "type": "object",
+  "description": "Backlog 16.12: a periodic check that everyone's access is still right. A snapshot of who had access when it started, a decision per person, and who completed it. Read and written only by the accessReview function.",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Open",
+        "Completed",
+        "Cancelled"
+      ],
+      "default": "Open",
+      "title": "Status"
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Started"
+    },
+    "started_by_id": {
+      "type": "string",
+      "title": "Started by (user id)"
+    },
+    "started_by_name": {
+      "type": "string",
+      "title": "Started by"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Due"
+    },
+    "items": {
+      "type": "array",
+      "title": "People reviewed",
+      "items": {
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "role_at_start": {
+            "type": "string"
+          },
+          "senior": {
+            "type": "boolean"
+          },
+          "decision": {
+            "type": "string",
+            "enum": [
+              "Pending",
+              "Kept",
+              "Changed",
+              "Suspended",
+              "Left already"
+            ]
+          },
+          "new_role": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          },
+          "decided_by_id": {
+            "type": "string"
+          },
+          "decided_by_name": {
+            "type": "string"
+          },
+          "decided_at": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Completed"
+    },
+    "completed_by_name": {
+      "type": "string",
+      "title": "Completed by"
+    },
+    "cancel_reason": {
+      "type": "string",
+      "title": "Why it was cancelled"
+    },
+    "summary": {
+      "type": "string",
+      "title": "Outcome summary"
+    }
+  },
+  "required": [
+    "title",
+    "status",
+    "started_at",
+    "started_by_id"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

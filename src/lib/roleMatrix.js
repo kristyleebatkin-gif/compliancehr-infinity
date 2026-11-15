@@ -287,6 +287,7 @@ export const ACTION_PERMISSIONS = [
   { key: 'task-signoff', label: 'Sign off completed tasks (Approval Inbox)', roles: TASK_APPROVER_ROLES, note: 'Nobody can sign off work they asked for or completed.' },
   { key: 'manage-access', label: 'Approve accounts and change roles', roles: MANAGEMENT_ROLES, note: 'Account must itself be active and approved.' },
   { key: 'decide-access-request', label: 'Decide access requests (Approval Inbox)', roles: MANAGEMENT_ROLES, note: 'Requests involving a senior role go to the owner or a Provider Administrator. Nobody decides their own.' },
+  { key: 'access-review', label: 'Run periodic access reviews', roles: MANAGEMENT_ROLES, note: 'Senior accounts are reviewed only by the owner or a Provider Administrator. Nobody reviews their own access.' },
   { key: 'all-businesses', label: 'See every business (owner access)', roles: ['admin'], note: 'Every other role sees its own business only.' },
 ];
 
