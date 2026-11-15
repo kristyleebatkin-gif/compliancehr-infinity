@@ -65,7 +65,7 @@ test('enterprise groups retain every module exactly once and shortcuts use permi
   const compliance = buildNavigationGroups(MODULE_DIRECTORY.filter((item) => item.key === 'compliance'));
   assert.equal(compliance.find((group) => group.id === 'audit-os').children[0].path, '/compliance?tab=audits');
   const planned = buildNavigationGroups([], [{ id: 'future-os', label: 'Future OS', keys: [], planned: true }], { includePlanned: true });
-  assert.equal(planned.length, NAV_GROUPS.filter(group => group.planned).length);
+  assert.equal(planned.length, 1);
   assert.ok(planned.every(group => group.planned && group.children.length === 0));
   const clinical = buildNavigationGroups(MODULE_DIRECTORY.filter(item => item.key === 'clinical-os'));
   assert.equal(clinical[0].children[0].path, '/clinical-os');
