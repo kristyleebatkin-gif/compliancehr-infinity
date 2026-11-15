@@ -12,7 +12,7 @@ export default function RoadmapPanel() {
       <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-2xs">
         <h2 className="text-lg font-extrabold leading-tight text-[#0A2B6D]">Existing source capability inventory</h2>
         <p className="mt-1 max-w-3xl text-sm leading-relaxed text-[#0A2B6D]/75">
-          The ten-phase sequence above governs delivery. This inventory retains the earlier source mappings;
+          The twelve-phase sequence above governs delivery. This inventory retains the earlier source mappings;
           source coverage alone does not establish release acceptance.
         </p>
 
@@ -64,7 +64,7 @@ export default function RoadmapPanel() {
         <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-2xs">
           <h3 className="text-sm font-extrabold text-[#0A2B6D]">Earlier gap register</h3>
           <p className="mt-1 text-xs leading-relaxed text-[#0A2B6D]/75">
-            Existing findings are retained for reconciliation within the ten-phase delivery sequence.
+            Existing findings are retained for reconciliation within the twelve-phase delivery sequence.
           </p>
           <ol className="mt-2 space-y-1.5">
             {ENTERPRISE_GAPS.slice(0, 8).map((item, index) => (
