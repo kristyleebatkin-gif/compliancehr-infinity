@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { useRole } from '@/lib/useRole';
+import { Button } from '@/components/ui/button';
 import { LayoutDashboard, ShieldAlert, Landmark, ShieldCheck, ClipboardCheck, FolderOpen } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
 import ExecutiveMetricCard from '@/components/executive/ExecutiveMetricCard';
@@ -20,7 +23,7 @@ const VIEWS = {
     ['incidents', 'Open incidents', 'Reported incidents that are not yet resolved or closed.', '/incidents'],
   ] },
   board: { title: 'Board Governance Dashboard', description: 'Review governance records, declarations, audit follow-ups and significant risks.', icon: Landmark, metrics: [
-    ['governanceReviews', 'Governance reviews past due', 'Active or under-review governance objects with a review date before today (Brisbane time).', '/governance?tab=objects'],
+    ['governanceReviews', 'Governance reviews past due', 'Active or under-review governance objects with a review date before today (Brisbane time).', '/governance?tab=board-assurance'],
     ['declarations', 'Declarations needing attention', 'Declarations marked under review or expired.', '/governance?tab=delegations'],
     ['auditFollowups', 'Audit follow-ups required', 'Audit records marked follow-up required.', '/compliance?tab=audits'],
     ['highRisks', 'High and critical risks', 'Open risks recorded with a high or critical rating.', '/risks'],
@@ -46,8 +49,16 @@ const VIEWS = {
 };
 
 export default function ExecutiveDashboards({ embedded = false } = {}) {
-  const [view, setView] = useState('executive');
-  const { data, isLoading } = useExecutiveDashboardMetrics(view);
+  const { can } = useRole();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const requested = searchParams.get('view');
+  const [embeddedView, setEmbeddedView] = useState('executive');
+  const view = embedded ? embeddedView : Object.hasOwn(VIEWS, requested) ? requested : 'executive';
+  const setView = next => {
+    if (embedded) setEmbeddedView(next);
+    else { const params = new URLSearchParams(searchParams); params.set('view', next); setSearchParams(params); }
+  };
+  const { data, isLoading, isFetching, refetch, dataUpdatedAt } = useExecutiveDashboardMetrics(view);
   const current = VIEWS[view];
   return (
     <div className="mx-auto w-full max-w-[1440px] space-y-3 pb-6">
@@ -59,7 +70,12 @@ export default function ExecutiveDashboards({ embedded = false } = {}) {
             <button key={key} type="button" onClick={() => setView(key)} aria-pressed={view === key} className={view === key ? 'rounded-lg border border-header-foreground/40 bg-brand px-4 py-2 text-sm font-bold text-header-foreground shadow-panel backdrop-blur-md' : 'rounded-lg border border-header-foreground/30 bg-workspace-navy/70 px-4 py-2 text-sm font-bold text-header-foreground backdrop-blur-md hover:bg-workspace-navy/90'}>{item.title}</button>
           ))}
         </div>
-        <p className="text-xs leading-relaxed text-header-foreground">Counts reflect records visible to your account. These source registers do not currently support organisation-level filtering, so counts may not represent a single organisation.</p>
+        <div className="flex flex-wrap items-center gap-3">
+          <Button type="button" variant="outline" disabled={isFetching} onClick={() => refetch()}>{isFetching ? 'Refreshing…' : 'Refresh dashboard'}</Button>
+          {view === 'board' && can('governance') && <Link to="/governance?tab=board-assurance" className="text-sm font-bold text-header-foreground underline">Open board assurance review</Link>}
+          {can('enterprise-os') && <Link to="/enterprise-os" className="text-sm font-bold text-header-foreground underline">Enterprise OS</Link>}
+        </div>
+        <p className="text-xs leading-relaxed text-header-foreground" role="status">Counts request records for your signed-in business and remain subject to your access. Unavailable measures need review or a retry.{dataUpdatedAt > 0 && <> Last refreshed: {new Intl.DateTimeFormat('en-AU', { timeZone: 'Australia/Brisbane', hour: '2-digit', minute: '2-digit' }).format(new Date(dataUpdatedAt))} (Brisbane).</>}</p>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
           {current.metrics.map(([key, title, description, path]) => <ExecutiveMetricCard key={key} title={title} description={description} value={data?.[key] ?? null} loading={isLoading} path={path} />)}
         </div>
