@@ -1,0 +1,278 @@
+{
+  "name": "AiAgent",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
+    "name": {
+      "type": "string",
+      "title": "Agent / Copilot Name"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "Copilot",
+        "Autonomous agent"
+      ],
+      "enumColors": [
+        "blue",
+        "purple"
+      ],
+      "default": "Copilot",
+      "title": "Kind"
+    },
+    "domain": {
+      "type": "string",
+      "title": "Domain"
+    },
+    "purpose": {
+      "type": "string",
+      "title": "Purpose"
+    },
+    "model": {
+      "type": "string",
+      "title": "Model"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Active",
+        "Paused",
+        "Retired"
+      ],
+      "enumColors": [
+        "gray",
+        "green",
+        "yellow",
+        "red"
+      ],
+      "default": "Draft",
+      "title": "Status"
+    },
+    "owner": {
+      "type": "string",
+      "title": "Accountable Owner"
+    },
+    "data_scope": {
+      "type": "string",
+      "enum": [
+        "Enterprise",
+        "Business unit",
+        "Region",
+        "Service",
+        "Site",
+        "Team",
+        "Self"
+      ],
+      "default": "Enterprise",
+      "title": "Data Scope"
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "title": "Capabilities"
+    },
+    "guardrails": {
+      "type": "string",
+      "title": "Guardrails"
+    },
+    "human_review_required": {
+      "type": "boolean",
+      "default": true,
+      "title": "Human Review Required"
+    },
+    "last_reviewed": {
+      "type": "string",
+      "format": "date",
+      "title": "Last Reviewed"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "name",
+    "kind",
+    "domain"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,295 @@
+{
+  "name": "AiRecommendation",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
+    "title": {
+      "type": "string",
+      "title": "Recommendation Title"
+    },
+    "module": {
+      "type": "string",
+      "title": "Module"
+    },
+    "agent_name": {
+      "type": "string",
+      "title": "Raised By"
+    },
+    "recommendation_type": {
+      "type": "string",
+      "title": "Review Type"
+    },
+    "recommendation": {
+      "type": "string",
+      "title": "Recommendation"
+    },
+    "reasoning": {
+      "type": "string",
+      "title": "Reasoning"
+    },
+    "executive_summary": {
+      "type": "string",
+      "title": "Executive Summary"
+    },
+    "confidence": {
+      "type": "number",
+      "title": "Confidence (%)"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "Low",
+        "Medium",
+        "High",
+        "Critical"
+      ],
+      "enumColors": [
+        "gray",
+        "yellow",
+        "red",
+        "red"
+      ],
+      "default": "Medium",
+      "title": "Priority"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Awaiting review",
+        "Accepted",
+        "Rejected",
+        "Implemented"
+      ],
+      "enumColors": [
+        "yellow",
+        "green",
+        "red",
+        "blue"
+      ],
+      "default": "Awaiting review",
+      "title": "Status"
+    },
+    "standard_refs": {
+      "type": "string",
+      "title": "Standards Impacted"
+    },
+    "control_refs": {
+      "type": "string",
+      "title": "Controls Impacted"
+    },
+    "risk_refs": {
+      "type": "string",
+      "title": "Risks Impacted"
+    },
+    "evidence_refs": {
+      "type": "string",
+      "title": "Evidence Referenced"
+    },
+    "traceability": {
+      "type": "string",
+      "title": "Traceability Map"
+    },
+    "human_verified_by": {
+      "type": "string",
+      "title": "Verified By"
+    },
+    "human_verified_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Verified Date"
+    },
+    "override_reason": {
+      "type": "string",
+      "title": "Override / Rejection Reason"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "title",
+    "recommendation"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

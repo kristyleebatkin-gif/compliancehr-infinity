@@ -1,0 +1,228 @@
+{
+  "name": "AiInteraction",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
+    "agent_name": {
+      "type": "string",
+      "title": "Agent / Copilot"
+    },
+    "module": {
+      "type": "string",
+      "title": "Module"
+    },
+    "interaction_type": {
+      "type": "string",
+      "title": "Review Type"
+    },
+    "model": {
+      "type": "string",
+      "title": "Model"
+    },
+    "user_email": {
+      "type": "string",
+      "title": "Requested By"
+    },
+    "question": {
+      "type": "string",
+      "title": "Request"
+    },
+    "response_summary": {
+      "type": "string",
+      "title": "Response Summary"
+    },
+    "confidence": {
+      "type": "number",
+      "title": "Confidence (%)"
+    },
+    "source_count": {
+      "type": "number",
+      "title": "Records Referenced"
+    },
+    "duration_ms": {
+      "type": "number",
+      "title": "Duration (ms)"
+    },
+    "flagged": {
+      "type": "boolean",
+      "default": false,
+      "title": "Flagged by Human"
+    },
+    "override": {
+      "type": "boolean",
+      "default": false,
+      "title": "Human Override"
+    },
+    "flag_reason": {
+      "type": "string",
+      "title": "Flag / Override Reason"
+    }
+  },
+  "required": [
+    "agent_name",
+    "module",
+    "response_summary"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
