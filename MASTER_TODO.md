@@ -1,5 +1,43 @@
 # ComplianceHR Portal — Master To-Do Plan
 
+## Enterprise transformation V3 — 15 November 2026 (Australia/Brisbane)
+
+Owner supplied Enterprise Implementation Plan V3.0 and requested building it in the existing app with ComplianceHR App Specialists. Master sequence recorded in ENTERPRISE_IMPLEMENTATION_PLAN_V3.md. The ten-release program remains open; this batch implements part of Release 1.
+
+Implemented in this batch:
+- Shared directory reorganised into AI Core, My Workspace, Operating Systems (Governance, Compliance, Risk, Audit, Workforce, Clinical Governance, Allied Health), Enterprise Registers, Reports & Analytics, Administration.
+- All 54 existing canonical module IDs/paths retained. Existing /analytics route added to the directory, yielding 55 discoverable workspaces; no replacement module or new business entity created.
+- Operating System groups use existing permitted modules. Permission-filtered shortcuts open existing Audit Management, Master Registers, Allied Health Catalogue and Executive Dashboards. Shortcut visibility derives from its canonical module's existing permission; empty restricted groups are removed.
+- Clinical Governance visibly marked Planned / Release 8 for operations-authorised accounts; no active clinical route fabricated. Allied Health identifies current participant/support workspaces and the outstanding discipline workflows. Existing five-pillar iPad grouping retained through legacy exports; new primary grouping reuses current directory.
+- Global search now queries existing Audit, AuditEvidenceFile, TrainingModule, BusinessProject and GovernanceObject in addition to previous sources. It searches governance records, not a newly implemented Board Papers subsystem.
+- Search adapter requires user ID, assigned business, active status and explicit approval before record queries. Each query includes tenant_id, bounded result size and projected fields. Existing tenant-scoped SDK client and server RLS remain the boundary; this batch does not assert new or live-verified isolation.
+- Array and cursor-page SDK responses accepted. Regex metacharacters escaped. Forbidden sources not queried. Failed/malformed sources shown as incomplete search with Retry; successful partial results retained. Raw errors and non-projected fields never appear in returned results.
+- Search state is scoped by user, business, role, status and approval so a changed identity cannot display the prior identity's results. This is source/unit evidence; live browser identity switching remains unverified.
+- Jamie/Sherelle accounts, all roles, backend enforcement, release switches, business data, record IDs, document relationships and existing disabled workflow gates unchanged.
+
+Verification after code changes:
+| Check | Result |
+|---|---|
+| npm run lint | exit 0 |
+| npm run typecheck | exit 0; existing configured scope, checkJs false; does not type-verify new src/lib helper or full backend |
+| npm run build | exit 0 |
+| npm test | exit 0; 70 passed, 0 failed, including 8 new V3 tests |
+| git diff b4026a1ed7952f18b212e7a563c0a0805d5e4c17 --check | exit 0 |
+| Preview URL API | returned preview URL successfully |
+| Browser acceptance | NOT PASSED: preview remained blank in initial and fresh verification tabs. No positive signed-in signal. Console showed bridge/no-parent and Tailwind warnings, no actionable application exception. Sandbox Vite log showed startup and HMR deprecation only. Cause remains unresolved. |
+
+New tests exercise rejected accounts before reads; identity-scope changes; denied-source exclusion; tenant filters, escaping and projection; partial failures/malformed responses; SDK response variants/caps; restricted navigation/shortcut visibility; enterprise-name module search. Existing route/group test proves each canonical workspace still has one home and a registered route. Synthetic tests are not production authorization proof.
+
+Source restore point before work: 6af902c627fbabe27cf4c9e5, commit b4026a1ed7952f18b212e7a563c0a0805d5e4c17.
+Final named checkpoint: V3 foundation — enterprise navigation and honest scoped search (ID returned in session completion).
+No deployment/publication, migration, live data creation, permission grants or external sends.
+
+Open work:
+- Release 1: full delegated/temporary/auditor-access and approval-authority engine acceptance; API gateway contract; logging framework completion; Board Papers-specific search; live tenant A/B and denied-access tests; authenticated browser/mobile/iPad acceptance; resolve preview blank rendering.
+- Releases 2–10: execute the recorded master sequence, reconciling existing implementations first. The document, navigation headings and catalogue are not evidence of completed operating systems.
+- Carry forward all earlier blockers and module requirements below; none are closed solely by this batch.
+
+
 ## Navigation build — 15 November 2026 (Australia/Brisbane)
 
 Scope: owner requested implementation of the navigation plan. Saved in the existing app; no publication performed.
