@@ -12,9 +12,11 @@ import ControlCoveragePanel from '@/components/assurance/ControlCoveragePanel';
 import FindingsPanel from '@/components/assurance/FindingsPanel';
 import EvidenceFormDialog from '@/components/assurance/EvidenceFormDialog';
 import EvidenceChainDialog from '@/components/assurance/EvidenceChainDialog';
+import GapEnginePanel from '@/components/assurance/GapEnginePanel';
 import {
   EVIDENCE_STATES, EVIDENCE_STATE_ORDER, evidenceState, standardCoverage, summariseEvidence,
 } from '@/lib/assuranceChain';
+import { detectAssuranceGaps, gapToTask } from '@/lib/assuranceGaps';
 
 const LOAD_LIMIT = 500;
 
@@ -37,6 +39,8 @@ export default function EvidenceOS() {
   const [verifyingId, setVerifyingId] = useState(null);
   const [chainControlId, setChainControlId] = useState(null);
   const [me, setMe] = useState(null);
+  const [remediationTasks, setRemediationTasks] = useState([]);
+  const [creatingActions, setCreatingActions] = useState(false);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -53,10 +57,18 @@ export default function EvidenceOS() {
     setLoading(false);
   }, []);
 
+  const loadRemediationTasks = useCallback(async () => {
+    const page = await base44.entities.TodoTask
+      .filter({ task_type: 'Assurance remediation' }, { limit: LOAD_LIMIT })
+      .catch(() => ({ items: [] }));
+    setRemediationTasks(page.items || []);
+  }, []);
+
   useEffect(() => {
     load();
+    loadRemediationTasks();
     base44.auth.me().then(setMe).catch(() => {});
-  }, [load]);
+  }, [load, loadRemediationTasks]);
 
   const controlsById = useMemo(() => new Map(controls.map((control) => [control.id, control])), [controls]);
   const summary = useMemo(() => summariseEvidence({ evidence, controls, findings }), [evidence, controls, findings]);
@@ -82,6 +94,24 @@ export default function EvidenceOS() {
         .some((value) => String(value).toLowerCase().includes(term));
     });
   }, [evidence, query, stateFilter]);
+
+  const gaps = useMemo(
+    () => detectAssuranceGaps({ standards, controls, evidence, findings }),
+    [standards, controls, evidence, findings]
+  );
+  const raisedActions = useMemo(
+    () => new Map(remediationTasks.map((task) => [task.title, task])),
+    [remediationTasks]
+  );
+
+  const createGapActions = async (selectedGaps) => {
+    if (!selectedGaps.length) return;
+    setCreatingActions(true);
+    const tenantId = me?.data?.tenant_id || me?.tenant_id || '';
+    await base44.entities.TodoTask.bulkCreate(selectedGaps.map((gap) => gapToTask(gap, tenantId)));
+    setCreatingActions(false);
+    await loadRemediationTasks();
+  };
 
   const chainControl = chainControlId ? controlsById.get(chainControlId) : null;
   const chainStandard = useMemo(() => {
@@ -237,6 +267,7 @@ export default function EvidenceOS() {
           <TabsTrigger value="register">Evidence register</TabsTrigger>
           <TabsTrigger value="coverage">Control coverage</TabsTrigger>
           <TabsTrigger value="findings">Findings &amp; CAPA</TabsTrigger>
+          <TabsTrigger value="gaps">Assurance gaps ({gaps.length})</TabsTrigger>
         </TabsList>
 
         <TabsContent value="register" className="mt-2 min-w-0 rounded-xl border border-border bg-card p-3 sm:p-4">
@@ -281,6 +312,19 @@ export default function EvidenceOS() {
             <p className="p-8 text-center text-sm text-muted-foreground">Loading findings…</p>
           ) : (
             <FindingsPanel findings={findings} controlsById={controlsById} onStatusChange={changeFindingStatus} />
+          )}
+        </TabsContent>
+
+        <TabsContent value="gaps" className="mt-2 min-w-0 rounded-xl border border-border bg-card p-3 sm:p-4">
+          {loading ? (
+            <p className="p-8 text-center text-sm text-muted-foreground">Detecting assurance gaps…</p>
+          ) : (
+            <GapEnginePanel
+              gaps={gaps}
+              existingTitles={raisedActions}
+              onCreateActions={createGapActions}
+              creating={creatingActions}
+            />
           )}
         </TabsContent>
       </Tabs>
