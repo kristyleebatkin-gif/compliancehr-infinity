@@ -14,7 +14,7 @@ function context(rows: any[] = [{ id: 'membership-a', user_id: 'user-a', tenant_
 }
 Deno.test('workflow preview refuses every new mutating action', () => {
   assertWorkflowAction('assess');
-  for (const action of ['bill_shifts', 'create_corrective_action', 'record_acknowledgement', 'start_revision', 'unknown']) {
+  for (const action of ['bill_shifts', 'create_corrective_action', 'record_acknowledgement', 'start_revision', 'create', 'save', 'clone', 'publish', 'archive', 'start', 'act', 'escalate', 'scanSla', 'unknown']) {
     assertThrows(() => assertWorkflowAction(action), Error, 'read-only');
   }
 });
