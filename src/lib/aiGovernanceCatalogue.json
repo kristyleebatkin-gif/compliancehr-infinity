@@ -1,0 +1,1389 @@
+{
+  "controls": [
+    {
+      "code": "AI-GOV-001",
+      "title": "Use-case inventory",
+      "record_type": "Control",
+      "description": "Use-case inventory. Enforce as a documented product or operating control.",
+      "risk": "Unowned AI use",
+      "owner": "AI governance lead",
+      "frequency": "Monthly",
+      "measure": "100% enabled agents have owner, purpose and expiry"
+    },
+    {
+      "code": "AI-GOV-002",
+      "title": "Steering committee charter",
+      "record_type": "Control",
+      "description": "Steering committee charter. Enforce as a documented product or operating control.",
+      "risk": "Unaccountable oversight",
+      "owner": "AI governance lead",
+      "frequency": "Annual",
+      "measure": "Charter approved and quorum recorded"
+    },
+    {
+      "code": "AI-GOV-003",
+      "title": "Human decision boundary",
+      "record_type": "Control",
+      "description": "Human decision boundary. Enforce as a documented product or operating control.",
+      "risk": "Automated consequential decisions",
+      "owner": "AI governance lead",
+      "frequency": "Every release",
+      "measure": "0 agent credentials can call domain approval APIs"
+    },
+    {
+      "code": "AI-GOV-004",
+      "title": "Independent release approval",
+      "record_type": "Control",
+      "description": "Independent release approval. Enforce as a documented product or operating control.",
+      "risk": "Self-approved releases",
+      "owner": "AI governance lead",
+      "frequency": "Every release",
+      "measure": "100% releases signed by independent accountable owner"
+    },
+    {
+      "code": "AI-GOV-005",
+      "title": "Delegation register",
+      "record_type": "Control",
+      "description": "Delegation register. Enforce as a documented product or operating control.",
+      "risk": "Invalid approval authority",
+      "owner": "AI governance lead",
+      "frequency": "Monthly",
+      "measure": "100% approvers have current scoped delegations"
+    },
+    {
+      "code": "AI-GOV-006",
+      "title": "Vendor due diligence",
+      "record_type": "Control",
+      "description": "Vendor due diligence. Enforce as a documented product or operating control.",
+      "risk": "Unsuitable AI supplier",
+      "owner": "AI governance lead",
+      "frequency": "Before contract and annually",
+      "measure": "100% suppliers assessed for security, privacy and exit"
+    },
+    {
+      "code": "AI-GOV-007",
+      "title": "Use-case suspension",
+      "record_type": "Control",
+      "description": "Use-case suspension. Enforce as a documented product or operating control.",
+      "risk": "Unsafe continued operation",
+      "owner": "AI governance lead",
+      "frequency": "Quarterly drill",
+      "measure": "Disable agent and cancel queued runs within 5 minutes"
+    },
+    {
+      "code": "AI-GOV-008",
+      "title": "Change accountability",
+      "record_type": "Control",
+      "description": "Change accountability. Enforce as a documented product or operating control.",
+      "risk": "Unreviewed scope expansion",
+      "owner": "AI governance lead",
+      "frequency": "Every change",
+      "measure": "100% prompt/tool changes include risk review"
+    },
+    {
+      "code": "AI-GOV-009",
+      "title": "Board reporting",
+      "record_type": "Control",
+      "description": "Board reporting. Enforce as a documented product or operating control.",
+      "risk": "Invisible material AI exposure",
+      "owner": "AI governance lead",
+      "frequency": "Quarterly",
+      "measure": "Report includes incidents, residual risks and unresolved exceptions"
+    },
+    {
+      "code": "AI-GOV-010",
+      "title": "Staff AI training",
+      "record_type": "Control",
+      "description": "Staff AI training. Enforce as a documented product or operating control.",
+      "risk": "Uninformed use",
+      "owner": "AI governance lead",
+      "frequency": "Onboarding and annual",
+      "measure": "100% active users complete role training"
+    },
+    {
+      "code": "AI-SEC-001",
+      "title": "Gateway identity validation",
+      "record_type": "Control",
+      "description": "Gateway identity validation. Enforce as a documented product or operating control.",
+      "risk": "Forged identity",
+      "owner": "Security lead",
+      "frequency": "Every request",
+      "measure": "100% JWTs validate issuer, audience, signature and expiry"
+    },
+    {
+      "code": "AI-SEC-002",
+      "title": "Tenant derivation",
+      "record_type": "Control",
+      "description": "Tenant derivation. Enforce as a documented product or operating control.",
+      "risk": "Cross-tenant data exposure",
+      "owner": "Security lead",
+      "frequency": "Every request",
+      "measure": "0 accepted client-supplied tenant overrides"
+    },
+    {
+      "code": "AI-SEC-003",
+      "title": "Tool allowlist",
+      "record_type": "Control",
+      "description": "Tool allowlist. Enforce as a documented product or operating control.",
+      "risk": "Privilege escalation",
+      "owner": "Security lead",
+      "frequency": "Every invocation",
+      "measure": "100% tools enforce scope and purpose"
+    },
+    {
+      "code": "AI-SEC-004",
+      "title": "Prompt injection quarantine",
+      "record_type": "Control",
+      "description": "Prompt injection quarantine. Enforce as a documented product or operating control.",
+      "risk": "Malicious instructions in evidence",
+      "owner": "Security lead",
+      "frequency": "Every ingestion and release",
+      "measure": "0 critical test payloads trigger tool use or disclosure"
+    },
+    {
+      "code": "AI-SEC-005",
+      "title": "Secret isolation",
+      "record_type": "Control",
+      "description": "Secret isolation. Enforce as a documented product or operating control.",
+      "risk": "Credential disclosure",
+      "owner": "Security lead",
+      "frequency": "Continuous",
+      "measure": "0 secrets in prompts, frontend bundles or ordinary entities"
+    },
+    {
+      "code": "AI-SEC-006",
+      "title": "MFA and step-up",
+      "record_type": "Control",
+      "description": "MFA and step-up. Enforce as a documented product or operating control.",
+      "risk": "Account takeover",
+      "owner": "Security lead",
+      "frequency": "Every privileged action",
+      "measure": "100% privileged reviews have fresh MFA context"
+    },
+    {
+      "code": "AI-SEC-007",
+      "title": "Encryption and key rotation",
+      "record_type": "Control",
+      "description": "Encryption and key rotation. Enforce as a documented product or operating control.",
+      "risk": "Data interception",
+      "owner": "Security lead",
+      "frequency": "Continuous and rotation schedule",
+      "measure": "100% stores and network paths use approved encryption"
+    },
+    {
+      "code": "AI-SEC-008",
+      "title": "Egress restriction",
+      "record_type": "Control",
+      "description": "Egress restriction. Enforce as a documented product or operating control.",
+      "risk": "Data exfiltration",
+      "owner": "Security lead",
+      "frequency": "Every provider call",
+      "measure": "100% destination hosts and payload fields allowlisted"
+    },
+    {
+      "code": "AI-SEC-009",
+      "title": "Tenant attack testing",
+      "record_type": "Control",
+      "description": "Tenant attack testing. Enforce as a documented product or operating control.",
+      "risk": "Isolation regression",
+      "owner": "Security lead",
+      "frequency": "Every release",
+      "measure": "0 cross-tenant reads, writes, counts, exports, jobs or files"
+    },
+    {
+      "code": "AI-SEC-010",
+      "title": "Incident containment",
+      "record_type": "Control",
+      "description": "Incident containment. Enforce as a documented product or operating control.",
+      "risk": "Delayed breach response",
+      "owner": "Security lead",
+      "frequency": "Quarterly drill",
+      "measure": "Containment exercise meets approved response objective"
+    },
+    {
+      "code": "AI-PRI-001",
+      "title": "Purpose and authority check",
+      "record_type": "Control",
+      "description": "Purpose and authority check. Enforce as a documented product or operating control.",
+      "risk": "Unlawful secondary use",
+      "owner": "Privacy officer",
+      "frequency": "Every run",
+      "measure": "100% runs have valid purpose and authority record"
+    },
+    {
+      "code": "AI-PRI-002",
+      "title": "Data minimisation",
+      "record_type": "Control",
+      "description": "Data minimisation. Enforce as a documented product or operating control.",
+      "risk": "Excess sensitive data",
+      "owner": "Privacy officer",
+      "frequency": "Every prompt",
+      "measure": "100% fields match approved input contract"
+    },
+    {
+      "code": "AI-PRI-003",
+      "title": "Consent withdrawal propagation",
+      "record_type": "Control",
+      "description": "Consent withdrawal propagation. Enforce as a documented product or operating control.",
+      "risk": "Continued unauthorised use",
+      "owner": "Privacy officer",
+      "frequency": "Every withdrawal",
+      "measure": "Search and cache revocation within 5 minutes"
+    },
+    {
+      "code": "AI-PRI-004",
+      "title": "Privacy impact assessment",
+      "record_type": "Control",
+      "description": "Privacy impact assessment. Enforce as a documented product or operating control.",
+      "risk": "Unassessed privacy risk",
+      "owner": "Privacy officer",
+      "frequency": "Before activation and material change",
+      "measure": "100% sensitive use cases have approved PIA"
+    },
+    {
+      "code": "AI-PRI-005",
+      "title": "Retention schedule",
+      "record_type": "Control",
+      "description": "Retention schedule. Enforce as a documented product or operating control.",
+      "risk": "Over-retention",
+      "owner": "Privacy officer",
+      "frequency": "Monthly",
+      "measure": "100% stores and backups map to approved retention classes"
+    },
+    {
+      "code": "AI-PRI-006",
+      "title": "Access and correction pathway",
+      "record_type": "Control",
+      "description": "Access and correction pathway. Enforce as a documented product or operating control.",
+      "risk": "Uncorrectable AI assertions",
+      "owner": "Privacy officer",
+      "frequency": "Every request",
+      "measure": "Requests tracked to authorised response and correction"
+    },
+    {
+      "code": "AI-PRI-007",
+      "title": "Cross-border review",
+      "record_type": "Control",
+      "description": "Cross-border review. Enforce as a documented product or operating control.",
+      "risk": "Unapproved overseas disclosure",
+      "owner": "Privacy officer",
+      "frequency": "Before provider activation",
+      "measure": "100% providers have recorded location and legal review"
+    },
+    {
+      "code": "AI-PRI-008",
+      "title": "No provider training reuse",
+      "record_type": "Control",
+      "description": "No provider training reuse. Enforce as a documented product or operating control.",
+      "risk": "Secondary training leakage",
+      "owner": "Privacy officer",
+      "frequency": "Contract and annual",
+      "measure": "Contract and deployment settings prohibit unapproved reuse"
+    },
+    {
+      "code": "AI-PRI-009",
+      "title": "Redacted observability",
+      "record_type": "Control",
+      "description": "Redacted observability. Enforce as a documented product or operating control.",
+      "risk": "Sensitive logs",
+      "owner": "Privacy officer",
+      "frequency": "Continuous",
+      "measure": "0 seeded identifiers appear in telemetry scans"
+    },
+    {
+      "code": "AI-PRI-010",
+      "title": "Legal-hold-aware disposal",
+      "record_type": "Control",
+      "description": "Legal-hold-aware disposal. Enforce as a documented product or operating control.",
+      "risk": "Premature destruction",
+      "owner": "Privacy officer",
+      "frequency": "Every purge",
+      "measure": "100% deletions check holds, authority and audit trail"
+    },
+    {
+      "code": "AI-EXP-001",
+      "title": "Claim-level citations",
+      "record_type": "Control",
+      "description": "Claim-level citations. Enforce as a documented product or operating control.",
+      "risk": "Unsupported recommendations",
+      "owner": "AI assurance lead",
+      "frequency": "Every response",
+      "measure": "100% material factual claims cite retrievable source versions"
+    },
+    {
+      "code": "AI-EXP-002",
+      "title": "Source version binding",
+      "record_type": "Control",
+      "description": "Source version binding. Enforce as a documented product or operating control.",
+      "risk": "Citation drift",
+      "owner": "AI assurance lead",
+      "frequency": "Every response",
+      "measure": "100% citations bind hash, locator and effective date"
+    },
+    {
+      "code": "AI-EXP-003",
+      "title": "Concise rationale",
+      "record_type": "Control",
+      "description": "Concise rationale. Enforce as a documented product or operating control.",
+      "risk": "Opaque advice",
+      "owner": "AI assurance lead",
+      "frequency": "Every recommendation",
+      "measure": "100% recommendations state evidence-based rationale"
+    },
+    {
+      "code": "AI-EXP-004",
+      "title": "Limitations disclosure",
+      "record_type": "Control",
+      "description": "Limitations disclosure. Enforce as a documented product or operating control.",
+      "risk": "Overreliance",
+      "owner": "AI assurance lead",
+      "frequency": "Every response",
+      "measure": "100% outputs show limitations and missing evidence"
+    },
+    {
+      "code": "AI-EXP-005",
+      "title": "Confidence calibration",
+      "record_type": "Control",
+      "description": "Confidence calibration. Enforce as a documented product or operating control.",
+      "risk": "False precision",
+      "owner": "AI assurance lead",
+      "frequency": "Every model release",
+      "measure": "Calibration evaluated by task/cohort; unknown shown if unvalidated"
+    },
+    {
+      "code": "AI-EXP-006",
+      "title": "Contradiction handling",
+      "record_type": "Control",
+      "description": "Contradiction handling. Enforce as a documented product or operating control.",
+      "risk": "Selective evidence",
+      "owner": "AI assurance lead",
+      "frequency": "Every run",
+      "measure": "100% contradictory test cases are surfaced or abstained"
+    },
+    {
+      "code": "AI-EXP-007",
+      "title": "Standards applicability",
+      "record_type": "Control",
+      "description": "Standards applicability. Enforce as a documented product or operating control.",
+      "risk": "Wrong obligations",
+      "owner": "AI assurance lead",
+      "frequency": "Every response",
+      "measure": "100% mappings include jurisdiction, service and effective date"
+    },
+    {
+      "code": "AI-EXP-008",
+      "title": "Traceability traversal",
+      "record_type": "Control",
+      "description": "Traceability traversal. Enforce as a documented product or operating control.",
+      "risk": "Broken provenance",
+      "owner": "AI assurance lead",
+      "frequency": "Nightly",
+      "measure": "100% cited paths resolve or are explicitly marked gaps"
+    },
+    {
+      "code": "AI-EXP-009",
+      "title": "Accessible explanations",
+      "record_type": "Control",
+      "description": "Accessible explanations. Enforce as a documented product or operating control.",
+      "risk": "Inaccessible rationale",
+      "owner": "AI assurance lead",
+      "frequency": "Every release",
+      "measure": "Keyboard and assistive-tech review passes critical paths"
+    },
+    {
+      "code": "AI-EXP-010",
+      "title": "Explanation challenge",
+      "record_type": "Control",
+      "description": "Explanation challenge. Enforce as a documented product or operating control.",
+      "risk": "Uncontestable output",
+      "owner": "AI assurance lead",
+      "frequency": "Every challenge",
+      "measure": "100% disputes assigned human reviewer and resolution"
+    },
+    {
+      "code": "AI-AUD-001",
+      "title": "Run reconstruction",
+      "record_type": "Control",
+      "description": "Run reconstruction. Enforce as a documented product or operating control.",
+      "risk": "Unreproducible outputs",
+      "owner": "Internal audit lead",
+      "frequency": "Every run",
+      "measure": "100% runs capture model, prompt, policy and snapshot versions"
+    },
+    {
+      "code": "AI-AUD-002",
+      "title": "Append-only events",
+      "record_type": "Control",
+      "description": "Append-only events. Enforce as a documented product or operating control.",
+      "risk": "Evidence tampering",
+      "owner": "Internal audit lead",
+      "frequency": "Continuous",
+      "measure": "0 ordinary-role log updates/deletes succeed"
+    },
+    {
+      "code": "AI-AUD-003",
+      "title": "Independent log anchor",
+      "record_type": "Control",
+      "description": "Independent log anchor. Enforce as a documented product or operating control.",
+      "risk": "Privileged log tampering",
+      "owner": "Internal audit lead",
+      "frequency": "Daily",
+      "measure": "Daily digest signed to separately controlled immutable storage"
+    },
+    {
+      "code": "AI-AUD-004",
+      "title": "Clock synchronisation",
+      "record_type": "Control",
+      "description": "Clock synchronisation. Enforce as a documented product or operating control.",
+      "risk": "Unreliable chronology",
+      "owner": "Internal audit lead",
+      "frequency": "Continuous",
+      "measure": "Clock skew stays within approved 1-minute bound"
+    },
+    {
+      "code": "AI-AUD-005",
+      "title": "Export manifest",
+      "record_type": "Control",
+      "description": "Export manifest. Enforce as a documented product or operating control.",
+      "risk": "Incomplete audit pack",
+      "owner": "Internal audit lead",
+      "frequency": "Every export",
+      "measure": "100% exports list authorised scope, hashes and exclusions"
+    },
+    {
+      "code": "AI-AUD-006",
+      "title": "Actor attribution",
+      "record_type": "Control",
+      "description": "Actor attribution. Enforce as a documented product or operating control.",
+      "risk": "Unattributed decisions",
+      "owner": "Internal audit lead",
+      "frequency": "Every decision",
+      "measure": "100% decisions bind human ID and authentication context"
+    },
+    {
+      "code": "AI-AUD-007",
+      "title": "Evidence completeness checks",
+      "record_type": "Control",
+      "description": "Evidence completeness checks. Enforce as a documented product or operating control.",
+      "risk": "Missing audit artefacts",
+      "owner": "Internal audit lead",
+      "frequency": "Nightly",
+      "measure": "Orphan and missing-source checks produce owned exceptions"
+    },
+    {
+      "code": "AI-AUD-008",
+      "title": "Auditor access expiry",
+      "record_type": "Control",
+      "description": "Auditor access expiry. Enforce as a documented product or operating control.",
+      "risk": "Persistent audit access",
+      "owner": "Internal audit lead",
+      "frequency": "Every request",
+      "measure": "Expired audit grants return denied with no metadata leak"
+    },
+    {
+      "code": "AI-AUD-009",
+      "title": "Restore exercises",
+      "record_type": "Control",
+      "description": "Restore exercises. Enforce as a documented product or operating control.",
+      "risk": "Unrecoverable audit history",
+      "owner": "Internal audit lead",
+      "frequency": "Quarterly",
+      "measure": "Restore measured against agreed RPO/RTO and hash checks"
+    },
+    {
+      "code": "AI-AUD-010",
+      "title": "Assurance independence",
+      "record_type": "Control",
+      "description": "Assurance independence. Enforce as a documented product or operating control.",
+      "risk": "Biased internal review",
+      "owner": "Internal audit lead",
+      "frequency": "Annual",
+      "measure": "Assurance reviewer independent of control operator"
+    },
+    {
+      "code": "AI-COM-001",
+      "title": "Official source register",
+      "record_type": "Control",
+      "description": "Official source register. Enforce as a documented product or operating control.",
+      "risk": "Unreliable regulatory guidance",
+      "owner": "Compliance lead",
+      "frequency": "Monthly",
+      "measure": "100% active regulatory rules cite official authority"
+    },
+    {
+      "code": "AI-COM-002",
+      "title": "Effective-date rule versions",
+      "record_type": "Control",
+      "description": "Effective-date rule versions. Enforce as a documented product or operating control.",
+      "risk": "Outdated legal interpretation",
+      "owner": "Compliance lead",
+      "frequency": "Every rule change",
+      "measure": "100% rules include valid-time and reviewer"
+    },
+    {
+      "code": "AI-COM-003",
+      "title": "Human applicability determination",
+      "record_type": "Control",
+      "description": "Human applicability determination. Enforce as a documented product or operating control.",
+      "risk": "Wrong service obligations",
+      "owner": "Compliance lead",
+      "frequency": "Before activation",
+      "measure": "100% obligation scopes approved by compliance lead"
+    },
+    {
+      "code": "AI-COM-004",
+      "title": "NDIS module mapping",
+      "record_type": "Control",
+      "description": "NDIS module mapping. Enforce as a documented product or operating control.",
+      "risk": "Missing NDIS obligations",
+      "owner": "Compliance lead",
+      "frequency": "Quarterly",
+      "measure": "All applicable modules mapped with reviewed exclusions"
+    },
+    {
+      "code": "AI-COM-005",
+      "title": "Aged care transition mapping",
+      "record_type": "Control",
+      "description": "Aged care transition mapping. Enforce as a documented product or operating control.",
+      "risk": "Legacy rights applied as current",
+      "owner": "Compliance lead",
+      "frequency": "Every update",
+      "measure": "Current Statement of Rights and applicable standards distinguished from history"
+    },
+    {
+      "code": "AI-COM-006",
+      "title": "Reporting deadline rules",
+      "record_type": "Control",
+      "description": "Reporting deadline rules. Enforce as a documented product or operating control.",
+      "risk": "Late statutory reporting",
+      "owner": "Compliance lead",
+      "frequency": "Every incident",
+      "measure": "Deterministic source-versioned clock and escalation tested"
+    },
+    {
+      "code": "AI-COM-007",
+      "title": "ISO mapping licence review",
+      "record_type": "Control",
+      "description": "ISO mapping licence review. Enforce as a documented product or operating control.",
+      "risk": "Unauthorised copyrighted content",
+      "owner": "Compliance lead",
+      "frequency": "Before import",
+      "measure": "Licensed content and permitted use recorded"
+    },
+    {
+      "code": "AI-COM-008",
+      "title": "Regulatory change triage",
+      "record_type": "Control",
+      "description": "Regulatory change triage. Enforce as a documented product or operating control.",
+      "risk": "Missed material change",
+      "owner": "Compliance lead",
+      "frequency": "Daily check; human daily review",
+      "measure": "100% material change candidates assigned within one business day"
+    },
+    {
+      "code": "AI-COM-009",
+      "title": "Legal interpretation escalation",
+      "record_type": "Control",
+      "description": "Legal interpretation escalation. Enforce as a documented product or operating control.",
+      "risk": "AI advice treated as law",
+      "owner": "Compliance lead",
+      "frequency": "Every disputed interpretation",
+      "measure": "100% material uncertainties routed to authorised specialist"
+    },
+    {
+      "code": "AI-COM-010",
+      "title": "Compliance status honesty",
+      "record_type": "Control",
+      "description": "Compliance status honesty. Enforce as a documented product or operating control.",
+      "risk": "False audit readiness",
+      "owner": "Compliance lead",
+      "frequency": "Every dashboard build",
+      "measure": "No unsupported certified, compliant or complete badges"
+    },
+    {
+      "code": "AI-CLI-001",
+      "title": "No autonomous clinical decisions",
+      "record_type": "Control",
+      "description": "No autonomous clinical decisions. Enforce as a documented product or operating control.",
+      "risk": "Unsafe care direction",
+      "owner": "Clinical governance lead",
+      "frequency": "Every release",
+      "measure": "0 AI routes can alter treatment, medicines or restrictive practices"
+    },
+    {
+      "code": "AI-CLI-002",
+      "title": "Clinical scope segregation",
+      "record_type": "Control",
+      "description": "Clinical scope segregation. Enforce as a documented product or operating control.",
+      "risk": "Unauthorised clinical access",
+      "owner": "Clinical governance lead",
+      "frequency": "Every request",
+      "measure": "100% clinical retrieval requires current care-role relationship"
+    },
+    {
+      "code": "AI-CLI-003",
+      "title": "Qualified reviewer assignment",
+      "record_type": "Control",
+      "description": "Qualified reviewer assignment. Enforce as a documented product or operating control.",
+      "risk": "Unqualified acceptance",
+      "owner": "Clinical governance lead",
+      "frequency": "Every clinical recommendation",
+      "measure": "100% reviews assigned appropriately credentialled human"
+    },
+    {
+      "code": "AI-CLI-004",
+      "title": "Safeguarding escalation",
+      "record_type": "Control",
+      "description": "Safeguarding escalation. Enforce as a documented product or operating control.",
+      "risk": "Missed immediate safety concern",
+      "owner": "Clinical governance lead",
+      "frequency": "Every safety report",
+      "measure": "Direct human escalation independent of AI availability"
+    },
+    {
+      "code": "AI-CLI-005",
+      "title": "Medication output restriction",
+      "record_type": "Control",
+      "description": "Medication output restriction. Enforce as a documented product or operating control.",
+      "risk": "Medication error",
+      "owner": "Clinical governance lead",
+      "frequency": "Every response",
+      "measure": "No patient-specific prescribing, dosing or medication changes"
+    },
+    {
+      "code": "AI-CLI-006",
+      "title": "Restrictive practice protection",
+      "record_type": "Control",
+      "description": "Restrictive practice protection. Enforce as a documented product or operating control.",
+      "risk": "Unauthorised restraint recommendation",
+      "owner": "Clinical governance lead",
+      "frequency": "Every response",
+      "measure": "AI never authorises or normalises restrictive practice"
+    },
+    {
+      "code": "AI-CLI-007",
+      "title": "Clinical evidence recency",
+      "record_type": "Control",
+      "description": "Clinical evidence recency. Enforce as a documented product or operating control.",
+      "risk": "Outdated practice",
+      "owner": "Clinical governance lead",
+      "frequency": "Every clinical query",
+      "measure": "Source age and review status visible; expired evidence excluded"
+    },
+    {
+      "code": "AI-CLI-008",
+      "title": "Outcome validity review",
+      "record_type": "Control",
+      "description": "Outcome validity review. Enforce as a documented product or operating control.",
+      "risk": "Misleading care forecasts",
+      "owner": "Clinical governance lead",
+      "frequency": "Every model release",
+      "measure": "Clinical validity and subgroup review documented"
+    },
+    {
+      "code": "AI-CLI-009",
+      "title": "Care consent verification",
+      "record_type": "Control",
+      "description": "Care consent verification. Enforce as a documented product or operating control.",
+      "risk": "Inappropriate information use",
+      "owner": "Clinical governance lead",
+      "frequency": "Every retrieval",
+      "measure": "Purpose-specific consent or authority checked before access"
+    },
+    {
+      "code": "AI-CLI-010",
+      "title": "Clinical incident review",
+      "record_type": "Control",
+      "description": "Clinical incident review. Enforce as a documented product or operating control.",
+      "risk": "Unlearned AI harm",
+      "owner": "Clinical governance lead",
+      "frequency": "Every incident",
+      "measure": "Human clinical review and safety case update recorded"
+    },
+    {
+      "code": "AI-WOR-001",
+      "title": "No employment decisions",
+      "record_type": "Control",
+      "description": "No employment decisions. Enforce as a documented product or operating control.",
+      "risk": "Automated adverse employment action",
+      "owner": "People and workforce lead",
+      "frequency": "Every release",
+      "measure": "0 tools can hire, dismiss, discipline or determine pay"
+    },
+    {
+      "code": "AI-WOR-002",
+      "title": "Award applicability review",
+      "record_type": "Control",
+      "description": "Award applicability review. Enforce as a documented product or operating control.",
+      "risk": "Wrong employment conditions",
+      "owner": "People and workforce lead",
+      "frequency": "Every rule revision",
+      "measure": "Human-approved coverage, classification and effective dates"
+    },
+    {
+      "code": "AI-WOR-003",
+      "title": "Credential authority verification",
+      "record_type": "Control",
+      "description": "Credential authority verification. Enforce as a documented product or operating control.",
+      "risk": "False credentials",
+      "owner": "People and workforce lead",
+      "frequency": "Before assignment and scheduled refresh",
+      "measure": "100% statuses show issuing-source verification time"
+    },
+    {
+      "code": "AI-WOR-004",
+      "title": "Competence distinction",
+      "record_type": "Control",
+      "description": "Competence distinction. Enforce as a documented product or operating control.",
+      "risk": "Training mistaken for competence",
+      "owner": "People and workforce lead",
+      "frequency": "Every view",
+      "measure": "Completion and assessed competency shown separately"
+    },
+    {
+      "code": "AI-WOR-005",
+      "title": "Workforce privacy segregation",
+      "record_type": "Control",
+      "description": "Workforce privacy segregation. Enforce as a documented product or operating control.",
+      "risk": "Sensitive HR disclosure",
+      "owner": "People and workforce lead",
+      "frequency": "Every request",
+      "measure": "Payroll, health and investigations restricted by field and purpose"
+    },
+    {
+      "code": "AI-WOR-006",
+      "title": "Roster fatigue escalation",
+      "record_type": "Control",
+      "description": "Roster fatigue escalation. Enforce as a documented product or operating control.",
+      "risk": "Unsafe staffing",
+      "owner": "People and workforce lead",
+      "frequency": "Every roster review",
+      "measure": "Rules flag gaps for human roster owner without auto-assignment"
+    },
+    {
+      "code": "AI-WOR-007",
+      "title": "Fairness evaluation",
+      "record_type": "Control",
+      "description": "Fairness evaluation. Enforce as a documented product or operating control.",
+      "risk": "Discriminatory recommendations",
+      "owner": "People and workforce lead",
+      "frequency": "Quarterly and release",
+      "measure": "Subgroup error analysis reviewed with lawful data basis"
+    },
+    {
+      "code": "AI-WOR-008",
+      "title": "Worker challenge channel",
+      "record_type": "Control",
+      "description": "Worker challenge channel. Enforce as a documented product or operating control.",
+      "risk": "Uncontestable adverse inference",
+      "owner": "People and workforce lead",
+      "frequency": "Every challenge",
+      "measure": "Accessible human review without automated retaliation"
+    },
+    {
+      "code": "AI-WOR-009",
+      "title": "Screening expiry verification",
+      "record_type": "Control",
+      "description": "Screening expiry verification. Enforce as a documented product or operating control.",
+      "risk": "Ineligible worker assignment",
+      "owner": "People and workforce lead",
+      "frequency": "Daily and before allocation",
+      "measure": "Stale or unavailable screening shown unverified, never cleared"
+    },
+    {
+      "code": "AI-WOR-010",
+      "title": "Supervision monitoring",
+      "record_type": "Control",
+      "description": "Supervision monitoring. Enforce as a documented product or operating control.",
+      "risk": "Unsupported practice",
+      "owner": "People and workforce lead",
+      "frequency": "Weekly",
+      "measure": "100% overdue supervision flags have assigned human owner"
+    },
+    {
+      "code": "AI-RSK-001",
+      "title": "Use-case risk tiering",
+      "record_type": "Control",
+      "description": "Use-case risk tiering. Enforce as a documented product or operating control.",
+      "risk": "Under-controlled high-risk use",
+      "owner": "Enterprise risk lead",
+      "frequency": "Before activation",
+      "measure": "100% use cases tiered across privacy, harm and rights"
+    },
+    {
+      "code": "AI-RSK-002",
+      "title": "Risk appetite gates",
+      "record_type": "Control",
+      "description": "Risk appetite gates. Enforce as a documented product or operating control.",
+      "risk": "Unaccepted residual exposure",
+      "owner": "Enterprise risk lead",
+      "frequency": "Every release",
+      "measure": "No extreme residual risks accepted; high risks require executive sign-off"
+    },
+    {
+      "code": "AI-RSK-003",
+      "title": "Control effectiveness evidence",
+      "record_type": "Control",
+      "description": "Control effectiveness evidence. Enforce as a documented product or operating control.",
+      "risk": "Assumed mitigation",
+      "owner": "Enterprise risk lead",
+      "frequency": "Quarterly",
+      "measure": "Residual ratings require current test evidence"
+    },
+    {
+      "code": "AI-RSK-004",
+      "title": "Drift alerting",
+      "record_type": "Control",
+      "description": "Drift alerting. Enforce as a documented product or operating control.",
+      "risk": "Degraded recommendations",
+      "owner": "Enterprise risk lead",
+      "frequency": "Daily monitoring",
+      "measure": "Threshold breaches route to owner and suspend affected scope if critical"
+    },
+    {
+      "code": "AI-RSK-005",
+      "title": "Bias harm scenarios",
+      "record_type": "Control",
+      "description": "Bias harm scenarios. Enforce as a documented product or operating control.",
+      "risk": "Unrecognised cultural harm",
+      "owner": "Enterprise risk lead",
+      "frequency": "Every release",
+      "measure": "Scenarios include disability, cultural safety and accessibility"
+    },
+    {
+      "code": "AI-RSK-006",
+      "title": "Dependency continuity",
+      "record_type": "Control",
+      "description": "Dependency continuity. Enforce as a documented product or operating control.",
+      "risk": "Provider outage",
+      "owner": "Enterprise risk lead",
+      "frequency": "Quarterly drill",
+      "measure": "Manual compliance and escalation workflows remain available"
+    },
+    {
+      "code": "AI-RSK-007",
+      "title": "Forecast uncertainty",
+      "record_type": "Control",
+      "description": "Forecast uncertainty. Enforce as a documented product or operating control.",
+      "risk": "False risk certainty",
+      "owner": "Enterprise risk lead",
+      "frequency": "Every forecast",
+      "measure": "Horizon, interval, validation cohort and limitations displayed"
+    },
+    {
+      "code": "AI-RSK-008",
+      "title": "Operational load controls",
+      "record_type": "Control",
+      "description": "Operational load controls. Enforce as a documented product or operating control.",
+      "risk": "Unbounded retries and cost",
+      "owner": "Enterprise risk lead",
+      "frequency": "Every job",
+      "measure": "Budget, rate, timeout, retry and dead-letter limits enforced"
+    },
+    {
+      "code": "AI-RSK-009",
+      "title": "Near-miss learning",
+      "record_type": "Control",
+      "description": "Near-miss learning. Enforce as a documented product or operating control.",
+      "risk": "Repeated harm",
+      "owner": "Enterprise risk lead",
+      "frequency": "Monthly",
+      "measure": "Near misses linked to controls and verified corrective actions"
+    },
+    {
+      "code": "AI-RSK-010",
+      "title": "Public assurance review",
+      "record_type": "Control",
+      "description": "Public assurance review. Enforce as a documented product or operating control.",
+      "risk": "Misleading platform claims",
+      "owner": "Enterprise risk lead",
+      "frequency": "Every publication",
+      "measure": "Audit/regulator/investor claims supported by dated evidence"
+    },
+    {
+      "code": "AI-MOD-001",
+      "title": "Model version pinning",
+      "record_type": "Control",
+      "description": "Model version pinning. Enforce as a documented product or operating control.",
+      "risk": "Silent vendor behaviour changes",
+      "owner": "AI engineering lead",
+      "frequency": "Every run",
+      "measure": "100% runs bind explicit deployment/model version"
+    },
+    {
+      "code": "AI-MOD-002",
+      "title": "Golden evaluation set",
+      "record_type": "Control",
+      "description": "Golden evaluation set. Enforce as a documented product or operating control.",
+      "risk": "Undetected regression",
+      "owner": "AI engineering lead",
+      "frequency": "Every release",
+      "measure": "Versioned human-labelled suite covers all enabled tasks"
+    },
+    {
+      "code": "AI-MOD-003",
+      "title": "Adversarial evaluation",
+      "record_type": "Control",
+      "description": "Adversarial evaluation. Enforce as a documented product or operating control.",
+      "risk": "Unsafe output pathways",
+      "owner": "AI engineering lead",
+      "frequency": "Every release",
+      "measure": "0 unresolved critical jailbreak or exfiltration cases"
+    },
+    {
+      "code": "AI-MOD-004",
+      "title": "Shadow deployment",
+      "record_type": "Control",
+      "description": "Shadow deployment. Enforce as a documented product or operating control.",
+      "risk": "Unvalidated behaviour in production",
+      "owner": "AI engineering lead",
+      "frequency": "Every model change",
+      "measure": "Shadow results reviewed without consequential execution"
+    },
+    {
+      "code": "AI-MOD-005",
+      "title": "Rollback readiness",
+      "record_type": "Control",
+      "description": "Rollback readiness. Enforce as a documented product or operating control.",
+      "risk": "Irreversible degradation",
+      "owner": "AI engineering lead",
+      "frequency": "Every release",
+      "measure": "Rollback model/prompt/index combination rehearsed"
+    },
+    {
+      "code": "AI-MOD-006",
+      "title": "Source poisoning detection",
+      "record_type": "Control",
+      "description": "Source poisoning detection. Enforce as a documented product or operating control.",
+      "risk": "Corrupted retrieval",
+      "owner": "AI engineering lead",
+      "frequency": "Every ingestion",
+      "measure": "Hash, malware, origin, ACL and instruction scan passed"
+    },
+    {
+      "code": "AI-MOD-007",
+      "title": "Embedding lineage",
+      "record_type": "Control",
+      "description": "Embedding lineage. Enforce as a documented product or operating control.",
+      "risk": "Irreproducible search",
+      "owner": "AI engineering lead",
+      "frequency": "Every index build",
+      "measure": "100% chunks bind source, embedding model and index version"
+    },
+    {
+      "code": "AI-MOD-008",
+      "title": "Model retirement",
+      "record_type": "Control",
+      "description": "Model retirement. Enforce as a documented product or operating control.",
+      "risk": "Unsupported model dependence",
+      "owner": "AI engineering lead",
+      "frequency": "Monthly",
+      "measure": "Retirement dates tracked with tested replacement"
+    },
+    {
+      "code": "AI-MOD-009",
+      "title": "Provider contract controls",
+      "record_type": "Control",
+      "description": "Provider contract controls. Enforce as a documented product or operating control.",
+      "risk": "Unapproved intellectual property exposure",
+      "owner": "AI engineering lead",
+      "frequency": "Before provider use",
+      "measure": "Licence, output use, retention and incident terms reviewed"
+    },
+    {
+      "code": "AI-MOD-010",
+      "title": "Controlled evaluation feedback",
+      "record_type": "Control",
+      "description": "Controlled evaluation feedback. Enforce as a documented product or operating control.",
+      "risk": "Contaminated model tuning",
+      "owner": "AI engineering lead",
+      "frequency": "Every dataset release",
+      "measure": "Feedback is adjudicated, deidentified and isolated from tests"
+    }
+  ],
+  "risks": [
+    {
+      "code": "AI-R-001",
+      "title": "AI silently approves or closes a regulated record",
+      "record_type": "Risk",
+      "description": "AI silently approves or closes a regulated record | Inherent rating: 15 High | Residual rating unassessed.",
+      "risk": "Governance Risk",
+      "owner": "AI governance lead",
+      "source_ref": "AI-GOV-003 AI-SEC-003 AI-CLI-001",
+      "measure": "Remove approval tools and test all direct/indirect routes"
+    },
+    {
+      "code": "AI-R-002",
+      "title": "No accountable owner for a deployed agent",
+      "record_type": "Risk",
+      "description": "No accountable owner for a deployed agent | Inherent rating: 12 High | Residual rating unassessed.",
+      "risk": "Governance Risk",
+      "owner": "AI governance lead",
+      "source_ref": "AI-GOV-001 AI-GOV-002 AI-GOV-008",
+      "measure": "Disable unowned agents and time-bound all delegations"
+    },
+    {
+      "code": "AI-R-003",
+      "title": "Conflicted release approver accepts own work",
+      "record_type": "Risk",
+      "description": "Conflicted release approver accepts own work | Inherent rating: 12 High | Residual rating unassessed.",
+      "risk": "Governance Risk",
+      "owner": "AI governance lead",
+      "source_ref": "AI-GOV-004 AI-AUD-010 AI-GOV-005",
+      "measure": "Require independent named reviewer and conflict declaration"
+    },
+    {
+      "code": "AI-R-004",
+      "title": "Provider outage blocks urgent compliance work",
+      "record_type": "Risk",
+      "description": "Provider outage blocks urgent compliance work | Inherent rating: 16 High | Residual rating unassessed.",
+      "risk": "Operational Risk",
+      "owner": "Operations lead",
+      "source_ref": "AI-RSK-006 AI-RSK-008 AI-AUD-009",
+      "measure": "Maintain manual workflows; exercise outage and restore"
+    },
+    {
+      "code": "AI-R-005",
+      "title": "Retries create duplicate tasks and runaway costs",
+      "record_type": "Risk",
+      "description": "Retries create duplicate tasks and runaway costs | Inherent rating: 12 High | Residual rating unassessed.",
+      "risk": "Operational Risk",
+      "owner": "Engineering lead",
+      "source_ref": "AI-RSK-008 AI-AUD-001 AI-SEC-003",
+      "measure": "Idempotency, bounded retries, budget cap and dead-letter review"
+    },
+    {
+      "code": "AI-R-006",
+      "title": "Backups omit indexes or immutable source versions",
+      "record_type": "Risk",
+      "description": "Backups omit indexes or immutable source versions | Inherent rating: 15 High | Residual rating unassessed.",
+      "risk": "Operational Risk",
+      "owner": "Engineering lead",
+      "source_ref": "AI-AUD-009 AI-MOD-007 AI-AUD-007",
+      "measure": "Restore full source, graph, ACL, log and index snapshots"
+    },
+    {
+      "code": "AI-R-007",
+      "title": "AI cites superseded aged care rights or standards",
+      "record_type": "Risk",
+      "description": "AI cites superseded aged care rights or standards | Inherent rating: 16 High | Residual rating unassessed.",
+      "risk": "Compliance Risk",
+      "owner": "Compliance lead",
+      "source_ref": "AI-COM-002 AI-COM-005 AI-EXP-007",
+      "measure": "Version current and historical schemes with applicability approval"
+    },
+    {
+      "code": "AI-R-008",
+      "title": "Incorrect NDIS or SIRS deadline delays human reporting",
+      "record_type": "Risk",
+      "description": "Incorrect NDIS or SIRS deadline delays human reporting | Inherent rating: 15 High | Residual rating unassessed.",
+      "risk": "Compliance Risk",
+      "owner": "Compliance lead",
+      "source_ref": "AI-COM-006 AI-COM-008 AI-CLI-004",
+      "measure": "Use deterministic deadline engine and human escalation outside AI"
+    },
+    {
+      "code": "AI-R-009",
+      "title": "Dashboard labels imply certification from missing evidence",
+      "record_type": "Risk",
+      "description": "Dashboard labels imply certification from missing evidence | Inherent rating: 16 High | Residual rating unassessed.",
+      "risk": "Compliance Risk",
+      "owner": "Compliance lead",
+      "source_ref": "AI-COM-010 AI-EXP-004 AI-AUD-007",
+      "measure": "Show unknown, missing, stale and coverage denominator separately"
+    },
+    {
+      "code": "AI-R-010",
+      "title": "Summary omits critical safeguarding context",
+      "record_type": "Risk",
+      "description": "Summary omits critical safeguarding context | Inherent rating: 15 High | Residual rating unassessed.",
+      "risk": "Clinical Risk",
+      "owner": "Clinical lead",
+      "source_ref": "AI-CLI-003 AI-CLI-004 AI-CLI-010",
+      "measure": "Qualified review and direct original-record access; no AI safety gate"
+    },
+    {
+      "code": "AI-R-011",
+      "title": "Agent suggests medication changes or restrictive practice",
+      "record_type": "Risk",
+      "description": "Agent suggests medication changes or restrictive practice | Inherent rating: 15 High | Residual rating unassessed.",
+      "risk": "Clinical Risk",
+      "owner": "Clinical lead",
+      "source_ref": "AI-CLI-001 AI-CLI-005 AI-CLI-006",
+      "measure": "Block prohibited advice paths and evaluate adversarial cases"
+    },
+    {
+      "code": "AI-R-012",
+      "title": "Credentials or scope of practice misrepresented",
+      "record_type": "Risk",
+      "description": "Credentials or scope of practice misrepresented | Inherent rating: 15 High | Residual rating unassessed.",
+      "risk": "Clinical Risk",
+      "owner": "Clinical lead",
+      "source_ref": "AI-WOR-003 AI-CLI-003 AI-CLI-007",
+      "measure": "Verify authoritative register and professional scope; show unavailable"
+    },
+    {
+      "code": "AI-R-013",
+      "title": "Award classification inference causes pay or leave error",
+      "record_type": "Risk",
+      "description": "Award classification inference causes pay or leave error | Inherent rating: 12 High | Residual rating unassessed.",
+      "risk": "Legal Risk",
+      "owner": "People lead",
+      "source_ref": "AI-WOR-001 AI-WOR-002 AI-COM-009",
+      "measure": "Human coverage review and payroll approval outside AI"
+    },
+    {
+      "code": "AI-R-014",
+      "title": "Licensed standards or documents reused beyond permission",
+      "record_type": "Risk",
+      "description": "Licensed standards or documents reused beyond permission | Inherent rating: 12 High | Residual rating unassessed.",
+      "risk": "Legal Risk",
+      "owner": "Legal adviser",
+      "source_ref": "AI-COM-007 AI-MOD-009 AI-GOV-006",
+      "measure": "Record source licences; restrict extraction and export"
+    },
+    {
+      "code": "AI-R-015",
+      "title": "AI records destroyed while under legal hold",
+      "record_type": "Risk",
+      "description": "AI records destroyed while under legal hold | Inherent rating: 10 Moderate | Residual rating unassessed.",
+      "risk": "Legal Risk",
+      "owner": "Privacy officer",
+      "source_ref": "AI-PRI-005 AI-PRI-010 AI-AUD-002",
+      "measure": "Hold-aware purge with independent disposal authorisation"
+    },
+    {
+      "code": "AI-R-016",
+      "title": "Cross-tenant retrieval reveals participant information",
+      "record_type": "Risk",
+      "description": "Cross-tenant retrieval reveals participant information | Inherent rating: 15 High | Residual rating unassessed.",
+      "risk": "Privacy Risk",
+      "owner": "Security lead",
+      "source_ref": "AI-SEC-002 AI-SEC-009 AI-PRI-002",
+      "measure": "Tenant plus resource ACL before candidate selection and final rendering"
+    },
+    {
+      "code": "AI-R-017",
+      "title": "Consent withdrawal leaves sensitive cached summaries",
+      "record_type": "Risk",
+      "description": "Consent withdrawal leaves sensitive cached summaries | Inherent rating: 15 High | Residual rating unassessed.",
+      "risk": "Privacy Risk",
+      "owner": "Privacy officer",
+      "source_ref": "AI-PRI-003 AI-PRI-001 AI-CLI-009",
+      "measure": "Revoke chunks, caches, exports and access; retain restricted legal copies only"
+    },
+    {
+      "code": "AI-R-018",
+      "title": "AI provider retains sensitive inputs for unapproved training",
+      "record_type": "Risk",
+      "description": "AI provider retains sensitive inputs for unapproved training | Inherent rating: 15 High | Residual rating unassessed.",
+      "risk": "Privacy Risk",
+      "owner": "Privacy officer",
+      "source_ref": "AI-PRI-007 AI-PRI-008 AI-GOV-006",
+      "measure": "Use approved contract/deployment and minimised deidentified inputs"
+    },
+    {
+      "code": "AI-R-019",
+      "title": "Retrieved file injects instructions to exfiltrate records",
+      "record_type": "Risk",
+      "description": "Retrieved file injects instructions to exfiltrate records | Inherent rating: 20 Extreme | Residual rating unassessed.",
+      "risk": "Security Risk",
+      "owner": "Security lead",
+      "source_ref": "AI-SEC-004 AI-SEC-008 AI-MOD-006",
+      "measure": "Treat content as untrusted data; sandbox parse and block tool instructions"
+    },
+    {
+      "code": "AI-R-020",
+      "title": "Stolen privileged session changes model permissions",
+      "record_type": "Risk",
+      "description": "Stolen privileged session changes model permissions | Inherent rating: 15 High | Residual rating unassessed.",
+      "risk": "Security Risk",
+      "owner": "Security lead",
+      "source_ref": "AI-SEC-001 AI-SEC-006 AI-GOV-008",
+      "measure": "Step-up MFA, short sessions and independent change approval"
+    },
+    {
+      "code": "AI-R-021",
+      "title": "Service account becomes global tenant bypass",
+      "record_type": "Risk",
+      "description": "Service account becomes global tenant bypass | Inherent rating: 15 High | Residual rating unassessed.",
+      "risk": "Security Risk",
+      "owner": "Security lead",
+      "source_ref": "AI-SEC-002 AI-SEC-003 AI-SEC-009",
+      "measure": "Tenant-bound service tokens and transaction context; no global credentials"
+    },
+    {
+      "code": "AI-R-022",
+      "title": "Board pack contains confident unsupported claims",
+      "record_type": "Risk",
+      "description": "Board pack contains confident unsupported claims | Inherent rating: 16 High | Residual rating unassessed.",
+      "risk": "Reputational Risk",
+      "owner": "CEO",
+      "source_ref": "AI-EXP-001 AI-EXP-004 AI-RSK-010",
+      "measure": "Claim-citation validation and board secretary sign-off"
+    },
+    {
+      "code": "AI-R-023",
+      "title": "Monitoring failure concealed by synthetic success data",
+      "record_type": "Risk",
+      "description": "Monitoring failure concealed by synthetic success data | Inherent rating: 12 High | Residual rating unassessed.",
+      "risk": "Reputational Risk",
+      "owner": "Operations lead",
+      "source_ref": "AI-COM-010 AI-AUD-007 AI-RSK-004",
+      "measure": "No fallback master records or fabricated metrics; visible failure states"
+    },
+    {
+      "code": "AI-R-024",
+      "title": "Unresolved complaints about AI undermine participant trust",
+      "record_type": "Risk",
+      "description": "Unresolved complaints about AI undermine participant trust | Inherent rating: 12 High | Residual rating unassessed.",
+      "risk": "Reputational Risk",
+      "owner": "Quality lead",
+      "source_ref": "AI-EXP-010 AI-PRI-006 AI-RSK-009",
+      "measure": "Human complaint channel with accessible explanations and remedy"
+    },
+    {
+      "code": "AI-R-025",
+      "title": "AI profiling creates unfair hiring or disciplinary outcomes",
+      "record_type": "Risk",
+      "description": "AI profiling creates unfair hiring or disciplinary outcomes | Inherent rating: 15 High | Residual rating unassessed.",
+      "risk": "Workforce Risk",
+      "owner": "People lead",
+      "source_ref": "AI-WOR-001 AI-WOR-007 AI-WOR-008",
+      "measure": "Prohibit consequential employment automation and offer human challenge"
+    },
+    {
+      "code": "AI-R-026",
+      "title": "Expired worker screening appears cleared",
+      "record_type": "Risk",
+      "description": "Expired worker screening appears cleared | Inherent rating: 15 High | Residual rating unassessed.",
+      "risk": "Workforce Risk",
+      "owner": "Workforce lead",
+      "source_ref": "AI-WOR-009 AI-WOR-003 AI-WOR-006",
+      "measure": "Verified source freshness and manual coverage review"
+    },
+    {
+      "code": "AI-R-027",
+      "title": "Staff rely on course completion as assessed competence",
+      "record_type": "Risk",
+      "description": "Staff rely on course completion as assessed competence | Inherent rating: 16 High | Residual rating unassessed.",
+      "risk": "Workforce Risk",
+      "owner": "People lead",
+      "source_ref": "AI-WOR-004 AI-WOR-010 AI-GOV-010",
+      "measure": "Separate evidence of learning from qualified competence assessment"
+    },
+    {
+      "code": "AI-R-028",
+      "title": "Disability or cultural bias distorts risk suggestions",
+      "record_type": "Risk",
+      "description": "Disability or cultural bias distorts risk suggestions | Inherent rating: 15 High | Residual rating unassessed.",
+      "risk": "Ethical Risk",
+      "owner": "AI governance lead",
+      "source_ref": "AI-RSK-005 AI-WOR-007 AI-CLI-008",
+      "measure": "Co-design scenarios, evaluate subgroup harm and withdraw unsafe use"
+    },
+    {
+      "code": "AI-R-029",
+      "title": "Uncalibrated confidence misleads human reviewer",
+      "record_type": "Risk",
+      "description": "Uncalibrated confidence misleads human reviewer | Inherent rating: 16 High | Residual rating unassessed.",
+      "risk": "Ethical Risk",
+      "owner": "AI assurance lead",
+      "source_ref": "AI-EXP-005 AI-EXP-004 AI-RSK-007",
+      "measure": "Display evidence strength or unknown; validate calibration before numeric score"
+    },
+    {
+      "code": "AI-R-030",
+      "title": "Participant cannot understand or contest a recommendation",
+      "record_type": "Risk",
+      "description": "Participant cannot understand or contest a recommendation | Inherent rating: 12 High | Residual rating unassessed.",
+      "risk": "Ethical Risk",
+      "owner": "Quality lead",
+      "source_ref": "AI-EXP-009 AI-EXP-010 AI-PRI-006",
+      "measure": "Accessible explanation, advocate support and recorded human appeal"
+    }
+  ],
+  "phases": [
+    {
+      "phase": 1,
+      "name": "Governance & foundation",
+      "months": "1\u20133",
+      "deliverables": "AI Governance Centre; model registry; prompts; audit logs; settings; security"
+    },
+    {
+      "phase": 2,
+      "name": "Knowledge graph foundation",
+      "months": "4\u20136",
+      "deliverables": "Relationship engine; standards; obligations; controls; traceability"
+    },
+    {
+      "phase": 3,
+      "name": "Compliance intelligence",
+      "months": "7\u20139",
+      "deliverables": "Compliance, policy, evidence and standards copilots"
+    },
+    {
+      "phase": 4,
+      "name": "Audit intelligence",
+      "months": "10\u201312",
+      "deliverables": "Audit Copilot; readiness; audit pack; finding analytics"
+    },
+    {
+      "phase": 5,
+      "name": "Risk intelligence",
+      "months": "13\u201315",
+      "deliverables": "Risk Copilot; control intelligence; validated forecasts"
+    },
+    {
+      "phase": 6,
+      "name": "Workforce intelligence",
+      "months": "16\u201318",
+      "deliverables": "Credential monitoring; training intelligence; Workforce Copilot"
+    },
+    {
+      "phase": 7,
+      "name": "Clinical intelligence",
+      "months": "19\u201321",
+      "deliverables": "Clinical governance; outcomes; allied health intelligence"
+    },
+    {
+      "phase": 8,
+      "name": "Executive intelligence",
+      "months": "22\u201324",
+      "deliverables": "CEO and Board copilots; executive Command Centre"
+    },
+    {
+      "phase": 9,
+      "name": "Enterprise monitoring",
+      "months": "25\u201330",
+      "deliverables": "Regulatory change; evidence health; audit readiness; risk prediction; briefings"
+    }
+  ],
+  "agents": [
+    {
+      "name": "Regulatory Change Agent",
+      "purpose": "Check approved official-source versions; draft change impacts for a human compliance owner.",
+      "record_type": "Agent"
+    },
+    {
+      "name": "Evidence Health Agent",
+      "purpose": "Flag missing, expired, weak or duplicate evidence for owner review.",
+      "record_type": "Agent"
+    },
+    {
+      "name": "Audit Readiness Agent",
+      "purpose": "Prepare bounded evidence-health measures; no certification or audit outcome.",
+      "record_type": "Agent"
+    },
+    {
+      "name": "Risk Prediction Agent",
+      "purpose": "Present validated forecasts with uncertainty; unavailable until validation is accepted.",
+      "record_type": "Agent"
+    },
+    {
+      "name": "Executive Briefing Agent",
+      "purpose": "Prepare daily, weekly, monthly and quarterly drafts for human review.",
+      "record_type": "Agent"
+    }
+  ]
+}
