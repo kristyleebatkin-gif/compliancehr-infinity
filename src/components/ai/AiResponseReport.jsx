@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { BadgeCheck, Link2, ShieldQuestion } from 'lucide-react';
 import { PRIORITY_TONES, confidenceBand } from '@/lib/aiIntelligence';
 
@@ -30,7 +31,7 @@ export default function AiResponseReport({ review, registers }) {
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-2">
         <span className={`rounded-full border px-2.5 py-1 text-[11px] font-bold ${band.chip}`}>
-          {band.label} · {review.confidence_score ?? 0}%
+          {band.label} · {review.confidence_score == null ? 'Uncalibrated' : `${review.confidence_score}% (unvalidated)`}
         </span>
         <span className={`rounded-full border px-2.5 py-1 text-[11px] font-bold ${priorityTone}`}>
           {review.overall_priority} priority
@@ -45,6 +46,7 @@ export default function AiResponseReport({ review, registers }) {
         ) : null}
       </div>
 
+      <section className="rounded-xl border border-border bg-white p-3"><h3 className="font-bold">Scope and confidence</h3><p className="text-sm">{review.confidence_method}</p>{asList(review.limitations).map((text,i)=><p key={i} className="mt-1 text-xs">{text}</p>)}<p className="mt-2 break-all text-xs">Snapshot SHA-256: {review.source_snapshot_hash || 'Not recorded'}</p></section>
       <section className="rounded-xl border border-brand/30 bg-brand/5 p-3">
         <h3 className="text-[11px] font-extrabold uppercase tracking-wide text-brand">Executive summary</h3>
         <p className="mt-1 text-sm font-semibold leading-relaxed text-foreground">{review.executive_summary}</p>
@@ -64,7 +66,8 @@ export default function AiResponseReport({ review, registers }) {
                     Evidence: {finding.evidence}
                   </div>
                 ) : null}
-                {finding.confidence !== undefined ? (
+                {Array.isArray(finding.source_ids) && <p className="mt-1 break-all text-xs">Source record IDs: {finding.source_ids.join(', ')}</p>}
+                {finding.confidence != null ? (
                   <div className="mt-0.5 text-[10px] font-bold text-muted-foreground">Confidence {finding.confidence}%</div>
                 ) : null}
               </li>
@@ -104,7 +107,7 @@ export default function AiResponseReport({ review, registers }) {
                     {item.priority || 'Medium'}
                   </span>
                   <span className="min-w-0 flex-1 text-xs font-bold text-foreground">{item.action}</span>
-                  {item.confidence !== undefined ? (
+                  {item.confidence != null ? (
                     <span className="text-[10px] font-bold text-muted-foreground">{item.confidence}%</span>
                   ) : null}
                 </div>
@@ -138,6 +141,7 @@ export default function AiResponseReport({ review, registers }) {
         )}
       </section>
 
+      <section className="rounded-xl border border-border p-3"><h3 className="font-bold">Supporting source records</h3>{asList(review.supporting_evidence).map(source=><p className="break-all text-xs" key={source.entity+source.id}>{source.entity} · {source.id} · updated {source.updated_date || 'Unknown'}</p>)}<Link className="text-sm underline" to="/compliance">Open authorised assurance registers to verify source records</Link><h3 className="mt-3 font-bold">Associated audits</h3><p className="text-xs">{asList(review.associated_audits).join(', ') || 'No audit-source records supplied; not evaluated.'}</p></section>
       <p className="rounded-lg border border-warning/40 bg-warning/10 px-3 py-2 text-[11px] font-semibold text-foreground">
         Every recommendation is recorded in the recommendation queue awaiting human verification, and this review is written to the AI audit log.
       </p>
