@@ -1,158 +1,50 @@
-// Resolves the master audit matrix against the live registers.
-//
-// A checkpoint is only ever scored from records that exist: a matching
-// ComplianceControl, current evidence for that standard, and open
-// AssuranceFinding records. Nothing is assumed, and a checkpoint with no
-// register coverage scores zero rather than counting as compliant.
-
-import { isEvidenceHolding } from './assuranceChain.js';
+// Draft catalogue projection. Live assessment is deliberately unavailable until
+// explicit reviewed mappings, applicability and version-pinned results exist.
+// Broad standard matches must never produce checkpoint assurance.
 import { AUDIT_CHECKPOINTS, AUDIT_DOMAINS, RATING_BANDS } from './masterAssuranceCatalogue.js';
+import { buildCsv } from './csvExport.js';
 
-export const MATRIX_STATES = {
-  assured: { label: 'Assured', weight: 1, tone: 'border-safe/40 bg-safe/10 text-safe' },
-  exception: { label: 'Exception', weight: 0.5, tone: 'border-danger/50 bg-danger/15 text-danger' },
-  pending: { label: 'Evidence pending', weight: 0.3, tone: 'border-warning/50 bg-warning/20 text-warning' },
-  missing: { label: 'No evidence', weight: 0, tone: 'border-warning/40 bg-warning/15 text-warning' },
-  unmapped: { label: 'Not mapped', weight: 0, tone: 'border-border bg-muted text-muted-foreground' },
-};
-
-export const MATRIX_STATE_ORDER = ['exception', 'missing', 'pending', 'unmapped', 'assured'];
+const UNKNOWN = { label: 'Not assessed', tone: 'border-border bg-muted text-muted-foreground' };
+export const MATRIX_STATES = { unassessed: { ...UNKNOWN, weight: 0 } };
+export const MATRIX_STATE_ORDER = ['unassessed'];
 
 export function ratingFor(percent) {
-  const value = Number(percent) || 0;
-  return RATING_BANDS.find((band) => value >= band.min) || RATING_BANDS[RATING_BANDS.length - 1];
+  if (typeof percent !== 'number' || !Number.isFinite(percent) || percent < 0 || percent > 100) return UNKNOWN;
+  return RATING_BANDS.find(band => percent >= band.min) || UNKNOWN;
 }
 
-function groupByStandard(records) {
-  const map = new Map();
-  records.forEach((record) => {
-    const key = record?.standard_code;
-    if (!key) return;
-    const list = map.get(key) || [];
-    list.push(record);
-    map.set(key, list);
-  });
-  return map;
-}
-
-export function resolveAuditMatrix({ controls = [], evidence = [], findings = [] } = {}) {
-  const controlsByStandard = groupByStandard(controls);
-  const evidenceByStandard = groupByStandard(evidence);
-  const openFindingsByStandard = groupByStandard(findings.filter((finding) => finding.status !== 'Closed'));
-
-  const rows = AUDIT_CHECKPOINTS.map((checkpoint) => {
-    const mappedControls = controlsByStandard.get(checkpoint.standard_code) || [];
-    const mappedEvidence = evidenceByStandard.get(checkpoint.standard_code) || [];
-    const openFindings = openFindingsByStandard.get(checkpoint.standard_code) || [];
-    const current = mappedEvidence.filter(isEvidenceHolding).length;
-    const actions = openFindings.filter((finding) => finding.corrective_action).length;
-
-    let state = 'assured';
-    if (!mappedControls.length) state = 'unmapped';
-    else if (openFindings.length) state = 'exception';
-    else if (current) state = 'assured';
-    else if (mappedEvidence.length) state = 'pending';
-    else state = 'missing';
-
-    const points = checkpoint.weighting * MATRIX_STATES[state].weight;
-
-    return {
-      ...checkpoint,
-      state,
-      state_label: MATRIX_STATES[state].label,
-      state_tone: MATRIX_STATES[state].tone,
-      control_records: mappedControls.length,
-      evidence_count: mappedEvidence.length,
-      current_evidence: current,
-      findings_count: openFindings.length,
-      actions_count: actions,
-      achieved_points: Math.round(points * 10) / 10,
-      compliance_percentage: Math.round((points / checkpoint.weighting) * 100),
-    };
-  });
-
-  const byDomain = AUDIT_DOMAINS.map((domain) => {
-    const domainRows = rows.filter((row) => row.audit_domain === domain.domain);
-    const available = domainRows.reduce((sum, row) => sum + row.weighting, 0);
-    const achieved = domainRows.reduce((sum, row) => sum + row.achieved_points, 0);
-    const percent = available ? Math.round((achieved / available) * 1000) / 10 : 0;
-    return {
-      ...domain,
-      available,
-      achieved: Math.round(achieved * 10) / 10,
-      percent,
-      rating: ratingFor(percent),
-      assured: domainRows.filter((row) => row.state === 'assured').length,
-      exceptions: domainRows.filter((row) => row.state === 'exception').length,
-      missing: domainRows.filter((row) => row.state === 'missing' || row.state === 'unmapped').length,
-    };
-  });
-
-  const available = rows.reduce((sum, row) => sum + row.weighting, 0);
-  const achieved = rows.reduce((sum, row) => sum + row.achieved_points, 0);
-  const percent = available ? Math.round((achieved / available) * 1000) / 10 : 0;
-
-  const counts = {
-    total: rows.length,
-    assured: rows.filter((row) => row.state === 'assured').length,
-    exception: rows.filter((row) => row.state === 'exception').length,
-    pending: rows.filter((row) => row.state === 'pending').length,
-    missing: rows.filter((row) => row.state === 'missing').length,
-    unmapped: rows.filter((row) => row.state === 'unmapped').length,
-    openFindings: rows.reduce((sum, row) => sum + row.findings_count, 0),
-    criticalFindings: rows.filter((row) => row.findings_count && row.criticality === 'Critical').length,
-    openActions: rows.reduce((sum, row) => sum + row.actions_count, 0),
-    evidenceHeld: rows.reduce((sum, row) => sum + row.current_evidence, 0),
-  };
-  counts.evidenceGaps = counts.missing + counts.pending + counts.unmapped;
-  counts.coveragePercent = counts.total ? Math.round((counts.assured / counts.total) * 100) : 0;
-
+export function resolveAuditMatrix() {
+  const rows = AUDIT_CHECKPOINTS.map(checkpoint => ({
+    ...checkpoint,
+    state: 'unassessed', state_label: UNKNOWN.label, state_tone: UNKNOWN.tone,
+    control_records: null, evidence_count: null, current_evidence: null,
+    findings_count: null, actions_count: null, achieved_points: null,
+    compliance_percentage: null, weighted_score: null,
+  }));
   return {
     rows,
-    byDomain,
-    counts,
-    enterprise: {
-      available,
-      achieved: Math.round(achieved * 10) / 10,
-      percent,
-      rating: ratingFor(percent),
-    },
+    byDomain: AUDIT_DOMAINS.map(domain => ({ ...domain, available: null, achieved: null,
+      percent: null, rating: UNKNOWN, assured: 0, exceptions: null, missing: null })),
+    counts: { total: rows.length, assured: 0, unassessed: rows.length,
+      exception: null, pending: null, missing: null, unmapped: rows.length,
+      openFindings: null, criticalFindings: null, openActions: null,
+      evidenceHeld: null, evidenceGaps: null, coveragePercent: null },
+    enterprise: { available: null, achieved: null, percent: null, rating: UNKNOWN },
   };
 }
 
-const CSV_COLUMNS = [
-  ['audit_code', 'Audit Code'],
-  ['audit_name', 'Audit Checkpoint'],
-  ['audit_domain', 'Domain'],
-  ['audit_subdomain', 'Subdomain'],
-  ['audit_type', 'Audit Type'],
-  ['indicator_code', 'Indicator'],
-  ['indicator_name', 'Indicator Name'],
-  ['control_code', 'Control'],
-  ['control_name', 'Control Name'],
-  ['evidence_code', 'Evidence Requirement'],
-  ['standard_code', 'Standard'],
-  ['standard_name', 'Standard Name'],
-  ['criticality', 'Criticality'],
-  ['weighting', 'Weighting'],
-  ['inherent_risk_score', 'Inherent Risk'],
-  ['residual_risk_score', 'Residual Risk'],
-  ['owner_role', 'Owner'],
-  ['reviewer_role', 'Reviewer'],
-  ['approver_role', 'Approver'],
-  ['state_label', 'Live Status'],
-  ['compliance_percentage', 'Compliance %'],
-  ['findings_count', 'Open Findings'],
-  ['evidence_count', 'Evidence Records'],
+export const MATRIX_COLUMNS = [
+  'audit_id', 'audit_code', 'audit_name', 'audit_domain', 'audit_subdomain', 'audit_category', 'audit_type',
+  'indicator_id', 'indicator_code', 'indicator_name', 'control_id', 'control_code', 'control_name',
+  'evidence_id', 'evidence_code', 'evidence_name', 'standard_code', 'standard_name', 'risk_id',
+  'risk_rating', 'criticality', 'inherent_risk_score', 'residual_risk_score', 'weighting', 'max_score',
+  'pass_score', 'review_frequency', 'evidence_frequency', 'owner_role', 'reviewer_role', 'approver_role',
+  'audit_status', 'compliance_status', 'audit_date', 'audit_period_start', 'audit_period_end',
+  'evidence_review_date', 'finding_date', 'corrective_action_due_date', 'verification_date', 'closure_date',
+  'next_review_date', 'next_audit_date', 'findings_count', 'actions_count', 'evidence_count',
+  'compliance_percentage', 'weighted_score', 'created_at', 'updated_at',
+  'catalogue_status', 'mapping_status',
 ];
-
-function csvCell(value) {
-  const text = String(value ?? '');
-  return `"${text.replace(/"/g, '""')}"`;
-}
-
 export function matrixCsv(rows = []) {
-  const header = CSV_COLUMNS.map(([, label]) => csvCell(label)).join(',');
-  const body = rows.map((row) => CSV_COLUMNS.map(([key]) => csvCell(row[key])).join(','));
-  return [header, ...body].join('\n');
+  return buildCsv(MATRIX_COLUMNS.map(key => ({ key, label: key })), rows);
 }
