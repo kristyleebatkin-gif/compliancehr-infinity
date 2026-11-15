@@ -93,7 +93,8 @@ export async function handleReview(client: any, body: any, now = new Date()): Pr
     const decision = String(body.decision || '');
     if (!['keep', 'change', 'suspend'].includes(decision)) return json({ error: 'Choose keep, change role or suspend.' }, 400);
     const note = String(body.note || '').trim().slice(0, 500);
-    const target = await E.User.get(item.user_id);
+    const found = await E.User.get(item.user_id);
+    const target = found ? { ...found } : null; // a copy, so the log records the account as it was before the change
     const seniorNow = item.senior || SENIOR_ROLES.includes(target?.role);
     if (seniorNow && !isOwnerOrPA(actor.role)) return json({ error: 'Only the owner or a Provider Administrator can review a senior account.' }, 403);
     const stamp = { decided_by_id: actor.id, decided_by_name: who, decided_at: now.toISOString() };
