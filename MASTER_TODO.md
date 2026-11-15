@@ -1,3 +1,34 @@
+## Phase 11 Enterprise Workflow Studio — 15 November 2026 (Australia/Brisbane)
+
+Owner supplied the complete Phase 11 enterprise workflow specification. Preserved in PHASE11_OWNER_SPECIFICATION.md and linked from the controlling master prompt.
+
+Designed:
+- PHASE11_WORKFLOW_STUDIO_DESIGN.md: 12 epics, 84 features, 336 acceptance stories, 48 logical data contracts, 22 screen contracts, eight engine groupings, permission/integration/release matrices, durable execution/approval/evidence/AI invariants and acceptance gates.
+- PHASE11_WORKFLOW_BACKLOG.csv: 336 planned stories. Logical contracts and proposed routes are NOT implemented database tables or working screens. The 14 domain OS integrations plus Automation and AI Core services reconcile the prompt's 16 opening systems.
+- Separate reviewable design report supplied to owner. No new role grants or runtime framework migration.
+
+Implemented source preview:
+- Existing app /workflows, compliance RoleGate, ModuleShell and central navigation retained. Ten illustrative templates, 33 node types, in-memory editable draft graph, properties, structural validation and bounded no-side-effect routing simulation. Draft edits are local to the mounted page and are not persisted by the app.
+- Stored definition/instance review, timeline shell and bounded analytics. Backend reads require approved identity, canonical module permission and exact assigned business before queries; explicit tenant filters, SDK response validation, metadata projection and truncation disclosure. Private case notes, mutable timeline content and private file references excluded from instance responses.
+- Identity/tenant/role/status/approval scope remounts studio state. Failed data requests show unavailable metrics, not empty successful populations. Empty completion/duration and historical SLA rates remain unavailable.
+- New WorkflowDefinition/WorkflowInstance schemas are business classified, require tenant_id, preserve backend-only writes and add strict exact-tenant read conditions plus existing canonical RLS wrapping. Live raw API/RLS acceptance remains unverified.
+- Initial builder runtime review found silent system-node completion, mutable definitions used by runs, unverified evidence counters, insufficient action authorization and no atomicity/idempotency. Removed the executable implementation; all mutation actions route through the EXISTING disabled workflowSafety gate. Client controls also disable publication/start/act/escalation/sweeps. Earlier operational gates remain unchanged.
+- Simulation stops at unimplemented adapters, broken routes, required branch input and traversal bounds. It does not execute approvals, evidence verification, AI, external APIs, notifications or timers.
+
+Final verification:
+- npm run ci:verify: exit 0; lint, 113 JavaScript tests passed/0 failed, 134 Deno tests passed/0 failed, Vite build.
+- npm run typecheck: exit 0 in configured scope (checkJs false; Deno tests use no-check). Not full backend/source type assurance.
+- git diff 9a482623ea1b479c9abd9ee197b2f0891ed1c435 --check: exit 0.
+- Eight new JS behavioral tests cover routing decisions, bounds/broken paths, missing adapters, malformed validation, truthful metrics, identity scope and catalogue coverage. Three new Deno tests cover denial before reads, metadata projection and malformed/cross-tenant/bounded page behavior. Existing workflowSafety test expanded to all studio mutation actions.
+- Preview URL API succeeded. Browser editor remained on Loading app data; no signed-in or visual acceptance obtained. Mobile/iPad, WCAG AA, load targets, live tenant A/B, raw API authorization, E2E, DR and production publication NOT verified.
+- Builder reported smoke-test records removed. This session did not independently confirm live cleanup; no further live record writes were performed after review.
+
+Restore point before builder: checkpoint 6af97da369e96c80f39b0ada; commit 9a482623ea1b479c9abd9ee197b2f0891ed1c435.
+Final checkpoint requested after this register entry: Phase 11 — workflow design, safe studio preview and routing simulation.
+
+OPEN: React Flow canvas, saved drafts/immutable published versions, real task/approval/evidence adapters, reviewed standard mappings, durable serialized runtime/idempotency/outbox, waits/calendar SLA/escalation, quorum voting, governed AI adapters, complete routes/screens, regulated templates, capacity/security/accessibility/DR acceptance and release signoff. Phase 11 is NOT production complete and NOT published.
+
+
 # ComplianceHR Portal — Master To-Do Plan
 
 ## Enterprise Master V2.0 scope and traceability review — 15 November 2026 (Brisbane)
