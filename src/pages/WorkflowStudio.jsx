@@ -155,6 +155,7 @@ function WorkflowStudioView() {
           </TabsList>
 
           <TabsContent value="command" className="mt-4 space-y-3">
+            {error ? <p role="status">Workflow record data is unavailable. Counts and analytics cannot be assessed.</p> : <>
             <StudioCommandStrip summary={summary} />
             <div className="grid gap-3 lg:grid-cols-2">
               <section className="overflow-hidden rounded-xl border border-border bg-card shadow-2xs">
@@ -218,8 +219,9 @@ function WorkflowStudioView() {
               </section>
             </div>
             <p className="text-xs text-primary">
-              Stored runs are shown for review. Immutable event storage, verified evidence links and version-pinned execution remain release requirements.
+              Stored runs are shown for review. Immutable event storage, verified evidence links and version-pinned execution remain release requirements. Private case notes and timeline content are omitted from this preview.
             </p>
+            </>}
           </TabsContent>
 
           <TabsContent value="library" className="mt-4">
@@ -258,7 +260,7 @@ function WorkflowStudioView() {
           </TabsContent>
 
           <TabsContent value="analytics" className="mt-4">
-            <WorkflowAnalytics instances={instances} />
+            {error ? <p>Workflow analytics are unavailable.</p> : <WorkflowAnalytics instances={instances} />}
           </TabsContent>
         </Tabs>
       )}
