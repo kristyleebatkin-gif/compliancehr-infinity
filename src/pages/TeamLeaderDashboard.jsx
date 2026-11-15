@@ -1,3 +1,4 @@
+import WorkspaceNavigationTools from '@/components/WorkspaceNavigationTools';
 import React, { useEffect, useState } from 'react';
 import '@/components/teamleader/teamLeader.css';
 import { useRole } from '@/lib/useRole';
@@ -51,6 +52,7 @@ function TeamLeaderWorkspace({ onSecurityPin }) {
     <div className="tl-shell">
       <div className="tl-phone" data-theme={theme}>
         <div className="tl-scroll flex-1 overflow-y-auto pb-2">
+          <WorkspaceNavigationTools compact />
           {!data || !derived ? (
             <div className="space-y-2.5 p-3.5">
               {[0, 1, 2, 3].map((key) => (

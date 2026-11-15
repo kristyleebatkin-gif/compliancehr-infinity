@@ -8,7 +8,7 @@ import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription } 
 
 const buttonClass = 'inline-flex min-h-11 items-center gap-2 rounded-lg border border-[#0072FF]/30 px-3 text-sm font-semibold focus-visible:ring-2 focus-visible:ring-[#0072FF]';
 
-export default function WorkspaceNavigationTools() {
+export default function WorkspaceNavigationTools({ compact = false }) {
   const location = useLocation();
   const { user, can, navRole } = useRole();
   const allowed = MODULE_DIRECTORY.filter((item) => can(item.key));
@@ -65,7 +65,7 @@ export default function WorkspaceNavigationTools() {
 
   return <section aria-label="Workspace shortcuts" className="border-b border-[#0072FF]/20 bg-white px-3 py-3 text-[#0A2B6D] sm:px-6">
     <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-3">
-      <nav aria-label="Breadcrumb" className="text-sm"><Link to="/dashboard" className="font-semibold text-[#0072FF]">Workspace</Link>{active && <> / <span>{active.group.replace(/^\d+\.\s*/, '')}</span> / <span aria-current="page" className="font-bold">{active.label}</span></>}</nav>
+      <nav aria-label="Breadcrumb" className={compact ? 'sr-only' : 'text-sm'}><Link to="/dashboard" className="font-semibold text-[#0072FF]">Workspace</Link>{active && <> / <span>{active.group.replace(/^\d+\.\s*/, '')}</span> / <span aria-current="page" className="font-bold">{active.label}</span></>}</nav>
       <div className="flex flex-wrap gap-2">
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild><button type="button" className={buttonClass}><LayoutGrid size={18} />Find a module <span>({allowed.length})</span></button></DialogTrigger>
@@ -90,9 +90,9 @@ export default function WorkspaceNavigationTools() {
         <Link to="/my-profile" className={buttonClass}>My account</Link>
       </div>
     </div>
-    <div className="mx-auto mt-2 flex max-w-[1440px] flex-wrap items-center gap-2 text-sm">
+    {!compact && <div className="mx-auto mt-2 flex max-w-[1440px] flex-wrap items-center gap-2 text-sm">
       <span className="font-bold">Favourites</span>{favourites.length ? favourites.map((key) => allowed.find((item) => item.key === key)).filter(Boolean).map((item) => <Link key={item.key} to={item.path} className="rounded-lg bg-[#0072FF]/10 px-3 py-3 font-semibold">{item.label}</Link>) : <span>Use Find a module to save shortcuts.</span>}
       {!!recent.length && <><span className="ml-2 font-bold">Recent</span>{recent.map((key) => allowed.find((item) => item.key === key)).filter(Boolean).map((item) => <Link key={item.key} to={item.path} className="rounded-lg px-3 py-3 text-[#5A00D6]">{item.label}</Link>)}</>}
-    </div>
+    </div>}
   </section>;
 }
