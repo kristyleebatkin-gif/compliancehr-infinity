@@ -719,3 +719,13 @@ Still required before production approval:
 - [ ] Verify real dashboard counts, exact deep links, exports and operational actions in the preview.
 - [ ] Merge the dashboard branch to main and publish only after owner approval.
 - [ ] Owner decision: confirm which approved role should access Invoicing (including Sherelle's Administration/Finance responsibilities). Align navigation permissions with entity RLS and add approved/denied runtime tests before exposing invoice actions. No access expansion was made in the dashboard polish batch.
+
+## Enterprise modular expansion alignment — 15 November 2026
+
+- Owner's ten-phase master plan is now the current delivery sequence. V3 prior scope and existing gap findings are preserved.
+- Added `src/lib/enterprisePhases.js`: 10 phases, 28 system/layer scopes, 15 shared engines, 18 required role workspaces, register/feature requirements, dependencies, release gates, evidence chain and digital-twin scope. All are target requirements, not completion claims.
+- Added an interactive phase selector to Enterprise OS → Roadmap with per-phase requirements and existing source reuse candidates. Existing inventory now says source present instead of working.
+- Updated the existing review ZIP's implementation-roadmap report and saved `ENTERPRISE_MODULAR_EXPANSION_PLAN.md` from the same model. Security/privacy/tenant isolation and AI oversight apply from foundation; specialist expansion remains in phases 8 and 10.
+- Before checkpoint: `6af9212339d7d28f841863e1`, commit `9ebac14ce6a8e0a2794c27af805666011454c324`.
+- Verification: `npm run ci:verify` exit 0 (lint, Node tests, 117 Deno tests, Vite build); `npm run typecheck` exit 0; model integrity checks exit 0 (dependency order, existing OS source IDs and generated-plan/export parity). `git diff --check` exit 0.
+- Preview returned successfully. Authenticated browser interaction, responsive/accessibility acceptance and live tenant A/B acceptance were not performed in this batch. No new entity models, role grants, operational workflows or production publication. Full implementation of the ten phases remains open, beginning with Phase 1's evidence/obligation/control and policy-lifecycle acceptance.
