@@ -144,6 +144,7 @@ export const NAV_PERMISSIONS = {
   staff: OPERATIONS,
   training: PERSONAL,
   compliance: OPERATIONS,
+  evidence: OPERATIONS,
   'daily-briefing': OPERATIONS,
   incidents: PERSONAL,
   risks: PERSONAL,

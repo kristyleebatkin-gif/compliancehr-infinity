@@ -1,0 +1,330 @@
+{
+  "name": "AssuranceEvidence",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
+    "control_id": {
+      "type": "string",
+      "title": "Linked Control ID"
+    },
+    "control_statement": {
+      "type": "string",
+      "title": "Control Statement"
+    },
+    "standard_code": {
+      "type": "string",
+      "title": "Standard Code"
+    },
+    "framework": {
+      "type": "string",
+      "title": "Framework"
+    },
+    "title": {
+      "type": "string",
+      "title": "Evidence Title"
+    },
+    "evidence_type": {
+      "type": "string",
+      "enum": [
+        "Document",
+        "Record",
+        "Register extract",
+        "Photo",
+        "Sign-off",
+        "System export",
+        "Certificate",
+        "Training record",
+        "Meeting minutes",
+        "Other"
+      ],
+      "default": "Document",
+      "title": "Evidence Type",
+      "enumColors": [
+        "blue",
+        "purple",
+        "green",
+        "pink",
+        "yellow",
+        "gray",
+        "teal",
+        "gray",
+        "gray",
+        "gray"
+      ]
+    },
+    "source": {
+      "type": "string",
+      "title": "Source System / Location"
+    },
+    "owner": {
+      "type": "string",
+      "title": "Evidence Owner"
+    },
+    "file_url": {
+      "type": "string",
+      "title": "Evidence Link"
+    },
+    "valid_from": {
+      "type": "string",
+      "format": "date",
+      "title": "Valid From"
+    },
+    "valid_to": {
+      "type": "string",
+      "format": "date",
+      "title": "Valid To"
+    },
+    "confidence": {
+      "type": "number",
+      "title": "Confidence Score (%)",
+      "description": "How strongly this evidence supports the control. 100 = direct, recent, independently verifiable."
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": [
+        "Unverified",
+        "In Review",
+        "Verified",
+        "Rejected",
+        "Expired"
+      ],
+      "default": "Unverified",
+      "title": "Verification Status",
+      "enumColors": [
+        "gray",
+        "yellow",
+        "green",
+        "red",
+        "red"
+      ]
+    },
+    "verified_by": {
+      "type": "string",
+      "title": "Verified By"
+    },
+    "verified_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Verified Date"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "title",
+    "evidence_type"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

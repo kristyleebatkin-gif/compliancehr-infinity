@@ -1,0 +1,323 @@
+{
+  "name": "AssuranceFinding",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
+    "control_id": {
+      "type": "string",
+      "title": "Linked Control ID"
+    },
+    "evidence_id": {
+      "type": "string",
+      "title": "Linked Evidence ID"
+    },
+    "standard_code": {
+      "type": "string",
+      "title": "Standard Code"
+    },
+    "framework": {
+      "type": "string",
+      "title": "Framework"
+    },
+    "title": {
+      "type": "string",
+      "title": "Finding Title"
+    },
+    "rating": {
+      "type": "string",
+      "enum": [
+        "Conformity",
+        "Minor non-conformity",
+        "Major non-conformity",
+        "Observation",
+        "Opportunity for improvement"
+      ],
+      "default": "Observation",
+      "title": "Rating",
+      "enumColors": [
+        "green",
+        "yellow",
+        "red",
+        "blue",
+        "purple"
+      ]
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "Internal audit",
+        "External audit",
+        "Desktop review",
+        "Spot check",
+        "Incident review",
+        "Complaint"
+      ],
+      "default": "Internal audit",
+      "title": "Finding Source",
+      "enumColors": [
+        "blue",
+        "purple",
+        "gray",
+        "yellow",
+        "red",
+        "pink"
+      ]
+    },
+    "finding_detail": {
+      "type": "string",
+      "title": "Finding Detail"
+    },
+    "root_cause": {
+      "type": "string",
+      "title": "Root Cause"
+    },
+    "corrective_action": {
+      "type": "string",
+      "title": "Corrective Action (CAPA)"
+    },
+    "owner": {
+      "type": "string",
+      "title": "Action Owner"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Due Date"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Open",
+        "In Progress",
+        "Verification",
+        "Closed"
+      ],
+      "default": "Open",
+      "title": "Status",
+      "enumColors": [
+        "red",
+        "yellow",
+        "purple",
+        "green"
+      ]
+    },
+    "closure_verified_by": {
+      "type": "string",
+      "title": "Closure Verified By"
+    },
+    "closure_verified_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Closure Verified Date"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "title",
+    "rating"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

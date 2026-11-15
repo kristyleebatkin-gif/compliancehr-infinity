@@ -1,0 +1,346 @@
+{
+  "name": "ComplianceControl",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
+    "standard_id": {
+      "type": "string",
+      "title": "Linked Standard ID"
+    },
+    "standard_code": {
+      "type": "string",
+      "title": "Standard Code"
+    },
+    "standard_title": {
+      "type": "string",
+      "title": "Standard Title"
+    },
+    "framework": {
+      "type": "string",
+      "enum": [
+        "NDIS Practice Standards",
+        "Aged Care Quality Standards",
+        "ISO 9001:2015",
+        "ISO/IEC 27001:2022",
+        "NSQHS Standards",
+        "HSQF",
+        "Fair Work"
+      ],
+      "default": "NDIS Practice Standards",
+      "title": "Framework",
+      "enumColors": [
+        "blue",
+        "purple",
+        "green",
+        "gray",
+        "pink",
+        "yellow",
+        "gray"
+      ]
+    },
+    "obligation": {
+      "type": "string",
+      "title": "Obligation"
+    },
+    "requirement": {
+      "type": "string",
+      "title": "Requirement"
+    },
+    "control_statement": {
+      "type": "string",
+      "title": "Control Statement",
+      "description": "What the business actually does to meet the requirement."
+    },
+    "control_type": {
+      "type": "string",
+      "enum": [
+        "Preventive",
+        "Detective",
+        "Corrective"
+      ],
+      "default": "Preventive",
+      "title": "Control Type",
+      "enumColors": [
+        "green",
+        "yellow",
+        "purple"
+      ]
+    },
+    "policy_reference": {
+      "type": "string",
+      "title": "Policy Reference"
+    },
+    "procedure_reference": {
+      "type": "string",
+      "title": "Procedure Reference"
+    },
+    "owner": {
+      "type": "string",
+      "title": "Control Owner"
+    },
+    "frequency": {
+      "type": "string",
+      "enum": [
+        "Continuous",
+        "Daily",
+        "Weekly",
+        "Monthly",
+        "Quarterly",
+        "Annually",
+        "Event-driven"
+      ],
+      "default": "Quarterly",
+      "title": "Evidence Frequency",
+      "enumColors": [
+        "green",
+        "gray",
+        "gray",
+        "blue",
+        "purple",
+        "yellow",
+        "pink"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Active",
+        "Under Review",
+        "Retired"
+      ],
+      "default": "Active",
+      "title": "Status",
+      "enumColors": [
+        "gray",
+        "green",
+        "yellow",
+        "red"
+      ]
+    },
+    "last_tested_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Last Tested"
+    },
+    "next_test_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Next Test Due"
+    },
+    "evidence_required": {
+      "type": "boolean",
+      "default": true,
+      "title": "Evidence Required"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "framework",
+    "control_statement"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
