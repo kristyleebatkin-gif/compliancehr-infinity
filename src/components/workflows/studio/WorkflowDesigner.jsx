@@ -4,11 +4,15 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { NODE_CATEGORIES, NODE_LIBRARY, NODE_META, graphFromJson, validateWorkflow } from '@/lib/workflowStudio';
 import { cn } from '@/lib/utils';
+import { simulateWorkflow } from '@/lib/workflowStudioSafety';
 
 export default function WorkflowDesigner({ definition, busy = false, onSave, onPublish }) {
   const [nodes, setNodes] = useState([]);
   const [selectedId, setSelectedId] = useState('');
   const [category, setCategory] = useState('Core');
+  const [decisions, setDecisions] = useState({});
+  const [simulation, setSimulation] = useState(null);
+  useEffect(() => { setSimulation(null); setDecisions({}); }, [nodes]);
 
   useEffect(() => {
     setNodes(graphFromJson(definition?.nodes_json));
@@ -72,6 +76,18 @@ export default function WorkflowDesigner({ definition, busy = false, onSave, onP
         </div>
       </div>
 
+      <section className="rounded-xl border border-border bg-card p-3 space-y-2" aria-label="Routing simulation">
+        <h3 className="font-bold">Routing simulation</h3>
+        <p className="text-xs">Hypothetical traversal only. Human steps are assumed complete; no tasks, approvals, uploads, AI calls or notifications are created. Adapter nodes stop the simulation.</p>
+        {nodes.filter(n => n.type === 'DECISION').map(n => <label className="block text-sm" key={n.id}>
+          {n.label}
+          <select aria-label={n.label} value={decisions[n.id] || ''} onChange={e => { setSimulation(null); setDecisions(d => ({ ...d, [n.id]: e.target.value })); }} className="ml-2 border rounded p-1">
+            <option value="">Choose branch</option><option value="approve">Approve / Yes</option><option value="reject">Reject / No</option>
+          </select>
+        </label>)}
+        <Button size="sm" variant="outline" disabled={!validation.valid} onClick={() => setSimulation(simulateWorkflow(nodes, decisions))}>Simulate routing</Button>
+        {simulation && <div role="status"><p>{simulation.status}</p><ol className="list-decimal pl-5">{simulation.steps.map((s, i) => <li key={i}>{s.label} ({s.type})</li>)}</ol></div>}
+      </section>
       <div className="grid gap-3 lg:grid-cols-[240px_1fr_300px]">
         <section className="rounded-xl border border-border bg-card p-3 shadow-2xs">
           <h3 className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground">Node palette</h3>
@@ -229,7 +245,7 @@ export default function WorkflowDesigner({ definition, busy = false, onSave, onP
             <h3 className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground">Validation</h3>
             {validation.valid && !validation.warnings.length && (
               <p className="mt-2 flex items-center gap-1.5 text-xs font-semibold text-safe">
-                <CheckCircle2 className="h-4 w-4" /> Ready to publish.
+                <CheckCircle2 className="h-4 w-4" /> Graph structure checked. Publication acceptance remains outstanding.
               </p>
             )}
             <ul className="mt-2 space-y-1">
