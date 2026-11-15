@@ -12,6 +12,8 @@ import ExecutionMonitor from '@/components/workflows/studio/ExecutionMonitor';
 import InstanceTimeline from '@/components/workflows/studio/InstanceTimeline';
 import WorkflowAnalytics from '@/components/workflows/studio/WorkflowAnalytics';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/lib/AuthContext';
+import { STUDIO_RELEASE_NOTICE, studioScopeKey } from '@/lib/workflowStudioSafety';
 
 const OPEN_STATES = ['Running', 'Waiting', 'Escalated', 'Paused'];
 
@@ -20,6 +22,11 @@ function errorMessage(err) {
 }
 
 export default function WorkflowStudio() {
+  const { user } = useAuth();
+  return <WorkflowStudioView key={studioScopeKey(user)} />;
+}
+
+function WorkflowStudioView() {
   const [definitions, setDefinitions] = useState([]);
   const [instances, setInstances] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,6 +34,8 @@ export default function WorkflowStudio() {
   const [error, setError] = useState('');
   const [tab, setTab] = useState('command');
   const [designingId, setDesigningId] = useState('');
+  const [localDraft, setLocalDraft] = useState(null);
+  const [truncated, setTruncated] = useState(false);
   const [startPreset, setStartPreset] = useState('');
   const [openInstance, setOpenInstance] = useState(null);
 
@@ -34,10 +43,14 @@ export default function WorkflowStudio() {
     setLoading(true);
     try {
       const res = await base44.functions.invoke('workflowRuntime', { action: 'list' });
-      setDefinitions(res?.data?.definitions || []);
+      if (!Array.isArray(res?.data?.definitions) || !Array.isArray(res?.data?.instances)) throw new Error('Workflow data is unavailable.');
+      setTruncated(Boolean(res.data.truncated));
+      setDefinitions(res.data.definitions);
       setInstances(res?.data?.instances || []);
       setError('');
     } catch (err) {
+      setDefinitions([]);
+      setInstances([]);
       setError(errorMessage(err));
     } finally {
       setLoading(false);
@@ -47,6 +60,7 @@ export default function WorkflowStudio() {
   useEffect(() => { load(); }, [load]);
 
   const call = useCallback(async (payload) => {
+    if (payload.action !== 'list') { setError(STUDIO_RELEASE_NOTICE); return null; }
     setBusy(true);
     setError('');
     try {
@@ -58,6 +72,8 @@ export default function WorkflowStudio() {
       await load();
       return res?.data || null;
     } catch (err) {
+      setDefinitions([]);
+      setInstances([]);
       setError(errorMessage(err));
       return null;
     } finally {
@@ -66,7 +82,7 @@ export default function WorkflowStudio() {
   }, [load]);
 
   const summary = useMemo(() => summariseInstances(instances), [instances]);
-  const designing = definitions.find((item) => item.id === designingId) || null;
+  const designing = localDraft || definitions.find((item) => item.id === designingId) || null;
   const recent = useMemo(
     () => [...instances]
       .filter((row) => OPEN_STATES.includes(row.state))
@@ -76,8 +92,8 @@ export default function WorkflowStudio() {
   );
 
   const createDefinition = async (template) => {
-    const data = await call({
-      action: 'create',
+    const data = { definition: {
+      id: `local-${template.code}`, state: 'Draft', version: 0, code: template.code,
       name: template.name,
       workflow_type: template.workflow_type,
       domain: template.domain,
@@ -88,7 +104,8 @@ export default function WorkflowStudio() {
       standard_refs: template.standards,
       evidence_refs: template.evidence,
       template_code: template.code,
-    });
+    } };
+    setLocalDraft(data.definition);
     if (data?.definition) {
       setDesigningId(data.definition.id);
       setTab('designer');
@@ -96,7 +113,7 @@ export default function WorkflowStudio() {
   };
 
   const saveDefinition = async (definition, nodes) => {
-    await call({ action: 'save', definition_id: definition.id, nodes_json: JSON.stringify(nodes) });
+    setLocalDraft({ ...definition, id: `local-${definition.template_code || definition.id}`, state: 'Draft', nodes_json: JSON.stringify(nodes) });
   };
 
   const publishDefinition = async (definition, nodes) => {
@@ -112,10 +129,12 @@ export default function WorkflowStudio() {
       <ModuleShell
         moduleKey="compliance"
         title="Workflow Studio"
-        subtitle="The orchestration layer: design a graph, validate it, publish a version, then run it — every step assigned by role, timed against its SLA and recorded as it happens."
+        subtitle="Phase 11 design workspace: explore templates, edit local draft graphs and test routing without operational side effects."
         icon={Network}
       />
 
+      <p role="status" className="rounded-xl border border-border bg-card p-3 text-sm text-primary">{STUDIO_RELEASE_NOTICE}</p>
+      {truncated && <p role="status">Showing a bounded sample: up to 200 definitions and 300 runs. Totals describe this sample only.</p>}
       {error && (
         <div role="alert" className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-[#FF2E9A] bg-white p-3 text-sm font-semibold text-primary">
           <span>{error}</span>
@@ -180,11 +199,10 @@ export default function WorkflowStudio() {
               <section className="rounded-xl border border-border bg-card p-4 shadow-2xs">
                 <h2 className="text-sm font-extrabold text-foreground">Engine checks</h2>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  The engine enforces the clock on every open run. Re-running the sweep marks any run past its due time as breached so it
-                  appears in the SLA view and on the executive dashboard.
+                  SLA calculation, reminders and escalation delivery require verified runtime adapters. No background sweep or notification service is enabled by this workspace.
                 </p>
                 <div className="mt-2 flex flex-wrap gap-2">
-                  <Button size="sm" variant="outline" disabled={busy} onClick={() => call({ action: 'scanSla' })}>
+                  <Button size="sm" variant="outline" disabled title="Operational engine not enabled" onClick={() => call({ action: 'scanSla' })}>
                     <TimerReset className="mr-1.5 h-4 w-4" /> Re-check SLA clocks
                   </Button>
                   <Button size="sm" variant="outline" onClick={load}>
@@ -200,8 +218,7 @@ export default function WorkflowStudio() {
               </section>
             </div>
             <p className="text-xs text-primary">
-              Every step is written by the runtime engine with the role that completed it and the time it happened, and cannot be edited
-              afterwards. A run only reaches Completed when the graph reaches its end node.
+              Stored runs are shown for review. Immutable event storage, verified evidence links and version-pinned execution remain release requirements.
             </p>
           </TabsContent>
 
@@ -210,7 +227,7 @@ export default function WorkflowStudio() {
               definitions={definitions}
               busy={busy}
               onCreate={createDefinition}
-              onOpen={(definition) => { setDesigningId(definition.id); setTab('designer'); }}
+              onOpen={(definition) => { setLocalDraft(null); setDesigningId(definition.id); setTab('designer'); }}
               onClone={(definition) => call({ action: 'clone', definition_id: definition.id })}
               onPublish={(definition) => publishDefinition(definition)}
               onArchive={(definition) => call({ action: 'archive', definition_id: definition.id })}
@@ -231,7 +248,7 @@ export default function WorkflowStudio() {
             <ExecutionMonitor
               instances={instances}
               definitions={definitions}
-              busy={busy}
+              busy={true}
               presetDefinitionId={startPreset}
               onStart={(definitionId, contextLabel) => call({ action: 'start', definition_id: definitionId, context_label: contextLabel })}
               onAct={(instanceId, decision, note) => call({ action: 'act', instance_id: instanceId, decision, note })}
