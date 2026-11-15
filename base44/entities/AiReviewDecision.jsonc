@@ -44,6 +44,63 @@
     "read": {
       "$and": [
         {
+          "$and": [
+            {
+              "$or": [
+                {
+                  "user_condition": {
+                    "role": "admin"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Provider Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Management"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Administration"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Quality & Improvement Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Auditor"
+                  }
+                }
+              ]
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            },
+            {
+              "user_condition": {
+                "account_status": "Active",
+                "access_approved": true
+              }
+            }
+          ]
+        },
+        {
           "$or": [
             {
               "user_condition": {
@@ -51,67 +108,74 @@
               }
             },
             {
-              "user_condition": {
-                "role": "Provider Administrator"
-              }
-            },
-            {
-              "user_condition": {
-                "role": "Compliance Manager"
-              }
-            },
-            {
-              "user_condition": {
-                "role": "Compliance Administrator"
-              }
-            },
-            {
-              "user_condition": {
-                "role": "Management"
-              }
-            },
-            {
-              "user_condition": {
-                "role": "Administration"
-              }
-            },
-            {
-              "user_condition": {
-                "role": "Quality & Improvement Manager"
-              }
-            },
-            {
-              "user_condition": {
-                "role": "Auditor"
-              }
+              "data.tenant_id": "{{user.data.tenant_id}}"
             }
           ]
-        },
-        {
-          "data.tenant_id": "{{user.data.tenant_id}}"
-        },
-        {
-          "user_condition": {
-            "account_status": "Active",
-            "access_approved": true
-          }
         }
       ]
     },
     "create": {
-      "user_condition": {
-        "role": "__server_only__"
-      }
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__server_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
     },
     "update": {
-      "user_condition": {
-        "role": "__server_only__"
-      }
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__server_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
     },
     "delete": {
-      "user_condition": {
-        "role": "__server_only__"
-      }
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__server_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
     }
   }
 }
