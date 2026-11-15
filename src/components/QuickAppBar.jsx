@@ -333,16 +333,13 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
           )}
           {onSwitchWorkspaceView && (
             <div className="flex flex-wrap items-center justify-center gap-1.5 border-t border-white/10 pt-1 md:order-1 lg:order-none">
-              <Link to="/login" className="hidden min-h-9 shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/20 bg-[#00C6FF] px-2.5 text-[10px] font-extrabold text-workspace-navy shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90 md:inline-flex lg:hidden">Sign In</Link>
-              <Link to="/?demo=book" className="hidden min-h-9 shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-[#00C6FF]/50 bg-[#0072FF] px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(0,114,255,0.55)] transition hover:opacity-90 md:inline-flex lg:hidden">Book Demo</Link>
-              <Link to="/register" className="hidden min-h-9 shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/25 bg-[#FF2E9A] px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(255,46,154,0.55)] transition hover:opacity-90 md:inline-flex lg:hidden">Start Free</Link>
-              <Link
+              {can('our-participants') && <Link
                 to="/our-participants"
                 className="inline-flex min-h-9 shrink-0 items-center justify-center gap-1 rounded-full border border-[#00C6FF] bg-[#0072FF] px-3 text-[10px] font-extrabold uppercase tracking-wide text-white shadow-[0_0_10px_rgba(0,114,255,0.5)] transition hover:opacity-95"
               >
                 <Heart className="h-3 w-3 shrink-0 text-[#00C6FF]" />
                 <span className="whitespace-nowrap">Participant Profiles</span>
-              </Link>
+              </Link>}
               <button
                 type="button"
                 onClick={() => onSwitchWorkspaceView('both')}

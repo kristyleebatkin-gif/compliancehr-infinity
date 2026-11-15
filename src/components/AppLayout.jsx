@@ -1,5 +1,5 @@
 import '@/components/dashboard/dashboardWorkspace.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, Outlet, Navigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
@@ -36,6 +36,7 @@ export default function AppLayout() {
   const location = useLocation();
   const { role, navRole, user } = useRole();
   const { toast } = useToast();
+  const menuTriggerRef = useRef(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
@@ -252,7 +253,7 @@ export default function AppLayout() {
       </aside>
 
       <Dialog open={mobileOpen} onOpenChange={setMobileOpen}>
-        <DialogContent className="left-0 top-0 h-dvh max-h-dvh w-[min(90vw,320px)] translate-x-0 translate-y-0 rounded-none bg-workspace-navy p-0 sm:max-w-[320px]">
+        <DialogContent onCloseAutoFocus={(event) => { event.preventDefault(); menuTriggerRef.current?.focus(); }} className="left-0 top-0 h-dvh max-h-dvh w-[min(90vw,320px)] translate-x-0 translate-y-0 rounded-none bg-workspace-navy p-0 sm:max-w-[320px]">
           <DialogTitle className="sr-only">Workspace navigation</DialogTitle>
           <DialogDescription className="sr-only">Browse the workspaces available to your role.</DialogDescription>
           <div className="overflow-y-auto pt-8">{sidebarContent}</div>
@@ -294,39 +295,18 @@ export default function AppLayout() {
                 <div className="grid w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-1.5">
                   <div className="flex min-w-0 flex-col items-end gap-1">
                     <button
-                      onClick={() => setMobileOpen(true)}
+                      onClick={(event) => { menuTriggerRef.current = event.currentTarget; setMobileOpen(true); }}
                       aria-label="Open menu"
                       aria-expanded={mobileOpen}
                       className="min-h-11 min-w-11 shrink-0 rounded-lg border-2 border-[#00C6FF] bg-workspace-navy p-1 text-[#00C6FF] shadow-2xs transition hover:border-[#FF2E9A] md:hidden"
                     >
                       <Menu className="h-3.5 w-3.5" style={{ color: '#00C6FF' }} />
                     </button>
-                    <Link
-                      to="/login"
-                      className="inline-flex md:hidden lg:inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/20 px-2.5 text-[10px] font-extrabold text-workspace-navy shadow-[0_0_10px_rgba(0,198,255,0.5)] transition hover:opacity-90"
-                      style={{ backgroundColor: '#00C6FF' }}
-                    >
-                      Sign In
-                    </Link>
                   </div>
                   <Link to="/dashboard" className="inline-flex min-w-0 flex-col items-center text-center transition">
                     <BrandLogoLockup size="md" theme="light" lightBackground showSlogan={false} />
                   </Link>
                   <div className="flex min-w-0 flex-wrap items-center justify-start gap-1">
-                    <Link
-                      to="/?demo=book"
-                      className="inline-flex md:hidden lg:inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-[#00C6FF]/50 px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(0,114,255,0.55)] transition hover:opacity-90"
-                      style={{ backgroundColor: '#0072FF' }}
-                    >
-                      Book Demo
-                    </Link>
-                    <Link
-                      to="/register"
-                      className="inline-flex md:hidden lg:inline-flex h-[24px] shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-white/25 px-2.5 text-[10px] font-extrabold text-white shadow-[0_0_10px_rgba(255,46,154,0.55)] transition hover:opacity-90"
-                      style={{ backgroundColor: '#FF2E9A' }}
-                    >
-                      Start Free
-                    </Link>
                   </div>
                 </div>
                 <BrandSlogan size="md" lightBackground className="text-[11px] sm:text-sm md:text-base tracking-tight" />
@@ -394,7 +374,7 @@ export default function AppLayout() {
             );
           })}
           <button
-            onClick={() => setMobileOpen(true)}
+            onClick={(event) => { menuTriggerRef.current = event.currentTarget; setMobileOpen(true); }}
             className="flex flex-1 flex-col items-center gap-0.5 rounded-lg py-1.5 text-xs font-bold text-[#0A2B6D]"
           >
             <MoreHorizontal className="h-5 w-5" />
