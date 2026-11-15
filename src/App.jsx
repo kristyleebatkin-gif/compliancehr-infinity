@@ -23,6 +23,7 @@ import OperationsCentre from '@/pages/OperationsCentre';
 import LegacyProfileRedirect from '@/components/profile/LegacyProfileRedirect';
 import ComplianceHub from '@/pages/ComplianceHub';
 import EvidenceOS from '@/pages/EvidenceOS';
+import AssuranceAuditMatrix from '@/pages/AssuranceAuditMatrix';
 import AiIntelligenceOS from '@/pages/AiIntelligenceOS';
 import KnowledgeGraphOS from '@/pages/KnowledgeGraphOS';
 import ClinicalOS from '@/pages/ClinicalOS';
@@ -169,6 +170,7 @@ const AuthenticatedApp = () => {
           <Route path="/staff/:id" element={<LegacyProfileRedirect kind="staff" />} />
           <Route path="/compliance" element={<RoleGate navKey="compliance"><ComplianceHub /></RoleGate>} />
           <Route path="/evidence" element={<RoleGate navKey="evidence"><EvidenceOS /></RoleGate>} />
+          <Route path="/assurance-matrix" element={<RoleGate navKey="evidence"><AssuranceAuditMatrix /></RoleGate>} />
           <Route path="/ai-os" element={<RoleGate navKey="ai-os"><AiIntelligenceOS /></RoleGate>} />
           <Route path="/knowledge-graph" element={<RoleGate navKey="knowledge-graph"><KnowledgeGraphOS /></RoleGate>} />
           <Route path="/clinical-os" element={<RoleGate navKey="clinical-os"><ClinicalOS /></RoleGate>} />
