@@ -1,5 +1,20 @@
 # ComplianceHR Portal — Master To-Do Plan
 
+## Direct Base44 edit — Executive OS continuation, 15 November 2026
+
+Owner requested continuing edits directly in Base44. Existing app, routes, branding and source frameworks retained.
+
+Saved changes:
+- Executive metric queries now explicitly require the approved active user's assigned business and operation access before reads. Every count includes tenant_id. Canonical module permissions replace local role-list drift; server RLS remains the authority.
+- Query cache keys include business, role, account status and approval; changed identities cannot reuse previous business counts. Invalid/negative/failed counts remain Unavailable, while real zero stays zero.
+- Executive dashboard views use a validated view query parameter; embedded dashboard tabs retain local selection. Existing unrelated query parameters retained. Added Refresh, Brisbane refresh time, Enterprise OS link and board-assurance drilldown.
+- No accounts, roles, schemas, live records, disabled workflow gates or publication state changed.
+
+Verification: npm run ci:verify exit 0 (lint, JavaScript tests, 117 Deno tests, Vite build); npm run typecheck exit 0 (existing configured scope); git diff --check exit 0. Five new tests cover pre-read denial, explicit business/cutoff filters, failed/malformed counts, identity-cache keys and invalid views/dates. Authenticated browser/device and live tenant A/B acceptance remain unverified; full Enterprise vNext remains open.
+
+Before checkpoint: 6af91fec3f86f688bd4686e2; commit cea5a4c9769bd836422492b9b5f9767ab054ac96.
+Final checkpoint name: Executive OS — scoped metrics, refresh and board assurance navigation.
+
 ## Enterprise vNext alignment — 15 November 2026 (Australia/Brisbane)
 
 Owner supplied the eight-phase Enterprise Platform Alignment Update. Full prompt passed unchanged to the existing Base44 app. The full enterprise transformation remains OPEN.
