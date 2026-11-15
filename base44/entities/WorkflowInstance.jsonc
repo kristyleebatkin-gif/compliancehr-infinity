@@ -195,6 +195,62 @@
     "read": {
       "$and": [
         {
+          "$and": [
+            {
+              "$or": [
+                {
+                  "user_condition": {
+                    "role": "admin"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Provider Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Quality & Improvement Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Management"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Auditor"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Team Leader"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Administration"
+                  }
+                }
+              ]
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        },
+        {
           "$or": [
             {
               "user_condition": {
@@ -202,49 +258,9 @@
               }
             },
             {
-              "user_condition": {
-                "role": "Provider Administrator"
-              }
-            },
-            {
-              "user_condition": {
-                "role": "Compliance Administrator"
-              }
-            },
-            {
-              "user_condition": {
-                "role": "Compliance Manager"
-              }
-            },
-            {
-              "user_condition": {
-                "role": "Quality & Improvement Manager"
-              }
-            },
-            {
-              "user_condition": {
-                "role": "Management"
-              }
-            },
-            {
-              "user_condition": {
-                "role": "Auditor"
-              }
-            },
-            {
-              "user_condition": {
-                "role": "Team Leader"
-              }
-            },
-            {
-              "user_condition": {
-                "role": "Administration"
-              }
+              "data.tenant_id": "{{user.data.tenant_id}}"
             }
           ]
-        },
-        {
-          "data.tenant_id": "{{user.data.tenant_id}}"
         }
       ]
     },
