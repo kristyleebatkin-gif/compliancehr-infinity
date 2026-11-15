@@ -154,6 +154,7 @@ export default function LandingLaunchVideosSection() {
 
   return (
     <section
+      id="about"
       aria-label="About Kristy Whelan and ComplianceHR Infinity Vision"
       className="w-full scroll-mt-20"
     >
