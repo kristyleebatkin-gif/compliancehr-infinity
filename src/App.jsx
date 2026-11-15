@@ -24,6 +24,7 @@ import LegacyProfileRedirect from '@/components/profile/LegacyProfileRedirect';
 import ComplianceHub from '@/pages/ComplianceHub';
 import EvidenceOS from '@/pages/EvidenceOS';
 import AiIntelligenceOS from '@/pages/AiIntelligenceOS';
+import KnowledgeGraphOS from '@/pages/KnowledgeGraphOS';
 import AuditorsPortal from '@/pages/AuditorsPortal';
 import DailyBriefing from '@/pages/DailyBriefing';
 import Documents from '@/pages/Documents';
@@ -166,6 +167,7 @@ const AuthenticatedApp = () => {
           <Route path="/compliance" element={<RoleGate navKey="compliance"><ComplianceHub /></RoleGate>} />
           <Route path="/evidence" element={<RoleGate navKey="evidence"><EvidenceOS /></RoleGate>} />
           <Route path="/ai-os" element={<RoleGate navKey="ai-os"><AiIntelligenceOS /></RoleGate>} />
+          <Route path="/knowledge-graph" element={<RoleGate navKey="knowledge-graph"><KnowledgeGraphOS /></RoleGate>} />
           <Route path="/auditor-portal" element={<RoleGate navKey="auditor-portal"><AuditorsPortal /></RoleGate>} />
           <Route path="/briefing" element={<RoleGate navKey="daily-briefing"><DailyBriefing /></RoleGate>} />
           <Route path="/documents" element={<RoleGate navKey="documents"><Documents /></RoleGate>} />

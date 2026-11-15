@@ -1,0 +1,327 @@
+{
+  "name": "KnowledgeLink",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
+    "from_type": {
+      "type": "string",
+      "enum": [
+        "standard",
+        "control",
+        "policy",
+        "form",
+        "evidence",
+        "audit",
+        "finding",
+        "capa",
+        "risk",
+        "issue",
+        "recommendation"
+      ],
+      "title": "From Object Type"
+    },
+    "from_id": {
+      "type": "string",
+      "title": "From Record ID"
+    },
+    "from_label": {
+      "type": "string",
+      "title": "From Record"
+    },
+    "to_type": {
+      "type": "string",
+      "enum": [
+        "standard",
+        "control",
+        "policy",
+        "form",
+        "evidence",
+        "audit",
+        "finding",
+        "capa",
+        "risk",
+        "issue",
+        "recommendation"
+      ],
+      "title": "To Object Type"
+    },
+    "to_id": {
+      "type": "string",
+      "title": "To Record ID"
+    },
+    "to_label": {
+      "type": "string",
+      "title": "To Record"
+    },
+    "relationship": {
+      "type": "string",
+      "enum": [
+        "HAS_STANDARD",
+        "HAS_OBLIGATION",
+        "HAS_REQUIREMENT",
+        "REQUIRES",
+        "REFERENCES",
+        "IMPLEMENTED_BY",
+        "SUPPORTED_BY",
+        "LINKED_TO",
+        "MITIGATED_BY",
+        "PRODUCES",
+        "GENERATES",
+        "CREATES",
+        "ASSIGNED_TO",
+        "EVIDENCES",
+        "AUDITED_BY",
+        "VALIDATED_BY",
+        "APPROVED_BY",
+        "REPORTS_TO",
+        "MANAGED_BY",
+        "GOVERNS",
+        "MONITORED_BY",
+        "OWNED_BY",
+        "RELATES_TO"
+      ],
+      "default": "RELATES_TO",
+      "title": "Relationship"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "Recorded by hand",
+        "Derived from record fields",
+        "Proposed by AI"
+      ],
+      "enumColors": [
+        "blue",
+        "gray",
+        "purple"
+      ],
+      "default": "Recorded by hand",
+      "title": "Link Source"
+    },
+    "confidence": {
+      "type": "number",
+      "default": 100,
+      "title": "Confidence (%)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Active",
+        "Retired"
+      ],
+      "enumColors": [
+        "green",
+        "gray"
+      ],
+      "default": "Active",
+      "title": "Status"
+    },
+    "reason": {
+      "type": "string",
+      "title": "Why this link exists"
+    }
+  },
+  "required": [
+    "from_type",
+    "from_id",
+    "to_type",
+    "to_id",
+    "relationship"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Team Leader"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

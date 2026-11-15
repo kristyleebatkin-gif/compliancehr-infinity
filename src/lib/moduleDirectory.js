@@ -5,7 +5,7 @@ import {
   ReceiptText, Wrench, MapPin, HeartHandshake, Building2, Newspaper, Landmark,
   UserCog, Handshake, BarChart3, Briefcase, ShoppingCart, KanbanSquare,
   ClipboardList, MessageSquare, Lightbulb, LifeBuoy, BookOpen, Bot, ClipboardCheck, Activity, TrendingUp,
-  Sun, Inbox, Layers, FileCheck2,
+  Sun, Inbox, Layers, FileCheck2, Network,
 } from 'lucide-react';
 
 // Single source of truth for every module in the app: the sidebar, bottom nav and
@@ -49,6 +49,7 @@ const CANONICAL_MODULES = [
   { key: 'compliance', label: 'Compliance & Evidence', path: '/compliance', icon: ShieldCheck, group: '7. Compliance, Quality & Documents', blurb: 'Merged Compliance Centre, Business Analytics, checklists, audit management, file matrices, KPIs and board exports.' },
   { key: 'evidence', label: 'Evidence OS', path: '/evidence', icon: FileCheck2, group: '7. Compliance, Quality & Documents', blurb: 'The assurance chain: every control traced from standard to evidence to finding, with coverage scoring and verified evidence only.' },
   { key: 'ai-os', label: 'AI Intelligence OS', path: '/ai-os', icon: Sparkles, group: '7. Compliance, Quality & Documents', blurb: 'Governed copilots over the registers, with explainable recommendations, confidence scoring and an AI audit trail.' },
+  { key: 'knowledge-graph', label: 'Knowledge Graph OS', path: '/knowledge-graph', icon: Network, group: '7. Compliance, Quality & Documents', blurb: 'Every register in one graph: typed relationships, the 14-stage compliance DNA and per-standard traceability scored from the records you hold.' },
   { key: 'auditor-portal', label: 'Auditor Portal', path: '/auditor-portal', icon: ClipboardCheck, group: '7. Compliance, Quality & Documents', blurb: 'Live read-only collaboration view for auditors: evidence, audits, corrective actions and observations.' },
   { key: 'documents', label: 'Documents & Policies', path: '/documents', icon: FolderOpen, group: '7. Compliance, Quality & Documents', blurb: 'Every Document, 45 Master Registers, Universal Storage & Export, Record Intelligence, 2026 Templates & Company Safe.' },
   { key: 'remote-access', label: 'Remote Access', path: '/remote-access', icon: ShieldCheck, group: '10. Administration & Help', blurb: 'Remote access without the headaches: Zero-Trust browser access, MFA perimeter and managed VPN rules.' },
@@ -136,6 +137,7 @@ export const NAV_GROUPS = [
       "compliance",
       "evidence",
       "ai-os",
+      "knowledge-graph",
       "quality",
       "checklists",
       "review-due",

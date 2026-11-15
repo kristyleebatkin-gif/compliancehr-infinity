@@ -10,8 +10,8 @@ import { MODULE_DIRECTORY, NAV_GROUPS } from './moduleDirectory.js';
 // Platform audit snapshot (counted from the repository on the audit date).
 export const PLATFORM_AUDIT = {
   auditedOn: '15 November 2026',
-  pages: 98,
-  entitySchemas: 189,
+  pages: 99,
+  entitySchemas: 190,
   backendFunctions: 114,
   workflows: 67,
   modules: MODULE_DIRECTORY.length,
@@ -306,9 +306,31 @@ export const OPERATING_SYSTEMS = [
     gaps: ['Version lineage for a single evidence item.', 'Evidence reuse across multiple controls without duplication.'],
   },
   {
+    id: 'knowledge-graph',
+    label: 'Knowledge Graph OS',
+    priority: 13,
+    summary: 'One graph over every register: typed relationships between objects, and the 14-stage chain from regulation to outcome traced standard by standard.',
+    moduleKeys: ['knowledge-graph', 'evidence', 'governance', 'ai-os'],
+    capabilities: [
+      cap('Typed relationships between records across registers', 'live', '/knowledge-graph'),
+      cap('The 23-relationship vocabulary from the enterprise specification', 'live', '/knowledge-graph'),
+      cap('Links derived from reference fields already stored on records', 'live', '/knowledge-graph'),
+      cap('Recorded links for relationships no field captures', 'live', '/knowledge-graph', 'Each stored link carries a type, a source and a reason, and counts towards chain completeness.'),
+      cap('Compliance DNA: regulation to outcome scored at every stage', 'live', '/knowledge-graph'),
+      cap('Per-standard chain tracing that names the exact break', 'live', '/knowledge-graph'),
+      cap('Orphan detection: objects nothing can trace', 'live', '/knowledge-graph'),
+      cap('Graph security inherited from each register\'s own rules', 'partial', '/knowledge-graph', 'The graph only loads records the signed-in role may read, but there is no separate graph-level permission layer.'),
+      cap('Force-directed graph canvas', 'gap', null, 'The explorer walks relationships step by step; there is no visual node canvas.'),
+    ],
+    registers: [
+      { entity: 'KnowledgeLink', label: 'Recorded knowledge links' },
+    ],
+    gaps: ['Graph canvas visualisation.', 'Relationship rules from policy, procedure and form to control.'],
+  },
+  {
     id: 'ai-core',
     label: 'AI Core OS',
-    priority: 13,
+    priority: 14,
     summary: 'Domain copilots, authorised retrieval and evidence-aware assistance.',
     moduleKeys: ['ai-os', 'assistant', 'suggestions-hub'],
     capabilities: [
@@ -331,7 +353,7 @@ export const OPERATING_SYSTEMS = [
   {
     id: 'automation',
     label: 'Automation OS',
-    priority: 14,
+    priority: 15,
     summary: 'Workflow engine, alerts, escalations, approvals and background processing.',
     moduleKeys: ['operations-centre', 'approvals', 'notifications', 'tasks'],
     capabilities: [
@@ -352,7 +374,7 @@ export const OPERATING_SYSTEMS = [
   {
     id: 'reporting',
     label: 'Reporting OS',
-    priority: 15,
+    priority: 16,
     summary: 'Executive, board, compliance, risk, workforce, clinical and regulatory reporting.',
     moduleKeys: ['analytics', 'operations-centre', 'compliance', 'incident-analytics'],
     capabilities: [
