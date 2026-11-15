@@ -760,3 +760,12 @@ Still required before production approval:
 - Before checkpoint: `6af9212339d7d28f841863e1`, commit `9ebac14ce6a8e0a2794c27af805666011454c324`.
 - Verification: `npm run ci:verify` exit 0 (lint, Node tests, 117 Deno tests, Vite build); `npm run typecheck` exit 0; model integrity checks exit 0 (dependency order, existing OS source IDs and generated-plan/export parity). `git diff --check` exit 0.
 - Preview returned successfully. Authenticated browser interaction, responsive/accessibility acceptance and live tenant A/B acceptance were not performed in this batch. No new entity models, role grants, operational workflows or production publication. Full implementation of the ten phases remains open, beginning with Phase 1's evidence/obligation/control and policy-lifecycle acceptance.
+
+## V15 and V16 master build instructions — 15 November 2026
+
+- Submitted the owner's full V15 prompt once, followed by the full V16 append instruction and fourteen-phase sequence to the existing app's main builder.
+- Builder commits: 8f691647610a32012d1c7d14d2c427f0c162cd54 (Evidence OS and assurance chain); 96106eb8a6cb1e8c3522713b9f3153cdfe077f41 (assurance gap detection). These implement an initial subset, not the entire master specification.
+- Before checkpoints: 6af955a80d78b01f5e307e61 (pre-V15), 6af95696dfd37afb7e04713f (pre-V16).
+- Verification found frontend/backend role matrix drift and four unclassified new entities. Repaired the backend evidence navigation permission to match frontend and classified AssuranceEvidence, AssuranceFinding, ComplianceControl and RegulatoryStandard as business-owned in both canonical classification files. Existing schema tenant locks were retained.
+- Final checks: build, lint and typecheck exit 0; Node tests 94 passed, zero failed; Deno tests 123 passed, zero failed.
+- Outstanding: authenticated UI/UAT, live tenant A/B checks, new assurance-specific behavioral coverage, complete V15/V16 architecture and release gates, persistence of the full consolidated specification and alignment of the existing roadmap model with the new fourteen-phase sequence. PostgreSQL/Prisma, GraphQL, warehouse, Power BI and autonomous background execution are not verified as implemented. Builder readiness is not production readiness. No production publication performed.
