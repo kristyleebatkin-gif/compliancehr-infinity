@@ -11,38 +11,18 @@ export default function TraceabilityChainDrawer({ row, onClose }) {
   if (!row) return null;
 
   const steps = [
-    { label: 'Standard', code: row.standard_code, value: row.standard_name, linked: Boolean(row.standard_code) },
-    { label: 'Indicator', code: row.indicator_code, value: row.indicator_name, linked: Boolean(row.indicator_code) },
-    {
-      label: 'Control',
-      code: row.control_code,
-      value: row.control_name,
-      linked: Boolean(row.control_code),
-      note: `${row.control_records} control(s) in your register cover ${row.standard_code}`,
-    },
-    { label: 'Audit checkpoint', code: row.audit_code, value: row.audit_name, linked: true, note: `${row.audit_type} · ${row.review_frequency}` },
-    {
-      label: 'Evidence requirement',
-      code: row.evidence_code,
-      value: row.evidence_name,
-      linked: Boolean(row.current_evidence),
-      note: `${row.evidence_count} evidence record(s) linked · ${row.current_evidence} current`,
-    },
-    {
-      label: 'Finding',
-      code: row.findings_count ? `${row.findings_count} open` : 'None open',
-      value: row.findings_count ? 'Corrective action required' : 'No open finding for this standard',
-      linked: row.findings_count > 0,
-    },
-    {
-      label: 'Corrective action',
-      code: row.actions_count ? `${row.actions_count} in progress` : 'None',
-      value: row.actions_count ? 'Actions tracked to verification and closure' : 'No corrective action recorded',
-      linked: row.actions_count > 0,
-    },
-    { label: 'Risk', code: row.risk_id, value: `${row.risk_rating} · residual score ${row.residual_risk_score}`, linked: true },
-    { label: 'Attestation', code: row.approver_role, value: `Signed off by the ${row.approver_role}`, linked: false },
-    { label: 'Executive & board report', code: row.reviewer_role, value: `Rolls up to ${row.audit_domain} assurance reporting`, linked: true },
+    { label: 'Standard', code: 'Not mapped', value: 'Current official source, version and applicability require review.' },
+    { label: 'Indicator proposal', code: row.indicator_code, value: row.indicator_name },
+    { label: 'Control proposal', code: row.control_code, value: row.control_name },
+    { label: 'Audit checkpoint proposal', code: row.audit_code, value: row.audit_name },
+    { label: 'Evidence requirement proposal', code: row.evidence_code, value: row.evidence_name },
+    { label: 'Evidence document', code: 'Not linked', value: 'Exact document version and verification required.' },
+    { label: 'Finding', code: 'Not assessed', value: 'No checkpoint assessment is connected.' },
+    { label: 'Corrective action', code: 'Not assessed', value: 'No action or closure has been verified.' },
+    { label: 'Risk', code: 'Not assessed', value: 'No risk record, inherent score or residual score has been assessed.' },
+    { label: 'Attestation', code: 'Not signed', value: `Proposed approver: ${row.approver_role}. No signature is recorded.` },
+    { label: 'Executive report', code: 'Not linked', value: 'Reporting requires verified source results.' },
+    { label: 'Board assurance', code: 'Not linked', value: 'Board assurance has not been established.' },
   ];
 
   return (
@@ -58,7 +38,7 @@ export default function TraceabilityChainDrawer({ row, onClose }) {
           <span className={cn('rounded-full border px-2 py-0.5', CRITICALITY[row.criticality].tone)}>{row.criticality}</span>
           <span className={cn('rounded-full border px-2 py-0.5', row.state_tone)}>{row.state_label}</span>
           <span className="rounded-full border border-border bg-muted px-2 py-0.5 text-foreground">
-            {row.achieved_points}/{row.weighting} points · {row.compliance_percentage}%
+            Draft mapping · Not assessed
           </span>
         </div>
 
@@ -86,8 +66,8 @@ export default function TraceabilityChainDrawer({ row, onClose }) {
         </ol>
 
         <p className="rounded-lg border border-border bg-muted/60 p-2.5 text-[11px] font-semibold text-muted-foreground">
-          Accountability: owner {row.owner_role} · reviewer {row.reviewer_role} · approver {row.approver_role}. Evidence is expected
-          {' '}{row.evidence_frequency.toLowerCase()} and the checkpoint is reviewed {row.review_frequency.toLowerCase()}.
+          Proposed accountability: owner {row.owner_role} · reviewer {row.reviewer_role} · approver {row.approver_role}. Proposed evidence cycle:
+          {' '}{row.evidence_frequency.toLowerCase()} ; proposed checkpoint review: {row.review_frequency.toLowerCase()}.
         </p>
       </DialogContent>
     </Dialog>
