@@ -799,3 +799,10 @@ Verification history and CURRENT LIMITS:
 - Full requested master package remains OPEN: complete specialised domain inputs/permissions, all 27 graph nodes with version-pinned validated relationships, operational regulatory/credential feeds, scheduled monitoring, calibrated predictions, complete schema/API artefacts, live decision-authority checks, full domain dashboards and release acceptance. Dashboard categories without connected measures show Not measured. Model/prompt draft registries do not connect to runtime selection.
 
 Saved checkpoint: 6af961aabd425e18308e4e08, commit 261774db7c10e6b2139b5f2dcec3f1a9d6dfa9a1, AI OS — governed workspace, 100 controls, 30 risks; live acceptance pending. Final tracker checkpoint requested after this append. Reconcile the shared tree and rerun all checks when one editing session owns the app.
+
+
+### AI OS final reconciliation — supersedes the earlier transient CI failure above
+
+Base44 returned ready. Reconciled AlliedHealthReferral, ApprovalChain, BoardResolution and CarePlan as business-owned in both canonical classification files and applied the existing tenant-RLS generator to those four schemas, preserving their fields and stricter rules. Restored Knowledge Graph navigation entitlement while preserving newly added Clinical OS, Board/CEO and Approval Engine entries, then mirrored the canonical backend role matrix. Updated the planned-navigation test to use an explicitly planned fixture, since the real previously planned group now contains source modules.
+
+Final verified source checks: ci:verify exit 0 (lint; 101 JavaScript tests passed, 0 failed; 128 Deno tests passed, 0 failed; production Vite build). Configured typecheck exit 0. git diff against 662c6cd17044cd62862b9d01651595b71979677d --check exit 0. Base44 status ready. No production publication. The live UI/provider, tenant A/B, concurrency, source authority and full master-scope limits recorded above remain open. These passing checks do not establish production/regulatory readiness. Final named checkpoint requested: AI OS — verified governed workspace, controls and risk catalogues.
