@@ -34,7 +34,7 @@ export default function WorkflowLibrary({ definitions = [], busy = false, onCrea
                 <h3 className="mt-1 text-sm font-bold text-foreground">{template.name}</h3>
                 <p className="mt-1 text-[11px] font-medium leading-snug text-muted-foreground">{template.description}</p>
                 <p className="mt-2 text-[11px] font-semibold text-muted-foreground">
-                  {template.nodes.length} nodes · {template.sla_hours}h SLA · {template.owner_role}
+                  {template.nodes.length} nodes · {template.sla_hours}h example target · {template.owner_role}
                 </p>
               </div>
               <Button size="sm" className="mt-2" disabled={busy} onClick={() => onCreate?.(template)}>
