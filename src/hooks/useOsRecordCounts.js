@@ -1,34 +1,23 @@
 import { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
+import { useAuth } from '@/lib/AuthContext';
+import { canAccessNav } from '@/lib/roleMatrix';
+import { enterpriseScope, readRegisterCounts } from '@/lib/enterpriseReadModel';
+import { OPERATING_SYSTEMS } from '@/lib/enterpriseOS';
 
-// Reads one live count per register for the selected operating system.
-// A register the signed-in user may not read returns null rather than a wrong number.
 export default function useOsRecordCounts(registers = []) {
-  const key = registers.map((item) => item.entity).join(',');
-  const [counts, setCounts] = useState(null);
-
+  const { user } = useAuth();
+  const scope = enterpriseScope(user);
+  const key = JSON.stringify([scope?.key, registers.map(item => item.entity)]);
+  const [state, setState] = useState(null);
   useEffect(() => {
     let cancelled = false;
-    if (!registers.length) {
-      setCounts({});
-      return () => { cancelled = true; };
-    }
-    setCounts(null);
-    Promise.all(
-      registers.map(async ({ entity }) => {
-        try {
-          const store = base44.entities[entity];
-          if (!store?.count) return { entity, count: null };
-          return { entity, count: await store.count({}) };
-        } catch {
-          return { entity, count: null };
-        }
-      })
-    ).then((rows) => {
-      if (!cancelled) setCounts(Object.fromEntries(rows.map((row) => [row.entity, row.count])));
-    });
+    const allowedEntities = new Set(OPERATING_SYSTEMS
+      .filter(os => os.moduleKeys.some(moduleKey => canAccessNav(user?.role, moduleKey)))
+      .flatMap(os => os.registers.map(item => item.entity)));
+    readRegisterCounts({ entities: base44.entities, registers, user, allowedEntities })
+      .then(counts => { if (!cancelled) setState({ key, counts }); });
     return () => { cancelled = true; };
   }, [key]);
-
-  return counts;
+  return state?.key === key ? state.counts : null;
 }
