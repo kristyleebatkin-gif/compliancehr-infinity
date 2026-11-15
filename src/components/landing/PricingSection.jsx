@@ -16,7 +16,7 @@ export const COMPLIANCE_HR_PACKAGES = [
     previousMonthly: 600,
     eliteAddon: 160,
     monthly: 760,
-    priceLabel: '$760 per a month',
+    priceLabel: '$760 per month',
     messageCredits: '1,200 message credits / mo',
     integrationCredits: '50,000 integration credits / mo',
     featured: true,
@@ -38,7 +38,7 @@ export const COMPLIANCE_HR_PACKAGES = [
     previousMonthly: 660,
     eliteAddon: 160,
     monthly: 820,
-    priceLabel: '$820 per a month',
+    priceLabel: '$820 per month',
     messageCredits: '1,200 message credits / mo',
     integrationCredits: '50,000 integration credits / mo',
     benefits: [
@@ -59,7 +59,7 @@ export const COMPLIANCE_HR_PACKAGES = [
     previousMonthly: 760,
     eliteAddon: 160,
     monthly: 920,
-    priceLabel: '$920 per a month',
+    priceLabel: '$920 per month',
     messageCredits: '1,200 message credits / mo',
     integrationCredits: '50,000 integration credits / mo',
     benefits: [
@@ -80,7 +80,7 @@ export const COMPLIANCE_HR_PACKAGES = [
     previousMonthly: 839,
     eliteAddon: 160,
     monthly: 999,
-    priceLabel: '$999 per a month',
+    priceLabel: '$999 per month',
     messageCredits: '1,200 message credits / mo',
     integrationCredits: '50,000 integration credits / mo',
     benefits: [
@@ -101,7 +101,7 @@ export const COMPLIANCE_HR_PACKAGES = [
     previousMonthly: 940,
     eliteAddon: 160,
     monthly: 1100,
-    priceLabel: '$1,100 per a month',
+    priceLabel: '$1,100 per month',
     messageCredits: '1,200 message credits / mo',
     integrationCredits: '50,000 integration credits / mo',
     benefits: [
@@ -122,7 +122,7 @@ export const COMPLIANCE_HR_PACKAGES = [
     previousMonthly: 1060,
     eliteAddon: 160,
     monthly: 1220,
-    priceLabel: '$1,220 per a month',
+    priceLabel: '$1,220 per month',
     messageCredits: '1,200 message credits / mo',
     integrationCredits: '50,000 integration credits / mo',
     benefits: [
@@ -149,7 +149,7 @@ export const CORE_PLATFORM_BENEFITS = [
   },
   {
     icon: Layers,
-    title: '46 Live Modules + HR, Intake & Policy Docs',
+    title: 'Connected Workspaces + HR, Intake & Policy Docs',
     desc: 'Dual Office & Profile Views plus Staff Training, Consents, Employee & Participant Intake, Progress, Skills, Review, Policies, Procedures, Registers & Business Plans.',
   },
   {
@@ -170,7 +170,7 @@ export const CORE_PLATFORM_BENEFITS = [
 ];
 
 const FEATURE_COMPARISON_ROWS = [
-  { feature: 'All 46 Connected Platform Modules', included: 'Included in Every Tier' },
+  { feature: 'All Connected Platform Workspaces', included: 'Included in Every Tier' },
   { feature: '100+ Tailored Business Details Documents', included: 'Included in Every Tier' },
   { feature: '17 Audit Categories & 356 NDIS Checkpoints', included: 'Included in Every Tier' },
   { feature: 'Elite Package Tokens ($160/mo value)', included: 'Included in Every Tier' },
@@ -234,7 +234,7 @@ export default function PricingSection({ onContactSales }) {
             </h2>
 
             <p className="text-sm sm:text-[13px] font-semibold leading-relaxed text-[#0A2B6D]">
-              Every Smart Enhanced tier includes full access to all 46 connected modules, 100+ tailored Business Details documents, $160/mo Elite Package Tokens, 1,200 message credits, 50,000 integration credits, and dedicated support.
+              Every Smart Enhanced tier includes full access to all connected platform workspaces, 100+ tailored Business Details documents, $160/mo Elite Package Tokens, 1,200 message credits, 50,000 integration credits, and dedicated support.
             </p>
 
             <div className="flex flex-wrap items-center justify-between gap-2 pt-0.5">
@@ -327,7 +327,7 @@ export default function PricingSection({ onContactSales }) {
                             ${pkg.monthly.toLocaleString()}
                           </div>
                           <div className="text-[10px] font-extrabold text-[#0072FF]">
-                            per a month ({billing === 'yearly' ? 'Annual' : 'Monthly'})
+                            per month ({billing === 'yearly' ? 'Annual' : 'Monthly'})
                           </div>
                         </div>
                       </div>
@@ -466,7 +466,7 @@ export default function PricingSection({ onContactSales }) {
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="text-left">
                 <h3 className="font-editorial text-sm sm:text-base font-black text-[#0A2B6D]">
-                  Full Feature Comparison Across All Tiers — Every Tier Unlocks All 46 Connected Modules
+                  Full Feature Comparison Across All Tiers — Every Tier Unlocks All Connected Workspaces
                 </h3>
               </div>
               <div className="flex flex-wrap items-center gap-1.5 shrink-0">

@@ -11,8 +11,8 @@ import {
 // Single source of truth for every module in the app: the sidebar, bottom nav and
 // the dashboard module hub all read this list so nothing can go missing again.
 export const MODULE_DIRECTORY = [
-  { key: 'today', label: 'Administration – Lead (Sherelle)', path: '/today', icon: Sun, group: '1. My Workspace', blurb: 'Sherelle’s daily operations workspace: morning brief, emails, roster, invoices, NDIS updates, compliance job, to-dos and team.' },
-  { key: 'team-leader', label: 'Team Leader - Lead (Jamie)', path: '/team-leader', icon: Sparkles, group: '1. My Workspace', blurb: 'Jamie’s team leader workspace: escalations, shift notes, who is on shift, roster cover, highlights, calculator and handover notes.' },
+  { key: 'today', label: 'Administration Workspace', path: '/today', icon: Sun, group: '1. My Workspace', blurb: 'Daily administration workspace: morning brief, emails, roster, invoices, NDIS updates, compliance job, to-dos and team.' },
+  { key: 'team-leader', label: 'Team Leader Workspace', path: '/team-leader', icon: Sparkles, group: '1. My Workspace', blurb: 'Team leader workspace: escalations, shift notes, who is on shift, roster cover, highlights, calculator and handover notes.' },
   { key: 'dashboard', label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard, group: '1. My Workspace', blurb: 'Executive Dashboard, Subscriptions, Communication, Mailbox, Live Roster, Briefings, Meetings, Feedback & Shared To-Do in one hub.' },
   { key: 'communications', label: 'Communication', path: '/communications', icon: Megaphone, group: '5. Communication & Engagement', blurb: 'Unified Communication, Mailbox, Live Roster, Merged Tasks & Shared To-Do Lists.' },
   { key: 'daily-briefing', label: 'Daily Briefing', path: '/briefing', icon: Newspaper, group: '1. My Workspace', blurb: 'Daily organisational briefing, operational priorities and executive updates.' },

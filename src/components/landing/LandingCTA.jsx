@@ -1,10 +1,11 @@
+import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Calendar, ShieldCheck, CheckCircle2, Building2 } from 'lucide-react';
 import Reveal from '@/components/landing/Reveal';
 
 const APP_STATED_FACTS = [
-  '46 Connected Modules',
+  `${MODULE_DIRECTORY.length} Connected Workspaces`,
   '45 Self-Maintaining Master Registers',
   '356 NDIS & Aged Care Checkpoints',
 ];
@@ -45,7 +46,7 @@ export default function LandingCTA({ onBookDemo }) {
                 >
                   <Building2 className="h-2.5 w-2.5 text-white" />
                 </span>
-                <span>14-Day Enterprise Evaluation · Full 46-Module Access</span>
+                <span>14-Day Enterprise Evaluation · Full Platform Access</span>
               </span>
 
               <span className="inline-flex items-center gap-1.5 rounded-full border border-[#A855F7]/50 bg-[#5A00D6]/30 px-2.5 py-0.5 text-[10.5px] font-extrabold text-white">

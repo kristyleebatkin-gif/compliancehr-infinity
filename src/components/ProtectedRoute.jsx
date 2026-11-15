@@ -25,15 +25,17 @@ export default function ProtectedRoute({ fallback = <DefaultFallback />, unauthe
     return fallback;
   }
 
+  const loginRedirect = unauthenticatedElement || <Navigate to={'/login?returnTo=' + encodeURIComponent(location.pathname + location.search + location.hash)} replace />;
+
   if (authError) {
     if (authError.type === 'user_not_registered') {
       return <UserNotRegisteredError />;
     }
-    return unauthenticatedElement;
+    return loginRedirect;
   }
 
   if (!isAuthenticated || !user) {
-    return unauthenticatedElement;
+    return loginRedirect;
   }
 
   if (!hasApprovedAccess(user)) return <AccountApprovalGate />;

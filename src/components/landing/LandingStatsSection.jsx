@@ -1,11 +1,12 @@
+import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import React from 'react';
 import { Layers, ShieldCheck, ClipboardCheck, Sparkles } from 'lucide-react';
 import LandingSectionHeader from '@/components/landing/LandingSectionHeader';
 
 const STATS = [
   {
-    value: '46',
-    title: '46 Connected Modules',
+    value: String(MODULE_DIRECTORY.length),
+    title: `${MODULE_DIRECTORY.length} Connected Workspaces`,
     subtitle: 'Unified people, rostering, incidents, compliance, HR, finance, and governance in one platform.',
     icon: Layers,
     accent: '#0072FF',

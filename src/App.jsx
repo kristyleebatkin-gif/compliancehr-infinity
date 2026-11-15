@@ -140,7 +140,7 @@ const AuthenticatedApp = () => {
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/mfa" element={<Mfa />} />
       <Route path="/oauth/consent" element={<OAuthConsent />} />
-      <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
+      <Route element={<ProtectedRoute  />}>
         <Route path="/today" element={<RoleGate navKey="today"><TodayDashboard /></RoleGate>} />
         <Route path="/team-leader" element={<RoleGate navKey="team-leader"><TeamLeaderDashboard /></RoleGate>} />
         <Route path="/second-screen" element={<SecondScreen />} />

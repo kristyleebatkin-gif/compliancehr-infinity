@@ -1,3 +1,4 @@
+import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
@@ -75,7 +76,7 @@ export default function LandingSolutionSection() {
           icon={Layers}
           title="One Unified Operating System Across Every Department"
           description="Disconnected point solutions create compliance blind spots — ComplianceHR Infinity connects People, Service Delivery, Governance, and Finance on a single data model."
-          rightTag="4 Pillars · 46 Modules"
+          rightTag={`4 Solution Areas · ${MODULE_DIRECTORY.length} Workspaces`}
         />
 
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2 items-stretch">

@@ -11,6 +11,9 @@ import { Menu, X, ChevronDown, MoreHorizontal, ShieldQuestion,
   LayoutDashboard, Users, Heart, GraduationCap, ShieldCheck,
 } from 'lucide-react';
 import QuickAppBar from '@/components/QuickAppBar';
+import WorkspaceNavigationTools from '@/components/WorkspaceNavigationTools';
+import { matchesModulePath } from '@/lib/navigationPreferences';
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import ObsidianSidebarRemote from '@/components/ObsidianSidebarRemote';
 import BrandLogoLockup from '@/components/common/BrandLogoLockup';
 import BrandSlogan from '@/components/common/BrandSlogan';
@@ -34,7 +37,6 @@ export default function AppLayout() {
   const { role, navRole, user } = useRole();
   const { toast } = useToast();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [moreOpen, setMoreOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
@@ -95,7 +97,6 @@ export default function AppLayout() {
   const accountStatus = user?.account_status || (role === 'Pending Approval' ? 'Pending Approval' : 'Active');
 
   const visiblePrimary = PRIMARY_NAV.filter((item) => canAccessNav(navRole, item.key));
-  const visibleNav = visiblePrimary;
   const visibleBottom = BOTTOM_NAV.filter((item) => canAccessNav(navRole, item.key));
 
   useEffect(() => {
@@ -118,7 +119,6 @@ export default function AppLayout() {
 
   useEffect(() => {
     setMobileOpen(false);
-    setMoreOpen(false);
     setUserMenuOpen(false);
     setNotifOpen(false);
     if (user?.id && accountStatus === 'Active' && role !== 'Archived') {
@@ -137,7 +137,8 @@ export default function AppLayout() {
       if (event.key === 'Escape') {
         setNotifOpen(false);
         setUserMenuOpen(false);
-      }
+        setMobileOpen(false);
+          }
     };
     window.addEventListener('keydown', closeMenus);
     return () => window.removeEventListener('keydown', closeMenus);
@@ -162,7 +163,7 @@ export default function AppLayout() {
   };
 
   const isActive = (path) =>
-    location.pathname === path || (path !== '/' && location.pathname.startsWith(path));
+    matchesModulePath(location.pathname, path);
 
   const navLabel = (item) => (item.key === 'my-profile' ? (role === ROLES.PARTICIPANT ? 'My participant profile' : 'My employee profile') : item.label);
   const activeNavItem = PRIMARY_NAV.find((i) => isActive(i.path));
@@ -249,14 +250,13 @@ export default function AppLayout() {
         {sidebarContent}
       </aside>
 
-      {mobileOpen && (
-        <div className="fixed inset-0 z-50 md:hidden">
-          <div className="absolute inset-0 bg-foreground/40" onClick={() => setMobileOpen(false)} />
-          <aside className="absolute left-0 top-0 h-full w-64 overflow-y-auto bg-sidebar shadow-xl">
-            {sidebarContent}
-          </aside>
-        </div>
-      )}
+      <Dialog open={mobileOpen} onOpenChange={setMobileOpen}>
+        <DialogContent className="left-0 top-0 h-dvh max-h-dvh w-[min(90vw,320px)] translate-x-0 translate-y-0 rounded-none bg-workspace-navy p-0 sm:max-w-[320px]">
+          <DialogTitle className="sr-only">Workspace navigation</DialogTitle>
+          <DialogDescription className="sr-only">Browse the workspaces available to your role.</DialogDescription>
+          <div className="overflow-y-auto pt-8">{sidebarContent}</div>
+        </DialogContent>
+      </Dialog>
 
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="preserve-island-theme sticky top-0 z-40 shrink-0 shadow-md">
@@ -295,7 +295,8 @@ export default function AppLayout() {
                     <button
                       onClick={() => setMobileOpen(true)}
                       aria-label="Open menu"
-                      className="shrink-0 rounded-lg border-2 border-[#00C6FF] bg-workspace-navy p-1 text-[#00C6FF] shadow-2xs transition hover:border-[#FF2E9A] md:hidden"
+                      aria-expanded={mobileOpen}
+                      className="min-h-11 min-w-11 shrink-0 rounded-lg border-2 border-[#00C6FF] bg-workspace-navy p-1 text-[#00C6FF] shadow-2xs transition hover:border-[#FF2E9A] md:hidden"
                     >
                       <Menu className="h-3.5 w-3.5" style={{ color: '#00C6FF' }} />
                     </button>
@@ -332,7 +333,8 @@ export default function AppLayout() {
             </div>
           )}
 
-          <div className="max-h-[40vh] overflow-y-auto">
+          <WorkspaceNavigationTools />
+          <div className="max-h-[35vh] overflow-y-auto lg:hidden">
             <QuickAppBar workspaceView={workspaceView} onSwitchWorkspaceView={switchWorkspaceView} />
           </div>
 
@@ -371,7 +373,7 @@ export default function AppLayout() {
         </main>
 
         {/* Bottom nav (mobile) */}
-        <nav className="fixed bottom-0 left-0 right-0 z-30 flex items-center justify-around border-t border-border/60 bg-background px-1 pb-[max(0.375rem,env(safe-area-inset-bottom))] pt-1.5 md:hidden">
+        <nav aria-label="Mobile workspace navigation" className="fixed bottom-0 left-0 right-0 z-30 flex items-center justify-around border-t border-border/60 bg-background px-1 pb-[max(0.375rem,env(safe-area-inset-bottom))] pt-1.5 md:hidden">
           {visibleBottom.map((item) => {
             const Icon = item.icon;
             const active = isActive(item.path);
@@ -380,6 +382,7 @@ export default function AppLayout() {
               <Link
                 key={item.path}
                 to={item.path}
+                aria-current={active ? 'page' : undefined}
                 className={`flex flex-1 flex-col items-center gap-0.5 rounded-lg py-1.5 text-xs font-bold transition-colors ${
                   active ? 'text-[#0072FF]' : 'text-[#0A2B6D]/75'
                 }`}
@@ -390,7 +393,7 @@ export default function AppLayout() {
             );
           })}
           <button
-            onClick={() => setMoreOpen(true)}
+            onClick={() => setMobileOpen(true)}
             className="flex flex-1 flex-col items-center gap-0.5 rounded-lg py-1.5 text-xs font-bold text-[#0A2B6D]"
           >
             <MoreHorizontal className="h-5 w-5" />
@@ -398,42 +401,7 @@ export default function AppLayout() {
           </button>
         </nav>
 
-        {moreOpen && (
-          <div className="fixed inset-0 z-50 md:hidden">
-            <div className="absolute inset-0 bg-foreground/40" onClick={() => setMoreOpen(false)} />
-            <div className="absolute bottom-0 left-0 right-0 max-h-[75vh] overflow-y-auto rounded-t-2xl bg-white p-4 pb-8">
-              <div className="mb-3 flex items-center justify-between border-b border-slate-100 pb-2.5">
-                <div className="text-base font-extrabold text-[#0A2B6D]">All Enterprise Modules</div>
-                <button onClick={() => setMoreOpen(false)} className="rounded-lg p-1.5 hover:bg-slate-100">
-                  <X className="h-5 w-5 text-[#0A2B6D]" />
-                </button>
-              </div>
-              <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
-                {visibleNav
-                  .filter((i) => !BOTTOM_NAV.some((b) => b.path === i.path))
-                  .map((item) => {
-                    const Icon = item.icon;
-                    const modColor = moduleKeyColour(item.key);
-                    return (
-                      <Link
-                        key={item.path}
-                        to={item.path}
-                        className="flex items-center gap-2.5 rounded-xl border border-slate-200 bg-white p-3 text-left text-xs font-bold text-[#0A2B6D] shadow-2xs transition hover:border-[#0072FF]"
-                      >
-                        <span
-                          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
-                          style={{ background: modColor }}
-                        >
-                          <Icon className="h-4 w-4 text-white" style={{ color: '#FFFFFF' }} />
-                        </span>
-                        <span className="break-words leading-snug">{navLabel(item)}</span>
-                      </Link>
-                    );
-                  })}
-              </div>
-            </div>
-          </div>
-        )}
+
       </div>
     </div>
   );
