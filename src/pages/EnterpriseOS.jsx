@@ -9,6 +9,7 @@ import OsDetailPanel from '@/components/enterprise/os/OsDetailPanel';
 import RoleWorkspaceTable from '@/components/enterprise/os/RoleWorkspaceTable';
 import PlatformAuditPanel from '@/components/enterprise/os/PlatformAuditPanel';
 import RoadmapPanel from '@/components/enterprise/os/RoadmapPanel';
+import EvidenceTraceabilityReview from '@/components/enterprise/os/EvidenceTraceabilityReview';
 import { OPERATING_SYSTEMS, OS_BY_ID, PLATFORM_COVERAGE, PLATFORM_AUDIT } from '@/lib/enterpriseOS';
 import { ROLE_WORKSPACES } from '@/lib/enterpriseRoleWorkspaces';
 
@@ -55,6 +56,7 @@ export default function EnterpriseOS() {
         <TabsList aria-label="Enterprise OS views" className="flex h-auto flex-wrap gap-1">
           <TabsTrigger value="systems">Operating systems</TabsTrigger>
           <TabsTrigger value="workspaces">Role workspaces</TabsTrigger>
+          <TabsTrigger value="traceability">Evidence traceability</TabsTrigger>
           <TabsTrigger value="audit">Platform audit</TabsTrigger>
           <TabsTrigger value="roadmap">Roadmap</TabsTrigger>
         </TabsList>
@@ -70,6 +72,10 @@ export default function EnterpriseOS() {
 
         <TabsContent value="workspaces" className="mt-3">
           <RoleWorkspaceTable />
+        </TabsContent>
+
+        <TabsContent value="traceability" className="mt-3">
+          <EvidenceTraceabilityReview />
         </TabsContent>
 
         <TabsContent value="audit" className="mt-3">
