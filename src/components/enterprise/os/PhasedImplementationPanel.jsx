@@ -9,7 +9,7 @@ export default function PhasedImplementationPanel() {
   return (
     <div className="space-y-4 text-[#0A2B6D]">
       <section className={box}>
-        <h2 className="text-lg font-extrabold">Ten-phase enterprise implementation</h2>
+        <h2 className="text-lg font-extrabold">Twelve-phase enterprise implementation</h2>
         <p className="mt-2 text-sm">{EVIDENCE_CHAIN.join(' → ')}</p>
         <p className="mt-2 text-sm">This is the target delivery sequence. All phases require acceptance. Existing source mappings below identify reuse candidates; they do not establish completion.</p>
         <p className="mt-2 text-sm font-semibold">Security, privacy, tenant isolation and AI oversight start in the foundation and apply to every phase.</p>
