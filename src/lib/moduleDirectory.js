@@ -10,7 +10,7 @@ import {
 
 // Single source of truth for every module in the app: the sidebar, bottom nav and
 // the dashboard module hub all read this list so nothing can go missing again.
-export const MODULE_DIRECTORY = [
+const CANONICAL_MODULES = [
   { key: 'today', label: 'Administration Workspace', path: '/today', icon: Sun, group: '1. My Workspace', blurb: 'Daily administration workspace: morning brief, emails, roster, invoices, NDIS updates, compliance job, to-dos and team.' },
   { key: 'team-leader', label: 'Team Leader Workspace', path: '/team-leader', icon: Sparkles, group: '1. My Workspace', blurb: 'Team leader workspace: escalations, shift notes, who is on shift, roster cover, highlights, calculator and handover notes.' },
   { key: 'dashboard', label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard, group: '1. My Workspace', blurb: 'Executive Dashboard, Subscriptions, Communication, Mailbox, Live Roster, Briefings, Meetings, Feedback & Shared To-Do in one hub.' },
@@ -79,11 +79,19 @@ export const MODULE_DIRECTORY = [
   { key: 'help', label: 'Help Centre', path: '/help', icon: LifeBuoy, group: '10. Administration & Help', blurb: 'Support centre, AI troubleshooter, system health and support desk.' },
 ];
 
-// Approved task-based navigation: each module has exactly one home.
+// App// Version 3.0 navigation reuses existing modules and routes. Shortcuts do not grant access.
 export const NAV_GROUPS = [
   {
+    "id": "ai-core",
+    "label": "AI Core",
+    "keys": [
+      "assistant",
+      "suggestions-hub"
+    ]
+  },
+  {
     "id": "my-workspace",
-    "label": "1. My Workspace",
+    "label": "My Workspace",
     "keys": [
       "dashboard",
       "today",
@@ -92,70 +100,29 @@ export const NAV_GROUPS = [
       "daily-briefing",
       "tasks",
       "approvals",
-      "assistant"
-    ]
-  },
-  {
-    "id": "people-intake",
-    "label": "2. People & Intake",
-    "keys": [
-      "intake",
-      "our-participants",
-      "our-staff",
-      "key-contacts",
-      "community-referral",
-      "volunteering-placements"
-    ]
-  },
-  {
-    "id": "service-delivery",
-    "label": "3. Service Delivery",
-    "keys": [
-      "rostering",
-      "goals",
-      "programs",
-      "frontline-hub",
-      "visual-boards"
-    ]
-  },
-  {
-    "id": "workforce-training",
-    "label": "4. Workforce & Training",
-    "keys": [
-      "human-resources",
-      "workforce-presence",
-      "training",
-      "certificates"
-    ]
-  },
-  {
-    "id": "communication-engagement",
-    "label": "5. Communication & Engagement",
-    "keys": [
       "communications",
-      "meetings",
       "feedback",
       "community-council"
     ]
   },
   {
-    "id": "incidents-risk-safety",
-    "label": "6. Incidents, Risk & Safety",
+    "id": "governance-os",
+    "label": "Governance OS",
+    "parent": "Operating Systems",
     "keys": [
-      "incidents",
-      "incident-analytics",
-      "risks",
-      "emergency-response",
-      "equipment-manuals"
+      "governance",
+      "projects",
+      "meetings",
+      "key-contacts",
+      "operations-centre"
     ]
   },
   {
-    "id": "compliance-quality-documents",
-    "label": "7. Compliance, Quality & Documents",
+    "id": "compliance-os",
+    "label": "Compliance OS",
+    "parent": "Operating Systems",
     "keys": [
       "compliance",
-      "auditor-portal",
-      "documents",
       "quality",
       "checklists",
       "review-due",
@@ -164,30 +131,117 @@ export const NAV_GROUPS = [
     ]
   },
   {
-    "id": "finance-assets-growth",
-    "label": "8. Finance, Assets & Growth",
+    "id": "risk-os",
+    "label": "Risk OS",
+    "parent": "Operating Systems",
     "keys": [
+      "risks",
+      "incidents",
+      "emergency-response",
+      "equipment-manuals"
+    ]
+  },
+  {
+    "id": "audit-os",
+    "label": "Audit OS",
+    "parent": "Operating Systems",
+    "keys": [
+      "auditor-portal"
+    ],
+    "shortcuts": [
+      {
+        "key": "audit-management",
+        "label": "Audit Management",
+        "path": "/compliance?tab=audits",
+        "permissionKey": "compliance"
+      }
+    ]
+  },
+  {
+    "id": "workforce-os",
+    "label": "Workforce OS",
+    "parent": "Operating Systems",
+    "keys": [
+      "our-staff",
+      "human-resources",
+      "rostering",
+      "frontline-hub",
+      "workforce-presence",
+      "training",
+      "certificates",
+      "volunteering-placements"
+    ]
+  },
+  {
+    "id": "clinical-governance-os",
+    "label": "Clinical Governance OS",
+    "parent": "Operating Systems",
+    "keys": [],
+    "planned": true,
+    "description": "Release 8 — clinical risk, supervision and review workflows are planned."
+  },
+  {
+    "id": "allied-health-os",
+    "label": "Allied Health OS",
+    "parent": "Operating Systems",
+    "keys": [
+      "our-participants",
+      "intake",
+      "community-referral",
+      "goals",
+      "visual-boards",
+      "programs"
+    ],
+    "description": "Existing participant and support workspaces. Discipline workflows remain part of Release 8.",
+    "shortcuts": [
+      {
+        "key": "allied-health-catalogue",
+        "label": "Allied Health Catalogue",
+        "path": "/documents?tab=registers-hub",
+        "permissionKey": "documents"
+      }
+    ]
+  },
+  {
+    "id": "enterprise-registers",
+    "label": "Enterprise Registers",
+    "keys": [
+      "documents",
+      "assets",
+      "procurement",
       "invoicing",
       "quotes",
       "receipts",
-      "procurement",
-      "assets",
       "crm"
+    ],
+    "shortcuts": [
+      {
+        "key": "master-registers",
+        "label": "Master Registers",
+        "path": "/documents?tab=registers-hub",
+        "permissionKey": "documents"
+      }
     ]
   },
   {
-    "id": "governance-operations",
-    "label": "9. Governance & Operations",
+    "id": "reports-analytics",
+    "label": "Reports & Analytics",
     "keys": [
-      "governance",
-      "operations-centre",
-      "projects",
-      "suggestions-hub"
+      "analytics",
+      "incident-analytics"
+    ],
+    "shortcuts": [
+      {
+        "key": "executive-dashboards",
+        "label": "Executive Dashboards",
+        "path": "/executive-dashboards",
+        "permissionKey": "analytics"
+      }
     ]
   },
   {
-    "id": "administration-help",
-    "label": "10. Administration & Help",
+    "id": "administration",
+    "label": "Administration",
     "keys": [
       "users",
       "remote-access",
@@ -196,6 +250,10 @@ export const NAV_GROUPS = [
     ]
   }
 ];
+
+export const MODULE_DIRECTORY = [...CANONICAL_MODULES,
+  { key: 'analytics', label: 'Reports & Analytics', path: '/analytics', icon: BarChart3, blurb: 'Existing reporting and analytics workspace.' },
+].map((module) => ({ ...module, group: NAV_GROUPS.find((group) => group.keys.includes(module.key))?.label || module.group }));
 
 export function buildNavigationGroups(directory = MODULE_DIRECTORY, groups = NAV_GROUPS) {
   const byKey = new Map(directory.map((module) => [module.key, module]));
