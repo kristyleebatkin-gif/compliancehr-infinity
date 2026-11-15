@@ -3,7 +3,7 @@ import { Bot, Flag, Gauge, Inbox, ThumbsUp } from 'lucide-react';
 import { confidenceBand } from '@/lib/aiIntelligence';
 
 const TILES = [
-  { key: 'runs', label: 'Copilot runs', icon: Gauge, hint: 'Every run is logged with its confidence' },
+  { key: 'runs', label: 'Copilot runs', icon: Gauge, hint: 'Completed runs within the displayed snapshot' },
   { key: 'avgConfidence', label: 'Average confidence', suffix: '%', icon: ThumbsUp, hintKey: 'confidenceHint' },
   { key: 'awaiting', label: 'Awaiting review', icon: Inbox, hint: 'Recommendations needing human verification' },
   { key: 'acceptanceRate', label: 'Acceptance rate', suffix: '%', icon: ThumbsUp, hintKey: 'acceptanceHint' },
@@ -14,7 +14,7 @@ const TILES = [
 export default function AiHealthStrip({ summary }) {
   const hints = {
     confidenceHint: summary.avgConfidence === null
-      ? 'Not measured yet'
+      ? 'Uncalibrated; numeric score unavailable'
       : confidenceBand(summary.avgConfidence).label,
     acceptanceHint: summary.acceptanceRate === null
       ? 'No decisions recorded yet'
