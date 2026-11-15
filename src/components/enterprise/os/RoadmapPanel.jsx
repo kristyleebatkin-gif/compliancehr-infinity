@@ -7,7 +7,8 @@ import { DELIVERABLES, ENTERPRISE_GAPS, OPERATING_SYSTEMS, osCoverage, osStatus 
 /** @param {any} props */
 export default function RoadmapPanel() {
   return (
-    <div className="space-y-3">\n      <PhasedImplementationPanel />
+    <div className="space-y-3">
+      <PhasedImplementationPanel />
       <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-2xs">
         <h2 className="text-lg font-extrabold leading-tight text-[#0A2B6D]">Existing source capability inventory</h2>
         <p className="mt-1 max-w-3xl text-sm leading-relaxed text-[#0A2B6D]/75">
