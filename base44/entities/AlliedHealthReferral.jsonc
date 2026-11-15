@@ -1,0 +1,364 @@
+{
+  "type": "object",
+  "name": "AlliedHealthReferral",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
+    "referral_number": {
+      "type": "string",
+      "title": "Referral Number"
+    },
+    "participant_id": {
+      "type": "string",
+      "title": "Participant Record ID"
+    },
+    "participant_name": {
+      "type": "string",
+      "title": "Participant Name"
+    },
+    "discipline": {
+      "type": "string",
+      "title": "Discipline",
+      "enum": [
+        "Occupational Therapy",
+        "Physiotherapy",
+        "Speech Pathology",
+        "Psychology",
+        "Positive Behaviour Support",
+        "Dietetics",
+        "Nursing",
+        "Social Work",
+        "Other"
+      ],
+      "enumColors": [
+        "blue",
+        "purple",
+        "pink",
+        "green",
+        "yellow",
+        "gray",
+        "teal",
+        "gray",
+        "gray"
+      ],
+      "default": "Occupational Therapy"
+    },
+    "provider_name": {
+      "type": "string",
+      "title": "Allied Health Provider"
+    },
+    "provider_contact": {
+      "type": "string",
+      "title": "Provider Contact"
+    },
+    "reason": {
+      "type": "string",
+      "title": "Reason for Referral"
+    },
+    "urgency": {
+      "type": "string",
+      "title": "Urgency",
+      "enum": [
+        "Routine",
+        "Priority",
+        "Urgent"
+      ],
+      "enumColors": [
+        "gray",
+        "yellow",
+        "red"
+      ],
+      "default": "Routine"
+    },
+    "referral_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Referral Date"
+    },
+    "appointment_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Next Appointment"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Draft",
+        "Sent",
+        "Accepted",
+        "Scheduled",
+        "Completed",
+        "Declined",
+        "Closed"
+      ],
+      "enumColors": [
+        "gray",
+        "blue",
+        "green",
+        "purple",
+        "green",
+        "red",
+        "gray"
+      ],
+      "default": "Draft"
+    },
+    "consent_status": {
+      "type": "string",
+      "title": "Consent",
+      "enum": [
+        "Consent recorded",
+        "Consent pending",
+        "Consent declined"
+      ],
+      "enumColors": [
+        "green",
+        "yellow",
+        "red"
+      ],
+      "default": "Consent pending"
+    },
+    "outcome_summary": {
+      "type": "string",
+      "title": "Outcome / Recommendations Received"
+    },
+    "report_file_url": {
+      "type": "string",
+      "title": "Report Link"
+    },
+    "review_due": {
+      "type": "string",
+      "format": "date",
+      "title": "Follow-up Due"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "participant_name",
+    "discipline",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Team Leader"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Support Worker"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Team Leader"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Support Worker"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Team Leader"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

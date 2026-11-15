@@ -1,0 +1,299 @@
+{
+  "type": "object",
+  "name": "BoardResolution",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
+    "resolution_number": {
+      "type": "string",
+      "title": "Resolution Number"
+    },
+    "title": {
+      "type": "string",
+      "title": "Resolution Title"
+    },
+    "meeting_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Board Meeting Date"
+    },
+    "resolution_type": {
+      "type": "string",
+      "title": "Resolution Type",
+      "enum": [
+        "Governance",
+        "Financial",
+        "Clinical governance",
+        "Risk acceptance",
+        "Policy approval",
+        "Strategic",
+        "Regulatory"
+      ],
+      "enumColors": [
+        "blue",
+        "green",
+        "purple",
+        "red",
+        "yellow",
+        "gray",
+        "pink"
+      ],
+      "default": "Governance"
+    },
+    "decision_text": {
+      "type": "string",
+      "title": "What the Board Resolved"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Draft",
+        "Tabled",
+        "Approved",
+        "Deferred",
+        "Rejected",
+        "Withdrawn"
+      ],
+      "enumColors": [
+        "gray",
+        "yellow",
+        "green",
+        "blue",
+        "red",
+        "gray"
+      ],
+      "default": "Draft"
+    },
+    "moved_by": {
+      "type": "string",
+      "title": "Moved By"
+    },
+    "seconded_by": {
+      "type": "string",
+      "title": "Seconded By"
+    },
+    "chair": {
+      "type": "string",
+      "title": "Chair"
+    },
+    "votes_for": {
+      "type": "number",
+      "title": "Votes For"
+    },
+    "votes_against": {
+      "type": "number",
+      "title": "Votes Against"
+    },
+    "abstentions": {
+      "type": "number",
+      "title": "Abstentions"
+    },
+    "signed_by": {
+      "type": "string",
+      "title": "Signed By"
+    },
+    "signed_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Signed Date"
+    },
+    "effective_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Effective Date"
+    },
+    "review_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Next Review Date"
+    },
+    "linked_record": {
+      "type": "string",
+      "title": "Linked Record Reference"
+    },
+    "evidence_url": {
+      "type": "string",
+      "title": "Minutes / Evidence Link"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "title",
+    "resolution_type",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

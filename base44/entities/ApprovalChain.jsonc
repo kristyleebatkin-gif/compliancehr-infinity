@@ -1,0 +1,285 @@
+{
+  "type": "object",
+  "name": "ApprovalChain",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID"
+    },
+    "title": {
+      "type": "string",
+      "title": "What needs approval"
+    },
+    "summary": {
+      "type": "string",
+      "title": "Summary for approvers"
+    },
+    "module": {
+      "type": "string",
+      "title": "Module"
+    },
+    "record_type": {
+      "type": "string",
+      "title": "Record type"
+    },
+    "record_id": {
+      "type": "string",
+      "title": "Record ID"
+    },
+    "record_url": {
+      "type": "string",
+      "title": "Open record"
+    },
+    "category": {
+      "type": "string",
+      "title": "Approval category"
+    },
+    "amount": {
+      "type": "number",
+      "title": "Amount (if financial)"
+    },
+    "risk_level": {
+      "type": "string",
+      "title": "Risk level",
+      "enum": [
+        "Low",
+        "Medium",
+        "High",
+        "Critical"
+      ],
+      "enumColors": [
+        "green",
+        "yellow",
+        "red",
+        "red"
+      ],
+      "default": "Medium"
+    },
+    "levels": {
+      "type": "number",
+      "title": "Number of levels"
+    },
+    "stages_json": {
+      "type": "string",
+      "title": "Approval stages"
+    },
+    "stage_names": {
+      "type": "string",
+      "title": "Stage names"
+    },
+    "current_level": {
+      "type": "number",
+      "title": "Current level",
+      "default": 1
+    },
+    "current_stage": {
+      "type": "string",
+      "title": "Current stage"
+    },
+    "current_roles": {
+      "type": "string",
+      "title": "Roles that may decide now"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Pending",
+        "Approved",
+        "Returned",
+        "Withdrawn"
+      ],
+      "enumColors": [
+        "yellow",
+        "green",
+        "red",
+        "gray"
+      ],
+      "default": "Pending"
+    },
+    "requested_by_id": {
+      "type": "string",
+      "title": "Requested by (user id)"
+    },
+    "requested_by_name": {
+      "type": "string",
+      "title": "Requested by"
+    },
+    "requested_by_email": {
+      "type": "string",
+      "title": "Requester email"
+    },
+    "requested_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Requested at"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Decision due"
+    },
+    "decisions_json": {
+      "type": "string",
+      "title": "Decision history"
+    },
+    "decision_count": {
+      "type": "number",
+      "title": "Decisions recorded",
+      "default": 0
+    },
+    "closed_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Closed at"
+    },
+    "last_decision_by": {
+      "type": "string",
+      "title": "Last decided by"
+    },
+    "last_decision_note": {
+      "type": "string",
+      "title": "Last decision note"
+    }
+  },
+  "required": [
+    "title",
+    "category",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Team Leader"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Finance & Accounts Officer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
