@@ -5,7 +5,7 @@ import {
   ReceiptText, Wrench, MapPin, HeartHandshake, Building2, Newspaper, Landmark,
   UserCog, Handshake, BarChart3, Briefcase, ShoppingCart, KanbanSquare,
   ClipboardList, MessageSquare, Lightbulb, LifeBuoy, BookOpen, Bot, ClipboardCheck, Activity, TrendingUp,
-  Sun, Inbox,
+  Sun, Inbox, Layers,
 } from 'lucide-react';
 
 // Single source of truth for every module in the app: the sidebar, bottom nav and
@@ -14,6 +14,7 @@ const CANONICAL_MODULES = [
   { key: 'today', label: 'Administration Workspace', path: '/today', icon: Sun, group: '1. My Workspace', blurb: 'Daily administration workspace: morning brief, emails, roster, invoices, NDIS updates, compliance job, to-dos and team.' },
   { key: 'team-leader', label: 'Team Leader Workspace', path: '/team-leader', icon: Sparkles, group: '1. My Workspace', blurb: 'Team leader workspace: escalations, shift notes, who is on shift, roster cover, highlights, calculator and handover notes.' },
   { key: 'dashboard', label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard, group: '1. My Workspace', blurb: 'Executive Dashboard, Subscriptions, Communication, Mailbox, Live Roster, Briefings, Meetings, Feedback & Shared To-Do in one hub.' },
+  { key: 'enterprise-os', label: 'Enterprise OS', path: '/enterprise-os', icon: Layers, group: '1. My Workspace', blurb: 'Every operating system in one console: capability coverage, the modules that serve it, live registers, role workspaces, gaps and roadmap.' },
   { key: 'communications', label: 'Communication', path: '/communications', icon: Megaphone, group: '5. Communication & Engagement', blurb: 'Unified Communication, Mailbox, Live Roster, Merged Tasks & Shared To-Do Lists.' },
   { key: 'daily-briefing', label: 'Daily Briefing', path: '/briefing', icon: Newspaper, group: '1. My Workspace', blurb: 'Daily organisational briefing, operational priorities and executive updates.' },
   { key: 'meetings', label: 'Meetings', path: '/meetings', icon: CalendarDays, group: '5. Communication & Engagement', blurb: 'Meetings, agenda assistant, templates, minutes and action item tracking.' },
@@ -103,6 +104,14 @@ export const NAV_GROUPS = [
       "communications",
       "feedback",
       "community-council"
+    ]
+  },
+  {
+    "id": "enterprise-os",
+    "label": "Enterprise OS",
+    "parent": "Operating Systems",
+    "keys": [
+      "enterprise-os"
     ]
   },
   {
