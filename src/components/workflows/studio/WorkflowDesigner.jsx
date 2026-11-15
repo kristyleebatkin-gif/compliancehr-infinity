@@ -64,9 +64,9 @@ export default function WorkflowDesigner({ definition, busy = false, onSave, onP
         </div>
         <div className="flex flex-wrap gap-1.5">
           <Button size="sm" variant="outline" disabled={busy} onClick={() => onSave?.(definition, nodes)}>
-            <Save className="mr-1.5 h-4 w-4" /> Save &amp; validate
+            <Save className="mr-1.5 h-4 w-4" /> Keep local draft
           </Button>
-          <Button size="sm" disabled={busy || !validation.valid} onClick={() => onPublish?.(definition, nodes)}>
+          <Button size="sm" disabled title="Publication awaits runtime acceptance" onClick={() => onPublish?.(definition, nodes)}>
             <Upload className="mr-1.5 h-4 w-4" /> Publish
           </Button>
         </div>
@@ -132,11 +132,11 @@ export default function WorkflowDesigner({ definition, busy = false, onSave, onP
                     <span className="min-w-0 flex-1">
                       <span className="block truncate text-xs font-bold text-foreground">{item.label}</span>
                       <span className="block truncate text-[11px] font-medium text-muted-foreground">
-                        {meta?.label || item.type} · {item.role || 'any role'} · next {target}
+                        {meta?.label || item.type} · {item.role || 'unassigned'} · next {target}
                       </span>
                     </span>
                     <span className={cn('rounded-full border px-1.5 py-0.5 text-[10px] font-bold', meta?.human ? 'border-warning/50 bg-warning/15 text-warning' : 'border-border bg-muted text-muted-foreground')}>
-                      {meta?.human ? 'Person' : 'Auto'}
+                      {meta?.human ? 'Person' : 'Adapter required'}
                     </span>
                   </button>
                 </li>
