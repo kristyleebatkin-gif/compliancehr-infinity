@@ -187,6 +187,7 @@
     }
   },
   "required": [
+    "tenant_id",
     "definition_name",
     "state"
   ],
@@ -243,16 +244,7 @@
           ]
         },
         {
-          "$or": [
-            {
-              "user_condition": {
-                "role": "admin"
-              }
-            },
-            {
-              "data.tenant_id": "{{user.data.tenant_id}}"
-            }
-          ]
+          "data.tenant_id": "{{user.data.tenant_id}}"
         }
       ]
     },
