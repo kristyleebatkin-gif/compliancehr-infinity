@@ -106,11 +106,11 @@ export default function WorkflowDesigner({ definition, busy = false, onSave, onV
         </p>
       ) : (
         <label className="block rounded-xl border border-border bg-card p-3 text-[11px] font-bold text-foreground">
-          Publication note (required when you authored this graph)
+          Publication note · an independent authorised publisher is required
           <Input
             value={note}
             onChange={(event) => setNote(event.target.value)}
-            placeholder="Why this version is being published, and under whose authority"
+            placeholder="Reason for publication and review reference"
             className="mt-1"
           />
         </label>
