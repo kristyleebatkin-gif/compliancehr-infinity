@@ -38,7 +38,7 @@ export default function WorkflowLibrary({ definitions = [], busy = false, onCrea
                 </p>
               </div>
               <Button size="sm" className="mt-2" disabled={busy} onClick={() => onCreate?.(template)}>
-                <FilePlus2 className="mr-1.5 h-4 w-4" /> Open local draft
+                <FilePlus2 className="mr-1.5 h-4 w-4" /> Create draft from template
               </Button>
             </article>
           ))}
@@ -49,7 +49,7 @@ export default function WorkflowLibrary({ definitions = [], busy = false, onCrea
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border px-4 py-3">
           <div>
             <h2 className="text-sm font-extrabold text-foreground">My workflows</h2>
-            <p className="text-xs text-muted-foreground">Review stored definitions. Publication and execution are gated.</p>
+            <p className="text-xs text-muted-foreground">Draft, validate and publish a workflow, or start a published one. Published versions are immutable; clone to revise.</p>
           </div>
           <span className="text-[11px] font-bold text-muted-foreground">{definitions.length} definition(s)</span>
         </div>
@@ -67,27 +67,35 @@ export default function WorkflowLibrary({ definitions = [], busy = false, onCrea
                 <h3 className="mt-0.5 truncate text-sm font-bold text-foreground">{definition.name}</h3>
                 <p className="text-[11px] font-medium text-muted-foreground">
                   {definition.workflow_type} · owner {definition.owner_role || 'unassigned'} · {definition.sla_hours || 72}h target
+                  {definition.content_hash ? ` · graph ${definition.content_hash.slice(-8)}` : ''}
+                  {definition.publisher_independent === false && definition.state === 'Published' ? ' · self-published' : ''}
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-1.5">
                 <Button size="sm" variant="outline" onClick={() => onOpen?.(definition)}>
                   <PencilRuler className="mr-1.5 h-4 w-4" /> Design
                 </Button>
-                <Button size="sm" variant="outline" disabled onClick={() => onClone?.(definition)}>
+                <Button size="sm" variant="outline" disabled={busy} onClick={() => onClone?.(definition)}>
                   <Copy className="mr-1.5 h-4 w-4" /> Clone
                 </Button>
                 {definition.state !== 'Published' && definition.state !== 'Archived' && (
-                  <Button size="sm" variant="outline" disabled onClick={() => onPublish?.(definition)}>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    disabled={busy || !(definition.validated_hash && definition.validated_hash === definition.content_hash)}
+                    title={definition.validated_hash === definition.content_hash ? 'Publish the validated version' : 'Validate this graph in the designer first'}
+                    onClick={() => onPublish?.(definition)}
+                  >
                     <Upload className="mr-1.5 h-4 w-4" /> Publish
                   </Button>
                 )}
                 {definition.state === 'Published' && (
-                  <Button size="sm" disabled onClick={() => onStart?.(definition)}>
+                  <Button size="sm" disabled={busy} onClick={() => onStart?.(definition)}>
                     <Play className="mr-1.5 h-4 w-4" /> Start run
                   </Button>
                 )}
                 {definition.state !== 'Archived' && (
-                  <Button size="sm" variant="ghost" disabled onClick={() => onArchive?.(definition)}>
+                  <Button size="sm" variant="ghost" disabled={busy} onClick={() => onArchive?.(definition)}>
                     <Archive className="mr-1.5 h-4 w-4" /> Archive
                   </Button>
                 )}

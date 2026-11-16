@@ -14,7 +14,6 @@ export default function ExecutionMonitor({ instances = [], definitions = [], bus
   useEffect(() => {
     if (presetDefinitionId) setDefinitionId(presetDefinitionId);
   }, [presetDefinitionId]);
-  const [contextLabel, setContextLabel] = useState('');
   const [stateFilter, setStateFilter] = useState('Open');
   const [search, setSearch] = useState('');
   const [decision, setDecision] = useState(null);
@@ -38,7 +37,7 @@ export default function ExecutionMonitor({ instances = [], definitions = [], bus
   const submitDecision = async () => {
     if (!decision) return;
     if (decision.kind === 'escalate') await onEscalate?.(decision.instance.id, note);
-    else await onAct?.(decision.instance.id, decision.kind, note);
+    else await onAct?.(decision.instance.id, decision.kind, note, decision.instance.current_node_id);
     setDecision(null);
     setNote('');
   };
@@ -60,18 +59,11 @@ export default function ExecutionMonitor({ instances = [], definitions = [], bus
               <option key={item.id} value={item.id}>{item.code} · {item.name}</option>
             ))}
           </select>
-          <Input
-            value={contextLabel}
-            onChange={(event) => setContextLabel(event.target.value)}
-            placeholder="What is this run about? e.g. Incident 24-118"
-            className="sm:w-72"
-          />
           <Button
             size="sm"
             disabled={busy || !definitionId}
             onClick={async () => {
-              await onStart?.(definitionId, contextLabel);
-              setContextLabel('');
+              await onStart?.(definitionId);
             }}
           >
             <Play className="mr-1.5 h-4 w-4" /> Start
@@ -127,7 +119,7 @@ export default function ExecutionMonitor({ instances = [], definitions = [], bus
                   <td className="px-3 py-2">
                     <div className="text-sm font-bold text-foreground">{row.definition_name}</div>
                     <div className="text-[11px] font-medium text-muted-foreground">
-                      {row.definition_code} · {row.context_label || 'No reference'} · {row.started_by || 'system'}
+                      {row.definition_code} · v{row.definition_version || 1} · started {row.started_at ? new Date(row.started_at).toLocaleDateString() : '—'}
                     </div>
                   </td>
                   <td className="px-3 py-2">
@@ -140,6 +132,11 @@ export default function ExecutionMonitor({ instances = [], definitions = [], bus
                     <div className="text-[11px] font-medium text-muted-foreground">
                       {row.task_kind || 'Closed'} · {row.task_role || 'no role'}
                     </div>
+                    {row.evidence_required && (
+                      <div className={cn('mt-1 inline-block rounded-full border px-2 py-0.5 text-[10px] font-bold', Number(row.evidence_count || 0) > 0 ? 'border-safe/40 bg-safe/10 text-safe' : 'border-warning/50 bg-warning/15 text-warning')}>
+                        {Number(row.evidence_count || 0) > 0 ? 'Evidence recorded' : 'Evidence required'}
+                      </div>
+                    )}
                   </td>
                   <td className="px-3 py-2">
                     <span className={cn('rounded-full border px-2 py-0.5 text-[11px] font-bold', SLA_STATES[row.sla_state] || SLA_STATES['On track'])}>
@@ -156,7 +153,12 @@ export default function ExecutionMonitor({ instances = [], definitions = [], bus
                       </Button>
                       {OPEN_STATES.includes(row.state) && (
                         <>
-                          <Button size="sm" disabled={busy} onClick={() => { setDecision({ instance: row, kind: 'approve' }); setNote(''); }}>
+                          <Button
+                            size="sm"
+                            disabled={busy || (row.evidence_required && Number(row.evidence_count || 0) < 1)}
+                            title={row.evidence_required && Number(row.evidence_count || 0) < 1 ? 'Record evidence before this step can pass validation' : undefined}
+                            onClick={() => { setDecision({ instance: row, kind: 'approve' }); setNote(''); }}
+                          >
                             {/approval|sign-off/i.test(row.task_kind || '') ? 'Approve' : 'Complete'}
                           </Button>
                           <Button

@@ -19,6 +19,24 @@
       "type": "string",
       "title": "Workflow Name"
     },
+    "definition_version": {
+      "type": "number",
+      "title": "Pinned Version",
+      "description": "The exact published version this run follows, even if the workflow changes later."
+    },
+    "version_id": {
+      "type": "string",
+      "title": "Version Snapshot ID"
+    },
+    "content_hash": {
+      "type": "string",
+      "title": "Pinned Graph Hash"
+    },
+    "start_key": {
+      "type": "string",
+      "title": "Start Command Key",
+      "description": "Idempotency key for the start command."
+    },
     "workflow_type": {
       "type": "string",
       "title": "Workflow Type"
@@ -138,6 +156,11 @@
         "gray"
       ],
       "default": "On track"
+    },
+    "evidence_required": {
+      "type": "boolean",
+      "default": false,
+      "title": "Evidence Required At Current Step"
     },
     "evidence_count": {
       "type": "number",

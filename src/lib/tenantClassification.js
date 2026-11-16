@@ -216,7 +216,9 @@ export const BUSINESS_OWNED_ENTITIES = Object.freeze([
   'VolunteerTraining',
   'WorkforceAssuranceRecord',
   'WorkflowDefinition',
+  'WorkflowEvent',
   'WorkflowInstance',
+  'WorkflowVersion',
   'WorkspaceSecurityPin',
 ]);
 

@@ -6,12 +6,13 @@ import { NODE_CATEGORIES, NODE_LIBRARY, NODE_META, graphFromJson, validateWorkfl
 import { cn } from '@/lib/utils';
 import { simulateWorkflow } from '@/lib/workflowStudioSafety';
 
-export default function WorkflowDesigner({ definition, busy = false, onSave, onPublish }) {
+export default function WorkflowDesigner({ definition, busy = false, onSave, onValidate, onPublish }) {
   const [nodes, setNodes] = useState([]);
   const [selectedId, setSelectedId] = useState('');
   const [category, setCategory] = useState('Core');
   const [decisions, setDecisions] = useState({});
   const [simulation, setSimulation] = useState(null);
+  const [note, setNote] = useState('');
   useEffect(() => { setSimulation(null); setDecisions({}); }, [nodes]);
 
   useEffect(() => {
@@ -21,6 +22,11 @@ export default function WorkflowDesigner({ definition, busy = false, onSave, onP
 
   const validation = useMemo(() => validateWorkflow(nodes), [nodes]);
   const selected = nodes.find((item) => item.id === selectedId) || null;
+  const savedGraph = useMemo(() => JSON.stringify(graphFromJson(definition?.nodes_json)), [definition?.nodes_json]);
+  const dirty = useMemo(() => JSON.stringify(nodes) !== savedGraph, [nodes, savedGraph]);
+  const locked = definition?.state === 'Published' || definition?.state === 'Archived';
+  const validated = Boolean(definition?.validated_hash) && definition.validated_hash === definition.content_hash;
+  const canPublish = Boolean(validated && !dirty && !locked);
 
   const updateNode = (id, changes) => setNodes((list) => list.map((item) => (item.id === id ? { ...item, ...changes } : item)));
 
@@ -63,18 +69,52 @@ export default function WorkflowDesigner({ definition, busy = false, onSave, onP
         <div>
           <h2 className="text-sm font-extrabold text-foreground">{definition.name}</h2>
           <p className="text-xs text-muted-foreground">
-            {definition.code} · {definition.state} v{definition.version || 1} · {nodes.length} nodes
+            {definition.code} · {definition.state} v{definition.version || 0} · {nodes.length} nodes
+            {definition.content_hash ? ` · graph ${definition.content_hash.slice(-8)}` : ''}
+          </p>
+          <p className="mt-0.5 flex flex-wrap items-center gap-1.5 text-[11px] font-bold">
+            <span className={cn('rounded-full border px-2 py-0.5', validated ? 'border-safe/40 bg-safe/10 text-safe' : 'border-warning/50 bg-warning/15 text-warning')}>
+              {validated ? 'Validated' : 'Not validated'}
+            </span>
+            {dirty && <span className="rounded-full border border-brand/40 bg-brand/10 px-2 py-0.5 text-brand">Unsaved changes</span>}
+            {definition.publisher_independent === false && definition.state === 'Published' && (
+              <span className="rounded-full border border-warning/50 bg-warning/15 px-2 py-0.5 text-warning">Self-published</span>
+            )}
           </p>
         </div>
-        <div className="flex flex-wrap gap-1.5">
-          <Button size="sm" variant="outline" disabled={busy} onClick={() => onSave?.(definition, nodes)}>
-            <Save className="mr-1.5 h-4 w-4" /> Keep local draft
+        <div className="flex flex-wrap items-center gap-1.5">
+          <Button size="sm" variant="outline" disabled={busy || locked || !dirty} onClick={() => onSave?.(definition, nodes)}>
+            <Save className="mr-1.5 h-4 w-4" /> Save draft
           </Button>
-          <Button size="sm" disabled title="Publication awaits runtime acceptance" onClick={() => onPublish?.(definition, nodes)}>
+          <Button size="sm" variant="outline" disabled={busy || locked} onClick={() => onValidate?.(definition, nodes)}>
+            <CheckCircle2 className="mr-1.5 h-4 w-4" /> Validate
+          </Button>
+          <Button
+            size="sm"
+            disabled={busy || !canPublish}
+            title={canPublish ? 'Publish this exact validated graph as an immutable version' : 'Save, then validate this exact graph before publishing'}
+            onClick={() => onPublish?.(definition, nodes, note)}
+          >
             <Upload className="mr-1.5 h-4 w-4" /> Publish
           </Button>
         </div>
       </div>
+
+      {locked ? (
+        <p role="status" className="rounded-xl border border-border bg-card p-3 text-xs font-semibold text-muted-foreground">
+          This workflow is {definition.state.toLowerCase()}. A published version never changes, so clone it from the library to author a revision.
+        </p>
+      ) : (
+        <label className="block rounded-xl border border-border bg-card p-3 text-[11px] font-bold text-foreground">
+          Publication note (required when you authored this graph)
+          <Input
+            value={note}
+            onChange={(event) => setNote(event.target.value)}
+            placeholder="Why this version is being published, and under whose authority"
+            className="mt-1"
+          />
+        </label>
+      )}
 
       <section className="rounded-xl border border-border bg-card p-3 space-y-2" aria-label="Routing simulation">
         <h3 className="font-bold">Routing simulation</h3>
@@ -245,7 +285,7 @@ export default function WorkflowDesigner({ definition, busy = false, onSave, onP
             <h3 className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground">Validation</h3>
             {validation.valid && !validation.warnings.length && (
               <p className="mt-2 flex items-center gap-1.5 text-xs font-semibold text-safe">
-                <CheckCircle2 className="h-4 w-4" /> Graph structure checked. Publication acceptance remains outstanding.
+                <CheckCircle2 className="h-4 w-4" /> Graph structure checked. Save and validate to make this graph publishable.
               </p>
             )}
             <ul className="mt-2 space-y-1">

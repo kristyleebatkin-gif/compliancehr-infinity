@@ -1,4 +1,4 @@
-export const STUDIO_RELEASE_NOTICE = 'Design preview: templates and mappings require review. Publication, execution and saved changes are gated. Local edits are lost when you leave this page.';
+export const STUDIO_RELEASE_NOTICE = 'Live in this release: saved drafts, graph validation, an immutable published version with a graph hash, and supervised runs through task, approval, evidence validation and end. Still unavailable: the SLA sweeper, notifications, AI steps, webhooks, sub-workflows and external integrations. Templates and their standard mappings still need review before operational use.';
 
 export function simulateWorkflow(nodes, decisions = {}, limit = 120) {
   if (!Array.isArray(nodes) || !nodes.length || nodes.length > 120) return { status: 'Invalid', steps: [] };

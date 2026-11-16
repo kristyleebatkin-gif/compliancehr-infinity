@@ -149,6 +149,45 @@
       "type": "string",
       "title": "Evidence Requirements"
     },
+    "author_id": {
+      "type": "string",
+      "title": "Author (user id)"
+    },
+    "author_name": {
+      "type": "string",
+      "title": "Author"
+    },
+    "content_hash": {
+      "type": "string",
+      "title": "Current Graph Hash"
+    },
+    "validated_hash": {
+      "type": "string",
+      "title": "Validated Graph Hash",
+      "description": "Cleared on every edit, so a stale validation can never publish a changed graph."
+    },
+    "validated_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Validated At"
+    },
+    "validated_by": {
+      "type": "string",
+      "title": "Validated By"
+    },
+    "published_version_id": {
+      "type": "string",
+      "title": "Published Version Record"
+    },
+    "publisher_independent": {
+      "type": "boolean",
+      "default": false,
+      "title": "Publisher Was Independent"
+    },
+    "publication_note": {
+      "type": "string",
+      "title": "Publication Note"
+    },
     "published_at": {
       "type": "string",
       "format": "date-time",
@@ -157,6 +196,11 @@
     "published_by": {
       "type": "string",
       "title": "Published By"
+    },
+    "archived_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Archived At"
     },
     "notes": {
       "type": "string",

@@ -1,0 +1,250 @@
+{
+  "name": "WorkflowEvent",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set automatically; do not edit by hand."
+    },
+    "instance_id": {
+      "type": "string",
+      "title": "Run ID"
+    },
+    "definition_id": {
+      "type": "string",
+      "title": "Definition ID"
+    },
+    "definition_version": {
+      "type": "number",
+      "title": "Pinned Version"
+    },
+    "sequence": {
+      "type": "number",
+      "title": "Sequence"
+    },
+    "event_type": {
+      "type": "string",
+      "title": "Event Type",
+      "enum": [
+        "Started",
+        "StepOpened",
+        "StepCompleted",
+        "StepRejected",
+        "ApprovalRecorded",
+        "EvidenceVerified",
+        "Escalated",
+        "Completed",
+        "Cancelled"
+      ],
+      "enumColors": [
+        "blue",
+        "gray",
+        "green",
+        "red",
+        "purple",
+        "teal",
+        "yellow",
+        "green",
+        "gray"
+      ]
+    },
+    "node_id": {
+      "type": "string",
+      "title": "Step ID"
+    },
+    "node_label": {
+      "type": "string",
+      "title": "Step"
+    },
+    "node_type": {
+      "type": "string",
+      "title": "Step Type"
+    },
+    "outcome": {
+      "type": "string",
+      "title": "Outcome"
+    },
+    "note": {
+      "type": "string",
+      "title": "Note"
+    },
+    "actor_id": {
+      "type": "string",
+      "title": "Actor (user id)"
+    },
+    "actor_name": {
+      "type": "string",
+      "title": "Actor"
+    },
+    "actor_role": {
+      "type": "string",
+      "title": "Actor Role"
+    },
+    "authority": {
+      "type": "string",
+      "title": "Authority Used",
+      "enum": [
+        "Assigned role",
+        "Administrator override",
+        "System"
+      ],
+      "enumColors": [
+        "green",
+        "yellow",
+        "gray"
+      ]
+    },
+    "self_approved": {
+      "type": "boolean",
+      "default": false,
+      "title": "Approved Own Earlier Step"
+    },
+    "command_key": {
+      "type": "string",
+      "title": "Command Key",
+      "description": "Idempotency key. A repeated command returns the existing result instead of acting twice."
+    },
+    "occurred_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Occurred At"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "instance_id",
+    "event_type",
+    "occurred_at"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Team Leader"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

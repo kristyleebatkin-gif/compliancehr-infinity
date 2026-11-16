@@ -1,10 +1,18 @@
 import { hasApprovedAccess } from './roleMatrix.ts';
 
-export const WORKFLOW_WRITES_ENABLED = false;
-export const WORKFLOW_WRITE_MESSAGE = 'This new workflow is read-only while transaction, identity and version checks are verified. Use the existing module for approved changes.';
+// Phase 11 first slice. These actions are the verified surface: durable drafts, an exact
+// version snapshot on publication, and one supervised run path (task, approval, evidence
+// validation, end) with idempotent commands and an append-only event log. Everything else
+// stays refused, so nothing can trigger an unverified handler.
+export const WORKFLOW_WRITE_ACTIONS = Object.freeze([
+  'save', 'validate', 'publish', 'versions', 'clone', 'archive', 'start', 'act', 'escalate', 'timeline',
+]);
+
+export const WORKFLOW_WRITE_MESSAGE = 'This action is read-only in the current release. Use a supported workflow action.';
 
 export function assertWorkflowAction(action: string) {
-  if (action !== 'assess' && !WORKFLOW_WRITES_ENABLED) {
+  if (action === 'assess') return;
+  if (!WORKFLOW_WRITE_ACTIONS.includes(action)) {
     const error: any = new Error(WORKFLOW_WRITE_MESSAGE);
     error.status = 503;
     throw error;

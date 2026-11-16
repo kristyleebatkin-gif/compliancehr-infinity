@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Loader2, Network, RefreshCw, TimerReset } from 'lucide-react';
+import { Loader2, Network, RefreshCw } from 'lucide-react';
 import ModuleShell from '@/components/module/ModuleShell';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -16,9 +16,19 @@ import { useAuth } from '@/lib/AuthContext';
 import { STUDIO_RELEASE_NOTICE, studioScopeKey } from '@/lib/workflowStudioSafety';
 
 const OPEN_STATES = ['Running', 'Waiting', 'Escalated', 'Paused'];
+const CARRIED_FIELDS = ['code', 'name', 'workflow_type', 'domain', 'description', 'sla_hours', 'owner_role', 'standard_refs', 'evidence_refs', 'template_code'];
 
 function errorMessage(err) {
   return err?.response?.data?.error || err?.data?.error || err?.message || 'The workflow engine could not complete that.';
+}
+
+function commandKey() {
+  if (globalThis.crypto?.randomUUID) return globalThis.crypto.randomUUID();
+  return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+}
+
+function fieldsOf(source) {
+  return Object.fromEntries(CARRIED_FIELDS.map((key) => [key, source?.[key] ?? '']));
 }
 
 export default function WorkflowStudio() {
@@ -34,7 +44,6 @@ function WorkflowStudioView() {
   const [error, setError] = useState('');
   const [tab, setTab] = useState('command');
   const [designingId, setDesigningId] = useState('');
-  const [localDraft, setLocalDraft] = useState(null);
   const [truncated, setTruncated] = useState(false);
   const [startPreset, setStartPreset] = useState('');
   const [openInstance, setOpenInstance] = useState(null);
@@ -46,7 +55,7 @@ function WorkflowStudioView() {
       if (!Array.isArray(res?.data?.definitions) || !Array.isArray(res?.data?.instances)) throw new Error('Workflow data is unavailable.');
       setTruncated(Boolean(res.data.truncated));
       setDefinitions(res.data.definitions);
-      setInstances(res?.data?.instances || []);
+      setInstances(res.data.instances);
       setError('');
     } catch (err) {
       setDefinitions([]);
@@ -60,20 +69,18 @@ function WorkflowStudioView() {
   useEffect(() => { load(); }, [load]);
 
   const call = useCallback(async (payload) => {
-    if (payload.action !== 'list') { setError(STUDIO_RELEASE_NOTICE); return null; }
     setBusy(true);
     setError('');
     try {
       const res = await base44.functions.invoke('workflowRuntime', payload);
-      if (res?.data?.error) {
-        setError(res.data.error);
+      const data = res?.data || {};
+      if (data.error) {
+        setError(data.error);
         return null;
       }
       await load();
-      return res?.data || null;
+      return data;
     } catch (err) {
-      setDefinitions([]);
-      setInstances([]);
       setError(errorMessage(err));
       return null;
     } finally {
@@ -82,7 +89,7 @@ function WorkflowStudioView() {
   }, [load]);
 
   const summary = useMemo(() => summariseInstances(instances), [instances]);
-  const designing = localDraft || definitions.find((item) => item.id === designingId) || null;
+  const designing = definitions.find((item) => item.id === designingId) || null;
   const recent = useMemo(
     () => [...instances]
       .filter((row) => OPEN_STATES.includes(row.state))
@@ -92,36 +99,45 @@ function WorkflowStudioView() {
   );
 
   const createDefinition = async (template) => {
-    const data = { definition: {
-      id: `local-${template.code}`, state: 'Draft', version: 0, code: template.code,
-      name: template.name,
-      workflow_type: template.workflow_type,
-      domain: template.domain,
-      description: template.description,
-      nodes_json: JSON.stringify(template.nodes),
-      sla_hours: template.sla_hours,
-      owner_role: template.owner_role,
+    const created = await call({
+      action: 'save',
+      ...fieldsOf(template),
+      code: template.code,
+      template_code: template.code,
       standard_refs: template.standards,
       evidence_refs: template.evidence,
-      template_code: template.code,
-    } };
-    setLocalDraft(data.definition);
-    if (data?.definition) {
-      setDesigningId(data.definition.id);
+      nodes_json: JSON.stringify(template.nodes),
+    });
+    if (created?.definition?.id) {
+      setDesigningId(created.definition.id);
       setTab('designer');
     }
   };
 
   const saveDefinition = async (definition, nodes) => {
-    setLocalDraft({ ...definition, id: `local-${definition.template_code || definition.id}`, state: 'Draft', nodes_json: JSON.stringify(nodes) });
+    if (!definition?.id) return;
+    await call({ action: 'save', definition_id: definition.id, ...fieldsOf(definition), nodes_json: JSON.stringify(nodes) });
   };
 
-  const publishDefinition = async (definition, nodes) => {
-    if (nodes) {
-      const saved = await call({ action: 'save', definition_id: definition.id, nodes_json: JSON.stringify(nodes) });
-      if (!saved) return;
-    }
-    await call({ action: 'publish', definition_id: definition.id });
+  const validateDefinition = async (definition, nodes) => {
+    if (!definition?.id) return;
+    const saved = await call({ action: 'save', definition_id: definition.id, ...fieldsOf(definition), nodes_json: JSON.stringify(nodes) });
+    if (!saved) return;
+    const result = await call({ action: 'validate', definition_id: definition.id });
+    if (!result) return;
+    const firstIssue = result.report?.errors?.[0] || (result.unsupported?.length
+      ? `These step types have no verified runtime handler: ${result.unsupported.join(', ')}.`
+      : '');
+    if (result.definition?.state !== 'Validated' && firstIssue) setError(firstIssue);
+  };
+
+  const publishDefinition = async (definition, nodes, publicationNote) => {
+    if (!definition?.id) return;
+    const saved = await call({ action: 'save', definition_id: definition.id, ...fieldsOf(definition), nodes_json: JSON.stringify(nodes) });
+    if (!saved) return;
+    const validated = await call({ action: 'validate', definition_id: definition.id });
+    if (!validated || validated.definition?.state !== 'Validated') return;
+    await call({ action: 'publish', definition_id: definition.id, publication_note: publicationNote || '' });
   };
 
   return (
@@ -129,7 +145,7 @@ function WorkflowStudioView() {
       <ModuleShell
         moduleKey="compliance"
         title="Workflow Studio"
-        subtitle="Phase 11 design workspace: explore templates, edit local draft graphs and test routing without operational side effects."
+        subtitle="Author, validate and publish governed workflows, then run them through their steps with a recorded version and an append-only trail."
         icon={Network}
       />
 
@@ -177,7 +193,7 @@ function WorkflowStudioView() {
                         <span className="min-w-0">
                           <span className="block truncate text-sm font-semibold text-foreground">{row.definition_name}</span>
                           <span className="block truncate text-[11px] font-medium text-muted-foreground">
-                            {row.current_node_label} · {row.task_role || 'no role'} · {row.context_label || 'no reference'}
+                            {row.current_node_label} · {row.task_role || 'no role'} · v{row.definition_version || 1}
                           </span>
                         </span>
                         <span className="flex shrink-0 flex-col items-end gap-1">
@@ -198,15 +214,18 @@ function WorkflowStudioView() {
               </section>
 
               <section className="rounded-xl border border-border bg-card p-4 shadow-2xs">
-                <h2 className="text-sm font-extrabold text-foreground">Engine checks</h2>
+                <h2 className="text-sm font-extrabold text-foreground">Engine status</h2>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  SLA calculation, reminders and escalation delivery require verified runtime adapters. No background sweep or notification service is enabled by this workspace.
+                  Runs advance one step at a time, each pinned to the published version it started on. Each decision is
+                  recorded against the person and role that made it.
                 </p>
+                <ul className="mt-2 space-y-1 text-[11px] font-semibold text-muted-foreground">
+                  <li>Live: drafts, validation, versioned publication, task, approval, evidence validation, decision, escalation.</li>
+                  <li>Not available: timed SLA sweep, notification delivery, AI steps, webhooks, sub-workflows and external adapters.</li>
+                  <li>Clocks are calculated when a run is read, so a breach is reported but no reminder is sent.</li>
+                </ul>
                 <div className="mt-2 flex flex-wrap gap-2">
-                  <Button size="sm" variant="outline" disabled title="Operational engine not enabled" onClick={() => call({ action: 'scanSla' })}>
-                    <TimerReset className="mr-1.5 h-4 w-4" /> Re-check SLA clocks
-                  </Button>
-                  <Button size="sm" variant="outline" onClick={load}>
+                  <Button size="sm" variant="outline" disabled={busy} onClick={load}>
                     <RefreshCw className="mr-1.5 h-4 w-4" /> Refresh
                   </Button>
                 </div>
@@ -219,7 +238,8 @@ function WorkflowStudioView() {
               </section>
             </div>
             <p className="text-xs text-primary">
-              Stored runs are shown for review. Immutable event storage, verified evidence links and version-pinned execution remain release requirements. Private case notes and timeline content are omitted from this preview.
+              Every transition is written to an append-only event log. Persistence is not transactional across records, so a
+              write that cannot be audited is rolled back and refused rather than reported as done.
             </p>
             </>}
           </TabsContent>
@@ -229,9 +249,9 @@ function WorkflowStudioView() {
               definitions={definitions}
               busy={busy}
               onCreate={createDefinition}
-              onOpen={(definition) => { setLocalDraft(null); setDesigningId(definition.id); setTab('designer'); }}
+              onOpen={(definition) => { setDesigningId(definition.id); setTab('designer'); }}
               onClone={(definition) => call({ action: 'clone', definition_id: definition.id })}
-              onPublish={(definition) => publishDefinition(definition)}
+              onPublish={(definition) => publishDefinition(definition, JSON.parse(definition.nodes_json || '[]'), '')}
               onArchive={(definition) => call({ action: 'archive', definition_id: definition.id })}
               onStart={(definition) => { setStartPreset(definition.id); setTab('executions'); }}
             />
@@ -242,6 +262,7 @@ function WorkflowStudioView() {
               definition={designing}
               busy={busy}
               onSave={saveDefinition}
+              onValidate={validateDefinition}
               onPublish={publishDefinition}
             />
           </TabsContent>
@@ -250,11 +271,11 @@ function WorkflowStudioView() {
             <ExecutionMonitor
               instances={instances}
               definitions={definitions}
-              busy={true}
+              busy={busy}
               presetDefinitionId={startPreset}
-              onStart={(definitionId, contextLabel) => call({ action: 'start', definition_id: definitionId, context_label: contextLabel })}
-              onAct={(instanceId, decision, note) => call({ action: 'act', instance_id: instanceId, decision, note })}
-              onEscalate={(instanceId, reason) => call({ action: 'escalate', instance_id: instanceId, reason })}
+              onStart={(definitionId) => call({ action: 'start', definition_id: definitionId, command_key: commandKey() })}
+              onAct={(instanceId, decision, note, expectedNodeId) => call({ action: 'act', instance_id: instanceId, decision, note, expected_node_id: expectedNodeId, command_key: commandKey() })}
+              onEscalate={(instanceId, reason) => call({ action: 'escalate', instance_id: instanceId, reason, command_key: commandKey() })}
               onOpen={setOpenInstance}
             />
           </TabsContent>

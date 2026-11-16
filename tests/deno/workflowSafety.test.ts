@@ -1,5 +1,5 @@
 import { assertEquals, assertRejects, assertThrows } from 'jsr:@std/assert@1';
-import { assertWorkflowAction, connectorOwnerAllows, readWorkflowRecords, requireWorkflowAdministrator } from '../../base44/shared/workflowSafety.ts';
+import { assertWorkflowAction, WORKFLOW_WRITE_ACTIONS, connectorOwnerAllows, readWorkflowRecords, requireWorkflowAdministrator } from '../../base44/shared/workflowSafety.ts';
 
 const user = { id: 'user-a', role: 'Provider Administrator', account_status: 'Active', access_approved: true, tenant_id: 'tenant-a' };
 function context(rows: any[] = [{ id: 'membership-a', user_id: 'user-a', tenant_id: 'tenant-a', status: 'Active' }]) {
@@ -12,9 +12,10 @@ function context(rows: any[] = [{ id: 'membership-a', user_id: 'user-a', tenant_
   } } } };
   return { base, reads: () => reads };
 }
-Deno.test('workflow preview refuses every new mutating action', () => {
+Deno.test('the verified slice is the whole permitted action surface', () => {
   assertWorkflowAction('assess');
-  for (const action of ['bill_shifts', 'create_corrective_action', 'record_acknowledgement', 'start_revision', 'create', 'save', 'clone', 'publish', 'archive', 'start', 'act', 'escalate', 'scanSla', 'unknown']) {
+  for (const action of WORKFLOW_WRITE_ACTIONS) assertWorkflowAction(action);
+  for (const action of ['bill_shifts', 'create_corrective_action', 'record_acknowledgement', 'start_revision', 'create', 'scanSla', 'send', 'notify', 'unknown']) {
     assertThrows(() => assertWorkflowAction(action), Error, 'read-only');
   }
 });
