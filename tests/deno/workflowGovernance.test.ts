@@ -1,5 +1,5 @@
-import { assertEquals } from 'jsr:@std/assert@1';
-import { publicationAuthority, approvalIndependence } from '../../base44/shared/workflowGovernance.ts';
+import { assertEquals, assertThrows } from 'jsr:@std/assert@1';
+import { publicationAuthority, approvalIndependence, definitionContributors } from '../../base44/shared/workflowGovernance.ts';
 import { canActOnNode, normaliseNodes } from '../../base44/shared/workflowEngine.ts';
 
 Deno.test('publication requires distinct known identities even for administrators', () => {
@@ -7,6 +7,15 @@ Deno.test('publication requires distinct known identities even for administrator
   assertEquals(Boolean(publicationAuthority('maker', 'maker')), true);
   assertEquals(Boolean(publicationAuthority('', 'checker')), true);
   assertEquals(Boolean(publicationAuthority('maker', '')), true);
+});
+Deno.test('all draft contributors remain makers while a review-only save does not create authorship', () => {
+  const definition = { author_id: 'first', author_ids_json: '["first","editor"]' };
+  assertEquals(definitionContributors(definition, 'reviewer', false), ['first', 'editor']);
+  assertEquals(definitionContributors(definition, 'new-editor', true), ['first', 'editor', 'new-editor']);
+  assertEquals(Boolean(publicationAuthority('first', 'editor', definitionContributors(definition, 'editor', false))), true);
+  assertEquals(publicationAuthority('first', 'reviewer', definitionContributors(definition, 'reviewer', false)), null);
+  assertThrows(() => definitionContributors({ author_id: 'first', author_ids_json: '{}' }, 'reviewer', false));
+  assertThrows(() => definitionContributors({ author_id: 'first', author_ids_json: 'broken' }, 'reviewer', false));
 });
 Deno.test('approval independence uses stable identities, includes all preparers and legacy evidence events', () => {
   const history = [
