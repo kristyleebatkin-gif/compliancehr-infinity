@@ -211,7 +211,7 @@ export function canActOnNode(node: StudioNode | undefined, actor: any): { allowe
   const role = String(actor?.role ?? '').trim();
   if (role === 'admin') return { allowed: true, override: true };
   const required = node.role;
-  if (!required) return { allowed: true, override: role === 'Provider Administrator' };
+  if (!required) return role === 'Provider Administrator' ? { allowed: true, override: true } : { allowed: false, override: false, reason: 'This step has no assigned role. An administrator must assign or supervise it.' };
   if (role.toLowerCase() === required.toLowerCase()) return { allowed: true, override: false };
   if (role === 'Provider Administrator') return { allowed: true, override: true };
   return { allowed: false, override: false, reason: `This step is assigned to ${required}.` };
