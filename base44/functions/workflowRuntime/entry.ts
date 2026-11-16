@@ -236,6 +236,7 @@ export default perBusiness(async function (req: Request) {
     }
 
     if (action === 'publish') {
+      if (!['admin', 'Provider Administrator', 'CEO', 'General Manager', 'Compliance Manager', 'Quality Manager'].includes(user.role)) fail('Workflow publication authority is required.', 403);
       const definition = await readDefinition(read, body.definition_id);
       if (definition.state === 'Published') fail('This workflow is already published. Clone it to publish a new version.', 409);
       if (definition.state === 'Archived') fail('An archived workflow cannot be published.', 409);
