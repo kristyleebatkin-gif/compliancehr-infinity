@@ -33,6 +33,7 @@
         "StepRejected",
         "ApprovalRecorded",
         "EvidenceVerified",
+        "EvidenceRecorded",
         "Escalated",
         "Completed",
         "Cancelled"
