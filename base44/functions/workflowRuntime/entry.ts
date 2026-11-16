@@ -13,7 +13,8 @@
 // the matching event cannot be recorded. Documented in PHASE11_ACCEPTANCE_LOG.md.
 import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 import { studioTenant, studioRows } from '../../shared/workflowStudioAccess.ts';
-import { assertWorkflowAction } from '../../shared/workflowSafety.ts';
+import { assertWorkflowAction, readWorkflowRecords } from '../../shared/workflowSafety.ts';
+import { publicationAuthority, approvalIndependence } from '../../shared/workflowGovernance.ts';
 import {
   normaliseNodes,
   validateGraph,
@@ -253,9 +254,8 @@ export default perBusiness(async function (req: Request) {
       const authorId = definition.author_id || definition.created_by_id;
       const independent = String(authorId || '') !== String(user.id);
       const publicationNote = text(body.publication_note, 500);
-      if (!independent && !publicationNote) {
-        fail('You are publishing work you authored. Record a publication note explaining the authority used.', 422);
-      }
+      const publicationError = publicationAuthority(authorId, user.id);
+      if (publicationError) fail(publicationError, 403);
 
       const version = nextVersion(definition.version);
       const publishedAt = new Date().toISOString();
@@ -369,6 +369,7 @@ export default perBusiness(async function (req: Request) {
       }
 
       const nodes = normaliseNodes(parseJson(snapshot.nodes_json));
+      if (await contentHash(nodes) !== snapshot.content_hash) fail('The published snapshot failed its content integrity check.', 409);
       const report = validateGraph(nodes);
       if (!report.valid) fail('The published graph does not pass execution checks. Publish a corrected version.', 409);
 
@@ -460,13 +461,21 @@ export default perBusiness(async function (req: Request) {
       const snapshot = instance.version_id ? await read.WorkflowVersion.get(instance.version_id) : null;
       if (!snapshot) fail('The pinned version for this run is unavailable, so it cannot advance.', 409);
       const nodes = normaliseNodes(parseJson(snapshot.nodes_json));
+      if (await contentHash(nodes) !== snapshot.content_hash || snapshot.content_hash !== instance.content_hash) fail('The pinned version failed its content integrity check.', 409);
+      if (body.expected_node_id && body.expected_node_id !== instance.current_node_id) fail('This run has moved to another step. Refresh before acting.', 409);
       const node = nodes.find((item) => item.id === instance.current_node_id);
       if (!node) fail('This run is pointing at a step that is not in its pinned version.', 409);
 
       const authority = canActOnNode(node, user);
       if (!authority.allowed) fail(authority.reason || 'You are not authorised to complete this step.', 403);
 
+      if (!['approve', 'reject'].includes(body.decision)) fail('Choose approve or reject explicitly.', 422);
       const decision = body.decision === 'reject' ? 'reject' : 'approve';
+      if (decision === 'approve' && isApprovalNode(node)) {
+        const history = await readWorkflowRecords(read.WorkflowEvent, { instance_id: instance.id });
+        const independenceError = approvalIndependence(user.id, history);
+        if (independenceError) fail(independenceError, 403);
+      }
       const note = text(body.note, 1000);
       if (decision === 'reject' && !note) fail('A rejection needs a reason.', 422);
       if (decision === 'approve' && requiresEvidence(node) && Number(instance.evidence_count || 0) < 1) {
@@ -532,7 +541,7 @@ export default perBusiness(async function (req: Request) {
       const nextNode = nodes.find((item) => item.id === nextId);
       if (!nextNode) fail('The pinned graph has no next step for that outcome, so the run cannot advance.', 409);
 
-      const evidenceEventType = ['EVIDENCE_UPLOAD', 'EVIDENCE_REQUEST'].includes(node.type) ? 'EvidenceVerified' : null;
+      const evidenceEventType = ['EVIDENCE_UPLOAD', 'EVIDENCE_REQUEST'].includes(node.type) ? 'EvidenceRecorded' : null;
       const stepEventType = evidenceEventType || (isApprovalNode(node) && decision === 'approve' ? 'ApprovalRecorded' : (decision === 'reject' ? 'StepRejected' : 'StepCompleted'));
       if (stepEventType) await appendEvent(read, write, { ...eventBase, event_type: stepEventType, outcome });
 
