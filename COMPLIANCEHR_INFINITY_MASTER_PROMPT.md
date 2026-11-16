@@ -1,5 +1,182 @@
 # Controlling master specification — 15 November 2026
 
+## Combined OS upgrade and module finalisation pack — 17 November 2026 (Australia/Brisbane)
+
+Owner authorised installation on main and combination of all 36 continuation prompts. This section is the execution sequence within the existing controlling specification, not a replacement app or a claim of implemented features.
+
+### Execution instruction applying to all 36 steps
+
+Continue in the EXISTING ComplianceHR Infinity Base44 app, main branch (app 6ac9f91f0d82b1f80ec6a25f). Preserve the remainder of this master specification, the current Phase 11 v2 requirements, existing architecture, canonical records/IDs/routes, AppLayout, ModuleShell, Universal360, Knowledge Graph, Evidence, Readiness, Executive Intelligence and iPad Quick Access.
+
+Read current implementation and evidence before each change. Reference SQL/Prisma/Kafka/API contracts do not authorise production migration or prove deployed infrastructure. Do not create a replacement app, duplicate modules/masters or force historical catalogue counts onto real inventory. Reconcile source differences explicitly; a missing reference package is a tracked blocker, never permission to invent release scope.
+
+Use dark blue glass surfaces with blue, purple and pink accents; avoid black backgrounds. Maintain readable contrast, keyboard/touch accessibility and responsive layouts.
+
+For EVERY step: inspect current code/dependencies; identify implemented/missing scope; take a recoverable checkpoint; implement persistence, server permissions, validation, error handling, audit and connected navigation; run appropriate checks and affected journeys; checkpoint passing work; record changed files, evidence and blockers in MASTER_TODO.md. Continue independent work when a dependency is blocked. Follow one mutation session per app; do not edit alongside an active builder.
+
+Reuse canonical task/approval/evidence/document/staff/participant adapters. Authorise server-side before reads, writes, aggregation, search, exports, graph expansion, files and cache population. Enforce tenant and record scope. Do not grant access from display names alone.
+
+No fabricated records, statistics, evidence, completion, regulatory assurance or delivery states. Show empty/unavailable/failed/pending/verified honestly. Unsupported handlers stay disabled; no simulated success. Unknown/zero metric denominators are unavailable.
+
+Run steps in dependency order with dashboards as the initial product priority after essential baseline/security/navigation work. Complete or explicitly block dependencies before executing downstream automation. Use existing verification rather than restarting proven work. Installing this pack does not execute its backlog or schedule a background build. Publication requires applicable verified gates and sign-off.
+
+### Current acceptance boundary
+
+PHASE11_ACCEPTANCE_LOG.md records a supervised runtime and later independent-publication/maker-checker changes. Its latest governance entry supersedes earlier weaker controls; preserve the stronger implemented controls. Transactional/CAS/outbox/inbox guarantees, scheduler/SLA events, actual file quarantine/hash/verification, board quorum/conflicts, MFA, unsupported adapters, classified/location ABAC, representative load/DR and F095 remain OPEN until independently evidenced. Preserve all current release gates.
+
+### Combined build sequence
+
+#### 01 — Establish the upgrade baseline
+
+Inspect the actual modules, navigation groups, routes, entities, functions, dashboards, workflows, integrations and verification evidence. Reconcile the historical 51-module / 13-group plan against the current app; do not force historical counts onto current implementation. Record canonical ID, route, group, owner, dependencies, permissions, gaps and evidence for each module. Use Not Assessed, Missing, Partial, Implemented, Verified and Blocked; track production status separately. Save a baseline checkpoint and dependency-aware queue.
+
+#### 02 — Repair permissions and truthful data
+
+Inspect frontend and backend controls together. Remove date-based bypasses and permissive placeholders where present. Enforce a single server-side policy with explicit existing-role adapters. Test direct routes, raw entities, functions, search, exports, revoked membership and tenant isolation. Remove fallback master records, fixed readiness scores and unsupported verification labels. Show request failures as failures, never successful empty populations. Preserve genuine records and audit history. Critical isolation failures block publication.
+
+#### 03 — Finalise navigation and module organisation
+
+Use the reconciled canonical directory for navigation, search and Quick App dashboard. Preserve IDs, routes, valid deep links and iPad Quick Access visual treatment. Provide role-appropriate favourites, recent modules and active states; persist preferences by user and tenant. Repair duplicates, broken destinations, labels and wasted space. Verify mobile menus, keyboard access, refreshes and authorised/denied direct links.
+
+#### 04 — Complete the dashboard framework
+
+Reuse the existing dashboard framework for Director, Manager, Team Leader, Business Support, Support Worker, Participant/Guardian and Auditor. Support authorised widget selection, ordering, size, saved filters, logo, business name, slogan and approved images. Query real scoped data with freshness and reporting periods. Distinguish loading, empty, unavailable and failed states. Verify saved preferences, identity switching and tenant cache separation.
+
+#### 05 — Finalise priority dashboards
+
+Complete Executive, Operations, Workforce, Compliance and Communication dashboards before lower-priority presentation work. Cards must open exact filtered registers or records. Include overdue work, pending decisions, unverified evidence and exceptions. Implement previously requested Jamie/Sherelle organisation administration only after resolving verified identities and explicit grants; never infer platform-wide access. Make Staff Leaderboard fair, configurable and permission-controlled; exclude sensitive clinical, payroll and participant information.
+
+#### 06 — Connect shared enterprise engines
+
+Inspect and connect existing Task, Approval, Evidence, Document, Notification, Search, Audit and Reporting engines through canonical adapters. Specify commands, authorised queries, correlation IDs, exact references and failure behaviour. Prevent duplicate canonical records from one business action. Link module work to its source and authorised 360 view. Verify task-to-approval-to-evidence journeys. Keep unsupported dependencies unavailable and explicitly tracked.
+
+#### 07 — Finalise Universal360 and traceability
+
+Reuse the shared framework for participant, staff, organisation, supplier, incident, risk, audit, document and standard views. Connect authorised tasks, approvals, findings, evidence, actions, relationships and history through exact IDs/versions. Validate Knowledge Graph endpoints and reviewed mappings. Distinguish inaccessible, broken, expired and unverified links. Authorise before expansion, counts, previews and exports. Remove fixed readiness and unsupported assurance claims.
+
+#### 08 — Complete Workflow Studio release 11.1
+
+Implement WF-001–WF-019. Retrieve this release's actual title, scope, dependencies and acceptance rows from the CURRENT release-plan.md and associated v2 package; do not infer scope from numbering. If unavailable, record the missing source and reconcile the existing app backlog before claiming v2 alignment. Preserve prior story namespaces as history. Complete missing foundations and link stories to real code and evidence. A schema, screen or specification alone is not delivery. Record code, checks, evidence and remaining blockers for every story. Continue independent work when dependencies are blocked.
+
+#### 09 — Complete Workflow Studio release 11.2
+
+Implement WF-020–WF-039. Retrieve this release's actual title, scope, dependencies and acceptance rows from the CURRENT release-plan.md and associated v2 package; do not infer scope from numbering. If unavailable, record the missing source and reconcile the existing app backlog before claiming v2 alignment. Preserve prior story namespaces as history. Verify dependencies from 11.1, exact versions, tenant scope and canonical adapters. Test success, invalid inputs, denials and stale updates. Record code, checks, evidence and remaining blockers for every story. Continue independent work when dependencies are blocked.
+
+#### 10 — Complete Workflow Studio release 11.3
+
+Implement WF-040–WF-054. Retrieve this release's actual title, scope, dependencies and acceptance rows from the CURRENT release-plan.md and associated v2 package; do not infer scope from numbering. If unavailable, record the missing source and reconcile the existing app backlog before claiming v2 alignment. Preserve prior story namespaces as history. Complete persistence, validation, permissions and audit behaviour. Reject unknown node settings and invalid references. Schema validity is not execution authority. Record code, checks, evidence and remaining blockers for every story. Continue independent work when dependencies are blocked.
+
+#### 11 — Complete Workflow Studio release 11.4
+
+Implement WF-055–WF-079. Retrieve this release's actual title, scope, dependencies and acceptance rows from the CURRENT release-plan.md and associated v2 package; do not infer scope from numbering. If unavailable, record the missing source and reconcile the existing app backlog before claiming v2 alignment. Preserve prior story namespaces as history. Test duplicate commands, concurrent changes and partial failures wherever state changes. Show persisted outcomes accurately. Record code, checks, evidence and remaining blockers for every story. Continue independent work when dependencies are blocked.
+
+#### 12 — Complete Workflow Studio release 11.5
+
+Implement WF-080–WF-104. Retrieve this release's actual title, scope, dependencies and acceptance rows from the CURRENT release-plan.md and associated v2 package; do not infer scope from numbering. If unavailable, record the missing source and reconcile the existing app backlog before claiming v2 alignment. Preserve prior story namespaces as history. Apply independent approval, conflict, delegation and authority checks wherever decisions occur. Exercise rejection, rework, expiry and denied actions. Record code, checks, evidence and remaining blockers for every story. Continue independent work when dependencies are blocked.
+
+#### 13 — Complete Workflow Studio release 11.6
+
+Implement WF-105–WF-129. Retrieve this release's actual title, scope, dependencies and acceptance rows from the CURRENT release-plan.md and associated v2 package; do not infer scope from numbering. If unavailable, record the missing source and reconcile the existing app backlog before claiming v2 alignment. Preserve prior story namespaces as history. Where evidence/documents occur, bind decisions to exact versions and file access. Distinguish uploaded, reviewed and independently verified; test expiry/replacement. Record code, checks, evidence and remaining blockers for every story. Continue independent work when dependencies are blocked.
+
+#### 14 — Complete Workflow Studio release 11.7
+
+Implement WF-130–WF-159. Retrieve this release's actual title, scope, dependencies and acceptance rows from the CURRENT release-plan.md and associated v2 package; do not infer scope from numbering. If unavailable, record the missing source and reconcile the existing app backlog before claiming v2 alignment. Preserve prior story namespaces as history. Prove required concurrency and durable persistence before automated execution. Keep supervised execution and block unsafe automation when atomicity or an equivalent safe protocol is unproven. Record code, checks, evidence and remaining blockers for every story. Continue independent work when dependencies are blocked.
+
+#### 15 — Complete Workflow Studio release 11.8
+
+Implement WF-160–WF-184. Retrieve this release's actual title, scope, dependencies and acceptance rows from the CURRENT release-plan.md and associated v2 package; do not infer scope from numbering. If unavailable, record the missing source and reconcile the existing app backlog before claiming v2 alignment. Preserve prior story namespaces as history. Where timers/SLA occur, require durable scheduling and explicit timezones. Test restart, duplicates, rescheduling and retained historical breaches. Browser timers are insufficient. Record code, checks, evidence and remaining blockers for every story. Continue independent work when dependencies are blocked.
+
+#### 16 — Complete Workflow Studio release 11.9
+
+Implement WF-185–WF-214. Retrieve this release's actual title, scope, dependencies and acceptance rows from the CURRENT release-plan.md and associated v2 package; do not infer scope from numbering. If unavailable, record the missing source and reconcile the existing app backlog before claiming v2 alignment. Preserve prior story namespaces as history. Verify permitted and blocked completion through canonical adapters. Escalation must retain original obligations/deadlines and never silently imply approval. Record code, checks, evidence and remaining blockers for every story. Continue independent work when dependencies are blocked.
+
+#### 17 — Complete Workflow Studio release 11.10
+
+Implement WF-215–WF-244. Retrieve this release's actual title, scope, dependencies and acceptance rows from the CURRENT release-plan.md and associated v2 package; do not infer scope from numbering. If unavailable, record the missing source and reconcile the existing app backlog before claiming v2 alignment. Preserve prior story namespaces as history. Every action must have real authorised persistence. Where communications occur, distinguish queued, accepted, delivered and failed; enforce classification and consent. Record code, checks, evidence and remaining blockers for every story. Continue independent work when dependencies are blocked.
+
+#### 18 — Complete Workflow Studio release 11.11
+
+Implement WF-245–WF-269. Retrieve this release's actual title, scope, dependencies and acceptance rows from the CURRENT release-plan.md and associated v2 package; do not infer scope from numbering. If unavailable, record the missing source and reconcile the existing app backlog before claiming v2 alignment. Preserve prior story namespaces as history. Where analytics occur, expose period, population, formula version, numerator, denominator, exclusions and freshness. Unknown/zero denominators yield unavailable rates. Record code, checks, evidence and remaining blockers for every story. Continue independent work when dependencies are blocked.
+
+#### 19 — Complete Workflow Studio release 11.12
+
+Implement WF-270–WF-309. Retrieve this release's actual title, scope, dependencies and acceptance rows from the CURRENT release-plan.md and associated v2 package; do not infer scope from numbering. If unavailable, record the missing source and reconcile the existing app backlog before claiming v2 alignment. Preserve prior story namespaces as history. Where AI occurs, keep outputs advisory, permission-scoped and linked to source/model/prompt versions. Require governed human review; test injection, unavailable sources and denied tool actions. Record code, checks, evidence and remaining blockers for every story. Continue independent work when dependencies are blocked.
+
+#### 20 — Complete Workflow Studio release 11.13 — Integrations
+
+Implement WF-310–WF-339. Retrieve this release's actual title, scope, dependencies and acceptance rows from the CURRENT release-plan.md and associated v2 package; do not infer scope from numbering. If unavailable, record the missing source and reconcile the existing app backlog before claiming v2 alignment. Preserve prior story namespaces as history. Integrations: approved connectors, server-held secret references, inbox/outbox, idempotency, bounded retry, reconciliation and restricted dead letters. Test webhook signatures, replay, destinations, duplicates, reordered/failed delivery and controlled replay. Do not claim exactly-once external delivery. Record code, checks, evidence and remaining blockers for every story. Continue independent work when dependencies are blocked.
+
+#### 21 — Complete Workflow Studio release 11.14 — Security
+
+Implement WF-340–WF-369. Retrieve this release's actual title, scope, dependencies and acceptance rows from the CURRENT release-plan.md and associated v2 package; do not infer scope from numbering. If unavailable, record the missing source and reconcile the existing app backlog before claiming v2 alignment. Preserve prior story namespaces as history. Security: verify tenant, role, assignment, classification, consent, delegation and independence across raw entities, commands, files, caches, search, graph, reports and exports. Include revoked access and tenant changes. Repair and retest critical failures. Security applies throughout earlier releases. Record code, checks, evidence and remaining blockers for every story. Continue independent work when dependencies are blocked.
+
+#### 22 — Complete Workflow Studio release 11.15
+
+Implement WF-370–WF-400. Retrieve this release's actual title, scope, dependencies and acceptance rows from the CURRENT release-plan.md and associated v2 package; do not infer scope from numbering. If unavailable, record the missing source and reconcile the existing app backlog before claiming v2 alignment. Preserve prior story namespaces as history. Reconcile all 400 stories with evidence and accurately list verified, partial, missing and blocked scope. Exercise end-to-end paths, rejection/rework, unsupported nodes and recovery. Production acceptance remains open without required proof. Record code, checks, evidence and remaining blockers for every story. Continue independent work when dependencies are blocked.
+
+#### 23 — Dashboard & Communication
+
+Finalise every mapped module: applicable dashboards, inboxes, announcements, tasks, decisions, printing and communication history. Move receipting functions into Receipt Hub while preserving historical links. Verify recipients, permissions, attachments, templates, delivery failures and source links. Prevent duplicate sends and misleading delivery claims. Reconcile the actual group count.
+
+#### 24 — People, Intake & Profiles
+
+Finalise mapped referral, intake, consent, participant, guardian, staff and supplier journeys using canonical records. Support duplicate review, required fields, authorised contacts, documents and conversion into services. Connect profiles to 360, tasks, risks and evidence. Verify restrictions, consent changes and exports. Do not insert invented production people or sensitive demonstration data.
+
+#### 25 — Service Delivery & Workforce
+
+Complete mapped agreements, rosters, availability, credentials, shifts, attendance and service evidence. Validate conflicts, eligibility, assignments and authorised changes. Link exceptions to task, incident and risk processes. Verify mobile shifts and failed saves. Medication support follows approved plans, worker authority and human clinical governance; no autonomous clinical instructions.
+
+#### 26 — Incidents, Risk & Safety
+
+Connect mapped intake, triage, immediate safety actions, assessment, treatment, investigation, review and verified closure. Preserve awareness times, original deadlines and decisions. Use reviewed versioned risk matrices and regulatory applicability. Verify confidentiality, restricted investigations, escalation, authorised reopening and overdue visibility. Internal approval is not external regulator submission.
+
+#### 27 — Compliance, Quality & Evidence
+
+Connect mapped standards, obligations, controls, policies, procedures, forms, evidence, audits, findings and corrective actions. Use reviewed applicability and exact versions. Require appropriate independent verification for assurance. Repair attachments, review dates and numbering inconsistencies. Editing approved templates creates draft revisions, never automatic activation/publication. Verify controlled printing, exports and effectiveness review.
+
+#### 28 — Training & Capability
+
+Complete mapped requirements, learning plans, assignments, assessments, credentials and renewals. Distinguish attendance, completion, assessed competence and current verified credentials. Connect overdue requirements to workforce eligibility and manager action under approved policy. Test exemptions, expiry and evidence access. Provide scoped worker and manager dashboards.
+
+#### 29 — Finance & Commercial
+
+Complete mapped quotes, agreements, invoices, receipts, approvals, reconciliation and reports. Use approved effective-dated rate tables; verify applicable current rules against authoritative sources before configuration. Separate calculated, approved, issued, paid and reconciled states. Test adjustments, credits, duplicates and restricted access. Submission/payment requires supporting evidence.
+
+#### 30 — Human Resources
+
+Complete mapped recruitment handoffs, employment records, onboarding, leave, performance, delegations and offboarding. Verify current jurisdiction and employment-instrument requirements against authoritative sources before entitlements/payroll configuration. Restrict payroll, health, disciplinary and identity information. Link offboarding to access revocation and work transfer. Test independent approvals, effective dates, history and exports.
+
+#### 31 — CRM, Growth & Relationships
+
+Complete mapped enquiries, organisations, contacts, opportunities, referrals, follow-ups and history. Use canonical contacts and consent-aware communication. Convert authorised opportunities into intake/service processes without duplicates. Verify ownership, duplicate review, pipeline definitions, restricted notes and reporting periods. Label forecast assumptions and never report forecasts as earned revenue.
+
+#### 32 — Governance & Strategy
+
+Complete mapped board/committee records, agendas, packs, meetings, resolutions, conflicts, objectives and delegated authorities. Enforce eligible voters, quorum, abstentions, conflicts, limits and independence. Distinguish acknowledgement from approval. Link actions/decisions to risk, controls and evidence. Verify confidential access, exact pack versions, immutable approved minutes and reviewed amendments.
+
+#### 33 — NDIS & Regulatory
+
+Connect mapped obligations, registrations, reporting, worker checks, pricing references and evidence. Verify current rules against authoritative sources before deadlines, reportability, rates or templates. Record source, effective date, applicability and reviewer. Distinguish draft, internally approved, externally submitted and acknowledged states. Internal workflow is not regulator acceptance.
+
+#### 34 — Community, Support & Knowledge
+
+Finalise Community & Support Services and Help, Knowledge & Support as TWO separate groups. Complete mapped programmes, activities, bookings, attendance, accessibility and outcomes; separately complete contextual guidance, searchable articles, requests and accountable escalation. Enforce consent, safeguarding, version control and permissions. Link reviewed guidance to modules. Reconcile each inventory independently without merging canonical identities.
+
+#### 35 — Complete the iPhone and iPad experience
+
+Here OS means Infinity operating-system upgrade; additionally verify existing web-app usability on iPhone/iPad. Test supported Safari, orientations, safe areas, keyboard, touch targets, dialogs, tables, file selection, download/printing and accessible graph alternatives. Preserve iPad Quick Access and functional Quick App dashboard. Verify requested 30-minute inactivity lock and forgotten-PIN recovery without bypassing authentication. If installable web features exist, test updates and prevent sensitive offline caching. Do not claim native iOS/App Store delivery from web testing.
+
+#### 36 — Finalise modules and prepare release
+
+Run acceptance against the reconciled inventory, 13 historical scope groups and 15 v2 workflow releases. Verify navigation plus representative create/edit/submit/approve/reject/search/export/print journeys. Test tenant/role restrictions, failures, accessibility, mobile, recovery and affected regressions. Rehearse restore across records, files and workflow state; measure recovery and document rollback. Complete applicable F095 with actual evidence and distinct author/checker/approver duties. Deliver inventory, verified capabilities, defects, blockers, checks/checkpoints/recovery evidence, owners and precise release recommendation. Mark Verified only with passing evidence; critical failures block publication.
+
+### Required execution report
+
+For each step record: scope and canonical IDs; before/after checkpoint IDs; changed files; checks actually run and outcomes; environment/identity/data limitations; defects/blockers with owners; next executable step. Separate Installed instructions, Implemented code, Verified behaviour and Published release. Never automatically close WF tickets from this document.
+
+---
+
+
 This is the current owner-directed specification. Earlier specifications remain historical context and existing capabilities must be preserved. Requirements below are targets, not claims of delivery. Track implementation and verification in MASTER_TODO.md. Preserve the existing Base44 runtime, routes, record IDs, shared engines and approved branding. PostgreSQL/Prisma/API/warehouse deliverables are architecture contracts until separately implemented and verified; this prompt does not migrate production data.
 
 Use this as the **single master prompt** for ComplianceHR Infinity. It consolidates everything we've built so far into one specification prompt for Base44, Claude, GPT, Lovable, Cursor, Windsurf, Replit, Bolt, Supabase, Prisma, PostgreSQL, or enterprise architecture generation.
