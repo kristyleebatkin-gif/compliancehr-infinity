@@ -1,3 +1,27 @@
+## Combined upgrade prompt installation — 17 November 2026 (Australia/Brisbane)
+
+Owner selected main and asked to combine all continuation prompts.
+Installed one 36-step OS upgrade/module finalisation sequence directly into
+COMPLIANCEHR_INFINITY_MASTER_PROMPT.md, preserving its existing specification.
+Scope includes shared instructions, foundation/dashboard work, all 15 Phase 11
+v2 ticket ranges WF-001–WF-400, all 13 historical module scope groups (the final
+two remain separately reconciled within step 34), mobile and release acceptance.
+
+Status: INSTRUCTIONS INSTALLED; execution of the 36-step backlog remains OPEN.
+No application runtime, entities, role grants, live records or publication were
+changed by this documentation installation. Prior implemented capabilities and
+all security/production gates remain in force. Current release-plan/package
+references must be resolved before claiming v2 story completion.
+
+Before checkpoint: 6afb87eb58d72da564b47079
+Before source: 6402ef9c662cfcbd19d17e3d910dc59fe0a22793
+Validation: run document sequence/range and original-content preservation checks
+before the final named checkpoint. No application test pass is implied.
+
+Next: begin step 01 inventory reconciliation when executing this pack.
+Owner's separate message "Can you nerve studio next" is ambiguous; do not merge
+studio-save-to-app or change its contents without clarifying the intended action.
+
 ## Phase 11 Enterprise Workflow Studio — 15 November 2026 (Australia/Brisbane)
 
 Owner supplied the complete Phase 11 enterprise workflow specification. Preserved in PHASE11_OWNER_SPECIFICATION.md and linked from the controlling master prompt.
