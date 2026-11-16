@@ -14,7 +14,7 @@
 import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 import { studioTenant, studioRows } from '../../shared/workflowStudioAccess.ts';
 import { assertWorkflowAction, readWorkflowRecords } from '../../shared/workflowSafety.ts';
-import { publicationAuthority, approvalIndependence } from '../../shared/workflowGovernance.ts';
+import { publicationAuthority, approvalIndependence, definitionContributors } from '../../shared/workflowGovernance.ts';
 import {
   normaliseNodes,
   validateGraph,
@@ -191,6 +191,7 @@ export default perBusiness(async function (req: Request) {
           state: 'Draft',
           version: 0,
           template_code: text(body.template_code, 40),
+          author_ids_json: JSON.stringify([user.id]),
           author_id: user.id,
           author_name: name,
           validated_hash: '',
@@ -201,8 +202,10 @@ export default perBusiness(async function (req: Request) {
       const definition = await readDefinition(read, body.definition_id);
       if (definition.state === 'Published') fail('A published workflow cannot be edited in place. Clone it to start a new version.', 409);
       if (definition.state === 'Archived') fail('An archived workflow cannot be edited. Clone it instead.', 409);
+      const edited = Object.entries(fields).some(([key, value]) => String(definition[key] ?? '') !== String(value ?? '')) || Boolean(body.code && text(body.code, 40) !== definition.code);
       const updated = await write.WorkflowDefinition.update(definition.id, {
         ...fields,
+        author_ids_json: JSON.stringify(definitionContributors(definition, user.id, edited)),
         code: text(body.code, 40) || definition.code,
         state: 'Draft',
         template_code: text(body.template_code, 40) || definition.template_code,
@@ -255,7 +258,7 @@ export default perBusiness(async function (req: Request) {
       const authorId = definition.author_id || definition.created_by_id;
       const independent = String(authorId || '') !== String(user.id);
       const publicationNote = text(body.publication_note, 500);
-      const publicationError = publicationAuthority(authorId, user.id);
+      const publicationError = publicationAuthority(authorId, user.id, definitionContributors(definition, user.id, false));
       if (publicationError) fail(publicationError, 403);
 
       const version = nextVersion(definition.version);
@@ -339,6 +342,7 @@ export default perBusiness(async function (req: Request) {
         owner_role: source.owner_role,
         standard_refs: source.standard_refs,
         evidence_refs: source.evidence_refs,
+        author_ids_json: JSON.stringify(definitionContributors(source, user.id, true)),
         author_id: user.id,
         author_name: name,
         content_hash: hash,
