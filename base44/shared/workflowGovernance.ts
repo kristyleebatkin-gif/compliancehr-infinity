@@ -1,8 +1,17 @@
 // Identity-based maker/checker controls shared by the supervised runtime.
-export function publicationAuthority(authorId: unknown, publisherId: unknown): string | null {
+export function publicationAuthority(authorId: unknown, publisherId: unknown, contributors: unknown[] = []): string | null {
   if (!authorId || !publisherId) return 'Author and publisher identities must be known before publication.';
-  if (String(authorId) === String(publisherId)) return 'An independent authorised publisher must publish this workflow. A publication note cannot override this control.';
+  if ([authorId, ...contributors].some(id => String(id) === String(publisherId))) return 'An independent authorised publisher must publish this workflow. A publication note cannot override this control.';
   return null;
+}
+
+export function definitionContributors(definition: any, actorId: string, changed: boolean): string[] {
+  let prior: unknown = [];
+  if (definition?.author_ids_json) {
+    try { prior = JSON.parse(definition.author_ids_json); } catch { throw new Error('Workflow authorship history is unreadable.'); }
+    if (!Array.isArray(prior) || prior.some(id => typeof id !== 'string' || !id)) throw new Error('Workflow authorship history is invalid.');
+  }
+  return [...new Set([definition?.author_id, ...(prior as string[]), ...(changed ? [actorId] : [])].filter(Boolean))] as string[];
 }
 
 export function approvalIndependence(actorId: unknown, events: any[]): string | null {
