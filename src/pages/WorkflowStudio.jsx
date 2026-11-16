@@ -133,10 +133,6 @@ function WorkflowStudioView() {
 
   const publishDefinition = async (definition, nodes, publicationNote) => {
     if (!definition?.id) return;
-    const saved = await call({ action: 'save', definition_id: definition.id, ...fieldsOf(definition), nodes_json: JSON.stringify(nodes) });
-    if (!saved) return;
-    const validated = await call({ action: 'validate', definition_id: definition.id });
-    if (!validated || validated.definition?.state !== 'Validated') return;
     await call({ action: 'publish', definition_id: definition.id, publication_note: publicationNote || '' });
   };
 
