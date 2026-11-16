@@ -2,6 +2,10 @@
   "name": "WorkflowDefinition",
   "type": "object",
   "properties": {
+    "author_ids_json": {
+      "type": "string",
+      "description": "Stable author and editor IDs; set only by the workflow service."
+    },
     "tenant_id": {
       "type": "string",
       "title": "Business (tenant) ID",
