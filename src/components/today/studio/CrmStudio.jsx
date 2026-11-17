@@ -1,9 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { Loader2, Sparkles, Copy, ArrowUpRight, Flame } from 'lucide-react';
 import { Empty, money } from '@/components/today/todayUi';
-import { readStore, writeStore, formatWhen } from '@/components/today/studio/studioStore';
+import { formatWhen } from '@/components/today/studio/studioStore';
+import { listStudioItems, createStudioItem, updateStudioItem } from '@/components/today/studio/studioData';
 
 const STAGES = ['New', 'Contacted', 'Proposal Sent', 'Negotiation', 'Won', 'Lost'];
 const STAGE_COLOUR = {
@@ -21,10 +22,12 @@ export default function CrmStudio() {
   const [leads, setLeads] = useState(null);
   const [error, setError] = useState('');
   const [selectedId, setSelectedId] = useState(null);
-  const [notes, setNotes] = useState(() => readStore('crm-notes', {}));
+  const [notes, setNotes] = useState({});
   const [advice, setAdvice] = useState(null);
   const [busy, setBusy] = useState(false);
   const [copied, setCopied] = useState(false);
+  const noteIdsRef = useRef({});
+  const saveTimerRef = useRef(null);
 
   useEffect(() => {
     base44.entities.Lead.list({ sort: '-updated_date', limit: 200 })
@@ -33,8 +36,66 @@ export default function CrmStudio() {
   }, []);
 
   useEffect(() => {
-    writeStore('crm-notes', notes);
-  }, [notes]);
+    let cancelled = false;
+    listStudioItems('crm_note')
+      .then((items) => {
+        if (cancelled) return;
+        const savedNotes = {};
+        const savedIds = {};
+        items.forEach((item) => {
+          const leadId = item.payload?.leadId;
+          if (!leadId) return;
+          savedNotes[leadId] = item.payload?.note || '';
+          savedIds[leadId] = item.id;
+        });
+        noteIdsRef.current = savedIds;
+        setNotes(savedNotes);
+      })
+      .catch((err) => {
+        if (!cancelled) setError(err?.message || 'Your saved notes could not be loaded.');
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(
+    () => () => {
+      if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+    },
+    []
+  );
+
+  const persistNote = async (leadId, leadName, note) => {
+    try {
+      const existing = noteIdsRef.current[leadId];
+      if (existing) {
+        await updateStudioItem(existing, {
+          title: leadName || 'CRM note',
+          payload: { leadId, note, savedAt: new Date().toISOString() }
+        });
+      } else {
+        const created = await createStudioItem('crm_note', leadName || 'CRM note', {
+          leadId,
+          note,
+          savedAt: new Date().toISOString()
+        });
+        noteIdsRef.current[leadId] = created.id;
+      }
+      setError('');
+    } catch (err) {
+      setError(err?.message || 'That note could not be saved.');
+    }
+  };
+
+  const changeNote = (leadId, leadName, value) => {
+    setNotes((prev) => ({ ...prev, [leadId]: value }));
+    if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+    saveTimerRef.current = setTimeout(() => {
+      saveTimerRef.current = null;
+      persistNote(leadId, leadName, value);
+    }, 700);
+  };
 
   const selected = (leads || []).find((lead) => lead.id === selectedId) || null;
 
@@ -201,7 +262,7 @@ export default function CrmStudio() {
               <span className="studio-label">Your notes on this enquiry</span>
               <textarea
                 value={notes[selected.id] || ''}
-                onChange={(event) => setNotes((prev) => ({ ...prev, [selected.id]: event.target.value }))}
+                onChange={(event) => changeNote(selected.id, selected.business_name, event.target.value)}
                 rows={4}
                 placeholder="What was said, what they need, what you promised…"
                 className="studio-textarea"
