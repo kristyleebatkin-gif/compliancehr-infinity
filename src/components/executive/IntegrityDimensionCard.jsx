@@ -23,7 +23,7 @@ export default function IntegrityDimensionCard({ dimension, counts, expanded, on
       >
         <span className="min-w-0">
           <span className="block text-sm font-bold text-header-foreground">{dimension.label}</span>
-          <span className="mt-0.5 block text-xs font-semibold text-header-foreground">Weight {dimension.weight}%{dimension.contribution !== null ? ` · adds ${dimension.contribution} points` : ''}</span>
+          <span className="mt-0.5 block text-xs font-semibold text-header-foreground">Weight {dimension.weight}%{dimension.contribution !== null ? ` · weighted value ${dimension.contribution}` : ''}</span>
         </span>
         <span className="flex shrink-0 items-center gap-2">
           <span className="text-lg font-extrabold tabular-nums text-header-foreground">{label}</span>
@@ -50,7 +50,7 @@ export default function IntegrityDimensionCard({ dimension, counts, expanded, on
             );
           })}
           <p className="pt-1 text-[11px] font-medium leading-snug text-header-foreground">
-            Good evidence {dimension.good} · open or failing evidence {dimension.bad}. {dimension.score === null ? 'No countable records yet, so this dimension is excluded from the index.' : `Scored ${dimension.score}% across ${dimension.coverage}% of this dimension's measures.`}
+            Positive indicator occurrences {dimension.good} · attention indicator occurrences {dimension.bad}. {dimension.score === null ? 'Incomplete reads or no countable records; this dimension and the overall score are withheld.' : `Indicative score ${dimension.score}% across ${dimension.coverage}% of required reads.`}
           </p>
         </dl>
       )}
