@@ -1090,3 +1090,15 @@ Not verified: raw live API denial with separate users, authenticated device UAT,
 OPEN: transactional CAS/idempotency/outbox/inbox, scheduler/SLA events, actual evidence file/quarantine/hash/verification, board quorum/voter conflicts, MFA, notification/AI/webhook/sub-workflow adapters, classified/location ABAC integration, canonical task/approval/evidence adapters, representative load/availability/DR and F095 sign-off. Current multi-entity compensation is not atomic; start/act/escalate failure/retry paths require further hardening. No claim of full Phase 11 completion or frontend production publication.
 
 Restore point before this batch: 6afae5e3d4ecea6c95696b00. A named post-check checkpoint is created after this log is saved.
+
+
+## Ultimate Everything Prompt — specification adoption, 17 November 2026
+
+- Owner's Master Enterprise Specification v1.0 preserved in ULTIMATE_EVERYTHING_SPECIFICATION_V1.md with normalised formatting. All 36 named requirement sections checked present.
+- Updated AGENTS.md and the controlling master entry point to make it the latest product authority. Compatible existing plans and prior evidence remain intact.
+- Recorded latest navy/blue/purple/pink tokens as superseding the historical pastel-only colour rule; actual styles and icons unchanged in this documentation batch.
+- Current inspected package.json uses React 18 / Vite / React Router / Base44. Next.js 15 / React 19 / NestJS / Prisma / PostgreSQL and the specified infrastructure remain target architecture requiring migration work; no runtime migration performed.
+- Added dependency-ordered acceptance queue and explicit tenant scope, lifecycle authority, atomic audit/evidence/version persistence, post-commit effects and reviewable AI requirements.
+- Before restore point: 6afc34a4b996db58c836d4d4, commit 813bf20fa7d4c4c31c4ae8f93c940ba2481d4a40.
+- Verification: all 36 section headings and three controlling references present; change scope and whitespace checked against that baseline. Documentation only; runtime tests not rerun. No feature completion, production publication or regulatory assurance claimed. Existing tenant/API/device/concurrency/DR/F095 gates remain open.
+- Final named restore point: Ultimate Everything v1.0 — governing specification installed (created after this entry).
