@@ -8,20 +8,20 @@ export default function HighlightsScreen({ derived, onBack }) {
 
   const needs = [
     { id: 'esc', label: 'Escalations waiting', value: derived.escalations.length },
-    { id: 'inc', label: 'Open incidents', value: derived.noteIncidents.length },
+    { id: 'inc', label: 'Open incident records', value: derived.openIncidents.length },
     { id: 'late', label: 'Not clocked in', value: derived.late.length },
     { id: 'unfilled', label: 'Unfilled shifts', value: derived.unfilled.length }
   ].filter((item) => item.value > 0);
 
   const wins = [
-    { id: 'on', label: 'Team on shift right now', value: derived.onShift.length },
-    { id: 'notes', label: 'Shift notes completed today', value: derived.missingNotes.length === 0 ? 'All in' : 'In progress' },
-    { id: 'clear', label: 'Incidents logged from notes', value: derived.noteIncidents.length }
+    { id: 'on', label: 'Shifts in progress', value: derived.onShift.length },
+    { id: 'notes', label: 'Shifts needing note review', value: derived.missingNotes.length },
+    { id: 'clear', label: 'Notes mentioning concerns', value: derived.noteIncidents.length }
   ];
 
   const summary = needs.length
     ? `${needs.length} things need you today: ${needs.map((item) => `${item.value} ${item.label.toLowerCase()}`).join(', ')}.`
-    : 'Nothing is escalated right now. The team is on shift and the notes are in.';
+    : 'No escalations appear in the loaded records. Note verification remains a separate review.';
 
   const readAloud = () => {
     if (!('speechSynthesis' in window)) {
@@ -66,7 +66,7 @@ export default function HighlightsScreen({ derived, onBack }) {
               </div>
             ))
           ) : (
-            <p className="tl-muted py-1.5 text-[11px]">Nothing escalated. Good day.</p>
+            <p className="tl-muted py-1.5 text-[11px]">No escalations in the loaded records.</p>
           )}
         </div>
       </section>
@@ -85,7 +85,7 @@ export default function HighlightsScreen({ derived, onBack }) {
       </section>
 
       <button type="button" onClick={sendPraise} className="tl-btn tl-primary mt-2 w-full">
-        <Megaphone className="h-3.5 w-3.5" /> {praiseSent ? 'Praise sent to the team' : 'Send praise to team'}
+        <Megaphone className="h-3.5 w-3.5" /> {praiseSent ? 'Praise prepared — send in Messages' : 'Prepare team praise'}
       </button>
     </div>
   );

@@ -90,8 +90,8 @@ function TodayWorkspace({ onSecurityPin }) {
     shifts: data?.summary?.shifts ?? 0,
     invoices: data?.summary?.invoices ?? 0,
     notesOutstanding: data?.summary?.notesOutstanding ?? 0,
-    onShift: (data?.shifts || []).filter((shift) => shift.clock_in && !shift.clock_out).length,
-    unfilled: (data?.shifts || []).filter((shift) => !shift.employee_name && shift.status !== 'Cancelled').length
+    onShift: (data?.shifts || []).filter((shift) => shift.clock_in && !shift.clock_out && !['Completed', 'Cancelled', 'Missed'].includes(shift.status)).length,
+    unfilled: (data?.shifts || []).filter((shift) => !shift.employee_name && !['Completed', 'Cancelled', 'Missed'].includes(shift.status)).length
   }), [data]);
 
   const plan = useMemo(() => {
@@ -137,6 +137,10 @@ function TodayWorkspace({ onSecurityPin }) {
             onScreensaver={() => screensaver.setSettingsOpen(true)}
           />
 
+          {data && <div className="t-muted flex items-center justify-between gap-2 text-xs" role="status">
+            <span>Loaded {new Date(data.loadedAt).toLocaleTimeString('en-AU', { timeZone: 'Australia/Brisbane' })} AEST · refreshes every minute</span>
+            <button type="button" onClick={reload} className="t-btn t-btn-ghost">Refresh</button>
+          </div>}
           <TodayRadio />
 
           <TodayMobileNav />

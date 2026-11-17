@@ -6,9 +6,9 @@ import HandoverNotes from '@/components/teamleader/HandoverNotes';
 
 const TILES = [
   { key: 'escalations', label: 'Team escalations', hint: 'Urgent / overdue', tone: 'from-[#FF2E9A] to-[#5A00D6]', screen: 'highlights' },
-  { key: 'missingNotes', label: 'Shift notes missing', hint: 'Needs a note', tone: 'from-[#5A00D6] to-[#0072FF]', screen: 'notes' },
-  { key: 'onShift', label: 'On shift now', hint: 'Clocked in', tone: 'from-[#0072FF] to-[#0A2B6D]', screen: 'team' },
-  { key: 'unfilled', label: 'Roster clash / unfilled', hint: 'Cover needed', tone: 'from-[#0A2B6D] to-[#5A00D6]', screen: 'roster' }
+  { key: 'missingNotes', label: 'Shift notes to review', hint: 'Check service evidence', tone: 'from-[#5A00D6] to-[#0072FF]', screen: 'notes' },
+  { key: 'onShift', label: 'Shifts in progress', hint: 'Clocked in', tone: 'from-[#0072FF] to-[#0A2B6D]', screen: 'team' },
+  { key: 'unfilled', label: 'Unfilled shifts', hint: 'Cover needed', tone: 'from-[#0A2B6D] to-[#5A00D6]', screen: 'roster' }
 ];
 
 const CHIPS = ["Today's highlights", "Who's late to clock in?", 'Chase shift notes'];
@@ -33,14 +33,14 @@ export default function TeamLeaderHome({ user, data, derived, theme, onToggleThe
       return;
     }
     if (query.includes('note')) {
-      setReply(`${derived.missingNotes.length} shift notes are still missing today.`);
+      setReply(`${derived.missingNotes.length} shifts need a note or evidence review. Name matches do not verify individual shifts.`);
       return;
     }
     if (query.includes('shift') || query.includes('roster')) {
-      setReply(`${derived.onShift.length} on shift now · ${derived.unfilled.length} unfilled · ${derived.late.length} not clocked in.`);
+      setReply(`${derived.onShift.length} shifts in progress · ${derived.unfilled.length} unfilled · ${derived.late.length} not clocked in.`);
       return;
     }
-    setReply(`${derived.escalations.length} escalations and ${derived.missingNotes.length} missing notes need you today.`);
+    setReply(`${derived.escalations.length} escalations and ${derived.missingNotes.length} note reviews need you today.`);
   };
 
   const firstName = (user?.full_name || '').split(' ')[0] || 'there';
@@ -50,7 +50,7 @@ export default function TeamLeaderHome({ user, data, derived, theme, onToggleThe
       <header className="flex items-start justify-between gap-2">
         <div className="min-w-0">
           <p className="tl-muted text-[10px] font-bold uppercase tracking-[0.14em]">
-            {new Date().toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short' })}
+            {new Date().toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'Australia/Brisbane' })}
           </p>
           <h1 className="tl-text mt-0.5 truncate text-[20px] font-extrabold leading-tight">
             Kia ora, {firstName}
@@ -139,7 +139,7 @@ export default function TeamLeaderHome({ user, data, derived, theme, onToggleThe
                 <span className="text-[11px] font-extrabold">{derived.noteIncidents.length}</span>
               </span>
               <div className="min-w-0 flex-1">
-                <p className="tl-text text-[11.5px] font-extrabold">Incident from notes</p>
+                <p className="tl-text text-[11.5px] font-extrabold">Concerns mentioned in notes</p>
                 <p className="tl-muted truncate text-[9.5px] font-semibold">
                   {derived.noteIncidents[0]?.person_name || 'Nothing flagged yet'}
                 </p>
@@ -187,7 +187,7 @@ export default function TeamLeaderHome({ user, data, derived, theme, onToggleThe
           <HandoverNotes day={data.day} />
 
           <p className="tl-muted flex items-center gap-1 pb-1 text-[9.5px] font-semibold">
-            <Clock className="h-3 w-3" /> Shift data refreshes when you reopen this screen
+            <Clock className="h-3 w-3" /> Roster data refreshes every minute; check the loaded time above.
           </p>
         </div>
       </div>

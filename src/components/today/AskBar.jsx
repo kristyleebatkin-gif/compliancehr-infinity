@@ -19,7 +19,7 @@ export default function AskBar({ counts, visibleKeys = {} }) {
     let reply;
     if (query.includes('email') || query.includes('inbox')) {
       reply = visibleKeys.emails ? `${counts.emails} recorded emails. Reply status is not calculated here.` : 'Email inbox access is not available in this workspace.';
-    } else if (query.includes('shift') || query.includes('roster') || query.includes('late')) {
+    } else if ((query.includes('shift') || query.includes('roster') || query.includes('late')) && !query.includes('note')) {
       reply = visibleKeys.shifts ? `${counts.shifts} shifts today · ${counts.onShift} on shift now · ${counts.unfilled} unfilled.` : 'Roster access is not available in this workspace.';
     } else if (query.includes('invoice') || query.includes('approve')) {
       reply = visibleKeys.invoices ? `${counts.invoices} ${counts.invoices === 1 ? 'invoice is' : 'invoices are'} ready for approval.` : 'Invoice access is not available in this workspace.';

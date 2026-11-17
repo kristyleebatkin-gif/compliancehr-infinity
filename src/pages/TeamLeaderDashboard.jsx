@@ -49,7 +49,7 @@ function TeamLeaderWorkspace({ onSecurityPin }) {
   const back = () => setScreen('home');
   const failedSections = Object.entries(data?.errors || {}).filter(([, error]) => Boolean(error)).map(([key]) => ERROR_LABELS[key] || key);
   const studioContext = derived
-    ? `${derived.onShift.length} of ${(data.team || []).length} team members on shift, ${derived.late.length} not clocked in, ${derived.unfilled.length} unfilled shifts, ${derived.missingNotes.length} shift notes still missing, ${derived.escalations.length} escalations waiting.`
+    ? `${derived.onShift.length} shifts in progress, ${derived.late.length} not clocked in, ${derived.unfilled.length} unfilled shifts, ${derived.missingNotes.length} shifts need note review, ${derived.escalations.length} escalations waiting.`
     : '';
 
   return (
@@ -57,6 +57,10 @@ function TeamLeaderWorkspace({ onSecurityPin }) {
       <div className="tl-phone" data-theme={theme}>
         <div className="tl-scroll flex-1 overflow-y-auto pb-2">
           <WorkspaceNavigationTools compact />
+          {data && <div className="tl-muted flex items-center justify-between gap-2 px-3.5 py-2 text-xs" role="status">
+            <span>Loaded {new Date(data.loadedAt).toLocaleTimeString('en-AU', { timeZone: 'Australia/Brisbane' })} AEST · refreshes every minute</span>
+            <button type="button" onClick={reload} className="tl-btn tl-ghost">Refresh</button>
+          </div>}
           {!data || !derived ? (
             <div className="space-y-2.5 p-3.5">
               {[0, 1, 2, 3].map((key) => (
@@ -123,9 +127,9 @@ function TeamLeaderWorkspace({ onSecurityPin }) {
           name={user?.full_name}
           roleLabel={screensaver.roleLabel}
           stats={[
-            { label: 'on shift', value: derived.onShift.length },
+            { label: 'shifts in progress', value: derived.onShift.length },
             { label: 'not clocked in', value: derived.late.length },
-            { label: 'notes missing', value: derived.missingNotes.length },
+            { label: 'note reviews', value: derived.missingNotes.length },
             { label: 'escalations', value: derived.escalations.length }
           ]}
           onClose={screensaver.closeScreensaver}
