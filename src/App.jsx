@@ -26,6 +26,7 @@ import EvidenceOS from '@/pages/EvidenceOS';
 import AssuranceAuditMatrix from '@/pages/AssuranceAuditMatrix';
 import AiIntelligenceOS from '@/pages/AiIntelligenceOS';
 import KnowledgeGraphOS from '@/pages/KnowledgeGraphOS';
+import V8000CommandCentre from '@/pages/V8000CommandCentre';
 import ClinicalOS from '@/pages/ClinicalOS';
 import BoardCeo from '@/pages/BoardCeo';
 import ApprovalEngine from '@/pages/ApprovalEngine';
@@ -174,6 +175,7 @@ const AuthenticatedApp = () => {
           <Route path="/assurance-matrix" element={<RoleGate navKey="evidence"><AssuranceAuditMatrix /></RoleGate>} />
           <Route path="/ai-os" element={<RoleGate navKey="ai-os"><AiIntelligenceOS /></RoleGate>} />
           <Route path="/knowledge-graph" element={<RoleGate navKey="knowledge-graph"><KnowledgeGraphOS /></RoleGate>} />
+          <Route path="/v8000" element={<RoleGate navKey="v8000-command"><V8000CommandCentre /></RoleGate>} />
           <Route path="/clinical-os" element={<RoleGate navKey="clinical-os"><ClinicalOS /></RoleGate>} />
           <Route path="/board-ceo" element={<RoleGate navKey="board-ceo"><BoardCeo /></RoleGate>} />
           <Route path="/auditor-portal" element={<RoleGate navKey="auditor-portal"><AuditorsPortal /></RoleGate>} />

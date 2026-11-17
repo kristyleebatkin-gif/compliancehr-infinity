@@ -22,6 +22,7 @@ import PendingApprovalNotice from '@/components/users/PendingApprovalNotice';
 import ModuleDocsFooter from '@/components/ModuleDocsFooter';
 import UniversalDocumentViewerModal from '@/components/documents/UniversalDocumentViewerModal';
 import EnterpriseFloatingWorkspaceDock from '@/components/EnterpriseFloatingWorkspaceDock';
+import CopilotDock from '@/components/v8000/CopilotDock';
 import ProviderOnboardingDrawer from '@/components/enterprise/ProviderOnboardingDrawer';
 
 const BOTTOM_NAV = [
@@ -350,6 +351,7 @@ export default function AppLayout() {
           {location.pathname !== '/our-employees' && location.pathname !== '/dashboard' && <ModuleDocsFooter />}
           <UniversalDocumentViewerModal />
           <EnterpriseFloatingWorkspaceDock />
+          <CopilotDock />
           <ProviderOnboardingDrawer open={onboardingOpen} onClose={() => setOnboardingOpen(false)} />
         </main>
 

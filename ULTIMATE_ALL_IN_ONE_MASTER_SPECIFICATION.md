@@ -108,6 +108,27 @@ user can do the thing on screen, against real records, today.**
 **Final governance law.** If a capability cannot be owned, governed, measured, evidence-linked,
 verified, audited, reported, improved and trusted, it must not exist.
 
+## 9a. V8000 foundation — implementation status (pass 1, 17 November 2026)
+
+Realised in this app at `/v8000` (V8000 Evidence Fabric), using existing entities only:
+
+- **Evidence Fabric** — framework → standard → obligation → requirement → control → evidence → finding → outcome, per
+  standard, with node detail for every control and the evidence state of each record. Engine: `src/lib/v8000Engine.js`.
+- **Calculations** — trust, coverage, gap, review, evidence-state and readiness from stored records. Unmeasured parts are
+  excluded from the score and reported as coverage; an empty business reads *not measured*, never 100.
+- **Validation** — ten traceability and validation checks, each with a count and the register to act in. No checks means
+  nothing was detected in the loaded records, not that the business is compliant.
+- **Entry points** — Executive, Board, Trust, NDIS, Aged Care, Clinical Governance, Workforce, Audit and Risk, each showing
+  live counts from its own registers and an explicit empty state.
+- **Copilot** — persistent dock on every page for AI OS roles, offering evidence gaps, readiness review, audit summary,
+  executive report and corrective actions through the governed `aiCopilot` function. Output is labelled an AI draft with
+  cited sources; it cannot approve, close or alter a record.
+
+**Deferred, and why:** the specification's Next.js/NestJS/PostgreSQL/Redis/Keycloak stack is not adopted (§2). Per-framework
+executive dashboards are entry points onto existing modules rather than nine new dashboards. Weighted readiness is a
+management indicator, not an audit opinion. SLA automation, notification fan-out and external integrations are outside this
+pass.
+
 ## 10. Change control
 
 1. Any change that alters a weight, threshold, band, or the completion test updates this file in the

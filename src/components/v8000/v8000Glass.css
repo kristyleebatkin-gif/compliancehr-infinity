@@ -1,0 +1,148 @@
+/* V8000 dark-blue glass surface. Scoped to V8000 components so existing modules keep their own theme. */
+
+.v8-shell {
+  color: #EAF2FF;
+}
+
+.v8-panel {
+  border: 1px solid rgba(190, 220, 255, 0.18);
+  border-radius: 1rem;
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.045) 45%, rgba(90, 0, 214, 0.16) 100%),
+    rgba(8, 27, 68, 0.55);
+  box-shadow: 0 10px 30px -18px rgba(2, 8, 24, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.v8-panel-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid rgba(190, 220, 255, 0.16);
+}
+
+.v8-title {
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: #FFFFFF;
+}
+
+.v8-sub {
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: #B7CDEC;
+}
+
+.v8-muted {
+  font-size: 0.75rem;
+  color: #A8C0E4;
+}
+
+.v8-kpi {
+  border: 1px solid rgba(190, 220, 255, 0.18);
+  border-radius: 0.85rem;
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.11), rgba(0, 114, 255, 0.12));
+  padding: 0.85rem 0.9rem;
+  min-width: 0;
+}
+
+.v8-kpi-value {
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: #FFFFFF;
+  font-variant-numeric: tabular-nums;
+}
+
+.v8-kpi-value[data-tone='good'] { color: #7CF0C4; }
+.v8-kpi-value[data-tone='watch'] { color: #FFD37A; }
+.v8-kpi-value[data-tone='risk'] { color: #FF9EC4; }
+.v8-kpi-value[data-tone='unmeasured'] { color: #C7D8F0; font-size: 1rem; }
+
+.v8-tablist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.v8-tab {
+  border: 1px solid rgba(190, 220, 255, 0.22);
+  border-radius: 0.6rem;
+  padding: 0.4rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #D6E5FA;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.v8-tab[aria-selected='true'] {
+  background: #FFFFFF;
+  color: #0A2B6D;
+  border-color: #FFFFFF;
+}
+
+.v8-tab:hover { background: rgba(255, 255, 255, 0.14); }
+.v8-tab[aria-selected='true']:hover { background: #FFFFFF; }
+
+.v8-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border-radius: 999px;
+  border: 1px solid rgba(190, 220, 255, 0.3);
+  padding: 0.1rem 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #DCE9FB;
+  white-space: nowrap;
+}
+
+.v8-chip[data-state='verified'] { border-color: rgba(124, 240, 196, 0.55); background: rgba(124, 240, 196, 0.14); color: #B9FBDD; }
+.v8-chip[data-state='expiring'] { border-color: rgba(255, 211, 122, 0.55); background: rgba(255, 211, 122, 0.14); color: #FFE6B4; }
+.v8-chip[data-state='review'] { border-color: rgba(140, 190, 255, 0.55); background: rgba(140, 190, 255, 0.14); color: #D3E6FF; }
+.v8-chip[data-state='risk'] { border-color: rgba(255, 158, 196, 0.6); background: rgba(255, 158, 196, 0.16); color: #FFD2E4; }
+.v8-chip[data-state='muted'] { border-color: rgba(190, 220, 255, 0.28); background: rgba(255, 255, 255, 0.06); color: #C7D8F0; }
+
+.v8-row {
+  border: 1px solid rgba(190, 220, 255, 0.14);
+  border-radius: 0.7rem;
+  background: rgba(255, 255, 255, 0.045);
+  padding: 0.6rem 0.7rem;
+  width: 100%;
+  text-align: left;
+}
+
+.v8-row:hover { background: rgba(255, 255, 255, 0.1); }
+.v8-row[aria-current='true'] { border-color: #7CD3FF; background: rgba(0, 198, 255, 0.16); }
+
+.v8-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border: 1px solid rgba(190, 220, 255, 0.4);
+  border-radius: 0.55rem;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  background: rgba(0, 114, 255, 0.28);
+}
+
+.v8-link:hover { background: rgba(0, 198, 255, 0.42); }
+
+.v8-scroll { max-height: 26rem; overflow-y: auto; }
+
+.v8-shell :is(button, a, select, input, [tabindex]):focus-visible {
+  outline: 2px solid #7CD3FF;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v8-panel { backdrop-filter: none; -webkit-backdrop-filter: none; }
+}
