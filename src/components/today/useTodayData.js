@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { serviceDay, previousServiceDay, relevantRoster } from '@/lib/rosterDashboard';
+import { readDashboardCollection } from '@/lib/dashboardRecords';
 import { base44 } from '@/api/base44Client';
 import { useRole } from '@/lib/useRole';
 import { canAccessNav, hasApprovedAccess } from '@/lib/roles';
 
-export const todayIso = () => new Date().toLocaleDateString('en-CA', { timeZone: 'Australia/Brisbane' });
+export const todayIso = serviceDay;
 
 const readItems = async (request) => {
   try {
@@ -52,15 +54,16 @@ export default function useTodayData() {
   const load = useCallback(async () => {
     const version = ++requestVersion.current;
     const day = todayIso();
+    const dates = [previousServiceDay(day), day];
     const [emails, shifts, invoices, notes, ndis, todos, team, incidents, issues, emailCount, shiftCount, invoiceCount, noteCount] = await Promise.all([
       access.emails ? readItems(base44.entities.CommunicationEntry.filter({ entry_kind: 'Email' }, { sort: '-created_date', limit: 6 })) : skippedItems(),
-      access.shifts ? readItems(base44.entities.Shift.filter({ date: day }, { sort: 'start_time', limit: 500 })) : skippedItems(),
+      access.shifts ? readDashboardCollection(options => base44.entities.Shift.filter({ date: { $in: dates } }, { ...options, sort: 'id' })) : skippedItems(),
       // Only Draft invoices await approval. Sent invoices have already been issued.
       access.invoices ? readItems(base44.entities.Invoice.filter({ status: 'Draft' }, { sort: '-created_date', limit: 6 })) : skippedItems(),
-      access.notes ? readItems(base44.entities.CommunicationEntry.filter({ entry_kind: 'Shift Note', entry_date: day }, { sort: '-created_date', limit: 8 })) : skippedItems(),
+      access.notes ? readDashboardCollection(options => base44.entities.CommunicationEntry.filter({ entry_kind: 'Shift Note', entry_date: { $in: dates }, lifecycle_status: { $ne: 'Archived' } }, { ...options, sort: 'id' })) : skippedItems(),
       access.ndis ? readItems(base44.entities.NdisUpdate.list({ sort: '-published_date', limit: 3 })) : skippedItems(),
       access.todos ? readItems(base44.entities.TodoTask.filter({ status: { $in: ['Pending', 'In Progress', 'Open'] } }, { limit: 6 })) : skippedItems(),
-      access.team ? readItems(base44.entities.StaffProfile.filter({ status: { $in: ['Active', 'On Leave'] } }, { limit: 12 })) : skippedItems(),
+      access.team ? readDashboardCollection(options => base44.entities.StaffProfile.filter({ status: { $in: ['Active', 'On Leave'] } }, { ...options, sort: 'id' })) : skippedItems(),
       access.incidents ? readItems(base44.entities.Incident.filter({ status: { $in: ['Reported', 'Under Investigation', 'Action Required'] } }, { limit: 5 })) : skippedItems(),
       access.issues ? readItems(base44.entities.ComplianceIssue.filter({ status: { $in: ['Open', 'In Progress'] } }, { limit: 4 })) : skippedItems(),
       access.emails ? readCount(base44.entities.CommunicationEntry.count({ entry_kind: 'Email', lifecycle_status: { $in: ['Sent', 'Delivered', 'Read', 'Acknowledged'] } })) : skippedCount(),
@@ -72,9 +75,10 @@ export default function useTodayData() {
     if (version !== requestVersion.current) return;
     setData({
       day,
+      loadedAt: new Date().toISOString(),
       access,
       emails: emails.items,
-      shifts: shifts.items,
+      shifts: relevantRoster(shifts.items, day),
       invoices: invoices.items,
       notes: notes.items,
       ndis: ndis.items,
@@ -108,7 +112,8 @@ export default function useTodayData() {
 
   useEffect(() => {
     load();
-    return () => { requestVersion.current += 1; };
+    const timer = setInterval(load, 60000);
+    return () => { clearInterval(timer); requestVersion.current += 1; };
   }, [load]);
 
   return { data, reload: load };

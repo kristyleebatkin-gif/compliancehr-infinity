@@ -1,16 +1,16 @@
+import { shiftNoteReview } from '@/lib/rosterDashboard';
 import React from 'react';
 import { ArrowLeft, Send } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 
 export default function ShiftNotesScreen({ shifts, notes, onBack }) {
   const { toast } = useToast();
-  const day = new Date().toLocaleDateString('en-AU');
-  const noted = notes.map((note) => note.person_name).filter(Boolean);
+  const day = new Date().toLocaleDateString('en-AU', { timeZone: 'Australia/Brisbane' });
 
   const chase = async (shift) => {
     const message = `Hi ${shift.employee_name || 'team'}, can you please add the shift note for ${
       shift.participant_name || 'your shift'
-    } on ${day} before you finish up? Thanks.`;
+    } on ${shift.date || day} (${shift.start_time || 'time not recorded'})? Thanks.`;
     try {
       await navigator.clipboard.writeText(message);
       toast({ title: 'Reminder copied', description: 'Paste it into Messages to send.' });
@@ -27,7 +27,7 @@ export default function ShiftNotesScreen({ shifts, notes, onBack }) {
         </button>
         <div className="min-w-0">
           <h1 className="tl-text truncate text-[16px] font-extrabold">Shift notes</h1>
-          <p className="tl-muted text-[10.5px] font-semibold">{shifts.length} shifts today · {day}</p>
+          <p className="tl-muted text-[10.5px] font-semibold">{shifts.length} roster records, including overnight carry-over · {day}</p>
         </div>
       </header>
 
@@ -43,15 +43,15 @@ export default function ShiftNotesScreen({ shifts, notes, onBack }) {
           </thead>
           <tbody>
             {shifts.map((shift) => {
-              const done = noted.includes(shift.participant_name);
+              const review = shiftNoteReview(shift, notes);
               return (
                 <tr key={shift.id}>
                   <td className="tl-text truncate font-bold">{shift.participant_name || '—'}</td>
                   <td className="tl-muted truncate">{shift.employee_name || 'Unfilled'}</td>
                   <td className="tl-muted">{shift.start_time || '—'}</td>
                   <td>
-                    {done ? (
-                      <span className="tl-pill tl-green">Done</span>
+                    {review.state !== 'missing' ? (
+                      <span className="tl-pill tl-amber">{review.label}</span>
                     ) : (
                       <button type="button" onClick={() => chase(shift)} className="tl-btn tl-primary !px-1.5 !py-1 !text-[9.5px]">
                         <Send className="h-2.5 w-2.5" /> Chase
@@ -71,7 +71,7 @@ export default function ShiftNotesScreen({ shifts, notes, onBack }) {
           </tbody>
         </table>
       </section>
-      <p className="tl-muted mt-2 px-1 text-[9.5px]">A note counts as done once a shift note names that participant.</p>
+      <p className="tl-muted mt-2 px-1 text-[9.5px]">Notes matched by participant and service date need review. A name match does not verify completion for an individual shift.</p>
     </div>
   );
 }

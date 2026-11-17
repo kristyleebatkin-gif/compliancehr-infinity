@@ -1,19 +1,13 @@
+import { shiftNoteReview } from '@/lib/rosterDashboard';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Panel, Row, Pill, Empty } from '@/components/today/todayUi';
-
-const hasNote = (shift, notes) =>
-  notes.some(
-    (note) =>
-      (note.person_name && note.person_name === shift.participant_name) ||
-      (note.subject && shift.participant_name && note.subject.includes(shift.participant_name))
-  );
 
 export default function RosterTodayPanel({ shifts, notes }) {
   return (
     <Panel
       title="Roster today"
-      subtitle={`${shifts.length} shifts scheduled`}
+      subtitle={`${Math.min(shifts.length, 6)} of ${shifts.length} roster records shown · includes overnight carry-over`}
       action={
         <Link to="/rostering" className="t-muted text-[11.5px] font-bold hover:underline">
           Open roster
@@ -25,7 +19,7 @@ export default function RosterTodayPanel({ shifts, notes }) {
       ) : (
         <div className="divide-y divide-[#0A2B6D]/6">
           {shifts.slice(0, 6).map((shift) => {
-            const noted = hasNote(shift, notes);
+            const review = shiftNoteReview(shift, notes);
             return (
               <Row key={shift.id}>
                 <div className="min-w-0 flex-1">
@@ -37,7 +31,7 @@ export default function RosterTodayPanel({ shifts, notes }) {
                     {shift.end_time ? `–${shift.end_time}` : ''}
                   </p>
                 </div>
-                <Pill tone={noted ? 'green' : 'amber'}>{noted ? 'Note in' : 'Note missing'}</Pill>
+                <Pill tone={review.tone}>{review.label}</Pill>
               </Row>
             );
           })}

@@ -1,15 +1,7 @@
+import { rosterMemberStatus } from '@/lib/rosterDashboard';
 import React, { useMemo, useState } from 'react';
 import { Sparkles } from 'lucide-react';
 import { Panel, Row, Pill, Empty } from '@/components/today/todayUi';
-
-const statusFor = (member, shifts) => {
-  if (member.status === 'On Leave') return { label: 'On leave', tone: 'gray' };
-  const shift = shifts.find((item) => item.employee_name === member.full_name);
-  if (!shift) return { label: 'Available', tone: 'green' };
-  if (shift.clock_in && !shift.clock_out) return { label: 'On shift', tone: 'blue' };
-  if (shift.status === 'Completed') return { label: 'Finished', tone: 'gray' };
-  return { label: shift.start_time ? `From ${shift.start_time}` : 'Scheduled', tone: 'amber' };
-};
 
 export default function TeamNowPanel({ team, shifts, notes }) {
   const [extract, setExtract] = useState(false);
@@ -25,13 +17,13 @@ export default function TeamNowPanel({ team, shifts, notes }) {
   }, [notes]);
 
   return (
-    <Panel title="Team right now" subtitle={`${team.length} people in the workspace`}>
+    <Panel title="Team right now" subtitle={`${Math.min(team.length, 6)} of ${team.length} people shown`}>
       {team.length === 0 ? (
         <Empty>No employee profiles have been added yet.</Empty>
       ) : (
         <div className="divide-y divide-[#0A2B6D]/6">
           {team.slice(0, 6).map((member) => {
-            const status = statusFor(member, shifts);
+            const status = rosterMemberStatus(member, shifts, team);
             return (
               <Row key={member.id}>
                 <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#0A2B6D]/8 text-[10.5px] font-extrabold text-[#0A2B6D]">
@@ -57,8 +49,8 @@ export default function TeamNowPanel({ team, shifts, notes }) {
         </div>
         <p className="mt-1 text-[11px] leading-relaxed text-[#2E4472]">
           {extract
-            ? `${summary.notes} notes today across ${summary.participants} participants. ${summary.issues} mention an issue or incident — review them in Communication.`
-            : 'Summarise today’s shift notes in one pass.'}
+            ? `${summary.notes} recent service notes across ${summary.participants} participants. ${summary.issues} mention an issue or incident — review them in Communication.`
+            : 'Summarise the loaded service notes in one pass.'}
         </p>
       </div>
     </Panel>
