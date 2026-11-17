@@ -1,8 +1,12 @@
 # Controlling master specification — 17 November 2026
 
-## Latest authority: Ultimate Master Build Prompt v2.0
+## Latest authority: Ultimate All-in-One Master Build Prompt
 
-The owner supplied ULTIMATE_MASTER_BUILD_SPECIFICATION_V2.md on 17 November 2026 as the latest governing specification and authorised completion of the outstanding build. It supersedes v1.0 where requirements differ. Its 22 operating systems, phases 0–12 and ordered 44 database migrations are requirements, not deployed capabilities. BaseEntity now explicitly includes tenantId. Complaint, Feedback, Analytics, Integration and Security OS must be reconciled with existing modules rather than duplicated. The earlier Customer/Executive and other compatible capabilities remain supporting scope.
+Read ULTIMATE_ALL_IN_ONE_MASTER_SPECIFICATION.md first. It adds Trust OS, Assurance OS, the 25-OS/18-workspace scope, universal entity contract and fixed ten-dimension Enterprise Integrity Index weights. Existing v2 detail remains compatible backlog. The index count ratios are proposed operational indicators requiring governance review; all-ten-dimension reads are required for a composite. No new architecture equivalence, completed regulatory mapping, release acceptance or deployment follows from adopting this prompt. Preserve the migration/engineering boundaries below and every existing unresolved gate.
+
+## Previous authority: Ultimate Master Build Prompt v2.0
+
+The owner supplied ULTIMATE_MASTER_BUILD_SPECIFICATION_V2.md on 17 November 2026 as the then-current governing specification and authorised completion of the outstanding build. It supersedes v1.0 where requirements differ. Its 22 operating systems, phases 0–12 and ordered 44 database migrations are requirements, not deployed capabilities. BaseEntity now explicitly includes tenantId. Complaint, Feedback, Analytics, Integration and Security OS must be reconciled with existing modules rather than duplicated. The earlier Customer/Executive and other compatible capabilities remain supporting scope.
 
 Phases 0–12 are the new enterprise roadmap namespace; they do not renumber or mark complete the existing Phase 11 Workflow Studio release/stories. Preserve both namespaces and their evidence. Use the engineering/acceptance boundaries below with the new specification; PostgreSQL migration numbers are target planning order, not executed Base44 migrations.
 

@@ -27,33 +27,17 @@ EVIDENCE → ASSURANCE → TRUST → INTEGRITY → BETTER OUTCOMES
 Where a document and the code disagree about what exists, **the code wins** and the document is
 corrected in the same change.
 
-## 2. Platform realisation: declared stack → what actually runs
+## 2. Current implementation and requested target architecture
 
-The specification's reference stack is the architectural intent, not a second implementation. This
-platform runs on the platform's own backend, and each reference technology maps to a live
-equivalent. No parallel stack is introduced.
+The current app is React 18, Vite, React Router, Tailwind and Base44 SDK with entity schemas and backend functions. Preserve its existing IDs, routes, AppLayout, ModuleShell, Universal360, Knowledge Graph, Evidence, Readiness and iPad Quick Access.
 
-| Specification intent | Realisation in this build | Consequence |
-| --- | --- | --- |
-| Next.js + React + TypeScript + Tailwind + shadcn/ui | React 18 + Vite + Tailwind + shadcn/ui | Same component and token discipline |
-| NestJS controllers/services | Platform backend functions (`base44/functions/*`) + `base44/shared/*` modules | One function per bounded operation; shared logic extracted, never copied |
-| Prisma + PostgreSQL | Platform entities (`base44/entities/*.jsonc`), Postgres-backed, versioned schema | Schema is the migration; every entity change ships its schema |
-| Row-level security | Entity `rls` blocks with tenant and role conditions | Isolation is enforced at the data layer, not in the UI |
-| Redis + BullMQ job orchestration | Workflows + scheduled functions, durable waits | Long-running and scheduled work is observable in Workflows |
-| Keycloak SSO / MFA | Platform authentication (SSO, MFA, session management) | Auth is never re-implemented in app code |
-| OpenSearch | Platform search + server-side filters/aggregates | Lists never filter whole datasets in the browser |
-| Azure Storage | Platform public/private file storage with signed URLs | Evidence files follow the same retention rules |
-| Terraform / Kubernetes / GitHub Actions | Platform deployment and publish pipeline | Environment parity is the platform's responsibility |
-| OpenTelemetry / App Insights | Runtime logs + audit registers | Every governed action writes an audit row |
-
-**Non-negotiable:** the app is not re-platformed. The specification is satisfied through these
-equivalents, and the mapping above is the audit trail for that decision.
+The owner's Next.js, NestJS, Prisma, PostgreSQL, Redis, BullMQ, OpenSearch, Azure Storage, Keycloak, Docker, Kubernetes, Terraform, GitHub Actions, Application Insights and OpenTelemetry stack remains requested target architecture. No stack migration or infrastructure equivalence is established by this batch. A separate implementation/cutover/rollback package and verified acceptance are required. Vendor internals, durable scheduling, universal audit atomicity, MFA, disaster recovery and environment parity have not been verified here.
 
 ## 3. The absolute platform laws
 
 Every capability must be auditable, versioned, traceable, searchable, permission-controlled,
 evidence-linked, workflow-enabled, mobile-compatible, reportable, AI-assistable, accessible and
-multi-tenant safe. How each law is met, in code:
+multi-tenant safe. The following are intended controls; source presence does not establish full acceptance:
 
 - **Auditable** — governed writes record actor, time, before/after or an append-only event.
 - **Versioned** — immutable snapshots (`WorkflowVersion`, `WorkspacePreferenceVersion`, document versions).
@@ -61,7 +45,7 @@ multi-tenant safe. How each law is met, in code:
 - **Permission-controlled** — entity `rls` plus `RoleGate` navigation gating.
 - **Evidence-linked** — evidence rows carry control and standard references; nothing is "done" on assertion.
 - **Workflow-enabled** — draft → validate → publish → run, with pinned versions per run.
-- **Reportable** — every register exports; executive and board reporting reads the same records.
+- **Reportable** — per-register reporting and export require acceptance against authorised records.
 - **Accessible** — WCAG 2.1 AA targets: visible focus, labelled controls, no colour-only meaning.
 - **Tenant-safe** — `tenant_id` on every owned record; tenant predicate kept even where a proxy cannot infer a schema.
 
@@ -82,12 +66,9 @@ Implementing file: `src/lib/integrityIndex.js`. Surface: Executive Dashboards �
 | Assurance | 5% | controls tested within schedule vs control tests past due |
 | Strategic Outcomes | 5% | goals achieved vs open, projects complete vs past due |
 
-**Computation law.** Each measure is a real count for the signed-in business. A dimension scores
-`good ÷ (good + bad)`; the index is the weighted mean of **measured** dimensions only. Weight that
-could not be measured is reported as coverage, never scored as zero and never scored as full marks.
-An empty register therefore reports *not measured*, not 100.
+**Computation law.** Each measure is a real count for the signed-in business. A proposed operational dimension scores `positive indicator occurrences ÷ total indicator occurrences` only after every required read succeeds and at least one countable occurrence exists. Missing, denied, malformed or failed reads withhold that dimension. The overall index uses the fixed owner weights divided by 100 only when all ten dimensions are measurable; otherwise the overall score is withheld. Coverage is shown separately and weights are never renormalised. Counts may overlap and status counts are not independently verified evidence. The indicator definitions require governance review and authenticated validation before use as enterprise assurance.
 
-**Bands.** Exemplary ≥ 90 · Assured 75–89 · Developing 60–74 · At risk < 60.
+**Bands.** Neutral indicator ranges: 90–100, 75–89, 60–74 and below 60. These are proposed presentation thresholds, not assurance classifications.
 
 **Explainability.** Every dimension expands to the exact counts behind it. No score may be
 displayed without its contributing measures reachable from the same screen.
@@ -99,14 +80,13 @@ Framework → Standard → Requirement → Obligation → Control → Policy →
 → Training → Competency → Evidence → Assessment → Audit → Finding → CAPA → Outcome
 ```
 
-Implemented through `RegulatoryStandard`, `ComplianceControl`, `AssuranceEvidence`,
+Existing supporting sources include `RegulatoryStandard`, `ComplianceControl`, `AssuranceEvidence`,
 `AssuranceFinding`, `KnowledgeLink` and the Assurance & Audit Matrix. A link that cannot be walked
 end to end is a gap, not a completed chain.
 
 ## 6. AI governance law
 
-Every AI action records its prompt, context, evidence sources, confidence, recommendation, approval
-status and outcome (`AiInteraction`, `AiRecommendation`, `AiGovernanceRecord`).
+Every AI action must record prompt, context, evidence sources, confidence score, risk score, recommendation, approval status, decision outcome and audit trail. Existing AI source entities require per-path verification; this batch does not establish universal enforcement.
 
 AI may draft, detect, summarise and recommend. AI may never approve, close a finding, bypass
 evidence, override a control, or act without a named human decision. Human review is the only path
@@ -114,24 +94,16 @@ to a governed outcome.
 
 ## 7. Security and tenancy
 
-Multi-tenant isolation, approved-access gating, role and role-matrix navigation control, private
-storage for end-user uploads, and admin-only configuration. Secrets are never stored in app code.
+Required: multi-tenant isolation, approved-access gating, RBAC/ABAC, SSO/MFA, encryption, secret/session management, audit logging, monitoring/threat detection, private storage and authorised configuration. Authenticated tenant/role/file/API tests remain open; this batch adds scoped read requests and role gates only. Secrets are never stored in app code.
 Security posture is reported by the Security scan; findings are fixed at the root cause, not muted.
 
 ## 8. Design authority
 
-The established brand tokens in `src/index.css` govern every surface: deep navy to violet glass,
-white cards, navy text (never black), Manrope typography. The specification's palette
-(`#0B1020` / `#131A2E` / `#3B82F6` / `#8B5CF6` / `#EC4899`) is treated as intent, mapped onto the
-existing tokens, and must not be pasted in as raw hex on new surfaces. Tables live inside tabs;
-module shells stay consistent.
+The owner's palette is authoritative: background #0B1020; surfaces #131A2E/#1A2240; blue #3B82F6; purple #8B5CF6; pink #EC4899; success #10B981; warning #F59E0B; critical #EF4444; text #FFFFFF/#B8C0D4. Apply through shared tokens with contrast and responsive checks. Microsoft Fabric/Azure Portal/Power BI style and WCAG 2.1 AA are targets. No global recolour or accessibility certification is claimed in this batch.
 
 ## 9. Completion test
 
-A capability is complete only when all of the following exist: schema, server-side read model,
-permission rules, workflow path, audit trail, evidence link, reporting/export, honest AI assist
-where applicable, documentation, tests, and an entry in the operating-system register with its true
-state. Anything less is recorded as `partial` or `gap`. **Nothing is described as delivered unless a
+A capability is complete only when all of the following exist: schema, migration, entity, DTO, validation, controller, service, repository, workflow, permissions, audit trail, evidence integration, reporting, AI integration, documentation, tests, monitoring and deployment. Platform adapters require explicit contract mapping and acceptance; current equivalents are not automatically accepted. An entry in the operating-system register must show the true state. Anything less is recorded as `partial` or `gap`. **Nothing is described as delivered unless a
 user can do the thing on screen, against real records, today.**
 
 **Final governance law.** If a capability cannot be owned, governed, measured, evidence-linked,
@@ -145,3 +117,27 @@ verified, audited, reported, improved and trusted, it must not exist.
    fails the build if they diverge.
 3. Register states in `src/lib/enterpriseOS.js` may only move upward (`gap → partial → live`) with
    evidence in the same change, and downward immediately when a regression is found.
+
+## 11. Complete owner scope retained as requirements
+
+The exact owner prompt is also retained in this app's builder conversation dated 17 November 2026. These catalogues are requirements, not delivered capabilities.
+
+- Purpose: governance, compliance, risk, audit, quality, workforce, learning, incidents, complaints, feedback, NDIS, aged care, clinical governance, allied health, evidence, reporting/BI, audit readiness, AI, automation, enterprise assurance, trust through evidence and organisational integrity.
+- Philosophy: People → Responsibility → Activity → Evidence → Assurance → Trust → Decision → Outcome → Improvement → Integrity.
+- Industries: NDIS, aged care, allied health, healthcare, community services, disability support, home care, corporate enterprises, professional services, not for profit and government.
+- Framework mapping targets: NDIS Practice Standards/Quality Indicators, Aged Care Quality Standards/Strengthened Standards, Fair Work, Privacy Act/APPs, WHS, clinical governance, NSQHS, ISO 9001/27001/31000, corporate and internal governance. Current authoritative sources/effective dates must be verified before regulatory mappings are claimed.
+- Operating systems (25): Platform Shell, Workspace, Governance, Compliance, Risk, Audit, Quality, Workforce, Learning, Incident, Complaint, Feedback, Evidence, Clinical Governance, Allied Health, NDIS, Aged Care, Reporting, Analytics, AI Core, Automation, Security, Administration, Trust and Assurance. Preserve prior compatible Integration/Executive scope.
+- Workspaces (18): Board, CEO, General Manager, Compliance, Quality, Risk, Audit, Clinical Governance, Workforce, Learning, NDIS, Aged Care, Allied Health, Evidence, Incident, Complaints, Reporting and Administration.
+- Allied health: occupational therapy, speech pathology, physiotherapy, psychology, social work, exercise physiology; clients, assessments, goals, interventions, session notes, outcome measures, care plans, clinical reviews, supervision and competencies.
+- NDIS: participants, service agreements, support delivery, progress notes, incidents, restrictive practices, complaints, worker screening, evidence mapping, practice standards and audit readiness.
+- Aged care: residents, care plans, quality standards, clinical governance, medication, workforce compliance, consumer outcomes, quality reviews and accreditation readiness.
+- Universal entity contract: id, tenantId, code, name, description, status, version, ownerId, createdBy/createdAt, updatedBy/updatedAt, deletedAt, permissions, evidenceLinks, workflowState, auditTrail, trustScore, assuranceScore and healthScore. Map existing snake_case fields explicitly; unknown scores stay unknown. No blanket schema rewrite performed.
+- Database domains: tenants, organisations, sites, departments, users, roles, permissions, workspaces; evidence/links/verification; policies/procedures/controls/requirements/obligations/standards/frameworks; risks/assessments/treatments; audits/findings/CAPAs; incidents/complaints; training/competencies/credentials/employees; participants/residents/clients/assessments/goals/interventions/clinical reviews; reports/dashboards/notifications/workflows/approvals/tasks; AI conversations/insights; trust and assurance scores. Reconcile existing schemas before creating anything.
+- Reports: executive, board, compliance, risk, audit, workforce, clinical, NDIS, aged care, allied health, trust, assurance and integrity.
+- Executive Command Centre: Enterprise Integrity Index, governance, compliance, risk exposure, audit readiness, clinical governance, NDIS readiness, aged care readiness, workforce capability, evidence health, trust, assurance and strategic readiness. Proposed index source is present; full command-centre acceptance remains open.
+- Workflow: Create → Review → Approve → Execute → Evidence Collection → Verification → Audit Event → Reporting → Improvement.
+- Test targets: unit, integration, E2E, accessibility, security, performance, workflow, audit, permission and mobile. Simulated tests do not replace authenticated tenant/device UAT.
+- Guides: architecture, security, developer, deployment, database, API, module, user, governance, risk, audit, clinical governance, NDIS, aged care and allied health.
+- Environments/operations: development, test, UAT, production, disaster recovery, backup strategy, monitoring, alerting, logging and audit monitoring. Source save/checkpoint, deployment and verified recovery are separate statuses.
+
+All historical release gates in MASTER_TODO.md and PHASE11_ACCEPTANCE_LOG.md remain open unless closed with current evidence. This batch does not complete the full platform.
