@@ -1,0 +1,184 @@
+{
+  "name": "StudioItem",
+  "type": "object",
+  "properties": {
+    "kind": {
+      "type": "string",
+      "title": "Studio Item Type",
+      "enum": [
+        "design",
+        "filed_design",
+        "document",
+        "meeting",
+        "assistant",
+        "crm_note"
+      ],
+      "enumColors": [
+        "pink",
+        "gray",
+        "blue",
+        "purple",
+        "green",
+        "yellow"
+      ],
+      "default": "document"
+    },
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "payload": {
+      "type": "string",
+      "title": "Saved Content"
+    },
+    "file_uri": {
+      "type": "string",
+      "title": "Filed File"
+    },
+    "file_name": {
+      "type": "string",
+      "title": "File Name"
+    },
+    "retention_until": {
+      "type": "string",
+      "format": "date",
+      "title": "Retained Until"
+    },
+    "migrated_source_id": {
+      "type": "string",
+      "title": "Migrated From Device Save"
+    },
+    "tenant_id": {
+      "type": "string",
+      "title": "Owning business"
+    },
+    "archived": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "kind",
+    "title",
+    "tenant_id"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$and": [
+            {
+              "created_by_id": "{{user.id}}"
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            },
+            {
+              "user_condition": {
+                "account_status": "Active",
+                "access_approved": true
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "$and": [
+            {
+              "created_by_id": "{{user.id}}"
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            },
+            {
+              "user_condition": {
+                "account_status": "Active",
+                "access_approved": true
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "$and": [
+            {
+              "created_by_id": "{{user.id}}"
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            },
+            {
+              "user_condition": {
+                "account_status": "Active",
+                "access_approved": true
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
