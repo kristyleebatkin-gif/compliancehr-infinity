@@ -105,7 +105,11 @@ export default function InvoicingCentre() {
 
   const exportProda = async () => {
     const count = await exportProdaClaims(base44.entities.Invoice);
-    toast({ title: 'PRODA claim file exported', description: `${count} claim lines ready for bulk upload.` });
+    if (!count) {
+      toast({ title: 'Nothing to claim yet', description: 'Only sent, paid or overdue invoices are included. Drafts and approved invoices are left out until they are sent.' });
+      return;
+    }
+    toast({ title: 'PRODA claim file exported', description: `${count} issued invoice${count === 1 ? '' : 's'} included. Drafts and unsent approved invoices are left out.` });
   };
 
   const openSend = (inv) => {
