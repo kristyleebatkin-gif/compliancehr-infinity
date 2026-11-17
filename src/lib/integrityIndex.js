@@ -1,4 +1,4 @@
-// Enterprise Integrity Index — the single weighted composite defined by the governing specification.
+// Enterprise Integrity Index — owner-defined weights with provisional operational indicators.
 //
 // Ten dimensions, weights summing to 100:
 //   Governance 15, Compliance 15, Risk 10, Audit 10, Evidence 10,

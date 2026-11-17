@@ -24,8 +24,7 @@ EVIDENCE → ASSURANCE → TRUST → INTEGRITY → BETTER OUTCOMES
 4. Module-level documents (`MODULE_EVIDENCE_MATRIX.md`, `PHASE11_*`, `ENTERPRISE_*`) — detail that
    must never contradict 1–3.
 
-Where a document and the code disagree about what exists, **the code wins** and the document is
-corrected in the same change.
+The owner specification governs required outcomes. Current source and test evidence govern observed implementation status; correct status documentation without weakening unmet owner requirements.
 
 ## 2. Current implementation and requested target architecture
 

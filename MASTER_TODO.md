@@ -1134,3 +1134,27 @@ Remaining work is OPEN, not complete:
 - Next.js/NestJS/PostgreSQL/Keycloak/Azure monorepo target and migrations 001–044 are not deployed. A verified staged migration/cutover/rollback package is still required.
 
 Final named checkpoint: v2 Workspace OS — scoped saves, resilient history and guarded restore.
+
+
+## Ultimate All-in-One Master — Integrity Index implementation and review, 17 November 2026
+
+Owner's exact master prompt submitted to the existing main Base44 app (6ac9f91f0d82b1f80ec6a25f) and retained in its builder conversation. Added ULTIMATE_ALL_IN_ONE_MASTER_SPECIFICATION.md as the latest normalized product scope and updated AGENTS.md/master entry points. Scope includes 25 operating systems, 18 workspaces, Trust/Assurance, universal entity/evidence/AI/security contracts, target stack, documentation, test and deployment requirements. Prior compatible requirements and release gates remain intact.
+
+Restore baseline: 6afc4a2c2f9416e057b3162b, source 6a405cfde936b9cd750e682fd79b11175f6eb2b2. Builder intermediate checkpoint: 6afc4b01875714a3aec5eab1; source a0b6a59cd540da28968d5a771c3b21a8b1b33676. Review fixes below supersede that intermediate version.
+
+Implemented in Executive Dashboards -> Enterprise Integrity Index:
+- Exact owner weights: Governance 15, Compliance 15, Risk 10, Audit 10, Evidence 10, Workforce 10, Clinical Governance 10, Trust 10, Assurance 5, Strategic Outcomes 5.
+- Expandable ten-dimension indicator cards with contributing register counts, refresh, loading and unavailable-read states, Brisbane cutoff/freshness, existing responsive glass surfaces and no route replacement.
+- Queries carry the signed-in business predicate; cache identity includes account/business/role/access. The read model rejects ineligible identities before querying and applies source module gates in addition to platform RLS.
+- Review removed partial-read scoring and weight renormalization. Any missing, denied, malformed, synchronous SDK or asynchronous failed read withholds the affected dimension; the fixed-weight overall composite requires all ten dimensions to be measurable. Empty business has no score.
+- Proposed ratios/bands are labelled operational indicators. Counts can overlap; record status does not prove independent evidence verification, clinical quality, strategic performance, trust or compliance. No verified-assurance band remains.
+- Corrected documentation that claimed unverified platform equivalents/infrastructure. Current React/Vite/Base44 remains in place; requested Next.js/NestJS/Prisma/PostgreSQL/Redis/BullMQ/OpenSearch/Azure/Keycloak and infrastructure remain target migration scope, not satisfied equivalents.
+- No schema, backend mutation, permission grant or tenant record writes in this batch. Backend tests use existing test doubles.
+
+Verification (each exit 0): npm run lint; npm test (174 passed, 0 failed); npm run typecheck; npm run test:deno (190 passed, 0 failed); npm run build. The 12 Integrity Index regression tests cover exact weights, fixed composite arithmetic, empty/partial/failure cases, actual schema fields/enums, approved identity checks, nested tenant identity, scoped reads and role matrix requests. Configured typecheck retains checkJs=false and excludes src/lib, so it is not comprehensive JS type verification. git diff --check passed against baseline. Base44 preview connector succeeded.
+
+OPEN acceptance: authenticated browser/device/touch/accessibility journeys; deployed raw tenant A/B and denied-role aggregate/file/API tests; independently verified evidence and current regulatory mappings; approved scoring methodology/denominators/periods/snapshot provenance/export and monitoring. The ratio model is provisional and not an approved Enterprise Integrity/Trust/Assurance assessment. No complete cross-domain backend/workflow/reporting/AI/deployment implementation is claimed.
+
+All prior transaction/CAS/idempotency/outbox, scheduler/SLA, file quarantine/verification, quorum/conflicts, MFA, classified/location ABAC, adapters, load/DR, tenant/device UAT and F095 gates remain OPEN. Full platform scope and target migration are incomplete. No production publication performed.
+
+Final named restore point created after this log: All-in-One master — guarded Integrity Index and verified checks.
