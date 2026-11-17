@@ -73,6 +73,7 @@ export default function IntegrityIndexPanel() {
       </div>
 
       {isError && <p className="text-sm font-semibold text-danger" role="alert">The index could not be read. Refresh to try again.</p>}
+      {data?.unavailableReads > 0 && <p className="text-sm font-semibold text-warning" role="status">{data.unavailableReads} required reads are unavailable or restricted. Affected scores are withheld. Refresh to retry.</p>}
 
       <p className="text-xs font-medium leading-relaxed text-header-foreground">
         Indicators use register counts available to your account in this business. Missing, denied or failed reads withhold the affected dimension and the overall score. Counts represent measure occurrences and may overlap; active or closed status alone is not independent evidence verification. Open a dimension to inspect the counts.
