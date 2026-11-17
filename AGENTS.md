@@ -2,7 +2,7 @@
 
 ## Controlling product specification
 
-Read `COMPLIANCEHR_INFINITY_MASTER_PROMPT.md` as the single current master product specification. Earlier blueprints are historical context; preserve their implemented capabilities. Use `MASTER_TODO.md` for evidence-based progress and unresolved release gates. Catalogue targets are not verified regulatory mappings or completion claims.
+Read `ULTIMATE_EVERYTHING_SPECIFICATION_V1.md` as the owner's current single source of truth (Master Enterprise Specification v1.0, 17 November 2026), then the latest-authority section of `COMPLIANCEHR_INFINITY_MASTER_PROMPT.md` for application/migration boundaries, engineering interpretation and acceptance sequence. The latest owner requirements supersede conflicting older product/visual instructions, including the pastel-only COLOUR_RULE.md. Earlier blueprints remain compatible supporting backlog and historical context; preserve implemented capabilities. Use `MASTER_TODO.md` for evidence-based progress and unresolved release gates. Target architecture, catalogue entries and installed specifications are not deployed capabilities, verified regulatory mappings or completion claims.
 
 ## Project Context
 
