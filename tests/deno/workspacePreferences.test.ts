@@ -125,3 +125,16 @@ Deno.test('stale or corrupt current versions cannot be overwritten', async () =>
   assertEquals((await f.post({ action: 'save', expected_version: 2, layout: defaultLayout() })).status, 409);
   assertEquals(f.writes.length, 0);
 });
+
+Deno.test('duplicate layout or snapshot identities require reconciliation before any write', async () => {
+  const duplicateSnapshot = fixture([snapshot(1), snapshot(1, { id: 'collision' })]);
+  assertEquals((await duplicateSnapshot.post({ action: 'restore', version_number: 1, expected_version: 0 })).status, 409);
+  assertEquals(duplicateSnapshot.writes.length, 0);
+  const duplicateLive = fixture();
+  duplicateLive.records.WorkspacePreference.push(
+    { ...snapshot(1), id: 'live-one' }, { ...snapshot(1), id: 'live-two' },
+  );
+  assertEquals((await duplicateLive.post({ action: 'load' })).status, 409);
+  assertEquals((await duplicateLive.post({ action: 'save', layout: defaultLayout(), expected_version: 1 })).status, 409);
+  assertEquals(duplicateLive.writes.length, 0);
+});

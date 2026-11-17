@@ -85,13 +85,18 @@ export async function handleWorkspacePreferences(base44: any, req: Request) {
       const page = await read.WorkspacePreference.filter(
         { tenant_id: tenantId, user_id: userId, workspace_key: workspaceKey },
         '-saved_at',
-        1,
+        2,
         0,
       );
       const rows = rowsOf(page);
       if (rows === null) {
         const error: any = new Error('The saved workspace layout could not be read.');
         error.status = 502;
+        throw error;
+      }
+      if (rows.length > 1) {
+        const error: any = new Error('Multiple saved layouts exist for this workspace. Reconcile them before changing a layout.');
+        error.status = 409;
         throw error;
       }
       const row = rows[0];
@@ -110,13 +115,18 @@ export async function handleWorkspacePreferences(base44: any, req: Request) {
       const page = await read.WorkspacePreferenceVersion.filter(
         { tenant_id: tenantId, user_id: userId, workspace_key: workspaceKey, version_number: versionNumber },
         '-version_number',
-        1,
+        2,
         0,
       );
       const rows = rowsOf(page);
       if (rows === null) {
         const error: any = new Error('Saved layout versions could not be read.');
         error.status = 502;
+        throw error;
+      }
+      if (rows.length > 1) {
+        const error: any = new Error('This version number has more than one snapshot. Reconcile history before restoring it.');
+        error.status = 409;
         throw error;
       }
       const row = rows[0];
