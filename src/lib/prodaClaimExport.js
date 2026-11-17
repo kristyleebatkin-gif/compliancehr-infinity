@@ -47,9 +47,16 @@ const COLUMNS = [
   { key: 'payment_status', label: 'Payment Status' },
 ];
 
-// Exports every invoice (uncapped via the cursor helper) as a PRODA/PACE bulk-claim file.
+// Only invoices that have been issued can be claimed. Drafts and approved-but-unsent invoices
+// are never included, so an unchecked invoice cannot end up in a bulk claim to the NDIA.
+export const PRODA_CLAIMABLE_STATUSES = ['Sent', 'Paid', 'Overdue'];
+
+// Exports every issued invoice (uncapped via the cursor helper) as a PRODA/PACE bulk-claim file.
+// Returns the number of invoices exported; no file is downloaded when there are none.
 export default async function exportProdaClaims(entity) {
-  const all = await fetchAllRecords(entity, {}, '-issue_date');
-  downloadCsv('NDIS-PRODA-Claims.csv', COLUMNS, prodaClaimRows(all));
-  return all.length;
+  const issued = await fetchAllRecords(entity, { status: { $in: PRODA_CLAIMABLE_STATUSES } }, '-issue_date');
+  const claimable = issued.filter((inv) => PRODA_CLAIMABLE_STATUSES.includes(inv.status));
+  if (!claimable.length) return 0;
+  downloadCsv('NDIS-PRODA-Claims.csv', COLUMNS, prodaClaimRows(claimable));
+  return claimable.length;
 }

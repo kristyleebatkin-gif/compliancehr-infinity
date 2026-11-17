@@ -75,6 +75,7 @@
       "type": "string",
       "enum": [
         "Draft",
+        "Approved",
         "Sent",
         "Paid",
         "Overdue"
@@ -97,6 +98,16 @@
     "notes": {
       "type": "string",
       "title": "Notes"
+    },
+    "approved_by": {
+      "type": "string",
+      "title": "Approved By",
+      "description": "Name or email of the person who approved the invoice for sending."
+    },
+    "approved_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Approved At"
     },
     "sent_at": {
       "type": "string",

@@ -1,38 +1,22 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { base44 } from '@/api/base44Client';
-import { useToast } from '@/components/ui/use-toast';
 import { Panel, Row, Pill, Empty, money } from '@/components/today/todayUi';
+import ApproveInvoicesDialog from '@/components/invoicing/ApproveInvoicesDialog';
 
-const TONE = { Draft: 'amber', Sent: 'blue', Paid: 'green', Overdue: 'pink' };
+const TONE = { Draft: 'amber', Approved: 'green', Sent: 'blue', Paid: 'green', Overdue: 'pink' };
 
-export default function InvoicesPanel({ invoices, onRefresh }) {
-  const { toast } = useToast();
-  const [saving, setSaving] = useState(false);
-
-  const approveAll = async () => {
-    if (!invoices.length) return;
-    setSaving(true);
-    try {
-      await base44.entities.Invoice.bulkUpdate(invoices.map((invoice) => ({ id: invoice.id, status: 'Sent' })));
-      toast({ title: 'Invoices approved', description: `${invoices.length} invoices marked as sent.` });
-      onRefresh?.();
-    } catch (error) {
-      toast({
-        title: 'Approval not saved',
-        description: error?.message || 'Open the Invoicing Centre to approve these invoices.',
-        variant: 'destructive'
-      });
-    } finally {
-      setSaving(false);
-    }
-  };
+// Shows a preview of draft invoices. "Review & approve" opens every draft (not just the preview),
+// with checks, a running total and a confirmation step. Approving never emails anything.
+export default function InvoicesPanel({ invoices, totalDrafts, onRefresh }) {
+  const [reviewOpen, setReviewOpen] = useState(false);
+  const waiting = Number.isFinite(totalDrafts) ? totalDrafts : invoices.length;
+  const hiddenCount = Math.max(0, waiting - Math.min(invoices.length, 4));
 
   return (
     <Panel
       title="Invoices ready"
-      subtitle={`${invoices.length} awaiting approval`}
-      action={<span className="t-muted text-[11.5px] font-bold">{money(invoices.reduce((sum, i) => sum + Number(i.amount || 0), 0))}</span>}
+      subtitle={`${waiting} awaiting approval`}
+      action={<span className="t-muted text-[11.5px] font-bold">{invoices.length < waiting ? 'Newest shown' : money(invoices.reduce((sum, i) => sum + Number(i.amount || 0), 0))}</span>}
     >
       {invoices.length === 0 ? (
         <Empty>No invoices waiting for approval.</Empty>
@@ -48,16 +32,18 @@ export default function InvoicesPanel({ invoices, onRefresh }) {
               <Pill tone={TONE[invoice.status] || 'gray'}>{invoice.status}</Pill>
             </Row>
           ))}
+          {hiddenCount > 0 && <p className="t-muted pt-2 text-[11px]">+ {hiddenCount} more in the review list</p>}
         </div>
       )}
       <div className="mt-3 flex gap-2">
-        <button type="button" onClick={approveAll} disabled={saving || !invoices.length} className="t-btn t-btn-primary flex-1 disabled:opacity-60">
-          {saving ? 'Approving…' : 'Approve all'}
+        <button type="button" onClick={() => setReviewOpen(true)} disabled={!waiting} className="t-btn t-btn-primary flex-1 disabled:opacity-60">
+          Review &amp; approve
         </button>
         <Link to="/invoicing" className="t-btn t-btn-ghost flex-1">
-          Review
+          Invoicing Centre
         </Link>
       </div>
+      <ApproveInvoicesDialog open={reviewOpen} onOpenChange={setReviewOpen} onApproved={onRefresh} />
     </Panel>
   );
 }

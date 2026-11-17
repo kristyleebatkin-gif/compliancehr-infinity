@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Loader2, Send, Timer } from 'lucide-react';
 import { format } from 'date-fns';
 import Sparkline from '@/components/ui/Sparkline';
+import { isUnsentInvoice } from '@/lib/invoiceApproval';
 
 // Aged receivables: outstanding invoices bucketed by days overdue,
 // with one-click payment reminder emails.
@@ -29,7 +30,7 @@ export default function AgedReceivables({ invoices, onChanged }) {
   const [reminding, setReminding] = useState(null);
   const today = new Date();
 
-  const outstanding = invoices.filter((inv) => inv.status !== 'Paid' && inv.status !== 'Draft');
+  const outstanding = invoices.filter((inv) => inv.status !== 'Paid' && !isUnsentInvoice(inv));
   const bucketed = BUCKETS.map((bucket) => {
     const items = outstanding.filter((inv) => {
       const days = daysOverdue(inv, today);
