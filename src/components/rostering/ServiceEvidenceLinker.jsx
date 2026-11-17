@@ -25,7 +25,7 @@ export default function ServiceEvidenceLinker({ shifts, onChanged }) {
   const save = async action => {
     const version = request.current; setBusy(true); setError(''); setResult('');
     try {
-      const response = await base44.functions.invoke('shiftServiceEvidence', { action, shift_id: shiftId, note_id: selected?.id, note_entity: selected?.note_entity, reason, reviewed, command_key: crypto.randomUUID() });
+      const response = await base44.functions.invoke('shiftServiceEvidence', { action, shift_id: shiftId, note_id: selected?.id, note_entity: selected?.note_entity, reason, reviewed, expected_association_id: options.current.association_id, expected_shift_hash: options.shift_hash, expected_note_hash: selected?.note_hash, command_key: crypto.randomUUID() });
       if (version !== request.current) return;
       if (!response.data?.ok) throw new Error(response.data?.error || 'Association not confirmed.');
       setOptions(current => ({ ...current, current: response.data.current }));

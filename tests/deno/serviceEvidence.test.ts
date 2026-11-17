@@ -24,7 +24,14 @@ function fixture() {
   return { db, calls, client: { businessId: 'a', entities, asServiceRole: { entities } } };
 }
 const link = (over = {}) => ({ action: 'link', shift_id: 'shift-a', note_entity: 'CommunicationEntry', note_id: 'diary-note', reviewed: true, reason: 'Reviewed service content and worker.', command_key: 'test-command-0001', ...over });
-const command = (f, body, time = at) => serviceEvidenceCommand(f.client, user, body, time);
+const command = async (f, body, time = at) => {
+  if (['link', 'unlink'].includes(body.action)) {
+    const options = await serviceEvidenceCommand(f.client, user, { action: 'options', shift_id: body.shift_id }, time);
+    const note = options.notes.find(note => note.id === body.note_id && note.note_entity === body.note_entity);
+    body = { expected_association_id: options.current.association_id, expected_shift_hash: options.shift_hash, expected_note_hash: note?.note_hash, ...body };
+  }
+  return serviceEvidenceCommand(f.client, user, body, time);
+};
 Deno.test('service evidence denies unapproved, non-manager and foreign identities before reads', async () => {
   for (const patch of [{ access_approved: false }, { account_status: 'Suspended' }, { role: 'Employee' }, { tenant_id: 'b' }]) {
     const f = fixture(); await assertRejects(() => serviceEvidenceCommand(f.client, { ...user, ...patch }, link(), at)); assertEquals(f.calls.length, 0);
@@ -80,4 +87,17 @@ Deno.test('unattributed or foreign link records cannot create a positive evidenc
   const event = { id: 'forged', action: 'Link', shift_id: 'shift-a', tenant_id: 'a', note_entity: 'CommunicationEntry', note_id: note.id, shift_hash: await evidenceHash(shiftEvidenceSnapshot(f.db.Shift[0])), note_hash: await evidenceHash(noteEvidenceSnapshot(note)) };
   assertEquals((await assessServiceEvidence(f.db.Shift, [note], [event], 'a'))[0].state, 'invalid');
   assertEquals((await assessServiceEvidence(f.db.Shift, [note], [{ ...event, tenant_id: 'b' }], 'a'))[0].state, 'unlinked');
+});
+
+Deno.test('a manager cannot associate content changed since their review screen loaded', async () => {
+  const f = fixture();
+  const options = await command(f, { action: 'options', shift_id: 'shift-a' });
+  const note = options.notes.find(note => note.id === 'diary-note');
+  f.db.CommunicationEntry[0].body = 'Content edited by another session.';
+  await assertRejects(() => serviceEvidenceCommand(f.client, user, { ...link(), expected_association_id: options.current.association_id, expected_shift_hash: options.shift_hash, expected_note_hash: note.note_hash }, at));
+  assertEquals(f.db.ServiceEvidenceLink.length, 0);
+});
+Deno.test('non-service diary entries do not qualify as service evidence', async () => {
+  const f = fixture(); f.db.CommunicationEntry[0].note_type = 'Employee Incident';
+  await assertRejects(() => command(f, link())); assertEquals(f.db.ServiceEvidenceLink.length, 0);
 });

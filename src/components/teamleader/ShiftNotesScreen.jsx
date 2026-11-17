@@ -51,7 +51,7 @@ export default function ShiftNotesScreen({ shifts, notes, evidence = [], onBack 
                   <td className="tl-muted">{shift.start_time || '—'}</td>
                   <td>
                     {review.state !== 'missing' ? (
-                      <span className="tl-pill tl-amber">{review.label}</span>
+                      <span className={`tl-pill tl-${review.tone}`}>{review.label}</span>
                     ) : (
                       <button type="button" onClick={() => chase(shift)} className="tl-btn tl-primary !px-1.5 !py-1 !text-[9.5px]">
                         <Send className="h-2.5 w-2.5" /> Chase

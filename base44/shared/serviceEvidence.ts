@@ -3,13 +3,14 @@ import { hasApprovedAccess } from './roleMatrix.ts';
 import { readWorkflowRecords } from './workflowSafety.ts';
 const ROLES = ['admin', 'Provider Administrator', 'Administration', 'Team Leader', 'Management', 'Rostering Coordinator'];
 const clean = value => typeof value === 'string' ? value.trim() : '';
+const isServiceNote = note => note.note_entity === 'ShiftNote' || note.entry_kind === 'Shift Note' && ['Shift Note', 'Progress Notes', 'Progress Reports'].includes(note.note_type || 'Shift Note');
 const scan = (dao, query = {}) => readWorkflowRecords(dao, query, { sort: 'id' });
 export async function evidenceHash(value) {
   const bytes = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(JSON.stringify(value)));
   return Array.from(new Uint8Array(bytes), byte => byte.toString(16).padStart(2, '0')).join('');
 }
 export const shiftEvidenceSnapshot = shift => ['Shift', shift.id, shift.tenant_id, shift.participant_name, shift.employee_name, shift.date, shift.start_time, shift.end_time];
-export const noteEvidenceSnapshot = note => [note.note_entity, note.id, note.tenant_id, note.participant_name || note.person_name, note.date || note.entry_date, note.staff_name || note.staff_involved, note.what_happened || note.body, note.lifecycle_status, note.updated_date];
+export const noteEvidenceSnapshot = note => [note.note_entity, note.id, note.tenant_id, note.participant_name || note.person_name, note.date || note.entry_date, note.staff_name || note.staff_involved, note.what_happened || note.body, note.lifecycle_status, note.note_type, note.attachments_json, note.updated_date];
 export function activeServiceLinks(events) {
   const groups = new Map();
   for (const event of events) groups.set(event.shift_id, [...(groups.get(event.shift_id) || []), event]);
@@ -22,15 +23,16 @@ export function activeServiceLinks(events) {
 export async function assessServiceEvidence(shifts, notes, events, tenantId) {
   const active = activeServiceLinks(events.filter(event => event.tenant_id === tenantId));
   return await Promise.all(shifts.map(async shift => {
-    const row = { shift_id: shift.id, state: 'unlinked', label: 'No exact note link', note_entity: null, note_id: null };
+    const history = events.filter(event => event.tenant_id === tenantId && event.shift_id === shift.id).sort((a, b) => String(b.recorded_at).localeCompare(String(a.recorded_at)) || String(b.id).localeCompare(String(a.id)));
+    const row = { shift_id: shift.id, association_id: history[0]?.id || '', state: 'unlinked', label: 'No exact note link', note_entity: null, note_id: null };
     if (!tenantId || shift.tenant_id !== tenantId) return { ...row, state: 'invalid', label: 'Business scope mismatch' };
     const link = active.find(event => event.shift_id === shift.id);
     if (!link) return row;
     if (!clean(link.actor_id) || !clean(link.participant_id) || !clean(link.worker_id) || !clean(link.reason) || !clean(link.recorded_at)) return { ...row, state: 'invalid', label: 'Association provenance requires review' };
     const sameNote = active.filter(event => event.note_entity === link.note_entity && event.note_id === link.note_id);
-    if (link.conflict || sameNote.length !== 1) return { ...row, state: 'conflict', label: 'Conflicting associations need review' };
+    if (link.action !== 'Link' || link.conflict || sameNote.length !== 1) return { ...row, state: 'conflict', label: 'Conflicting associations need review' };
     const note = notes.find(note => note.note_entity === link.note_entity && note.id === link.note_id && note.tenant_id === tenantId);
-    if (!note || note.lifecycle_status === 'Archived' || note.entry_kind && note.entry_kind !== 'Shift Note') return { ...row, state: 'changed', label: 'Linked note unavailable or archived' };
+    if (!note || note.lifecycle_status === 'Archived' || !isServiceNote(note)) return { ...row, state: 'changed', label: 'Linked note unavailable or archived' };
     if (link.shift_hash !== await evidenceHash(shiftEvidenceSnapshot(shift)) || link.note_hash !== await evidenceHash(noteEvidenceSnapshot(note))) return { ...row, state: 'changed', label: 'Record changed — review association' };
     if (!(clean(note.what_happened || note.body))) return { ...row, state: 'invalid', label: 'Linked note has no service content' };
     return { ...row, state: 'linked', label: 'Exact note linked', note_entity: link.note_entity, note_id: link.note_id };
@@ -65,20 +67,22 @@ export async function serviceEvidenceCommand(base44, user, body, now = new Date(
   const notes = await readServiceEvidenceNotes(entities, [...new Set(shifts.map(shift => shift.date))]);
   if (action === 'assess') return { rows: await assessServiceEvidence(shifts, notes, events, tenantId), verification: 'Associations only; not clinical verification or billing authorisation.' };
   const shift = shifts[0];
-  const candidates = notes.filter(note => note.tenant_id === tenantId && note.lifecycle_status !== 'Archived' && clean(note.person_name || note.participant_name) === clean(shift.participant_name) && clean(note.entry_date || note.date) === clean(shift.date) && clean(note.body || note.what_happened));
+  const candidates = notes.filter(note => note.tenant_id === tenantId && isServiceNote(note) && note.lifecycle_status !== 'Archived' && clean(note.person_name || note.participant_name) === clean(shift.participant_name) && clean(note.entry_date || note.date) === clean(shift.date) && clean(note.body || note.what_happened));
   const current = (await assessServiceEvidence(shifts, notes, events, tenantId))[0];
-  if (action === 'options') return { current, notes: candidates.map(note => ({ id: note.id, note_entity: note.note_entity, title: note.subject || 'Service note', body: note.body || note.what_happened, staff: note.staff_name || (note.staff_involved || []).join(', '), date: note.date || note.entry_date })) };
+  if (action === 'options') return { current, shift_hash: await evidenceHash(shiftEvidenceSnapshot(shift)), notes: await Promise.all(candidates.map(async note => ({ id: note.id, note_entity: note.note_entity, note_hash: await evidenceHash(noteEvidenceSnapshot(note)), title: note.subject || 'Service note', body: note.body || note.what_happened, staff: note.staff_name || (note.staff_involved || []).join(', '), date: note.date || note.entry_date }))) };
   if (body.reviewed !== true || !clean(body.reason) || body.reason.length > 1000 || !/^[a-zA-Z0-9_-]{12,100}$/.test(body.command_key || '')) throw Object.assign(new Error('Review the note, enter an association reason and provide a command reference.'), { status: 400 });
   const prior = events.find(event => event.command_key === body.command_key);
   if (prior) {
     if (prior.actor_id !== user.id || prior.reason !== body.reason.trim() || prior.shift_id !== shift.id || prior.action !== (action === 'link' ? 'Link' : 'Unlink') || action === 'link' && (prior.note_id !== body.note_id || prior.note_entity !== body.note_entity)) throw Object.assign(new Error('This command reference was already used for different work.'), { status: 409 });
     return { ok: true, deduplicated: true, current };
   }
+  if (body.expected_association_id !== current.association_id) throw Object.assign(new Error('The association changed after you opened it. Reload and review again.'), { status: 409 });
   let note, participant, worker;
   if (action === 'link') {
     if (!clean(shift.participant_name) || !clean(shift.employee_name)) throw Object.assign(new Error('The shift must identify its participant and worker.'), { status: 400 });
     note = candidates.find(note => note.note_entity === body.note_entity && note.id === body.note_id);
     if (!note) throw Object.assign(new Error('Select a factual service note for the exact participant and service date.'), { status: 400 });
+    if (body.expected_shift_hash !== await evidenceHash(shiftEvidenceSnapshot(shift)) || body.expected_note_hash !== await evidenceHash(noteEvidenceSnapshot(note))) throw Object.assign(new Error('The shift or note changed after it was displayed. Reload and review the current content.'), { status: 409 });
     const [people, workers] = await Promise.all([scan(entities.ParticipantProfile, { full_name: shift.participant_name }), scan(entities.StaffProfile, { full_name: shift.employee_name })]);
     if (people.length !== 1 || workers.length !== 1 || [...people, ...workers].some(row => row.tenant_id !== tenantId)) throw Object.assign(new Error('Resolve participant and worker identity ambiguity before linking service evidence.'), { status: 409 });
     participant = people[0]; worker = workers[0];
