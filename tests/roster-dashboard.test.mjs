@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readDashboardCollection } from '../src/lib/dashboardRecords.js';
-import { shiftBounds, shiftNeedsClockIn, shiftNoteReview, relevantRoster, rosterMemberStatus, deriveRosterDashboard, serviceDay } from '../src/lib/rosterDashboard.js';
+import { shiftBounds, shiftNeedsClockIn, shiftNoteReview, relevantRoster, rosterMemberStatus, deriveRosterDashboard, serviceDay, rosterShiftStatus } from '../src/lib/rosterDashboard.js';
 const overnight = { id: 's', date: '2026-11-17', start_time: '22:00', end_time: '06:00', employee_name: 'Worker', participant_name: 'Person', status: 'Scheduled' };
 test('dashboard reads all cursor pages rather than presenting the first page as complete', async () => {
   const calls = [];
@@ -64,4 +64,8 @@ test('incident counts come from incident records and completed unassigned shifts
   const data = { day: '2026-11-17', shifts: [{ ...overnight, employee_name: '', status: 'Completed' }], notes: [{ incident_report: 'reference' }], incidents: [{ id: 'incident-a' }, { id: 'incident-b' }], team: [], todos: [] };
   const derived = deriveRosterDashboard(data);
   assert.equal(derived.unfilled.length, 0); assert.equal(derived.noteIncidents.length, 1); assert.equal(derived.openIncidents.length, 2);
+});
+
+test('roster rows retain cancelled, missed and completed statuses instead of claiming coverage', () => {
+  for (const status of ['Cancelled', 'Missed', 'Completed']) assert.equal(rosterShiftStatus({ ...overnight, status, employee_name: '' }).label, status);
 });

@@ -10,7 +10,8 @@ export default function HighlightsScreen({ derived, onBack }) {
     { id: 'esc', label: 'Escalations waiting', value: derived.escalations.length },
     { id: 'inc', label: 'Open incident records', value: derived.openIncidents.length },
     { id: 'late', label: 'Not clocked in', value: derived.late.length },
-    { id: 'unfilled', label: 'Unfilled shifts', value: derived.unfilled.length }
+    { id: 'unfilled', label: 'Unfilled shifts', value: derived.unfilled.length },
+    { id: 'notes', label: 'Shifts needing note review', value: derived.missingNotes.length }
   ].filter((item) => item.value > 0);
 
   const wins = [
@@ -29,7 +30,7 @@ export default function HighlightsScreen({ derived, onBack }) {
       return;
     }
     window.speechSynthesis.cancel();
-    const utter = new SpeechSynthesisUtterance(`${summary} Wins today: ${wins.map((w) => `${w.value} ${w.label.toLowerCase()}`).join(', ')}.`);
+    const utter = new SpeechSynthesisUtterance(`${summary} Current snapshot: ${wins.map((w) => `${w.value} ${w.label.toLowerCase()}`).join(', ')}.`);
     utter.lang = 'en-AU';
     window.speechSynthesis.speak(utter);
   };
@@ -72,13 +73,13 @@ export default function HighlightsScreen({ derived, onBack }) {
       </section>
 
       <section className="tl-card mt-2 p-3">
-        <p className="tl-text text-[11.5px] font-extrabold uppercase tracking-[0.1em]">Wins today</p>
+        <p className="tl-text text-[11.5px] font-extrabold uppercase tracking-[0.1em]">Current snapshot</p>
         <div className="mt-1.5 space-y-1.5">
           {wins.map((item) => (
             <div key={item.id} className="flex items-center gap-1.5">
-              <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-[#0AA070]" />
+              <CheckCircle2 className="h-3.5 w-3.5 shrink-0 tl-muted" />
               <p className="tl-text text-[11.5px] font-semibold">{item.label}</p>
-              <span className="tl-pill tl-green ml-auto">{item.value}</span>
+              <span className="tl-pill tl-gray ml-auto">{item.value}</span>
             </div>
           ))}
         </div>

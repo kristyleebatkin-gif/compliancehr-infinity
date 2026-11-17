@@ -1,3 +1,4 @@
+import { rosterShiftStatus } from '@/lib/rosterDashboard';
 import React from 'react';
 import { ArrowLeft } from 'lucide-react';
 
@@ -34,7 +35,7 @@ export function TeamScreen({ team, derived, onBack }) {
   );
 }
 
-export function RosterScreen({ shifts, derived, onBack }) {
+export function RosterScreen({ shifts, onBack }) {
   return (
     <div className="px-3.5 pt-3.5">
       <header className="mb-2 flex items-center gap-2">
@@ -46,8 +47,7 @@ export function RosterScreen({ shifts, derived, onBack }) {
       <section className="tl-card p-3">
         <div className="divide-y divide-[#0A2B6D]/8">
           {shifts.map((shift) => {
-            const late = derived.late.some((item) => item.id === shift.id);
-            const on = shift.clock_in && !shift.clock_out;
+            const status = rosterShiftStatus(shift);
             return (
               <div key={shift.id} className="flex items-center gap-2 py-2">
                 <div className="min-w-0 flex-1">
@@ -56,8 +56,8 @@ export function RosterScreen({ shifts, derived, onBack }) {
                     {shift.start_time || '—'}–{shift.end_time || '—'} · {shift.employee_name || 'Unfilled'}
                   </p>
                 </div>
-                <span className={`tl-pill ${!shift.employee_name ? 'tl-pink' : late ? 'tl-amber' : on ? 'tl-blue' : 'tl-green'}`}>
-                  {!shift.employee_name ? 'Unfilled' : late ? 'Not clocked in' : on ? 'On shift' : 'Covered'}
+                <span className={`tl-pill tl-${status.tone}`}>
+                  {status.label}
                 </span>
               </div>
             );

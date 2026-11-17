@@ -60,3 +60,14 @@ export function deriveRosterDashboard(data, now = new Date()) {
     statusFor: member => rosterMemberStatus(member, data.shifts, data.team, now)
   };
 }
+
+export function rosterShiftStatus(shift, now = new Date()) {
+  if (shift.status === 'Cancelled') return { label: 'Cancelled', tone: 'gray' };
+  if (shift.status === 'Missed') return { label: 'Missed', tone: 'pink' };
+  if (shift.status === 'Completed') return { label: 'Completed', tone: 'gray' };
+  if (!shift.employee_name) return { label: 'Unfilled', tone: 'pink' };
+  if (shift.clock_in && !shift.clock_out) return { label: 'On shift', tone: 'blue' };
+  if (shift.clock_out) return { label: 'Clocked out', tone: 'gray' };
+  if (shiftNeedsClockIn(shift, now)) return { label: 'Not clocked in', tone: 'amber' };
+  return { label: shiftBounds(shift) ? 'Scheduled' : 'Check times', tone: 'gray' };
+}
