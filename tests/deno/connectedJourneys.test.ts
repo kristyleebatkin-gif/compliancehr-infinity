@@ -8,7 +8,6 @@ import {
   buildBillingLines,
   guardDocumentEdit,
   nextVersionLabel,
-  noteKey,
   partitionBillable,
 } from '../../base44/shared/connectedJourneys.ts';
 
@@ -45,14 +44,14 @@ const shift = (over = {}) => ({
 });
 
 Deno.test('B: a completed, approved, notated shift is billable', () => {
-  const rows = assessBillingBoard({ shifts: [shift()], noteKeys: [noteKey('Synthetic Participant', '2026-11-10')] });
+  const rows = assessBillingBoard({ shifts: [shift()], evidenceShiftIds: ['shift_1'] });
   eq(rows[0].state, 'ready', 'shift with all evidence should be ready');
   eq(rows[0].amount, 120, 'two hours at $60 should be $120');
   eq(rows[0].blockers, [], 'no blockers expected');
 });
 
 Deno.test('B: missing service note blocks billing', () => {
-  const rows = assessBillingBoard({ shifts: [shift()], noteKeys: [] });
+  const rows = assessBillingBoard({ shifts: [shift()], evidenceShiftIds: [] });
   eq(rows[0].state, 'blocked', 'shift without a note must be blocked');
   assert(codes(rows[0]).includes('note_missing'), 'note_missing blocker expected');
 });
@@ -61,14 +60,14 @@ Deno.test('B: pending, rejected and unrecorded approval all block billing', () =
   for (const approval_status of ['Pending Approval', 'Rejected', '', 'Something']) {
     const rows = assessBillingBoard({
       shifts: [shift({ approval_status })],
-      noteKeys: [noteKey('Synthetic Participant', '2026-11-10')],
+      evidenceShiftIds: ['shift_1'],
     });
     eq(rows[0].state, 'blocked', `approval "${approval_status}" must block`);
   }
   // "Not Required" is a real approval outcome and must pass.
   const rows = assessBillingBoard({
     shifts: [shift({ approval_status: 'Not Required' })],
-    noteKeys: [noteKey('Synthetic Participant', '2026-11-10')],
+    evidenceShiftIds: ['shift_1'],
   });
   eq(rows[0].state, 'ready', '"Not Required" approval should be billable');
 });
@@ -77,7 +76,7 @@ Deno.test('B: an uncompleted or missed service is never billable', () => {
   for (const status of ['Scheduled', 'In Progress', 'Missed', 'Cancelled']) {
     const rows = assessBillingBoard({
       shifts: [shift({ status })],
-      noteKeys: [noteKey('Synthetic Participant', '2026-11-10')],
+      evidenceShiftIds: ['shift_1'],
     });
     eq(rows[0].state, 'blocked', `status "${status}" must be blocked`);
   }
@@ -86,7 +85,7 @@ Deno.test('B: an uncompleted or missed service is never billable', () => {
 Deno.test('B: an already invoiced shift is complete and cannot be billed again', () => {
   const rows = assessBillingBoard({
     shifts: [shift({ invoiced: true, invoice_id: 'inv_9' })],
-    noteKeys: [noteKey('Synthetic Participant', '2026-11-10')],
+    evidenceShiftIds: ['shift_1'],
   });
   eq(rows[0].state, 'complete', 'invoiced shift should be complete');
   assert(rows[0].blockers[0].label.includes('inv_9'), 'existing invoice should be named');
@@ -104,7 +103,7 @@ Deno.test('B: invoice lines retain the originating service id', () => {
 Deno.test('B: partition only hands ready shifts to billing and reports the rest', () => {
   const rows = assessBillingBoard({
     shifts: [shift(), shift({ id: 'shift_2', approval_status: 'Pending Approval' })],
-    noteKeys: [noteKey('Synthetic Participant', '2026-11-10')],
+    evidenceShiftIds: ['shift_1'],
   });
   const partition = partitionBillable(rows, ['shift_1', 'shift_2', 'shift_missing']);
   eq(partition.billable, ['shift_1'], 'only the ready shift is billable');
@@ -115,7 +114,7 @@ Deno.test('B: partition only hands ready shifts to billing and reports the rest'
 Deno.test('B: missing clock times are surfaced as an unknown, not a false blocker', () => {
   const rows = assessBillingBoard({
     shifts: [shift({ clock_in: '', clock_out: '' })],
-    noteKeys: [noteKey('Synthetic Participant', '2026-11-10')],
+    evidenceShiftIds: ['shift_1'],
   });
   eq(rows[0].state, 'ready', 'completion is evidenced by status, so billing may proceed');
   assert(rows[0].unknowns.some((u) => u.includes('Attendance')), 'attendance gap must be visible');

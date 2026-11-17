@@ -1,3 +1,4 @@
+import { assessServiceEvidence, readServiceEvidenceNotes } from '../../shared/serviceEvidence.ts';
 import { assertWorkflowAction, readWorkflowRecords, requireWorkflowAdministrator } from '../../shared/workflowSafety.ts';
 import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 import {
@@ -6,7 +7,6 @@ import {
   assessIncidentFollowUp,
   assessRosterEligibility,
   buildBillingLines,
-  noteKey,
   partitionBillable,
   nextVersionLabel,
 } from '../../shared/connectedJourneys.ts';
@@ -53,15 +53,15 @@ async function billingBoard(base44: any, body: any) {
   const from = text(body.from) || window.from;
   const to = text(body.to) || window.to;
 
-  const [shifts, notes] = await Promise.all([
+  const [shifts] = await Promise.all([
     listAll(base44.entities.Shift, { date: { $gte: from, $lte: to } }, { sort: '-date', limit: 300 }),
-    listAll(base44.entities.ShiftNote, { date: { $gte: from, $lte: to } }, { sort: '-date', limit: 500 }),
+    Promise.resolve(null),
   ]);
 
-  const rows = assessBillingBoard({
-    shifts,
-    noteKeys: notes.map((n: any) => noteKey(n.participant_name, n.date)),
-  });
+  const notes = await readServiceEvidenceNotes(base44.entities, [...new Set(shifts.map(shift => shift.date))]);
+  const evidenceEvents = await listAll(base44.asServiceRole.entities.ServiceEvidenceLink, { tenant_id: base44.businessId }, {});
+  const evidence = await assessServiceEvidence(shifts, notes, evidenceEvents, base44.businessId);
+  const rows = assessBillingBoard({ shifts, evidenceShiftIds: evidence.filter(row => row.state === 'linked').map(row => row.shift_id) });
 
   const order = { blocked: 0, ready: 1, complete: 2 };
   rows.sort((a, b) => (order[a.state] - order[b.state]) || String(b.date).localeCompare(String(a.date)));
@@ -276,15 +276,10 @@ async function billShifts(base44: any, user: any, body: any) {
   if (!shifts.length) return fail('None of the selected shifts are in this business.', 404);
 
   const dates = [...new Set(shifts.map((s: any) => text(s.date).slice(0, 10)).filter(Boolean))];
-  const notes = await listAll(
-    base44.entities.ShiftNote,
-    { date: { $in: dates } },
-    { limit: 500 },
-  );
-  const rows = assessBillingBoard({
-    shifts,
-    noteKeys: notes.map((n: any) => noteKey(n.participant_name, n.date)),
-  });
+  const notes = await readServiceEvidenceNotes(base44.entities, dates);
+  const evidenceEvents = await listAll(base44.asServiceRole.entities.ServiceEvidenceLink, { tenant_id: base44.businessId }, {});
+  const evidence = await assessServiceEvidence(shifts, notes, evidenceEvents, base44.businessId);
+  const rows = assessBillingBoard({ shifts, evidenceShiftIds: evidence.filter(row => row.state === 'linked').map(row => row.shift_id) });
   const partition = partitionBillable(rows, ids);
 
   if (!partition.billable.length) {

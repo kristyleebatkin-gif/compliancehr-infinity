@@ -131,7 +131,7 @@ export function assessShiftBilling(input: {
   if (!input.hasServiceNote) {
     blockers.push({
       code: 'note_missing',
-      label: 'No service note recorded for this participant and date',
+      label: 'No unchanged service note is explicitly associated with this shift',
     });
   }
 
@@ -148,13 +148,14 @@ export function assessShiftBilling(input: {
 /** Board rows for the billing exception screen. */
 export function assessBillingBoard(input: {
   shifts: any[];
-  noteKeys: Iterable<string>;
+  evidenceShiftIds?: Iterable<string>;
+  noteKeys?: Iterable<string>; // Historical caller shape only; names/dates never establish evidence.
 }): ShiftBilling[] {
-  const keys = new Set(input?.noteKeys || []);
+  const exactIds = new Set(input?.evidenceShiftIds || []);
   return (input?.shifts || []).map((shift) => {
     const verdict = assessShiftBilling({
       shift,
-      hasServiceNote: keys.has(noteKey(shift?.participant_name, shift?.date)),
+      hasServiceNote: exactIds.has(text(shift?.id)),
     });
     return {
       ...verdict,
