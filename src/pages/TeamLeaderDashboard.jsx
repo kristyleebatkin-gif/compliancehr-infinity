@@ -18,6 +18,7 @@ import ScreensaverSettingsDialog from '@/components/screensaver/ScreensaverSetti
 
 const ERROR_LABELS = {
   shifts: 'today’s roster',
+  evidence: 'service note associations',
   notes: 'today’s shift notes',
   todos: 'team tasks',
   incidents: 'incident records',
@@ -86,7 +87,7 @@ function TeamLeaderWorkspace({ onSecurityPin }) {
               />
             </div>
           ) : screen === 'notes' ? (
-            <ShiftNotesScreen shifts={data.shifts} notes={data.notes} onBack={back} />
+            <ShiftNotesScreen shifts={data.shifts} notes={data.notes} evidence={data.evidence} onRefresh={reload} onBack={back} />
           ) : screen === 'highlights' ? (
             <HighlightsScreen derived={derived} onBack={back} />
           ) : screen === 'calculator' ? (

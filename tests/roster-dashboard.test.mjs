@@ -69,3 +69,10 @@ test('incident counts come from incident records and completed unassigned shifts
 test('roster rows retain cancelled, missed and completed statuses instead of claiming coverage', () => {
   for (const status of ['Cancelled', 'Missed', 'Completed']) assert.equal(rosterShiftStatus({ ...overnight, status, employee_name: '' }).label, status);
 });
+
+test('dashboard distinguishes exact service associations from edited or unlinked evidence', () => {
+  const shift = { ...overnight, status: 'Completed' };
+  assert.equal(shiftNoteReview(shift, [], new Date(), [{ shift_id: shift.id, state: 'linked' }]).state, 'linked');
+  assert.equal(shiftNoteReview(shift, [], new Date(), [{ shift_id: shift.id, state: 'changed', label: 'Review changed note' }]).state, 'review');
+  assert.equal(shiftNoteReview(shift, [], new Date(), [{ shift_id: 'another-shift', state: 'linked' }]).state, 'missing');
+});

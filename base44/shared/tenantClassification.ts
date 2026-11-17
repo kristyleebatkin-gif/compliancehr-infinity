@@ -185,6 +185,7 @@ export const BUSINESS_OWNED_ENTITIES = Object.freeze([
   'SatisfactionSurvey',
   'Shift',
   'ShiftNote',
+  'ServiceEvidenceLink',
   'StaffAvailability',
   'StaffFormEntry',
   'StaffGoal',
@@ -220,6 +221,8 @@ export const BUSINESS_OWNED_ENTITIES = Object.freeze([
   'WorkflowEvent',
   'WorkflowInstance',
   'WorkflowVersion',
+  'WorkspacePreference',
+  'WorkspacePreferenceVersion',
   'WorkspaceSecurityPin',
 ]);
 

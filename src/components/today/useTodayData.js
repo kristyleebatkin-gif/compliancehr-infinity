@@ -1,3 +1,4 @@
+import { readServiceEvidence } from '@/lib/serviceEvidenceClient';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { serviceDay, previousServiceDay, relevantRoster } from '@/lib/rosterDashboard';
 import { readDashboardCollection } from '@/lib/dashboardRecords';
@@ -72,6 +73,7 @@ export default function useTodayData() {
       access.notes ? readCount(base44.entities.CommunicationEntry.count({ entry_kind: 'Shift Note', entry_date: day, lifecycle_status: { $in: ['Sent', 'Delivered', 'Read'] } })) : skippedCount()
     ]);
 
+    const evidence = shifts.error ? { items: [], error: shifts.error } : await readServiceEvidence(relevantRoster(shifts.items, day));
     if (version !== requestVersion.current) return;
     setData({
       day,
@@ -81,6 +83,7 @@ export default function useTodayData() {
       shifts: relevantRoster(shifts.items, day),
       invoices: invoices.items,
       notes: notes.items,
+      evidence: evidence.items,
       ndis: ndis.items,
       todos: todos.items,
       team: team.items,
@@ -93,6 +96,7 @@ export default function useTodayData() {
         notesOutstanding: noteCount.count
       },
       errors: {
+        evidence: evidence.error,
         emails: emails.error,
         shifts: shifts.error,
         invoices: invoices.error,

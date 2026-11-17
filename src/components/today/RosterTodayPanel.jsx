@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Panel, Row, Pill, Empty } from '@/components/today/todayUi';
 
-export default function RosterTodayPanel({ shifts, notes }) {
+export default function RosterTodayPanel({ shifts, notes, evidence = [] }) {
   return (
     <Panel
       title="Roster today"
@@ -19,7 +19,7 @@ export default function RosterTodayPanel({ shifts, notes }) {
       ) : (
         <div className="divide-y divide-[#0A2B6D]/6">
           {shifts.slice(0, 6).map((shift) => {
-            const review = shiftNoteReview(shift, notes);
+            const review = shiftNoteReview(shift, notes, new Date(), evidence);
             return (
               <Row key={shift.id}>
                 <div className="min-w-0 flex-1">

@@ -235,6 +235,8 @@ function Feedback({ profile, embedded = false } = {}) {
         subtitle="Feedback, complaints and satisfaction surveys, with lifecycle tracking, stored forms and exportable registers."
         icon={Megaphone}
         moduleKey="feedback"
+        workspaceKey="feedback"
+        workspaceLabel="Feedback & Surveys"
         insightModule="feedback"
         actions={<FeedbackToolbar tab={tab} onRecord={() => setOpen(true)} onExport={exportRegister} />}
         small={[

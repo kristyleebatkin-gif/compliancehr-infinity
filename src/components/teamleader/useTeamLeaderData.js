@@ -1,3 +1,4 @@
+import { readServiceEvidence } from '@/lib/serviceEvidenceClient';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { serviceDay, previousServiceDay, relevantRoster, deriveRosterDashboard } from '@/lib/rosterDashboard';
@@ -19,16 +20,19 @@ export default function useTeamLeaderData() {
       readDashboardCollection(options => base44.entities.StaffProfile.filter({ status: { $in: ['Active', 'On Leave'] } }, { ...options, sort: 'id' }))
     ]);
 
+    const evidence = shifts.error ? { items: [], error: shifts.error } : await readServiceEvidence(relevantRoster(shifts.items, day));
     if (version !== requestVersion.current) return;
     setData({
       day,
       loadedAt: new Date().toISOString(),
       shifts: relevantRoster(shifts.items, day),
       notes: notes.items,
+      evidence: evidence.items,
       todos: todos.items,
       incidents: incidents.items,
       team: team.items,
       errors: {
+        evidence: evidence.error,
         shifts: shifts.error,
         notes: notes.error,
         todos: todos.error,

@@ -1,3 +1,109 @@
+## Workspace OS vertical slice — persisted layout, view state, context and version history — 17 November 2026 (Australia/Brisbane)
+
+Owner installed the ULTIMATE MASTER PLATFORM PROMPT as the latest product requirements in the existing
+app and asked for the largest coherent Workspace OS slice that fits the current engines, prioritising
+real persisted layout preferences and workspace selection/context/history/version visibility linked into
+existing dashboards. Baseline main `fd16f88b` ("External agent changes"), working tree clean at start.
+No framework migration, no production publish, no data migration, no role grants.
+Before checkpoint: none available in this session before edits (documented as a limitation; the baseline
+commit above is the reproducible restore reference).
+
+### What was reconciled before building
+
+Read `AGENTS.md`, `README.md`, `COMPLIANCEHR_INFINITY_MASTER_PROMPT.md`, `MASTER_TODO.md`, then the actual
+code: `src/App.jsx` routing and gates, `AppLayout`, `ModuleShell`, `WorkspaceNavigationTools`
+(local-only favourites/recents), `navigationPreferences`, `tenantScope`, `tenantClassification`,
+`roleMatrix` (frontend and backend), and the existing Workflow/AI/Evidence engines. Finding: the shell,
+navigation and engines exist; what did not exist was any **server-persisted** per-user workspace layout,
+view state or version history. Favourites/recents were browser-local only, and nothing recorded which
+view or block layout a person used in a workspace.
+
+### Implemented (code, not a plan)
+
+| Area | Code | Behaviour and limits |
+|---|---|---|
+| Layout contract (server) | `base44/shared/workspaceLayout.ts` | 13 view states, 4 shell blocks, validation, canonical form, FNV-1a hash, diff, next-version rule, and `workspaceAccess()` which decides access before any record read: approved account → business from the account record → workspace present in the canonical permission matrix → `canAccessNav(role, key)` |
+| Layout contract (browser mirror) | `src/lib/workspaceLayout.js` | Same accepted values, identity scope key (business + user + role + status + approval), stale-response rule, ordering/visibility helpers, diffs |
+| Persistence | `WorkspacePreference`, `WorkspacePreferenceVersion` entities | Business-owned, classified in both canonical classification files. Read is owner-or-admin inside the business; create/update/delete are service-role-only, so the browser cannot write a layout directly |
+| Service | `base44/functions/workspacePreferences/entry.ts` | `load`, `save`, `history`, `restore`, `reset` with the requested API envelope (success/data/errors/warnings/metadata, page/pageSize/totalRecords/totalPages, errorCode/message/correlationId). Save appends an immutable snapshot first, then points the live row at it; a failed live write deletes the snapshot as compensation and says so |
+| Shell integration | `src/components/module/ModuleShell.jsx` | New optional `workspaceKey`/`workspaceLabel`. When supplied, the shell renders the layout strip and context panel and applies the saved block order/visibility. Without it, every existing page renders exactly as before |
+| UI | `src/components/workspace/WorkspaceLayoutBar.jsx`, `WorkspaceVersionHistory.jsx`, `WorkspaceContextPanel.jsx`, `useWorkspaceLayout.js` | Dark blue glass, blue/purple/pink accents, no black surfaces; 44px touch targets, labelled controls, `aria-pressed`/`aria-live` states; explicit loading, unavailable and failure text; version compare and restore; "Switch" opens the existing module directory |
+| Enabled dashboards | `DailyBriefing`, `IncidentAnalytics`, `QualityImprovement`, `Rostering`, `Feedback` | Each passes its canonical permission key, so the strip appears only where the person already has module access |
+
+### Verification actually run
+
+| Check | Result |
+|---|---|
+| `npm run ci:verify` (final) | **exit 0** — lint clean; **146 Node tests passed, 0 failed**; **175 Deno tests passed, 0 failed**; Vite production build succeeded |
+| `npm run typecheck` | **exit 0** in the existing configured scope (checkJs false; Deno tests use `--no-check`) — not full source/backend type assurance |
+| New Node tests `tests/workspace-layout.test.mjs` | 10/10 pass: contract parity with the server file, default order, rejection of unsupported view state / unknown / duplicate / non-boolean sections, omitted sections stay visible, reorder bounds, hide+describe, scope key separating person/business/role/approval without a display name, stale-response rejection, diff output |
+| New Deno tests `tests/deno/workspaceLayout.test.ts` | 12/12 pass: contract, canonical form and hash stability/change, all validation codes, unreadable stored layout refused, monotonic version numbers, diff fields, and access denials (no user, pending/unapproved, no business, unknown workspace, Employee/Participant/Auditor on restricted workspaces) plus "caller business cannot be spoofed" |
+| Tenant lock generator | `WorkspacePreference` and `WorkspacePreferenceVersion` report as already locked (the earlier generator failure on the version entity was fixed by correcting the rule order) |
+| Live function probes (builder invocation) | `load` on `compliance` returned the default layout with version 0; unknown workspace returned 400 `UNKNOWN_WORKSPACE`; an unsupported view state returned 400 `INVALID_VIEW_STATE` **before any write**; `history` returned an empty first page with `totalRecords: 0` |
+
+### Honest boundaries — not verified, not claimed
+
+- **No production records were written.** The probe identity has full access, so a real save would have
+  created a genuine owner layout record; that write was not performed. Save/restore/conflict paths are
+  covered by unit-level logic tests only until an approved test identity saves a layout.
+- **Role-denial is not verified live.** The builder invocation runs with elevated rights, so the
+  Employee/Auditor denials exist as passing logic tests, not as a demonstrated hosted refusal.
+- **No atomicity.** The expected-version check is a read-then-write, not CAS; the snapshot/live-row pair is
+  compensated, not transactional. Disclosed in the function and to the user in the save warning.
+- **No browser/UAT acceptance.** No authenticated visual, keyboard, phone/iPad, contrast or screen-reader
+  pass was performed in this session; the preview was not used to confirm rendering.
+- **Role/organisation layouts, layout approval, widget drag/resize builder, workspace node/edge graph** are
+  not built. The controls for them do not exist rather than existing and doing nothing.
+- **Context panel registers** (relationships, evidence, risks, audits, incidents, controls, comments, tasks,
+  approvals, AI) are labelled not-connected in this panel and link to the modules that own them; no counts,
+  statuses or AI output are invented.
+- The 99.9% availability, WCAG AA, load, DR/restore and F095 gates remain OPEN. Nothing in this batch is
+  marked Verified on the strength of a screen, a schema or a passing build.
+
+### Changed files
+
+New: `base44/shared/workspaceLayout.ts`, `base44/functions/workspacePreferences/entry.ts`,
+`base44/entities/WorkspacePreference.jsonc`, `base44/entities/WorkspacePreferenceVersion.jsonc`,
+`src/lib/workspaceLayout.js`, `src/components/workspace/{WorkspaceLayoutBar,WorkspaceVersionHistory,WorkspaceContextPanel}.jsx`,
+`src/components/workspace/useWorkspaceLayout.js`, `tests/workspace-layout.test.mjs`,
+`tests/deno/workspaceLayout.test.ts`.
+Modified: `src/components/module/ModuleShell.jsx` (optional workspace strip, existing behaviour preserved),
+`src/lib/tenantClassification.js`, `base44/shared/tenantClassification.ts` (two entities classified),
+`src/pages/{DailyBriefing,IncidentAnalytics,QualityImprovement,Rostering,Feedback}.jsx` (one prop each),
+`COMPLIANCEHR_INFINITY_MASTER_PROMPT.md` (latest owner specification section and requirement-to-code/gap matrix),
+`MASTER_TODO.md` (this entry). No entity field changed, no record migrated, no route changed, nothing published.
+
+### Next unresolved dependency
+
+An approved, non-admin test identity in a second business is required to close the real acceptance gaps:
+save a layout, prove a foreign-business and a wrong-role refusal against the hosted API and RLS, switch
+identity mid-request to prove the stale-response rule in a browser, then repeat on phone/tablet with
+keyboard and screen-reader checks. Until that exists, the Workspace OS slice is **Implemented and
+source-verified, not Verified**. Named checkpoint for this batch requested after this register entry:
+"Workspace OS — persisted layout, view state, context and version history".
+
+## Exact service evidence association and billing matching — 17 November 2026 (Australia/Brisbane)
+
+Owner requested completion after reporting publication. Published app URL confirmed through platform API: https://polite-safe-hire-flow.base44.app . Baseline main 8a41fa3c8a331af5e5c0596d2a9b0a6d34defc18 was ready/clean (package updates since preceding batch preserved).
+Before checkpoint: 6afc2969ef18b31dc5e20e79.
+Verified code checkpoint: 6afc2d78dabb50a2b801e4de; source 8a2dde683b1f02bdfd81b22905302ec2766cdcd0.
+
+| Finding | Evidence / severity | Implemented | Verification and boundary |
+|---|---|---|---|
+| ADR-010 | P1; billing checked ShiftNote by participant/date while Communications saved CommunicationEntry; dashboard could not identify a service note for one shift | Added ServiceEvidenceLink association history and shiftServiceEvidence handler/shared rules. Both note sources remain canonical/readable; records and IDs preserved. Service manager selects exact shift, reviews note text, gives reason and records stable participant/worker/note/shift IDs and content hashes. Browser writes to association history are denied by service-only RLS; approved role/exact business/active membership checked before reads. | 12 Deno behavioural tests cover denials, legacy/diary source, profile ambiguity, wrong worker, content, retry, unlink, concurrent duplicate-note conflict, edited/archive state, provenance and stale review. Hosted separate-user RLS acceptance pending. |
+| ADR-011 | P1; participant/date keys could make unrelated shifts appear billing-ready | assessBillingBoard accepts only exact linked shift IDs; connectedJourneyGate derives those IDs from server association assessment after re-reading both note sources and server-only events. Old noteKeys callers no longer satisfy service evidence. Existing bill_shifts safety gate remains disabled. | Full connected journey suite passed after fixtures changed to exact IDs, plus regression rejecting old name/date inputs. This does NOT enable automated billing or prove atomic invoice/shift persistence. |
+| ADR-012 | P1; note matching/completeness differed across dashboard and roster | Jamie Shift Notes and Rostering Operations include reviewed association UI. Today/Team Leader fetch exact evidence status, show changed/conflicting links for review and hide evidence-dependent summaries on errors. Roster Operations uses complete bounded reads and exact association counts. | Node regression covers exact/changed/unrelated associations. Lint/typecheck/build passed. Authenticated component/device/persistence UAT remains unverified. |
+
+Associations record review, not independent clinical verification. Source hashes include actual note content/type/attachment references/update timestamp and service identity/time metadata. Files themselves are NOT scanned, hashed or clinically verified by this feature. Editing source content invalidates readiness. Selected shift/note hashes and latest association ID must still match the review screen before a new event is appended. One note cannot silently serve multiple shifts; conflicting effective associations fail closed. Read-check-write/command deduplication is NOT transactional CAS/unique-key enforcement; unattended billing remains gated. Append-only refers to application actions, not proof against privileged platform/database administrators.
+
+Checks actually run on final code: npm run ci:verify EXIT 0 (136 Node tests, 163 Deno tests, lint and Vite build); npm run typecheck EXIT 0 in existing scope; git diff --check EXIT 0; tenant classifier Would lock 0 entities; frontend/backend classification identical by tests. Baseline diff reviewed: 20 files, additive association schema/function/UI plus exact billing-match repairs. Runtime probe using an anonymous SDK client against published origin returned HTTP 401; platform denial alone does not prove authenticated business isolation or a successful handler path.
+
+Browser observation on published site: landing rendered; following Open Live Workspace redirected to /login?returnTo=%2Fdashboard. No signed-in app session available. No login was attempted, credentials requested, production note associations written, invoices raised or messages sent. New source/backend/schema changes are saved; no frontend production deploy was performed in this batch. No legacy records were migrated or automatically associated.
+
+OPEN for full completion: authenticated role A/B and tenant A/B reads/writes/files/search/export acceptance; actual create/link/edit/unlink/reopen and stale/concurrent save tests; iPhone/iPad/desktop/PIN/recording/upload checks; reviewed legacy associations; shift/person stable IDs on future roster/note-entry forms; reconciliation of other note-entry surfaces and scheduled legacy reminder matching; safe invoice transaction/idempotency protocol before bill_shifts enablement; Director dashboard/customisation and other full module journeys; Phase 11 scheduler/adapters/file verification/DR/F095. Public landing also contains assurance/endorsement/remote-status claims outside sample KPI panels; their supporting evidence was not assessed and remains a separate truthful-content review. The app and Phase 11 are NOT declared fully complete or production-verified.
+
+Next acceptance action: establish an approved signed-in browser session and isolated test identities, then exercise the exact association UI and hosted denial paths without altering real clinical/financial records.
+
 ## Roster and dashboard accuracy — 17 November 2026 (Australia/Brisbane)
 
 Owner requested continuation. Baseline main ab0b0566112ab146c4e23ffbc3596b58473fbc46 was clean/ready.
