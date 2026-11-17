@@ -1,3 +1,87 @@
+## Workspace OS vertical slice — persisted layout, view state, context and version history — 17 November 2026 (Australia/Brisbane)
+
+Owner installed the ULTIMATE MASTER PLATFORM PROMPT as the latest product requirements in the existing
+app and asked for the largest coherent Workspace OS slice that fits the current engines, prioritising
+real persisted layout preferences and workspace selection/context/history/version visibility linked into
+existing dashboards. Baseline main `fd16f88b` ("External agent changes"), working tree clean at start.
+No framework migration, no production publish, no data migration, no role grants.
+Before checkpoint: none available in this session before edits (documented as a limitation; the baseline
+commit above is the reproducible restore reference).
+
+### What was reconciled before building
+
+Read `AGENTS.md`, `README.md`, `COMPLIANCEHR_INFINITY_MASTER_PROMPT.md`, `MASTER_TODO.md`, then the actual
+code: `src/App.jsx` routing and gates, `AppLayout`, `ModuleShell`, `WorkspaceNavigationTools`
+(local-only favourites/recents), `navigationPreferences`, `tenantScope`, `tenantClassification`,
+`roleMatrix` (frontend and backend), and the existing Workflow/AI/Evidence engines. Finding: the shell,
+navigation and engines exist; what did not exist was any **server-persisted** per-user workspace layout,
+view state or version history. Favourites/recents were browser-local only, and nothing recorded which
+view or block layout a person used in a workspace.
+
+### Implemented (code, not a plan)
+
+| Area | Code | Behaviour and limits |
+|---|---|---|
+| Layout contract (server) | `base44/shared/workspaceLayout.ts` | 13 view states, 4 shell blocks, validation, canonical form, FNV-1a hash, diff, next-version rule, and `workspaceAccess()` which decides access before any record read: approved account → business from the account record → workspace present in the canonical permission matrix → `canAccessNav(role, key)` |
+| Layout contract (browser mirror) | `src/lib/workspaceLayout.js` | Same accepted values, identity scope key (business + user + role + status + approval), stale-response rule, ordering/visibility helpers, diffs |
+| Persistence | `WorkspacePreference`, `WorkspacePreferenceVersion` entities | Business-owned, classified in both canonical classification files. Read is owner-or-admin inside the business; create/update/delete are service-role-only, so the browser cannot write a layout directly |
+| Service | `base44/functions/workspacePreferences/entry.ts` | `load`, `save`, `history`, `restore`, `reset` with the requested API envelope (success/data/errors/warnings/metadata, page/pageSize/totalRecords/totalPages, errorCode/message/correlationId). Save appends an immutable snapshot first, then points the live row at it; a failed live write deletes the snapshot as compensation and says so |
+| Shell integration | `src/components/module/ModuleShell.jsx` | New optional `workspaceKey`/`workspaceLabel`. When supplied, the shell renders the layout strip and context panel and applies the saved block order/visibility. Without it, every existing page renders exactly as before |
+| UI | `src/components/workspace/WorkspaceLayoutBar.jsx`, `WorkspaceVersionHistory.jsx`, `WorkspaceContextPanel.jsx`, `useWorkspaceLayout.js` | Dark blue glass, blue/purple/pink accents, no black surfaces; 44px touch targets, labelled controls, `aria-pressed`/`aria-live` states; explicit loading, unavailable and failure text; version compare and restore; "Switch" opens the existing module directory |
+| Enabled dashboards | `DailyBriefing`, `IncidentAnalytics`, `QualityImprovement`, `Rostering`, `Feedback` | Each passes its canonical permission key, so the strip appears only where the person already has module access |
+
+### Verification actually run
+
+| Check | Result |
+|---|---|
+| `npm run ci:verify` (final) | **exit 0** — lint clean; **146 Node tests passed, 0 failed**; **175 Deno tests passed, 0 failed**; Vite production build succeeded |
+| `npm run typecheck` | **exit 0** in the existing configured scope (checkJs false; Deno tests use `--no-check`) — not full source/backend type assurance |
+| New Node tests `tests/workspace-layout.test.mjs` | 10/10 pass: contract parity with the server file, default order, rejection of unsupported view state / unknown / duplicate / non-boolean sections, omitted sections stay visible, reorder bounds, hide+describe, scope key separating person/business/role/approval without a display name, stale-response rejection, diff output |
+| New Deno tests `tests/deno/workspaceLayout.test.ts` | 12/12 pass: contract, canonical form and hash stability/change, all validation codes, unreadable stored layout refused, monotonic version numbers, diff fields, and access denials (no user, pending/unapproved, no business, unknown workspace, Employee/Participant/Auditor on restricted workspaces) plus "caller business cannot be spoofed" |
+| Tenant lock generator | `WorkspacePreference` and `WorkspacePreferenceVersion` report as already locked (the earlier generator failure on the version entity was fixed by correcting the rule order) |
+| Live function probes (builder invocation) | `load` on `compliance` returned the default layout with version 0; unknown workspace returned 400 `UNKNOWN_WORKSPACE`; an unsupported view state returned 400 `INVALID_VIEW_STATE` **before any write**; `history` returned an empty first page with `totalRecords: 0` |
+
+### Honest boundaries — not verified, not claimed
+
+- **No production records were written.** The probe identity has full access, so a real save would have
+  created a genuine owner layout record; that write was not performed. Save/restore/conflict paths are
+  covered by unit-level logic tests only until an approved test identity saves a layout.
+- **Role-denial is not verified live.** The builder invocation runs with elevated rights, so the
+  Employee/Auditor denials exist as passing logic tests, not as a demonstrated hosted refusal.
+- **No atomicity.** The expected-version check is a read-then-write, not CAS; the snapshot/live-row pair is
+  compensated, not transactional. Disclosed in the function and to the user in the save warning.
+- **No browser/UAT acceptance.** No authenticated visual, keyboard, phone/iPad, contrast or screen-reader
+  pass was performed in this session; the preview was not used to confirm rendering.
+- **Role/organisation layouts, layout approval, widget drag/resize builder, workspace node/edge graph** are
+  not built. The controls for them do not exist rather than existing and doing nothing.
+- **Context panel registers** (relationships, evidence, risks, audits, incidents, controls, comments, tasks,
+  approvals, AI) are labelled not-connected in this panel and link to the modules that own them; no counts,
+  statuses or AI output are invented.
+- The 99.9% availability, WCAG AA, load, DR/restore and F095 gates remain OPEN. Nothing in this batch is
+  marked Verified on the strength of a screen, a schema or a passing build.
+
+### Changed files
+
+New: `base44/shared/workspaceLayout.ts`, `base44/functions/workspacePreferences/entry.ts`,
+`base44/entities/WorkspacePreference.jsonc`, `base44/entities/WorkspacePreferenceVersion.jsonc`,
+`src/lib/workspaceLayout.js`, `src/components/workspace/{WorkspaceLayoutBar,WorkspaceVersionHistory,WorkspaceContextPanel}.jsx`,
+`src/components/workspace/useWorkspaceLayout.js`, `tests/workspace-layout.test.mjs`,
+`tests/deno/workspaceLayout.test.ts`.
+Modified: `src/components/module/ModuleShell.jsx` (optional workspace strip, existing behaviour preserved),
+`src/lib/tenantClassification.js`, `base44/shared/tenantClassification.ts` (two entities classified),
+`src/pages/{DailyBriefing,IncidentAnalytics,QualityImprovement,Rostering,Feedback}.jsx` (one prop each),
+`COMPLIANCEHR_INFINITY_MASTER_PROMPT.md` (latest owner specification section and requirement-to-code/gap matrix),
+`MASTER_TODO.md` (this entry). No entity field changed, no record migrated, no route changed, nothing published.
+
+### Next unresolved dependency
+
+An approved, non-admin test identity in a second business is required to close the real acceptance gaps:
+save a layout, prove a foreign-business and a wrong-role refusal against the hosted API and RLS, switch
+identity mid-request to prove the stale-response rule in a browser, then repeat on phone/tablet with
+keyboard and screen-reader checks. Until that exists, the Workspace OS slice is **Implemented and
+source-verified, not Verified**. Named checkpoint for this batch requested after this register entry:
+"Workspace OS — persisted layout, view state, context and version history".
+
 ## Exact service evidence association and billing matching — 17 November 2026 (Australia/Brisbane)
 
 Owner requested completion after reporting publication. Published app URL confirmed through platform API: https://polite-safe-hire-flow.base44.app . Baseline main 8a41fa3c8a331af5e5c0596d2a9b0a6d34defc18 was ready/clean (package updates since preceding batch preserved).

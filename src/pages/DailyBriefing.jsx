@@ -206,6 +206,8 @@ export default function DailyBriefing() {
     <div className="mx-auto w-full max-w-[1440px] space-y-4">
       <ModuleShell
         moduleKey="daily-briefing"
+        workspaceKey="daily-briefing"
+        workspaceLabel="Daily Briefing"
         title="Daily 8:30 AM Briefing & Role Summary"
         subtitle="Automated 8:30 AM role-based summaries across Incidents, Risks, Audits, Actions, Training, Compliance, Expiries, Reviews, Escalations, Approvals, and Critical Issues."
         icon={Sunrise}

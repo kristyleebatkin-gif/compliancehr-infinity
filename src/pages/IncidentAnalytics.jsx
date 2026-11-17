@@ -63,6 +63,8 @@ export default function IncidentAnalytics({ embedded = false } = {}) {
       <ModuleShell
         embedded={embedded}
         moduleKey="incident-analytics"
+        workspaceKey="incident-analytics"
+        workspaceLabel="Incident Analytics"
         title="Friendly Incident & Safety Support Analytics"
         subtitle="Supportive, blame-free safety insights showing where extra care, training, or environmental adjustments can help our participants and staff thrive."
         icon={Activity}

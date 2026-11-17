@@ -717,3 +717,105 @@ The owner Phase 11 specification is preserved in `PHASE11_OWNER_SPECIFICATION.md
 - Use applicable available points with recorded exclusions and display assessment completeness. Never equate lack of data with either compliance or regulatory non-conformance.
 - Keep existing role/tenant enforcement and approved operational access. Workspace specifications do not grant permissions.
 - Do not publish until the existing release gates have evidence. Report saved source, automated tests, authenticated acceptance and publication separately.
+
+## Ultimate Master Platform Prompt — latest owner specification (17 November 2026, Australia/Brisbane)
+
+This section is the owner's latest product requirements, integrated into this same controlling
+specification. It adds scope; it does not replace the sections above, the 36-step combined build
+sequence, the Phase 11 requirements, the implemented modules, routes, record IDs, AppLayout,
+ModuleShell, iPad Quick Access, or the canonical Evidence/Task/Approval/Workflow/Universal360/
+Knowledge Graph engines. It does not authorise a framework migration: the deployed application
+remains the existing vite_spa React 18 + Base44 runtime. Next 15 / React 19 / Nest / Prisma /
+Keycloak / Azure and the referenced monorepo are reference architecture only — not deployed facts
+and not permission to migrate, replace or re-platform.
+
+### Product scope
+
+Multi-tenant enterprise operating system for governance, compliance, risk, audit, quality,
+workforce, learning, incident, NDIS, aged care, allied health, clinical, HR, reporting, evidence,
+AI and automation.
+
+Every workspace and record must be: auditable, versioned, traceable, permission controlled,
+reportable, evidence linked, workflow enabled, AI assistable, searchable, and accessible on mobile.
+
+Operating systems: Platform Shell, Workspace, Governance, Compliance, Risk, Audit, Quality,
+Workforce, Learning, Incident, Clinical Governance, Allied Health, Evidence, Reporting, AI Core,
+Automation, Administration.
+
+### Shell and workspace contract
+
+- Shell: Header, Sidebar, Workspace Canvas, Context Panel, Bottom Dock, Command Palette, Infinity AI.
+- Layout: header → sidebar → KPI ribbon → canvas → context → history dock → AI → version timeline.
+- View states (a way of looking, not a record status): Dashboard, Selection, Review, Investigation,
+  Evidence Analysis, AI Analysis, Workflow Action, Approval, Reporting, History, Version Compare,
+  Design Mode, Archived. A view state, a record lifecycle
+  (Draft → Design → Review → Approved → Published → Active → Modified → Versioned → Archived) and a
+  stored version snapshot are three different things and must never be conflated.
+- Workspace machine: connected graph across AI Core, Governance, Compliance, Risk, Audit, Quality,
+  Evidence, Policies, Controls, Training, Competency, Clinical, Allied Health, Workforce, Reporting
+  and Automation, with selection, drag, connect, zoom, history, evidence, AI, permissions and audit.
+- Workspace builder: drag/resize/move/configure widgets, templates, publish/compare/restore/clone,
+  and personal/role/organisation layouts.
+- Context sections: Properties, Metadata, Relationships, Evidence, Linked Risks, Audits, Incidents,
+  Controls, Standards, Comments, Tasks, Approvals, AI Insights, Audit Trail, Version History.
+- KPI ribbon: Compliance Score, Risk Score, Audit Readiness, Quality Score, Clinical Health,
+  Evidence Health, Training Compliance, Workforce Compliance, Tasks Due, Incidents Open. Each figure
+  must be real, scoped, and carry period, formula, source, denominator and freshness; unmeasured
+  values read as unavailable. Scores are never invented.
+
+### Data, API and traceability contracts
+
+- Reference entities: Tenant, Organisation, Site, Department, User, Role, Permission, Workspace,
+  Layout, Widget, Panel, Version, History, Template, Automation, Node, Edge, Workflow,
+  WorkflowInstance, Evidence, EvidenceLink, AuditEvent, Notification, ActivityEvent, SearchIndex,
+  FileStorage, AIConversation, AIInsight. Reuse the existing equivalent entities and adapters; the
+  owner's base contract omits `tenant_id` and business identity, and both MUST still be enforced.
+- Audit fields (id, code, status, version, createdAt, createdAtBy, updatedAt, updatedAtBy,
+  deletedAt, deletedBy) are adapted to the current canonical naming; no second naming scheme is
+  introduced where one already exists.
+- API envelope: success, data, errors, warnings, metadata; paging as page, pageSize, totalRecords,
+  totalPages; errors as errorCode, message, correlationId.
+- Traceability: Framework → Standard → Requirement → Obligation → Control → Policy → Procedure →
+  Training → Competency → Evidence → Audit → Finding → CAPA → Outcome, with validated exact
+  references and version links. Missing, inaccessible and unverified links stay visible as such.
+- Permissions: View, Create, Edit, Delete, Approve, Publish, Export, Configure, Admin mapped onto the
+  canonical roles, enforced server-first, with approval/publish separation and maker-checker kept.
+- Workflow: trigger → condition → rule → action → notification → audit → version. Enforcement order:
+  auth → tenant → permission → business validation → workflow → audit/evidence/version → commit →
+  notification/AI/reporting. Absent transactions, CAS and outbox are acknowledged, never claimed.
+- AI assistants (Infinity, Compliance, Risk, Audit, Governance, Evidence, Quality, Workforce,
+  Clinical, Allied Health, Reporting, Automation) are advisory only, source- and tenant-restricted,
+  with governed human review.
+- Documentation set: architecture, developer, API, security, module, database, workflow, permission,
+  reporting, operations, deployment, DR, testing. Checks: unit, integration, E2E, accessibility,
+  permission, workflow, audit, performance, security, mobile. 99.9% availability, WCAG AA,
+  encryption, observability and restore/DR are acceptance targets that require evidence.
+- Feature completion needs schema/migration where relevant, DTO, validator, repository, service,
+  controller, permissions, audit, evidence, version, workflow, automation, reporting, AI, OpenAPI,
+  tests, accessibility, security, docs and deployment evidence. A screen or a schema alone is not
+  completion.
+
+### Requirement-to-code and gap matrix (as at 17 November 2026)
+
+| Requirement | Where it lives now | Status |
+|---|---|---|
+| Existing framework, routes, IDs, AppLayout, ModuleShell, iPad Quick Access preserved | `src/App.jsx`, `src/components/AppLayout.jsx`, `src/components/module/ModuleShell.jsx` | Preserved; no migration performed |
+| Platform Shell (header, sidebar, canvas, bottom dock, quick access) | `src/components/AppLayout.jsx`, `WorkspaceNavigationTools.jsx`, `QuickAppBar.jsx`, `ObsidianSidebarRemote.jsx` | Implemented (pre-existing) |
+| Workspace view states | `base44/shared/workspaceLayout.ts`, `src/lib/workspaceLayout.js` | 13 states stored; 4 (Dashboard, Selection, History, Version Compare) open a real view; the rest are recorded and labelled as not built |
+| Workspace selection | existing module directory + `WorkspaceLayoutBar` "Switch"; layout is scoped per workspace key | Implemented for the five enabled dashboards |
+| Persisted layout preferences | `WorkspacePreference` entity, `workspacePreferences` function, `useWorkspaceLayout` hook | Implemented: user + business scoped, server-authorised, optimistic version check |
+| Layout version history, compare, restore | `WorkspacePreferenceVersion` entity, `WorkspaceVersionHistory.jsx` | Implemented: append-only versions, compare, restore-as-new-version |
+| Context panel sections | `WorkspaceContextPanel.jsx` | Properties, layout and links implemented; Relationships/Evidence/Risks/Audits/Incidents/Controls/Comments/Tasks/Approvals/AI sections are labelled not-connected rather than populated |
+| KPI ribbon with period/formula/denominator/freshness | existing executive and module dashboards | Partially implemented elsewhere; this slice adds no KPI and no fabricated score |
+| Workspace machine graph (node/edge editing) | Knowledge Graph OS (`/knowledge-graph`) | Existing graph views only; workspace-level node/edge authoring not built |
+| Workspace builder (drag/resize/configure, templates, publish/compare/clone) | — | Not built. Block order/visibility is the only layout editing shipped |
+| Role and organisation layouts, layout approval | — | Not built. Deliberately disabled until real enforced handlers exist (no client-only success, no simulated approval) |
+| Reference entity set | reused existing entities; added `WorkspacePreference`, `WorkspacePreferenceVersion` | Reused + 2 new; no duplicate canonical records created |
+| `tenant_id` and business identity enforced | `perBusiness`, `createScopedClientFromRequest`, entity RLS, `workspaceAccess` | Implemented for this slice; live multi-user/tenant A/B acceptance still open |
+| API envelope and paging | `base44/functions/workspacePreferences/entry.ts` | Implemented for this function only |
+| Traceability chain, permissions matrix, workflow enforcement, AI assistant set | existing engines (Assurance Audit Matrix, roleMatrix, Workflow Studio, AI Intelligence OS) | Pre-existing and unchanged; this slice adds no new traceability or AI behaviour |
+| Documentation and check suites | this file, `MASTER_TODO.md`, `tests/`, `npm run ci:verify` | Extended; WCAG AA, load, DR and 99.9% availability remain unverified targets |
+
+Status words follow the existing scale (Not Assessed, Missing, Partial, Implemented, Verified,
+Blocked). Nothing in this matrix is Verified without passing evidence, and no part of this section
+declares the whole platform delivered.

@@ -328,6 +328,8 @@ function Rostering({ profile, profileKind, ourView = false, embedded = false } =
           title="Rostering & Shift Management"
           subtitle="Roster board, shift register, timesheet approvals and staff availability."
           moduleKey="rostering"
+          workspaceKey="rostering"
+          workspaceLabel="Rostering & Shifts"
           insightModule="rostering"
           tabs={<RosterDashboardNavigation profile={profile} profileKind={profileKind} />}
           actions={

@@ -186,6 +186,8 @@ export default function QualityImprovement() {
         title="Quality & Improvement"
         subtitle="Continuous improvement register: ideas, suggestions and corrective actions with owners, nominations, status history and exportable registers."
         moduleKey="quality"
+        workspaceKey="quality"
+        workspaceLabel="Quality & Improvement"
         insightModule="quality"
         small={[
           ['Ideas', items.filter((i) => matchesTab(i, TABS[0])).length],
