@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Loader2, Send, Timer } from 'lucide-react';
 import { format } from 'date-fns';
 import Sparkline from '@/components/ui/Sparkline';
+import { isUnsentInvoice } from '@/lib/invoiceApproval';
 
 // Aged receivables: outstanding invoices bucketed by days overdue,
 // with one-click payment reminder emails.

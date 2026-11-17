@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Loader2, Landmark, CheckCircle2, Trash2, Upload, Split, BookmarkPlus, FileUp } from 'lucide-react';
 import { format } from 'date-fns';
 import { suggestFor, describeKeyword, recordRuleUse, saveRule, deleteRule, parseStatementCsv } from '@/lib/bankMatchRules';
+import { isUnsentInvoice } from '@/lib/invoiceApproval';
 
 const money = (v) => `$${Number(v || 0).toLocaleString('en-AU', { minimumFractionDigits: 2 })}`;
 
