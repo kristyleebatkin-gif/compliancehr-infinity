@@ -29,7 +29,7 @@ export default function AgedReceivables({ invoices, onChanged }) {
   const [reminding, setReminding] = useState(null);
   const today = new Date();
 
-  const outstanding = invoices.filter((inv) => inv.status !== 'Paid' && inv.status !== 'Draft');
+  const outstanding = invoices.filter((inv) => inv.status !== 'Paid' && !isUnsentInvoice(inv));
   const bucketed = BUCKETS.map((bucket) => {
     const items = outstanding.filter((inv) => {
       const days = daysOverdue(inv, today);
