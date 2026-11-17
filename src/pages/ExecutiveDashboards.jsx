@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useRole } from '@/lib/useRole';
 import { Button } from '@/components/ui/button';
-import { LayoutDashboard, ShieldAlert, Landmark, ShieldCheck, ClipboardCheck, FolderOpen } from 'lucide-react';
+import { LayoutDashboard, ShieldAlert, Landmark, ShieldCheck, ClipboardCheck, FolderOpen, Gauge } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
 import ExecutiveMetricCard from '@/components/executive/ExecutiveMetricCard';
 import useExecutiveDashboardMetrics from '@/components/executive/useExecutiveDashboardMetrics';
+import IntegrityIndexPanel from '@/components/executive/IntegrityIndexPanel';
 import ReportGenerator from '@/components/reports/ReportGenerator';
 import '@/components/executive/executiveGlass.css';
 
 const VIEWS = {
+  integrity: { title: 'Enterprise Integrity Index', description: 'One weighted measure of governance, compliance, risk, audit, evidence, workforce, clinical governance, trust, assurance and strategic outcomes.', icon: Gauge, metrics: [] },
   executive: { title: 'CEO Executive Dashboard', description: 'A concise overview of outstanding governance and operational records.', icon: LayoutDashboard, metrics: [
     ['risks', 'Open risks', 'Identified, assessed, treating or monitored risks.', '/risks'],
     ['incidents', 'Open incidents', 'Reported incidents that are not yet resolved or closed.', '/incidents'],
@@ -76,9 +78,13 @@ export default function ExecutiveDashboards({ embedded = false } = {}) {
           {can('enterprise-os') && <Link to="/enterprise-os" className="text-sm font-bold text-header-foreground underline">Enterprise OS</Link>}
         </div>
         <p className="text-xs leading-relaxed text-header-foreground" role="status">Counts request records for your signed-in business and remain subject to your access. Unavailable measures need review or a retry.{dataUpdatedAt > 0 && <> Last refreshed: {new Intl.DateTimeFormat('en-AU', { timeZone: 'Australia/Brisbane', hour: '2-digit', minute: '2-digit' }).format(new Date(dataUpdatedAt))} (Brisbane).</>}</p>
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
-          {current.metrics.map(([key, title, description, path]) => <ExecutiveMetricCard key={key} title={title} description={description} value={data?.[key] ?? null} loading={isLoading} path={path} />)}
-        </div>
+        {view === 'integrity' ? (
+          <IntegrityIndexPanel />
+        ) : (
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            {current.metrics.map(([key, title, description, path]) => <ExecutiveMetricCard key={key} title={title} description={description} value={data?.[key] ?? null} loading={isLoading} path={path} />)}
+          </div>
+        )}
       </section>
     </div>
   );
