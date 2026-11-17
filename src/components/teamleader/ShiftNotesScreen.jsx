@@ -1,9 +1,10 @@
+import ServiceEvidenceLinker from '@/components/rostering/ServiceEvidenceLinker';
 import { shiftNoteReview } from '@/lib/rosterDashboard';
 import React from 'react';
 import { ArrowLeft, Send } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 
-export default function ShiftNotesScreen({ shifts, notes, evidence = [], onBack }) {
+export default function ShiftNotesScreen({ shifts, notes, evidence = [], onRefresh, onBack }) {
   const { toast } = useToast();
   const day = new Date().toLocaleDateString('en-AU', { timeZone: 'Australia/Brisbane' });
 
@@ -71,6 +72,7 @@ export default function ShiftNotesScreen({ shifts, notes, evidence = [], onBack 
           </tbody>
         </table>
       </section>
+      <div className="mt-3"><ServiceEvidenceLinker shifts={shifts} onChanged={onRefresh} /></div>
       <p className="tl-muted mt-2 px-1 text-[9.5px]">Notes matched by participant and service date need review. A name match does not verify completion for an individual shift.</p>
     </div>
   );

@@ -87,7 +87,7 @@ function TeamLeaderWorkspace({ onSecurityPin }) {
               />
             </div>
           ) : screen === 'notes' ? (
-            <ShiftNotesScreen shifts={data.shifts} notes={data.notes} evidence={data.evidence} onBack={back} />
+            <ShiftNotesScreen shifts={data.shifts} notes={data.notes} evidence={data.evidence} onRefresh={reload} onBack={back} />
           ) : screen === 'highlights' ? (
             <HighlightsScreen derived={derived} onBack={back} />
           ) : screen === 'calculator' ? (
