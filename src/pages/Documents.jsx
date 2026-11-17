@@ -18,6 +18,7 @@ import { downloadCsv, fetchAllRecords } from '@/lib/csvExport';
 import DataControlPanel from '@/components/documents/DataControlPanel';
 import StaffDocumentToolbar from '@/components/documents/StaffDocumentToolbar';
 import DocumentsDashboard from '@/components/documents/DocumentsDashboard';
+import StudioSavesPanel from '@/components/documents/StudioSavesPanel';
 import { format, differenceInCalendarDays } from 'date-fns';
 import VaultUploads from '@/components/documents/VaultUploads';
 import '@/components/documents/vaultWorkspace.css';
@@ -319,6 +320,7 @@ function Documents({ profile, profileKind, embedded = false } = {}) {
             />
           )}
           {!profile && <DocumentsDashboard role={me?.role} focus={focus} />}
+          {!profile && <StudioSavesPanel />}
       <div id="staff-docs" className="scroll-mt-24">
         <StaffDocumentToolbar profile={profile} staff={staff} scanning={scanning} scanMsg={scanMsg} onScan={runScan} onExport={exportAll} onAdd={() => { setEditing(null); setOpen(true); }} onDone={load} />
       </div>
