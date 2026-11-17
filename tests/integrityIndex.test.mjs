@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { integrityDimensions, scoreDimension, scoreIntegrityIndex, integrityBand, businessToday } from '../src/lib/integrityIndex.js';
 import { loadIntegrityIndex, INTEGRITY_SOURCE_PERMISSIONS } from '../src/lib/loadIntegrityIndex.js';
-import { canAccessNav } from '../src/lib/roleMatrix.js';
+import { ALL_ROLES, canAccessNav } from '../src/lib/roleMatrix.js';
+import { canReadExecutiveMetrics } from '../src/lib/executiveMetrics.js';
 
 const today = '2026-11-17';
 const dimensions = integrityDimensions(today);
@@ -106,12 +107,15 @@ test('async failures, synchronous SDK errors and malformed counts are unavailabl
   assert.equal(result.counts.certCurrent,1);
 });
 
-test('loader skips modules outside the role matrix', async () => {
-  const person={...user,role:'Human Resources Manager'};
-  let calls=0;
-  const entities=new Proxy({}, {get:(_,name)=>({count:async()=>{ calls++; assert.equal(canAccessNav(person.role,INTEGRITY_SOURCE_PERMISSIONS[name]),true); return 1; }})});
-  const result=await loadIntegrityIndex({entities,user:person,today});
-  assert.equal(result.score,null);
-  assert.equal(result.counts.govActive,null);
-  assert.ok(calls>0);
+test('loader requests only allowed source modules across the current role matrix', async () => {
+  for (const role of ALL_ROLES) {
+    const person={...user,role};
+    let calls=0;
+    const entities=new Proxy({}, {get:(_,name)=>({count:async()=>{ calls++; assert.equal(canAccessNav(role,INTEGRITY_SOURCE_PERMISSIONS[name]),true); return 1; }})});
+    const result=await loadIntegrityIndex({entities,user:person,today});
+    if (!canReadExecutiveMetrics(person)) {
+      assert.equal(calls,0,role);
+      assert.equal(result.score,null);
+    } else assert.ok(calls>0,role);
+  }
 });
