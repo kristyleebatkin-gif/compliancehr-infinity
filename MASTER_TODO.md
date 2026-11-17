@@ -1102,3 +1102,35 @@ Restore point before this batch: 6afae5e3d4ecea6c95696b00. A named post-check ch
 - Before restore point: 6afc34a4b996db58c836d4d4, commit 813bf20fa7d4c4c31c4ae8f93c940ba2481d4a40.
 - Verification: all 36 section headings and three controlling references present; change scope and whitespace checked against that baseline. Documentation only; runtime tests not rerun. No feature completion, production publication or regulatory assurance claimed. Existing tenant/API/device/concurrency/DR/F095 gates remain open.
 - Final named restore point: Ultimate Everything v1.0 — governing specification installed (created after this entry).
+
+
+## Ultimate Master Build v2.0 — workspace reliability implementation, 17 November 2026
+
+Owner authorised completion of outstanding tasks and supplied Ultimate Master Build Prompt v2.0. Saved normalised full requirements in ULTIMATE_MASTER_BUILD_SPECIFICATION_V2.md and updated AGENTS.md, master entry point and historical colour pointer. Checked 13 roadmap phases (0–12), all 44 ordered migration names and explicit tenantId contract. These requirements supersede v1.0; no target-stack migration was performed.
+
+Restore baseline: 6afc3c6d61f91e53fea4e583, commit 66a18f9baa79463e3ff848acac3c7fc8d6cc144a.
+
+Implemented in the existing Workspace OS:
+- Layout requests and displayed metadata are bound to account, business, role/approval and workspace, with per-context identity so an A→B→A switch cannot admit an old response.
+- Pending reads cannot overwrite a newer save. Duplicate mutations in the same mounted context are refused. Layout controls remount on identity/workspace change, clearing unsaved drafts and dialogs. Save/reset unavailable while the saved version is not ready.
+- History loads depend on a stable history callback rather than the changing workspace result object. Closed/replaced dialogs discard delayed responses; page changes clear comparison selections.
+- Server returns hasMore independently of count, retaining pagination during count-service failure. Added retry history and disabled compare for unreadable snapshots; no false equal-layout claim.
+- Restore rejects fractional/coerced/unsafe version numbers, invalid pages, unsupported schemas, missing/mismatched snapshot hashes, invalid stored versions and duplicate live/snapshot identities requiring reconciliation. Valid restore appends a new version. Existing historical rows are retained.
+- Layout/history timestamps use Australia/Brisbane. Hash checks detect accidental content mismatch only; FNV is not a signature or independent evidence verification.
+
+Verification:
+- Full ci:verify exit 0: lint, 152 JavaScript tests, 182 Deno tests and production Vite build.
+- Configured typecheck completed without errors (existing checkJs=false coverage limitation retained).
+- After duplicate-history detection, targeted real-handler tests 8/8 passed and complete Deno suite rerun: 183 passed, 0 failed.
+- Added 6 rendered React/JSDOM regression tests using the actual hook/history component with controlled SDK responses, plus 8 real backend handler tests with an in-memory SDK substitute. These are simulated API/component evidence, not deployed tenant A/B acceptance.
+- Final source diff/whitespace check against baseline performed before checkpoint. Preview connector succeeded; cloud browser reached the Base44 login page, so authenticated UI/device UAT was blocked by missing browser sign-in. No live tenant records were changed by tests. No production publication.
+
+Remaining work is OPEN, not complete:
+- All v2 operating systems require complete current-source mapping and per-feature acceptance. Existing catalogue/source mappings do not establish all 22 OS delivered.
+- Workspace templates/widgets/panels, shared layouts, full lifecycle approvals/time machine and graph capabilities beyond the existing bounded personal layout implementation remain partial.
+- Server transaction/CAS/idempotency/outbox guarantees remain unproven; local save serialisation does not make cross-session writes atomic. Duplicate detection requires reconciliation rather than guessing a winning snapshot.
+- Workspace version snapshots do not establish a separate universal audit-event/evidence-link transaction. Full universal audit/evidence/version consistency remains an engineering gate.
+- Existing MFA, scheduler/SLA, file quarantine/verification, board quorum/conflicts, external adapters, classified/location ABAC, canonical engine integration, load/DR, authenticated role/tenant/device UAT and F095 gates remain open.
+- Next.js/NestJS/PostgreSQL/Keycloak/Azure monorepo target and migrations 001–044 are not deployed. A verified staged migration/cutover/rollback package is still required.
+
+Final named checkpoint: v2 Workspace OS — scoped saves, resilient history and guarded restore.
