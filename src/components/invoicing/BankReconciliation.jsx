@@ -48,9 +48,10 @@ export default function BankReconciliation({ invoices, onChanged }) {
     toast({ title: `${parsed.length} statement line${parsed.length === 1 ? '' : 's'} imported` });
   };
 
-  // Open invoices as matcher entries, keyed by billed-to name.
+  // Open invoices as matcher entries, keyed by billed-to name. Only invoices that have actually
+  // been sent can be paid, so drafts and approved-but-unsent invoices are left out.
   const entries = (invoices || [])
-    .filter((i) => i.status !== 'Paid' && i.status !== 'Draft')
+    .filter((i) => i.status !== 'Paid' && !isUnsentInvoice(i))
     .map((i) => ({ doc: i, name: i.client_name || i.participant_name || '', amount: Number(i.amount || 0) }));
 
   const suggestionFor = (line) => {
@@ -186,7 +187,7 @@ export default function BankReconciliation({ invoices, onChanged }) {
                           )}
                         </>
                       )}
-                      {!line.reconciled && !inv && line.amount > 0 && invoices.some((i) => i.status !== 'Paid' && i.status !== 'Draft') && (
+                      {!line.reconciled && !inv && line.amount > 0 && invoices.some((i) => i.status !== 'Paid' && !isUnsentInvoice(i)) && (
                         <select
                           className="h-8 max-w-[220px] rounded-md border border-input bg-background px-2 text-xs"
                           defaultValue=""
@@ -194,7 +195,7 @@ export default function BankReconciliation({ invoices, onChanged }) {
                           disabled={busy === line.id}
                         >
                           <option value="">Match to an invoice...</option>
-                          {invoices.filter((i) => i.status !== 'Paid' && i.status !== 'Draft').map((i) => (
+                          {invoices.filter((i) => i.status !== 'Paid' && !isUnsentInvoice(i)).map((i) => (
                             <option key={i.id} value={i.id}>{i.invoice_number} - {money(i.amount)}</option>
                           ))}
                         </select>
