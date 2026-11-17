@@ -1,3 +1,6 @@
+import { readDashboardCollection } from '@/lib/dashboardRecords';
+import { readServiceEvidence } from '@/lib/serviceEvidenceClient';
+import ServiceEvidenceLinker from '@/components/rostering/ServiceEvidenceLinker';
 import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent } from '@/components/ui/card';
@@ -13,25 +16,30 @@ export default function RosterOpsOverview({ onOpenApprovals }) {
   const [range, setRange] = useState({ from: format(addDays(new Date(), -30), 'yyyy-MM-dd'), to: format(new Date(), 'yyyy-MM-dd') });
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const [shiftPage, notes, checks] = await Promise.all([
-        base44.entities.Shift.filter({ status: 'Completed', date: { $gte: range.from, $lte: range.to } }, { sort: '-date', limit: 500 }),
-        base44.entities.ShiftNote.filter({ date: { $gte: range.from, $lte: range.to } }, { limit: 500 }),
-        base44.entities.VehicleSafetyCheck.filter({ check_date: { $gte: range.from, $lte: range.to } }, { limit: 500 }),
+      setError('');
+      const [shiftPage, checks] = await Promise.all([
+        readDashboardCollection(options => base44.entities.Shift.filter({ status: 'Completed', date: { $gte: range.from, $lte: range.to } }, { ...options, sort: 'id' })),
+        readDashboardCollection(options => base44.entities.VehicleSafetyCheck.filter({ check_date: { $gte: range.from, $lte: range.to } }, { ...options, sort: 'id' })),
       ]);
-      const shifts = shiftPage.items || [];
-      const noteKeys = new Set((notes.items || []).map((n) => `${n.date}|${(n.participant_name || '').trim().toLowerCase()}`));
-      const checkShiftIds = new Set((checks.items || []).map((c) => c.shift_id));
-      const missingNotes = shifts.filter((s) => !noteKeys.has(`${s.date}|${(s.participant_name || '').trim().toLowerCase()}`));
+      if (shiftPage.error || checks.error) throw new Error(shiftPage.error || checks.error);
+      const shifts = shiftPage.items;
+      const evidence = await readServiceEvidence(shifts);
+      if (evidence.error) throw new Error(evidence.error);
+      const linkedShiftIds = new Set(evidence.items.filter(row => row.state === 'linked').map(row => row.shift_id));
+      const checkShiftIds = new Set(checks.items.map(check => check.shift_id));
+      const missingNotes = shifts.filter(shift => !linkedShiftIds.has(shift.id));
       const travelShifts = shifts; // Provider policy: check every shift.
       const missingChecks = travelShifts.filter((s) => !checkShiftIds.has(s.id));
       setData({
         shifts,
         notesDone: shifts.length - missingNotes.length,
         missingNotes: missingNotes.slice(0, 20),
+        missingNotesTotal: missingNotes.length,
         travelCount: travelShifts.length,
         checksDone: travelShifts.length - missingChecks.length,
         missingChecks: missingChecks.slice(0, 20),
@@ -40,6 +48,8 @@ export default function RosterOpsOverview({ onOpenApprovals }) {
         rejected: shifts.filter((s) => s.approval_status === 'Rejected').length,
         notClocked: shifts.filter((s) => !s.clock_in).length,
       });
+    } catch (failure) {
+      setData(null); setError(failure.message || 'Operations overview unavailable.');
     } finally {
       setLoading(false);
     }
@@ -70,6 +80,7 @@ export default function RosterOpsOverview({ onOpenApprovals }) {
           <Button variant="outline" size="sm" onClick={load} disabled={loading}>{loading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Refresh'}</Button>
         </div>
 
+        {error && <p role="alert" className="text-sm text-destructive">{error} Totals are unavailable; refresh to retry.</p>}
         {loading ? (
           <div className="flex justify-center py-10"><Loader2 className="h-6 w-6 animate-spin text-primary" /></div>
         ) : !data ? null : (
@@ -79,12 +90,12 @@ export default function RosterOpsOverview({ onOpenApprovals }) {
               <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                 <div className="flex items-center gap-2"><StickyNote className="h-4 w-4 text-brand" /><p className="text-sm font-bold">Shift notes</p></div>
                 <div className="flex flex-wrap items-center gap-4">
-                  <Stat icon={CheckCircle2} tone="bg-safe/10 text-safe" label="completed" value={data.notesDone} />
-                  <Stat icon={AlertTriangle} tone="bg-warning/10 text-warning" label="not completed" value={data.missingNotes.length === 20 ? '20+' : data.missingNotes.length} />
+                  <Stat icon={CheckCircle2} tone="bg-safe/10 text-safe" label="exact notes linked" value={data.notesDone} />
+                  <Stat icon={AlertTriangle} tone="bg-warning/10 text-warning" label="need association review" value={data.missingNotesTotal} />
                 </div>
               </div>
               {data.missingNotes.length === 0 ? (
-                <p className="text-xs text-muted-foreground">Every completed shift in this period has a shift note.</p>
+                <p className="text-xs text-muted-foreground">Every loaded completed shift has an unchanged, explicitly associated service note. This does not authorise billing.</p>
               ) : (
                 <div className="max-h-40 space-y-1 overflow-y-auto">
                   {data.missingNotes.map((s) => (
@@ -98,7 +109,9 @@ export default function RosterOpsOverview({ onOpenApprovals }) {
               )}
             </div>
 
-            {/* Car safety checks */}
+            <ServiceEvidenceLinker shifts={data.shifts} onChanged={load} />
+
+            {/* Car safety checks */
             <div className="rounded-xl border border-border/60 p-4">
               <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                 <div className="flex items-center gap-2"><Car className="h-4 w-4 text-warning" /><p className="text-sm font-bold">Car safety checks</p><Badge variant="secondary">{data.travelCount} shift(s) requiring a check</Badge></div>

@@ -26,8 +26,11 @@ export function shiftNeedsClockIn(shift, now = new Date()) {
   const bounds = shiftBounds(shift);
   return Boolean(bounds && bounds.start < +now && shift.employee_name && !shift.clock_in && !shift.clock_out && !['Cancelled', 'Completed', 'Missed'].includes(shift.status));
 }
-export function shiftNoteReview(shift, notes, now = new Date()) {
+export function shiftNoteReview(shift, notes, now = new Date(), evidence = []) {
   if (['Cancelled', 'Missed'].includes(shift.status)) return { state: 'not-required', label: 'No service note due', tone: 'gray' };
+  const association = evidence.find(row => row.shift_id === shift.id);
+  if (association?.state === 'linked') return { state: 'linked', label: 'Exact note linked', tone: 'green' };
+  if (association && !['linked', 'unlinked'].includes(association.state)) return { state: 'review', label: association.label, tone: 'amber' };
   const bounds = shiftBounds(shift);
   const finished = shift.status === 'Completed' || Boolean(shift.clock_out) || Boolean(bounds && bounds.end < +now);
   if (!finished) return { state: bounds ? 'not-due' : 'unknown', label: bounds ? 'Not due yet' : 'Check shift times', tone: 'gray' };
@@ -48,7 +51,7 @@ export function rosterMemberStatus(member, shifts, team, now = new Date()) {
 }
 export function deriveRosterDashboard(data, now = new Date()) {
   const active = data.shifts.filter(shift => !['Cancelled', 'Missed'].includes(shift.status));
-  const review = shift => shiftNoteReview(shift, data.notes, now);
+  const review = shift => shiftNoteReview(shift, data.notes, now, data.evidence || []);
   return {
     onShift: active.filter(shift => shift.clock_in && !shift.clock_out && shift.status !== 'Completed'),
     unfilled: active.filter(shift => !shift.employee_name && shift.status !== 'Completed'),

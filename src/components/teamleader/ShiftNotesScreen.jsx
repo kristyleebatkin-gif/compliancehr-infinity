@@ -3,7 +3,7 @@ import React from 'react';
 import { ArrowLeft, Send } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 
-export default function ShiftNotesScreen({ shifts, notes, onBack }) {
+export default function ShiftNotesScreen({ shifts, notes, evidence = [], onBack }) {
   const { toast } = useToast();
   const day = new Date().toLocaleDateString('en-AU', { timeZone: 'Australia/Brisbane' });
 
@@ -43,7 +43,7 @@ export default function ShiftNotesScreen({ shifts, notes, onBack }) {
           </thead>
           <tbody>
             {shifts.map((shift) => {
-              const review = shiftNoteReview(shift, notes);
+              const review = shiftNoteReview(shift, notes, new Date(), evidence);
               return (
                 <tr key={shift.id}>
                   <td className="tl-text truncate font-bold">{shift.participant_name || '—'}</td>

@@ -55,6 +55,7 @@ export async function serviceEvidenceCommand(base44, user, body, now = new Date(
   const entities = base44.entities;
   const action = body.action || 'assess';
   if (!['assess', 'options', 'link', 'unlink'].includes(action)) throw Object.assign(new Error('Unsupported service evidence action.'), { status: 400 });
+  if (action === 'assess' && !Array.isArray(body.shift_ids)) throw Object.assign(new Error('Provide shift_ids as a list.'), { status: 400 });
   const ids = [...new Set(action === 'assess' ? body.shift_ids : [body.shift_id])];
   if (!ids.length || ids.length > 2000 || ids.some(id => typeof id !== 'string' || !id || id.length > 100)) throw Object.assign(new Error('Select valid service shift records.'), { status: 400 });
   const shifts = await scan(entities.Shift, { id: { $in: ids } });
@@ -74,6 +75,7 @@ export async function serviceEvidenceCommand(base44, user, body, now = new Date(
   }
   let note, participant, worker;
   if (action === 'link') {
+    if (!clean(shift.participant_name) || !clean(shift.employee_name)) throw Object.assign(new Error('The shift must identify its participant and worker.'), { status: 400 });
     note = candidates.find(note => note.note_entity === body.note_entity && note.id === body.note_id);
     if (!note) throw Object.assign(new Error('Select a factual service note for the exact participant and service date.'), { status: 400 });
     const [people, workers] = await Promise.all([scan(entities.ParticipantProfile, { full_name: shift.participant_name }), scan(entities.StaffProfile, { full_name: shift.employee_name })]);
