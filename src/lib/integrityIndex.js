@@ -6,9 +6,9 @@
 //
 // Every dimension score comes from real record counts in the caller's business (never a typed-in
 // number). Each measure is either "good" evidence (counts toward the numerator) or "bad" evidence
-// (counts toward the denominator only). A dimension with no countable records is reported as
-// "not measured" and is left out of the weighted total, so an empty register can never inflate
-// the index. Coverage reports how much of the 100 points of weight was actually measurable.
+// (counts toward the denominator only). Missing reads make the dimension unavailable.
+// All ten dimensions must be measurable before the fixed-weight index is reported.
+// These are proposed operational indicators, not independently verified assurance.
 //
 // This file holds no React and no network calls, so the arithmetic is testable on its own.
 
@@ -165,7 +165,7 @@ export function scoreDimension(dimension, counts = {}) {
     else bad += value;
   }
   const denominator = good + bad;
-  const score = denominator > 0 ? Math.round((good / denominator) * 100) : null;
+  const score = measuredMeasures === dimension.measures.length && denominator > 0 ? Math.round((good / denominator) * 100) : null;
   return {
     key: dimension.key,
     label: dimension.label,
@@ -182,22 +182,22 @@ export function scoreDimension(dimension, counts = {}) {
 /** Bands used on the executive surface. */
 export function integrityBand(score) {
   if (score === null || score === undefined) return { label: 'Not measured', tone: 'unmeasured' };
-  if (score >= 90) return { label: 'Exemplary', tone: 'exemplary' };
-  if (score >= 75) return { label: 'Assured', tone: 'assured' };
-  if (score >= 60) return { label: 'Developing', tone: 'developing' };
-  return { label: 'At risk', tone: 'risk' };
+  if (score >= 90) return { label: 'Indicator 90–100', tone: 'exemplary' };
+  if (score >= 75) return { label: 'Indicator 75–89', tone: 'assured' };
+  if (score >= 60) return { label: 'Indicator 60–74', tone: 'developing' };
+  return { label: 'Indicator below 60', tone: 'risk' };
 }
 
 /**
- * Combine the dimensions into the index. Only measured dimensions carry weight; the remaining
- * weight is reported as unmeasured coverage rather than silently scored as zero or as full marks.
+ * Combine all ten dimensions using the owner's fixed weights. Missing dimensions suppress
+ * the composite rather than renormalising the available data into a misleading full score.
  */
 export function scoreIntegrityIndex(dimensions, counts = {}) {
   const scored = dimensions.map((dimension) => scoreDimension(dimension, counts));
   const measured = scored.filter((dimension) => dimension.score !== null);
   const measuredWeight = measured.reduce((total, dimension) => total + dimension.weight, 0);
   const weighted = measured.reduce((total, dimension) => total + dimension.score * dimension.weight, 0);
-  const score = measuredWeight > 0 ? Math.round(weighted / measuredWeight) : null;
+  const score = measured.length === scored.length && scored.length === 10 && measuredWeight === 100 ? Math.round(weighted / 100) : null;
   return {
     score,
     band: integrityBand(score),
