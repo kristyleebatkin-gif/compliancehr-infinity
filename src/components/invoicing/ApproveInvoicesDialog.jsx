@@ -61,7 +61,7 @@ export default function ApproveInvoicesDialog({ open, onOpenChange, onApproved }
     for (const inv of chosen) {
       try {
         // Re-check the live record so an invoice changed by someone else is not approved by mistake.
-        const fresh = (await base44.entities.Invoice.filter({ id: inv.id }, { limit: 1 })).items?.[0] || null;
+        const fresh = await base44.entities.Invoice.get(inv.id);
         const problems = invoiceApprovalProblems(fresh);
         if (problems.length) { failures.push(`${inv.invoice_number}: ${problems.join(', ')}`); continue; }
         await base44.entities.Invoice.update(inv.id, patch);
