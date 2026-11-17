@@ -89,10 +89,11 @@ export default perBusiness(async function(req) {
             + `${r.q.nominated_to ? ` Nominated to ${r.q.nominated_to}.` : ''} Please progress or reschedule it.`,
         })));
 
-    // 2. Invoicing Centre — unpaid invoices overdue or due soon.
+    // 2. Invoicing Centre — unpaid invoices overdue or due soon. Only invoices that have been
+    // sent can be chased for payment: drafts and approved-but-unsent invoices are skipped.
     addGroup('Invoice Overdue', 'Invoicing Centre', 'Overdue Escalation', 'Finance & Accounts Officer, Administration',
       pageItems(invoiceP)
-        .filter((inv) => inv.status !== 'Paid' && inv.status !== 'Cancelled' && inv.due_date)
+        .filter((inv) => !['Paid', 'Cancelled', 'Draft', 'Approved'].includes(inv.status) && inv.due_date)
         .map((inv) => ({ inv, state: inv.due_date < today ? 'Overdue' : (inv.due_date <= soon ? 'Due Soon' : null) }))
         .filter((r) => r.state)
         .map((r) => ({
