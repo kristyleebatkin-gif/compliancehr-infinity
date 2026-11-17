@@ -1,3 +1,25 @@
+## Access and dashboard reliability pass — 17 November 2026 (Australia/Brisbane)
+
+Owner authorised proceeding with access verification, priority dashboards and connected daily journeys.
+Baseline: main 776063e3a93d70ea842e1be51e6eec10a9410286; clean working tree; 22 focused access/tenant source tests passed.
+Before checkpoint: 6afc0c71de1b5af6dfa3da87.
+Verified code checkpoint: 6afc0eba28ac6764204f9718; source ec7723961435ad2356857699a97ab4e5bbf3f765.
+
+| Finding | Severity / source | Root cause and implemented repair | Status / limits |
+|---|---|---|---|
+| ADR-001 | P1; current systemAuth.ts/callers inspected today | Contact helper accepted omitted user and relied on enclosing perBusiness scope. All three callers now pass authenticated user; helper refuses missing approval/business before reads, filters every source by tenant and excludes foreign/untagged returned rows. Existing perBusiness membership boundary retained. | Verified with three in-memory Deno tests; no claim of a demonstrated prior hosted cross-tenant leak. Live separate-user API checks remain OPEN. |
+| ADR-002 | P1; Today/TeamLeader source inspected today | Workspace state did not remount with identity/business/authority changes; data loaders allowed earlier requests to overwrite later results. Key complete workspace/PIN subtree by identity/business/role/status/approval and invalidate stale/unmounted requests. | Implemented; key helper tests/build pass. Actual React identity-switch timing, PIN and hosted browser acceptance remain unverified. |
+| ADR-003 | P1; Today summary, tiles and AskBar inspected today | Failed requests were passed to Studio assistant with zero fallback; recorded emails were described as unanswered and recorded notes as outstanding. Supply explicit unavailable context on errors, include permitted figures only, disclose task sample and correct labels/context. | Verified helper behaviour with three Node tests; signed-in UI/AI acceptance pending. |
+| ADR-004 | P2; useTodayData inspected today | Browser-local day could query the wrong Choices NQ service date. Use Australia/Brisbane for Today date shared by Team Leader. | Implemented; build/typecheck pass. Organisation-configurable timezones and Team Leader local-clock/overnight calculations remain OPEN. |
+
+Checks on code checkpoint: npm run ci:verify EXIT 0 (lint; 125 Node tests; 151 Deno tests; Vite build). npm run typecheck EXIT 0 in existing configured scope. git diff --check EXIT 0. Tenant RLS classifier reports Would lock 0 entities. Full diff inspected against baseline; 13 files changed. Source, fixture and build verification only.
+
+Connected journeys: existing 26 connectedJourneys and 25 referralHandover Deno tests passed in full suite. They cover billing eligibility/duplicate billing, corrective-action/effectiveness closure gates and referral handover among other paths; these are in-memory checks, NOT complete hosted UI-to-backend acceptance.
+
+OPEN / next: authenticated multi-user/multi-business raw API and file denials; device/PIN/identity-switch UAT; dashboard pagination/completeness and exact filtered destinations; stable-ID shift/note matching and overnight/timezone derivations; Director dashboard/customisation acceptance; then hosted referral-to-profile, roster-to-invoice and incident-to-evidence journeys using isolated test accounts/fixtures. Independent test identities are not established in this session. Wider Phase 11 automation/file verification/recovery/F095 gates remain OPEN. No emails sent, account grants changed, data migrations or frontend publication performed. Source checkpoints do not restore application data.
+
+Final progress checkpoint follows this entry; the verified code checkpoint above remains the reproducible code reference.
+
 ## Studio source integrated into main — 17 November 2026 (Australia/Brisbane)
 
 Owner clarified and authorised studio-save-to-app -> main, then requested continuation.
