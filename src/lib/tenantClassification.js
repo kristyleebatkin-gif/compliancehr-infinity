@@ -194,6 +194,7 @@ export const BUSINESS_OWNED_ENTITIES = Object.freeze([
   'StaffProfile',
   'StaffTrainingAudit',
   'StatusLog',
+  'StudioItem',
   'SuggestedAction',
   'Supplier',
   'SupportLetter',
