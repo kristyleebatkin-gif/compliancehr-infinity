@@ -28,8 +28,13 @@ import { Plus, Trash2, FileSpreadsheet, Printer, Send, FileDown, Loader2 } from 
 import { format } from 'date-fns';
 import { loadCompanyBranding } from '@/lib/companyBranding';
 import SecondScreenSwitch from '@/components/shared/SecondScreenSwitch';
+import ApproveInvoicesDialog from '@/components/invoicing/ApproveInvoicesDialog';
+import SendApprovedDialog from '@/components/invoicing/SendApprovedDialog';
+import { MANUAL_INVOICE_STATUSES } from '@/lib/invoiceApproval';
 
-const STATUSES = ['Draft', 'Sent', 'Paid', 'Overdue'];
+// Statuses offered in each invoice's menu. Approved and Sent are shown (greyed) only when an
+// invoice is already in that state: they are set by Review & approve and by a successful email.
+const statusOptions = (current) => (MANUAL_INVOICE_STATUSES.includes(current) ? MANUAL_INVOICE_STATUSES : [current, ...MANUAL_INVOICE_STATUSES]);
 
 
 export default function InvoicingCentre() {
@@ -43,6 +48,8 @@ export default function InvoicingCentre() {
   const [sendTarget, setSendTarget] = useState(null);
   const [sendForm, setSendForm] = useState({ to: '', subject: '', message: '', attach: true });
   const [sending, setSending] = useState(false);
+  const [approveOpen, setApproveOpen] = useState(false);
+  const [sendApprovedOpen, setSendApprovedOpen] = useState(false);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -68,9 +75,13 @@ export default function InvoicingCentre() {
   const outstanding = invoices.filter((i) => i.status !== 'Paid').reduce((sum, i) => sum + (i.amount || 0), 0);
   const paid = invoices.filter((i) => i.status === 'Paid').reduce((sum, i) => sum + (i.amount || 0), 0);
   const setStatus = async (inv, status) => {
+    if (status === inv.status) return;
+    if (!MANUAL_INVOICE_STATUSES.includes(status)) {
+      toast({ title: 'Use Review & approve or Send', description: 'Approved and Sent are set by the approval screen and by emailing the invoice.', variant: 'destructive' });
+      return;
+    }
     const patch = { status };
     if (status === 'Paid') patch.paid_date = format(new Date(), 'yyyy-MM-dd');
-    if (status === 'Sent' && !inv.sent_at) patch.sent_at = new Date().toISOString();
     await base44.entities.Invoice.update(inv.id, patch);
     await load();
     toast({ title: `Invoice ${inv.invoice_number} marked ${status.toLowerCase()}` });
@@ -126,6 +137,9 @@ export default function InvoicingCentre() {
     }
   };
 
+  const approvedCount = invoices.filter((i) => i.status === 'Approved').length;
+  const draftCount = invoices.filter((i) => i.status === 'Draft').length;
+
   const summary = useMemo(() => ({
     total: invoices.length,
     sent: invoices.filter((i) => i.status === 'Sent').length,
@@ -148,6 +162,12 @@ export default function InvoicingCentre() {
             <>
               <Button size="sm" onClick={() => setBuilderOpen(true)}>
                 <Plus className="mr-1.5 h-4 w-4" />Generate Invoice
+              </Button>
+              <Button size="sm" variant="outline" className="border-border bg-white text-[#0A2B6D]" onClick={() => setApproveOpen(true)} disabled={loading || loadError || draftCount === 0}>
+                Review &amp; approve drafts ({loading ? '…' : draftCount})
+              </Button>
+              <Button size="sm" variant="outline" className="border-border bg-white text-[#0A2B6D]" onClick={() => setSendApprovedOpen(true)} disabled={loading || loadError || approvedCount === 0}>
+                <Send className="mr-1.5 h-4 w-4" />Send approved ({loading ? '…' : approvedCount})
               </Button>
               <Button size="sm" variant="outline" className="border-border bg-white text-[#0A2B6D]" onClick={exportCsv} disabled={loading || invoices.length === 0}>
                 <FileDown className="mr-1.5 h-4 w-4" />Export CSV
@@ -187,7 +207,7 @@ export default function InvoicingCentre() {
           ) : (
             <div className="space-y-3">
               {invoices.map((inv) => (
-                <Card key={inv.id} className={`border-l-4 ${inv.status === 'Paid' ? 'border-l-emerald-500' : inv.status === 'Overdue' ? 'border-l-rose-500' : inv.status === 'Sent' ? 'border-l-sky-500' : 'border-l-slate-300'}`}>
+                <Card key={inv.id} className={`border-l-4 ${inv.status === 'Paid' ? 'border-l-emerald-500' : inv.status === 'Overdue' ? 'border-l-rose-500' : inv.status === 'Sent' ? 'border-l-sky-500' : inv.status === 'Approved' ? 'border-l-violet-500' : 'border-l-slate-300'}`}>
                   <CardContent className="flex flex-wrap items-center justify-between gap-2 px-3 py-2">
                     <div className="min-w-0">
                       <p className="font-medium">{inv.invoice_number}{inv.client_name ? ` · ${inv.client_name}` : ''}{inv.participant_name ? ` (${inv.participant_name})` : ''}</p>
@@ -202,7 +222,7 @@ export default function InvoicingCentre() {
                       <Badge className={statusTone(inv.status)}>{inv.status}</Badge>
                       <Select value={inv.status} onValueChange={(v) => setStatus(inv, v)}>
                         <SelectTrigger className="h-8 w-[110px] text-xs"><SelectValue /></SelectTrigger>
-                        <SelectContent>{STATUSES.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
+                        <SelectContent>{statusOptions(inv.status).map((s) => <SelectItem key={s} value={s} disabled={!MANUAL_INVOICE_STATUSES.includes(s)}>{s}</SelectItem>)}</SelectContent>
                       </Select>
                       <InvoiceFileButton invoice={inv} business={business} onChanged={load} />
                       <Button variant="ghost" size="icon" title="Preview" onClick={() => setPreview(inv)}><FileSpreadsheet className="h-4 w-4" /></Button>
@@ -227,6 +247,9 @@ export default function InvoicingCentre() {
         </TabsContent>
         </ModuleShell>
       </Tabs>
+
+      <ApproveInvoicesDialog open={approveOpen} onOpenChange={setApproveOpen} onApproved={load} />
+      <SendApprovedDialog open={sendApprovedOpen} onOpenChange={setSendApprovedOpen} invoices={invoices} business={business} onChanged={load} />
 
       <InvoiceBuilder open={builderOpen} onClose={() => setBuilderOpen(false)} onSaved={load} invoiceCount={invoices.length} />
 
