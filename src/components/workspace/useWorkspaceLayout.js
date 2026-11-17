@@ -27,28 +27,29 @@ export default function useWorkspaceLayout(workspaceKey, workspaceLabel = '') {
   const identity = layoutScopeKey(user);
   const permitted = Boolean(workspaceKey && identity && can(workspaceKey));
   const scope = permitted ? JSON.stringify([identity, workspaceKey]) : null;
-  const [state, setState] = useState({ ...EMPTY, scope: null });
+  const [state, setState] = useState({ ...EMPTY, scope: null, context: null });
   const requestRef = useRef(0);
-  const scopeRef = useRef(scope);
+  const contextRef = useRef({ scope });
+  if (contextRef.current.scope !== scope) contextRef.current = { scope };
+  const context = contextRef.current;
   const mutationRef = useRef(null);
-  scopeRef.current = scope;
 
   const load = useCallback(async () => {
-    if (!scope || scopeRef.current !== scope || mutationRef.current?.scope === scope) return;
+    if (!scope || contextRef.current !== context || mutationRef.current?.context === context) return;
     const requestId = ++requestRef.current;
-    const current = () => scopeRef.current === scope && isLatestResponse(requestId, requestRef.current);
-    setState((previous) => ({ ...(previous.scope === scope ? previous : EMPTY), scope, status: 'loading', error: null, warning: null }));
+    const current = () => contextRef.current === context && isLatestResponse(requestId, requestRef.current);
+    setState((previous) => ({ ...(previous.context === context ? previous : EMPTY), scope, context, status: 'loading', error: null, warning: null }));
     try {
       const response = await base44.functions.invoke('workspacePreferences', { action: 'load', workspace_key: workspaceKey });
       if (!current()) return;
       const data = response.data;
       if (!data?.success) {
-        setState({ ...EMPTY, scope, status: 'error', error: data?.errors?.[0]?.message || 'The saved layout could not be loaded.' });
+        setState({ ...EMPTY, scope, context, status: 'error', error: data?.errors?.[0]?.message || 'The saved layout could not be loaded.' });
         return;
       }
       const normalised = normaliseWorkspaceLayout(data.data?.layout);
       setState({
-        scope, status: 'ready',
+        scope, context, status: 'ready',
         layout: normalised.ok ? normalised.layout : defaultWorkspaceLayout(),
         version: Number(data.data?.version) || 0,
         savedAt: data.data?.saved_at || null, savedBy: data.data?.saved_by || null,
@@ -58,13 +59,13 @@ export default function useWorkspaceLayout(workspaceKey, workspaceLabel = '') {
         warning: data.warnings?.[0] || null,
       });
     } catch (error) {
-      if (current()) setState({ ...EMPTY, scope, status: 'error', error: messageOf(error) });
+      if (current()) setState({ ...EMPTY, scope, context, status: 'error', error: messageOf(error) });
     }
-  }, [scope, workspaceKey]);
+  }, [scope, workspaceKey, context]);
 
   useEffect(() => {
     if (!scope) {
-      setState({ ...EMPTY, scope: null });
+      setState({ ...EMPTY, scope: null, context: null });
       return;
     }
     load();
@@ -72,12 +73,12 @@ export default function useWorkspaceLayout(workspaceKey, workspaceLabel = '') {
   }, [scope, load]);
 
   const send = useCallback(async (action, payload = {}) => {
-    if (!scope || scopeRef.current !== scope) return changed();
+    if (!scope || contextRef.current !== context) return changed();
     const mutation = action !== 'history';
-    if (mutation && mutationRef.current?.scope === scope) {
+    if (mutation && mutationRef.current?.context === context) {
       return { ok: false, code: 'SAVE_IN_PROGRESS', message: 'Wait for the current layout save to finish before changing it again.' };
     }
-    const token = { scope };
+    const token = { scope, context };
     if (mutation) {
       mutationRef.current = token;
       requestRef.current += 1; // An earlier read must never replace a completed save.
@@ -86,7 +87,7 @@ export default function useWorkspaceLayout(workspaceKey, workspaceLabel = '') {
       const response = await base44.functions.invoke('workspacePreferences', {
         ...payload, action, workspace_key: workspaceKey, workspace_label: workspaceLabel,
       });
-      if (scopeRef.current !== scope) return changed();
+      if (contextRef.current !== context) return changed();
       const data = response.data;
       if (!data?.success) {
         return { ok: false, code: data?.errors?.[0]?.errorCode || 'FAILED',
@@ -94,29 +95,29 @@ export default function useWorkspaceLayout(workspaceKey, workspaceLabel = '') {
       }
       return { ok: true, data: data.data, warnings: data.warnings || [] };
     } catch (error) {
-      if (scopeRef.current !== scope) return changed();
+      if (contextRef.current !== context) return changed();
       const body = error?.response?.data;
       return { ok: false, code: body?.errors?.[0]?.errorCode || 'FAILED',
         message: body?.errors?.[0]?.message || messageOf(error), data: body?.data || null };
     } finally {
       if (mutationRef.current === token) mutationRef.current = null;
     }
-  }, [scope, workspaceKey, workspaceLabel]);
+  }, [scope, workspaceKey, workspaceLabel, context]);
 
   const save = useCallback(async (layout, expectedVersion, note = '') => {
     const normalised = normaliseWorkspaceLayout(layout);
     if (!normalised.ok) return { ok: false, code: normalised.code, message: normalised.message };
     const result = await send('save', { layout: normalised.layout, expected_version: expectedVersion, note });
-    if (result.ok && scopeRef.current === scope) {
+    if (result.ok && contextRef.current === context) {
       setState({
-        ...EMPTY, scope, status: 'ready', layout: normalised.layout,
+        ...EMPTY, scope, context, status: 'ready', layout: normalised.layout,
         version: result.data?.version, savedAt: result.data?.saved_at || null,
         savedBy: result.data?.saved_by || null, note, hash: result.data?.content_hash || null,
         stored: true, warning: result.warnings?.[0] || null,
       });
     }
     return result;
-  }, [send, scope]);
+  }, [send, scope, context]);
 
   const restore = useCallback(async (versionNumber, expectedVersion) => {
     const result = await send('restore', { version_number: versionNumber, expected_version: expectedVersion });
@@ -131,6 +132,6 @@ export default function useWorkspaceLayout(workspaceKey, workspaceLabel = '') {
   }, [send, load]);
 
   const history = useCallback(async (page = 0) => send('history', { page }), [send]);
-  const visible = state.scope === scope ? state : { ...EMPTY, status: scope ? 'loading' : 'idle' };
+  const visible = state.context === context ? state : { ...EMPTY, status: scope ? 'loading' : 'idle' };
   return { ...visible, permitted, scope, load, save, restore, reset, history };
 }
