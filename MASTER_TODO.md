@@ -1,3 +1,15 @@
+## Workspace OS independent review corrections — 17 November 2026
+
+Supersedes weaker save/read and RLS statements in the builder entry below. Restorable pre-review checkpoint: 6afc32e8520ca2b2b89db42f.
+
+- Corrected canonical persisted layout serialization to the same object format accepted by the reader. Regression verifies round-trip of default and reordered/hidden layouts; without this correction saved versions were unreadable.
+- Both new entity read rules now require exact user ownership, exact business, Active account and approved access, retaining the canonical tenant-lock wrapper. No admin-wide owner/tenant bypass remains on these read rules. Live RLS enforcement with independent accounts remains unverified.
+- Backend queries include tenant explicitly and returned rows are checked for business/user/workspace. All mutations require a nonnegative safe-integer expected version. This is still read-then-write, NOT atomic concurrency control.
+- Unknown write outcomes retain snapshots, report uncertainty and require reload/reconciliation; no promise of safe retry or successful rollback. Incomplete initial preference-create response cannot report success.
+- ModuleShell remounts layout hook, drafts and context state when account/business/access scope or workspace changes, discarding pending state from the previous scope.
+- Independently reran npm run ci:verify: exit 0, lint, 146 Node tests, 175 Deno tests, Vite build. Configured typecheck completed without diagnostics; canonical tenant-RLS checker reports zero changes; git diff --check clean. Existing checkJs/no-check limits remain.
+- No new live saves, role grants, production migration or production publication. Hosted user/tenant denial, save/reload/compare/restore, concurrent/uncertain saves, keyboard/device/accessibility and full platform acceptance remain OPEN. This is a Workspace OS subset; full ultimate master scope is incomplete.
+
 ## Workspace OS vertical slice — persisted layout, view state, context and version history — 17 November 2026 (Australia/Brisbane)
 
 Owner installed the ULTIMATE MASTER PLATFORM PROMPT as the latest product requirements in the existing
