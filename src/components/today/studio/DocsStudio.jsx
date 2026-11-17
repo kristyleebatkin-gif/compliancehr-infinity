@@ -39,6 +39,8 @@ export default function DocsStudio() {
   const editorRef = useRef(null);
   const docsRef = useRef([]);
   const saveTimer = useRef(null);
+  const pendingSaveRef = useRef(null);
+  const persistRef = useRef(null);
 
   const active = docs.find((doc) => doc.id === activeId) || null;
 
@@ -77,6 +79,7 @@ export default function DocsStudio() {
   useEffect(
     () => () => {
       if (saveTimer.current) clearTimeout(saveTimer.current);
+      if (pendingSaveRef.current) persistRef.current?.(pendingSaveRef.current);
     },
     []
   );
@@ -95,11 +98,15 @@ export default function DocsStudio() {
     }
   }, []);
 
+  persistRef.current = persist;
+
   const scheduleSave = useCallback(
     (id) => {
       if (saveTimer.current) clearTimeout(saveTimer.current);
+      pendingSaveRef.current = id;
       saveTimer.current = setTimeout(() => {
         saveTimer.current = null;
+        pendingSaveRef.current = null;
         persist(id);
       }, 700);
     },
@@ -143,6 +150,7 @@ export default function DocsStudio() {
       clearTimeout(saveTimer.current);
       saveTimer.current = null;
     }
+    pendingSaveRef.current = null;
     if (activeId) persist(activeId);
   };
 
@@ -226,6 +234,7 @@ export default function DocsStudio() {
               className="studio-input flex-1 min-w-[140px] font-bold"
               aria-label="Document title"
             />
+            <button type="button" onClick={flush} className="studio-chip">Save now</button>
             <button type="button" onClick={() => run('bold')} className="studio-chip" aria-label="Bold"><Bold className="h-3.5 w-3.5" /></button>
             <button type="button" onClick={() => run('italic')} className="studio-chip" aria-label="Italic"><Italic className="h-3.5 w-3.5" /></button>
             <button type="button" onClick={() => run('formatBlock', '<h2>')} className="studio-chip" aria-label="Heading"><Heading2 className="h-3.5 w-3.5" /></button>
