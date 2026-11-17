@@ -10,6 +10,7 @@
     "lint:fix": "eslint . --fix",
     "test": "node --test tests/*.test.mjs src/tests/*.test.mjs",
     "typecheck": "tsc -p ./jsconfig.json --noEmit",
+    "typecheck:v8000": "tsc --noEmit -p src/v8000/tsconfig.json",
     "ci:verify": "npm run lint && npm test && npm run test:deno && npm run build",
     "preview": "vite preview",
     "test:deno": "deno test --no-config --no-lock --no-check -A tests/deno/"
