@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import { Mail, CalendarClock, ReceiptText, NotebookPen } from 'lucide-react';
 
 const TILES = [
-  { key: 'emails', label: 'Emails to answer', icon: Mail, href: '/communications', tone: 'from-[#0072FF] to-[#5A00D6]' },
+  { key: 'emails', label: 'Recorded emails', icon: Mail, href: '/communications', tone: 'from-[#0072FF] to-[#5A00D6]' },
   { key: 'shifts', label: 'Shifts today', icon: CalendarClock, href: '/rostering', tone: 'from-[#0A2B6D] to-[#0072FF]' },
-  { key: 'invoices', label: 'Invoices ready', icon: ReceiptText, href: '/invoicing', tone: 'from-[#5A00D6] to-[#FF2E9A]' },
-  { key: 'notesOutstanding', label: 'Shift notes outstanding', icon: NotebookPen, href: '/communications', tone: 'from-[#FF2E9A] to-[#5A00D6]' }
+  { key: 'invoices', label: 'Draft invoices', icon: ReceiptText, href: '/invoicing', tone: 'from-[#5A00D6] to-[#FF2E9A]' },
+  { key: 'notesOutstanding', label: 'Shift notes recorded today', icon: NotebookPen, href: '/communications', tone: 'from-[#FF2E9A] to-[#5A00D6]' }
 ];
 
 export default function MorningBriefTiles({ counts, visibleKeys = {} }) {

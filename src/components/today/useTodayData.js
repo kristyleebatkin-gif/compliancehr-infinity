@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useRole } from '@/lib/useRole';
 import { canAccessNav, hasApprovedAccess } from '@/lib/roles';
@@ -33,6 +33,7 @@ const skippedCount = () => ({ count: null, error: null });
 export default function useTodayData() {
   const { role, user } = useRole();
   const [data, setData] = useState(null);
+  const requestVersion = useRef(0);
   const access = useMemo(() => {
     const allowed = (key) => hasApprovedAccess(user) && canAccessNav(role, key);
     return {
@@ -49,6 +50,7 @@ export default function useTodayData() {
   }, [role, user?.id, user?.account_status, user?.access_approved]);
 
   const load = useCallback(async () => {
+    const version = ++requestVersion.current;
     const day = todayIso();
     const [emails, shifts, invoices, notes, ndis, todos, team, incidents, issues, emailCount, shiftCount, invoiceCount, noteCount] = await Promise.all([
       access.emails ? readItems(base44.entities.CommunicationEntry.filter({ entry_kind: 'Email' }, { sort: '-created_date', limit: 6 })) : skippedItems(),
@@ -67,6 +69,7 @@ export default function useTodayData() {
       access.notes ? readCount(base44.entities.CommunicationEntry.count({ entry_kind: 'Shift Note', entry_date: day, lifecycle_status: { $in: ['Sent', 'Delivered', 'Read'] } })) : skippedCount()
     ]);
 
+    if (version !== requestVersion.current) return;
     setData({
       day,
       access,
@@ -105,6 +108,7 @@ export default function useTodayData() {
 
   useEffect(() => {
     load();
+    return () => { requestVersion.current += 1; };
   }, [load]);
 
   return { data, reload: load };

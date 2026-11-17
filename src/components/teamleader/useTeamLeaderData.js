@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { todayIso } from '@/components/today/useTodayData';
 
@@ -27,8 +27,10 @@ const minutes = (time) => {
 
 export default function useTeamLeaderData() {
   const [data, setData] = useState(null);
+  const requestVersion = useRef(0);
 
   const load = useCallback(async () => {
+    const version = ++requestVersion.current;
     const day = todayIso();
     const [shifts, notes, todos, incidents, team] = await Promise.all([
       readItems(base44.entities.Shift.filter({ date: day }, { sort: 'start_time', limit: 500 })),
@@ -38,6 +40,7 @@ export default function useTeamLeaderData() {
       readItems(base44.entities.StaffProfile.filter({ status: { $in: ['Active', 'On Leave'] } }, { limit: 100 }))
     ]);
 
+    if (version !== requestVersion.current) return;
     setData({
       day,
       shifts: shifts.items,
@@ -57,6 +60,7 @@ export default function useTeamLeaderData() {
 
   useEffect(() => {
     load();
+    return () => { requestVersion.current += 1; };
   }, [load]);
 
   const derived = useMemo(() => {

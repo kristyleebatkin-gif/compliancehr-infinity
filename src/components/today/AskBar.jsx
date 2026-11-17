@@ -18,19 +18,19 @@ export default function AskBar({ counts, visibleKeys = {} }) {
     const query = value.toLowerCase();
     let reply;
     if (query.includes('email') || query.includes('inbox')) {
-      reply = visibleKeys.emails ? `${counts.emails} ${counts.emails === 1 ? 'email is' : 'emails are'} waiting for a reply.` : 'Email inbox access is not available in this workspace.';
+      reply = visibleKeys.emails ? `${counts.emails} recorded emails. Reply status is not calculated here.` : 'Email inbox access is not available in this workspace.';
     } else if (query.includes('shift') || query.includes('roster') || query.includes('late')) {
       reply = visibleKeys.shifts ? `${counts.shifts} shifts today · ${counts.onShift} on shift now · ${counts.unfilled} unfilled.` : 'Roster access is not available in this workspace.';
     } else if (query.includes('invoice') || query.includes('approve')) {
       reply = visibleKeys.invoices ? `${counts.invoices} ${counts.invoices === 1 ? 'invoice is' : 'invoices are'} ready for approval.` : 'Invoice access is not available in this workspace.';
     } else if (query.includes('note')) {
-      reply = visibleKeys.notesOutstanding ? `${counts.notesOutstanding} shift notes are still outstanding today.` : 'Shift-note access is not available in this workspace.';
+      reply = visibleKeys.notesOutstanding ? `${counts.notesOutstanding} shift notes have been recorded today. Missing notes are not calculated here.` : 'Shift-note access is not available in this workspace.';
     } else if (query.includes('waiting') || query.includes('me')) {
       const waiting = [];
-      if (visibleKeys.emails) waiting.push(`${counts.emails} emails`);
-      if (visibleKeys.invoices) waiting.push(`${counts.invoices} invoices`);
-      if (visibleKeys.notesOutstanding) waiting.push(`${counts.notesOutstanding} shift notes`);
-      reply = waiting.length ? `Your current queues: ${waiting.join(', ')}.` : 'No work queues are available in this workspace.';
+      if (visibleKeys.emails) waiting.push(`${counts.emails} recorded emails`);
+      if (visibleKeys.invoices) waiting.push(`${counts.invoices} draft invoices`);
+      if (visibleKeys.notesOutstanding) waiting.push(`${counts.notesOutstanding} recorded shift notes`);
+      reply = waiting.length ? `Your current recorded figures: ${waiting.join(', ')}.` : 'No work queues are available in this workspace.';
     } else {
       const topics = [
         visibleKeys.emails && 'emails',
