@@ -83,7 +83,7 @@ export default perBusiness(async function(req) {
       if (!selected.length || selected.length > 25 || selected.some((email) => typeof email !== 'string')) throw new Error('Select between 1 and 25 key-personnel recipients.');
       const emails = [...new Set(selected.map((email) => email.trim().toLowerCase()))];
       if (action === 'message' && values.email_mode === true && values.email_copy === true && emails.length === 1) {
-        if (!(await appContactEmails(base44)).has(emails[0])) return Response.json({ error: 'Choose an email address belonging to an app user or a saved contact.' }, { status: 403 });
+        if (!(await appContactEmails(base44, user)).has(emails[0])) return Response.json({ error: 'Choose an email address belonging to an app user or a saved contact.' }, { status: 403 });
         recipients = [{ email: emails[0], name: emails[0] }];
       } else {
         const contacts = await keyPersonnel(base44);

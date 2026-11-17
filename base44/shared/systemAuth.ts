@@ -53,11 +53,14 @@ export async function authorizeSystemCall(base44: any, _body?: any, roles: strin
 // Lowercased set of email addresses stored in the app (registered users,
 // staff, participants and contacts).
 export async function appContactEmails(base44: any, user?: any): Promise<Set<string>> {
+  // Resolve from an authenticated caller before privileged contact lookups. The enclosing
+  // perBusiness wrapper remains the membership boundary; this helper also fails closed alone.
+  const tenantId = resolveUserTenantId(user);
+  if (!user?.id || !tenantId) throw new Error('An approved business identity is required.');
   const emails = new Set<string>();
-  const tenantId = user?.tenant_id || user?.data?.tenant_id || null;
   const baseQuery = scopeQueryToTenant({}, tenantId);
   const results = await Promise.allSettled([
-    base44.asServiceRole.entities.User.list(),
+    base44.asServiceRole.entities.User.filter(baseQuery),
     base44.asServiceRole.entities.StaffProfile.filter(baseQuery, { limit: 1000, fields: ['email', 'tenant_id'] }),
     base44.asServiceRole.entities.ParticipantProfile.filter(baseQuery, { limit: 1000, fields: ['email', 'tenant_id'] }),
     base44.asServiceRole.entities.Contact.filter(baseQuery, { limit: 1000, fields: ['email', 'tenant_id'] }),
@@ -65,9 +68,13 @@ export async function appContactEmails(base44: any, user?: any): Promise<Set<str
   ]);
   for (const result of results) {
     if (result.status !== 'fulfilled') continue;
-    const records = Array.isArray(result.value) ? result.value : result.value.items || [];
+    const records = Array.isArray(result.value) ? result.value : result.value?.items;
+    if (!Array.isArray(records)) continue;
     for (const record of records) {
-      if (record && record.email) emails.add(String(record.email).trim().toLowerCase());
+      const recordTenant = record?.tenant_id || record?.data?.tenant_id;
+      if (recordTenant === tenantId && typeof record?.email === 'string') {
+        emails.add(record.email.trim().toLowerCase());
+      }
     }
   }
   return emails;

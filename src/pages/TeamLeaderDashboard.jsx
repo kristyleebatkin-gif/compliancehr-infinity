@@ -1,3 +1,4 @@
+import { dashboardIdentityKey } from '@/lib/dashboardReliability';
 import WorkspaceNavigationTools from '@/components/WorkspaceNavigationTools';
 import React, { useEffect, useState } from 'react';
 import '@/components/teamleader/teamLeader.css';
@@ -24,8 +25,11 @@ const ERROR_LABELS = {
 };
 
 export default function TeamLeaderDashboard() {
+  const { user } = useRole();
+  const identityKey = dashboardIdentityKey(user);
+  if (!identityKey) return null;
   return (
-    <SecurityPinGate workspace="team-leader" title="Team Leader – Lead" subtitle="Jamie's team workspace">
+    <SecurityPinGate key={identityKey} workspace="team-leader" title="Team Leader – Lead" subtitle="Jamie's team workspace">
       {({ openSecurityPin }) => <TeamLeaderWorkspace onSecurityPin={openSecurityPin} />}
     </SecurityPinGate>
   );

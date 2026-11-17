@@ -24,7 +24,7 @@ export default perBusiness(async function(req) {
       return Response.json({ error: 'Your role cannot send app email' }, { status: 403 });
     }
     if (!hasAnyRole(user, MANAGEMENT_ROLES)) {
-      const contacts = await appContactEmails(base44);
+      const contacts = await appContactEmails(base44, user);
       if (!contacts.has(to.toLowerCase())) {
         return Response.json({ error: 'Recipients must be registered app users or contacts stored in the app' }, { status: 403 });
       }

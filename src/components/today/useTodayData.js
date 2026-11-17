@@ -3,7 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useRole } from '@/lib/useRole';
 import { canAccessNav, hasApprovedAccess } from '@/lib/roles';
 
-export const todayIso = () => new Date().toLocaleDateString('en-CA');
+export const todayIso = () => new Date().toLocaleDateString('en-CA', { timeZone: 'Australia/Brisbane' });
 
 const readItems = async (request) => {
   try {

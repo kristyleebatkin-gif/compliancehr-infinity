@@ -45,7 +45,7 @@ export default perBusiness(async function(req: Request) {
       return Response.json({ error: 'Your role cannot send professional email' }, { status: 403 });
     }
     if (!hasAnyRole(user, MANAGEMENT_ROLES)) {
-      const contacts = await appContactEmails(base44);
+      const contacts = await appContactEmails(base44, user);
       const disallowed = recipients.find((r) => !contacts.has(r.toLowerCase()));
       if (disallowed) {
         return Response.json({ error: 'Recipients must be registered app users or contacts stored in the app' }, { status: 403 });

@@ -1,3 +1,4 @@
+import { dashboardIdentityKey, todayAssistantContext } from '@/lib/dashboardReliability';
 import WorkspaceNavigationTools from '@/components/WorkspaceNavigationTools';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import '@/components/today/today.css';
@@ -51,8 +52,11 @@ function SectionUnavailable({ label }) {
 }
 
 export default function TodayDashboard() {
+  const { user } = useRole();
+  const identityKey = dashboardIdentityKey(user);
+  if (!identityKey) return null;
   return (
-    <SecurityPinGate workspace="today" title="Administration – Lead" subtitle="Sherelle's daily operations workspace">
+    <SecurityPinGate key={identityKey} workspace="today" title="Administration – Lead" subtitle="Sherelle's daily operations workspace">
       {({ openSecurityPin }) => <TodayWorkspace onSecurityPin={openSecurityPin} />}
     </SecurityPinGate>
   );
@@ -100,10 +104,7 @@ function TodayWorkspace({ onSecurityPin }) {
     return entries;
   }, [data, counts, visibleKeys.todos, visibleKeys.invoices]);
 
-  const studioContext = useMemo(() => {
-    if (!data) return '';
-    return `${data.summary?.emails ?? 0} emails in the inbox, ${counts.shifts} shifts today (${counts.onShift} in progress, ${counts.unfilled} unfilled), ${counts.invoices} draft invoices, ${(data.todos || []).length} open tasks, ${counts.notesOutstanding} outstanding shift notes.`;
-  }, [data, counts]);
+  const studioContext = useMemo(() => todayAssistantContext(data), [data]);
 
   const failedSections = useMemo(
     () => Object.entries(data?.errors || {}).filter(([, error]) => Boolean(error)).map(([key]) => ERROR_LABELS[key] || key),
