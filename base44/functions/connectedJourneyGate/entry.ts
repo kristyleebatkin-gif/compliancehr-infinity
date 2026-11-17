@@ -53,10 +53,7 @@ async function billingBoard(base44: any, body: any) {
   const from = text(body.from) || window.from;
   const to = text(body.to) || window.to;
 
-  const [shifts] = await Promise.all([
-    listAll(base44.entities.Shift, { date: { $gte: from, $lte: to } }, { sort: '-date', limit: 300 }),
-    Promise.resolve(null),
-  ]);
+  const shifts = await listAll(base44.entities.Shift, { date: { $gte: from, $lte: to } }, { sort: '-date', limit: 300 });
 
   const notes = await readServiceEvidenceNotes(base44.entities, [...new Set(shifts.map(shift => shift.date))]);
   const evidenceEvents = await listAll(base44.asServiceRole.entities.ServiceEvidenceLink, { tenant_id: base44.businessId }, {});

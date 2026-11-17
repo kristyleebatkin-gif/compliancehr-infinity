@@ -111,7 +111,7 @@ export default function RosterOpsOverview({ onOpenApprovals }) {
 
             <ServiceEvidenceLinker shifts={data.shifts} onChanged={load} />
 
-            {/* Car safety checks */
+            {/* Car safety checks */}
             <div className="rounded-xl border border-border/60 p-4">
               <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                 <div className="flex items-center gap-2"><Car className="h-4 w-4 text-warning" /><p className="text-sm font-bold">Car safety checks</p><Badge variant="secondary">{data.travelCount} shift(s) requiring a check</Badge></div>
