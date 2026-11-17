@@ -21,13 +21,14 @@ export default function IntegrityIndexPanel() {
 
   return (
     <div className="space-y-3">
+      <p className="text-sm font-semibold text-header-foreground" role="status">Provisional scoring model — requires governance approval and authenticated validation. The overall score is withheld until all ten dimensions have complete reads and countable records.</p>
       <div className="flex flex-col gap-3 rounded-xl border border-header-foreground/20 bg-workspace-navy/70 p-4 text-header-foreground shadow-panel backdrop-blur-md sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-start gap-3">
           <Gauge className="mt-1 h-6 w-6 shrink-0" aria-hidden="true" />
           <div className="min-w-0">
             <h2 className="text-base font-extrabold text-header-foreground">Enterprise Integrity Index</h2>
             <p className="mt-1 text-sm font-medium leading-relaxed text-header-foreground">
-              One weighted measure of governance, compliance, risk, audit, evidence, workforce, clinical governance, trust, assurance and strategic outcomes for your business.
+              Proposed operational indicators across the ten weighted dimensions. Register counts do not establish verified assurance or regulatory compliance.
             </p>
           </div>
         </div>
@@ -74,7 +75,7 @@ export default function IntegrityIndexPanel() {
       {isError && <p className="text-sm font-semibold text-danger" role="alert">The index could not be read. Refresh to try again.</p>}
 
       <p className="text-xs font-medium leading-relaxed text-header-foreground">
-        Every point is calculated from records in your business. A dimension with no countable records is shown as not measured and left out of the score rather than assumed, so the index never reports a number that the evidence cannot support. Open any dimension to see the exact counts behind it.
+        Indicators use register counts available to your account in this business. Missing, denied or failed reads withhold the affected dimension and the overall score. Counts represent measure occurrences and may overlap; active or closed status alone is not independent evidence verification. Open a dimension to inspect the counts.
       </p>
     </div>
   );
