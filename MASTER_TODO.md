@@ -1,3 +1,29 @@
+## Studio source integrated into main — 17 November 2026 (Australia/Brisbane)
+
+Owner clarified and authorised studio-save-to-app -> main, then requested continuation.
+Reviewed source head bef743b5c01d1605d16cc1c683a730e24944174a against its comparison
+base. Integrated 11 source files through supported Base44 file edits, with security and
+save-handling adaptations documented in STUDIO_MAIN_INTEGRATION.md. SDK update already
+present on main. This is source integration, NOT a native Git branch-merge commit.
+
+Implemented: StudioItem-backed personal saves across five workbench tools, Documents
+saved-item panel, owner/business/approved-account restrictions, scoped adapters and
+identity remounts, HTML allowlisting and soft archive. Removed automatic upload/erasure
+of legacy unscoped browser saves and unapproved fixed-retention promises. Pending
+document/CRM saves flush on close; Save now available for documents.
+
+Verified: full ci:verify passed (lint, JavaScript suite including nine new tests,
+148 Deno tests and build); targeted studio/tenant suite 24/24; typecheck passed.
+Final UI save-handling changes lint/typecheck/build passed again. Tenant checker has
+0 entities to lock; both classifications identical; combined master unchanged;
+whitespace check clean. Details and limitations in STUDIO_MAIN_INTEGRATION.md.
+
+Before checkpoint: 6afbb57a74dd9ff24fd6112d.
+OPEN: hosted multi-identity RLS/API acceptance, authenticated UAT, uploads/recording,
+device testing, concurrent editing/save-failure recovery, reviewed legacy import and
+approved retention policy. No production data migration or frontend publication.
+Source branch remains unchanged. Final named checkpoint follows this entry.
+
 ## Combined upgrade prompt installation — 17 November 2026 (Australia/Brisbane)
 
 Owner selected main and asked to combine all continuation prompts.
