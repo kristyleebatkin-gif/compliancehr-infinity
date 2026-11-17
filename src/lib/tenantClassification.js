@@ -185,6 +185,7 @@ export const BUSINESS_OWNED_ENTITIES = Object.freeze([
   'SatisfactionSurvey',
   'Shift',
   'ShiftNote',
+  'ServiceEvidenceLink',
   'StaffAvailability',
   'StaffFormEntry',
   'StaffGoal',
