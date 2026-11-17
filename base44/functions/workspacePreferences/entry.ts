@@ -26,6 +26,9 @@ import {
   canonicalLayout,
   HISTORY_PAGE_SIZE,
   MAX_NOTE,
+  restoreVersionNumber,
+  historyPageIndex,
+  parseStoredSnapshot,
 } from '../../shared/workspaceLayout.ts';
 
 const MAX_TEXT = 140;
@@ -59,10 +62,9 @@ function rowsOf(page: any): any[] | null {
   return Array.isArray(rows) ? rows : null;
 }
 
-export default perBusiness(async function (req: Request) {
+export async function handleWorkspacePreferences(base44: any, req: Request) {
   const correlationId = crypto.randomUUID();
   try {
-    const base44 = createScopedClientFromRequest(req);
     const user = await base44.auth.me();
     const body = await req.json().catch(() => ({}));
     const action = text(body.action, 24) || 'load';
@@ -123,7 +125,10 @@ export default perBusiness(async function (req: Request) {
 
     async function writeLayout(layout: any, expectedVersion: unknown, note: string, restoredFrom: number | null) {
       const current = await currentPreference();
-      const currentVersion = current ? Number(current.version_number) || 0 : 0;
+      const currentVersion = current ? current.version_number : 0;
+      if (!Number.isSafeInteger(currentVersion) || currentVersion < 0 || currentVersion >= Number.MAX_SAFE_INTEGER) {
+        return fail('INVALID_STORED_VERSION', 'The saved layout version needs review before it can be changed.', 409, correlationId);
+      }
       if (typeof expectedVersion !== 'number' || !Number.isSafeInteger(expectedVersion) || expectedVersion < 0) {
         return fail('INVALID_EXPECTED_VERSION', 'Reload the layout and supply its whole-number version before saving.', 400, correlationId);
       }
@@ -280,21 +285,21 @@ export default perBusiness(async function (req: Request) {
     }
 
     if (action === 'restore') {
-      const target = Number(body.version_number);
-      if (!Number.isFinite(target) || target < 1) {
+      const target = restoreVersionNumber(body.version_number);
+      if (target === null) {
         return fail('INVALID_VERSION', 'Choose a saved version to restore.', 400, correlationId);
       }
-      const version = await readVersion(Math.floor(target));
+      const version = await readVersion(target);
       if (!version) return fail('VERSION_NOT_FOUND', 'That saved version is not available to this account.', 404, correlationId);
-      const layout = parseStoredLayout(version.layout_json);
+      const layout = parseStoredSnapshot(version);
       if (!layout) {
-        return fail('VERSION_UNREADABLE', 'That saved version cannot be read, so it was not restored.', 409, correlationId);
+        return fail('VERSION_UNREADABLE', 'That snapshot is unreadable or its stored hash does not match. It was not restored.', 409, correlationId);
       }
       return await writeLayout(
         layout,
         body.expected_version,
-        `Restored from version ${Math.floor(target)}`,
-        Math.floor(target),
+        `Restored from version ${target}`,
+        target,
       );
     }
 
@@ -303,7 +308,8 @@ export default perBusiness(async function (req: Request) {
     }
 
     if (action === 'history') {
-      const pageIndex = Math.max(0, Math.min(50, Number(body.page) || 0));
+      const pageIndex = historyPageIndex(body.page);
+      if (pageIndex === null) return fail('INVALID_PAGE', 'Choose a whole-number history page from 0 to 100000.', 400, correlationId);
       const page = await read.WorkspacePreferenceVersion.filter(
         { tenant_id: tenantId, user_id: userId, workspace_key: workspaceKey },
         '-version_number',
@@ -325,7 +331,7 @@ export default perBusiness(async function (req: Request) {
       return ok({
         workspace_key: workspaceKey,
         items: rows.slice(0, HISTORY_PAGE_SIZE).map((row) => {
-          const layout = parseStoredLayout(row.layout_json);
+          const layout = parseStoredSnapshot(row);
           return {
             id: row.id,
             version: Number(row.version_number) || 0,
@@ -338,6 +344,7 @@ export default perBusiness(async function (req: Request) {
           };
         }),
         page: pageIndex + 1,
+        hasMore: rows.length > HISTORY_PAGE_SIZE,
         pageSize: HISTORY_PAGE_SIZE,
         totalRecords: Number.isFinite(totalRecords) && totalRecords >= 0 ? totalRecords : null,
         totalPages: totalRecords > 0 ? Math.ceil(totalRecords / HISTORY_PAGE_SIZE) : null,
@@ -350,4 +357,6 @@ export default perBusiness(async function (req: Request) {
     const code = status === 502 ? 'LAYOUT_UNAVAILABLE' : status === 409 ? 'LAYOUT_CONFLICT' : 'WORKSPACE_LAYOUT_FAILED';
     return fail(code, String(error?.message || 'The workspace layout request failed.'), status >= 400 ? status : 500, correlationId);
   }
-});
+}
+
+export default perBusiness((req: Request) => handleWorkspacePreferences(createScopedClientFromRequest(req), req));

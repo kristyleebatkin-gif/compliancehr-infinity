@@ -101,6 +101,9 @@ export function normaliseLayout(input: any): LayoutResult {
   if (!input || typeof input !== 'object' || Array.isArray(input)) {
     return reject('INVALID_LAYOUT', 'A workspace layout must be an object.');
   }
+  if (input.schema !== undefined && input.schema !== LAYOUT_SCHEMA_VERSION) {
+    return reject('UNSUPPORTED_LAYOUT_SCHEMA', 'This layout uses an unsupported schema version.');
+  }
   const viewState = typeof input.viewState === 'string' ? input.viewState : '';
   if (!WORKSPACE_VIEW_STATES.includes(viewState)) {
     return reject('INVALID_VIEW_STATE', 'That view state is not one of the supported workspace views.');
@@ -199,4 +202,22 @@ export function workspaceAccess(user: any, workspaceKey: unknown): WorkspaceAcce
   if (!key || !Object.hasOwn(NAV_PERMISSIONS, key)) return deny('UNKNOWN_WORKSPACE');
   if (!canAccessNav(user.role, key)) return deny('NO_PERMISSION');
   return { ok: true, tenantId, workspaceKey: key };
+}
+// Refuse coercion/rounding: version 1.9 must never silently restore version 1.
+export function restoreVersionNumber(value: unknown): number | null {
+  return typeof value === 'number' && Number.isSafeInteger(value) && value > 0 ? value : null;
+}
+
+// Undefined means the first page. Invalid page requests are rejected, not silently redirected.
+export function historyPageIndex(value: unknown): number | null {
+  if (value === undefined) return 0;
+  return typeof value === 'number' && Number.isSafeInteger(value) && value >= 0 && value <= 100000 ? value : null;
+}
+
+// This hash is corruption detection, not a signature or independent evidence verification.
+// Legacy snapshots without a matching hash remain visible but cannot be restored automatically.
+export function parseStoredSnapshot(row: any): WorkspaceLayout | null {
+  const layout = parseStoredLayout(row?.layout_json);
+  if (!layout || row?.content_hash !== layoutHash(layout)) return null;
+  return layout;
 }

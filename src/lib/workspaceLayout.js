@@ -65,6 +65,9 @@ export function normaliseWorkspaceLayout(input) {
   if (!input || typeof input !== 'object' || Array.isArray(input)) {
     return { ok: false, code: 'INVALID_LAYOUT', message: 'A workspace layout must be an object.' };
   }
+  if (input.schema !== undefined && input.schema !== 1) {
+    return { ok: false, code: 'UNSUPPORTED_LAYOUT_SCHEMA', message: 'This layout uses an unsupported schema version.' };
+  }
   if (!WORKSPACE_VIEW_STATES.includes(input.viewState)) {
     return { ok: false, code: 'INVALID_VIEW_STATE', message: 'That view state is not supported.' };
   }
