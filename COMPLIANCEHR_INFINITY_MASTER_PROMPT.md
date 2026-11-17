@@ -1,4 +1,47 @@
-# Controlling master specification — 15 November 2026
+# Controlling master specification — 17 November 2026
+
+## Latest authority: Ultimate Master Build Prompt v2.0
+
+The owner supplied ULTIMATE_MASTER_BUILD_SPECIFICATION_V2.md on 17 November 2026 as the latest governing specification and authorised completion of the outstanding build. It supersedes v1.0 where requirements differ. Its 22 operating systems, phases 0–12 and ordered 44 database migrations are requirements, not deployed capabilities. BaseEntity now explicitly includes tenantId. Complaint, Feedback, Analytics, Integration and Security OS must be reconciled with existing modules rather than duplicated. The earlier Customer/Executive and other compatible capabilities remain supporting scope.
+
+Phases 0–12 are the new enterprise roadmap namespace; they do not renumber or mark complete the existing Phase 11 Workflow Studio release/stories. Preserve both namespaces and their evidence. Use the engineering/acceptance boundaries below with the new specification; PostgreSQL migration numbers are target planning order, not executed Base44 migrations.
+
+## Previous authority: Ultimate Everything Prompt — Master Enterprise Specification v1.0
+
+The owner's full current specification is preserved in [ULTIMATE_EVERYTHING_SPECIFICATION_V1.md](ULTIMATE_EVERYTHING_SPECIFICATION_V1.md). It is retained as previous scope; the v2.0 specification above now controls conflicting requirements. Earlier detailed implementation plans remain supporting backlog where compatible; preserve existing capabilities and evidence. Installing this specification is documentation work, not feature delivery or release acceptance.
+
+### Application and migration boundary
+
+Continue in the existing ComplianceHR Infinity main app (6ac9f91f0d82b1f80ec6a25f). Current package.json records React 18, Vite, React Router, Tailwind and the Base44 SDK. The owner specifies Next.js 15 / React 19 / NestJS / Prisma / PostgreSQL / Redis / BullMQ / OpenSearch / Azure / Keycloak plus a monorepo target. Record this as the requested target architecture; it is not deployed by adopting the specification. Prepare a separately reviewable migration with canonical-ID/route preservation, auth/session mapping, tenant policy parity, data reconciliation, staged cutover and tested rollback before replacing the working platform. Do not silently substitute that target with a claim of Base44 equivalence.
+
+The new design tokens (background #0B1020, surfaces #131A2E/#1A2240, blue #3B82F6, purple #8B5CF6, pink #EC4899, white/secondary text, 16px radius and Fluent icons) supersede the earlier pastel-only COLOUR_RULE.md for future design work. This adoption batch does not apply a global recolour or replace icons. Reconcile actual CSS/module tokens and contrast before implementing; retain accessible responsive and iPad Quick Access behaviour.
+
+### Required engineering interpretation
+
+- Tenant scope is mandatory even though the owner's BaseEntity excerpt does not list tenantId. Derive effective tenant and actor from trusted server context; reject cross-tenant IDs in reads, writes, search, files, graph traversal, exports and cached results.
+- UI workspace states and persisted lifecycle statuses are separate concepts. Define a validated transition matrix, maker/checker authority and exact-version approvals before enabling publish/activate/archive actions.
+- The owner's action sequence is a business dependency sequence. Persist the business change, audit event, evidence relationship and version snapshot atomically where supported; otherwise keep the capability explicitly blocked until an equivalent recoverable protocol is proven. Deliver notifications, report updates and optional AI analysis after durable commit using idempotent processing. AI failure must not lose or replay a committed business action.
+- Evidence links must reference real authorised evidence and exact versions. Do not invent evidence solely to populate a universal contract. Track missing/unverified evidence honestly and enforce evidence prerequisites for actions that require it.
+- AI assistance must respect the same tenant, role, record and field policies as direct use. Recommendations are reviewable and cannot grant permissions, independently approve their source work or declare regulatory assurance.
+- API contracts are target contracts. Document and test any adapter from current Base44 response/field conventions. Do not claim the proposed /api/v1 routes, Prisma entities, controllers or guards exist until implemented and exercised.
+- Regulatory/framework names in the specification are requirements to map against current authoritative sources, not verified legal mappings or certification.
+- Preserve all unresolved gates from MASTER_TODO.md and PHASE11_ACCEPTANCE_LOG.md. Earlier passing checks are historical evidence, not proof that new requirements are complete.
+
+### Delivery queue and acceptance evidence
+
+| Stage | Required work | Acceptance evidence |
+| --- | --- | --- |
+| 1 — Inventory and boundary | Map each target OS, shell element, entity, route and shared engine to current source; classify Missing, Partial, Implemented, Verified or Blocked | Exact source references, current check results and explicit gaps; no inferred completion |
+| 2 — Tenant and security | Validate server-derived tenancy, permission matrix and direct API/file/search/export isolation | Authenticated tenant A/B and denied-role tests, revoked access, scoped cache checks |
+| 3 — Workspace foundation | Reuse AppLayout and canonical engines for layouts, widgets, panels, versions, history and state transitions | Authorised persistence/reload, invalid/stale transition rejection, version/audit/evidence consistency |
+| 4 — Shell and machine | Integrate header/sidebar/canvas/context/dock/command/AI plus graph node behaviour | Keyboard/touch/mobile journeys, valid scoped graph edges, error/loading states and exact-version links |
+| 5 — Domain coverage | Reconcile all 18 requested operating systems and the 14-stage traceability chain | Real record-to-evidence-to-finding/CAPA/outcome journeys with role controls |
+| 6 — Engines and contracts | Complete workflow, automation, search, reporting, AI and documented API adapters | Invalid-input, duplicate/retry, failure-injection and concurrency checks; truthful metrics |
+| 7 — Architecture migration | Produce and review the target stack migration package before changing runtime | Reconciled data, permission parity, staged cutover rehearsal and successful restore |
+| 8 — Release | Verify accessibility, security, performance, mobile, DR and required sign-off | Retained test/UAT evidence and explicit release decision; specification adoption alone never releases |
+
+The following sections are supporting implementation history and compatible backlog.
+
 
 ## Combined OS upgrade and module finalisation pack — 17 November 2026 (Australia/Brisbane)
 

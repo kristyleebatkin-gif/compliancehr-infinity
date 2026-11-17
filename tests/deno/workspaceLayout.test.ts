@@ -24,7 +24,10 @@ Deno.test('view states and sections stay within the documented contract', () => 
 Deno.test('default layout is canonical, hashed and stable', () => {
   const layout = defaultLayout();
   const canonical = canonicalLayout(layout);
-  assertEquals(JSON.parse(canonical).sections, [['insight', true], ['tiles', true], ['medium', true], ['supporting', true]]);
+  assertEquals(JSON.parse(canonical).sections, layout.sections);
+  assertEquals(parseStoredLayout(canonical), layout);
+  const edited = { ...layout, viewState: 'History', sections: [...layout.sections].reverse().map((section) => ({ ...section, visible: false })) };
+  assertEquals(parseStoredLayout(canonicalLayout(edited)), edited);
   assertEquals(layoutHash(layout), layoutHash(defaultLayout()));
   assertEquals(layoutHash(layout).startsWith('fnv1a-'), true);
 });

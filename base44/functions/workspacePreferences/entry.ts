@@ -13,8 +13,8 @@
 // by service-role-only RLS, so this function is the only write path.
 //
 // Honest limits: the version check is a read-then-write, not an atomic compare-and-swap, so two
-// saves at the same moment can still collide; if the live row cannot be updated the snapshot is
-// deleted again (compensation), which is not a transaction. Recorded as open work in MASTER_TODO.md.
+// saves at the same moment can still collide. An uncertain write retains its snapshot for
+// reconciliation and never promises safe retries. This is not a transaction.
 import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 import {
   workspaceAccess,
@@ -26,6 +26,9 @@ import {
   canonicalLayout,
   HISTORY_PAGE_SIZE,
   MAX_NOTE,
+  restoreVersionNumber,
+  historyPageIndex,
+  parseStoredSnapshot,
 } from '../../shared/workspaceLayout.ts';
 
 const MAX_TEXT = 140;
@@ -59,10 +62,9 @@ function rowsOf(page: any): any[] | null {
   return Array.isArray(rows) ? rows : null;
 }
 
-export default perBusiness(async function (req: Request) {
+export async function handleWorkspacePreferences(base44: any, req: Request) {
   const correlationId = crypto.randomUUID();
   try {
-    const base44 = createScopedClientFromRequest(req);
     const user = await base44.auth.me();
     const body = await req.json().catch(() => ({}));
     const action = text(body.action, 24) || 'load';
@@ -81,9 +83,9 @@ export default perBusiness(async function (req: Request) {
     async function currentPreference() {
       // Positional SDK form: a plain array, with the business applied by the scoped client.
       const page = await read.WorkspacePreference.filter(
-        { user_id: userId, workspace_key: workspaceKey },
+        { tenant_id: tenantId, user_id: userId, workspace_key: workspaceKey },
         '-saved_at',
-        1,
+        2,
         0,
       );
       const rows = rowsOf(page);
@@ -92,11 +94,16 @@ export default perBusiness(async function (req: Request) {
         error.status = 502;
         throw error;
       }
+      if (rows.length > 1) {
+        const error: any = new Error('Multiple saved layouts exist for this workspace. Reconcile them before changing a layout.');
+        error.status = 409;
+        throw error;
+      }
       const row = rows[0];
       if (!row) return null;
       // The scoped client already filters by business; this refuses an untagged or foreign row
       // rather than treating it as this person's layout.
-      if (row.tenant_id !== tenantId) {
+      if (row.tenant_id !== tenantId || row.user_id !== userId || row.workspace_key !== workspaceKey) {
         const error: any = new Error('The saved workspace layout is not in your business.');
         error.status = 409;
         throw error;
@@ -106,9 +113,9 @@ export default perBusiness(async function (req: Request) {
 
     async function readVersion(versionNumber: number) {
       const page = await read.WorkspacePreferenceVersion.filter(
-        { user_id: userId, workspace_key: workspaceKey, version_number: versionNumber },
+        { tenant_id: tenantId, user_id: userId, workspace_key: workspaceKey, version_number: versionNumber },
         '-version_number',
-        1,
+        2,
         0,
       );
       const rows = rowsOf(page);
@@ -117,14 +124,25 @@ export default perBusiness(async function (req: Request) {
         error.status = 502;
         throw error;
       }
+      if (rows.length > 1) {
+        const error: any = new Error('This version number has more than one snapshot. Reconcile history before restoring it.');
+        error.status = 409;
+        throw error;
+      }
       const row = rows[0];
-      return row && row.tenant_id === tenantId ? row : null;
+      return row && row.tenant_id === tenantId && row.user_id === userId && row.workspace_key === workspaceKey ? row : null;
     }
 
     async function writeLayout(layout: any, expectedVersion: unknown, note: string, restoredFrom: number | null) {
       const current = await currentPreference();
-      const currentVersion = current ? Number(current.version_number) || 0 : 0;
-      if (expectedVersion !== undefined && expectedVersion !== null && expectedVersion !== '') {
+      const currentVersion = current ? current.version_number : 0;
+      if (!Number.isSafeInteger(currentVersion) || currentVersion < 0 || currentVersion >= Number.MAX_SAFE_INTEGER) {
+        return fail('INVALID_STORED_VERSION', 'The saved layout version needs review before it can be changed.', 409, correlationId);
+      }
+      if (typeof expectedVersion !== 'number' || !Number.isSafeInteger(expectedVersion) || expectedVersion < 0) {
+        return fail('INVALID_EXPECTED_VERSION', 'Reload the layout and supply its whole-number version before saving.', 400, correlationId);
+      }
+      {
         const expected = Number(expectedVersion);
         if (!Number.isFinite(expected) || expected < 0) {
           return fail('INVALID_EXPECTED_VERSION', 'The expected version must be a whole number.', 400, correlationId);
@@ -163,10 +181,10 @@ export default perBusiness(async function (req: Request) {
           restored_from_version: restoredFrom ?? undefined,
         });
       } catch {
-        return fail('SAVE_FAILED', 'The version snapshot could not be recorded, so nothing was changed.', 503, correlationId);
+        return fail('SAVE_FAILED', 'The snapshot outcome could not be confirmed. Reload history before retrying; the current layout was not updated by this request.', 503, correlationId);
       }
       if (!snapshot?.id) {
-        return fail('SAVE_FAILED', 'The version snapshot was not stored, so nothing was changed.', 503, correlationId);
+        return fail('SAVE_FAILED', 'The snapshot response was incomplete. Reload history before retrying; the current layout was not updated by this request.', 503, correlationId);
       }
 
       let savedPreferenceId = current?.id || null;
@@ -202,6 +220,7 @@ export default perBusiness(async function (req: Request) {
             note,
           });
           savedPreferenceId = created?.id || null;
+          if (!savedPreferenceId) throw new Error('The saved layout response had no record ID.');
           if (savedPreferenceId && snapshot) {
             // Point the snapshot at the row it now belongs to. A failure here is not fatal: the
             // snapshot is still the person's own version and the history read is keyed on user + workspace.
@@ -209,11 +228,10 @@ export default perBusiness(async function (req: Request) {
           }
         }
       } catch {
-        // Compensation, not a transaction: drop the orphan snapshot so a retry starts clean.
-        try { await write.WorkspacePreferenceVersion.delete(snapshot.id); } catch { /* disclosed below */ }
+        // A failed transport can follow a committed write. Retain its snapshot for reconciliation.
         return fail(
-          'SAVE_FAILED',
-          'The layout was not saved. The snapshot was rolled back; retrying is safe. If the snapshot could not be rolled back, the history dialog will show an extra version.',
+          'SAVE_OUTCOME_UNKNOWN',
+          'The save outcome could not be confirmed. Reload the layout and history before trying again; the attempted snapshot was retained.',
           503,
           correlationId,
         );
@@ -277,21 +295,21 @@ export default perBusiness(async function (req: Request) {
     }
 
     if (action === 'restore') {
-      const target = Number(body.version_number);
-      if (!Number.isFinite(target) || target < 1) {
+      const target = restoreVersionNumber(body.version_number);
+      if (target === null) {
         return fail('INVALID_VERSION', 'Choose a saved version to restore.', 400, correlationId);
       }
-      const version = await readVersion(Math.floor(target));
+      const version = await readVersion(target);
       if (!version) return fail('VERSION_NOT_FOUND', 'That saved version is not available to this account.', 404, correlationId);
-      const layout = parseStoredLayout(version.layout_json);
+      const layout = parseStoredSnapshot(version);
       if (!layout) {
-        return fail('VERSION_UNREADABLE', 'That saved version cannot be read, so it was not restored.', 409, correlationId);
+        return fail('VERSION_UNREADABLE', 'That snapshot is unreadable or its stored hash does not match. It was not restored.', 409, correlationId);
       }
       return await writeLayout(
         layout,
         body.expected_version,
-        `Restored from version ${Math.floor(target)}`,
-        Math.floor(target),
+        `Restored from version ${target}`,
+        target,
       );
     }
 
@@ -300,21 +318,22 @@ export default perBusiness(async function (req: Request) {
     }
 
     if (action === 'history') {
-      const pageIndex = Math.max(0, Math.min(50, Number(body.page) || 0));
+      const pageIndex = historyPageIndex(body.page);
+      if (pageIndex === null) return fail('INVALID_PAGE', 'Choose a whole-number history page from 0 to 100000.', 400, correlationId);
       const page = await read.WorkspacePreferenceVersion.filter(
-        { user_id: userId, workspace_key: workspaceKey },
+        { tenant_id: tenantId, user_id: userId, workspace_key: workspaceKey },
         '-version_number',
         HISTORY_PAGE_SIZE + 1,
         pageIndex * HISTORY_PAGE_SIZE,
       );
       const rows = rowsOf(page);
       if (rows === null) return fail('HISTORY_UNAVAILABLE', 'Saved layout versions could not be read.', 502, correlationId);
-      const foreign = rows.some((row) => row.tenant_id !== tenantId);
+      const foreign = rows.some((row) => row.tenant_id !== tenantId || row.user_id !== userId || row.workspace_key !== workspaceKey);
       if (foreign) return fail('HISTORY_UNAVAILABLE', 'Saved layout versions are not all in your business.', 409, correlationId);
 
       let totalRecords = 0;
       try {
-        totalRecords = await read.WorkspacePreferenceVersion.count({ user_id: userId, workspace_key: workspaceKey });
+        totalRecords = await read.WorkspacePreferenceVersion.count({ tenant_id: tenantId, user_id: userId, workspace_key: workspaceKey });
       } catch {
         totalRecords = -1;
       }
@@ -322,7 +341,7 @@ export default perBusiness(async function (req: Request) {
       return ok({
         workspace_key: workspaceKey,
         items: rows.slice(0, HISTORY_PAGE_SIZE).map((row) => {
-          const layout = parseStoredLayout(row.layout_json);
+          const layout = parseStoredSnapshot(row);
           return {
             id: row.id,
             version: Number(row.version_number) || 0,
@@ -335,6 +354,7 @@ export default perBusiness(async function (req: Request) {
           };
         }),
         page: pageIndex + 1,
+        hasMore: rows.length > HISTORY_PAGE_SIZE,
         pageSize: HISTORY_PAGE_SIZE,
         totalRecords: Number.isFinite(totalRecords) && totalRecords >= 0 ? totalRecords : null,
         totalPages: totalRecords > 0 ? Math.ceil(totalRecords / HISTORY_PAGE_SIZE) : null,
@@ -347,4 +367,6 @@ export default perBusiness(async function (req: Request) {
     const code = status === 502 ? 'LAYOUT_UNAVAILABLE' : status === 409 ? 'LAYOUT_CONFLICT' : 'WORKSPACE_LAYOUT_FAILED';
     return fail(code, String(error?.message || 'The workspace layout request failed.'), status >= 400 ? status : 500, correlationId);
   }
-});
+}
+
+export default perBusiness((req: Request) => handleWorkspacePreferences(createScopedClientFromRequest(req), req));
