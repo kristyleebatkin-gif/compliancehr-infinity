@@ -26,6 +26,7 @@ export async function assessServiceEvidence(shifts, notes, events, tenantId) {
     if (!tenantId || shift.tenant_id !== tenantId) return { ...row, state: 'invalid', label: 'Business scope mismatch' };
     const link = active.find(event => event.shift_id === shift.id);
     if (!link) return row;
+    if (!clean(link.actor_id) || !clean(link.participant_id) || !clean(link.worker_id) || !clean(link.reason) || !clean(link.recorded_at)) return { ...row, state: 'invalid', label: 'Association provenance requires review' };
     const sameNote = active.filter(event => event.note_entity === link.note_entity && event.note_id === link.note_id);
     if (link.conflict || sameNote.length !== 1) return { ...row, state: 'conflict', label: 'Conflicting associations need review' };
     const note = notes.find(note => note.note_entity === link.note_entity && note.id === link.note_id && note.tenant_id === tenantId);
@@ -70,7 +71,7 @@ export async function serviceEvidenceCommand(base44, user, body, now = new Date(
   if (body.reviewed !== true || !clean(body.reason) || body.reason.length > 1000 || !/^[a-zA-Z0-9_-]{12,100}$/.test(body.command_key || '')) throw Object.assign(new Error('Review the note, enter an association reason and provide a command reference.'), { status: 400 });
   const prior = events.find(event => event.command_key === body.command_key);
   if (prior) {
-    if (prior.shift_id !== shift.id || prior.action !== (action === 'link' ? 'Link' : 'Unlink') || action === 'link' && (prior.note_id !== body.note_id || prior.note_entity !== body.note_entity)) throw Object.assign(new Error('This command reference was already used for different work.'), { status: 409 });
+    if (prior.actor_id !== user.id || prior.reason !== body.reason.trim() || prior.shift_id !== shift.id || prior.action !== (action === 'link' ? 'Link' : 'Unlink') || action === 'link' && (prior.note_id !== body.note_id || prior.note_entity !== body.note_entity)) throw Object.assign(new Error('This command reference was already used for different work.'), { status: 409 });
     return { ok: true, deduplicated: true, current };
   }
   let note, participant, worker;
