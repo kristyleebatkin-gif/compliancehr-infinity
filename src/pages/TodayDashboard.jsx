@@ -173,7 +173,7 @@ function TodayWorkspace({ onSecurityPin }) {
               <div className="grid gap-3.5 md:grid-cols-2 xl:grid-cols-3 min-[1640px]:grid-cols-4">
                 {visibleKeys.emails && (data.errors?.emails ? <SectionUnavailable label={ERROR_LABELS.emails} /> : <EmailsPanel emails={data.emails} />)}
                 {visibleKeys.shifts && visibleKeys.notesOutstanding && (data.errors?.shifts || data.errors?.notes ? <SectionUnavailable label="roster and shift-note data" /> : <RosterTodayPanel shifts={data.shifts} notes={data.notes} />)}
-                {visibleKeys.invoices && (data.errors?.invoices ? <SectionUnavailable label={ERROR_LABELS.invoices} /> : <InvoicesPanel invoices={data.invoices} onRefresh={reload} />)}
+                {visibleKeys.invoices && (data.errors?.invoices ? <SectionUnavailable label={ERROR_LABELS.invoices} /> : <InvoicesPanel invoices={data.invoices} totalDrafts={data.errors?.invoiceCount ? undefined : counts.invoices} onRefresh={reload} />)}
                 {visibleKeys.ndis && (data.errors?.ndis ? <SectionUnavailable label={ERROR_LABELS.ndis} /> : <NdisUpdatesPanel updates={data.ndis} />)}
                 {visibleKeys.compliance && (data.errors?.issues || data.errors?.incidents ? <SectionUnavailable label="compliance and incident data" /> : <ComplianceJobPanel issues={data.issues} incidents={data.incidents} />)}
                 {visibleKeys.todos && (data.errors?.todos ? <SectionUnavailable label={ERROR_LABELS.todos} /> : <TodosPanel todos={data.todos} />)}
