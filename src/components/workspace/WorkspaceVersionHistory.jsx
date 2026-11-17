@@ -44,14 +44,18 @@ export default function WorkspaceVersionHistory({ open, onOpenChange, workspace,
     setPage(0);
     setCompare({ a: '', b: '' });
     setMessage(null);
+    setBusy(false);
     if (open) load(0);
     else setResult({ status: 'idle', items: [], totalPages: null, hasMore: false, error: null });
     return () => { requestRef.current += 1; };
   }, [open, load]);
 
   const restore = async (versionNumber) => {
+    const requestId = requestRef.current;
+    const forScope = scope;
     setBusy(true);
     const response = await workspace.restore(versionNumber, workspace.version || 0);
+    if (!contextRef.current.open || contextRef.current.scope !== forScope || requestRef.current !== requestId) return;
     setBusy(false);
     if (response.ok) {
       setMessage({ tone: 'ok', text: `Version ${versionNumber} restored as version ${response.data?.version}.` });

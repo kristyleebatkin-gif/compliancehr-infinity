@@ -69,7 +69,7 @@ export default function WorkspaceLayoutBar({ workspaceKey, workspaceLabel, avail
             {workspace.status === 'loading' && 'Loading your saved layout…'}
             {workspace.status === 'error' && 'Your saved layout is unavailable'}
             {workspace.status === 'ready' && (workspace.stored
-              ? `Version ${workspace.version} · saved ${workspace.savedAt ? new Date(workspace.savedAt).toLocaleString() : 'earlier'}${workspace.savedBy ? ` by ${workspace.savedBy}` : ''}`
+              ? `Version ${workspace.version} · saved ${workspace.savedAt ? new Date(workspace.savedAt).toLocaleString('en-AU', { timeZone: 'Australia/Brisbane' }) : 'earlier'}${workspace.savedBy ? ` by ${workspace.savedBy}` : ''}`
               : 'No layout saved yet · showing the default layout')}
             {dirty ? ' · unsaved changes' : ''}
           </p>
@@ -88,13 +88,13 @@ export default function WorkspaceLayoutBar({ workspaceKey, workspaceLabel, avail
           <button type="button" onClick={onOpenContext} className={`${chip} border border-white/30 bg-white/10`}>
             <PanelRight className="h-4 w-4" /> Context
           </button>
-          <button type="button" onClick={reset} disabled={saving} className={`${chip} border border-[#FF2E9A]/60 bg-[#FF2E9A]/20 disabled:opacity-50`}>
+          <button type="button" onClick={reset} disabled={saving || workspace.status !== 'ready'} className={`${chip} border border-[#FF2E9A]/60 bg-[#FF2E9A]/20 disabled:opacity-50`}>
             <RotateCcw className="h-4 w-4" /> Reset
           </button>
           <button
             type="button"
             onClick={save}
-            disabled={saving || !dirty}
+            disabled={saving || workspace.status !== 'ready' || !dirty}
             className={`${chip} text-[#0A2B6D] disabled:opacity-50`}
             style={{ background: 'linear-gradient(115deg, #00C6FF 0%, #A100FF 100%)' }}
           >

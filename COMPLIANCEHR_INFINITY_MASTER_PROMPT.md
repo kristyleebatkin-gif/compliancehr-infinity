@@ -1,8 +1,14 @@
 # Controlling master specification — 17 November 2026
 
-## Latest authority: Ultimate Everything Prompt — Master Enterprise Specification v1.0
+## Latest authority: Ultimate Master Build Prompt v2.0
 
-The owner's full current specification is preserved in [ULTIMATE_EVERYTHING_SPECIFICATION_V1.md](ULTIMATE_EVERYTHING_SPECIFICATION_V1.md). It is the single source of truth for product requirements and supersedes conflicting earlier product/visual specifications below. Earlier detailed implementation plans remain supporting backlog where compatible; preserve existing capabilities and evidence. Installing this specification is documentation work, not feature delivery or release acceptance.
+The owner supplied ULTIMATE_MASTER_BUILD_SPECIFICATION_V2.md on 17 November 2026 as the latest governing specification and authorised completion of the outstanding build. It supersedes v1.0 where requirements differ. Its 22 operating systems, phases 0–12 and ordered 44 database migrations are requirements, not deployed capabilities. BaseEntity now explicitly includes tenantId. Complaint, Feedback, Analytics, Integration and Security OS must be reconciled with existing modules rather than duplicated. The earlier Customer/Executive and other compatible capabilities remain supporting scope.
+
+Phases 0–12 are the new enterprise roadmap namespace; they do not renumber or mark complete the existing Phase 11 Workflow Studio release/stories. Preserve both namespaces and their evidence. Use the engineering/acceptance boundaries below with the new specification; PostgreSQL migration numbers are target planning order, not executed Base44 migrations.
+
+## Previous authority: Ultimate Everything Prompt — Master Enterprise Specification v1.0
+
+The owner's full current specification is preserved in [ULTIMATE_EVERYTHING_SPECIFICATION_V1.md](ULTIMATE_EVERYTHING_SPECIFICATION_V1.md). It is retained as previous scope; the v2.0 specification above now controls conflicting requirements. Earlier detailed implementation plans remain supporting backlog where compatible; preserve existing capabilities and evidence. Installing this specification is documentation work, not feature delivery or release acceptance.
 
 ### Application and migration boundary
 

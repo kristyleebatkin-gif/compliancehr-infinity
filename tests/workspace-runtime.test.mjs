@@ -5,11 +5,12 @@ import { createRequire } from 'node:module';
 import ts from 'typescript';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { act } from 'react-dom/test-utils';
+import { act as legacyAct } from 'react-dom/test-utils';
 import { JSDOM } from 'jsdom';
 import * as contract from '../src/lib/workspaceLayout.js';
 
 const require = createRequire(import.meta.url);
+const act = React.act || legacyAct;
 function sourceModule(path, mocks) {
   const text = readFileSync(new URL('../' + path, import.meta.url), 'utf8');
   const compiled = ts.transpileModule(text, {
