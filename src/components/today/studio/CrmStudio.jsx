@@ -28,6 +28,8 @@ export default function CrmStudio() {
   const [copied, setCopied] = useState(false);
   const noteIdsRef = useRef({});
   const saveTimerRef = useRef(null);
+  const pendingNoteRef = useRef(null);
+  const persistNoteRef = useRef(null);
 
   useEffect(() => {
     base44.entities.Lead.list({ sort: '-updated_date', limit: 200 })
@@ -62,6 +64,8 @@ export default function CrmStudio() {
   useEffect(
     () => () => {
       if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+      const pending = pendingNoteRef.current;
+      if (pending) persistNoteRef.current?.(...pending);
     },
     []
   );
@@ -88,11 +92,17 @@ export default function CrmStudio() {
     }
   };
 
+  persistNoteRef.current = persistNote;
+
   const changeNote = (leadId, leadName, value) => {
+    const previous = pendingNoteRef.current;
+    if (previous && previous[0] !== leadId) persistNote(...previous);
+    pendingNoteRef.current = [leadId, leadName, value];
     setNotes((prev) => ({ ...prev, [leadId]: value }));
     if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
     saveTimerRef.current = setTimeout(() => {
       saveTimerRef.current = null;
+      pendingNoteRef.current = null;
       persistNote(leadId, leadName, value);
     }, 700);
   };
