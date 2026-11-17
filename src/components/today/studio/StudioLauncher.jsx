@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Sparkles, Palette, Target, FileText, Mic, ArrowUpRight } from 'lucide-react';
+import { useRole } from '@/lib/useRole';
 import { Panel } from '@/components/today/todayUi';
 import StudioShell from '@/components/today/studio/StudioShell';
 import AssistantStudio from '@/components/today/studio/AssistantStudio';
@@ -51,7 +52,15 @@ const TOOLS = [
   }
 ];
 
-export default function StudioLauncher({
+export default function StudioLauncher(props) {
+  const { user } = useRole();
+  const tenant = user?.tenant_id || user?.data?.tenant_id;
+  if (!user?.id || !tenant || user.account_status !== 'Active' || user.access_approved !== true) return null;
+  const identityKey = [user.id, tenant, user.role, user.account_status, user.access_approved].join(':');
+  return <ScopedStudioLauncher key={identityKey} {...props} />;
+}
+
+function ScopedStudioLauncher({
   context,
   title = 'Sherelle’s workbench',
   subtitle = 'Five studios in one — built for the iPad and the MacBook'
