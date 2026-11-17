@@ -78,7 +78,7 @@ export function canonicalLayout(layout: WorkspaceLayout) {
   return JSON.stringify({
     schema: LAYOUT_SCHEMA_VERSION,
     viewState: layout.viewState,
-    sections: layout.sections.map((section) => [section.key, section.visible]),
+    sections: layout.sections.map((section) => ({ key: section.key, visible: section.visible })),
   });
 }
 

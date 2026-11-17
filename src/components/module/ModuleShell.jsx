@@ -6,7 +6,8 @@ import { moduleKeyColour } from '@/components/dashboard/dashboardModuleColours';
 import WorkspaceLayoutBar from '@/components/workspace/WorkspaceLayoutBar';
 import WorkspaceContextPanel from '@/components/workspace/WorkspaceContextPanel';
 import useWorkspaceLayout from '@/components/workspace/useWorkspaceLayout';
-import { orderedSections } from '@/lib/workspaceLayout';
+import { orderedSections, layoutScopeKey } from '@/lib/workspaceLayout';
+import { useRole } from '@/lib/useRole';
 import '@/components/module/moduleShell.css';
 
 /**
@@ -17,7 +18,7 @@ import '@/components/module/moduleShell.css';
  *
  * @param {any} props
  */
-export default function ModuleShell({
+function ScopedModuleShell({
   embedded = false,
   header = null,
   title = '',
@@ -195,4 +196,9 @@ export default function ModuleShell({
       {supporting}
     </div>
   );
+}
+// Remount layout, pending requests and unsaved drafts when identity or workspace changes.
+export default function ModuleShell(props) {
+  const { user } = useRole();
+  return <ScopedModuleShell key={`${layoutScopeKey(user) || 'anonymous'}:${props?.workspaceKey || ''}`} {...props} />;
 }
