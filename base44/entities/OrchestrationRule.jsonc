@@ -1,0 +1,259 @@
+{
+  "name": "OrchestrationRule",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Stamped by the automation fabric service; never from the browser."
+    },
+    "rule_key": {
+      "type": "string",
+      "title": "Rule Key"
+    },
+    "name": {
+      "type": "string",
+      "title": "Rule Name"
+    },
+    "description": {
+      "type": "string",
+      "title": "Why This Rule Exists"
+    },
+    "event_type_key": {
+      "type": "string",
+      "title": "Event Key"
+    },
+    "conditions_json": {
+      "type": "string",
+      "title": "Conditions (JSON)",
+      "description": "Ordered conditions on payload fields. Every condition must pass for the rule to match. No conditions means every event of this type matches."
+    },
+    "condition_count": {
+      "type": "number",
+      "title": "Conditions",
+      "default": 0
+    },
+    "action": {
+      "type": "string",
+      "title": "Action",
+      "enum": [
+        "Route to workflow",
+        "Route to flow",
+        "Record only",
+        "Suppress"
+      ],
+      "enumColors": [
+        "purple",
+        "blue",
+        "gray",
+        "yellow"
+      ],
+      "default": "Route to workflow"
+    },
+    "target_workflow_id": {
+      "type": "string",
+      "title": "Target Workflow ID"
+    },
+    "target_workflow_name": {
+      "type": "string",
+      "title": "Target Workflow"
+    },
+    "target_flow_id": {
+      "type": "string",
+      "title": "Target Flow ID"
+    },
+    "target_flow_name": {
+      "type": "string",
+      "title": "Target Flow"
+    },
+    "priority": {
+      "type": "number",
+      "title": "Priority",
+      "default": 100,
+      "description": "Lower numbers are evaluated first. The first matching active rule decides the route, so two rules can never both claim one event."
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Active",
+        "Disabled"
+      ],
+      "enumColors": [
+        "green",
+        "gray"
+      ],
+      "default": "Active"
+    },
+    "match_count": {
+      "type": "number",
+      "title": "Times Matched",
+      "default": 0
+    },
+    "last_matched_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Last Matched"
+    },
+    "effective_from": {
+      "type": "string",
+      "format": "date",
+      "title": "Effective From"
+    },
+    "created_by_name": {
+      "type": "string",
+      "title": "Created By"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "rule_key",
+    "name",
+    "event_type_key",
+    "action",
+    "priority",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$and": [
+            {
+              "$or": [
+                {
+                  "user_condition": {
+                    "role": "admin"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Provider Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Management"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Administration"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Quality & Improvement Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Auditor"
+                  }
+                }
+              ]
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            },
+            {
+              "user_condition": {
+                "account_status": "Active",
+                "access_approved": true
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

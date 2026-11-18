@@ -1,0 +1,285 @@
+{
+  "name": "AutomationFlow",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Stamped by the automation fabric service; never from the browser."
+    },
+    "flow_key": {
+      "type": "string",
+      "title": "Flow Key"
+    },
+    "name": {
+      "type": "string",
+      "title": "Flow Name"
+    },
+    "description": {
+      "type": "string",
+      "title": "What This Flow Does"
+    },
+    "trigger_event_key": {
+      "type": "string",
+      "title": "Triggering Event"
+    },
+    "trigger_event_name": {
+      "type": "string",
+      "title": "Trigger Event Name"
+    },
+    "steps_json": {
+      "type": "string",
+      "title": "Steps (JSON)",
+      "description": "Ordered steps. Only step kinds the fabric can genuinely perform are accepted; anything else is refused at validation."
+    },
+    "step_count": {
+      "type": "number",
+      "title": "Steps",
+      "default": 0
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Draft",
+        "Validated",
+        "Published",
+        "Paused",
+        "Archived"
+      ],
+      "enumColors": [
+        "gray",
+        "blue",
+        "green",
+        "yellow",
+        "gray"
+      ],
+      "default": "Draft"
+    },
+    "version": {
+      "type": "number",
+      "title": "Version",
+      "default": 1
+    },
+    "content_hash": {
+      "type": "string",
+      "title": "Current Steps Hash"
+    },
+    "validated_hash": {
+      "type": "string",
+      "title": "Validated Steps Hash",
+      "description": "Cleared on every edit, so a stale validation can never publish changed steps."
+    },
+    "validated_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Validated At"
+    },
+    "validated_by": {
+      "type": "string",
+      "title": "Validated By"
+    },
+    "validated_note": {
+      "type": "string",
+      "title": "Validation Note"
+    },
+    "published_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Published At"
+    },
+    "published_by": {
+      "type": "string",
+      "title": "Published By"
+    },
+    "publisher_independent": {
+      "type": "boolean",
+      "title": "Publisher Was Independent",
+      "default": false
+    },
+    "previous_version_id": {
+      "type": "string",
+      "title": "Previous Version Record"
+    },
+    "change_note": {
+      "type": "string",
+      "title": "What Changed In This Version"
+    },
+    "run_count": {
+      "type": "number",
+      "title": "Times Routed",
+      "default": 0
+    },
+    "last_run_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Last Routed"
+    },
+    "owner_role": {
+      "type": "string",
+      "title": "Process Owner"
+    },
+    "author": {
+      "type": "string",
+      "title": "Author"
+    },
+    "author_id": {
+      "type": "string",
+      "title": "Author (user id)"
+    },
+    "archived_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Archived At"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "flow_key",
+    "name",
+    "trigger_event_key",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$and": [
+            {
+              "$or": [
+                {
+                  "user_condition": {
+                    "role": "admin"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Provider Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Management"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Administration"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Quality & Improvement Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Auditor"
+                  }
+                }
+              ]
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            },
+            {
+              "user_condition": {
+                "account_status": "Active",
+                "access_approved": true
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

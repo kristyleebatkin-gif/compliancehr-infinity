@@ -238,6 +238,13 @@ export const BUSINESS_OWNED_ENTITIES = Object.freeze([
   'DigitalTwinModel',
   'DigitalTwinScenario',
   'SimulationRun',
+  'AutomationEventType',
+  'AutomationSubscription',
+  'AutomationFlow',
+  'OrchestrationRule',
+  'IntegrationConnector',
+  'IntegrationMessage',
+  'EventDeliveryAttempt',
 ]);
 
 export function tenantGroupOf(entityName) {

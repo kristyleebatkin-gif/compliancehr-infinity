@@ -5,7 +5,7 @@ import {
   ReceiptText, Wrench, MapPin, HeartHandshake, Building2, Newspaper, Landmark,
   UserCog, Handshake, BarChart3, Briefcase, ShoppingCart, KanbanSquare,
   ClipboardList, MessageSquare, Lightbulb, LifeBuoy, BookOpen, Bot, ClipboardCheck, Activity, TrendingUp,
-  Sun, Inbox, Layers, FileCheck2, Network, Stethoscope, Crown, GitBranch, Gavel,
+  Sun, Inbox, Layers, FileCheck2, Network, Stethoscope, Crown, GitBranch, Gavel, Workflow,
 } from 'lucide-react';
 
 // Single source of truth for every module in the app: the sidebar, bottom nav and
@@ -56,6 +56,7 @@ const CANONICAL_MODULES = [
   { key: 'v8000-command', label: 'V8000 Evidence Fabric', path: '/v8000', icon: Layers, group: '7. Compliance, Quality & Documents', blurb: 'The V8000 foundation: framework-to-outcome evidence fabric, readiness, trust, gap and review calculations from stored records, validation findings and the nine dashboard entry points.' },
   { key: 'compliance-operations', label: 'Compliance Operations OS', path: '/compliance-operations', icon: ShieldCheck, group: '7. Compliance, Quality & Documents', blurb: 'Autonomous assessments, gap analysis, control testing and remediation plans built from the standards, controls and evidence you hold.' },
   { key: 'digital-twin', label: 'Digital Twin OS', path: '/digital-twin', icon: Boxes, group: '7. Compliance, Quality & Documents', blurb: 'Versioned twin models, approved scenarios and simulation runs that estimate what a change would do, with every figure labelled an estimate and traced to the records behind it.' },
+  { key: 'automation-fabric', label: 'Automation Fabric', path: '/automation-fabric', icon: Workflow, group: '7. Compliance, Quality & Documents', blurb: 'Event catalogue, subscriptions, orchestration rules and connectors that route validated events into existing published workflows, with attempts, retries, dead letters and a redacted delivery history.' },
   { key: 'clinical-os', label: 'Clinical & Allied Health OS', path: '/clinical-os', icon: Stethoscope, group: '3. Service Delivery', blurb: 'Care plans, review dates, consent, restrictive practice and allied health referrals in one clinical register.' },
   { key: 'board-ceo', label: 'Board & CEO Copilots', path: '/board-ceo', icon: Crown, group: '9. Governance & Operations', blurb: 'Board and CEO assurance briefings from the recorded position, with the resolutions that record what was decided.' },
   { key: 'approval-engine', label: 'Approval Chains', path: '/approval-engine', icon: GitBranch, group: '1. My Workspace', blurb: 'Up to five signed levels per decision: expenditure, policy, risk acceptance, clinical and access approvals.' },
@@ -155,6 +156,7 @@ export const NAV_GROUPS = [
       "v8000-command",
       "compliance-operations",
       "digital-twin",
+      "automation-fabric",
       "quality",
       "checklists",
       "review-due",

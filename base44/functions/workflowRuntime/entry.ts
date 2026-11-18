@@ -13,6 +13,8 @@
 // the matching event cannot be recorded. Documented in PHASE11_ACCEPTANCE_LOG.md.
 import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 import { studioTenant, studioRows } from '../../shared/workflowStudioAccess.ts';
+import { appendWorkflowEvent as appendEvent } from '../../shared/workflowEvents.ts';
+import { launchPublishedWorkflow } from '../../shared/workflowLauncher.ts';
 import { assertWorkflowAction, readWorkflowRecords } from '../../shared/workflowSafety.ts';
 import { publicationAuthority, approvalIndependence, definitionContributors } from '../../shared/workflowGovernance.ts';
 import {
@@ -95,12 +97,8 @@ function graphOf(definition: any): StudioNode[] {
   return normaliseNodes(parseJson(definition?.nodes_json));
 }
 
-/** Appends one append-only fact. Sequence is per run and derived from the recorded events. */
-async function appendEvent(read: any, write: any, payload: Record<string, unknown>) {
-  const counted = await read.WorkflowEvent.count({ instance_id: payload.instance_id });
-  const total = typeof counted === 'number' ? counted : Number((counted as any)?.count) || 0;
-  return write.WorkflowEvent.create({ ...payload, sequence: total + 1, occurred_at: new Date().toISOString() });
-}
+/* appendEvent (one append-only fact per run transition) lives in shared/workflowEvents.ts,
+ * so the automation fabric records workflow facts exactly the same way this runtime does. */
 
 /** Writes the run, then its event. If the event cannot be recorded the run is put back. */
 async function commitTransition(read: any, write: any, instance: any, changes: Record<string, unknown>, event: Record<string, unknown>, previous: Record<string, unknown>) {
@@ -363,92 +361,20 @@ export default perBusiness(async function (req: Request) {
     }
 
     if (action === 'start') {
-      const definition = await readDefinition(read, body.definition_id);
-      if (definition.state !== 'Published') fail('Only a published workflow can start. Publish it first.', 409);
-
-      const versions = await pageOf(read.WorkflowVersion, { definition_id: definition.id }, '-version', 1);
-      const snapshot = versions[0];
-      if (!snapshot) fail('The published version snapshot is missing, so this workflow cannot start.', 409);
-      if (snapshot.content_hash !== definition.content_hash) {
-        fail('The published snapshot no longer matches the workflow. Publish it again before starting a run.', 409);
-      }
-
-      const nodes = normaliseNodes(parseJson(snapshot.nodes_json));
-      if (await contentHash(nodes) !== snapshot.content_hash) fail('The published snapshot failed its content integrity check.', 409);
-      const report = validateGraph(nodes);
-      if (!report.valid) fail('The published graph does not pass execution checks. Publish a corrected version.', 409);
-
-      const commandKey = text(body.command_key, 120);
-      if (commandKey) {
-        const duplicate = await pageOf(read.WorkflowInstance, { definition_id: definition.id, start_key: commandKey }, '-created_date', 1);
-        if (duplicate[0]) return json({ instance: duplicate[0], deduplicated: true });
-      }
-
-      const startNode = nodes.find((node) => node.type === 'START');
-      const first = nodes.find((node) => node.id === nextNodeId(startNode, 'approve'));
-      if (!first) fail('The published graph has no first step after the start.', 409);
-
-      const now = new Date();
-      const at = now.toISOString();
-      const fallbackHours = Number(definition.sla_hours) || 72;
-      const closesImmediately = first.type === 'END';
-      const base = {
-        node_id: 'start', label: startNode?.label || 'Started', type: 'START', at, by: name, outcome: 'Started', note: '',
-      };
-
-      const instance = await write.WorkflowInstance.create({
-        definition_id: definition.id,
-        definition_code: definition.code,
-        definition_name: definition.name,
-        definition_version: snapshot.version,
-        version_id: snapshot.id,
-        content_hash: snapshot.content_hash,
-        start_key: commandKey,
-        workflow_type: definition.workflow_type,
-        domain: definition.domain,
-        state: closesImmediately ? 'Completed' : 'Running',
-        current_node_id: closesImmediately ? '' : first.id,
-        current_node_label: closesImmediately ? '' : first.label,
-        current_node_type: closesImmediately ? '' : first.type,
-        current_step: 1,
-        task_kind: closesImmediately ? '' : stepKind(first),
-        task_label: closesImmediately ? '' : first.label,
-        task_role: closesImmediately ? '' : first.role,
-        assigned_role: first.role || definition.owner_role || '',
-        context_label: text(body.context_label, 200),
-        priority: 'Medium',
-        sla_hours: Number(first.sla_hours) || fallbackHours,
-        due_at: closesImmediately ? '' : dueAtFor(first, now, fallbackHours),
-        sla_state: closesImmediately ? 'Closed' : 'On track',
-        evidence_required: closesImmediately ? false : requiresEvidence(first),
-        evidence_count: 0,
-        approval_count: 0,
-        started_at: at,
-        started_by: name,
-        completed_at: closesImmediately ? at : '',
-        last_action_by: name,
-        last_action_at: at,
-        last_action_note: 'Run started',
-        steps_json: JSON.stringify([
-          base,
-          { node_id: first.id, label: first.label, type: first.type, at, by: name, outcome: closesImmediately ? 'Workflow completed' : 'Opened', note: '' },
-        ]),
+      // One launcher for every run in the app: the fabric routes events through the same call.
+      const launched = await launchPublishedWorkflow({
+        read,
+        write,
+        definitionId: text(body.definition_id, 80),
+        commandKey: text(body.command_key, 120),
+        contextLabel: text(body.context_label, 200),
+        actorName: name,
+        actorId: String(user.id || ''),
+        actorRole: text(user.role, 60),
       });
-
-      await appendEvent(read, write, {
-        instance_id: instance.id, definition_id: definition.id, definition_version: snapshot.version,
-        event_type: 'Started', node_id: 'start', node_label: base.label, node_type: 'START',
-        outcome: 'Started', actor_id: user.id, actor_name: name, actor_role: text(user.role, 60),
-        authority: 'System', command_key: commandKey,
-      });
-      if (!closesImmediately) {
-        await appendEvent(read, write, {
-          instance_id: instance.id, definition_id: definition.id, definition_version: snapshot.version,
-          event_type: 'StepOpened', node_id: first.id, node_label: first.label, node_type: first.type,
-          outcome: 'Opened', actor_id: user.id, actor_name: name, actor_role: text(user.role, 60), authority: 'System',
-        });
-      }
-      return json({ instance }, 201);
+      return launched.deduplicated
+        ? json({ instance: launched.instance, deduplicated: true })
+        : json({ instance: launched.instance }, 201);
     }
 
     if (action === 'act') {

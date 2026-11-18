@@ -1,0 +1,330 @@
+{
+  "name": "IntegrationMessage",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Stamped by the automation fabric service; never from the browser."
+    },
+    "message_ref": {
+      "type": "string",
+      "title": "Message Reference",
+      "description": "Trace reference printed on screen, in the audit trail and in the routing history."
+    },
+    "trace_id": {
+      "type": "string",
+      "title": "Trace ID",
+      "description": "One id followed from the event to the workflow run it started."
+    },
+    "event_key": {
+      "type": "string",
+      "title": "Event Key"
+    },
+    "event_type_name": {
+      "type": "string",
+      "title": "Event"
+    },
+    "event_schema_version": {
+      "type": "number",
+      "title": "Event Schema Version"
+    },
+    "direction": {
+      "type": "string",
+      "title": "Direction",
+      "enum": [
+        "Inbound",
+        "Outbound"
+      ],
+      "enumColors": [
+        "blue",
+        "purple"
+      ],
+      "default": "Inbound"
+    },
+    "source_ref": {
+      "type": "string",
+      "title": "Source Record",
+      "description": "What produced the event, in words or an id."
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Queued",
+        "Delivered",
+        "Retrying",
+        "Failed",
+        "Dead letter",
+        "Suppressed",
+        "Replayed"
+      ],
+      "enumColors": [
+        "gray",
+        "green",
+        "yellow",
+        "red",
+        "red",
+        "gray"
+      ],
+      "default": "Queued"
+    },
+    "payload_json": {
+      "type": "string",
+      "title": "Payload (JSON, redacted)",
+      "description": "The event as stored, with secret-looking values replaced before the record is written."
+    },
+    "payload_hash": {
+      "type": "string",
+      "title": "Payload Hash",
+      "description": "Hash of the validated payload, so a replay can be proven identical without re-reading secrets."
+    },
+    "redacted_fields_json": {
+      "type": "string",
+      "title": "Redacted Field Names (JSON)"
+    },
+    "redacted_count": {
+      "type": "number",
+      "title": "Redacted Fields",
+      "default": 0
+    },
+    "attempts": {
+      "type": "number",
+      "title": "Delivery Attempts",
+      "default": 0
+    },
+    "max_attempts": {
+      "type": "number",
+      "title": "Maximum Attempts",
+      "default": 3
+    },
+    "next_attempt_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Next Attempt"
+    },
+    "last_error": {
+      "type": "string",
+      "title": "Last Failure Reason",
+      "description": "Why the last attempt failed, with anything secret-looking removed."
+    },
+    "delivered_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Delivered At"
+    },
+    "rule_id": {
+      "type": "string",
+      "title": "Rule ID"
+    },
+    "rule_name": {
+      "type": "string",
+      "title": "Rule Matched"
+    },
+    "subscription_id": {
+      "type": "string",
+      "title": "Subscription ID"
+    },
+    "subscription_name": {
+      "type": "string",
+      "title": "Subscription"
+    },
+    "connector_id": {
+      "type": "string",
+      "title": "Connector ID"
+    },
+    "connector_name": {
+      "type": "string",
+      "title": "Connector"
+    },
+    "workflow_definition_id": {
+      "type": "string",
+      "title": "Workflow Definition ID"
+    },
+    "workflow_definition_name": {
+      "type": "string",
+      "title": "Workflow"
+    },
+    "workflow_definition_version": {
+      "type": "number",
+      "title": "Workflow Version Routed",
+      "description": "The exact published version this event started, pinned at routing time."
+    },
+    "workflow_instance_id": {
+      "type": "string",
+      "title": "Workflow Run ID"
+    },
+    "idempotency_key": {
+      "type": "string",
+      "title": "Idempotency Key",
+      "description": "One key per business, event and source. The same event published twice is delivered once."
+    },
+    "replay_of_id": {
+      "type": "string",
+      "title": "Replay Of"
+    },
+    "replay_count": {
+      "type": "number",
+      "title": "Replays",
+      "default": 0
+    },
+    "published_by": {
+      "type": "string",
+      "title": "Published By"
+    },
+    "published_by_id": {
+      "type": "string",
+      "title": "Published By (user id)"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "message_ref",
+    "trace_id",
+    "event_key",
+    "status",
+    "direction"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$and": [
+            {
+              "$or": [
+                {
+                  "user_condition": {
+                    "role": "admin"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Provider Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Management"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Administration"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Quality & Improvement Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Auditor"
+                  }
+                }
+              ]
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            },
+            {
+              "user_condition": {
+                "account_status": "Active",
+                "access_approved": true
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
