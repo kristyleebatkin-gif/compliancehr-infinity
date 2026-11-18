@@ -22,7 +22,7 @@ If the reference and the records ever disagree, the records win.
 | 6 | Next.js frontend | Not built. The equivalent is `src/pages/DecisionIntelligence.jsx` + `src/components/decisions/*` | Replaced by React app |
 | 7 | Knowledge Graph Architecture | Live: `GraphEntity`, `GraphRelationship`, `GraphTaxonomy`, `GraphOntology`, `knowledgeGraphRegistry`, `base44/shared/graphRegistry.ts`, registry tab at `/knowledge-graph`. References §8 | Delivered for C7 |
 | 8 | Digital Twin Architecture | Live: `DigitalTwinModel`, `DigitalTwinScenario`, `SimulationRun`, `digitalTwin`, `base44/shared/digitalTwin.ts`, module at `/digital-twin`. References §8 | Delivered for C7 |
-| 9 | Event Fabric Architecture | Existing workflow triggers. Catalogue and message log are C8 gaps | Planned |
+| 9 | Event Fabric Architecture | Live: `AutomationEventType`, `AutomationSubscription`, `AutomationFlow`, `OrchestrationRule`, `IntegrationConnector`, `IntegrationMessage`, `EventDeliveryAttempt`, `automationFabric`, `base44/shared/automationFabric.ts`, module at `/automation-fabric`. References §9 | Delivered for C8 |
 | 10 | AI Workforce Architecture | Existing `AiModel`, `AiAgent`, `AiPrompt`, `AiInteraction`. Tool grants are C9 gaps | Partial |
 | 11 | Enterprise Strategy Architecture | Not built; C10 | Planned |
 | 12 | Analytics Warehouse Schema | Existing snapshot records only (`ExecutiveScoreSnapshot`, `ProgressSnapshot`, `ModuleDailyStatus`) | Partial |
@@ -1266,3 +1266,16 @@ input scores; confidence is the share of model weight that had records; a run wi
 records is refused rather than scored.
 
 Named checkpoint for this step: **Capability Track C7 — Knowledge Graph & Digital Twin OS**.
+
+---
+
+## 9. C8 — Enterprise Automation Fabric
+
+The C8 references (seven-table DDL, Prisma models, the `automationFabric` OpenAPI contract) live in
+`src/PHASE5_10_C8_REFERENCE.md`, because this file already covers C5–C7 and a fourth register block
+would push it past a readable length. What runs today is recorded there in §9 and in
+`PHASE5_10_INVENTORY.md`. Two boundaries hold for C8 exactly as they did for C5–C7: the fabric owns
+routing but not execution (a delivery starts an existing published Workflow Studio version through
+`base44/shared/workflowLauncher.ts`), and a connector stores the name of an app secret, never a value.
+
+Named checkpoint for this step: **Capability Track C8 — Enterprise Automation Fabric**.

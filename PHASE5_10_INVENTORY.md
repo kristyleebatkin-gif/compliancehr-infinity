@@ -1,6 +1,6 @@
 # Phases 5–10 Capability Track — Read-Only Inventory & Conflict Register
 
-Status: **Phase 0 complete, conflicts resolved, Steps C5, C6 and C7 built.**
+Status: **Phase 0 complete, conflicts resolved, Steps C5, C6, C7 and C8 built.**
 Date: 18 November 2026.
 
 Owner decisions recorded before any build:
@@ -40,6 +40,25 @@ model, validated it, approved it, created a scenario, ran a simulation, submitte
 scenario and opened a model revision, then removed every test record and its audit entries. The
 graph index itself was kept: it indexes 109 real register records into 30 validated relationships
 with 0 candidates rejected.
+
+**Step C8 delivered (Enterprise Automation Fabric).** Seven tenant-scoped records:
+`AutomationEventType`, `AutomationSubscription`, `AutomationFlow`, `OrchestrationRule`,
+`IntegrationConnector`, `IntegrationMessage`, `EventDeliveryAttempt`. One server-authorised function
+(`automationFabric`) with 19 actions, the fabric rules in `base44/shared/automationFabric.ts`, the
+append-only fact helper in `base44/shared/workflowEvents.ts`, and one module at
+`/automation-fabric` (six tabs: deliveries, subscriptions, flows, rules, event catalogue,
+connectors). Conflict C4 was honoured: the fabric does **not** run a second workflow engine. A
+delivery starts an *existing published* Workflow Studio version through
+`base44/shared/workflowLauncher.ts`, which was extracted so the Studio, the connected-journey gate
+and the fabric all start a run by the same path. Flow steps are limited to the three kinds the
+fabric can genuinely perform (`Route to workflow`, `Record only`, `Stop`); a wait, AI call or HTTP
+request is refused at save and at validation rather than shown as a green flow that does nothing. A
+connector stores the *name* of an app secret (`secret://…`); a pasted key or a token-bearing URL is
+refused, and a failure reason is sanitised before storage. Every payload is validated against its
+declared contract, redacted (with the withheld field names recorded), de-duplicated by a
+tenant-scoped idempotency key, then routed to exactly one rule or subscription. Tests in
+`tests/deno/capabilityC8.test.ts` cover the routing rule, tenancy, permissions, redaction,
+idempotency, backoff, rate limiting, flow-step refusal and connector credential refusal.
 
 This document records what exists, what is genuinely missing, and which conflicts must be resolved
 before any schema is written. Nothing here is a delivery claim.
@@ -119,12 +138,12 @@ A link table exists and is used by five modules. The graph index and the digital
 ### Phase 8 — Enterprise Automation Fabric
 | Requested table | Status | Existing equivalent |
 | --- | --- | --- |
-| `event_registry` | Missing | `WorkflowEvent` is a per-run step log, not an event catalogue |
-| `event_subscriptions` | Partial | Triggers declared inside workflow `.jsonc` files |
-| `automation_flows` | Present (different shape) | `WorkflowDefinition` — 33 process types, versioned, publish-gated |
-| `orchestration_rules` | Partial | `shared/workflowEngine.ts`, `connectedJourneyGate` |
-| `integration_connectors` | Partial | Connector configs (`googlecalendar`, `gmail`) plus `integrationStatus`; not a register |
-| `integration_messages` | Missing | — |
+| `event_registry` | Present (C8) | `AutomationEventType` — versioned payload contract, sensitivity and retention per event; `WorkflowEvent` stays the per-run step log |
+| `event_subscriptions` | Present (C8) | `AutomationSubscription` — event to published workflow, published flow or record only, with filters, attempts and rate limit |
+| `automation_flows` | Present (C8) | `AutomationFlow` — ordered steps limited to the three kinds the fabric can perform, validated-then-published and immutable once live. `WorkflowDefinition` remains the process engine the steps route into |
+| `orchestration_rules` | Present (C8) | `OrchestrationRule` — priority, conditions and one action; the first match owns the event |
+| `integration_connectors` | Present (C8) | `IntegrationConnector` — secret *name* only, permitted events, rate limit; the existing connector configs stay as they are |
+| `integration_messages` | Present (C8) | `IntegrationMessage` + `EventDeliveryAttempt` — redacted payload, trace, route, attempts, backoff, dead letters and replays |
 
 ### Phase 9 — Autonomous AI Workforce
 | Requested table | Status | Existing equivalent |
@@ -230,18 +249,20 @@ real counts only → checkpoint, then stop for review.
 | C5 | Decision Intelligence ✅ | Decision register with evidence links, approvals, outcome target vs actual | C1, C5, C6 |
 | C6 | Autonomous Compliance Operations ✅ | Persisted assessment runs and control-test results, feeding existing findings | C5, C9 |
 | C7 | Graph & Digital Twin ✅ | Indexed, ontology-validated graph registry; versioned twin models, scenarios and simulation runs over the existing registers | C3 |
-| C8 | Automation Fabric | Event catalogue, subscriptions, integration messages beside Workflow Studio | C4, C7 |
+| C8 | Automation Fabric ✅ | Event catalogue, subscriptions, orchestration rules, flows, connectors and a redacted delivery history beside Workflow Studio | C4, C7 |
 | C9 | AI Workforce | Tool register and agent-to-tool grants over the existing AI registers | C2 |
 | C10 | Autonomous Enterprise | Portfolio → program → objective → benefit → capability → maturity chain | C6, C1 |
 
 ---
 
-## 5. Phase 0 baseline, and what C5–C7 changed since
+## 5. Phase 0 baseline, and what C5–C8 changed since
 
 Phase 0 itself changed no entity, function, workflow, route, permission, style or data record, and
-deployed nothing. Since then C5, C6 and C7 each added their own records, one server-authorised
+deployed nothing. Since then C5, C6, C7 and C8 each added their own records, one server-authorised
 function, one module and its audit writes, as recorded in §4 and in `MASTER_TODO.md`. No existing
-module, route, entity or role was removed or replaced by any of the three steps.
+module, route, entity or role was removed or replaced by any of the four steps. C8 did extract one
+shared helper (`base44/shared/workflowLauncher.ts`) so every run start goes through a single path;
+the behaviour of the Studio and the connected-journey gate is unchanged by that extraction.
 
 Named checkpoints, one per step: C5 Decision Intelligence, C6 Autonomous Compliance Operations,
-**C7 — Knowledge Graph & Digital Twin OS**.
+**C7 — Knowledge Graph & Digital Twin OS**, **C8 — Enterprise Automation Fabric**.

@@ -29,6 +29,7 @@ import KnowledgeGraphOS from '@/pages/KnowledgeGraphOS';
 import DecisionIntelligence from '@/pages/DecisionIntelligence';
 import AutonomousCompliance from '@/pages/AutonomousCompliance';
 import DigitalTwin from '@/pages/DigitalTwin';
+import AutomationFabric from '@/pages/AutomationFabric';
 import V8000CommandCentre from '@/pages/V8000CommandCentre';
 import ClinicalOS from '@/pages/ClinicalOS';
 import BoardCeo from '@/pages/BoardCeo';
@@ -181,6 +182,7 @@ const AuthenticatedApp = () => {
           <Route path="/decision-intelligence" element={<RoleGate navKey="decision-intelligence"><DecisionIntelligence /></RoleGate>} />
           <Route path="/compliance-operations" element={<RoleGate navKey="compliance-operations"><AutonomousCompliance /></RoleGate>} />
           <Route path="/digital-twin" element={<RoleGate navKey="digital-twin"><DigitalTwin /></RoleGate>} />
+          <Route path="/automation-fabric" element={<RoleGate navKey="automation-fabric"><AutomationFabric /></RoleGate>} />
           <Route path="/v8000" element={<RoleGate navKey="v8000-command"><V8000CommandCentre /></RoleGate>} />
           <Route path="/clinical-os" element={<RoleGate navKey="clinical-os"><ClinicalOS /></RoleGate>} />
           <Route path="/board-ceo" element={<RoleGate navKey="board-ceo"><BoardCeo /></RoleGate>} />
