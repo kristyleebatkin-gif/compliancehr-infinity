@@ -23,7 +23,7 @@ If the reference and the records ever disagree, the records win.
 | 7 | Knowledge Graph Architecture | Live: `GraphEntity`, `GraphRelationship`, `GraphTaxonomy`, `GraphOntology`, `knowledgeGraphRegistry`, `base44/shared/graphRegistry.ts`, registry tab at `/knowledge-graph`. References §8 | Delivered for C7 |
 | 8 | Digital Twin Architecture | Live: `DigitalTwinModel`, `DigitalTwinScenario`, `SimulationRun`, `digitalTwin`, `base44/shared/digitalTwin.ts`, module at `/digital-twin`. References §8 | Delivered for C7 |
 | 9 | Event Fabric Architecture | Live: `AutomationEventType`, `AutomationSubscription`, `AutomationFlow`, `OrchestrationRule`, `IntegrationConnector`, `IntegrationMessage`, `EventDeliveryAttempt`, `automationFabric`, `base44/shared/automationFabric.ts`, module at `/automation-fabric`. References §9 | Delivered for C8 |
-| 10 | AI Workforce Architecture | Existing `AiModel`, `AiAgent`, `AiPrompt`, `AiInteraction`. Tool grants are C9 gaps | Partial |
+| 10 | AI Workforce Architecture | Live: `AiWorkforceModel`, `AiPromptVersion`, `AiTool`, `AiWorkforceAgent`, `AiAgentToolAssignment`, `AiDecisionRecord`, `AiDecisionReview`, `AiAuditRecord`, `aiWorkforce`, `base44/shared/aiWorkforce.ts`, module at `/ai-workforce`, beside the existing `AiModel`, `AiAgent`, `AiPrompt`, `AiInteraction` registers. References §10 | Delivered for C9 |
 | 11 | Enterprise Strategy Architecture | Not built; C10 | Planned |
 | 12 | Analytics Warehouse Schema | Existing snapshot records only (`ExecutiveScoreSnapshot`, `ProgressSnapshot`, `ModuleDailyStatus`) | Partial |
 | 13–15 | RBAC / ABAC / RLS | Live: `roleMatrix` (both copies), entity `rls` blocks, tenant-scoped functions | Delivered pattern |
@@ -1279,3 +1279,20 @@ routing but not execution (a delivery starts an existing published Workflow Stud
 `base44/shared/workflowLauncher.ts`), and a connector stores the name of an app secret, never a value.
 
 Named checkpoint for this step: **Capability Track C8 — Enterprise Automation Fabric**.
+
+---
+
+## 10. C9 — Autonomous AI Workforce OS
+
+The C9 references (the eight-record table, the `aiWorkforce` action surface, the policy and
+redaction rules, the live verification cycle and the boundaries) live in
+`src/PHASE5_10_C9_REFERENCE.md`, for the same reason C8 has its own file: this one already covers
+C5–C8 and a sixth register block would push it past a readable length. What runs today is recorded
+there and in `PHASE5_10_INVENTORY.md`. Three boundaries hold for C9 exactly as they did for C5–C8:
+no model provider is called (a model record names the secret, never the key), the OS records a
+proposal but never executes it (`execution_state` is never anything but `Not executed`,
+`Recorded only` or `Refused`), and autonomy is bounded by tool kind, so a financial, clinical,
+employment, permission-changing, destructive or other high-impact tool can never be granted internal
+autonomy.
+
+Named checkpoint for this step: **Capability Track C9 — Autonomous AI Workforce OS**.

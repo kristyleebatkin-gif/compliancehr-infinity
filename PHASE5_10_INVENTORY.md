@@ -1,6 +1,6 @@
 # Phases 5–10 Capability Track — Read-Only Inventory & Conflict Register
 
-Status: **Phase 0 complete, conflicts resolved, Steps C5, C6, C7 and C8 built.**
+Status: **Phase 0 complete, conflicts resolved, Steps C5, C6, C7, C8 and C9 built.**
 Date: 18 November 2026.
 
 Owner decisions recorded before any build:
@@ -59,6 +59,43 @@ declared contract, redacted (with the withheld field names recorded), de-duplica
 tenant-scoped idempotency key, then routed to exactly one rule or subscription. Tests in
 `tests/deno/capabilityC8.test.ts` cover the routing rule, tenancy, permissions, redaction,
 idempotency, backoff, rate limiting, flow-step refusal and connector credential refusal.
+
+**Step C9 delivered (Autonomous AI Workforce OS).** Eight tenant-scoped records:
+`AiWorkforceModel`, `AiPromptVersion`, `AiTool`, `AiWorkforceAgent`, `AiAgentToolAssignment`,
+`AiDecisionRecord`, `AiDecisionReview`, `AiAuditRecord`. One server-authorised function
+(`aiWorkforce`) covering the model, prompt, tool, agent, grant, proposal, review and audit registers,
+with the governance rules in `base44/shared/aiWorkforce.ts`, and one module at `/ai-workforce` (seven
+tabs: decisions, agents, grants, tools, prompts, models, audit trail). The module is gated to
+Provider Administrator, Compliance Manager, Compliance Administrator, Management, Administration,
+Quality & Improvement Manager, Auditor and admin. Three boundaries hold. First, the OS never calls a
+model provider: a model record holds the *name* of the app secret that would carry a key
+(`secret://…`), never a key. Second, the OS never performs the proposed action: an approved proposal
+is a person's authorisation to act themselves, so `execution_state` stays `Not executed` or
+`Recorded only`. Third, autonomy is bounded by tool kind: external, financial, employment, clinical,
+participant-impacting, permission-changing, destructive and compliance-status-changing tools can
+never be granted internal autonomy, and a grant attempt is refused with the reason printed. Every
+proposal is redacted before storage (secrets, emails, phone numbers, record identifiers), carries a
+tenant-scoped idempotency key, and is refused rather than recorded when the agent is paused,
+disabled or archived. A person cannot review their own proposal, and a prompt version cannot publish
+without the human-review guardrail. Tests in `tests/deno/capabilityC9.test.ts` cover the policy
+table, tenancy, permissions, redaction, idempotency, the forbidden-autonomy refusal, the safe failure
+state and reviewer independence. All eight records carry the release-2 business lock (admin, or a
+record whose `tenant_id` matches the signed-in user's) as the last element of the rule on every
+operation, on top of service-role-only writes, so the tenancy test covers them like any other
+business-owned register.
+
+**C9 live verification and cleanup.** A live cycle on the production database created a model,
+validated it, created and published a prompt, defined a financial tool and a low-risk read tool,
+registered an agent, activated it, was **refused** internal autonomy on the financial tool, granted
+it proposal-only and the read tool internal, then recorded two proposals and reviewed one. The
+financial proposal came back `Human approval required` / `Awaiting human review` / `Not executed`; the
+read tool came back `Internal action permitted` / `Permitted internal` / `Recorded only` with two
+fields redacted; a review by the same person who recorded the proposal was refused; disabling the
+agent made the next proposal `Blocked` / `Safe failure` / `Refused`. The cycle removed its nine
+records and fourteen audit rows. One blocked decision (`AID-20261118025422-UKM3`, agent "C9 smoke
+agent") was left behind when a cleanup run was cancelled, and was deleted on request by its exact id
+after checking its reference, agent name and status; no other AI record was touched. All AI workforce
+counts now read zero.
 
 This document records what exists, what is genuinely missing, and which conflicts must be resolved
 before any schema is written. Nothing here is a delivery claim.
@@ -250,19 +287,21 @@ real counts only → checkpoint, then stop for review.
 | C6 | Autonomous Compliance Operations ✅ | Persisted assessment runs and control-test results, feeding existing findings | C5, C9 |
 | C7 | Graph & Digital Twin ✅ | Indexed, ontology-validated graph registry; versioned twin models, scenarios and simulation runs over the existing registers | C3 |
 | C8 | Automation Fabric ✅ | Event catalogue, subscriptions, orchestration rules, flows, connectors and a redacted delivery history beside Workflow Studio | C4, C7 |
-| C9 | AI Workforce | Tool register and agent-to-tool grants over the existing AI registers | C2 |
+| C9 | AI Workforce ✅ | Model, prompt-version, tool and agent registers with agent-to-tool grants, a redacted proposal register, an independent review queue and an append-only audit trail, beside the existing AI registers | C2 |
 | C10 | Autonomous Enterprise | Portfolio → program → objective → benefit → capability → maturity chain | C6, C1 |
 
 ---
 
-## 5. Phase 0 baseline, and what C5–C8 changed since
+## 5. Phase 0 baseline, and what C5–C9 changed since
 
 Phase 0 itself changed no entity, function, workflow, route, permission, style or data record, and
-deployed nothing. Since then C5, C6, C7 and C8 each added their own records, one server-authorised
-function, one module and its audit writes, as recorded in §4 and in `MASTER_TODO.md`. No existing
+deployed nothing. Since then C5, C6, C7, C8 and C9 each added their own records, server-authorised
+functions, one module and its audit writes, as recorded in §4 and in `MASTER_TODO.md`. No existing
 module, route, entity or role was removed or replaced by any of the four steps. C8 did extract one
 shared helper (`base44/shared/workflowLauncher.ts`) so every run start goes through a single path;
 the behaviour of the Studio and the connected-journey gate is unchanged by that extraction.
 
 Named checkpoints, one per step: C5 Decision Intelligence, C6 Autonomous Compliance Operations,
-**C7 — Knowledge Graph & Digital Twin OS**, **C8 — Enterprise Automation Fabric**.
+**C7 — Knowledge Graph & Digital Twin OS**, **C8 — Enterprise Automation Fabric**,
+**C9 — Autonomous AI Workforce OS**. C9 is the current checkpoint; C10 (Autonomous Enterprise) remains
+unstarted and is the next step in the order above.
