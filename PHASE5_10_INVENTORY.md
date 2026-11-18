@@ -1,0 +1,199 @@
+# Phases 5–10 Capability Track — Read-Only Inventory & Conflict Register
+
+Status: **Phase 0 complete. No application code, schema, route, workflow or permission was changed.**
+Date: 18 November 2026. Scope: inventory and conflict identification only, as instructed.
+
+This document records what exists, what is genuinely missing, and which conflicts must be resolved
+before any schema is written. Nothing here is a delivery claim.
+
+---
+
+## 1. What the application already contains
+
+| Surface | Count (verified on disk) | Source |
+| --- | --- | --- |
+| Entity schemas | 206 | `base44/entities/` |
+| Backend functions | 123 | `base44/functions/` |
+| Workflows | 68 | `base44/workflows/` |
+| Pages | 106 | `src/pages/` |
+| Components | 916 | `src/components/**/*.jsx` |
+| Registered routes | ~120 | `src/App.jsx` |
+| Navigation keys | 65 | `src/lib/moduleDirectory.js` |
+
+Already-delivered operating systems relevant to this request: Workflow Studio (`WorkflowDefinition`,
+`WorkflowInstance`, `WorkflowVersion`, `WorkflowEvent`, `workflowRuntime`, `workflowEngine`),
+Evidence Fabric (`AssuranceEvidence`, `EvidenceOS`, `AssuranceAuditMatrix`), Knowledge Graph
+(`KnowledgeLink`, `KnowledgeGraphOS`, `lib/knowledgeGraph.js`, `components/graph/*`), AI Core
+(`AiModel`, `AiAgent`, `AiPrompt`, `AiInteraction`, `AiRecommendation`, `AiReviewDecision`,
+`AiGovernanceRecord`, `aiCopilot`, `agentRuntime`), Executive scoring
+(`ExecutiveScoreSnapshot`, `ProgressSnapshot`, `ModuleDailyStatus`, `integrityIndex.js`), and the
+V8000 package (`src/v8000/`, 75 files, validators/runners/checks).
+
+---
+
+## 2. Requested data model versus what exists
+
+Legend: **Present** = the requested concept exists as a first-class tenant-scoped record.
+**Partial** = the concept is expressed inside another record, as a field, or only in memory.
+**Missing** = no record of this concept exists.
+
+### Phase 5 — Decision Intelligence
+| Requested table | Status | Existing equivalent |
+| --- | --- | --- |
+| `decision_register` | Missing | `BoardResolution` (board decisions only), `ApprovalChain` (approvals, not decisions) |
+| `decision_recommendations` | Partial | `AiRecommendation` (AI-raised, human-verified); not attached to a decision |
+| `decision_evidence` | Partial | `KnowledgeLink`, `AiRecommendation.evidence_refs`, `AssuranceEvidence` |
+| `decision_outcomes` | Missing | `KPI.target_value` / `current_value` only |
+
+No record currently holds impact, benefit, risk, approvals, outcome target versus actual for a
+decision. This is a real gap.
+
+### Phase 6 — Autonomous Compliance Operations
+| Requested table | Status | Existing equivalent |
+| --- | --- | --- |
+| `autonomous_assessments` | Partial | `InternalAudit`, `NDISAuditRecord`, `ComplianceChecklistEntry`; V8000 runners compute in memory and persist nothing |
+| `compliance_gap_analysis` | Partial | `lib/assuranceGaps.js`, `GapEnginePanel` — computed, not stored |
+| `control_testing_results` | Partial | `ComplianceControl.last_tested_date` / `next_test_date`, `AssuranceEvidence.verification_status` |
+| `remediation_plans` | Partial | `AssuranceFinding.corrective_action`, `ImprovementAction` |
+
+V8000’s nightly runner is a pure function with no store and no schedule. Nothing in the app is
+autonomous today; assessment results are only ever recomputed or typed in.
+
+### Phase 7 — Knowledge Graph & Digital Twin
+| Requested table | Status | Existing equivalent |
+| --- | --- | --- |
+| `graph_entities` | Partial | Register records are the nodes; `KnowledgeLink` references them by type and id |
+| `graph_relationships` | Partial | `KnowledgeLink` — 19 relationship types, confidence, source, status, tenant-scoped |
+| `graph_taxonomies` | Missing | — |
+| `graph_ontologies` | Missing | — |
+| `digital_twin_models` | Missing | `DIGITAL_TWIN_RECORDS` constants only |
+| `digital_twin_scenarios` | Missing | — |
+| `simulation_runs` | Missing | Static content in `careSphere*Data.js` files |
+
+A link table exists and is used by five modules. A digital twin does not exist.
+
+### Phase 8 — Enterprise Automation Fabric
+| Requested table | Status | Existing equivalent |
+| --- | --- | --- |
+| `event_registry` | Missing | `WorkflowEvent` is a per-run step log, not an event catalogue |
+| `event_subscriptions` | Partial | Triggers declared inside workflow `.jsonc` files |
+| `automation_flows` | Present (different shape) | `WorkflowDefinition` — 33 process types, versioned, publish-gated |
+| `orchestration_rules` | Partial | `shared/workflowEngine.ts`, `connectedJourneyGate` |
+| `integration_connectors` | Partial | Connector configs (`googlecalendar`, `gmail`) plus `integrationStatus`; not a register |
+| `integration_messages` | Missing | — |
+
+### Phase 9 — Autonomous AI Workforce
+| Requested table | Status | Existing equivalent |
+| --- | --- | --- |
+| `ai_models` | **Present** | `AiModel` |
+| `ai_agents` | **Present** | `AiAgent` (kind, guardrails, human-review flag, data scope) |
+| `ai_prompts` | **Present** | `AiPrompt` (version, approval, testing notes) |
+| `ai_tools` | Missing | — |
+| `ai_agent_tools` | Missing | — |
+| `ai_decisions` | Partial | `AiInteraction` (append-only audit), `AiReviewDecision` |
+| `ai_reviews` | Partial | `AiReviewDecision` |
+
+Three of seven requested tables already exist and must not be recreated.
+
+### Phase 10 — Autonomous Enterprise Operating System
+| Requested table | Status | Existing equivalent |
+| --- | --- | --- |
+| `enterprise_portfolios` | Missing | `BusinessProject` is project-level |
+| `enterprise_programs` | Missing | — |
+| `enterprise_objectives` | Missing | `Goal` is **participant**-scoped, `StaffGoal` is worker-scoped |
+| `enterprise_benefits` | Missing | — |
+| `enterprise_capabilities` | Missing | — |
+| `enterprise_maturity_assessments` | Missing | Maturity exists only as prose in static blueprint data |
+
+The strategy chain is a stated requirement in the existing phase register but has no records.
+
+---
+
+## 3. Conflict register
+
+Each conflict must be resolved before the phase that touches it. None has been changed.
+
+**C1 — Phase numbering collides with an existing owner-directed register (blocking).**
+`src/lib/enterprisePhases.js` already defines a 12-phase register (owner direction, 15 November 2026)
+where Phase 5 is Operational Governance, 6 Board & Strategy, 7 Clinical Governance, 8 Commercial
+Governance, 9 Enterprise Intelligence, 10 AI Governance, 11 Accreditation, 12 Enterprise Digital
+Twin. This request numbers Phases 5–10 as Decision Intelligence, Autonomous Compliance, Graph &
+Twin, Automation Fabric, AI Workforce, Autonomous Enterprise. Reusing ids 5–10 would silently
+rewrite an accepted governance register and every dependency that references it.
+Proposal: leave `ENTERPRISE_PHASES` untouched and record this work as a separate **Capability
+Track** (C5–C10) with an explicit mapping to the register phases.
+
+**C2 — Duplicate-schema hazard on `ai_models`, `ai_agents`, `ai_prompts`.**
+All three exist. Creating them again, or a second "AI workforce" register, would split the AI
+inventory across two stores and break `AiGovernanceRecord`, `agentRuntime` and the AI audit trail.
+Proposal: extend only the true gaps (`ai_tools`, `ai_agent_tools`); never duplicate.
+
+**C3 — `KnowledgeLink` versus `graph_relationships`.**
+A working, tenant-scoped relationship store is in use by Knowledge Graph, V8000 Fabric, governance
+and tenant classification. A parallel relationship table would fork the graph.
+Proposal: keep `KnowledgeLink` authoritative; add graph node/ontology/taxonomy records only if a
+real feature needs them, and by reference, not by copy.
+
+**C4 — `WorkflowEvent` is not an event registry.**
+`WorkflowEvent` records step transitions for one run, is append-only and service-role-only. An event
+catalogue (event types, producers, schemas, subscriptions) is a different concern. Overloading it
+would corrupt workflow audit history.
+Proposal: new event-catalogue records with a distinct name; leave `WorkflowEvent` unchanged.
+
+**C5 — Two recommendation stores.**
+A new `decision_recommendations` alongside `AiRecommendation` would give the same concept two homes
+and two review queues. Proposal: one recommendation store with an explicit source, referenced by
+decisions.
+
+**C6 — `Goal` cannot serve enterprise objectives.**
+`Goal` is participant plan data (`participant_name`, `admin_approved`, progress against a support
+goal) and carries participant-scoped RLS. Enterprise objectives are tenant-level and would leak
+plan data or corrupt RLS. Proposal: separate enterprise records; no reuse.
+
+**C7 — Deliverables 2–6 and 19–24 target a stack this application does not run on.**
+The runtime is React + Vite with the Base44 backend (entities, backend functions, workflows), not
+PostgreSQL migrations, Prisma, NestJS, Next.js, Terraform or AKS. Those artifacts can be produced
+as reference design documents, but they would not deploy, would not be executed by this app, and
+would immediately drift from the real data model. Proposal: map each to its native equivalent
+(entities as the schema of record, entity RLS as the row-level policy layer, backend function
+contracts as the API surface, platform hosting as the deployment model) and ship only the ones that
+describe something real here.
+
+**C8 — Write authority and tenant isolation.**
+Existing computed-result entities are service-role-only on create/update/delete and scoped by
+`data.tenant_id === user.data.tenant_id`. New decision, assessment, graph, event, AI-tool and
+portfolio records must follow the same pattern; client-side writes for computed outcomes would be
+a security regression.
+
+**C9 — Truthfulness of "autonomous".**
+Phase 6 and Phase 10 name autonomy. Today V8000 computes readiness in memory with no persistence
+and no schedule, so no autonomy claim is supportable yet. Any autonomy feature needs a persisted
+run record plus a real scheduled workflow, and status labels must stay literal until then.
+
+**C10 — Preserved surfaces.**
+Routes in `src/App.jsx`, `moduleDirectory.js` keys, branding tokens, tenant RLS and the 68 workflow
+definitions are treated as fixed. New capability pages must be added, not substituted.
+
+---
+
+## 4. Proposed build order (one checkpoint per step)
+
+Each step: entity schema with tenant RLS → backend authorisation → audit evidence → a page showing
+real counts only → checkpoint, then stop for review.
+
+| Step | Capability | Real gap closed | Depends on |
+| --- | --- | --- | --- |
+| C5 | Decision Intelligence | Decision register with evidence links, approvals, outcome target vs actual | C1, C5, C6 |
+| C6 | Autonomous Compliance Operations | Persisted assessment runs and control-test results, feeding existing findings | C5, C9 |
+| C7 | Graph & Digital Twin | Scenario and simulation-run records over the existing link graph | C3 |
+| C8 | Automation Fabric | Event catalogue, subscriptions, integration messages beside Workflow Studio | C4, C7 |
+| C9 | AI Workforce | Tool register and agent-to-tool grants over the existing AI registers | C2 |
+| C10 | Autonomous Enterprise | Portfolio → program → objective → benefit → capability → maturity chain | C6, C1 |
+
+---
+
+## 5. Not done in this step, by design
+
+No entity, function, workflow, route, permission, style or data change. No deployment. The next
+step cannot start until C1 and C7 are decided, because both change what "done" means for every
+later phase.
