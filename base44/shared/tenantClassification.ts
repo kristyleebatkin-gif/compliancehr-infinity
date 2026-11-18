@@ -227,6 +227,10 @@ export const BUSINESS_OWNED_ENTITIES = Object.freeze([
   'WorkspacePreference',
   'WorkspacePreferenceVersion',
   'WorkspaceSecurityPin',
+  'AutonomousAssessment',
+  'ComplianceGapAnalysis',
+  'ControlTestingResult',
+  'RemediationPlan',
 ]);
 
 export function tenantGroupOf(entityName) {

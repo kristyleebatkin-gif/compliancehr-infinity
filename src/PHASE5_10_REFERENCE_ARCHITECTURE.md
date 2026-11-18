@@ -399,3 +399,316 @@ components:
    carried over from a mock.
 5. **Bounded reads** — registers are read with a limit and sorted server-side; nothing loads a whole
    table into memory per render.
+
+---
+
+## 7. C6 — Autonomous Compliance Operations OS (design-only references)
+
+Live implementation: `AutonomousAssessment`, `ComplianceGapAnalysis`, `ControlTestingResult`,
+`RemediationPlan`, the `autonomousCompliance` function, the engine in
+`base44/shared/complianceAssessment.ts`, and the module at `/compliance-operations`.
+
+**Reuse decision.** Frameworks and standards are the existing `RegulatoryStandard` records; controls
+are `ComplianceControl`; evidence is `AssuranceEvidence`; findings are `AssuranceFinding`. There is no
+`compliance_frameworks` table in this app and none was created: `framework` is the framework name on
+those records. The assessment reads them and raises gaps; it never creates a standard, a control or
+an evidence record to fill a gap. A standard with no control, or a control with no evidence, becomes a
+gap record, which is the point of the module.
+
+### 7.1 PostgreSQL DDL (mirror of the four entities)
+
+```sql
+create table autonomous_assessment (
+  id                     text primary key,
+  tenant_id              text not null,
+  assessment_ref         text not null,
+  framework              text not null,
+  assessment_type        text not null,
+  status                 text not null check (status in ('Completed','Completed with gaps','Failed')),
+  score                  smallint check (score between 0 and 100),
+  risk_score             smallint check (risk_score between 0 and 100),
+  confidence_score       smallint check (confidence_score between 0 and 100),
+  assessed_on            timestamptz not null,
+  standards_total        integer not null default 0,
+  controls_total         integer not null default 0,
+  controls_passed        integer not null default 0,
+  controls_with_evidence integer not null default 0,
+  gaps_found             integer not null default 0,
+  open_findings          integer not null default 0,
+  methodology            text,
+  summary                text,
+  run_mode               text not null default 'Manual',
+  run_by                 text,
+  run_by_id              text,
+  engine_version         text,
+  duration_ms            integer,
+  created_at             timestamptz not null default now(),
+  unique (tenant_id, assessment_ref)
+);
+create index autonomous_assessment_fw_idx on autonomous_assessment (tenant_id, framework, assessed_on desc);
+
+create table compliance_gap_analysis (
+  id                text primary key,
+  tenant_id         text not null,
+  gap_ref           text,
+  framework         text not null,
+  standard_id       text,          -- RegulatoryStandard.id
+  standard_code     text,
+  standard_title    text,
+  control_id        text,          -- ComplianceControl.id, empty when no control exists
+  control_statement text,
+  gap_type          text not null check (gap_type in ('No control defined','Evidence missing',
+                      'Evidence expired','Control not tested','Control test failed','Open finding',
+                      'Partial coverage')),
+  severity          text not null check (severity in ('Low','Medium','High','Critical')),
+  observation       text,
+  recommendation    text,
+  status            text not null default 'Open' check (status in ('Open','Remediation planned',
+                      'In progress','Closed','Risk accepted')),
+  assessment_id     text references autonomous_assessment (id),
+  assessment_ref    text,
+  detected_on       timestamptz not null,
+  detected_by       text not null default 'Assessment run',
+  remediation_count integer not null default 0,
+  resolved_on       date,
+  resolved_by       text,
+  closure_note      text,
+  created_at        timestamptz not null default now()
+);
+create index gap_open_idx on compliance_gap_analysis (tenant_id, status, severity)
+  where status in ('Open','Remediation planned','In progress');
+create unique index gap_no_duplicate_open on compliance_gap_analysis (tenant_id, control_id, standard_code)
+  where status in ('Open','Remediation planned','In progress');
+
+create table control_testing_result (
+  id                   text primary key,
+  tenant_id            text not null,
+  framework            text not null,
+  standard_code        text,
+  control_id           text not null,   -- ComplianceControl.id
+  control_statement    text,
+  evidence_id          text,            -- AssuranceEvidence.id
+  evidence_title       text,
+  evidence_state       text,
+  test_method          text,
+  result               text not null check (result in ('Pass','Partial','Fail','Not tested','Not applicable')),
+  score                smallint check (score between 0 and 100),
+  tested_on            timestamptz not null,
+  tested_by            text,
+  tested_by_id         text,
+  test_source          text not null default 'Assessment run',
+  assessment_id        text references autonomous_assessment (id),
+  remediation_required boolean not null default false,
+  notes                text
+);
+create index control_test_idx on control_testing_result (tenant_id, control_id, tested_on desc);
+
+create table remediation_plan (
+  id                    text primary key,
+  tenant_id             text not null,
+  plan_ref              text not null,
+  gap_id                text not null references compliance_gap_analysis (id),
+  gap_ref               text,
+  gap_title             text,
+  gap_severity          text,
+  framework             text,
+  standard_code         text,
+  control_id            text,
+  assigned_to           text not null,
+  assigned_to_id        text,
+  assigned_to_email     text,
+  priority              text not null default 'Medium',
+  status                text not null default 'Not started' check (status in ('Not started',
+                          'In progress','Blocked','Completed','Closed')),
+  target_date           date,
+  completion_percentage integer not null default 0 check (completion_percentage between 0 and 100),
+  actions               text,
+  evidence_ref          text,
+  updates_json          jsonb not null default '[]'::jsonb,
+  update_count          integer not null default 0,
+  started_on            date,
+  completed_on          date,
+  closed_on             date,
+  closure_note          text,
+  verified_by           text,
+  verified_on           date,
+  last_update_by        text,
+  last_update_at        timestamptz,
+  created_at            timestamptz not null default now(),
+  unique (tenant_id, plan_ref)
+);
+create index remediation_open_idx on remediation_plan (tenant_id, status, target_date);
+
+-- Same RLS shape as C5: reads by permitted role inside the tenant, writes from the service role only.
+alter table autonomous_assessment enable row level security;
+create policy assessment_tenant on autonomous_assessment for select
+  using (tenant_id = current_setting('app.tenant_id', true) or current_setting('app.role', true) = 'admin');
+```
+
+### 7.2 Prisma models (design-only)
+
+```prisma
+model AutonomousAssessment {
+  id                   String   @id @default(cuid())
+  tenantId             String
+  assessmentRef        String
+  framework            String
+  assessmentType       String
+  status               String   @default("Completed")
+  score                Int?
+  riskScore            Int?
+  confidenceScore      Int?
+  assessedOn           DateTime
+  standardsTotal       Int      @default(0)
+  controlsTotal        Int      @default(0)
+  controlsPassed       Int      @default(0)
+  controlsWithEvidence Int      @default(0)
+  gapsFound            Int      @default(0)
+  openFindings         Int      @default(0)
+  methodology          String?
+  summary              String?
+  runMode              String   @default("Manual")
+  runBy                String?
+  runById              String?
+  engineVersion        String?
+  durationMs           Int?
+  gaps                 ComplianceGapAnalysis[]
+  tests                ControlTestingResult[]
+
+  @@unique([tenantId, assessmentRef])
+  @@index([tenantId, framework, assessedOn])
+}
+
+model ComplianceGapAnalysis {
+  id               String    @id @default(cuid())
+  tenantId         String
+  gapRef           String?
+  framework        String
+  standardId       String?
+  standardCode     String?
+  standardTitle    String?
+  controlId        String?
+  controlStatement String?
+  gapType          String
+  severity         String
+  observation      String?
+  recommendation   String?
+  status           String    @default("Open")
+  assessmentId     String?
+  assessment       AutonomousAssessment? @relation(fields: [assessmentId], references: [id])
+  detectedOn       DateTime
+  detectedBy       String    @default("Assessment run")
+  remediationCount Int       @default(0)
+  resolvedOn       DateTime? @db.Date
+  resolvedBy       String?
+  closureNote      String?
+  plans            RemediationPlan[]
+
+  @@index([tenantId, status, severity])
+}
+
+model ControlTestingResult {
+  id                  String    @id @default(cuid())
+  tenantId            String
+  framework           String
+  standardCode        String?
+  controlId           String
+  controlStatement    String?
+  evidenceId          String?
+  evidenceTitle       String?
+  evidenceState       String?
+  testMethod          String?
+  result              String
+  score               Int?
+  testedOn            DateTime
+  testedBy            String?
+  testedById          String?
+  testSource          String    @default("Assessment run")
+  assessmentId        String?
+  assessment          AutonomousAssessment? @relation(fields: [assessmentId], references: [id])
+  remediationRequired Boolean   @default(false)
+  notes               String?
+
+  @@index([tenantId, controlId, testedOn])
+}
+
+model RemediationPlan {
+  id                   String    @id @default(cuid())
+  tenantId             String
+  planRef              String
+  gapId                String
+  gap                  ComplianceGapAnalysis @relation(fields: [gapId], references: [id])
+  gapTitle             String?
+  gapSeverity          String?
+  framework            String?
+  standardCode         String?
+  controlId            String?
+  assignedTo           String
+  assignedToId         String?
+  assignedToEmail      String?
+  priority             String    @default("Medium")
+  status               String    @default("Not started")
+  targetDate           DateTime? @db.Date
+  completionPercentage Int       @default(0)
+  actions              String?
+  evidenceRef          String?
+  updatesJson          Json      @default("[]")
+  updateCount          Int       @default(0)
+  startedOn            DateTime? @db.Date
+  completedOn          DateTime? @db.Date
+  closedOn             DateTime? @db.Date
+  closureNote          String?
+  verifiedBy           String?
+  verifiedOn           DateTime? @db.Date
+
+  @@unique([tenantId, planRef])
+  @@index([tenantId, status, targetDate])
+}
+```
+
+### 7.3 OpenAPI 3.1 — `autonomousCompliance` (design-only)
+
+```yaml
+paths:
+  /functions/autonomousCompliance:
+    post:
+      summary: Read registers, run an assessment, or record gap, test and remediation work
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [action]
+              properties:
+                action:
+                  enum: [list, runAssessment, recordTest, createRemediation, updateRemediation,
+                         verifyRemediation, updateGap]
+                framework: { type: string }
+                assessment_type: { type: string }
+                gap_status: { type: string }
+                search: { type: string }
+                gap_id: { type: string }
+                plan_id: { type: string }
+                control_id: { type: string }
+                evidence_id: { type: string }
+                result: { enum: [Pass, Partial, Fail, 'Not tested', 'Not applicable'] }
+                test_method: { type: string }
+                assigned_to: { type: string, minLength: 2 }
+                target_date: { type: string, format: date }
+                completion_percentage: { type: integer, minimum: 0, maximum: 100 }
+                note: { type: string }
+                closure_note: { type: string }
+      responses:
+        '200': { description: Result of the action }
+        '400': { description: Missing or invalid input, including a framework with no recorded coverage }
+        '403': { description: Role or business not permitted }
+        '404': { description: Record is not in this business }
+        '409': { description: Record already closed }
+```
+
+Scoring rule, stated once and used by both the running engine and any future implementation:
+verified and current evidence scores 100, unverified or in-review evidence 50, expired, rejected or
+missing evidence 0; the assessment score is the mean control score; confidence is the share of
+controls holding any evidence; the risk score adds 25 per critical gap, 12 per high, 6 per medium and
+2 per low, capped at 100.

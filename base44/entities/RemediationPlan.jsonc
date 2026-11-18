@@ -1,0 +1,321 @@
+{
+  "name": "RemediationPlan",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set by the compliance operations service; never from the browser."
+    },
+    "plan_ref": {
+      "type": "string",
+      "title": "Plan Reference"
+    },
+    "gap_id": {
+      "type": "string",
+      "title": "Gap Record ID"
+    },
+    "gap_ref": {
+      "type": "string",
+      "title": "Gap Reference"
+    },
+    "gap_title": {
+      "type": "string",
+      "title": "Gap Being Remediated"
+    },
+    "gap_severity": {
+      "type": "string",
+      "title": "Gap Severity",
+      "enum": [
+        "Low",
+        "Medium",
+        "High",
+        "Critical"
+      ],
+      "enumColors": [
+        "green",
+        "yellow",
+        "red",
+        "red"
+      ],
+      "default": "Medium"
+    },
+    "framework": {
+      "type": "string",
+      "title": "Framework"
+    },
+    "standard_code": {
+      "type": "string",
+      "title": "Standard Code"
+    },
+    "control_id": {
+      "type": "string",
+      "title": "Control Record ID"
+    },
+    "assigned_to": {
+      "type": "string",
+      "title": "Assigned To"
+    },
+    "assigned_to_id": {
+      "type": "string",
+      "title": "Assigned To (user id)"
+    },
+    "assigned_to_email": {
+      "type": "string",
+      "title": "Assigned To Email"
+    },
+    "priority": {
+      "type": "string",
+      "title": "Priority",
+      "enum": [
+        "Low",
+        "Medium",
+        "High",
+        "Critical"
+      ],
+      "enumColors": [
+        "gray",
+        "yellow",
+        "red",
+        "red"
+      ],
+      "default": "Medium"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Not started",
+        "In progress",
+        "Blocked",
+        "Completed",
+        "Closed"
+      ],
+      "enumColors": [
+        "gray",
+        "blue",
+        "red",
+        "green",
+        "gray"
+      ],
+      "default": "Not started"
+    },
+    "target_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Target Date"
+    },
+    "completion_percentage": {
+      "type": "number",
+      "title": "Completion (%)",
+      "default": 0
+    },
+    "actions": {
+      "type": "string",
+      "title": "Planned Actions"
+    },
+    "evidence_ref": {
+      "type": "string",
+      "title": "Evidence Of Completion"
+    },
+    "updates_json": {
+      "type": "string",
+      "title": "Progress Log (JSON)",
+      "description": "Append-only progress notes: who, when, percentage and what changed."
+    },
+    "update_count": {
+      "type": "number",
+      "title": "Progress Notes",
+      "default": 0
+    },
+    "started_on": {
+      "type": "string",
+      "format": "date",
+      "title": "Started On"
+    },
+    "completed_on": {
+      "type": "string",
+      "format": "date",
+      "title": "Completed On"
+    },
+    "closed_on": {
+      "type": "string",
+      "format": "date",
+      "title": "Closed On"
+    },
+    "closure_note": {
+      "type": "string",
+      "title": "Closure Note"
+    },
+    "verified_by": {
+      "type": "string",
+      "title": "Completion Verified By"
+    },
+    "verified_on": {
+      "type": "string",
+      "format": "date",
+      "title": "Verified On"
+    },
+    "created_by": {
+      "type": "string",
+      "title": "Created By"
+    },
+    "last_update_by": {
+      "type": "string",
+      "title": "Last Updated By"
+    },
+    "last_update_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Last Updated At"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "gap_id",
+    "status",
+    "priority"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$and": [
+            {
+              "$or": [
+                {
+                  "user_condition": {
+                    "role": "admin"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Provider Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Management"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Administration"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Quality & Improvement Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Auditor"
+                  }
+                }
+              ]
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            },
+            {
+              "user_condition": {
+                "account_status": "Active",
+                "access_approved": true
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

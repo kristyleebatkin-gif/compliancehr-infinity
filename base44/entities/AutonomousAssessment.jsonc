@@ -1,0 +1,309 @@
+{
+  "name": "AutonomousAssessment",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set by the compliance operations service; never from the browser."
+    },
+    "assessment_ref": {
+      "type": "string",
+      "title": "Assessment Reference"
+    },
+    "framework": {
+      "type": "string",
+      "title": "Framework",
+      "enum": [
+        "NDIS Practice Standards",
+        "Aged Care Quality Standards",
+        "ISO 9001:2015",
+        "ISO/IEC 27001:2022",
+        "NSQHS Standards",
+        "HSQF",
+        "Fair Work"
+      ],
+      "enumColors": [
+        "blue",
+        "purple",
+        "green",
+        "gray",
+        "pink",
+        "yellow",
+        "gray"
+      ],
+      "default": "NDIS Practice Standards"
+    },
+    "assessment_type": {
+      "type": "string",
+      "title": "Assessment Type",
+      "enum": [
+        "Scheduled assurance pass",
+        "Manual assessment",
+        "Pre-audit readiness",
+        "Post-incident review",
+        "Certification readiness"
+      ],
+      "enumColors": [
+        "blue",
+        "purple",
+        "yellow",
+        "red",
+        "green"
+      ],
+      "default": "Manual assessment"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Completed",
+        "Completed with gaps",
+        "Failed"
+      ],
+      "enumColors": [
+        "green",
+        "yellow",
+        "red"
+      ],
+      "default": "Completed"
+    },
+    "score": {
+      "type": "number",
+      "title": "Compliance Score (%)",
+      "description": "Average control test score for the framework. Derived from the stored tests, never estimated."
+    },
+    "risk_score": {
+      "type": "number",
+      "title": "Risk Score (0-100)",
+      "description": "Severity-weighted open gap score. Higher means more risk."
+    },
+    "confidence_score": {
+      "type": "number",
+      "title": "Confidence (%)",
+      "description": "Share of controls that hold evidence at all. Low confidence means the score is thin."
+    },
+    "assessed_on": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Assessed On"
+    },
+    "standards_total": {
+      "type": "number",
+      "title": "Standards In Framework",
+      "default": 0
+    },
+    "controls_total": {
+      "type": "number",
+      "title": "Controls Assessed",
+      "default": 0
+    },
+    "controls_passed": {
+      "type": "number",
+      "title": "Controls Passed",
+      "default": 0
+    },
+    "controls_with_evidence": {
+      "type": "number",
+      "title": "Controls With Evidence",
+      "default": 0
+    },
+    "gaps_found": {
+      "type": "number",
+      "title": "Gaps Found",
+      "default": 0
+    },
+    "open_findings": {
+      "type": "number",
+      "title": "Open Findings Considered",
+      "default": 0
+    },
+    "methodology": {
+      "type": "string",
+      "title": "How This Was Calculated",
+      "description": "Plain-language statement of the rule used, so a reader can re-perform it."
+    },
+    "summary": {
+      "type": "string",
+      "title": "Summary"
+    },
+    "run_mode": {
+      "type": "string",
+      "title": "Run Mode",
+      "enum": [
+        "Manual",
+        "Scheduled"
+      ],
+      "enumColors": [
+        "blue",
+        "gray"
+      ],
+      "default": "Manual"
+    },
+    "run_by": {
+      "type": "string",
+      "title": "Run By"
+    },
+    "run_by_id": {
+      "type": "string",
+      "title": "Run By (user id)"
+    },
+    "engine_version": {
+      "type": "string",
+      "title": "Engine Version"
+    },
+    "duration_ms": {
+      "type": "number",
+      "title": "Duration (ms)"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "framework",
+    "assessment_type",
+    "status",
+    "assessed_on"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$and": [
+            {
+              "$or": [
+                {
+                  "user_condition": {
+                    "role": "admin"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Provider Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Management"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Administration"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Quality & Improvement Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Auditor"
+                  }
+                }
+              ]
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            },
+            {
+              "user_condition": {
+                "account_status": "Active",
+                "access_approved": true
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

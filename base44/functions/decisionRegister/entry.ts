@@ -1,5 +1,6 @@
 import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 import { hasApprovedAccess, resolveUserTenantId, COMPLIANCE_REVIEW_ROLES, MANAGEMENT_ROLES } from '../../shared/roleMatrix.ts';
+import { str, num, dateOnly, clampPercent, today, writeAudit } from '../../shared/registerCommon.ts';
 
 const DECISION_TYPES = [
   'Operational Governance', 'Clinical Governance', 'Financial', 'Strategic', 'Risk Acceptance',
@@ -13,14 +14,6 @@ const OUTCOME_STATUSES = ['Not started', 'On track', 'Off track', 'Achieved', 'N
 const EVIDENCE_TYPES = ['Document', 'Record', 'Register extract', 'Photo', 'Sign-off', 'System export', 'Certificate', 'Meeting minutes', 'Other'];
 const OPEN_STATUSES = ['Draft', 'Proposed', 'In Review'];
 
-const str = (value: any) => (typeof value === 'string' ? value.trim() : '');
-const num = (value: any) => (Number.isFinite(Number(value)) ? Number(value) : null);
-const dateOnly = (value: any) => (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value) ? value : '');
-const clampPercent = (value: any) => {
-  const n = num(value);
-  return n === null ? null : Math.max(0, Math.min(100, Math.round(n)));
-};
-const today = () => new Date().toISOString().slice(0, 10);
 
 function canWrite(user: any) {
   return COMPLIANCE_REVIEW_ROLES.includes(user.role);
@@ -30,22 +23,15 @@ function canDecide(user: any) {
   return MANAGEMENT_ROLES.includes(user.role);
 }
 
-async function audit(base44: any, user: any, action: string, record: any, details: any) {
-  await base44.asServiceRole.entities.AuditLog.create({
-    tenant_id: record.tenant_id,
+const audit = (base44: any, user: any, action: string, record: any, details: any) =>
+  writeAudit(base44, user, {
     action,
-    entity_type: 'DecisionRecord',
-    record_id: record.id,
-    record_title: record.title,
-    performed_by: user.full_name || user.email || 'Unknown',
-    performed_by_user_id: user.id,
-    performed_by_email: user.email || '',
-    performed_by_role: user.role,
+    entityType: 'DecisionRecord',
+    record,
+    details,
     route: '/decision-intelligence',
-    details: JSON.stringify(details).slice(0, 4000),
-    timestamp: new Date().toISOString(),
+    title: record.title,
   });
-}
 
 function outcomeFromMeasures(measures: any[]) {
   if (!measures.length) return 'Not measured';

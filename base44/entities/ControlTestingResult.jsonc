@@ -1,0 +1,289 @@
+{
+  "name": "ControlTestingResult",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set by the compliance operations service; never from the browser."
+    },
+    "framework": {
+      "type": "string",
+      "title": "Framework"
+    },
+    "standard_code": {
+      "type": "string",
+      "title": "Standard Code"
+    },
+    "control_id": {
+      "type": "string",
+      "title": "Control Record ID"
+    },
+    "control_statement": {
+      "type": "string",
+      "title": "Control Tested"
+    },
+    "evidence_id": {
+      "type": "string",
+      "title": "Evidence Record ID"
+    },
+    "evidence_title": {
+      "type": "string",
+      "title": "Evidence Used"
+    },
+    "evidence_state": {
+      "type": "string",
+      "title": "Evidence State",
+      "enum": [
+        "Verified and current",
+        "Unverified",
+        "In review",
+        "Expired",
+        "Rejected",
+        "None held"
+      ],
+      "enumColors": [
+        "green",
+        "gray",
+        "yellow",
+        "red",
+        "red",
+        "red"
+      ],
+      "default": "None held"
+    },
+    "test_method": {
+      "type": "string",
+      "title": "Test Method",
+      "enum": [
+        "Evidence review",
+        "Record inspection",
+        "Walkthrough",
+        "Re-performance",
+        "Interview",
+        "System output"
+      ],
+      "enumColors": [
+        "blue",
+        "purple",
+        "green",
+        "yellow",
+        "pink",
+        "gray"
+      ],
+      "default": "Evidence review"
+    },
+    "result": {
+      "type": "string",
+      "title": "Result",
+      "enum": [
+        "Pass",
+        "Partial",
+        "Fail",
+        "Not tested",
+        "Not applicable"
+      ],
+      "enumColors": [
+        "green",
+        "yellow",
+        "red",
+        "gray",
+        "gray"
+      ],
+      "default": "Not tested"
+    },
+    "score": {
+      "type": "number",
+      "title": "Score (%)",
+      "description": "Pass 100, Partial 50, Fail or Not tested 0."
+    },
+    "tested_on": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Tested On"
+    },
+    "tested_by": {
+      "type": "string",
+      "title": "Tested By"
+    },
+    "tested_by_id": {
+      "type": "string",
+      "title": "Tested By (user id)"
+    },
+    "test_source": {
+      "type": "string",
+      "title": "Test Source",
+      "enum": [
+        "Assessment run",
+        "Manual test"
+      ],
+      "enumColors": [
+        "blue",
+        "purple"
+      ],
+      "default": "Assessment run"
+    },
+    "assessment_id": {
+      "type": "string",
+      "title": "Assessment ID"
+    },
+    "assessment_ref": {
+      "type": "string",
+      "title": "Assessment Reference"
+    },
+    "remediation_required": {
+      "type": "boolean",
+      "title": "Remediation Required",
+      "default": false
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "framework",
+    "control_id",
+    "result",
+    "tested_on"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$and": [
+            {
+              "$or": [
+                {
+                  "user_condition": {
+                    "role": "admin"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Provider Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Management"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Administration"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Quality & Improvement Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Auditor"
+                  }
+                }
+              ]
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            },
+            {
+              "user_condition": {
+                "account_status": "Active",
+                "access_approved": true
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

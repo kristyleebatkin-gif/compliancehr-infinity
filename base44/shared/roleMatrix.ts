@@ -148,6 +148,7 @@ export const NAV_PERMISSIONS = {
   'ai-os': COMPLIANCE_REVIEW_ROLES,
   'knowledge-graph': COMPLIANCE_REVIEW_ROLES,
   'decision-intelligence': COMPLIANCE_REVIEW_ROLES,
+  'compliance-operations': COMPLIANCE_REVIEW_ROLES,
   'v8000-command': COMPLIANCE_REVIEW_ROLES,
   'clinical-os': OPERATIONS,
   'board-ceo': FULL_ACCESS,
