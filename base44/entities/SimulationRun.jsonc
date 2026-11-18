@@ -1,0 +1,294 @@
+{
+  "name": "SimulationRun",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Stamped by the digital twin service; never from the browser."
+    },
+    "run_ref": {
+      "type": "string",
+      "title": "Run Reference"
+    },
+    "model_id": {
+      "type": "string",
+      "title": "Model Record ID"
+    },
+    "model_key": {
+      "type": "string",
+      "title": "Model Key"
+    },
+    "model_name": {
+      "type": "string",
+      "title": "Model"
+    },
+    "model_version": {
+      "type": "number",
+      "title": "Model Version Used"
+    },
+    "model_status_at_run": {
+      "type": "string",
+      "title": "Model Status At Run"
+    },
+    "scenario_id": {
+      "type": "string",
+      "title": "Scenario Record ID"
+    },
+    "scenario_key": {
+      "type": "string",
+      "title": "Scenario Key"
+    },
+    "scenario_name": {
+      "type": "string",
+      "title": "Scenario"
+    },
+    "scenario_version": {
+      "type": "number",
+      "title": "Scenario Version Used"
+    },
+    "scenario_status_at_run": {
+      "type": "string",
+      "title": "Scenario Status At Run"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Completed",
+        "Failed"
+      ],
+      "enumColors": [
+        "green",
+        "red"
+      ],
+      "default": "Completed"
+    },
+    "estimate_notice": {
+      "type": "string",
+      "title": "Estimate Notice",
+      "description": "Printed on every run: this is a modelled estimate, not an observed outcome."
+    },
+    "inputs_json": {
+      "type": "string",
+      "title": "Input Snapshot (JSON)",
+      "description": "The observed value, the lever applied and where the observation came from, frozen at run time."
+    },
+    "assumptions_json": {
+      "type": "string",
+      "title": "Assumptions At Run (JSON)"
+    },
+    "results_json": {
+      "type": "string",
+      "title": "Modelled Results (JSON)"
+    },
+    "index_baseline": {
+      "type": "number",
+      "title": "Observed Baseline Index"
+    },
+    "index_projected": {
+      "type": "number",
+      "title": "Modelled Index (Estimate)"
+    },
+    "index_delta": {
+      "type": "number",
+      "title": "Modelled Change"
+    },
+    "confidence": {
+      "type": "number",
+      "title": "Confidence (%)",
+      "description": "Share of the model's inputs that had records behind them. Low confidence means the estimate rests on thin data."
+    },
+    "data_completeness": {
+      "type": "number",
+      "title": "Data Completeness (%)"
+    },
+    "metrics_used": {
+      "type": "number",
+      "title": "Inputs Used",
+      "default": 0
+    },
+    "metrics_missing": {
+      "type": "number",
+      "title": "Inputs With No Records",
+      "default": 0
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Started At"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Completed At"
+    },
+    "duration_ms": {
+      "type": "number",
+      "title": "Duration (ms)"
+    },
+    "run_by": {
+      "type": "string",
+      "title": "Run By"
+    },
+    "run_by_id": {
+      "type": "string",
+      "title": "Run By (user id)"
+    },
+    "engine_version": {
+      "type": "string",
+      "title": "Engine Version"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "run_ref",
+    "model_id",
+    "scenario_id",
+    "status",
+    "estimate_notice",
+    "started_at"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$and": [
+            {
+              "$or": [
+                {
+                  "user_condition": {
+                    "role": "admin"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Provider Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Management"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Administration"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Quality & Improvement Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Auditor"
+                  }
+                }
+              ]
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            },
+            {
+              "user_condition": {
+                "account_status": "Active",
+                "access_approved": true
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

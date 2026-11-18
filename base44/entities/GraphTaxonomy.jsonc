@@ -1,0 +1,218 @@
+{
+  "name": "GraphTaxonomy",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Written by the graph registry service."
+    },
+    "taxonomy_key": {
+      "type": "string",
+      "title": "Taxonomy Key"
+    },
+    "name": {
+      "type": "string",
+      "title": "Name"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description"
+    },
+    "version": {
+      "type": "number",
+      "title": "Version",
+      "default": 1
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Active",
+        "Retired"
+      ],
+      "enumColors": [
+        "green",
+        "gray"
+      ],
+      "default": "Active"
+    },
+    "is_system": {
+      "type": "boolean",
+      "title": "Generated From This App's Registers",
+      "description": "True when the type catalogue was built from the app's own node types rather than entered by a person.",
+      "default": true
+    },
+    "node_types_json": {
+      "type": "string",
+      "title": "Controlled Node Types"
+    },
+    "relationship_types_json": {
+      "type": "string",
+      "title": "Controlled Relationship Types"
+    },
+    "node_type_count": {
+      "type": "number",
+      "title": "Node Types",
+      "default": 0
+    },
+    "relationship_type_count": {
+      "type": "number",
+      "title": "Relationship Types",
+      "default": 0
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Generated At"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "taxonomy_key",
+    "name",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$and": [
+            {
+              "$or": [
+                {
+                  "user_condition": {
+                    "role": "admin"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Provider Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Management"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Administration"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Quality & Improvement Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Auditor"
+                  }
+                }
+              ]
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            },
+            {
+              "user_condition": {
+                "account_status": "Active",
+                "access_approved": true
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

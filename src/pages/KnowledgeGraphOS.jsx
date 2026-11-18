@@ -10,6 +10,7 @@ import GraphExplorerPanel from '@/components/graph/GraphExplorerPanel';
 import TraceabilityPanel from '@/components/graph/TraceabilityPanel';
 import LinkRegisterPanel from '@/components/graph/LinkRegisterPanel';
 import GraphCanvas from '@/components/graph/GraphCanvas';
+import GraphRegistryPanel from '@/components/graph/GraphRegistryPanel';
 
 export default function KnowledgeGraphOS() {
   const [data, setData] = useState(null);
@@ -68,6 +69,7 @@ export default function KnowledgeGraphOS() {
             <TabsTrigger value="explorer">Graph explorer</TabsTrigger>
             <TabsTrigger value="traceability">Traceability chains</TabsTrigger>
             <TabsTrigger value="links">Links register</TabsTrigger>
+            <TabsTrigger value="registry">Knowledge registry</TabsTrigger>
           </TabsList>
 
           <TabsContent value="command" className="mt-4 space-y-3">
@@ -94,6 +96,10 @@ export default function KnowledgeGraphOS() {
               tenantId={data.tenantId}
               onChanged={load}
             />
+          </TabsContent>
+
+          <TabsContent value="registry" className="mt-4">
+            <GraphRegistryPanel />
           </TabsContent>
         </Tabs>
         </div>

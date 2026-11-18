@@ -1,0 +1,289 @@
+{
+  "name": "DigitalTwinScenario",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Stamped by the digital twin service; never from the browser."
+    },
+    "scenario_key": {
+      "type": "string",
+      "title": "Scenario Key"
+    },
+    "name": {
+      "type": "string",
+      "title": "Scenario Name"
+    },
+    "version": {
+      "type": "number",
+      "title": "Version",
+      "default": 1
+    },
+    "model_id": {
+      "type": "string",
+      "title": "Model Record ID"
+    },
+    "model_key": {
+      "type": "string",
+      "title": "Model Key"
+    },
+    "model_name": {
+      "type": "string",
+      "title": "Model"
+    },
+    "model_version": {
+      "type": "number",
+      "title": "Model Version At Creation",
+      "description": "Pinned so a later model change cannot silently move this scenario."
+    },
+    "description": {
+      "type": "string",
+      "title": "What This Scenario Tests"
+    },
+    "levers_json": {
+      "type": "string",
+      "title": "Levers (JSON)",
+      "description": "One change per model input, with the reason for it. Never a hidden assumption."
+    },
+    "lever_count": {
+      "type": "number",
+      "title": "Levers",
+      "default": 0
+    },
+    "baseline_note": {
+      "type": "string",
+      "title": "Baseline Note"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Draft",
+        "Submitted",
+        "Approved",
+        "Returned",
+        "Archived"
+      ],
+      "enumColors": [
+        "gray",
+        "blue",
+        "green",
+        "yellow",
+        "gray"
+      ],
+      "default": "Draft"
+    },
+    "author": {
+      "type": "string",
+      "title": "Author"
+    },
+    "author_id": {
+      "type": "string",
+      "title": "Author (user id)"
+    },
+    "submitted_by": {
+      "type": "string",
+      "title": "Submitted By"
+    },
+    "submitted_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Submitted At"
+    },
+    "decided_by": {
+      "type": "string",
+      "title": "Decision By"
+    },
+    "decided_by_id": {
+      "type": "string",
+      "title": "Decision By (user id)"
+    },
+    "decided_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Decision At"
+    },
+    "decision_note": {
+      "type": "string",
+      "title": "Decision Note"
+    },
+    "approval_authority": {
+      "type": "string",
+      "title": "Approval Authority",
+      "enum": [
+        "Independent reviewer",
+        "Administrator override"
+      ],
+      "enumColors": [
+        "green",
+        "yellow"
+      ],
+      "default": "Independent reviewer"
+    },
+    "self_approved": {
+      "type": "boolean",
+      "title": "Approved By Its Author",
+      "default": false
+    },
+    "run_count": {
+      "type": "number",
+      "title": "Simulations Run",
+      "default": 0
+    },
+    "last_run_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Last Simulation"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "scenario_key",
+    "name",
+    "model_id",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$and": [
+            {
+              "$or": [
+                {
+                  "user_condition": {
+                    "role": "admin"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Provider Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Management"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Administration"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Quality & Improvement Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Auditor"
+                  }
+                }
+              ]
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            },
+            {
+              "user_condition": {
+                "account_status": "Active",
+                "access_approved": true
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

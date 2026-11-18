@@ -1,0 +1,239 @@
+{
+  "name": "GraphOntology",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Written by the graph registry service."
+    },
+    "ontology_key": {
+      "type": "string",
+      "title": "Ontology Key"
+    },
+    "name": {
+      "type": "string",
+      "title": "Name"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description"
+    },
+    "version": {
+      "type": "number",
+      "title": "Version",
+      "default": 1
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Draft",
+        "Validated",
+        "Approved",
+        "Retired"
+      ],
+      "enumColors": [
+        "gray",
+        "blue",
+        "green",
+        "gray"
+      ],
+      "default": "Draft"
+    },
+    "is_system": {
+      "type": "boolean",
+      "title": "Built In",
+      "default": false
+    },
+    "node_types_json": {
+      "type": "string",
+      "title": "Node Types Declared"
+    },
+    "allowed_relationships_json": {
+      "type": "string",
+      "title": "Allowed Triples",
+      "description": "Ordered triples of from type, relationship and to type. A star (*) means any controlled type."
+    },
+    "triple_count": {
+      "type": "number",
+      "title": "Allowed Triples",
+      "default": 0
+    },
+    "constraints": {
+      "type": "string",
+      "title": "Constraints",
+      "description": "What the registry enforces with this ontology: endpoint checks, no self links, no cross-business links."
+    },
+    "validated_by": {
+      "type": "string",
+      "title": "Validated By"
+    },
+    "validated_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Validated At"
+    },
+    "approved_by": {
+      "type": "string",
+      "title": "Approved By"
+    },
+    "approved_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Approved At"
+    },
+    "approval_note": {
+      "type": "string",
+      "title": "Approval Note"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "ontology_key",
+    "name",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$and": [
+            {
+              "$or": [
+                {
+                  "user_condition": {
+                    "role": "admin"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Provider Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Management"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Administration"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Quality & Improvement Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Auditor"
+                  }
+                }
+              ]
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            },
+            {
+              "user_condition": {
+                "account_status": "Active",
+                "access_approved": true
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,304 @@
+{
+  "name": "DigitalTwinModel",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Stamped by the digital twin service; never from the browser."
+    },
+    "model_key": {
+      "type": "string",
+      "title": "Model Key"
+    },
+    "name": {
+      "type": "string",
+      "title": "Model Name"
+    },
+    "version": {
+      "type": "number",
+      "title": "Version",
+      "default": 1
+    },
+    "domain": {
+      "type": "string",
+      "title": "Domain",
+      "description": "The operating area this twin models."
+    },
+    "purpose": {
+      "type": "string",
+      "title": "Purpose"
+    },
+    "description": {
+      "type": "string",
+      "title": "How The Model Works"
+    },
+    "metrics_json": {
+      "type": "string",
+      "title": "Model Inputs (JSON)",
+      "description": "Chosen metrics with their weight and, for counts, the ceiling treated as the worst case."
+    },
+    "metric_count": {
+      "type": "number",
+      "title": "Inputs",
+      "default": 0
+    },
+    "assumptions": {
+      "type": "string",
+      "title": "Stated Assumptions",
+      "description": "What the model assumes. Printed on every simulation it produces."
+    },
+    "confidence_note": {
+      "type": "string",
+      "title": "Confidence Note"
+    },
+    "horizon": {
+      "type": "string",
+      "title": "Planning Horizon"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Draft",
+        "Validated",
+        "Approved",
+        "Retired"
+      ],
+      "enumColors": [
+        "gray",
+        "blue",
+        "green",
+        "gray"
+      ],
+      "default": "Draft"
+    },
+    "author": {
+      "type": "string",
+      "title": "Author"
+    },
+    "author_id": {
+      "type": "string",
+      "title": "Author (user id)"
+    },
+    "reviewed_by": {
+      "type": "string",
+      "title": "Validated By"
+    },
+    "reviewed_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Validated At"
+    },
+    "reviewed_note": {
+      "type": "string",
+      "title": "Validation Note"
+    },
+    "approved_by": {
+      "type": "string",
+      "title": "Approved By"
+    },
+    "approved_by_id": {
+      "type": "string",
+      "title": "Approved By (user id)"
+    },
+    "approved_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Approved At"
+    },
+    "approval_note": {
+      "type": "string",
+      "title": "Approval Note"
+    },
+    "approval_authority": {
+      "type": "string",
+      "title": "Approval Authority",
+      "enum": [
+        "Independent reviewer",
+        "Administrator override"
+      ],
+      "enumColors": [
+        "green",
+        "yellow"
+      ],
+      "default": "Independent reviewer"
+    },
+    "self_approved": {
+      "type": "boolean",
+      "title": "Approved By Its Author",
+      "default": false
+    },
+    "previous_version_id": {
+      "type": "string",
+      "title": "Previous Version Record"
+    },
+    "change_note": {
+      "type": "string",
+      "title": "What Changed In This Version"
+    },
+    "retired_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Retired At"
+    },
+    "review_due": {
+      "type": "string",
+      "format": "date",
+      "title": "Model Review Due"
+    },
+    "engine_version": {
+      "type": "string",
+      "title": "Engine Version"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "model_key",
+    "name",
+    "version",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$and": [
+            {
+              "$or": [
+                {
+                  "user_condition": {
+                    "role": "admin"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Provider Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Management"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Administration"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Quality & Improvement Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Auditor"
+                  }
+                }
+              ]
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            },
+            {
+              "user_condition": {
+                "account_status": "Active",
+                "access_approved": true
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

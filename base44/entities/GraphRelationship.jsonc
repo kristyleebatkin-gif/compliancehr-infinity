@@ -1,0 +1,326 @@
+{
+  "name": "GraphRelationship",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Stamped by the graph registry service; never from the browser."
+    },
+    "relationship_key": {
+      "type": "string",
+      "title": "Relationship Key",
+      "description": "Source key, relationship type and target key, so a rebuild cannot duplicate an edge."
+    },
+    "from_entity_key": {
+      "type": "string",
+      "title": "From Node"
+    },
+    "from_entity_id": {
+      "type": "string",
+      "title": "From Node Record ID"
+    },
+    "from_type": {
+      "type": "string",
+      "title": "From Type"
+    },
+    "from_label": {
+      "type": "string",
+      "title": "From Label"
+    },
+    "to_entity_key": {
+      "type": "string",
+      "title": "To Node"
+    },
+    "to_entity_id": {
+      "type": "string",
+      "title": "To Node Record ID"
+    },
+    "to_type": {
+      "type": "string",
+      "title": "To Type"
+    },
+    "to_label": {
+      "type": "string",
+      "title": "To Label"
+    },
+    "relationship": {
+      "type": "string",
+      "title": "Relationship",
+      "enum": [
+        "HAS_STANDARD",
+        "HAS_OBLIGATION",
+        "HAS_REQUIREMENT",
+        "REQUIRES",
+        "REFERENCES",
+        "IMPLEMENTED_BY",
+        "SUPPORTED_BY",
+        "LINKED_TO",
+        "MITIGATED_BY",
+        "PRODUCES",
+        "GENERATES",
+        "CREATES",
+        "ASSIGNED_TO",
+        "EVIDENCES",
+        "AUDITED_BY",
+        "VALIDATED_BY",
+        "APPROVED_BY",
+        "REPORTS_TO",
+        "MANAGED_BY",
+        "GOVERNS",
+        "MONITORED_BY",
+        "OWNED_BY",
+        "RELATES_TO"
+      ],
+      "enumColors": [
+        "blue",
+        "blue",
+        "blue",
+        "purple",
+        "purple",
+        "teal",
+        "teal",
+        "gray",
+        "red",
+        "green",
+        "green",
+        "green",
+        "yellow",
+        "green",
+        "pink",
+        "pink",
+        "pink",
+        "gray",
+        "gray",
+        "purple",
+        "gray",
+        "gray",
+        "gray"
+      ],
+      "default": "RELATES_TO"
+    },
+    "weight": {
+      "type": "number",
+      "title": "Weight",
+      "default": 100
+    },
+    "confidence": {
+      "type": "number",
+      "title": "Confidence (%)",
+      "description": "How certain this edge is, from the rule or link that produced it."
+    },
+    "provenance_type": {
+      "type": "string",
+      "title": "Provenance",
+      "enum": [
+        "Record field",
+        "Knowledge link",
+        "Derived rule"
+      ],
+      "enumColors": [
+        "green",
+        "blue",
+        "gray"
+      ],
+      "default": "Derived rule"
+    },
+    "provenance_detail": {
+      "type": "string",
+      "title": "Provenance Detail",
+      "description": "The field, link or rule that produced this edge, in plain language."
+    },
+    "source_field": {
+      "type": "string",
+      "title": "Source Field"
+    },
+    "knowledge_link_id": {
+      "type": "string",
+      "title": "Links Register Record",
+      "description": "The KnowledgeLink this edge mirrors, when one exists. The Links register stays the only hand-edited store."
+    },
+    "derived_rule": {
+      "type": "string",
+      "title": "Derivation Rule"
+    },
+    "valid_from": {
+      "type": "string",
+      "format": "date",
+      "title": "Valid From"
+    },
+    "valid_to": {
+      "type": "string",
+      "format": "date",
+      "title": "Valid To"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Active",
+        "Retracted",
+        "Superseded"
+      ],
+      "enumColors": [
+        "green",
+        "gray",
+        "gray"
+      ],
+      "default": "Active"
+    },
+    "index_version": {
+      "type": "string",
+      "title": "Index Version"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "relationship_key",
+    "from_entity_key",
+    "to_entity_key",
+    "relationship",
+    "provenance_type",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$and": [
+            {
+              "$or": [
+                {
+                  "user_condition": {
+                    "role": "admin"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Provider Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Management"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Administration"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Quality & Improvement Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Auditor"
+                  }
+                }
+              ]
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            },
+            {
+              "user_condition": {
+                "account_status": "Active",
+                "access_approved": true
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,6 +1,6 @@
 # Phases 5–10 Capability Track — Read-Only Inventory & Conflict Register
 
-Status: **Phase 0 complete, conflicts resolved, Step C5 built.**
+Status: **Phase 0 complete, conflicts resolved, Steps C5, C6 and C7 built.**
 Date: 18 November 2026.
 
 Owner decisions recorded before any build:
@@ -26,6 +26,21 @@ creates no fallback standard, control or evidence. A test cycle ran assessment, 
 progress, verification, gap closure and a manual control test on a temporary framework, then removed
 every test record and its audit entries.
 
+**Step C7 delivered (Knowledge Graph & Digital Twin OS).** Seven tenant-scoped records:
+`GraphEntity`, `GraphRelationship`, `GraphTaxonomy`, `GraphOntology`, `DigitalTwinModel`,
+`DigitalTwinScenario`, `SimulationRun`. Two server-authorised functions: `knowledgeGraphRegistry`
+(list, node, rebuild) and `digitalTwin` (models, scenarios, simulations). Two workspaces: a new
+**Knowledge registry** tab on the existing Knowledge Graph OS at `/knowledge-graph`, and the Digital
+Twin module at `/digital-twin`. Engines: `base44/shared/graphRegistry.ts` (index, endpoint and
+ontology validation) and `base44/shared/digitalTwin.ts` (observed-input computation and simulation).
+Conflict C3 was honoured: `KnowledgeLink` remains the only hand-edited edge store, and
+`GraphRelationship` mirrors a recorded link by `knowledge_link_id` rather than copying it. The index
+is derived, rebuildable and validated, so no fallback master data was created. A test cycle created a
+model, validated it, approved it, created a scenario, ran a simulation, submitted and decided the
+scenario and opened a model revision, then removed every test record and its audit entries. The
+graph index itself was kept: it indexes 109 real register records into 30 validated relationships
+with 0 candidates rejected.
+
 This document records what exists, what is genuinely missing, and which conflicts must be resolved
 before any schema is written. Nothing here is a delivery claim.
 
@@ -35,12 +50,12 @@ before any schema is written. Nothing here is a delivery claim.
 
 | Surface | Count (verified on disk) | Source |
 | --- | --- | --- |
-| Entity schemas | 206 | `base44/entities/` |
-| Backend functions | 123 | `base44/functions/` |
+| Entity schemas | 220 | `base44/entities/` |
+| Backend functions | 127 | `base44/functions/` |
 | Workflows | 68 | `base44/workflows/` |
-| Pages | 106 | `src/pages/` |
-| Components | 916 | `src/components/**/*.jsx` |
-| Registered routes | ~120 | `src/App.jsx` |
+| Pages | 108 | `src/pages/` |
+| Components | 944 | `src/components/**/*.jsx` |
+| Registered routes | 122 | `src/App.jsx` |
 | Navigation keys | 65 | `src/lib/moduleDirectory.js` |
 
 Already-delivered operating systems relevant to this request: Workflow Studio (`WorkflowDefinition`,
@@ -85,15 +100,19 @@ autonomous today; assessment results are only ever recomputed or typed in.
 ### Phase 7 — Knowledge Graph & Digital Twin
 | Requested table | Status | Existing equivalent |
 | --- | --- | --- |
-| `graph_entities` | Partial | Register records are the nodes; `KnowledgeLink` references them by type and id |
-| `graph_relationships` | Partial | `KnowledgeLink` — 19 relationship types, confidence, source, status, tenant-scoped |
-| `graph_taxonomies` | Missing | — |
-| `graph_ontologies` | Missing | — |
-| `digital_twin_models` | Missing | `DIGITAL_TWIN_RECORDS` constants only |
-| `digital_twin_scenarios` | Missing | — |
-| `simulation_runs` | Missing | Static content in `careSphere*Data.js` files |
+| `graph_entities` | Present (C7) | `GraphEntity` — tenanted reference to a real register record with type, canonical key, source register and safe summary |
+| `graph_relationships` | Present (C7) | `GraphRelationship` — validated edges with type, weight, confidence, provenance, validity dates; mirrors `KnowledgeLink` by reference |
+| `graph_taxonomies` | Present (C7) | `GraphTaxonomy` — the controlled node and relationship types generated from this app's registers |
+| `graph_ontologies` | Present (C7) | `GraphOntology` — allowed triples and constraints every indexed edge is validated against |
+| `digital_twin_models` | Present (C7) | `DigitalTwinModel` — versioned inputs, weights, ceilings, assumptions and approval record |
+| `digital_twin_scenarios` | Present (C7) | `DigitalTwinScenario` — levers with a reason each, pinned model version, review decision |
+| `simulation_runs` | Present (C7) | `SimulationRun` — pinned versions, input snapshot with provenance, modelled results, estimate notice |
 
-A link table exists and is used by five modules. A digital twin does not exist.
+Conflict C3 stands resolved as recorded: `KnowledgeLink` is still the only place an edge is recorded
+by hand, and the relationship register is a derived, rebuildable mirror. No node, edge or type is
+invented to fill a gap; an unlinked record is reported as unlinked.
+
+A link table exists and is used by five modules. The graph index and the digital twin now exist.
 
 ### Phase 8 — Enterprise Automation Fabric
 | Requested table | Status | Existing equivalent |
@@ -206,9 +225,9 @@ real counts only → checkpoint, then stop for review.
 
 | Step | Capability | Real gap closed | Depends on |
 | --- | --- | --- | --- |
-| C5 | Decision Intelligence | Decision register with evidence links, approvals, outcome target vs actual | C1, C5, C6 |
-| C6 | Autonomous Compliance Operations | Persisted assessment runs and control-test results, feeding existing findings | C5, C9 |
-| C7 | Graph & Digital Twin | Scenario and simulation-run records over the existing link graph | C3 |
+| C5 | Decision Intelligence ✅ | Decision register with evidence links, approvals, outcome target vs actual | C1, C5, C6 |
+| C6 | Autonomous Compliance Operations ✅ | Persisted assessment runs and control-test results, feeding existing findings | C5, C9 |
+| C7 | Graph & Digital Twin ✅ | Indexed, ontology-validated graph registry; versioned twin models, scenarios and simulation runs over the existing registers | C3 |
 | C8 | Automation Fabric | Event catalogue, subscriptions, integration messages beside Workflow Studio | C4, C7 |
 | C9 | AI Workforce | Tool register and agent-to-tool grants over the existing AI registers | C2 |
 | C10 | Autonomous Enterprise | Portfolio → program → objective → benefit → capability → maturity chain | C6, C1 |

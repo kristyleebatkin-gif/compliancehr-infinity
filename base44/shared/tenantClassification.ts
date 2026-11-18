@@ -231,6 +231,13 @@ export const BUSINESS_OWNED_ENTITIES = Object.freeze([
   'ComplianceGapAnalysis',
   'ControlTestingResult',
   'RemediationPlan',
+  'GraphEntity',
+  'GraphRelationship',
+  'GraphTaxonomy',
+  'GraphOntology',
+  'DigitalTwinModel',
+  'DigitalTwinScenario',
+  'SimulationRun',
 ]);
 
 export function tenantGroupOf(entityName) {

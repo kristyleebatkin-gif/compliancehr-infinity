@@ -1,0 +1,246 @@
+{
+  "name": "GraphEntity",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Stamped by the graph registry service; never from the browser."
+    },
+    "entity_type": {
+      "type": "string",
+      "title": "Node Type",
+      "enum": [
+        "standard",
+        "control",
+        "evidence",
+        "finding",
+        "policy",
+        "form",
+        "audit",
+        "capa",
+        "risk",
+        "issue",
+        "recommendation"
+      ],
+      "enumColors": [
+        "blue",
+        "purple",
+        "green",
+        "red",
+        "teal",
+        "gray",
+        "pink",
+        "yellow",
+        "orange",
+        "red",
+        "gray"
+      ],
+      "default": "standard"
+    },
+    "entity_key": {
+      "type": "string",
+      "title": "Canonical Key",
+      "description": "Stable graph key: node type plus the source record id."
+    },
+    "source_entity": {
+      "type": "string",
+      "title": "Source Register",
+      "description": "The entity that actually holds this record, e.g. RegulatoryStandard."
+    },
+    "source_record_id": {
+      "type": "string",
+      "title": "Source Record ID"
+    },
+    "display_label": {
+      "type": "string",
+      "title": "Display Label"
+    },
+    "summary": {
+      "type": "string",
+      "title": "Safe Summary",
+      "description": "Short, non-sensitive context copied from the record for graph reading."
+    },
+    "module_label": {
+      "type": "string",
+      "title": "Module"
+    },
+    "module_path": {
+      "type": "string",
+      "title": "Module Route",
+      "description": "Where the source record is worked on in this app."
+    },
+    "record_status": {
+      "type": "string",
+      "title": "Record Status"
+    },
+    "relationship_count": {
+      "type": "number",
+      "title": "Relationships",
+      "default": 0
+    },
+    "index_version": {
+      "type": "string",
+      "title": "Index Version"
+    },
+    "last_indexed_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Last Indexed"
+    },
+    "indexed_by": {
+      "type": "string",
+      "title": "Indexed By"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "entity_type",
+    "entity_key",
+    "source_entity",
+    "source_record_id",
+    "display_label"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$and": [
+            {
+              "$or": [
+                {
+                  "user_condition": {
+                    "role": "admin"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Provider Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Management"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Administration"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Quality & Improvement Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Auditor"
+                  }
+                }
+              ]
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            },
+            {
+              "user_condition": {
+                "account_status": "Active",
+                "access_approved": true
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
