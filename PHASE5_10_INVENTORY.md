@@ -94,8 +94,10 @@ decision. This is a real gap.
 | `control_testing_results` | Partial | `ComplianceControl.last_tested_date` / `next_test_date`, `AssuranceEvidence.verification_status` |
 | `remediation_plans` | Partial | `AssuranceFinding.corrective_action`, `ImprovementAction` |
 
-V8000’s nightly runner is a pure function with no store and no schedule. Nothing in the app is
-autonomous today; assessment results are only ever recomputed or typed in.
+V8000’s nightly runner is a pure function with no store and no schedule. Before C6, nothing in the
+app stored an assessment: results were recomputed or typed in. C6 keeps the nightly runner as it is
+and adds a persisted, record-reading assessment behind the `autonomousCompliance` function, so a
+score now has stored control tests behind it rather than a recomputation.
 
 ### Phase 7 — Knowledge Graph & Digital Twin
 | Requested table | Status | Existing equivalent |
@@ -234,8 +236,12 @@ real counts only → checkpoint, then stop for review.
 
 ---
 
-## 5. Not done in this step, by design
+## 5. Phase 0 baseline, and what C5–C7 changed since
 
-No entity, function, workflow, route, permission, style or data change. No deployment. The next
-step cannot start until C1 and C7 are decided, because both change what "done" means for every
-later phase.
+Phase 0 itself changed no entity, function, workflow, route, permission, style or data record, and
+deployed nothing. Since then C5, C6 and C7 each added their own records, one server-authorised
+function, one module and its audit writes, as recorded in §4 and in `MASTER_TODO.md`. No existing
+module, route, entity or role was removed or replaced by any of the three steps.
+
+Named checkpoints, one per step: C5 Decision Intelligence, C6 Autonomous Compliance Operations,
+**C7 — Knowledge Graph & Digital Twin OS**.

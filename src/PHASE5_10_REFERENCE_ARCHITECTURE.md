@@ -20,8 +20,8 @@ If the reference and the records ever disagree, the records win.
 | 4 | OpenAPI 3.1 contracts | §5 below — one contract per backend function | Reference, C5 function only |
 | 5 | NestJS services | Not built. The equivalent is `decisionRegister` (auth, validation, transitions, audit) | Replaced by function |
 | 6 | Next.js frontend | Not built. The equivalent is `src/pages/DecisionIntelligence.jsx` + `src/components/decisions/*` | Replaced by React app |
-| 7 | Knowledge Graph Architecture | Existing: `KnowledgeLink`, `KnowledgeGraphOS`, `lib/knowledgeGraph.js`. Gaps in C7 | Partial |
-| 8 | Digital Twin Architecture | Not built (register phase 12 target). Gaps in C7 | Planned |
+| 7 | Knowledge Graph Architecture | Live: `GraphEntity`, `GraphRelationship`, `GraphTaxonomy`, `GraphOntology`, `knowledgeGraphRegistry`, `base44/shared/graphRegistry.ts`, registry tab at `/knowledge-graph`. References §8 | Delivered for C7 |
+| 8 | Digital Twin Architecture | Live: `DigitalTwinModel`, `DigitalTwinScenario`, `SimulationRun`, `digitalTwin`, `base44/shared/digitalTwin.ts`, module at `/digital-twin`. References §8 | Delivered for C7 |
 | 9 | Event Fabric Architecture | Existing workflow triggers. Catalogue and message log are C8 gaps | Planned |
 | 10 | AI Workforce Architecture | Existing `AiModel`, `AiAgent`, `AiPrompt`, `AiInteraction`. Tool grants are C9 gaps | Partial |
 | 11 | Enterprise Strategy Architecture | Not built; C10 | Planned |
@@ -712,3 +712,557 @@ verified and current evidence scores 100, unverified or in-review evidence 50, e
 missing evidence 0; the assessment score is the mean control score; confidence is the share of
 controls holding any evidence; the risk score adds 25 per critical gap, 12 per high, 6 per medium and
 2 per low, capped at 100.
+
+---
+
+## 8. C7 — Knowledge Graph & Digital Twin OS (design-only references)
+
+Live implementation: `GraphEntity`, `GraphRelationship`, `GraphTaxonomy`, `GraphOntology`,
+`DigitalTwinModel`, `DigitalTwinScenario`, `SimulationRun`; the `knowledgeGraphRegistry` and
+`digitalTwin` functions; the engines in `base44/shared/graphRegistry.ts` and
+`base44/shared/digitalTwin.ts`; the registry tab at `/knowledge-graph` and the module at
+`/digital-twin`.
+
+**Reuse decision.** Nodes are the existing registers (`RegulatoryStandard`, `ComplianceControl`,
+`AssuranceEvidence`, `AssuranceFinding`, `Policy`, `FormTemplate`, `InternalAudit`,
+`ImprovementAction`, `Risk`, `ComplianceIssue`, `AiRecommendation`). No register was copied, and no
+node, edge or type was invented to fill a gap. An edge is recorded by hand only in `KnowledgeLink`;
+`GraphRelationship` is a derived, rebuildable index that mirrors it and the record fields, so
+rebuilding can never duplicate an edge or silently invent one. An unlinked record is reported as
+unlinked.
+
+**What the index refuses.** An edge whose endpoint is not an indexed record of the same business; an
+edge from a record to itself; an edge the ontology's allowed triples do not cover. Rejections are
+counted and reported, never dropped silently. The house taxonomy and ontology are generated from this
+app's own node and relationship types, so the ontology cannot drift from the registers it describes.
+
+**What the twin will not do.** It returns a modelled estimate and says so on every run: the
+`estimate_notice` is stored with the run and cannot be blanked. An input with no records behind it is
+excluded from the arithmetic and lowers `confidence` (the share of model weight that had records);
+it is never filled with a default, a zero, or a figure from another model. A model whose inputs all
+lack records refuses to simulate rather than producing a number. Every lever carries a stated reason,
+and the model's version, status and assumptions are pinned on the run so a later edit cannot move a
+past result.
+
+### 8.1 PostgreSQL DDL (mirror of the seven entities)
+
+```sql
+create table graph_entity (
+  id                 text primary key,
+  tenant_id          text not null,
+  entity_type        text not null check (entity_type in ('standard','control','evidence','finding',
+                       'policy','form','audit','capa','risk','issue','recommendation')),
+  entity_key         text not null,
+  source_entity      text not null,   -- RegulatoryStandard, ComplianceControl, ...
+  source_record_id   text not null,
+  display_label      text not null,
+  summary            text,
+  module_label       text,
+  module_path        text,
+  record_status      text,
+  relationship_count integer not null default 0,
+  index_version      text,
+  last_indexed_at    timestamptz,
+  indexed_by         text,
+  notes              text,
+  unique (tenant_id, entity_key)
+);
+create index graph_entity_type_idx on graph_entity (tenant_id, entity_type);
+create index graph_entity_source_idx on graph_entity (tenant_id, source_entity, source_record_id);
+
+create table graph_relationship (
+  id                  text primary key,
+  tenant_id           text not null,
+  relationship_key    text not null,   -- from key -> relationship -> to key
+  from_entity_key     text not null,
+  from_entity_id      text,
+  from_type           text not null,
+  from_label          text,
+  to_entity_key       text not null,
+  to_entity_id        text,
+  to_type             text not null,
+  to_label            text,
+  relationship        text not null check (relationship in ('HAS_STANDARD','HAS_OBLIGATION',
+                        'HAS_REQUIREMENT','REQUIRES','REFERENCES','IMPLEMENTED_BY','SUPPORTED_BY',
+                        'LINKED_TO','MITIGATED_BY','PRODUCES','GENERATES','CREATES','ASSIGNED_TO',
+                        'EVIDENCES','AUDITED_BY','VALIDATED_BY','APPROVED_BY','REPORTS_TO',
+                        'MANAGED_BY','GOVERNS','MONITORED_BY','OWNED_BY','RELATES_TO')),
+  weight              integer not null default 100,
+  confidence          smallint check (confidence between 0 and 100),
+  provenance_type     text not null check (provenance_type in ('Record field','Knowledge link','Derived rule')),
+  provenance_detail   text,
+  source_field        text,
+  knowledge_link_id   text,            -- KnowledgeLink.id when one exists
+  derived_rule        text,
+  valid_from          date,
+  valid_to            date,
+  status              text not null default 'Active' check (status in ('Active','Retracted','Superseded')),
+  index_version       text,
+  notes               text,
+  unique (tenant_id, relationship_key),
+  check (from_entity_key <> to_entity_key)
+);
+create index graph_relationship_from_idx on graph_relationship (tenant_id, from_entity_key);
+create index graph_relationship_to_idx on graph_relationship (tenant_id, to_entity_key);
+
+create table graph_taxonomy (
+  id                       text primary key,
+  tenant_id                text not null,
+  taxonomy_key             text not null,
+  name                     text not null,
+  description              text,
+  version                  integer not null default 1,
+  status                   text not null default 'Active' check (status in ('Active','Retired')),
+  is_system                boolean not null default true,
+  node_types_json          text,
+  relationship_types_json  text,
+  node_type_count          integer not null default 0,
+  relationship_type_count  integer not null default 0,
+  generated_at             timestamptz,
+  notes                    text,
+  unique (tenant_id, taxonomy_key)
+);
+
+create table graph_ontology (
+  id                       text primary key,
+  tenant_id                text not null,
+  ontology_key             text not null,
+  name                     text not null,
+  description              text,
+  version                  integer not null default 1,
+  status                   text not null default 'Draft' check (status in ('Draft','Validated',
+                             'Approved','Retired')),
+  is_system                boolean not null default false,
+  node_types_json          text,
+  allowed_relationships_json text,
+  triple_count             integer not null default 0,
+  constraints              text,
+  validated_by             text,
+  validated_at             timestamptz,
+  approved_by              text,
+  approved_at              timestamptz,
+  approval_note            text,
+  notes                    text,
+  unique (tenant_id, ontology_key)
+);
+
+create table digital_twin_model (
+  id                   text primary key,
+  tenant_id            text not null,
+  model_key            text not null,
+  name                 text not null,
+  version              integer not null default 1,
+  domain               text,
+  purpose              text,
+  description          text,
+  metrics_json         text not null,      -- inputs, weights, count ceilings
+  metric_count         integer not null default 0,
+  assumptions          text,
+  confidence_note      text,
+  horizon              text,
+  status               text not null default 'Draft' check (status in ('Draft','Validated',
+                         'Approved','Retired')),
+  author               text,
+  author_id            text,
+  reviewed_by          text,
+  reviewed_at          timestamptz,
+  reviewed_note        text,
+  approved_by          text,
+  approved_by_id       text,
+  approved_at          timestamptz,
+  approval_note        text,
+  approval_authority   text not null default 'Independent reviewer'
+                         check (approval_authority in ('Independent reviewer','Administrator override')),
+  self_approved        boolean not null default false,
+  previous_version_id  text references digital_twin_model (id),
+  change_note          text,
+  retired_at           timestamptz,
+  review_due           date,
+  engine_version       text,
+  notes                text,
+  unique (tenant_id, model_key, version)
+);
+create index digital_twin_model_latest_idx on digital_twin_model (tenant_id, model_key, version desc);
+
+create table digital_twin_scenario (
+  id                    text primary key,
+  tenant_id             text not null,
+  scenario_key          text not null,
+  name                  text not null,
+  version               integer not null default 1,
+  model_id              text not null references digital_twin_model (id),
+  model_key             text,
+  model_name            text,
+  model_version         integer,          -- pinned so a model edit cannot move this scenario
+  description           text,
+  levers_json           text not null,    -- one change per input, each with its reason
+  lever_count           integer not null default 0,
+  baseline_note         text,
+  status                text not null default 'Draft' check (status in ('Draft','Submitted',
+                          'Approved','Returned','Archived')),
+  author                text,
+  author_id             text,
+  submitted_by          text,
+  submitted_at          timestamptz,
+  decided_by            text,
+  decided_by_id         text,
+  decided_at            timestamptz,
+  decision_note         text,
+  approval_authority    text not null default 'Independent reviewer'
+                          check (approval_authority in ('Independent reviewer','Administrator override')),
+  self_approved         boolean not null default false,
+  run_count             integer not null default 0,
+  last_run_at           timestamptz,
+  notes                 text,
+  unique (tenant_id, scenario_key)
+);
+
+create table simulation_run (
+  id                       text primary key,
+  tenant_id                text not null,
+  run_ref                  text not null,
+  model_id                 text not null references digital_twin_model (id),
+  model_key                text,
+  model_name               text,
+  model_version            integer,
+  model_status_at_run      text,
+  scenario_id              text not null references digital_twin_scenario (id),
+  scenario_key             text,
+  scenario_name            text,
+  scenario_version         integer,
+  scenario_status_at_run   text,
+  status                   text not null check (status in ('Completed','Failed')),
+  estimate_notice          text not null,  -- cannot be blank: the run is a modelled estimate
+  inputs_json              text,
+  assumptions_json         text,
+  results_json             text,
+  index_baseline           numeric(6,2),
+  index_projected          numeric(6,2),
+  index_delta              numeric(6,2),
+  confidence               smallint check (confidence between 0 and 100),
+  data_completeness        smallint check (data_completeness between 0 and 100),
+  metrics_used             integer not null default 0,
+  metrics_missing          integer not null default 0,
+  started_at               timestamptz not null,
+  completed_at             timestamptz,
+  duration_ms              integer,
+  run_by                   text,
+  run_by_id                text,
+  engine_version           text,
+  notes                    text,
+  unique (tenant_id, run_ref)
+);
+create index simulation_run_model_idx on simulation_run (tenant_id, model_id, started_at desc);
+```
+
+### 8.2 `schema.prisma` — C7 (reference)
+
+```prisma
+model GraphEntity {
+  id                String   @id
+  tenantId          String   @map("tenant_id")
+  entityType        String   @map("entity_type")
+  entityKey         String   @map("entity_key")
+  sourceEntity      String   @map("source_entity")
+  sourceRecordId    String   @map("source_record_id")
+  displayLabel      String   @map("display_label")
+  summary           String?
+  moduleLabel       String?  @map("module_label")
+  modulePath        String?  @map("module_path")
+  recordStatus      String?  @map("record_status")
+  relationshipCount Int      @default(0) @map("relationship_count")
+  indexVersion      String?  @map("index_version")
+  lastIndexedAt     DateTime? @map("last_indexed_at")
+  indexedBy         String?  @map("indexed_by")
+  notes             String?
+
+  @@unique([tenantId, entityKey])
+  @@index([tenantId, entityType])
+  @@map("graph_entity")
+}
+
+model GraphRelationship {
+  id               String    @id
+  tenantId         String    @map("tenant_id")
+  relationshipKey  String    @map("relationship_key")
+  fromEntityKey    String    @map("from_entity_key")
+  fromEntityId     String?   @map("from_entity_id")
+  fromType         String    @map("from_type")
+  fromLabel        String?   @map("from_label")
+  toEntityKey      String    @map("to_entity_key")
+  toEntityId       String?   @map("to_entity_id")
+  toType           String    @map("to_type")
+  toLabel          String?   @map("to_label")
+  relationship     String
+  weight           Int       @default(100)
+  confidence       Int?
+  provenanceType   String    @map("provenance_type")
+  provenanceDetail String?   @map("provenance_detail")
+  sourceField      String?   @map("source_field")
+  knowledgeLinkId  String?   @map("knowledge_link_id")
+  derivedRule      String?   @map("derived_rule")
+  validFrom        DateTime? @map("valid_from") @db.Date
+  validTo          DateTime? @map("valid_to") @db.Date
+  status           String    @default("Active")
+  indexVersion     String?   @map("index_version")
+  notes            String?
+
+  @@unique([tenantId, relationshipKey])
+  @@index([tenantId, fromEntityKey])
+  @@index([tenantId, toEntityKey])
+  @@map("graph_relationship")
+}
+
+model GraphTaxonomy {
+  id                     String    @id
+  tenantId               String    @map("tenant_id")
+  taxonomyKey            String    @map("taxonomy_key")
+  name                   String
+  description            String?
+  version                Int       @default(1)
+  status                 String    @default("Active")
+  isSystem               Boolean   @default(true) @map("is_system")
+  nodeTypesJson          String?   @map("node_types_json")
+  relationshipTypesJson  String?   @map("relationship_types_json")
+  nodeTypeCount          Int       @default(0) @map("node_type_count")
+  relationshipTypeCount  Int       @default(0) @map("relationship_type_count")
+  generatedAt            DateTime? @map("generated_at")
+  notes                  String?
+
+  @@unique([tenantId, taxonomyKey])
+  @@map("graph_taxonomy")
+}
+
+model GraphOntology {
+  id                     String    @id
+  tenantId               String    @map("tenant_id")
+  ontologyKey            String    @map("ontology_key")
+  name                   String
+  description            String?
+  version                Int       @default(1)
+  status                 String    @default("Draft")
+  isSystem               Boolean   @default(false) @map("is_system")
+  nodeTypesJson          String?   @map("node_types_json")
+  allowedRelationshipsJson String? @map("allowed_relationships_json")
+  tripleCount            Int       @default(0) @map("triple_count")
+  constraints            String?
+  validatedBy            String?   @map("validated_by")
+  validatedAt            DateTime? @map("validated_at")
+  approvedBy             String?   @map("approved_by")
+  approvedAt             DateTime? @map("approved_at")
+  approvalNote           String?   @map("approval_note")
+  notes                  String?
+
+  @@unique([tenantId, ontologyKey])
+  @@map("graph_ontology")
+}
+
+model DigitalTwinModel {
+  id                 String    @id
+  tenantId           String    @map("tenant_id")
+  modelKey           String    @map("model_key")
+  name               String
+  version            Int       @default(1)
+  domain             String?
+  purpose            String?
+  description        String?
+  metricsJson        String    @map("metrics_json")
+  metricCount        Int       @default(0) @map("metric_count")
+  assumptions        String?
+  confidenceNote     String?   @map("confidence_note")
+  horizon            String?
+  status             String    @default("Draft")
+  author             String?
+  authorId           String?   @map("author_id")
+  reviewedBy         String?   @map("reviewed_by")
+  reviewedAt         DateTime? @map("reviewed_at")
+  reviewedNote       String?   @map("reviewed_note")
+  approvedBy         String?   @map("approved_by")
+  approvedById       String?   @map("approved_by_id")
+  approvedAt         DateTime? @map("approved_at")
+  approvalNote       String?   @map("approval_note")
+  approvalAuthority  String    @default("Independent reviewer") @map("approval_authority")
+  selfApproved       Boolean   @default(false) @map("self_approved")
+  previousVersionId  String?   @map("previous_version_id")
+  changeNote         String?   @map("change_note")
+  retiredAt          DateTime? @map("retired_at")
+  reviewDue          DateTime? @map("review_due") @db.Date
+  engineVersion      String?   @map("engine_version")
+  notes              String?
+  scenarios          DigitalTwinScenario[]
+  runs               SimulationRun[]
+
+  @@unique([tenantId, modelKey, version])
+  @@map("digital_twin_model")
+}
+
+model DigitalTwinScenario {
+  id                String    @id
+  tenantId          String    @map("tenant_id")
+  scenarioKey       String    @map("scenario_key")
+  name              String
+  version           Int       @default(1)
+  modelId           String    @map("model_id")
+  modelKey          String?   @map("model_key")
+  modelName         String?   @map("model_name")
+  modelVersion      Int?      @map("model_version")
+  description       String?
+  leversJson        String    @map("levers_json")
+  leverCount        Int       @default(0) @map("lever_count")
+  baselineNote      String?   @map("baseline_note")
+  status            String    @default("Draft")
+  author            String?
+  authorId          String?   @map("author_id")
+  submittedBy       String?   @map("submitted_by")
+  submittedAt       DateTime? @map("submitted_at")
+  decidedBy         String?   @map("decided_by")
+  decidedById       String?   @map("decided_by_id")
+  decidedAt         DateTime? @map("decided_at")
+  decisionNote      String?   @map("decision_note")
+  approvalAuthority String    @default("Independent reviewer") @map("approval_authority")
+  selfApproved      Boolean   @default(false) @map("self_approved")
+  runCount          Int       @default(0) @map("run_count")
+  lastRunAt         DateTime? @map("last_run_at")
+  notes             String?
+  model             DigitalTwinModel @relation(fields: [modelId], references: [id])
+  runs              SimulationRun[]
+
+  @@unique([tenantId, scenarioKey])
+  @@map("digital_twin_scenario")
+}
+
+model SimulationRun {
+  id                    String    @id
+  tenantId              String    @map("tenant_id")
+  runRef                String    @map("run_ref")
+  modelId               String    @map("model_id")
+  modelKey              String?   @map("model_key")
+  modelName             String?   @map("model_name")
+  modelVersion          Int?      @map("model_version")
+  modelStatusAtRun      String?   @map("model_status_at_run")
+  scenarioId            String    @map("scenario_id")
+  scenarioKey           String?   @map("scenario_key")
+  scenarioName          String?   @map("scenario_name")
+  scenarioVersion       Int?      @map("scenario_version")
+  scenarioStatusAtRun   String?   @map("scenario_status_at_run")
+  status                String
+  estimateNotice        String    @map("estimate_notice")
+  inputsJson            String?   @map("inputs_json")
+  assumptionsJson       String?   @map("assumptions_json")
+  resultsJson           String?   @map("results_json")
+  indexBaseline         Decimal?  @map("index_baseline") @db.Decimal(6, 2)
+  indexProjected        Decimal?  @map("index_projected") @db.Decimal(6, 2)
+  indexDelta            Decimal?  @map("index_delta") @db.Decimal(6, 2)
+  confidence            Int?
+  dataCompleteness      Int?      @map("data_completeness")
+  metricsUsed           Int       @default(0) @map("metrics_used")
+  metricsMissing        Int       @default(0) @map("metrics_missing")
+  startedAt             DateTime  @map("started_at")
+  completedAt           DateTime? @map("completed_at")
+  durationMs            Int?      @map("duration_ms")
+  runBy                 String?   @map("run_by")
+  runById               String?   @map("run_by_id")
+  engineVersion         String?   @map("engine_version")
+  notes                 String?
+  model                 DigitalTwinModel    @relation(fields: [modelId], references: [id])
+  scenario              DigitalTwinScenario @relation(fields: [scenarioId], references: [id])
+
+  @@unique([tenantId, runRef])
+  @@index([tenantId, modelId, startedAt])
+  @@map("simulation_run")
+}
+```
+
+### 8.3 OpenAPI 3.1 — `knowledgeGraphRegistry` (reference)
+
+```yaml
+paths:
+  /functions/knowledgeGraphRegistry:
+    post:
+      summary: Read the graph index, inspect one node, or rebuild the index
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [action]
+              properties:
+                action: { enum: [list, node, rebuild] }
+                entity_key: { type: string, description: "Required for node, e.g. risk:abc123" }
+                entity_type: { type: string }
+                search: { type: string }
+                node_limit: { type: integer, minimum: 1, maximum: 500 }
+                edge_limit: { type: integer, minimum: 1, maximum: 500 }
+      responses:
+        '200': { description: Nodes, edges, taxonomy, ontology and rejection counts }
+        '400': { description: Missing or invalid input }
+        '403': { description: Role or business not permitted }
+        '404': { description: Node is not indexed for this business }
+```
+
+### 8.4 OpenAPI 3.1 — `digitalTwin` (reference)
+
+```yaml
+paths:
+  /functions/digitalTwin:
+    post:
+      summary: Read the twin, build a model or scenario, decide it, or run a simulation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [action]
+              properties:
+                action:
+                  enum: [list, createModel, updateModel, reviseModel, validateModel, approveModel,
+                         retireModel, createScenario, updateScenario, reviseScenario,
+                         submitScenario, decideScenario, runSimulation]
+                model_id: { type: string }
+                scenario_id: { type: string }
+                name: { type: string, minLength: 3 }
+                domain: { type: string }
+                purpose: { type: string }
+                description: { type: string }
+                assumptions: { type: string }
+                horizon: { type: string }
+                review_due: { type: string, format: date }
+                metrics:
+                  type: array
+                  minItems: 1
+                  items:
+                    type: object
+                    required: [metric, weight]
+                    properties:
+                      metric: { type: string }
+                      weight: { type: integer, minimum: 1, maximum: 100 }
+                      ceiling: { type: integer, minimum: 1, maximum: 1000 }
+                levers:
+                  type: array
+                  items:
+                    type: object
+                    required: [metric, delta, rationale]
+                    properties:
+                      metric: { type: string }
+                      delta: { type: number }
+                      rationale: { type: string, minLength: 4, maxLength: 400 }
+                change_note: { type: string }
+                note: { type: string }
+                decision: { enum: [Approved, Returned] }
+      responses:
+        '200': { description: Result of the action, including the estimate notice on a run }
+        '400': { description: Invalid input, an unapproved model, or no records behind every input }
+        '403': { description: Role not permitted to build or decide }
+        '404': { description: Record is not in this business }
+        '409': { description: Model or scenario state does not allow this action }
+```
+
+Estimate rule, stated once and used by both the running engine and any future implementation: an
+input with records contributes its weight; an input without records is excluded from both the index
+and the confidence denominator's numerator; the modelled index is the weight-normalised mean of the
+input scores; confidence is the share of model weight that had records; a run with no input holding
+records is refused rather than scored.
+
+Named checkpoint for this step: **Capability Track C7 — Knowledge Graph & Digital Twin OS**.

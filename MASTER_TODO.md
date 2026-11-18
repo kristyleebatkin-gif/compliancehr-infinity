@@ -1,3 +1,53 @@
+## Capability Track C7 — Knowledge Graph & Digital Twin OS — 18 November 2026 (UTC)
+
+Seventh step of the separate C5–C10 capability track, not a re-plan of the 12-phase register. Code was
+saved in `54635930` ("Implement phase 5.10 digital twin and knowledge graph infrastructure"); this
+batch closed the remaining C7 items: engine regression coverage, the design reference and the inventory
+reconciliation, then the checks below.
+
+Delivered:
+- Graph index: `GraphEntity`, `GraphRelationship`, `GraphTaxonomy`, `GraphOntology`, the
+  `knowledgeGraphRegistry` function and `base44/shared/graphRegistry.ts`. Nodes are the existing
+  registers; `KnowledgeLink` stays the only hand-edited edge store and the relationship register is a
+  rebuildable mirror, so a rebuild cannot duplicate or invent an edge.
+- Digital twin: `DigitalTwinModel`, `DigitalTwinScenario`, `SimulationRun`, the `digitalTwin` function,
+  `base44/shared/digitalTwin.ts` and the module at `/digital-twin`. Inputs are read from records at run
+  time; a run pins model and scenario versions, stores the estimate notice with the result, and refuses
+  to model when no input has records behind it.
+- Registry tab inside the existing `/knowledge-graph` page; both modules registered in
+  `moduleDirectory.js`, the role matrix and `src/App.jsx`. No existing module, route or entity removed.
+- `tests/deno/capabilityC7.test.ts` — 11 tests over the two engines: derived triples all allowed,
+  duplicate source registers per node type absent, foreign/self/ontology-illegal edges rejected, node
+  provenance and route, estimate notice and provenance on a run, missing-record inputs excluded and
+  lowering confidence, refusal when no input has data, lever rationale required, lever outside the
+  model rejected, model input validation.
+- `PHASE5_10_INVENTORY.md` Phase 7 table and step summary, `PHASE5_10_REFERENCE_ARCHITECTURE.md` §8
+  (DDL for seven tables, Prisma models, OpenAPI for both functions, estimate rule) and its deliverable
+  rows 7–8 now read Delivered for C7.
+
+Checks actually run this session, each exit 0: `npm run lint`; `npm test` (220 passed, 0 failed);
+`npm run test:deno` (201 passed, 0 failed, including the 11 new C7 tests); `npm run typecheck`;
+`npm run build`. `knowledgeGraphRegistry` and `digitalTwin` were each invoked against this app's live
+database with `{action:"list"}` and returned 200 with real counts (109 indexed nodes, 32 holding
+relationships; graph coverage 29% of 109). Configured typecheck retains `checkJs=false`, so it is not
+comprehensive JavaScript type verification.
+
+Limitations recorded, not glossed: the twin currently holds no models, scenarios or runs, so no live
+simulation was executed in this batch and none was created to make the screen look fuller; the run
+path's own arithmetic is covered by engine tests only. No authenticated multi-identity or
+multi-business UAT this session, no role grant, no record migration, no production publication.
+`GraphEntity`/`GraphRelationship` writes are service-role only, so browser-side changes cannot bypass
+the ontology.
+
+OPEN, not complete: graph rebuild at scale beyond the 500-per-register index limit; ontology approval
+workflow beyond Validated; twin model approval independence under two real identities; simulation
+against a populated multi-business dataset; C8 event fabric, C9 AI workforce and C10 strategy remain
+unbuilt.
+
+Named checkpoint: **Capability Track C7 — Knowledge Graph & Digital Twin OS**.
+
+---
+
 ## Workspace OS independent review corrections — 17 November 2026
 
 Supersedes weaker save/read and RLS statements in the builder entry below. Restorable pre-review checkpoint: 6afc32e8520ca2b2b89db42f.
