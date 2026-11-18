@@ -1,3 +1,41 @@
+## PMM Phase 0–1 — Product Model Management factory adopted in place — 18 November 2026 (UTC)
+
+Applied the attached PMM plan to the existing app without replacing anything. No route, entity, record,
+permission, workflow or tenant was removed, renamed or migrated, and nothing was published.
+
+Delivered:
+- `base44/shared/pmmMetadata.ts` — the metadata repository: platform (runtime, target stack, migration rules,
+  eight compatibility entries), security, 13 domains, 39 registers (35 existing, 4 explicitly planned), 10
+  workflows, 7 reports, 6 AI skills and 26 capability rows reconciled to present/partial/planned/blocked.
+- `base44/shared/pmm.ts` — the Phase 1 engine: ten specification validators, loader, reference resolver,
+  canonical AST, MetadataGraph, ValidatedGraph (duplicate ids, dangling edges, domain dependency cycles) and
+  CompiledGraph with a deterministic order and stable hash. Pure: no clock, no I/O, no entity access.
+- `base44/functions/pmmFactory/entry.ts` — read-only service (`overview`, `validate`, `graph`, `compile`,
+  `capabilities`, `entity`), gated by approved access plus a compliance or management role; auditors read.
+- `/pmm-factory` workspace with five tabs: capability matrix, migration map, metadata graph, validation and
+  reference output (Prisma, SQL with FORCE RLS, OpenAPI, screen spec, test spec per register). Registered in
+  the module directory, the role matrix (frontend and shared) and `src/App.jsx`.
+- `src/PMM_PHASE0_BASELINE.md` — Phase 0 baseline, compatibility/adaptation map and the ten metadata
+  specifications. `tests/deno/pmm.test.ts` — 13 tests, including a reconciliation pass that fails if any named
+  register, field, module key, workflow file, report surface, AI surface or evidence path stops existing.
+
+Checks actually run this session, each exit 0: `npm run lint`; `npm test` (225 passed, 0 failed);
+`npm run test:deno` (299 passed, 0 failed, including the 13 new PMM tests); `npm run build`. The
+`pmmFactory` function was invoked against this app's live runtime for `overview`, `validate` (0 errors, 4
+planned-register warnings, 0 unresolved references), `graph` (0 dangling edges, 0 findings), `compile`
+(13 domains ordered, graph hash `b783610c`), `capabilities` (12 present, 11 partial, 2 planned, 1 blocked) and
+`entity` for Risk (5 artefacts generated).
+
+Limitations recorded, not glossed: Phases 2, 3, 4 and 6 are partial — Prisma, SQL/RLS, OpenAPI, screen and test
+output is generated as reference only and has never been deployed, migrated or executed; Phase 5 is planned;
+the MVP release gate stays blocked because its generated-output gates are unmet. Phases 7–12 are present as
+reused capability (they run in this app but were hand-built, not generated). No multi-identity UAT, no auditor
+read path exercised live, no production data touched, no publication.
+
+Named checkpoint: **PMM Phase 0–1 — Metadata Factory**.
+
+---
+
 ## Capability Track C10 — Autonomous Enterprise Operating System — 18 November 2026 (UTC)
 
 Last step of the separate C5–C10 capability track, and it closes that order. Nothing in the 12-phase

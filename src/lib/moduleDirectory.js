@@ -5,7 +5,7 @@ import {
   ReceiptText, Wrench, MapPin, HeartHandshake, Building2, Newspaper, Landmark,
   UserCog, Handshake, BarChart3, Briefcase, ShoppingCart, KanbanSquare,
   ClipboardList, MessageSquare, Lightbulb, LifeBuoy, BookOpen, Bot, ClipboardCheck, Activity, TrendingUp,
-  Sun, Inbox, Layers, FileCheck2, Network, Stethoscope, Crown, GitBranch, Gavel, Workflow,
+  Sun, Inbox, Layers, FileCheck2, Network, Stethoscope, Crown, GitBranch, Gavel, Workflow, Factory,
 } from 'lucide-react';
 
 // Single source of truth for every module in the app: the sidebar, bottom nav and
@@ -59,6 +59,7 @@ const CANONICAL_MODULES = [
   { key: 'automation-fabric', label: 'Automation Fabric', path: '/automation-fabric', icon: Workflow, group: '7. Compliance, Quality & Documents', blurb: 'Event catalogue, subscriptions, orchestration rules and connectors that route validated events into existing published workflows, with attempts, retries, dead letters and a redacted delivery history.' },
   { key: 'ai-workforce', label: 'AI Workforce OS', path: '/ai-workforce', icon: Bot, group: '7. Compliance, Quality & Documents', blurb: 'Tenant-scoped models, agents, versioned prompts, tool policies and human review: every AI proposal traced to the versions that produced it, redacted before storage, and settled by a named person.' },
   { key: 'enterprise-strategy', label: 'Enterprise Strategy OS', path: '/enterprise-strategy', icon: Target, group: '7. Compliance, Quality & Documents', blurb: 'Strategy and transformation in one workspace: portfolios, programs, objectives and benefits rolled up from real measures, capability maturity proven by validated assessments, and versioned roadmaps approved by a person.' },
+  { key: 'pmm-factory', label: 'PMM Product Factory', path: '/pmm-factory', icon: Factory, group: '7. Compliance, Quality & Documents', blurb: 'The metadata layer for the platform: domains, registers, automations and capabilities reconciled against the app, validated, compiled into one graph, and previewed as reference output.' },
   { key: 'clinical-os', label: 'Clinical & Allied Health OS', path: '/clinical-os', icon: Stethoscope, group: '3. Service Delivery', blurb: 'Care plans, review dates, consent, restrictive practice and allied health referrals in one clinical register.' },
   { key: 'board-ceo', label: 'Board & CEO Copilots', path: '/board-ceo', icon: Crown, group: '9. Governance & Operations', blurb: 'Board and CEO assurance briefings from the recorded position, with the resolutions that record what was decided.' },
   { key: 'approval-engine', label: 'Approval Chains', path: '/approval-engine', icon: GitBranch, group: '1. My Workspace', blurb: 'Up to five signed levels per decision: expenditure, policy, risk acceptance, clinical and access approvals.' },
@@ -168,6 +169,7 @@ export const NAV_GROUPS = [
       "digital-twin",
       "automation-fabric",
       "ai-workforce",
+      "pmm-factory",
       "quality",
       "checklists",
       "review-due",
