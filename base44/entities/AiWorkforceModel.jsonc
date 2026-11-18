@@ -1,0 +1,204 @@
+{
+  "name": "AiWorkforceModel",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Stamped by the AI workforce service; never from the browser."
+    },
+    "model_key": {
+      "type": "string",
+      "title": "Model Key"
+    },
+    "name": {
+      "type": "string",
+      "title": "Model Name"
+    },
+    "provider": {
+      "type": "string",
+      "title": "Provider",
+      "enum": [
+        "OpenAI",
+        "Anthropic",
+        "Google",
+        "Azure OpenAI",
+        "Internal",
+        "Other"
+      ],
+      "enumColors": [
+        "gray",
+        "purple",
+        "blue",
+        "teal",
+        "green",
+        "gray"
+      ],
+      "default": "OpenAI"
+    },
+    "provider_model_id": {
+      "type": "string",
+      "title": "Provider Model Identifier",
+      "description": "The identifier this app would send to the provider. Recorded only; no provider is called by this module."
+    },
+    "credential_ref": {
+      "type": "string",
+      "title": "Credential Reference",
+      "description": "The NAME of the app secret holding the provider key, e.g. secret://OPENAI_API_KEY. The key itself is never stored on this record."
+    },
+    "context_window": {
+      "type": "number",
+      "title": "Context Window (tokens)",
+      "default": 128000
+    },
+    "capabilities_json": {
+      "type": "string",
+      "title": "Capabilities (JSON)",
+      "description": "What the deployment is recorded as able to do, as declared by the person who registered it."
+    },
+    "sensitivity_ceiling": {
+      "type": "string",
+      "title": "Sensitivity Ceiling",
+      "description": "The most sensitive record this model may be given.",
+      "enum": [
+        "Public",
+        "Internal",
+        "Confidential",
+        "Restricted"
+      ],
+      "enumColors": [
+        "gray",
+        "blue",
+        "yellow",
+        "red"
+      ],
+      "default": "Internal"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Registered",
+        "Validated",
+        "Retired"
+      ],
+      "enumColors": [
+        "gray",
+        "green",
+        "gray"
+      ],
+      "default": "Registered"
+    },
+    "validated_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Validated At"
+    },
+    "validated_by": {
+      "type": "string",
+      "title": "Validated By"
+    },
+    "validation_note": {
+      "type": "string",
+      "title": "Validation Note"
+    },
+    "owner_role": {
+      "type": "string",
+      "title": "Owner Role"
+    },
+    "created_by_name": {
+      "type": "string",
+      "title": "Created By"
+    },
+    "retired_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Retired At"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "model_key",
+    "name",
+    "provider",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            }
+          ]
+        },
+        {
+          "user_condition": {
+            "account_status": "Active",
+            "access_approved": true
+          }
+        },
+        {
+          "data.tenant_id": "{{user.data.tenant_id}}"
+        }
+      ]
+    },
+    "create": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    }
+  }
+}

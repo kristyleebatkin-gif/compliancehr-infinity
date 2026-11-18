@@ -1,0 +1,195 @@
+{
+  "name": "AiTool",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Stamped by the AI workforce service; never from the browser."
+    },
+    "tool_key": {
+      "type": "string",
+      "title": "Tool Key"
+    },
+    "name": {
+      "type": "string",
+      "title": "Tool Name"
+    },
+    "description": {
+      "type": "string",
+      "title": "What This Tool Does"
+    },
+    "kind": {
+      "type": "string",
+      "title": "Tool Kind",
+      "description": "The kind fixes the risk. External, financial, employment, clinical, participant-impacting, permission-changing, destructive and compliance-status-changing tools can never be granted autonomy.",
+      "enum": [
+        "Read internal record",
+        "Write internal record",
+        "Send message",
+        "External API",
+        "Financial",
+        "Employment",
+        "Clinical",
+        "Participant impacting",
+        "Permission change",
+        "Destructive",
+        "Compliance status change"
+      ],
+      "enumColors": [
+        "green",
+        "yellow",
+        "yellow",
+        "red",
+        "red",
+        "red",
+        "red",
+        "red",
+        "red",
+        "red",
+        "red"
+      ],
+      "default": "Read internal record"
+    },
+    "risk_level": {
+      "type": "string",
+      "title": "Risk Level",
+      "enum": [
+        "Low",
+        "Medium",
+        "High",
+        "Critical"
+      ],
+      "enumColors": [
+        "green",
+        "yellow",
+        "red",
+        "red"
+      ],
+      "default": "Low"
+    },
+    "autonomous_allowed": {
+      "type": "boolean",
+      "title": "May Ever Run Without A Person",
+      "default": false
+    },
+    "requires_human_approval": {
+      "type": "boolean",
+      "title": "Requires Human Approval",
+      "default": true
+    },
+    "idempotency_supported": {
+      "type": "boolean",
+      "title": "Supports Idempotency",
+      "description": "True only when a repeated call with the same key cannot do the work twice.",
+      "default": false
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Active",
+        "Disabled"
+      ],
+      "enumColors": [
+        "green",
+        "gray"
+      ],
+      "default": "Active"
+    },
+    "owner_role": {
+      "type": "string",
+      "title": "Tool Owner"
+    },
+    "created_by_name": {
+      "type": "string",
+      "title": "Created By"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "tool_key",
+    "name",
+    "kind",
+    "risk_level",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            }
+          ]
+        },
+        {
+          "user_condition": {
+            "account_status": "Active",
+            "access_approved": true
+          }
+        },
+        {
+          "data.tenant_id": "{{user.data.tenant_id}}"
+        }
+      ]
+    },
+    "create": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    }
+  }
+}

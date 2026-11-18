@@ -1,0 +1,176 @@
+{
+  "name": "AiDecisionReview",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Stamped by the AI workforce service; never from the browser."
+    },
+    "review_ref": {
+      "type": "string",
+      "title": "Review Reference"
+    },
+    "decision_id": {
+      "type": "string",
+      "title": "Decision Record ID"
+    },
+    "decision_ref": {
+      "type": "string",
+      "title": "Decision Reference"
+    },
+    "agent_name": {
+      "type": "string",
+      "title": "Agent"
+    },
+    "action_title": {
+      "type": "string",
+      "title": "Proposed Action"
+    },
+    "policy_verdict": {
+      "type": "string",
+      "title": "Policy Verdict At Review"
+    },
+    "outcome": {
+      "type": "string",
+      "title": "Outcome",
+      "enum": [
+        "Approved",
+        "Rejected",
+        "Overridden"
+      ],
+      "enumColors": [
+        "green",
+        "red",
+        "purple"
+      ],
+      "default": "Approved"
+    },
+    "reason": {
+      "type": "string",
+      "title": "Review Reason",
+      "description": "The reviewer's own words. This is the audit record."
+    },
+    "override_reason": {
+      "type": "string",
+      "title": "Override Reason"
+    },
+    "conditions": {
+      "type": "string",
+      "title": "Conditions Of Approval"
+    },
+    "reviewer": {
+      "type": "string",
+      "title": "Reviewer"
+    },
+    "reviewer_id": {
+      "type": "string",
+      "title": "Reviewer (user id)"
+    },
+    "reviewer_role": {
+      "type": "string",
+      "title": "Reviewer Role"
+    },
+    "independent": {
+      "type": "boolean",
+      "title": "Independent Reviewer",
+      "default": true
+    },
+    "decided_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Decided At"
+    },
+    "correlation_id": {
+      "type": "string",
+      "title": "Correlation ID"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "review_ref",
+    "decision_id",
+    "outcome",
+    "reason",
+    "reviewer",
+    "decided_at"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            }
+          ]
+        },
+        {
+          "user_condition": {
+            "account_status": "Active",
+            "access_approved": true
+          }
+        },
+        {
+          "data.tenant_id": "{{user.data.tenant_id}}"
+        }
+      ]
+    },
+    "create": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    }
+  }
+}

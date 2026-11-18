@@ -1,0 +1,370 @@
+{
+  "name": "AiDecisionRecord",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Stamped by the AI workforce service; never from the browser."
+    },
+    "decision_ref": {
+      "type": "string",
+      "title": "Decision Reference"
+    },
+    "agent_id": {
+      "type": "string",
+      "title": "Agent Record ID"
+    },
+    "agent_key": {
+      "type": "string",
+      "title": "Agent Key"
+    },
+    "agent_name": {
+      "type": "string",
+      "title": "Agent"
+    },
+    "agent_status_at_run": {
+      "type": "string",
+      "title": "Agent Status When Recorded"
+    },
+    "autonomy_level": {
+      "type": "string",
+      "title": "Autonomy Level At Run"
+    },
+    "model_key": {
+      "type": "string",
+      "title": "Model Key"
+    },
+    "model_name": {
+      "type": "string",
+      "title": "Model"
+    },
+    "model_version": {
+      "type": "number",
+      "title": "Model Context Window"
+    },
+    "model_ref_id": {
+      "type": "string",
+      "title": "Model Record ID"
+    },
+    "prompt_key": {
+      "type": "string",
+      "title": "Prompt Key"
+    },
+    "prompt_name": {
+      "type": "string",
+      "title": "Prompt"
+    },
+    "prompt_version": {
+      "type": "number",
+      "title": "Prompt Version Used"
+    },
+    "prompt_hash": {
+      "type": "string",
+      "title": "Prompt Hash Used"
+    },
+    "tool_key": {
+      "type": "string",
+      "title": "Tool Key"
+    },
+    "tool_name": {
+      "type": "string",
+      "title": "Tool"
+    },
+    "tool_kind": {
+      "type": "string",
+      "title": "Tool Kind"
+    },
+    "tool_risk_level": {
+      "type": "string",
+      "title": "Tool Risk Level",
+      "enum": [
+        "Low",
+        "Medium",
+        "High",
+        "Critical"
+      ],
+      "enumColors": [
+        "green",
+        "yellow",
+        "red",
+        "red"
+      ],
+      "default": "Low"
+    },
+    "assignment_id": {
+      "type": "string",
+      "title": "Tool Grant Record ID"
+    },
+    "assignment_policy": {
+      "type": "string",
+      "title": "Tool Policy Applied"
+    },
+    "action_title": {
+      "type": "string",
+      "title": "Proposed Action"
+    },
+    "action_summary": {
+      "type": "string",
+      "title": "What The Agent Proposed",
+      "description": "Redacted before storage."
+    },
+    "input_source": {
+      "type": "string",
+      "title": "Input Source",
+      "description": "Where the records the agent read came from, e.g. /incidents."
+    },
+    "input_refs_json": {
+      "type": "string",
+      "title": "Input Records (JSON)",
+      "description": "Named provenance: which register and record each input came from."
+    },
+    "input_summary": {
+      "type": "string",
+      "title": "Input Summary",
+      "description": "Redacted. Secrets and participant or staff identifiers never reach this field."
+    },
+    "input_hash": {
+      "type": "string",
+      "title": "Input Hash"
+    },
+    "output_summary": {
+      "type": "string",
+      "title": "Output Summary",
+      "description": "Redacted."
+    },
+    "output_hash": {
+      "type": "string",
+      "title": "Output Hash"
+    },
+    "confidence": {
+      "type": "number",
+      "title": "Confidence (%)"
+    },
+    "confidence_band": {
+      "type": "string",
+      "title": "Confidence Band"
+    },
+    "rationale": {
+      "type": "string",
+      "title": "Stated Rationale",
+      "description": "Redacted."
+    },
+    "policy_verdict": {
+      "type": "string",
+      "title": "Policy Verdict",
+      "enum": [
+        "Blocked",
+        "Human approval required",
+        "Internal action permitted"
+      ],
+      "enumColors": [
+        "red",
+        "yellow",
+        "green"
+      ],
+      "default": "Human approval required"
+    },
+    "policy_reason": {
+      "type": "string",
+      "title": "Why The Verdict"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Awaiting human review",
+        "Permitted internal",
+        "Approved",
+        "Rejected",
+        "Overridden",
+        "Blocked",
+        "Safe failure",
+        "Expired"
+      ],
+      "enumColors": [
+        "yellow",
+        "blue",
+        "green",
+        "red",
+        "purple",
+        "red",
+        "red",
+        "gray"
+      ],
+      "default": "Awaiting human review"
+    },
+    "execution_state": {
+      "type": "string",
+      "title": "Execution State",
+      "description": "This OS never performs the action. An approved decision is a person's authorisation to act themselves.",
+      "enum": [
+        "Not executed",
+        "Recorded only",
+        "Refused"
+      ],
+      "enumColors": [
+        "gray",
+        "blue",
+        "red"
+      ],
+      "default": "Not executed"
+    },
+    "redacted_count": {
+      "type": "number",
+      "title": "Fields Redacted",
+      "default": 0
+    },
+    "idempotency_key": {
+      "type": "string",
+      "title": "Idempotency Key",
+      "description": "One key per business, agent, tool and proposal. The same proposal recorded twice is stored once."
+    },
+    "correlation_id": {
+      "type": "string",
+      "title": "Correlation ID",
+      "description": "Follows the proposal from the agent run to the workflow run it informs."
+    },
+    "workflow_definition_id": {
+      "type": "string",
+      "title": "Workflow Definition ID"
+    },
+    "workflow_definition_name": {
+      "type": "string",
+      "title": "Workflow"
+    },
+    "workflow_definition_version": {
+      "type": "number",
+      "title": "Workflow Version"
+    },
+    "workflow_instance_id": {
+      "type": "string",
+      "title": "Workflow Run ID"
+    },
+    "requested_by": {
+      "type": "string",
+      "title": "Recorded By"
+    },
+    "requested_by_id": {
+      "type": "string",
+      "title": "Recorded By (user id)"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Review Due By"
+    },
+    "review_id": {
+      "type": "string",
+      "title": "Review Record ID"
+    },
+    "reviewed_by": {
+      "type": "string",
+      "title": "Reviewed By"
+    },
+    "reviewed_by_id": {
+      "type": "string",
+      "title": "Reviewed By (user id)"
+    },
+    "reviewed_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Reviewed At"
+    },
+    "review_outcome": {
+      "type": "string",
+      "title": "Review Outcome"
+    },
+    "override_reason": {
+      "type": "string",
+      "title": "Override Reason"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "decision_ref",
+    "agent_id",
+    "tool_kind",
+    "policy_verdict",
+    "status",
+    "execution_state"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            }
+          ]
+        },
+        {
+          "user_condition": {
+            "account_status": "Active",
+            "access_approved": true
+          }
+        },
+        {
+          "data.tenant_id": "{{user.data.tenant_id}}"
+        }
+      ]
+    },
+    "create": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    }
+  }
+}

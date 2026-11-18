@@ -1,0 +1,254 @@
+{
+  "name": "AiWorkforceAgent",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Stamped by the AI workforce service; never from the browser."
+    },
+    "agent_key": {
+      "type": "string",
+      "title": "Agent Key"
+    },
+    "name": {
+      "type": "string",
+      "title": "Agent Name"
+    },
+    "purpose": {
+      "type": "string",
+      "title": "Purpose"
+    },
+    "description": {
+      "type": "string",
+      "title": "What This Agent Does"
+    },
+    "model_id": {
+      "type": "string",
+      "title": "Model Record ID"
+    },
+    "model_key": {
+      "type": "string",
+      "title": "Model Key"
+    },
+    "model_name": {
+      "type": "string",
+      "title": "Model"
+    },
+    "model_version": {
+      "type": "number",
+      "title": "Model Context Window At Registration"
+    },
+    "prompt_id": {
+      "type": "string",
+      "title": "Prompt Version Record ID"
+    },
+    "prompt_key": {
+      "type": "string",
+      "title": "Prompt Key"
+    },
+    "prompt_name": {
+      "type": "string",
+      "title": "Prompt"
+    },
+    "prompt_version": {
+      "type": "number",
+      "title": "Prompt Version Pinned",
+      "description": "The exact published prompt version this agent runs on. A later prompt version does not move it."
+    },
+    "prompt_hash": {
+      "type": "string",
+      "title": "Pinned Prompt Hash"
+    },
+    "autonomy_level": {
+      "type": "string",
+      "title": "Autonomy Level",
+      "enum": [
+        "Suggest only",
+        "Internal actions permitted"
+      ],
+      "enumColors": [
+        "blue",
+        "yellow"
+      ],
+      "default": "Suggest only",
+      "description": "Suggest only keeps every outcome waiting for a person. Internal actions permitted still never allows an external, financial, employment, clinical, participant-impacting, permission-changing, destructive or compliance-status-changing action."
+    },
+    "risk_tier": {
+      "type": "string",
+      "title": "Risk Tier",
+      "enum": [
+        "Low",
+        "Medium",
+        "High",
+        "Critical"
+      ],
+      "enumColors": [
+        "green",
+        "yellow",
+        "red",
+        "red"
+      ],
+      "default": "Low"
+    },
+    "data_scope": {
+      "type": "string",
+      "title": "Data Scope",
+      "description": "What this agent is allowed to read, in plain language."
+    },
+    "tool_count": {
+      "type": "number",
+      "title": "Active Tool Grants",
+      "default": 0
+    },
+    "decision_count": {
+      "type": "number",
+      "title": "Decisions Recorded",
+      "default": 0
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Draft",
+        "Active",
+        "Paused",
+        "Disabled",
+        "Archived"
+      ],
+      "enumColors": [
+        "gray",
+        "green",
+        "yellow",
+        "red",
+        "gray"
+      ],
+      "default": "Draft"
+    },
+    "status_reason": {
+      "type": "string",
+      "title": "Why It Is Paused Or Disabled"
+    },
+    "paused_by": {
+      "type": "string",
+      "title": "Paused Or Disabled By"
+    },
+    "paused_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Paused Or Disabled At"
+    },
+    "activated_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Activated At"
+    },
+    "last_activity_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Last Decision Recorded"
+    },
+    "owner_role": {
+      "type": "string",
+      "title": "Process Owner"
+    },
+    "author": {
+      "type": "string",
+      "title": "Author"
+    },
+    "author_id": {
+      "type": "string",
+      "title": "Author (user id)"
+    },
+    "review_due": {
+      "type": "string",
+      "format": "date",
+      "title": "Governance Review Due"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "agent_key",
+    "name",
+    "autonomy_level",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            }
+          ]
+        },
+        {
+          "user_condition": {
+            "account_status": "Active",
+            "access_approved": true
+          }
+        },
+        {
+          "data.tenant_id": "{{user.data.tenant_id}}"
+        }
+      ]
+    },
+    "create": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    }
+  }
+}

@@ -245,6 +245,14 @@ export const BUSINESS_OWNED_ENTITIES = Object.freeze([
   'IntegrationConnector',
   'IntegrationMessage',
   'EventDeliveryAttempt',
+  'AiWorkforceModel',
+  'AiWorkforceAgent',
+  'AiPromptVersion',
+  'AiTool',
+  'AiAgentToolAssignment',
+  'AiDecisionRecord',
+  'AiDecisionReview',
+  'AiAuditRecord',
 ]);
 
 export function tenantGroupOf(entityName) {

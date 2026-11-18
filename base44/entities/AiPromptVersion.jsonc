@@ -1,0 +1,202 @@
+{
+  "name": "AiPromptVersion",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Stamped by the AI workforce service; never from the browser."
+    },
+    "prompt_key": {
+      "type": "string",
+      "title": "Prompt Key",
+      "description": "Shared by every version of one prompt."
+    },
+    "name": {
+      "type": "string",
+      "title": "Prompt Name"
+    },
+    "version": {
+      "type": "number",
+      "title": "Version",
+      "default": 1
+    },
+    "purpose": {
+      "type": "string",
+      "title": "Purpose"
+    },
+    "body": {
+      "type": "string",
+      "title": "Prompt Body",
+      "description": "The instruction the model runs on. It must carry the human-review guardrail, which is checked before this version can be published."
+    },
+    "body_hash": {
+      "type": "string",
+      "title": "Body Hash"
+    },
+    "variables_json": {
+      "type": "string",
+      "title": "Declared Variables (JSON)"
+    },
+    "variable_count": {
+      "type": "number",
+      "title": "Variables",
+      "default": 0
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Draft",
+        "Validated",
+        "Published",
+        "Retired"
+      ],
+      "enumColors": [
+        "gray",
+        "blue",
+        "green",
+        "gray"
+      ],
+      "default": "Draft"
+    },
+    "validated_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Validated At"
+    },
+    "validated_by": {
+      "type": "string",
+      "title": "Validated By"
+    },
+    "validation_note": {
+      "type": "string",
+      "title": "Validation Note"
+    },
+    "published_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Published At"
+    },
+    "published_by": {
+      "type": "string",
+      "title": "Published By"
+    },
+    "publisher_independent": {
+      "type": "boolean",
+      "title": "Publisher Was Independent",
+      "default": false
+    },
+    "previous_version_id": {
+      "type": "string",
+      "title": "Previous Version Record"
+    },
+    "change_note": {
+      "type": "string",
+      "title": "What Changed In This Version"
+    },
+    "author": {
+      "type": "string",
+      "title": "Author"
+    },
+    "author_id": {
+      "type": "string",
+      "title": "Author (user id)"
+    },
+    "retired_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Retired At"
+    },
+    "review_due": {
+      "type": "string",
+      "format": "date",
+      "title": "Prompt Review Due"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "prompt_key",
+    "name",
+    "version",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            }
+          ]
+        },
+        {
+          "user_condition": {
+            "account_status": "Active",
+            "access_approved": true
+          }
+        },
+        {
+          "data.tenant_id": "{{user.data.tenant_id}}"
+        }
+      ]
+    },
+    "create": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    }
+  }
+}

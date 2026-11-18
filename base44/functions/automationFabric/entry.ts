@@ -14,9 +14,8 @@
 // flow step kind the app cannot actually perform, and any credential stored on a record (a
 // connector holds the NAME of an app secret, never the value).
 import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
-import {
-  hasApprovedAccess, resolveUserTenantId, COMPLIANCE_REVIEW_ROLES, MANAGEMENT_ROLES,
-} from '../../shared/roleMatrix.ts';
+import { hasApprovedAccess, resolveUserTenantId, canComplianceReview, canManagementAct } from '../../shared/roleMatrix.ts';
+import { Refusal, refuse, pageOf, getOwn, requireOwn } from '../../shared/serviceKit.ts';
 import { str, nowIso, writeAudit } from '../../shared/registerCommon.ts';
 import { launchPublishedWorkflow } from '../../shared/workflowLauncher.ts';
 import {
@@ -28,43 +27,14 @@ import {
   validateFlowSteps, flowContentHash, credentialRefProblem, endpointProblem, messageSummary,
 } from '../../shared/automationFabric.ts';
 
-const canRead = (user: any) => COMPLIANCE_REVIEW_ROLES.includes(user.role);
-const canConfigure = (user: any) => COMPLIANCE_REVIEW_ROLES.includes(user.role);
-const canManageConnectors = (user: any) => MANAGEMENT_ROLES.includes(user.role);
+const canRead = (user: any) => canComplianceReview(user);
+const canConfigure = (user: any) => canComplianceReview(user);
+const canManageConnectors = (user: any) => canManagementAct(user);
 
 const ROUTE = '/automation-fabric';
 
-class Refusal extends Error {
-  status: number;
-  constructor(message: string, status = 400) {
-    super(message);
-    this.status = status;
-  }
-}
-
-const refuse = (message: string, status = 400): never => { throw new Refusal(message, status); };
-
 const audit = (base44: any, user: any, action: string, entityType: string, record: any, details: any) =>
   writeAudit(base44, user, { action, entityType, record, details, route: ROUTE });
-
-async function pageOf(dao: any, query: any, sort = '-created_date', limit = 200): Promise<any[]> {
-  const page = await dao.filter(query, { sort, limit });
-  const rows = Array.isArray(page) ? page : page?.items;
-  return Array.isArray(rows) ? rows : [];
-}
-
-async function getOwn(dao: any, id: string, tenantId: string) {
-  const key = str(id);
-  if (!key) return null;
-  const record = await dao.get(key).catch((e: any) => (e?.status === 404 ? null : Promise.reject(e)));
-  return record && record.tenant_id === tenantId ? record : null;
-}
-
-const requireOwn = async (dao: any, id: string, tenantId: string, label: string) => {
-  const record = await getOwn(dao, id, tenantId);
-  if (!record) refuse(`That ${label} is not in your business.`, 404);
-  return record;
-};
 
 export default perBusiness(async function (req: Request) {
   try {

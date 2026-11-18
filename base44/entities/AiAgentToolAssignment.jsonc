@@ -1,0 +1,216 @@
+{
+  "name": "AiAgentToolAssignment",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Stamped by the AI workforce service; never from the browser."
+    },
+    "assignment_key": {
+      "type": "string",
+      "title": "Grant Key"
+    },
+    "agent_id": {
+      "type": "string",
+      "title": "Agent Record ID"
+    },
+    "agent_key": {
+      "type": "string",
+      "title": "Agent Key"
+    },
+    "agent_name": {
+      "type": "string",
+      "title": "Agent"
+    },
+    "tool_id": {
+      "type": "string",
+      "title": "Tool Record ID"
+    },
+    "tool_key": {
+      "type": "string",
+      "title": "Tool Key"
+    },
+    "tool_name": {
+      "type": "string",
+      "title": "Tool"
+    },
+    "tool_kind": {
+      "type": "string",
+      "title": "Tool Kind At Grant"
+    },
+    "tool_risk_level": {
+      "type": "string",
+      "title": "Risk Level At Grant",
+      "enum": [
+        "Low",
+        "Medium",
+        "High",
+        "Critical"
+      ],
+      "enumColors": [
+        "green",
+        "yellow",
+        "red",
+        "red"
+      ],
+      "default": "Low"
+    },
+    "policy": {
+      "type": "string",
+      "title": "Policy",
+      "description": "The per-tool decision. Allowed internal is only ever possible for a low-risk internal tool that supports idempotency.",
+      "enum": [
+        "Denied",
+        "Propose only",
+        "Allowed with approval",
+        "Allowed internal"
+      ],
+      "enumColors": [
+        "red",
+        "blue",
+        "yellow",
+        "green"
+      ],
+      "default": "Propose only"
+    },
+    "requires_human_approval": {
+      "type": "boolean",
+      "title": "Requires Human Approval",
+      "default": true
+    },
+    "idempotency_required": {
+      "type": "boolean",
+      "title": "Idempotency Key Required",
+      "default": true
+    },
+    "rate_limit_per_run": {
+      "type": "number",
+      "title": "Calls Per Run",
+      "default": 1
+    },
+    "least_privilege_note": {
+      "type": "string",
+      "title": "Least Privilege Justification",
+      "description": "Why this agent needs this tool, and why a narrower grant will not do."
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Active",
+        "Disabled"
+      ],
+      "enumColors": [
+        "green",
+        "gray"
+      ],
+      "default": "Active"
+    },
+    "granted_by": {
+      "type": "string",
+      "title": "Granted By"
+    },
+    "granted_by_id": {
+      "type": "string",
+      "title": "Granted By (user id)"
+    },
+    "granted_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Granted At"
+    },
+    "review_due": {
+      "type": "string",
+      "format": "date",
+      "title": "Grant Review Due"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "assignment_key",
+    "agent_id",
+    "tool_id",
+    "tool_kind",
+    "policy",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            }
+          ]
+        },
+        {
+          "user_condition": {
+            "account_status": "Active",
+            "access_approved": true
+          }
+        },
+        {
+          "data.tenant_id": "{{user.data.tenant_id}}"
+        }
+      ]
+    },
+    "create": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "__service_role_only__"
+      }
+    }
+  }
+}

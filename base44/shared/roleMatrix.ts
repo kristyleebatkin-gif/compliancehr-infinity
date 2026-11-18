@@ -109,6 +109,10 @@ export function canManageAccess(user) {
   return hasApprovedAccess(user) && MANAGEMENT_ROLES.includes(user.role);
 }
 
+export const canComplianceReview = (user) => hasAnyRole(user, COMPLIANCE_REVIEW_ROLES);
+
+export const canManagementAct = (user) => hasAnyRole(user, MANAGEMENT_ROLES);
+
 export function hasAnyRole(user, roles = MANAGEMENT_ROLES) {
   if (!hasApprovedAccess(user)) return false;
   const normalized = normalizeRole(user.role);
@@ -151,6 +155,7 @@ export const NAV_PERMISSIONS = {
   'compliance-operations': COMPLIANCE_REVIEW_ROLES,
   'digital-twin': COMPLIANCE_REVIEW_ROLES,
   'automation-fabric': COMPLIANCE_REVIEW_ROLES,
+  'ai-workforce': COMPLIANCE_REVIEW_ROLES,
   'v8000-command': COMPLIANCE_REVIEW_ROLES,
   'clinical-os': OPERATIONS,
   'board-ceo': FULL_ACCESS,
