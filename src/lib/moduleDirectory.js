@@ -5,7 +5,7 @@ import {
   ReceiptText, Wrench, MapPin, HeartHandshake, Building2, Newspaper, Landmark,
   UserCog, Handshake, BarChart3, Briefcase, ShoppingCart, KanbanSquare,
   ClipboardList, MessageSquare, Lightbulb, LifeBuoy, BookOpen, Bot, ClipboardCheck, Activity, TrendingUp,
-  Sun, Inbox, Layers, FileCheck2, Network, Stethoscope, Crown, GitBranch,
+  Sun, Inbox, Layers, FileCheck2, Network, Stethoscope, Crown, GitBranch, Gavel,
 } from 'lucide-react';
 
 // Single source of truth for every module in the app: the sidebar, bottom nav and
@@ -52,6 +52,7 @@ const CANONICAL_MODULES = [
   { key: 'workflow-studio', label: 'Workflow Studio', path: '/workflows', icon: GitBranch, group: '9. Governance & Operations', blurb: 'The orchestration layer: 33 node types, enterprise templates, a graph designer with validation, a runtime engine that assigns each step by role, enforces SLAs and records every action.' },
   { key: 'ai-os', label: 'AI Intelligence OS', path: '/ai-os', icon: Sparkles, group: '7. Compliance, Quality & Documents', blurb: 'Governed copilots over the registers, with explainable recommendations, confidence scoring and an AI audit trail.' },
   { key: 'knowledge-graph', label: 'Knowledge Graph OS', path: '/knowledge-graph', icon: Network, group: '7. Compliance, Quality & Documents', blurb: 'Every register in one graph: typed relationships, the 14-stage compliance DNA and per-standard traceability scored from the records you hold.' },
+  { key: 'decision-intelligence', label: 'Decision Intelligence OS', path: '/decision-intelligence', icon: Gavel, group: '7. Compliance, Quality & Documents', blurb: 'Governed decisions with their evidence, approval authority, risk and measured outcomes, kept as records rather than recollection.' },
   { key: 'v8000-command', label: 'V8000 Evidence Fabric', path: '/v8000', icon: Layers, group: '7. Compliance, Quality & Documents', blurb: 'The V8000 foundation: framework-to-outcome evidence fabric, readiness, trust, gap and review calculations from stored records, validation findings and the nine dashboard entry points.' },
   { key: 'clinical-os', label: 'Clinical & Allied Health OS', path: '/clinical-os', icon: Stethoscope, group: '3. Service Delivery', blurb: 'Care plans, review dates, consent, restrictive practice and allied health referrals in one clinical register.' },
   { key: 'board-ceo', label: 'Board & CEO Copilots', path: '/board-ceo', icon: Crown, group: '9. Governance & Operations', blurb: 'Board and CEO assurance briefings from the recorded position, with the resolutions that record what was decided.' },
@@ -148,6 +149,7 @@ export const NAV_GROUPS = [
       "assurance-matrix",
       "ai-os",
       "knowledge-graph",
+      "decision-intelligence",
       "v8000-command",
       "quality",
       "checklists",

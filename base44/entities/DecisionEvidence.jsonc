@@ -1,0 +1,236 @@
+{
+  "name": "DecisionEvidence",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set by the decision register service; never from the browser."
+    },
+    "decision_id": {
+      "type": "string",
+      "title": "Decision ID"
+    },
+    "decision_title": {
+      "type": "string",
+      "title": "Decision"
+    },
+    "title": {
+      "type": "string",
+      "title": "Evidence"
+    },
+    "evidence_type": {
+      "type": "string",
+      "title": "Evidence Type",
+      "enum": [
+        "Document",
+        "Record",
+        "Register extract",
+        "Photo",
+        "Sign-off",
+        "System export",
+        "Certificate",
+        "Meeting minutes",
+        "Other"
+      ],
+      "enumColors": [
+        "blue",
+        "purple",
+        "green",
+        "pink",
+        "yellow",
+        "gray",
+        "teal",
+        "gray",
+        "gray"
+      ],
+      "default": "Document"
+    },
+    "source": {
+      "type": "string",
+      "title": "Source"
+    },
+    "file_url": {
+      "type": "string",
+      "title": "Evidence Link"
+    },
+    "linked_evidence_id": {
+      "type": "string",
+      "title": "Assurance Evidence ID",
+      "description": "Optional reference to an existing AssuranceEvidence record rather than a copy of it."
+    },
+    "standard_code": {
+      "type": "string",
+      "title": "Standard Code"
+    },
+    "control_id": {
+      "type": "string",
+      "title": "Control ID"
+    },
+    "confidence": {
+      "type": "number",
+      "title": "Confidence (%)"
+    },
+    "verification_status": {
+      "type": "string",
+      "title": "Verification",
+      "enum": [
+        "Unverified",
+        "Verified",
+        "Rejected",
+        "Expired"
+      ],
+      "enumColors": [
+        "gray",
+        "green",
+        "red",
+        "red"
+      ],
+      "default": "Unverified"
+    },
+    "verified_by": {
+      "type": "string",
+      "title": "Verified By"
+    },
+    "verified_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Verified Date"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "decision_id",
+    "title",
+    "evidence_type"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__server_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__server_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__server_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

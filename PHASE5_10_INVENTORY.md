@@ -1,7 +1,21 @@
 # Phases 5–10 Capability Track — Read-Only Inventory & Conflict Register
 
-Status: **Phase 0 complete. No application code, schema, route, workflow or permission was changed.**
-Date: 18 November 2026. Scope: inventory and conflict identification only, as instructed.
+Status: **Phase 0 complete, conflicts resolved, Step C5 built.**
+Date: 18 November 2026.
+
+Owner decisions recorded before any build:
+
+1. **Separate capability track.** This work is numbered C5–C10 and mapped onto the existing
+   12-phase register. `ENTERPRISE_PHASES` in `src/lib/enterprisePhases.js` is unchanged; ids 5–10 keep
+   their accepted meanings.
+2. **Reference documents too.** The non-native deliverables (PostgreSQL DDL, Prisma, OpenAPI, NestJS,
+   Next.js, Terraform, AKS) are written as clearly-labelled design references, stating that this app
+   does not execute them.
+
+**Step C5 delivered (Decision Intelligence OS).** Three tenant-scoped records (`DecisionRecord`,
+`DecisionEvidence`, `DecisionOutcome`), one server-authorised function (`decisionRegister`), one
+module at `/decision-intelligence`, an `AuditLog` entry on every write, and a test cycle that
+exercised create, evidence, outcome and decision outcome before the test records were removed.
 
 This document records what exists, what is genuinely missing, and which conflicts must be resolved
 before any schema is written. Nothing here is a delivery claim.

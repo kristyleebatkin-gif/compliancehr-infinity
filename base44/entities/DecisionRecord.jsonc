@@ -1,0 +1,414 @@
+{
+  "name": "DecisionRecord",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Set by the decision register service; never from the browser."
+    },
+    "decision_number": {
+      "type": "string",
+      "title": "Decision Number"
+    },
+    "title": {
+      "type": "string",
+      "title": "Decision"
+    },
+    "summary": {
+      "type": "string",
+      "title": "What was decided"
+    },
+    "decision_type": {
+      "type": "string",
+      "title": "Decision Type",
+      "enum": [
+        "Operational Governance",
+        "Clinical Governance",
+        "Financial",
+        "Strategic",
+        "Risk Acceptance",
+        "Workforce",
+        "Technology",
+        "Policy",
+        "Safeguarding",
+        "Regulatory Response"
+      ],
+      "enumColors": [
+        "blue",
+        "purple",
+        "green",
+        "gray",
+        "red",
+        "yellow",
+        "teal",
+        "pink",
+        "red",
+        "blue"
+      ],
+      "default": "Operational Governance"
+    },
+    "domain": {
+      "type": "string",
+      "title": "Operating System",
+      "description": "Which OS this decision belongs to, e.g. Compliance OS."
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Draft",
+        "Proposed",
+        "In Review",
+        "Approved",
+        "Rejected",
+        "Deferred",
+        "Implemented",
+        "Closed"
+      ],
+      "enumColors": [
+        "gray",
+        "blue",
+        "yellow",
+        "green",
+        "red",
+        "yellow",
+        "purple",
+        "gray"
+      ],
+      "default": "Draft"
+    },
+    "priority": {
+      "type": "string",
+      "title": "Priority",
+      "enum": [
+        "Low",
+        "Medium",
+        "High",
+        "Critical"
+      ],
+      "enumColors": [
+        "gray",
+        "yellow",
+        "red",
+        "red"
+      ],
+      "default": "Medium"
+    },
+    "owner": {
+      "type": "string",
+      "title": "Accountable Owner"
+    },
+    "decision_maker": {
+      "type": "string",
+      "title": "Decision Authority"
+    },
+    "decision_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Decision Date"
+    },
+    "effective_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Effective Date"
+    },
+    "review_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Next Review Date"
+    },
+    "context": {
+      "type": "string",
+      "title": "Context and Trigger"
+    },
+    "options_considered": {
+      "type": "string",
+      "title": "Options Considered"
+    },
+    "recommendation": {
+      "type": "string",
+      "title": "Recommendation Made"
+    },
+    "impact_summary": {
+      "type": "string",
+      "title": "Impact"
+    },
+    "benefit_expected": {
+      "type": "string",
+      "title": "Expected Benefit"
+    },
+    "benefit_actual": {
+      "type": "string",
+      "title": "Realised Benefit"
+    },
+    "cost_estimate": {
+      "type": "number",
+      "title": "Cost Estimate"
+    },
+    "risk_level": {
+      "type": "string",
+      "title": "Risk Level",
+      "enum": [
+        "Low",
+        "Medium",
+        "High",
+        "Critical"
+      ],
+      "enumColors": [
+        "green",
+        "yellow",
+        "red",
+        "red"
+      ],
+      "default": "Medium"
+    },
+    "risk_summary": {
+      "type": "string",
+      "title": "Risk if Wrong"
+    },
+    "evidence_confidence": {
+      "type": "number",
+      "title": "Evidence Confidence (%)",
+      "description": "How strongly the attached evidence supports this decision. 100 = direct, current, independently verifiable."
+    },
+    "confidence_score": {
+      "type": "number",
+      "title": "Decision Confidence (%)"
+    },
+    "standard_refs": {
+      "type": "string",
+      "title": "Standards Impacted"
+    },
+    "control_refs": {
+      "type": "string",
+      "title": "Controls Impacted"
+    },
+    "risk_refs": {
+      "type": "string",
+      "title": "Risks Linked"
+    },
+    "linked_recommendation_id": {
+      "type": "string",
+      "title": "Linked Recommendation ID"
+    },
+    "linked_recommendation_label": {
+      "type": "string",
+      "title": "Linked Recommendation"
+    },
+    "linked_approval_chain_id": {
+      "type": "string",
+      "title": "Linked Approval Chain ID"
+    },
+    "linked_workflow_instance_id": {
+      "type": "string",
+      "title": "Linked Workflow Run ID"
+    },
+    "linked_board_resolution_id": {
+      "type": "string",
+      "title": "Linked Board Resolution ID"
+    },
+    "outcome_target": {
+      "type": "string",
+      "title": "Outcome Target"
+    },
+    "outcome_status": {
+      "type": "string",
+      "title": "Outcome Status",
+      "enum": [
+        "Not measured",
+        "On track",
+        "At risk",
+        "Achieved",
+        "Not achieved"
+      ],
+      "enumColors": [
+        "gray",
+        "green",
+        "yellow",
+        "green",
+        "red"
+      ],
+      "default": "Not measured"
+    },
+    "evidence_count": {
+      "type": "number",
+      "title": "Evidence Records",
+      "default": 0
+    },
+    "outcome_count": {
+      "type": "number",
+      "title": "Outcome Measures",
+      "default": 0
+    },
+    "decided_by": {
+      "type": "string",
+      "title": "Decided By"
+    },
+    "decided_by_id": {
+      "type": "string",
+      "title": "Decided By (user id)"
+    },
+    "decided_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Decided At"
+    },
+    "decision_note": {
+      "type": "string",
+      "title": "Decision Note"
+    },
+    "created_by_name": {
+      "type": "string",
+      "title": "Raised By"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "title",
+    "decision_type",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$and": [
+            {
+              "$or": [
+                {
+                  "user_condition": {
+                    "role": "admin"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Provider Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Compliance Administrator"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Management"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Administration"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Quality & Improvement Manager"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "Auditor"
+                  }
+                }
+              ]
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            },
+            {
+              "user_condition": {
+                "account_status": "Active",
+                "access_approved": true
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__server_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__server_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__server_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
