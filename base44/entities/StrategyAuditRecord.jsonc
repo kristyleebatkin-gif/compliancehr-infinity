@@ -1,0 +1,227 @@
+{
+  "name": "StrategyAuditRecord",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Written by the strategy service only."
+    },
+    "audit_ref": {
+      "type": "string",
+      "title": "Audit Reference"
+    },
+    "occurred_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Occurred At"
+    },
+    "actor": {
+      "type": "string",
+      "title": "Actor"
+    },
+    "actor_id": {
+      "type": "string",
+      "title": "Actor (user id)"
+    },
+    "actor_role": {
+      "type": "string",
+      "title": "Actor Role"
+    },
+    "action": {
+      "type": "string",
+      "title": "Action"
+    },
+    "subject_type": {
+      "type": "string",
+      "title": "Subject Type"
+    },
+    "subject_ref": {
+      "type": "string",
+      "title": "Subject Reference"
+    },
+    "subject_id": {
+      "type": "string",
+      "title": "Subject Record ID"
+    },
+    "outcome": {
+      "type": "string",
+      "title": "Outcome",
+      "enum": [
+        "Recorded",
+        "Refused",
+        "Changed"
+      ],
+      "enumColors": [
+        "green",
+        "red",
+        "blue"
+      ],
+      "default": "Recorded"
+    },
+    "detail": {
+      "type": "string",
+      "title": "Detail",
+      "description": "Redacted before storage."
+    },
+    "redacted_count": {
+      "type": "number",
+      "title": "Fields Redacted",
+      "default": 0
+    },
+    "correlation_id": {
+      "type": "string",
+      "title": "Correlation ID"
+    },
+    "previous_hash": {
+      "type": "string",
+      "title": "Previous Entry Hash"
+    },
+    "chain_hash": {
+      "type": "string",
+      "title": "Chain Hash",
+      "description": "Hashes this entry together with the one before it, so a removed entry is visible."
+    }
+  },
+  "required": [
+    "tenant_id",
+    "audit_ref",
+    "occurred_at",
+    "action",
+    "subject_type"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            }
+          ]
+        },
+        {
+          "user_condition": {
+            "account_status": "Active",
+            "access_approved": true
+          }
+        },
+        {
+          "data.tenant_id": "{{user.data.tenant_id}}"
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

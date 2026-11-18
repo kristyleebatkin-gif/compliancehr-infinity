@@ -1,0 +1,234 @@
+{
+  "name": "TransformationProgram",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Stamped by the strategy service; never from the browser."
+    },
+    "program_key": {
+      "type": "string",
+      "title": "Program Reference"
+    },
+    "portfolio_id": {
+      "type": "string",
+      "title": "Portfolio Record ID"
+    },
+    "portfolio_key": {
+      "type": "string",
+      "title": "Portfolio Reference"
+    },
+    "portfolio_name": {
+      "type": "string",
+      "title": "Portfolio"
+    },
+    "name": {
+      "type": "string",
+      "title": "Program Name"
+    },
+    "purpose": {
+      "type": "string",
+      "title": "What This Program Changes"
+    },
+    "sponsor": {
+      "type": "string",
+      "title": "Program Sponsor"
+    },
+    "owner_role": {
+      "type": "string",
+      "title": "Delivery Owner"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Draft",
+        "Active",
+        "Paused",
+        "Closed",
+        "Archived"
+      ],
+      "enumColors": [
+        "gray",
+        "green",
+        "yellow",
+        "blue",
+        "gray"
+      ],
+      "default": "Draft"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Start Date"
+    },
+    "target_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Target Date"
+    },
+    "status_reason": {
+      "type": "string",
+      "title": "Why The Status Changed"
+    },
+    "archived_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Archived At"
+    },
+    "author": {
+      "type": "string",
+      "title": "Author"
+    },
+    "author_id": {
+      "type": "string",
+      "title": "Author (user id)"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "program_key",
+    "portfolio_id",
+    "name",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            }
+          ]
+        },
+        {
+          "user_condition": {
+            "account_status": "Active",
+            "access_approved": true
+          }
+        },
+        {
+          "data.tenant_id": "{{user.data.tenant_id}}"
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

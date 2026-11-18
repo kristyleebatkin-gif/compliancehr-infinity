@@ -1,0 +1,287 @@
+{
+  "name": "StrategyBenefit",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Stamped by the strategy service; never from the browser."
+    },
+    "benefit_key": {
+      "type": "string",
+      "title": "Benefit Reference"
+    },
+    "objective_id": {
+      "type": "string",
+      "title": "Objective Record ID"
+    },
+    "objective_key": {
+      "type": "string",
+      "title": "Objective Reference"
+    },
+    "objective_name": {
+      "type": "string",
+      "title": "Objective"
+    },
+    "program_id": {
+      "type": "string",
+      "title": "Program Record ID"
+    },
+    "program_key": {
+      "type": "string",
+      "title": "Program Reference"
+    },
+    "portfolio_id": {
+      "type": "string",
+      "title": "Portfolio Record ID"
+    },
+    "portfolio_key": {
+      "type": "string",
+      "title": "Portfolio Reference"
+    },
+    "name": {
+      "type": "string",
+      "title": "Benefit"
+    },
+    "owner": {
+      "type": "string",
+      "title": "Benefit Owner"
+    },
+    "unit": {
+      "type": "string",
+      "title": "Unit"
+    },
+    "baseline_value": {
+      "type": "number",
+      "title": "Baseline"
+    },
+    "target_value": {
+      "type": "number",
+      "title": "Target"
+    },
+    "actual_value": {
+      "type": "number",
+      "title": "Actual",
+      "description": "The measured realised benefit. Realisation is calculated from this."
+    },
+    "valuation_method": {
+      "type": "string",
+      "title": "Valuation Method",
+      "enum": [
+        "Not valued",
+        "Cost avoided",
+        "Revenue growth",
+        "Efficiency gain",
+        "Risk reduction",
+        "Compliance assurance",
+        "Productivity gain"
+      ],
+      "enumColors": [
+        "gray",
+        "green",
+        "green",
+        "blue",
+        "yellow",
+        "purple",
+        "teal"
+      ],
+      "default": "Not valued"
+    },
+    "valuation_amount": {
+      "type": "number",
+      "title": "Valuation Amount",
+      "description": "Recorded by a person using the chosen method. Never derived from guesswork."
+    },
+    "review_status": {
+      "type": "string",
+      "title": "Review Status",
+      "enum": [
+        "Not reviewed",
+        "Under review",
+        "Validated",
+        "Rejected",
+        "Archived"
+      ],
+      "enumColors": [
+        "gray",
+        "yellow",
+        "green",
+        "red",
+        "gray"
+      ],
+      "default": "Not reviewed"
+    },
+    "realised_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Realised On"
+    },
+    "evidence_refs_json": {
+      "type": "string",
+      "title": "Evidence References (JSON)",
+      "description": "References to evidence records that support the realised figure."
+    },
+    "status_reason": {
+      "type": "string",
+      "title": "Why The Status Changed"
+    },
+    "archived_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Archived At"
+    },
+    "author": {
+      "type": "string",
+      "title": "Author"
+    },
+    "author_id": {
+      "type": "string",
+      "title": "Author (user id)"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "benefit_key",
+    "objective_id",
+    "name",
+    "review_status"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            }
+          ]
+        },
+        {
+          "user_condition": {
+            "account_status": "Active",
+            "access_approved": true
+          }
+        },
+        {
+          "data.tenant_id": "{{user.data.tenant_id}}"
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

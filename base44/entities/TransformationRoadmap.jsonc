@@ -1,0 +1,314 @@
+{
+  "name": "TransformationRoadmap",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "title": "Business (tenant) ID",
+      "description": "Owning business. Stamped by the strategy service; never from the browser."
+    },
+    "roadmap_key": {
+      "type": "string",
+      "title": "Roadmap Reference"
+    },
+    "program_id": {
+      "type": "string",
+      "title": "Program Record ID"
+    },
+    "program_key": {
+      "type": "string",
+      "title": "Program Reference"
+    },
+    "program_name": {
+      "type": "string",
+      "title": "Program"
+    },
+    "portfolio_id": {
+      "type": "string",
+      "title": "Portfolio Record ID"
+    },
+    "portfolio_key": {
+      "type": "string",
+      "title": "Portfolio Reference"
+    },
+    "name": {
+      "type": "string",
+      "title": "Roadmap Name"
+    },
+    "summary": {
+      "type": "string",
+      "title": "What This Roadmap Delivers"
+    },
+    "version": {
+      "type": "number",
+      "title": "Version",
+      "default": 1
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Draft",
+        "Submitted",
+        "Approved",
+        "Returned",
+        "Archived"
+      ],
+      "enumColors": [
+        "gray",
+        "blue",
+        "green",
+        "yellow",
+        "gray"
+      ],
+      "default": "Draft"
+    },
+    "initiatives_json": {
+      "type": "string",
+      "title": "Initiatives (JSON)",
+      "description": "Ordered initiatives, each with its own version, owner, due date and status."
+    },
+    "initiative_count": {
+      "type": "number",
+      "title": "Initiatives",
+      "default": 0
+    },
+    "dependencies_json": {
+      "type": "string",
+      "title": "Dependencies (JSON)"
+    },
+    "dependency_count": {
+      "type": "number",
+      "title": "Dependencies",
+      "default": 0
+    },
+    "milestones_json": {
+      "type": "string",
+      "title": "Milestones (JSON)"
+    },
+    "milestone_count": {
+      "type": "number",
+      "title": "Milestones",
+      "default": 0
+    },
+    "submitted_by": {
+      "type": "string",
+      "title": "Submitted By"
+    },
+    "submitted_by_id": {
+      "type": "string",
+      "title": "Submitted By (user id)"
+    },
+    "submitted_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Submitted At"
+    },
+    "decided_by": {
+      "type": "string",
+      "title": "Decided By"
+    },
+    "decided_by_id": {
+      "type": "string",
+      "title": "Decided By (user id)"
+    },
+    "decided_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Decided At"
+    },
+    "decision_note": {
+      "type": "string",
+      "title": "Decision Note"
+    },
+    "approval_authority": {
+      "type": "string",
+      "title": "Approval Authority",
+      "enum": [
+        "Independent reviewer",
+        "Administrator override"
+      ],
+      "enumColors": [
+        "green",
+        "yellow"
+      ],
+      "default": "Independent reviewer"
+    },
+    "self_approved": {
+      "type": "boolean",
+      "title": "Approved By Its Author",
+      "default": false
+    },
+    "previous_version_id": {
+      "type": "string",
+      "title": "Previous Version Record"
+    },
+    "change_note": {
+      "type": "string",
+      "title": "What Changed In This Version"
+    },
+    "engine_version": {
+      "type": "string",
+      "title": "Engine Version"
+    },
+    "archived_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Archived At"
+    },
+    "author": {
+      "type": "string",
+      "title": "Author"
+    },
+    "author_id": {
+      "type": "string",
+      "title": "Author (user id)"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "roadmap_key",
+    "program_id",
+    "name",
+    "version",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Provider Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Compliance Administrator"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Management"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Administration"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Quality & Improvement Manager"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "Auditor"
+              }
+            }
+          ]
+        },
+        {
+          "user_condition": {
+            "account_status": "Active",
+            "access_approved": true
+          }
+        },
+        {
+          "data.tenant_id": "{{user.data.tenant_id}}"
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "__service_role_only__"
+          }
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "data.tenant_id": "{{user.data.tenant_id}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

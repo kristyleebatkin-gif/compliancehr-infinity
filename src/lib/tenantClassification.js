@@ -253,6 +253,14 @@ export const BUSINESS_OWNED_ENTITIES = Object.freeze([
   'AiDecisionRecord',
   'AiDecisionReview',
   'AiAuditRecord',
+  'EnterprisePortfolio',
+  'TransformationProgram',
+  'StrategyObjective',
+  'StrategyBenefit',
+  'EnterpriseCapability',
+  'CapabilityMaturityAssessment',
+  'TransformationRoadmap',
+  'StrategyAuditRecord',
 ]);
 
 export function tenantGroupOf(entityName) {

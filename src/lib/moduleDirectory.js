@@ -58,6 +58,7 @@ const CANONICAL_MODULES = [
   { key: 'digital-twin', label: 'Digital Twin OS', path: '/digital-twin', icon: Boxes, group: '7. Compliance, Quality & Documents', blurb: 'Versioned twin models, approved scenarios and simulation runs that estimate what a change would do, with every figure labelled an estimate and traced to the records behind it.' },
   { key: 'automation-fabric', label: 'Automation Fabric', path: '/automation-fabric', icon: Workflow, group: '7. Compliance, Quality & Documents', blurb: 'Event catalogue, subscriptions, orchestration rules and connectors that route validated events into existing published workflows, with attempts, retries, dead letters and a redacted delivery history.' },
   { key: 'ai-workforce', label: 'AI Workforce OS', path: '/ai-workforce', icon: Bot, group: '7. Compliance, Quality & Documents', blurb: 'Tenant-scoped models, agents, versioned prompts, tool policies and human review: every AI proposal traced to the versions that produced it, redacted before storage, and settled by a named person.' },
+  { key: 'enterprise-strategy', label: 'Enterprise Strategy OS', path: '/enterprise-strategy', icon: Target, group: '7. Compliance, Quality & Documents', blurb: 'Strategy and transformation in one workspace: portfolios, programs, objectives and benefits rolled up from real measures, capability maturity proven by validated assessments, and versioned roadmaps approved by a person.' },
   { key: 'clinical-os', label: 'Clinical & Allied Health OS', path: '/clinical-os', icon: Stethoscope, group: '3. Service Delivery', blurb: 'Care plans, review dates, consent, restrictive practice and allied health referrals in one clinical register.' },
   { key: 'board-ceo', label: 'Board & CEO Copilots', path: '/board-ceo', icon: Crown, group: '9. Governance & Operations', blurb: 'Board and CEO assurance briefings from the recorded position, with the resolutions that record what was decided.' },
   { key: 'approval-engine', label: 'Approval Chains', path: '/approval-engine', icon: GitBranch, group: '1. My Workspace', blurb: 'Up to five signed levels per decision: expenditure, policy, risk acceptance, clinical and access approvals.' },
@@ -127,6 +128,14 @@ export const NAV_GROUPS = [
     "parent": "Operating Systems",
     "keys": [
       "enterprise-os"
+    ]
+  },
+  {
+    "id": "strategy-os",
+    "label": "Strategy & Transformation OS",
+    "parent": "Operating Systems",
+    "keys": [
+      "enterprise-strategy"
     ]
   },
   {
