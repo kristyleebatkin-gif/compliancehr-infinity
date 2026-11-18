@@ -1,6 +1,6 @@
 # Phases 5–10 Capability Track — Read-Only Inventory & Conflict Register
 
-Status: **Phase 0 complete, conflicts resolved, Steps C5, C6, C7, C8 and C9 built.**
+Status: **Phase 0 complete, conflicts resolved, Steps C5, C6, C7, C8, C9 and C10 built.**
 Date: 18 November 2026.
 
 Owner decisions recorded before any build:
@@ -96,6 +96,36 @@ records and fourteen audit rows. One blocked decision (`AID-20261118025422-UKM3`
 agent") was left behind when a cleanup run was cancelled, and was deleted on request by its exact id
 after checking its reference, agent name and status; no other AI record was touched. All AI workforce
 counts now read zero.
+
+**Step C10 delivered (Autonomous Enterprise Operating System).** Eight tenant-scoped records:
+`EnterprisePortfolio`, `TransformationProgram`, `StrategyObjective`, `StrategyBenefit`,
+`EnterpriseCapability`, `CapabilityMaturityAssessment`, `TransformationRoadmap`, `StrategyAuditRecord`.
+One server-authorised function (`enterpriseStrategy`) with seventeen actions, the strategy rules in
+`base44/shared/enterpriseStrategy.ts` (`C10.1`), and one module at `/enterprise-strategy` (eight tabs:
+board view, portfolios, programs, objectives, benefits, capabilities, assessments, roadmaps, audit
+trail). The module is gated to the same compliance-review roles as C9, with roadmap approval limited to
+`permissions.approve`. Conflict C10 was honoured: nothing was substituted. The chain is portfolio →
+programme → objective → benefit → capability → maturity, and every figure is a rollup of stored values.
+Progress returns "not measured" when a measure is absent, capability maturity comes from the latest
+*validated* assessment only, and an empty workspace reads zero instead of a placeholder. Status changes
+that set work in motion need an approving role and a recorded reason; a roadmap can only be approved
+once submitted, with a reason, by someone other than its author, with an administrator override
+recorded as an override; and editing a submitted or approved roadmap creates a new version rather than
+overwriting it. Tests in `tests/deno/capabilityC10.test.ts` (20 tests) cover the rollups, progress, due
+state, evidence-backed maturity, the empty workspace, permission denial, the approval triggers, the
+roadmap transition sequence, audit redaction and hash chaining, and the reported version.
+
+**C10 live verification.** The read path and every endpoint's refusal path were exercised against the
+live function: `list` returned `saved: true` with all register counts at zero; a valid `savePortfolio`
+created `POR-2026-001` as `Draft` and wrote one audit entry; invalid names were refused `400`; and the
+other fifteen actions each refused `404` with their own message when handed a parent record that does
+not exist, writing nothing. No live end-to-end cycle through programme, objective, benefit, capability,
+assessment or roadmap creation was run, because each would need records created and then removed. The
+test portfolio was soft-deleted by its exact record id on request. Its audit entry
+(`AUD-20261118030719-2DY5`, `Portfolio created`, `POR-2026-001`, outcome `Recorded`) is preserved
+unmodified as immutable history, and no other audit row was touched; because the register is
+append-only, an honest trail for this step begins with that one entry. The portfolio register now reads
+zero and the audit register reads one.
 
 This document records what exists, what is genuinely missing, and which conflicts must be resolved
 before any schema is written. Nothing here is a delivery claim.
@@ -288,20 +318,23 @@ real counts only → checkpoint, then stop for review.
 | C7 | Graph & Digital Twin ✅ | Indexed, ontology-validated graph registry; versioned twin models, scenarios and simulation runs over the existing registers | C3 |
 | C8 | Automation Fabric ✅ | Event catalogue, subscriptions, orchestration rules, flows, connectors and a redacted delivery history beside Workflow Studio | C4, C7 |
 | C9 | AI Workforce ✅ | Model, prompt-version, tool and agent registers with agent-to-tool grants, a redacted proposal register, an independent review queue and an append-only audit trail, beside the existing AI registers | C2 |
-| C10 | Autonomous Enterprise | Portfolio → program → objective → benefit → capability → maturity chain | C6, C1 |
+| C10 | Autonomous Enterprise ✅ | Portfolio → program → objective → benefit → capability → maturity chain | C6, C1 |
 
 ---
 
-## 5. Phase 0 baseline, and what C5–C9 changed since
+## 5. Phase 0 baseline, and what C5–C10 changed since
 
 Phase 0 itself changed no entity, function, workflow, route, permission, style or data record, and
-deployed nothing. Since then C5, C6, C7, C8 and C9 each added their own records, server-authorised
+deployed nothing. Since then C5, C6, C7, C8, C9 and C10 each added their own records, server-authorised
 functions, one module and its audit writes, as recorded in §4 and in `MASTER_TODO.md`. No existing
-module, route, entity or role was removed or replaced by any of the four steps. C8 did extract one
+module, route, entity or role was removed or replaced by any of the six steps. C8 did extract one
 shared helper (`base44/shared/workflowLauncher.ts`) so every run start goes through a single path;
 the behaviour of the Studio and the connected-journey gate is unchanged by that extraction.
 
 Named checkpoints, one per step: C5 Decision Intelligence, C6 Autonomous Compliance Operations,
 **C7 — Knowledge Graph & Digital Twin OS**, **C8 — Enterprise Automation Fabric**,
-**C9 — Autonomous AI Workforce OS**. C9 is the current checkpoint; C10 (Autonomous Enterprise) remains
-unstarted and is the next step in the order above.
+**C9 — Autonomous AI Workforce OS**, **C10 — Autonomous Enterprise Operating System**.
+C10 is the current checkpoint and completes the C5–C10 order above. Every step in that order is
+delivered; the reference documents are `src/PHASE5_10_C8_REFERENCE.md`,
+`src/PHASE5_10_C9_REFERENCE.md` and `src/PHASE5_10_C10_REFERENCE.md`. Checks at the C10 checkpoint:
+lint clean, 225 app tests and 286 Deno tests passing, production build succeeding.

@@ -1,3 +1,46 @@
+## Capability Track C10 — Autonomous Enterprise Operating System — 18 November 2026 (UTC)
+
+Last step of the separate C5–C10 capability track, and it closes that order. Nothing in the 12-phase
+register was re-planned, and no existing module, route, entity or role was substituted.
+
+Delivered:
+- Eight tenant-scoped records: `EnterprisePortfolio`, `TransformationProgram`, `StrategyObjective`,
+  `StrategyBenefit`, `EnterpriseCapability`, `CapabilityMaturityAssessment`, `TransformationRoadmap`,
+  `StrategyAuditRecord`. Service-role-only writes with the release-2 business lock on every operation.
+- `base44/shared/enterpriseStrategy.ts` (`C10.1`): rollups, progress, due state, evidence-backed
+  capability maturity, per-register validation, approval triggers, the roadmap transition rule, and the
+  hash-chained audit builder. The `enterpriseStrategy` function is the only writer, with seventeen
+  actions.
+- Module `/enterprise-strategy` (board view, portfolios, programs, objectives, benefits, capabilities,
+  assessments, roadmaps, audit trail), registered in `moduleDirectory.js`, the role matrix and
+  `src/App.jsx`. Roadmap approval additionally needs `permissions.approve`.
+- `tests/deno/capabilityC10.test.ts` — 20 tests over the engine: rollup arithmetic, progress and due
+  state, maturity from validated assessments only, the empty workspace, permission denial, approval
+  triggers, the submit-then-approve-by-someone-else sequence, audit redaction and chaining, reported
+  version.
+- `src/PHASE5_10_C10_REFERENCE.md` added; `PHASE5_10_INVENTORY.md` step summary, build-order table and
+  §5 checkpoint list updated to C10.
+
+Checks actually run this session, each exit 0: `npm run lint`; `npm test` (225 passed, 0 failed);
+`npm run test:deno` (286 passed, 0 failed, including the 20 C10 tests); `npm run build`. The
+`enterpriseStrategy` function was invoked against this app's live production database: `list` returned
+200 with every register count at zero, a valid `savePortfolio` created `POR-2026-001` with one audit
+entry, invalid names were refused 400, and the other fifteen actions each refused 404 with their own
+message against a parent record that does not exist, writing nothing.
+
+Limitations recorded, not glossed: no live end-to-end cycle through programme, objective, benefit,
+capability, assessment or roadmap creation, status change, benefit review, assessment validation or the
+roadmap submit/decide/archive transitions. Those paths are covered by the 20 engine tests only, because
+each live cycle would need records created and then removed. The test portfolio was soft-deleted by its
+exact record id on request; its audit entry (`AUD-20261118030719-2DY5`, `Portfolio created`,
+`POR-2026-001`, `Recorded`) is preserved unmodified as immutable history and no other audit row was
+touched, so the strategy audit trail honestly begins with that single entry. No multi-identity UAT, no
+role grant, no record migration, no publication.
+
+Named checkpoint: **Capability Track C10 — Autonomous Enterprise Operating System**.
+
+---
+
 ## Capability Track C7 — Knowledge Graph & Digital Twin OS — 18 November 2026 (UTC)
 
 Seventh step of the separate C5–C10 capability track, not a re-plan of the 12-phase register. Code was
