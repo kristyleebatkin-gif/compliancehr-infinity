@@ -56,3 +56,18 @@ Deno.test('a level is sent once per due date; moving the due date restarts', () 
   assertEquals(planEscalations([task({ escalation_level: 2, escalation_due_date: '2026-11-16' })], users, [], '2026-11-19')[0].to_level, LEVEL.OWNER);
   assertEquals(planEscalations([task({ due_date: '2026-11-17', escalation_level: 3, escalation_due_date: '2026-11-16' })], users, [], '2026-11-18')[0].to_level, LEVEL.ASSIGNEE);
 });
+
+// Real records name people and roles in assigned_to instead of emails (found in the 19 Nov 2026 test run).
+Deno.test('assigned_to names and roles are matched to active users', async () => {
+  const { assigneeEmails } = await import('../../base44/shared/taskEscalation.ts');
+  const people = [
+    { email: 'kristy@x.au', full_name: 'kristy batkin', role: 'admin', account_status: 'Active' },
+    { email: 'sherelle@x.au', full_name: 'Sherelle Dalton', role: 'Provider Administrator', account_status: 'Active' },
+    { email: 'gone@x.au', full_name: 'Old Staff', role: 'Administration', account_status: 'Archived' },
+  ];
+  assertEquals(assigneeEmails({ assigned_to: 'Kristy Batkin' }, people), ['kristy@x.au']);
+  assertEquals(assigneeEmails({ assigned_to: 'Compliance Manager, Provider Administrator' }, people), ['sherelle@x.au']);
+  assertEquals(assigneeEmails({ assigned_to: 'Administration' }, people), []);
+  assertEquals(assigneeEmails({ assigned_to: 'Nobody Known' }, people), []);
+  assertEquals(targetLevel({ due_date: '2026-11-16', priority: 'Medium', status: 'Open', assigned_to: 'Kristy Batkin' }, '2026-11-17', holidaySet([]), people), LEVEL.ASSIGNEE);
+});
