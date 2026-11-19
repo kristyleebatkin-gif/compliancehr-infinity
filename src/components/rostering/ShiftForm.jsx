@@ -17,7 +17,7 @@ const BLANK = {
   employee_name: '', participant_name: '', date: '', start_time: '', end_time: '',
   status: 'Scheduled', service_type: '', funding_source: '', location: '',
   location_lat: '', location_lng: '',
-  notes: '', break_minutes: '', travel_km: '', billable_rate: '', participant_goal: '',
+  notes: '', break_minutes: '', travel_km: '', billable_rate: '', support_item_number: '', participant_goal: '',
   repeat_rule: 'none', repeat_until: '', approval_status: 'Not Required',
 };
 
@@ -49,7 +49,7 @@ export default function ShiftForm({ open, onOpenChange, shift, prefillDate, onSa
         status: shift.status || 'Scheduled', service_type: shift.service_type || '', funding_source: shift.funding_source || '',
         location: shift.location || '', location_lat: shift.location_lat ?? '', location_lng: shift.location_lng ?? '',
         notes: shift.notes || '',
-        break_minutes: shift.break_minutes ?? '', travel_km: shift.travel_km ?? '', billable_rate: shift.billable_rate ?? '',
+        break_minutes: shift.break_minutes ?? '', travel_km: shift.travel_km ?? '', billable_rate: shift.billable_rate ?? '', support_item_number: shift.support_item_number ?? '',
         participant_goal: shift.participant_goal || '',
         repeat_rule: shift.repeat_rule || 'none', repeat_until: shift.repeat_until || '',
         approval_status: shift.approval_status || 'Not Required',
@@ -121,6 +121,7 @@ export default function ShiftForm({ open, onOpenChange, shift, prefillDate, onSa
       break_minutes: form.break_minutes === '' ? undefined : Number(form.break_minutes),
       travel_km: form.travel_km === '' ? undefined : Number(form.travel_km),
       billable_rate: form.billable_rate === '' ? undefined : Number(form.billable_rate),
+      support_item_number: form.support_item_number ? form.support_item_number.trim() : undefined,
       participant_goal: form.participant_goal || undefined,
       repeat_rule: editing ? undefined : form.repeat_rule,
       repeat_until: form.repeat_rule !== 'none' && !editing ? form.repeat_until : undefined,
@@ -243,6 +244,24 @@ export default function ShiftForm({ open, onOpenChange, shift, prefillDate, onSa
             <div className="grid gap-1.5"><Label>Break (min)</Label><Input type="number" min="0" value={form.break_minutes} onChange={(e) => setForm({ ...form, break_minutes: e.target.value })} /></div>
             <div className="grid gap-1.5"><Label>Travel (km)</Label><Input type="number" min="0" value={form.travel_km} onChange={(e) => setForm({ ...form, travel_km: e.target.value })} /></div>
             <div className="grid gap-1.5"><Label>Rate ($/hr)</Label><Input type="number" min="0" step="0.01" value={form.billable_rate} onChange={(e) => setForm({ ...form, billable_rate: e.target.value })} /></div>
+          </div>
+          <div className="grid gap-1.5">
+            <Label>NDIS support item number</Label>
+            <Input
+              placeholder="e.g. 01_011_0107_1_1"
+              value={form.support_item_number}
+              onChange={(e) => setForm({ ...form, support_item_number: e.target.value })}
+              onBlur={async (e) => {
+                const number = e.target.value.trim();
+                if (!/^\d{2}_\d{3}_\d{4}_\d_\d/.test(number) || form.billable_rate !== '') return;
+                try {
+                  const found = await base44.entities.NDISPriceGuideItem.filter({ support_item_number: number, active: true }, '-effective_from', 1);
+                  const price = Array.isArray(found) ? found[0]?.national_price : found?.items?.[0]?.national_price;
+                  if (price != null) setForm((f) => ({ ...f, billable_rate: String(price) }));
+                } catch { /* price guide not loaded yet: rate stays manual */ }
+              }}
+            />
+            <p className="text-[11px] text-muted-foreground">Fills the rate from the active NDIS price guide. Approved price updates re-price future, un-invoiced shifts with this item.</p>
           </div>
           {!editing && (
             <div className="grid gap-3 rounded-lg border p-3">
