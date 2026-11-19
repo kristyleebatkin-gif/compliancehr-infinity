@@ -10,14 +10,20 @@ import NdisNewsDashboard from '@/components/ndis/NdisNewsDashboard';
 import '@/components/ndis/ndisWorkspace.css';
 import { useToast } from '@/components/ui/use-toast';
 import NdisUpdateList from '@/components/ndis/NdisUpdateList';
+import PriceGuidePanel from '@/components/ndis/PriceGuidePanel';
 import ModuleAlertsButton from '@/components/ModuleAlertsButton';
 import { fetchAllRecords } from '@/lib/csvExport';
 import { Newspaper, ExternalLink, Mail } from 'lucide-react';
 
 const TYPE_FILTERS = ['News', 'Update', 'Consultation'];
 
-const buildQuery = (tab, typeFilter, search) => {
+const SECTOR_FILTERS = ['NDIS', 'Aged Care'];
+
+const buildQuery = (tab, typeFilter, search, sector = 'all') => {
   const conds = [];
+  // Items saved before aged care was added have no sector and are NDIS.
+  if (sector === 'Aged Care') conds.push({ sector: 'Aged Care' });
+  else if (sector === 'NDIS') conds.push({ sector: { $ne: 'Aged Care' } });
   if (tab === 'newsletters') conds.push({ news_type: 'Newsletter' });
   else if (typeFilter !== 'all') conds.push({ news_type: typeFilter });
   const term = search.trim();
@@ -41,6 +47,7 @@ export default function NdisUpdates() {
   const [typeFilter, setTypeFilter] = useState('all');
   const [search, setSearch] = useState('');
   const [tab, setTab] = useState('updates');
+  const [sector, setSector] = useState('all');
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -53,7 +60,7 @@ export default function NdisUpdates() {
       const cutoff = format(new Date(Date.now() - 30 * 86400000), 'yyyy-MM-dd');
       const recent = await base44.entities.NdisUpdate.count({ published_date: { $gte: cutoff } });
       setStats({ total, recent, byType });
-      const rows = await fetchAllRecords(base44.entities.NdisUpdate, buildQuery(tab, typeFilter, search), '-published_date');
+      const rows = await fetchAllRecords(base44.entities.NdisUpdate, buildQuery(tab, typeFilter, search, sector), '-published_date');
       setItems(rows);
     } catch (error) {
       console.error(error);
@@ -61,29 +68,30 @@ export default function NdisUpdates() {
     } finally {
       setLoading(false);
     }
-  }, [typeFilter, tab, search]);
+  }, [typeFilter, tab, search, sector]);
 
   useEffect(() => { load(); }, [load]);
 
   const refresh = async () => {
     setRefreshing(true);
     try {
-      const res = await base44.functions.invoke('ndisNewsFetch', {});
+      const res = await base44.functions.invoke('ndisNewsFetch', { sector: 'all' });
       const fetched = Array.isArray(res.data?.items) ? res.data.items : [];
       if (!fetched.length) {
-        toast({ title: 'No new items found from the NDIS sites right now' });
+        toast({ title: 'No new items found from the NDIS or aged care sites right now' });
       } else {
         const cleaned = fetched.map((it) => ({
           title: it.title,
           published_date: it.published_date || undefined,
-          source: ['NDIS Commission', 'NDIS Agency', 'Other'].includes(it.source) ? it.source : 'Other',
+          source: ['NDIS Commission', 'NDIS Agency', 'Aged Care Commission', 'Department of Health', 'Other'].includes(it.source) ? it.source : 'Other',
+          sector: it.sector === 'Aged Care' ? 'Aged Care' : 'NDIS',
           news_type: ['News', 'Update', 'Newsletter', 'Consultation'].includes(it.news_type) ? it.news_type : 'News',
           category: it.category || undefined,
           summary: it.summary || undefined,
           url: it.url,
         }));
         const result = await base44.entities.NdisUpdate.upsert(cleaned, { key: 'url' });
-        toast({ title: 'NDIS feed refreshed', description: `${result.created || 0} new and ${result.updated || 0} existing items from the NDIS sites.` });
+        toast({ title: 'Updates refreshed', description: `${result.created || 0} new and ${result.updated || 0} existing items from the NDIS and aged care sites.` });
       }
       await load();
     } catch (error) {
@@ -95,7 +103,7 @@ export default function NdisUpdates() {
 
   return (
     <div className="ndis-workspace space-y-4">
-      <ModuleShell moduleKey="ndis-news" title="NDIS Updates & News" subtitle="Summary of the latest NDIS news, pricing and practice updates, consultations and newsletters." icon={Newspaper} />
+      <ModuleShell moduleKey="ndis-news" title="NDIS & Aged Care Updates" subtitle="Summaries of the latest NDIS and aged care news, pricing and practice updates, consultations and newsletters, plus the NDIS price guide." icon={Newspaper} />
       <div className="module-action-bar flex flex-wrap items-center gap-1 rounded-xl border border-primary/20 bg-card p-2 shadow-sm">
         <ModuleAlertsButton />
       </div>
@@ -105,6 +113,14 @@ export default function NdisUpdates() {
       <NdisNewsDashboard stats={loadError ? { total: '—', recent: '—', byType: { News: '—', Update: '—', Newsletter: '—', Consultation: '—' } } : stats} />
         <TabsContent value="updates">
           <div className="module-filter-bar mb-2 flex flex-wrap items-center">
+            <p className="text-sm font-semibold">Sector</p>
+            <Select value={sector} onValueChange={setSector}>
+              <SelectTrigger className="w-36"><SelectValue /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">NDIS &amp; Aged Care</SelectItem>
+                {SECTOR_FILTERS.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
+              </SelectContent>
+            </Select>
             <p className="text-sm font-semibold">Filter by type</p>
             <Select value={typeFilter} onValueChange={setTypeFilter}>
               <SelectTrigger className="w-40"><SelectValue /></SelectTrigger>
@@ -135,6 +151,9 @@ export default function NdisUpdates() {
             </Card>
           </div>
           <NdisUpdateList items={loadError ? [] : items} loading={loading} emptyText="No newsletters fetched yet - use Refresh updates." />
+        </TabsContent>
+        <TabsContent value="price-guide">
+          <PriceGuidePanel />
         </TabsContent>
       </Tabs>
     </div>
