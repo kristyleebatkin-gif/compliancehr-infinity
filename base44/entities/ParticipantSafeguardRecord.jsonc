@@ -92,6 +92,49 @@
       "type": "string",
       "title": "Restrictive Practice Type"
     },
+    "restrictive_practice_category": {
+      "type": "string",
+      "title": "Regulated Category",
+      "enum": [
+        "Seclusion",
+        "Chemical restraint",
+        "Mechanical restraint",
+        "Physical restraint",
+        "Environmental restraint"
+      ]
+    },
+    "authorisation_status": {
+      "type": "string",
+      "title": "Authorisation Status",
+      "enum": [
+        "Authorised",
+        "Pending",
+        "Unauthorised"
+      ]
+    },
+    "behaviour_support_plan_reference": {
+      "type": "string",
+      "title": "Behaviour Support Plan Reference"
+    },
+    "reported_to_regulator": {
+      "type": "boolean",
+      "title": "Reported to Regulator",
+      "default": false
+    },
+    "reported_date": {
+      "type": "string",
+      "title": "Reported Date",
+      "format": "date"
+    },
+    "sector": {
+      "type": "string",
+      "title": "Sector",
+      "enum": [
+        "NDIS",
+        "Aged Care"
+      ],
+      "default": "NDIS"
+    },
     "authorisation_reference": {
       "type": "string",
       "title": "Authorisation Reference"
