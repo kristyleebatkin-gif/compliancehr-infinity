@@ -70,7 +70,8 @@ function RequestRow({ r, onDecide, onWithdraw }) {
   );
 }
 
-function Section({ title, hint, rows, empty, onDecide, onWithdraw }) {
+function Section({ title, hint, rows: rawRows, empty, onDecide, onWithdraw }) {
+  const rows = Array.isArray(rawRows) ? rawRows : [];
   return (
     <section aria-label={title} className="space-y-2">
       <div>
