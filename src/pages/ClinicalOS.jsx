@@ -12,6 +12,7 @@ import ClinicalKpiStrip from '@/components/clinical/ClinicalKpiStrip';
 import ClinicalCopilotBar from '@/components/clinical/ClinicalCopilotBar';
 import CarePlanPanel from '@/components/clinical/CarePlanPanel';
 import AlliedHealthPanel from '@/components/clinical/AlliedHealthPanel';
+import RestrictivePracticeRegister from '@/components/clinical/RestrictivePracticeRegister';
 import { clinicalMetrics, daysLabel, reviewQueue } from '@/lib/clinicalGovernance';
 
 export default function ClinicalOS() {
@@ -72,9 +73,14 @@ export default function ClinicalOS() {
           <TabsTrigger value="command">Command centre</TabsTrigger>
           <TabsTrigger value="plans">Care plans</TabsTrigger>
           <TabsTrigger value="allied">Allied health</TabsTrigger>
+          <TabsTrigger value="restrictive">Restrictive practices</TabsTrigger>
           <TabsTrigger value="copilots">Clinical copilots</TabsTrigger>
           <TabsTrigger value="governance">Clinical governance</TabsTrigger>
         </TabsList>
+
+        <TabsContent value="restrictive" className="mt-4">
+          <RestrictivePracticeRegister />
+        </TabsContent>
 
         <TabsContent value="command" className="mt-4 space-y-4">
           <ClinicalKpiStrip metrics={metrics} />
