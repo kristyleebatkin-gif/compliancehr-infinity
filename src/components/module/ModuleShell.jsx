@@ -136,7 +136,7 @@ function ScopedModuleShell({
 
   const workspaceBar = workspace.permitted ? (
     <WorkspaceLayoutBar
-      key={workspace.scope}
+      key={`${workspace.scope}:bar`}
       workspaceKey={workspaceKey}
       workspaceLabel={workspaceLabel || title || workspaceKey}
       availableSections={availableSections}
@@ -147,7 +147,7 @@ function ScopedModuleShell({
 
   const contextPanel = workspace.permitted ? (
     <WorkspaceContextPanel
-      key={workspace.scope}
+      key={`${workspace.scope}:context`}
       open={contextOpen}
       onOpenChange={setContextOpen}
       workspaceKey={workspaceKey}
