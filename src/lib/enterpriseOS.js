@@ -197,7 +197,7 @@ export const OPERATING_SYSTEMS = [
     capabilities: [
       cap('Clinical and safeguarding incidents', 'partial', '/incidents', 'Incidents capture clinical classification; clinical severity review is not a separate workflow.'),
       cap('Care plans with review dates, consent, clinical risk and restrictive practice', 'live', '/clinical-os', 'Every plan carries its review date, consent position and any restrictive practice with the authorisation detail.'),
-      cap('Restrictive practice monitoring and reduction planning', 'partial', '/clinical-os', 'Plans record that a restrictive practice is used and how it is authorised; monitoring and reduction planning are not modelled.'),
+      cap('Restrictive practice monitoring and reduction planning', 'live', '/clinical-os', 'Restrictive practices register (Clinical OS): every use with category, authorisation status and expiry, behaviour support plan, regulator reporting and reduction actions, with flags. Added 19 Nov 2026; signed-in acceptance pending.'),
       cap('Clinical and allied health copilots over assurance metadata', 'live', '/clinical-os'),
       cap('Consent and information sharing', 'live', '/documents'),
       cap('Clinical supervision and credentialing', 'gap', null, 'No supervision log or clinical credential register.'),
@@ -212,7 +212,6 @@ export const OPERATING_SYSTEMS = [
       { entity: 'Investigation', label: 'Investigations' },
     ],
     gaps: [
-      'Restrictive practice monitoring and reduction planning.',
       'Clinical supervision and credentialing log.',
       'Standardised clinical outcome measures.',
       'Clinical audit programme.',
@@ -254,6 +253,8 @@ export const OPERATING_SYSTEMS = [
       cap('Clinical indicators and reporting', 'gap', null, 'No aged care quality indicator capture.'),
       cap('Consumer feedback and complaints', 'live', '/feedback'),
       cap('SIRS-style incident monitoring', 'partial', '/incidents', 'Incidents capture classification and severity; aged care priority timeframes are not enforced as a rule set.'),
+      cap('Aged care regulator updates', 'live', '/ndis-updates', 'Daily summaries from the Aged Care Quality and Safety Commission and the Department of Health aged care pages, filterable by sector. Added 19 Nov 2026.'),
+      cap('Restrictive practice register', 'live', '/clinical-os', 'Shared NDIS and aged care register in Clinical OS. Added 19 Nov 2026.'),
     ],
     registers: [
       { entity: 'SatisfactionSurvey', label: 'Consumer surveys' },
@@ -277,15 +278,15 @@ export const OPERATING_SYSTEMS = [
       cap('Service delivery and shift records', 'live', '/rostering'),
       cap('Incident monitoring and reportable incidents', 'live', '/incidents'),
       cap('Provider compliance and audit readiness', 'live', '/compliance'),
-      cap('Price guide and NDIS updates', 'live', '/ndis-updates'),
-      cap('Restrictive practice monitoring', 'partial', '/our-participants', 'Safeguard records exist; authorisation and reduction reporting are not built.'),
+      cap('Price guide and NDIS updates', 'partial', '/ndis-updates', 'NDIS updates are live. Price guide import, impact preview and approve-and-apply added 19 Nov 2026; no catalogue has been loaded yet, so shifts cannot be priced automatically.'),
+      cap('Restrictive practice monitoring', 'live', '/clinical-os', 'Restrictive practices register: authorisation, expiry, behaviour support plan, reporting and reduction flags. Added 19 Nov 2026.'),
     ],
     registers: [
       { entity: 'NDISRegistrationProfile', label: 'Registration profiles' },
       { entity: 'NDISComplianceDeadline', label: 'Compliance deadlines' },
       { entity: 'NDISRegistrationGroup', label: 'Registration groups' },
     ],
-    gaps: ['Restrictive practice authorisation and monitoring register.'],
+    gaps: ['Load the current NDIS Support Catalogue and record support item numbers on shifts.'],
   },
   {
     id: 'evidence',
