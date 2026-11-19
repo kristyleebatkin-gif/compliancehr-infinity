@@ -1,3 +1,4 @@
+import { loggedInvokeLLM } from '../../shared/aiAudit.ts';
 import { hasApprovedAccess } from '../../shared/appAccess.ts';
 import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 
@@ -54,7 +55,7 @@ export default perBusiness(async function(req) {
       participant_support_teams: Object.fromEntries(participants.map((p) => [p.full_name, p.support_team || []])),
     };
 
-    const llm = await service.integrations.Core.InvokeLLM({
+    const llm = await loggedInvokeLLM(service, { feature: 'rosterSuggest', user: user }, {
       prompt: `You are a rostering assistant for an Australian NDIS disability support provider. Suggest which active staff member should fill each unfilled shift below.\n\nPriorities, in order:\n1. Continuity of support - prefer workers already on the participant's support team or listed as supporting that participant.\n2. Availability - never suggest a worker marked Unavailable for that date (all day, or overlapping the shift times).\n3. Spread the load fairly - do not suggest the same worker for everything when alternatives exist.\n4. Match service type and skill level where known.\n\nGive at most 2 candidates per shift (suggested_worker and alternative_worker). If no worker is suitable, set suggested_worker to "No suitable worker" and explain why.\n\nData (JSON): ${JSON.stringify(payload)}`,
       response_json_schema: {
         type: 'object',

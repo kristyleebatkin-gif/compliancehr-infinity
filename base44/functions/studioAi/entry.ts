@@ -1,3 +1,4 @@
+import { loggedInvokeLLM } from '../../shared/aiAudit.ts';
 import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 
 import { authorizeAndLogAiAction } from '../../shared/aiGovernance.ts';
@@ -40,7 +41,7 @@ export default perBusiness(async function (req: Request): Promise<Response> {
       }
 
       const context = clip(body.context, 600);
-      const reply = await base44.asServiceRole.integrations.Core.InvokeLLM({
+      const reply = await loggedInvokeLLM(base44.asServiceRole, { feature: 'studioAi', user: gate.user }, {
         prompt: `${VOICE}
 
 You are Sherelle's in-app assistant inside her daily operations dashboard. Answer in plain conversational text (short paragraphs or simple dash-dot lists). Be concise unless asked for detail. If she asks for a document, draft it in full. If something needs a human decision or compliance sign-off, say so plainly.
@@ -62,7 +63,7 @@ Assistant:`,
       if (!brief) return Response.json({ error: 'Describe what the design is for.' }, { status: 400 });
       const format = clip(body.format, 60) || 'social post';
 
-      const result = await base44.asServiceRole.integrations.Core.InvokeLLM({
+      const result = await loggedInvokeLLM(base44.asServiceRole, { feature: 'studioAi', user: gate.user }, {
         prompt: `${VOICE}
 
 Write copy for a ${format} promoting this: ${brief}
@@ -88,7 +89,7 @@ Keep the headline under 60 characters, the subhead under 140 characters and the 
       const name = clip(lead.name, 120);
       if (!name) return Response.json({ error: 'Select a lead first.' }, { status: 400 });
 
-      const result = await base44.asServiceRole.integrations.Core.InvokeLLM({
+      const result = await loggedInvokeLLM(base44.asServiceRole, { feature: 'studioAi', user: gate.user }, {
         prompt: `${VOICE}
 
 You are advising on an NDIS/aged care pipeline enquiry.
@@ -121,7 +122,7 @@ Give the single best next step, then a ready-to-send follow-up email (subject an
       return Response.json({ error: 'Add or record a longer transcript first.' }, { status: 400 });
     }
 
-    const result = await base44.asServiceRole.integrations.Core.InvokeLLM({
+    const result = await loggedInvokeLLM(base44.asServiceRole, { feature: 'studioAi', user: gate.user }, {
       prompt: `${VOICE}
 
 Summarise this meeting transcript. Only use what is in the transcript; if an owner or date is not stated, leave that field as an empty string.

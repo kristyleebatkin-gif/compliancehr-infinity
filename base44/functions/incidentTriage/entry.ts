@@ -1,3 +1,4 @@
+import { loggedInvokeLLM } from '../../shared/aiAudit.ts';
 import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 
 import { hasAnyRole } from '../../shared/systemAuth.ts';
@@ -117,7 +118,7 @@ export default perBusiness(async function (req: Request) {
       `Police notified: ${i.requires_police ? 'Yes' : 'No'}`,
     ].join('\n');
 
-    const suggestion = await base44.asServiceRole.integrations.Core.InvokeLLM({
+    const suggestion = await loggedInvokeLLM(base44.asServiceRole, { feature: 'incidentTriage', user: user }, {
       prompt: `You help a registered NDIS and aged care provider in Australia triage an incident. Suggest how it should be assessed. A manager will review your suggestion before anything is recorded.
 
 ${RULES}

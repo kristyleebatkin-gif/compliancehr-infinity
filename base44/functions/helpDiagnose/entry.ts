@@ -1,3 +1,4 @@
+import { loggedInvokeLLM } from '../../shared/aiAudit.ts';
 import { authorizeAndLogAiAction } from '../../shared/aiGovernance.ts';
 import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 
@@ -19,7 +20,7 @@ export default perBusiness(async function(req) {
       return Response.json({ error: 'Description is too long.' }, { status: 400 });
     }
 
-    const result = await base44.asServiceRole.integrations.Core.InvokeLLM({
+    const result = await loggedInvokeLLM(base44.asServiceRole, { feature: 'helpDiagnose', user: gate.user }, {
       prompt: `You are a senior support engineer for ComplianceHR Infinity, a web app for Australian NDIS providers built on the Base44 platform. A user reports a problem and needs a diagnosis with step-by-step fixes.
 
 Problem: ${problem}

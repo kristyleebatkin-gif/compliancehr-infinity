@@ -1,3 +1,4 @@
+import { loggedInvokeLLM } from '../../shared/aiAudit.ts';
 import { hasApprovedAccess } from '../../shared/appAccess.ts';
 import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 
@@ -33,7 +34,7 @@ export default perBusiness(async function(req) {
       .map((i) => `${i.code || '(no code)'} | ${i.description} | $${Number(i.rate || 0).toFixed(2)} per ${i.unit || 'hour'}`)
       .join('\n');
 
-    const result = await base44.asServiceRole.integrations.Core.InvokeLLM({
+    const result = await loggedInvokeLLM(base44.asServiceRole, { feature: 'aiLineItems', user: user }, {
       prompt: `You are an NDIS billing assistant helping an Australian disability support provider draft ${mode === 'quote' ? 'a quote' : 'an invoice'} line items.
 Choose ONLY from the NDIS price guide list below - match the support item code, description, unit and unit price EXACTLY as listed (pick the closest suitable support). Choose the quantity that the request implies.
 

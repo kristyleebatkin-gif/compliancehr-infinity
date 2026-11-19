@@ -1,3 +1,4 @@
+import { loggedInvokeLLM } from '../../shared/aiAudit.ts';
 import { hasApprovedAccess } from '../../shared/appAccess.ts';
 import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 
@@ -55,7 +56,7 @@ export default perBusiness(async function(req) {
     const documentTitle = doc.title || doc.document_type || '';
 
     const { signed_url: signedUrl } = await service.integrations.Core.CreateFileSignedUrl({ file_uri: storedFileUri });
-    const extraction = await service.integrations.Core.InvokeLLM({
+    const extraction = await loggedInvokeLLM(service, { feature: 'consentDocumentExtract', user: user }, {
       prompt: `This is a document uploaded to the document hub of an Australian NDIS provider for ${kind === 'staff' ? 'an employee' : 'a participant'}${documentTitle ? ` (filed as "${documentTitle}")` : ''}. Read it and extract:
 1. Whether it records any consent decision (audit consent to review records, consent to share information, consent to act as an advocate, or medication consent). List every consent type it covers and the decision recorded.
 2. Who gave the consent (the person or representative signing), who is authorised (the person or organisation information may be shared with, who acts as advocate, or who may assist with medication), the scope authorised, and any stated reason or conditions.

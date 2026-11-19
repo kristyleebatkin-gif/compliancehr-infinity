@@ -1,3 +1,4 @@
+import { loggedInvokeLLM } from '../../shared/aiAudit.ts';
 import { hasApprovedAccess } from '../../shared/appAccess.ts';
 import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 
@@ -14,7 +15,7 @@ export default perBusiness(async function(req) {
       return Response.json({ error: 'Enter a valid 4-digit Australian postcode.' }, { status: 400 });
     }
 
-    const result = await base44.asServiceRole.integrations.Core.InvokeLLM({
+    const result = await loggedInvokeLLM(base44.asServiceRole, { feature: 'councilLookup', user: user }, {
       add_context_from_internet: true,
       prompt: `An Australian user provides the postcode ${postcode}. Using web search:
 1. Identify the primary Local Government Area (city council / shire) that covers most addresses in postcode ${postcode}, including the state it is in. If the postcode spans multiple councils, name the main one and mention the others in notes.

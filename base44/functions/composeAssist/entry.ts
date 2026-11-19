@@ -1,3 +1,4 @@
+import { loggedInvokeLLM } from '../../shared/aiAudit.ts';
 import { STAFF_SEND_ROLES } from '../../shared/roleMatrix.ts';
 import { authorizeAndLogAiAction } from '../../shared/aiGovernance.ts';
 import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
@@ -18,7 +19,7 @@ export default perBusiness(async function(req) {
       return Response.json({ error: 'Add a few key points first.' }, { status: 400 });
     }
 
-    const result = await base44.asServiceRole.integrations.Core.InvokeLLM({
+    const result = await loggedInvokeLLM(base44.asServiceRole, { feature: 'composeAssist', user: gate.user }, {
       prompt: `You are a professional communications writer for ComplianceHR Infinity, an Australian NDIS disability support provider.
 
 Write a ${body.message_type || 'professional email'} with a ${body.tone || 'professional'} tone.

@@ -1,3 +1,4 @@
+import { loggedInvokeLLM } from '../../shared/aiAudit.ts';
 import { authorizeAndLogAiAction } from '../../shared/aiGovernance.ts';
 import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 
@@ -17,7 +18,7 @@ export default perBusiness(async function(req) {
       return Response.json({ error: 'Text and language are required' }, { status: 400 });
     }
 
-    const result = await base44.asServiceRole.integrations.Core.InvokeLLM({
+    const result = await loggedInvokeLLM(base44.asServiceRole, { feature: 'translateText', user: gate.user }, {
       prompt: `Translate the following text into ${language}. Return ONLY the translated text, nothing else. Keep the translation simple, natural and easy to read aloud. If the text is already in ${language}, return it unchanged.\n\nText to translate: ${text}`,
     });
 

@@ -1,3 +1,4 @@
+import { loggedInvokeLLM } from '../../shared/aiAudit.ts';
 import { hasApprovedAccess } from '../../shared/appAccess.ts';
 import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 
@@ -15,7 +16,7 @@ export default perBusiness(async function(req) {
       return Response.json({ error: 'Enter a 4-digit postcode or choose a state.' }, { status: 400 });
     }
 
-    const result = await base44.asServiceRole.integrations.Core.InvokeLLM({
+    const result = await loggedInvokeLLM(base44.asServiceRole, { feature: 'emergencyAlerts', user: user }, {
       add_context_from_internet: true,
       prompt: `You are an emergency readiness assistant for an Australian NDIS provider. Using web search, find CURRENT, ACTIVE emergency warnings and alerts relevant to ${postcode ? `postcode ${postcode}` : state} (state: ${state || 'any Australian state/territory'}).
 Check the authoritative official sources: state/territory emergency services (e.g. NSW RFS, VIC Emergency, QLD Alerts, BOM Bureau of Meteorology, SES), and national sources.

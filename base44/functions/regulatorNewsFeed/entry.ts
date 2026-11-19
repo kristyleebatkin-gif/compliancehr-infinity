@@ -1,3 +1,4 @@
+import { loggedInvokeLLM } from '../../shared/aiAudit.ts';
 import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 
 const REGULATORS = [
@@ -79,7 +80,7 @@ export default perBusiness(async function (req) {
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
 
     const results = await Promise.allSettled(
-      REGULATORS.map((regulator) => base44.asServiceRole.integrations.Core.InvokeLLM({
+      REGULATORS.map((regulator) => loggedInvokeLLM(base44.asServiceRole, { feature: 'regulatorNewsFeed', user: user }, {
         add_context_from_internet: true,
         prompt: promptFor(regulator),
         response_json_schema: RESPONSE_SCHEMA,

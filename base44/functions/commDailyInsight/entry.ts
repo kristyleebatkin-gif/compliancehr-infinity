@@ -1,3 +1,4 @@
+import { loggedInvokeLLM } from '../../shared/aiAudit.ts';
 import { hasApprovedAccess } from '../../shared/appAccess.ts';
 import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 
@@ -27,7 +28,7 @@ export default perBusiness(async function(req) {
       s.Shift.count({ date: { $gte: today, $lte: in7 }, employee_name: null }),
     ]);
 
-    const ai = await base44.asServiceRole.integrations.Core.InvokeLLM({
+    const ai = await loggedInvokeLLM(base44.asServiceRole, { feature: 'commDailyInsight', user: user }, {
       prompt:
         'You are a friendly assistant for an NDIS provider team. Write a short daily insight for the team communication dashboard: 2-3 sentences, maximum 55 words, plain text, warm and encouraging, ending with one clear focus suggestion for today. ' +
         `Data: ${overdue} overdue tasks, ${dueToday} tasks due today, ${inProgress} tasks in progress, ${commsWeek} communications logged in the last 7 days, ${banterWeek} team chat messages in the last 7 days, ${unfilledShifts} unfilled shifts in the next 7 days.`,

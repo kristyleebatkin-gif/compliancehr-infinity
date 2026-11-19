@@ -1,3 +1,4 @@
+import { loggedInvokeLLM } from '../../shared/aiAudit.ts';
 import { authorizeAndLogAiAction } from '../../shared/aiGovernance.ts';
 import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 
@@ -15,7 +16,7 @@ export default perBusiness(async function(req) {
     const count = Math.min(Math.max(Number(body.count) || 5, 3), 8);
     if (!topic) return Response.json({ error: 'Choose a training topic to drill.' }, { status: 400 });
 
-    const result = await base44.asServiceRole.integrations.Core.InvokeLLM({
+    const result = await loggedInvokeLLM(base44.asServiceRole, { feature: 'generateTrainingQuiz', user: gate.user }, {
       prompt: `You are a senior trainer at an Australian NDIS disability support provider. Write ${count} fresh multiple-choice quiz questions to drill a support worker on the topic "${topic}", aligned to the NDIS Practice Standards and the NDIS Code of Conduct.
 
 Rules:

@@ -1,3 +1,4 @@
+import { loggedInvokeLLM } from '../../shared/aiAudit.ts';
 import { hasApprovedAccess } from '../../shared/appAccess.ts';
 import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 
@@ -14,7 +15,7 @@ export default perBusiness(async function(req) {
       return Response.json({ error: 'Enter a valid 4-digit Australian postcode.' }, { status: 400 });
     }
 
-    const result = await base44.asServiceRole.integrations.Core.InvokeLLM({
+    const result = await loggedInvokeLLM(base44.asServiceRole, { feature: 'supportServicesLookup', user: user }, {
       add_context_from_internet: true,
       prompt: `An Australian support worker provides the postcode ${postcode}. Using web search, find 6 to 10 real, currently operating local support and community services in or around postcode ${postcode} (include the suburb/LGA name). Cover a spread of these kinds of services where they exist nearby: NDIS/disability support providers, community or neighbourhood centres, mental health services (e.g. headspace, community mental health), housing and homelessness services, family and domestic violence services, youth services, alcohol and other drug services, emergency relief / food banks, community health centres, Centrelink / Services Australia offices, and local council community services.
 For each service return: name, category (free text, e.g. "Mental Health", "Housing", "NDIS / Disability"), suburb, address (if available), phone (if available), email (if available), website (https URL, if available), and a one-line description of what they help with. Only include services you can verify are real and current. Do not guess phone numbers or URLs - leave fields empty rather than inventing them.`,

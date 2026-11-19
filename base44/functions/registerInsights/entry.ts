@@ -1,3 +1,4 @@
+import { loggedInvokeLLM } from '../../shared/aiAudit.ts';
 import { hasApprovedAccess } from '../../shared/appAccess.ts';
 import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 
@@ -43,7 +44,7 @@ export default perBusiness(async function (req) {
       ? byStatus.filter((s) => !cfg.closed.includes(s.status)).reduce((a, s) => a + s.count, 0)
       : total;
 
-    const insights = await base44.asServiceRole.integrations.Core.InvokeLLM({
+    const insights = await loggedInvokeLLM(base44.asServiceRole, { feature: 'registerInsights', user: user }, {
       prompt: [
         `You are the compliance assistant inside an NDIS provider's management app ("ComplianceHR Infinity").`,
         `Write a register insight for the "${cfg.label}" module, using ONLY these live numbers (do not invent records or names):`,

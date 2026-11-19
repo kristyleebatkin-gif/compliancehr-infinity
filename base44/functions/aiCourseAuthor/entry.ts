@@ -1,3 +1,4 @@
+import { loggedInvokeLLM } from '../../shared/aiAudit.ts';
 import { COMPLIANCE_REVIEW_ROLES, HR_ROLES } from '../../shared/roleMatrix.ts';
 import { authorizeAndLogAiAction } from '../../shared/aiGovernance.ts';
 import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
@@ -30,7 +31,7 @@ export default perBusiness(async function(req: Request): Promise<Response> {
       .map((m: any) => `- ${m.title}${m.group ? ` [${m.group}]` : ''}`)
       .join('\n');
 
-    const result = await base44.asServiceRole.integrations.Core.InvokeLLM({
+    const result = await loggedInvokeLLM(base44.asServiceRole, { feature: 'aiCourseAuthor', user: gate.user }, {
       prompt: `You are a senior NDIS learning-and-development designer for an Australian disability support provider.
 
 A training coordinator is building a role template:

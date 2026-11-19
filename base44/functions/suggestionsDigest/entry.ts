@@ -1,3 +1,4 @@
+import { loggedInvokeLLM } from '../../shared/aiAudit.ts';
 import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 
 import { REGISTRY } from '../../shared/registerRegistry.ts';
@@ -52,7 +53,7 @@ export default perBusiness(async function (req) {
       s.expiring !== null ? `- Due/expiring within 30 days: ${s.expiring}` : null,
     ].filter((l) => l !== null).join('\n')).join('\n\n');
 
-    const digest = await base44.asServiceRole.integrations.Core.InvokeLLM({
+    const digest = await loggedInvokeLLM(base44.asServiceRole, { feature: 'suggestionsDigest', user: user }, {
       prompt: [
         `You are the compliance assistant inside an NDIS provider's management app ("ComplianceHR Infinity").`,
         `Below are the live register numbers for every module. Using ONLY these numbers (never invent records, names or dates):`,
