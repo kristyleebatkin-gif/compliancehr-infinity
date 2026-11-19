@@ -20,6 +20,7 @@ export const LEVEL_LABEL = ['Not overdue', 'Overdue', 'With manager', 'With owne
 
 const norm = (v: unknown) => String(v ?? '').trim().toLowerCase();
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const activeUser = (u: any) => u && u.email && EMAIL_RE.test(norm(u.email)) && !['Archived', 'Suspended'].includes(u.account_status);
 
 export function holidaySet(holidays: any[] = []): Set<string> {
   const set = new Set<string>();
@@ -57,29 +58,40 @@ export function businessDaysOverdue(dueIso: string, todayIso: string, holidays: 
   return count;
 }
 
-export function assigneeEmails(task: any): string[] {
+// The people a task is assigned to. Tasks may name them by email, or (as most records do) by a
+// person's name or a role in `assigned_to`, e.g. "Kristy Batkin" or "Compliance Manager, Administration".
+// Names and roles are matched to active app users so the assigned person is reminded first,
+// instead of the task looking unassigned and going straight to the managers.
+export function assigneeEmails(task: any, users: any[] = []): string[] {
   const set = new Set<string>();
   if (task?.assigned_email) set.add(norm(task.assigned_email));
   for (const e of task?.responsible_emails || []) set.add(norm(e));
+  const tokens = String(task?.assigned_to || '').split(/[,;]/).map(norm).filter(Boolean);
+  for (const token of tokens) {
+    if (EMAIL_RE.test(token)) { set.add(token); continue; }
+    for (const u of users) {
+      if (!activeUser(u)) continue;
+      if (norm(u.full_name) === token || norm(u.role) === token) set.add(norm(u.email));
+    }
+  }
   return [...set].filter((e) => EMAIL_RE.test(e));
 }
 
-export function targetLevel(task: any, todayIso: string, holidays: Set<string>): number {
+export function targetLevel(task: any, todayIso: string, holidays: Set<string>, users: any[] = []): number {
   if (!task || task.archived === true || DONE_STATUSES.includes(task.status)) return LEVEL.NONE;
   const days = businessDaysOverdue(task.due_date, todayIso, holidays);
   if (days <= 0) return LEVEL.NONE;
   if (task.priority === 'Urgent') return LEVEL.OWNER;
   if (days >= 3) return LEVEL.OWNER;
   if (days >= 2) return LEVEL.MANAGER;
-  if (assigneeEmails(task).length === 0) return LEVEL.MANAGER;
+  if (assigneeEmails(task, users).length === 0) return LEVEL.MANAGER;
   return LEVEL.ASSIGNEE;
 }
 
-const activeUser = (u: any) => u && u.email && EMAIL_RE.test(norm(u.email)) && !['Archived', 'Suspended'].includes(u.account_status);
 
 export function recipientsFor(level: number, task: any, users: any[]): { email: string; why: string }[] {
   const out = new Map<string, string>();
-  if (level >= LEVEL.ASSIGNEE) for (const e of assigneeEmails(task)) out.set(e, 'assigned');
+  if (level >= LEVEL.ASSIGNEE) for (const e of assigneeEmails(task, users)) out.set(e, 'assigned');
   if (level >= LEVEL.MANAGER) {
     for (const u of users.filter((x) => activeUser(x) && MANAGER_ROLES.includes(x.role))) {
       if (!out.has(norm(u.email))) out.set(norm(u.email), 'manager');
@@ -98,7 +110,7 @@ export function planEscalations(tasks: any[], users: any[], holidays: any[], tod
   const hol = holidaySet(holidays);
   const plan: any[] = [];
   for (const task of tasks) {
-    const level = targetLevel(task, todayIso, hol);
+    const level = targetLevel(task, todayIso, hol, users);
     if (level === LEVEL.NONE) continue;
     const sentFor = String(task.escalation_due_date || '');
     const already = sentFor === String(task.due_date || '') ? Number(task.escalation_level || 0) : 0;
@@ -109,7 +121,7 @@ export function planEscalations(tasks: any[], users: any[], holidays: any[], tod
       due_date: task.due_date,
       priority: task.priority || 'Medium',
       business_days_overdue: businessDaysOverdue(task.due_date, todayIso, hol),
-      unassigned: assigneeEmails(task).length === 0,
+      unassigned: assigneeEmails(task, users).length === 0,
       from_level: already,
       to_level: level,
       stage: LEVEL_LABEL[level],
