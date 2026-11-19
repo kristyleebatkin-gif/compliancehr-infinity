@@ -272,7 +272,7 @@ export const ENTRY_POINTS = [
     counts: [{ entity: 'CarePlan', label: 'Care plans' }, { entity: 'AlliedHealthReferral', label: 'Allied health referrals' }] },
   { key: 'workforce', label: 'Workforce', path: '/certificates', description: 'Credentials and training currency across the workforce.',
     counts: [{ entity: 'Certificate', label: 'Certificates' }, { entity: 'TrainingCompletion', label: 'Training completions' }] },
-  { key: 'audit', label: 'Audit', path: '/auditors-portal', description: 'Audits performed and the findings they raised.',
+  { key: 'audit', label: 'Audit', path: '/auditor-portal', description: 'Audits performed and the findings they raised.',
     counts: [{ entity: 'InternalAudit', label: 'Audits' }, { entity: 'AssuranceFinding', label: 'Findings' }] },
   { key: 'risk', label: 'Risk', path: '/risks', description: 'The risk register and the compliance issues feeding it.',
     counts: [{ entity: 'Risk', label: 'Risks' }, { entity: 'ComplianceIssue', label: 'Compliance issues' }] },
