@@ -16,10 +16,21 @@
       "enum": [
         "NDIS Commission",
         "NDIS Agency",
+        "Aged Care Commission",
+        "Department of Health",
         "Other"
       ],
       "default": "NDIS Agency",
       "title": "Source"
+    },
+    "sector": {
+      "type": "string",
+      "enum": [
+        "NDIS",
+        "Aged Care"
+      ],
+      "default": "NDIS",
+      "title": "Sector"
     },
     "news_type": {
       "type": "string",
