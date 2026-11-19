@@ -3,7 +3,7 @@
  * path it actually lives at and whether Phase 1 built it or reused what the app already had.
  *
  * `npm test` asserts that every path in this map exists, so the map cannot drift into fiction.
- * The Phase 1 plan (V8000_PHASE1_PLAN.md) explains the mapping decisions in prose.
+ * The Phase 1 plan (docs/history/V8000_PHASE1_PLAN.md) explains the mapping decisions in prose.
  */
 export type ArtefactStatus = 'reuse' | 'extend' | 'new';
 
@@ -172,5 +172,5 @@ export const REPOSITORY_MAP: readonly RepositoryEntry[] = [
   { path: 'tests/v8000-phase1-schemas.test.mjs', artefact: 'Schema and contract coverage', status: 'new', notes: 'Runs on the repository’s node:test harness.' },
   { path: 'tests/v8000-phase1-validators.test.mjs', artefact: 'Validator coverage', status: 'new', notes: '' },
   { path: 'tests/v8000-phase1-runners.test.mjs', artefact: 'Runner coverage', status: 'new', notes: '' },
-  { path: 'V8000_PHASE1_PLAN.md', artefact: 'Phase 1 implementation plan', status: 'new', notes: 'Mapping, reuse decisions and recorded deviations.' },
+  { path: 'docs/history/V8000_PHASE1_PLAN.md', artefact: 'Phase 1 implementation plan', status: 'new', notes: 'Mapping, reuse decisions and recorded deviations.' },
 ];

@@ -10,7 +10,7 @@
 // What it deliberately refuses: any node type without a verified handler (notifications,
 // waits, AI, API calls, webhooks, sub-workflows, register lookups). Persistence has no
 // cross-entity transaction, so runs stay single-writer and each write is compensated if
-// the matching event cannot be recorded. Documented in PHASE11_ACCEPTANCE_LOG.md.
+// the matching event cannot be recorded. Documented in docs/history/PHASE11_ACCEPTANCE_LOG.md.
 import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 import { studioTenant, studioRows } from '../../shared/workflowStudioAccess.ts';
 import { appendWorkflowEvent as appendEvent } from '../../shared/workflowEvents.ts';

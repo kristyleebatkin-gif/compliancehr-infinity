@@ -14,4 +14,4 @@ Every page/module header (use `<PageHeader>`; never hand-build a banner):
 8. A modular icon tile (rounded square, translucent white with a soft ring) sits to the LEFT of the title and description in every header — always shown; pass the module's icon via `icon`.
 9. Section/card headers follow the same gradient, 3cm, border and text rules.
 Enforced in src/index.css (".app-page-header", ".dashboard-panel-header", ".app-section-card-header").
-Colours follow COLOUR_RULE.md.
+Colours follow docs/specifications/COLOUR_RULE.md.

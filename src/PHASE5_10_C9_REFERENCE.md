@@ -63,7 +63,7 @@ The cycle removed its nine records and fourteen audit rows. One blocked decision
 (`AID-20261118025422-UKM3`, agent "C9 smoke agent") survived a cancelled cleanup run; it was deleted
 on request by its exact id, after its reference, agent name and status were checked, and no other AI
 record was touched. All AI workforce counts read zero afterwards. The full note is in
-`PHASE5_10_INVENTORY.md`.
+`docs/history/PHASE5_10_INVENTORY.md`.
 
 ---
 

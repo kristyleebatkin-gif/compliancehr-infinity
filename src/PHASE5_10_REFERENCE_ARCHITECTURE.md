@@ -1,6 +1,6 @@
 # Phases 5–10 — Reference Architecture (not executed by this app)
 
-Companion to `PHASE5_10_INVENTORY.md`. Decisions taken: this work is a **separate capability
+Companion to `docs/history/PHASE5_10_INVENTORY.md`. Decisions taken: this work is a **separate capability
 track (C5–C10)** mapped onto the existing 12-phase register, and the non-native artifacts below are
 **design references only**. Nothing in this file is deployed, run or enforced by ComplianceHR
 Infinity. The running implementation is the entity schemas, entity RLS and backend function that
@@ -14,7 +14,7 @@ If the reference and the records ever disagree, the records win.
 
 | # | Requested deliverable | What exists or will exist here | Status |
 | --- | --- | --- | --- |
-| 1 | Master Enterprise ERD | `PHASE5_10_INVENTORY.md` §2 coverage map + §4 build order | Delivered for C5 scope |
+| 1 | Master Enterprise ERD | `docs/history/PHASE5_10_INVENTORY.md` §2 coverage map + §4 build order | Delivered for C5 scope |
 | 2 | Full PostgreSQL DDL | §3 below — mirrors the entity schemas exactly | Reference, C5 tables only |
 | 3 | `schema.prisma` | §4 below — same three tables | Reference, C5 tables only |
 | 4 | OpenAPI 3.1 contracts | §5 below — one contract per backend function | Reference, C5 function only |
@@ -1274,7 +1274,7 @@ Named checkpoint for this step: **Capability Track C7 — Knowledge Graph & Digi
 The C8 references (seven-table DDL, Prisma models, the `automationFabric` OpenAPI contract) live in
 `src/PHASE5_10_C8_REFERENCE.md`, because this file already covers C5–C7 and a fourth register block
 would push it past a readable length. What runs today is recorded there in §9 and in
-`PHASE5_10_INVENTORY.md`. Two boundaries hold for C8 exactly as they did for C5–C7: the fabric owns
+`docs/history/PHASE5_10_INVENTORY.md`. Two boundaries hold for C8 exactly as they did for C5–C7: the fabric owns
 routing but not execution (a delivery starts an existing published Workflow Studio version through
 `base44/shared/workflowLauncher.ts`), and a connector stores the name of an app secret, never a value.
 
@@ -1288,7 +1288,7 @@ The C9 references (the eight-record table, the `aiWorkforce` action surface, the
 redaction rules, the live verification cycle and the boundaries) live in
 `src/PHASE5_10_C9_REFERENCE.md`, for the same reason C8 has its own file: this one already covers
 C5–C8 and a sixth register block would push it past a readable length. What runs today is recorded
-there and in `PHASE5_10_INVENTORY.md`. Three boundaries hold for C9 exactly as they did for C5–C8:
+there and in `docs/history/PHASE5_10_INVENTORY.md`. Three boundaries hold for C9 exactly as they did for C5–C8:
 no model provider is called (a model record names the secret, never the key), the OS records a
 proposal but never executes it (`execution_state` is never anything but `Not executed`,
 `Recorded only` or `Refused`), and autonomy is bounded by tool kind, so a financial, clinical,

@@ -56,7 +56,7 @@ Delivered:
   state, maturity from validated assessments only, the empty workspace, permission denial, approval
   triggers, the submit-then-approve-by-someone-else sequence, audit redaction and chaining, reported
   version.
-- `src/PHASE5_10_C10_REFERENCE.md` added; `PHASE5_10_INVENTORY.md` step summary, build-order table and
+- `src/PHASE5_10_C10_REFERENCE.md` added; `docs/history/PHASE5_10_INVENTORY.md` step summary, build-order table and
   §5 checkpoint list updated to C10.
 
 Checks actually run this session, each exit 0: `npm run lint`; `npm test` (225 passed, 0 failed);
@@ -102,7 +102,7 @@ Delivered:
   provenance and route, estimate notice and provenance on a run, missing-record inputs excluded and
   lowering confidence, refusal when no input has data, lever rationale required, lever outside the
   model rejected, model input validation.
-- `PHASE5_10_INVENTORY.md` Phase 7 table and step summary, `PHASE5_10_REFERENCE_ARCHITECTURE.md` §8
+- `docs/history/PHASE5_10_INVENTORY.md` Phase 7 table and step summary, `PHASE5_10_REFERENCE_ARCHITECTURE.md` §8
   (DDL for seven tables, Prisma models, OpenAPI for both functions, estimate rule) and its deliverable
   rows 7–8 now read Delivered for C7.
 
@@ -153,7 +153,7 @@ commit above is the reproducible restore reference).
 
 ### What was reconciled before building
 
-Read `AGENTS.md`, `README.md`, `COMPLIANCEHR_INFINITY_MASTER_PROMPT.md`, `MASTER_TODO.md`, then the actual
+Read `AGENTS.md`, `README.md`, `docs/specifications/COMPLIANCEHR_INFINITY_MASTER_PROMPT.md`, `MASTER_TODO.md`, then the actual
 code: `src/App.jsx` routing and gates, `AppLayout`, `ModuleShell`, `WorkspaceNavigationTools`
 (local-only favourites/recents), `navigationPreferences`, `tenantScope`, `tenantClassification`,
 `roleMatrix` (frontend and backend), and the existing Workflow/AI/Evidence engines. Finding: the shell,
@@ -213,7 +213,7 @@ New: `base44/shared/workspaceLayout.ts`, `base44/functions/workspacePreferences/
 Modified: `src/components/module/ModuleShell.jsx` (optional workspace strip, existing behaviour preserved),
 `src/lib/tenantClassification.js`, `base44/shared/tenantClassification.ts` (two entities classified),
 `src/pages/{DailyBriefing,IncidentAnalytics,QualityImprovement,Rostering,Feedback}.jsx` (one prop each),
-`COMPLIANCEHR_INFINITY_MASTER_PROMPT.md` (latest owner specification section and requirement-to-code/gap matrix),
+`docs/specifications/COMPLIANCEHR_INFINITY_MASTER_PROMPT.md` (latest owner specification section and requirement-to-code/gap matrix),
 `MASTER_TODO.md` (this entry). No entity field changed, no record migrated, no route changed, nothing published.
 
 ### Next unresolved dependency
@@ -292,7 +292,7 @@ Final progress checkpoint follows this entry; the verified code checkpoint above
 Owner clarified and authorised studio-save-to-app -> main, then requested continuation.
 Reviewed source head bef743b5c01d1605d16cc1c683a730e24944174a against its comparison
 base. Integrated 11 source files through supported Base44 file edits, with security and
-save-handling adaptations documented in STUDIO_MAIN_INTEGRATION.md. SDK update already
+save-handling adaptations documented in docs/history/STUDIO_MAIN_INTEGRATION.md. SDK update already
 present on main. This is source integration, NOT a native Git branch-merge commit.
 
 Implemented: StudioItem-backed personal saves across five workbench tools, Documents
@@ -305,7 +305,7 @@ Verified: full ci:verify passed (lint, JavaScript suite including nine new tests
 148 Deno tests and build); targeted studio/tenant suite 24/24; typecheck passed.
 Final UI save-handling changes lint/typecheck/build passed again. Tenant checker has
 0 entities to lock; both classifications identical; combined master unchanged;
-whitespace check clean. Details and limitations in STUDIO_MAIN_INTEGRATION.md.
+whitespace check clean. Details and limitations in docs/history/STUDIO_MAIN_INTEGRATION.md.
 
 Before checkpoint: 6afbb57a74dd9ff24fd6112d.
 OPEN: hosted multi-identity RLS/API acceptance, authenticated UAT, uploads/recording,
@@ -317,7 +317,7 @@ Source branch remains unchanged. Final named checkpoint follows this entry.
 
 Owner selected main and asked to combine all continuation prompts.
 Installed one 36-step OS upgrade/module finalisation sequence directly into
-COMPLIANCEHR_INFINITY_MASTER_PROMPT.md, preserving its existing specification.
+docs/specifications/COMPLIANCEHR_INFINITY_MASTER_PROMPT.md, preserving its existing specification.
 Scope includes shared instructions, foundation/dashboard work, all 15 Phase 11
 v2 ticket ranges WF-001–WF-400, all 13 historical module scope groups (the final
 two remain separately reconciled within step 34), mobile and release acceptance.
@@ -341,11 +341,11 @@ studio-save-to-app or change its contents without clarifying the intended action
 
 ## Phase 11 Enterprise Workflow Studio — 15 November 2026 (Australia/Brisbane)
 
-Owner supplied the complete Phase 11 enterprise workflow specification. Preserved in PHASE11_OWNER_SPECIFICATION.md and linked from the controlling master prompt.
+Owner supplied the complete Phase 11 enterprise workflow specification. Preserved in docs/specifications/PHASE11_OWNER_SPECIFICATION.md and linked from the controlling master prompt.
 
 Designed:
-- PHASE11_WORKFLOW_STUDIO_DESIGN.md: 12 epics, 84 features, 336 acceptance stories, 48 logical data contracts, 22 screen contracts, eight engine groupings, permission/integration/release matrices, durable execution/approval/evidence/AI invariants and acceptance gates.
-- PHASE11_WORKFLOW_BACKLOG.csv: 336 planned stories. Logical contracts and proposed routes are NOT implemented database tables or working screens. The 14 domain OS integrations plus Automation and AI Core services reconcile the prompt's 16 opening systems.
+- docs/specifications/PHASE11_WORKFLOW_STUDIO_DESIGN.md: 12 epics, 84 features, 336 acceptance stories, 48 logical data contracts, 22 screen contracts, eight engine groupings, permission/integration/release matrices, durable execution/approval/evidence/AI invariants and acceptance gates.
+- docs/history/PHASE11_WORKFLOW_BACKLOG.csv: 336 planned stories. Logical contracts and proposed routes are NOT implemented database tables or working screens. The 14 domain OS integrations plus Automation and AI Core services reconcile the prompt's 16 opening systems.
 - Separate reviewable design report supplied to owner. No new role grants or runtime framework migration.
 
 Implemented source preview:
@@ -445,7 +445,7 @@ Remaining: full audited schema contracts and safe migrations; dedicated OS workf
 
 ## Enterprise transformation V3 — 15 November 2026 (Australia/Brisbane)
 
-Owner supplied Enterprise Implementation Plan V3.0 and requested building it in the existing app with ComplianceHR App Specialists. Master sequence recorded in ENTERPRISE_IMPLEMENTATION_PLAN_V3.md. The ten-release program remains open; this batch implements part of Release 1.
+Owner supplied Enterprise Implementation Plan V3.0 and requested building it in the existing app with ComplianceHR App Specialists. Master sequence recorded in docs/history/ENTERPRISE_IMPLEMENTATION_PLAN_V3.md. The ten-release program remains open; this batch implements part of Release 1.
 
 Implemented in this batch:
 - Shared directory reorganised into AI Core, My Workspace, Operating Systems (Governance, Compliance, Risk, Audit, Workforce, Clinical Governance, Allied Health), Enterprise Registers, Reports & Analytics, Administration.
@@ -506,7 +506,7 @@ Verification (final run, after all code edits):
 
 ## Current implementation checkpoint — 14 November 2026, final review
 
-This section supersedes earlier claims that the new cross-module actions are enabled or verified. All 51 requested module outcomes remain accepted in APPROVED_MODULE_BUILD_SCOPE.md; full completion has NOT been achieved.
+This section supersedes earlier claims that the new cross-module actions are enabled or verified. All 51 requested module outcomes remain accepted in docs/specifications/APPROVED_MODULE_BUILD_SCOPE.md; full completion has NOT been achieved.
 
 Implemented and saved:
 - Referral server handover logic, consent/status checks, recovery ledger and behaviour tests. Public handover disabled before data access: atomic concurrency and unambiguous source linkage unresolved. Existing referral functions remain available.
@@ -577,7 +577,7 @@ Still not verified (unchanged): live browser walkthrough, deployed RLS enforceme
 
 ### Module evidence matrix — every module, and what is actually known about it
 
-The matrix is `MODULE_EVIDENCE_MATRIX.md` (55 lines, generated — not hand-written — from the three real sources: `src/lib/moduleDirectory.js` for the module list and grouping, `src/App.jsx` for route registration and the page each route renders, and the page file itself for its size).
+The matrix is `docs/history/MODULE_EVIDENCE_MATRIX.md` (55 lines, generated — not hand-written — from the three real sources: `src/lib/moduleDirectory.js` for the module list and grouping, `src/App.jsx` for route registration and the page each route renders, and the page file itself for its size).
 
 Result of that pass: **53 modules inventoried; 53 routes registered in `App.jsx`; 0 modules without a registered route; 0 modules whose route does not resolve to a page file.** Every row reads, honestly:
 
@@ -1128,7 +1128,7 @@ Still required before production approval:
 - Owner's ten-phase master plan is now the current delivery sequence. V3 prior scope and existing gap findings are preserved.
 - Added `src/lib/enterprisePhases.js`: 10 phases, 28 system/layer scopes, 15 shared engines, 18 required role workspaces, register/feature requirements, dependencies, release gates, evidence chain and digital-twin scope. All are target requirements, not completion claims.
 - Added an interactive phase selector to Enterprise OS → Roadmap with per-phase requirements and existing source reuse candidates. Existing inventory now says source present instead of working.
-- Updated the existing review ZIP's implementation-roadmap report and saved `ENTERPRISE_MODULAR_EXPANSION_PLAN.md` from the same model. Security/privacy/tenant isolation and AI oversight apply from foundation; specialist expansion remains in phases 8 and 10.
+- Updated the existing review ZIP's implementation-roadmap report and saved `docs/history/ENTERPRISE_MODULAR_EXPANSION_PLAN.md` from the same model. Security/privacy/tenant isolation and AI oversight apply from foundation; specialist expansion remains in phases 8 and 10.
 - Before checkpoint: `6af9212339d7d28f841863e1`, commit `9ebac14ce6a8e0a2794c27af805666011454c324`.
 - Verification: `npm run ci:verify` exit 0 (lint, Node tests, 117 Deno tests, Vite build); `npm run typecheck` exit 0; model integrity checks exit 0 (dependency order, existing OS source IDs and generated-plan/export parity). `git diff --check` exit 0.
 - Preview returned successfully. Authenticated browser interaction, responsive/accessibility acceptance and live tenant A/B acceptance were not performed in this batch. No new entity models, role grants, operational workflows or production publication. Full implementation of the ten phases remains open, beginning with Phase 1's evidence/obligation/control and policy-lifecycle acceptance.
@@ -1193,7 +1193,7 @@ Final verified source checks: ci:verify exit 0 (lint; 101 JavaScript tests passe
 
 ## Single audit, compliance and assurance master prompt — 15 November 2026
 
-- Current controlling specification: `COMPLIANCEHR_INFINITY_MASTER_PROMPT.md`, linked from AGENTS.md. The full owner prompt is preserved with implementation interpretation; earlier plans remain historical scope and existing capabilities are retained. Before checkpoint 6af963abd80d7ac19a6f8299 (2f0dc1c4cd0d2ae2c16b1421523b553a2f15df31). Submitted once to the existing Base44 main builder; builder checkpoint 6af964acc0c6c207625aff7d, commit 745675ae2db930e09b0c3fd46a6a1b10d47c6f98.
+- Current controlling specification: `docs/specifications/COMPLIANCEHR_INFINITY_MASTER_PROMPT.md`, linked from AGENTS.md. The full owner prompt is preserved with implementation interpretation; earlier plans remain historical scope and existing capabilities are retained. Before checkpoint 6af963abd80d7ac19a6f8299 (2f0dc1c4cd0d2ae2c16b1421523b553a2f15df31). Submitted once to the existing Base44 main builder; builder checkpoint 6af964acc0c6c207625aff7d, commit 745675ae2db930e09b0c3fd46a6a1b10d47c6f98.
 - Added `/assurance-matrix` under Compliance OS, reusing the evidence route entitlement. Searchable draft catalogues have 150 indicators, 50 controls, 350 evidence requirements, 356 audit checkpoints and nine requested domain ranges. Draft relationship drawer, filters, pagination, keyboard-accessible code buttons, rating definitions and CSV export are present in source.
 - Review found broad-standard matching would incorrectly assure many checkpoints from unrelated evidence and repeat finding/action counts. Removed that inference. No live tenant records are loaded by this draft explorer; all assessments/scores are unavailable. Standard mappings, generated criticalities/review cycles and catalogue relationships require expert review. No generated risk IDs/scores, signatures or board assurance are presented as facts. Requirements and synthetic codes are internal draft proposals, not official regulatory content. CSV includes all 50 requested columns plus draft/mapping status and uses the shared spreadsheet-injection protection.
 - Verification: ci:verify exit 0 (lint, existing 101 Node tests, 131 Deno tests, production build). Configured typecheck exit 0. Four new regression tests pass for catalogue integrity, broad-standard false-assurance prevention, unknown/rating boundaries and CSV safety; final npm test exit 0 (105 passed, 0 failed). Whitespace corrected after diff check; final diff check requested. Existing checkJs/no-check limitations remain.
@@ -1225,7 +1225,7 @@ Restore point before this batch: 6afae5e3d4ecea6c95696b00. A named post-check ch
 
 ## Ultimate Everything Prompt — specification adoption, 17 November 2026
 
-- Owner's Master Enterprise Specification v1.0 preserved in ULTIMATE_EVERYTHING_SPECIFICATION_V1.md with normalised formatting. All 36 named requirement sections checked present.
+- Owner's Master Enterprise Specification v1.0 preserved in docs/specifications/ULTIMATE_EVERYTHING_SPECIFICATION_V1.md with normalised formatting. All 36 named requirement sections checked present.
 - Updated AGENTS.md and the controlling master entry point to make it the latest product authority. Compatible existing plans and prior evidence remain intact.
 - Recorded latest navy/blue/purple/pink tokens as superseding the historical pastel-only colour rule; actual styles and icons unchanged in this documentation batch.
 - Current inspected package.json uses React 18 / Vite / React Router / Base44. Next.js 15 / React 19 / NestJS / Prisma / PostgreSQL and the specified infrastructure remain target architecture requiring migration work; no runtime migration performed.
@@ -1237,7 +1237,7 @@ Restore point before this batch: 6afae5e3d4ecea6c95696b00. A named post-check ch
 
 ## Ultimate Master Build v2.0 — workspace reliability implementation, 17 November 2026
 
-Owner authorised completion of outstanding tasks and supplied Ultimate Master Build Prompt v2.0. Saved normalised full requirements in ULTIMATE_MASTER_BUILD_SPECIFICATION_V2.md and updated AGENTS.md, master entry point and historical colour pointer. Checked 13 roadmap phases (0–12), all 44 ordered migration names and explicit tenantId contract. These requirements supersede v1.0; no target-stack migration was performed.
+Owner authorised completion of outstanding tasks and supplied Ultimate Master Build Prompt v2.0. Saved normalised full requirements in docs/specifications/ULTIMATE_MASTER_BUILD_SPECIFICATION_V2.md and updated AGENTS.md, master entry point and historical colour pointer. Checked 13 roadmap phases (0–12), all 44 ordered migration names and explicit tenantId contract. These requirements supersede v1.0; no target-stack migration was performed.
 
 Restore baseline: 6afc3c6d61f91e53fea4e583, commit 66a18f9baa79463e3ff848acac3c7fc8d6cc144a.
 

@@ -2,8 +2,8 @@
 
 **ComplianceHR Infinity — governing build constitution**
 Installed 17 November 2026. Supersedes the executive summaries in
-`COMPLIANCEHR_INFINITY_MASTER_PROMPT.md`, `ULTIMATE_MASTER_BUILD_SPECIFICATION_V2.md` and
-`ULTIMATE_EVERYTHING_SPECIFICATION_V1.md` where they differ. This document is the authority for
+`docs/specifications/COMPLIANCEHR_INFINITY_MASTER_PROMPT.md`, `docs/specifications/ULTIMATE_MASTER_BUILD_SPECIFICATION_V2.md` and
+`docs/specifications/ULTIMATE_EVERYTHING_SPECIFICATION_V1.md` where they differ. This document is the authority for
 what the platform must contain, how a capability is judged complete, and what may never be claimed.
 
 > One Platform. One Source of Truth. One Source of Evidence. One Source of Assurance.
@@ -21,7 +21,7 @@ EVIDENCE → ASSURANCE → TRUST → INTEGRITY → BETTER OUTCOMES
 2. `src/lib/enterpriseOS.js` — the machine-readable register of every operating system and the
    honest state of each capability (`live`, `partial`, `gap`).
 3. `src/lib/integrityIndex.js` — the executable form of the Enterprise Integrity Index.
-4. Module-level documents (`MODULE_EVIDENCE_MATRIX.md`, `PHASE11_*`, `ENTERPRISE_*`) — detail that
+4. Module-level documents (`docs/history/MODULE_EVIDENCE_MATRIX.md`, `PHASE11_*`, `ENTERPRISE_*`) — detail that
    must never contradict 1–3.
 
 The owner specification governs required outcomes. Current source and test evidence govern observed implementation status; correct status documentation without weakening unmet owner requirements.
@@ -160,4 +160,4 @@ The exact owner prompt is also retained in this app's builder conversation dated
 - Guides: architecture, security, developer, deployment, database, API, module, user, governance, risk, audit, clinical governance, NDIS, aged care and allied health.
 - Environments/operations: development, test, UAT, production, disaster recovery, backup strategy, monitoring, alerting, logging and audit monitoring. Source save/checkpoint, deployment and verified recovery are separate statuses.
 
-All historical release gates in MASTER_TODO.md and PHASE11_ACCEPTANCE_LOG.md remain open unless closed with current evidence. This batch does not complete the full platform.
+All historical release gates in MASTER_TODO.md and docs/history/PHASE11_ACCEPTANCE_LOG.md remain open unless closed with current evidence. This batch does not complete the full platform.

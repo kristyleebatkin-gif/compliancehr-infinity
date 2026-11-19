@@ -443,7 +443,7 @@ export const ENTERPRISE_GAPS = OPERATING_SYSTEMS.flatMap((os) =>
 export const DELIVERABLES = [
   { label: 'Platform audit report', where: 'Platform audit tab', state: 'live' },
   { label: 'Gap analysis report', where: 'Platform audit tab', state: 'live' },
-  { label: 'Architecture report', where: 'This console and ENTERPRISE_VNEXT_AUDIT.md', state: 'live' },
+  { label: 'Architecture report', where: 'This console and docs/history/ENTERPRISE_VNEXT_AUDIT.md', state: 'live' },
   { label: 'Database expansion plan', where: 'Platform audit tab — schema plan', state: 'partial' },
   { label: 'API expansion plan', where: 'Platform audit tab — API plan', state: 'partial' },
   { label: 'Missing screens list', where: 'Gap register', state: 'live' },
