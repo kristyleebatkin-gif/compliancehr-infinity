@@ -1,11 +1,11 @@
 import { perBusiness, createScopedClientFromRequest } from '../../shared/tenantScope.ts';
 
 import { authorizeSystemCall } from '../../shared/systemAuth.ts';
-import { fetchNdisItems, cleanNdisItems } from '../../shared/ndisNews.ts';
+import { fetchNdisItems, cleanNdisItems, fetchAgedCareItems, cleanAgedCareItems } from '../../shared/ndisNews.ts';
 
-// Fetches the latest NDIS news and upserts it into the NdisUpdate library.
-// Called daily by the "NDIS News Updates" scheduled workflow, which runs as
-// the app's admin. Only management users may also trigger it manually.
+// Fetches the latest NDIS and aged care news and upserts it into the shared update library.
+// Called daily by the "NDIS News Updates" scheduled workflow, which runs as the app's admin.
+// Only management users may also trigger it manually. One sector failing does not stop the other.
 export default perBusiness(async function(req) {
   try {
     const base44 = createScopedClientFromRequest(req);
@@ -14,19 +14,29 @@ export default perBusiness(async function(req) {
       return Response.json({ error: 'Unauthorized' }, { status: 403 });
     }
     const service = base44.asServiceRole;
-    const core = service.integrations.Core;
+    const ctx = { feature: 'ndisNewsSync' };
 
-    const result = await fetchNdisItems(core);
-    const cleaned = cleanNdisItems(result?.items);
-    if (!cleaned.length) return Response.json({ created: 0, updated: 0, items: 0 });
+    const [ndis, aged] = await Promise.allSettled([fetchNdisItems(service, ctx), fetchAgedCareItems(service, ctx)]);
+    const cleaned = [
+      ...(ndis.status === 'fulfilled' ? cleanNdisItems(ndis.value?.items) : []),
+      ...(aged.status === 'fulfilled' ? cleanAgedCareItems(aged.value?.items) : []),
+    ];
+    const errors = [
+      ...(ndis.status === 'rejected' ? [`NDIS: ${ndis.reason?.message || 'failed'}`] : []),
+      ...(aged.status === 'rejected' ? [`Aged care: ${aged.reason?.message || 'failed'}`] : []),
+    ];
+    if (!cleaned.length) return Response.json({ created: 0, updated: 0, items: 0, errors });
 
     const upsert = await service.entities.NdisUpdate.upsert(cleaned, { key: 'url' });
     return Response.json({
       created: upsert.created || 0,
       updated: upsert.updated || 0,
       items: cleaned.length,
+      ndis_items: cleaned.filter((c) => c.sector === 'NDIS').length,
+      aged_care_items: cleaned.filter((c) => c.sector === 'Aged Care').length,
+      errors,
     });
   } catch (error) {
-    return Response.json({ error: error.message || 'NDIS news sync failed.' }, { status: 500 });
+    return Response.json({ error: (error as Error).message || 'News sync failed.' }, { status: 500 });
   }
 });
