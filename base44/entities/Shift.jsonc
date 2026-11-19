@@ -91,6 +91,11 @@
       "type": "number",
       "title": "Billable Rate ($/hr)"
     },
+    "support_item_number": {
+      "type": "string",
+      "title": "NDIS Support Item Number",
+      "description": "NDIS Support Catalogue item this shift is claimed under, e.g. 01_011_0107_1_1. Approved price guide updates re-price future, un-invoiced shifts with this item."
+    },
     "participant_goal": {
       "type": "string",
       "title": "Shift Goal"
