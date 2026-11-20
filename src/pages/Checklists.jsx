@@ -41,7 +41,7 @@ export const ASSESSMENT_14_STANDARD_TYPES = [
   'Environmental Assessments',
   'Home Safety Assessments',
   'Clinical Assessments',
-  'Training Assessments',
+  'Skill Development Assessments',
   'Quality Assessments',
   'Audit Checklists',
   'Compliance Checklists',
