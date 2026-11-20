@@ -391,7 +391,7 @@ export const GUIDES_PART_1 = {
   },
 
   training: {
-    tagline: 'From induction to the training ladder',
+    tagline: 'From induction to role-ready capability',
     purpose: 'The Training Centre assigns, delivers and tracks every piece of learning: a curriculum of training modules, an LMS with quizzes and scenario drills, AI quiz generation, competency checklists, a training ladder, training calendar, templates and team analytics. Certificates upload against records with expiry dates, feeding the training expiry alert workflow.',
     features: [
       { name: 'Training curriculum', detail: 'A structured library of modules covering induction through advanced practice.' },
