@@ -1,120 +1,54 @@
-import React, { useState } from 'react';
-import { ChevronDown, HelpCircle } from 'lucide-react';
-import Reveal from '@/components/landing/Reveal';
-import LandingSectionHeader from '@/components/landing/LandingSectionHeader';
+import React from 'react';
+import { HelpCircle } from 'lucide-react';
 
 const FAQS = [
   {
-    topic: 'NDIS & Aged Care Standards',
-    question: 'How does ComplianceHR Infinity align with the NDIS Practice Standards and Strengthened Aged Care Standards?',
-    answer:
-      'ComplianceHR Infinity includes 17 NDIS Practice Standards reference categories, 356 verification checkpoints, and Strengthened Aged Care Quality Standards mappings to organise operational evidence. Providers should confirm that their configured records and evidence meet the regulatory requirements for their registration groups.',
+    question: 'What does ComplianceHR Infinity help organisations do?',
+    answer: 'It brings people, service delivery, governance and business operations into an organised workspace. A walkthrough can show the current screens and workflows that match your organisation’s needs.',
   },
   {
-    topic: 'Zero-Trust Data Security',
-    question: 'How is sensitive participant, clinical, and employee information protected?',
-    answer:
-      'Access is governed through 15 role tiers, multi-tenant isolation, and record-level permissions (RLS). Administrators can review and audit the permission matrix and security classification rules before onboarding live participant or personnel records.',
+    question: 'Does the platform make an organisation compliant?',
+    answer: 'No software can certify an organisation as compliant. The platform can help organise obligations, actions and supporting records. Your organisation remains responsible for interpreting and meeting applicable requirements.',
   },
   {
-    topic: 'Role-Scoped Access',
-    question: 'Can we control what Support Workers, Team Leaders, Finance Officers, Participants, and External Auditors see?',
-    answer:
-      'Yes. Access is enforced by role and record-level security rules. Participant and staff audit visibility requires explicit recorded consent before records appear in the read-only External Auditor Portal.',
+    question: 'Which standards and quality indicators are included?',
+    answer: 'Applicable mappings should be confirmed against the current official source, identifier, jurisdiction and effective date. During a walkthrough, ask to see the source and evidence behind each mapping; draft or unverified mappings should be labelled clearly.',
   },
   {
-    topic: 'Workforce Screening Gate',
-    question: 'How are NDIS Worker Screening, Blue Cards, First Aid, and training expiries enforced?',
-    answer:
-      'Employee dossiers track screening clearances, qualifications, and LMS competencies with automated 90/60/30/14-day expiry alerts and rostering validation rules.',
+    question: 'Are all modules and integrations live?',
+    answer: 'Availability depends on the module, configuration and connected provider. The walkthrough should distinguish a working feature from a setup-required connection, sample data, or planned capability.',
   },
   {
-    topic: 'Audit Readiness',
-    question: 'How quickly can our compliance team prepare for an NDIS mid-term or renewal audit?',
-    answer:
-      'Because operational entries automatically populate the 45 master registers and attach to checkpoints, compliance managers can generate board-ready PDF audit packs or provision consent-gated External Auditor Portal access at any time.',
+    question: 'How are privacy, security and data handling confirmed?',
+    answer: 'Before using live sensitive information, confirm the organisation’s access roles, tenant boundaries, hosting, retention, backup, export and incident procedures from the current product configuration and written security information.',
   },
   {
-    topic: 'Executive & Financial Reporting',
-    question: 'What executive, clinical governance, and financial reconciliation reports are included?',
-    answer:
-      'The platform provides 5-Index Executive Scorecards, statutory incident SLA logs, ISO 31000 risk heatmaps, NDIS Price Guide claim exports, and 3-way procurement reconciliation.',
+    question: 'How much does it cost and what is included?',
+    answer: 'Request an itemised written quote. It should show the price in AUD, GST, billing term, user or organisation limits, onboarding, support, integrations, usage limits and optional charges before acceptance.',
   },
   {
-    topic: 'AI Governance Copilot',
-    question: 'How does the AI Assistant support frontline and compliance teams safely?',
-    answer:
-      'The AI assistant helps draft shift notes, policies, and training quizzes with human-in-the-loop review so qualified staff verify every output before clinical, payroll, or compliance sign-off.',
-  },
-  {
-    topic: 'Onboarding & Migration',
-    question: 'How fast can our organisation onboard and import existing records?',
-    answer:
-      'Organisations can start immediately with a 14-day free trial and use structured CSV/JSON bulk intake tools to migrate participant, staff, and document registers.',
+    question: 'Can I try the platform before deciding?',
+    answer: 'Book a tailored walkthrough first. Any trial availability, data used, length, conditions and costs should be confirmed before signup.',
   },
 ];
 
 export default function LandingFaqSection() {
-  const [openIndex, setOpenIndex] = useState(0);
-
   return (
-    <section id="faq" className="w-full scroll-mt-20">
-      <Reveal className="enterprise-surface rounded-2xl p-3.5 sm:p-4 space-y-3">
-        <LandingSectionHeader
-          badge="Governance & Security FAQ"
-          tone="blue"
-          icon={HelpCircle}
-          title="Frequently Asked Questions"
-          description="Key architectural, regulatory, and security answers for executives, compliance managers, and IT administrators."
-          rightTag="8 Core Governance & Security Answers"
-        />
-
-        <div className="grid grid-cols-1 gap-2 md:grid-cols-2 items-start">
-          {FAQS.map((faq, idx) => {
-            const isOpen = openIndex === idx;
-            return (
-              <div
-                key={faq.topic}
-                className={`rounded-xl border transition-all ${
-                  isOpen
-                    ? 'border-[#0A2B6D] bg-[#F8FAFC] shadow-2xs'
-                    : 'border-slate-200 bg-white hover:border-[#0072FF]'
-                }`}
-              >
-                <button
-                  type="button"
-                  onClick={() => setOpenIndex(isOpen ? -1 : idx)}
-                  aria-expanded={isOpen}
-                  aria-controls={`faq-answer-${idx}`}
-                  className="flex w-full items-start justify-between gap-2.5 p-3 text-left"
-                >
-                  <div>
-                    {/* Header Question First -> Blue Topic Badge After */}
-                    <h3 className="text-sm font-black text-[#0A2B6D] leading-snug">
-                      {faq.question}
-                    </h3>
-                    <span className="mt-1 inline-block rounded bg-[#0072FF]/10 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#0072FF]">
-                      {faq.topic}
-                    </span>
-                  </div>
-                  <ChevronDown
-                    className={`mt-0.5 h-4 w-4 shrink-0 text-[#0A2B6D] transition-transform ${
-                      isOpen ? 'rotate-180' : ''
-                    }`}
-                  />
-                </button>
-                <div
-                  id={`faq-answer-${idx}`}
-                  hidden={!isOpen}
-                  className="border-t border-slate-200/80 px-3 pb-3 pt-2 text-left text-sm font-medium leading-relaxed text-[#0A2B6D]"
-                >
-                  {faq.answer}
-                </div>
-              </div>
-            );
-          })}
+    <section id="faq" className="scroll-mt-24 rounded-3xl border border-slate-200 bg-white/85 p-5 shadow-[0_14px_42px_rgba(10,43,109,0.06)] backdrop-blur sm:p-8">
+      <div className="mx-auto max-w-3xl">
+        <div className="flex items-center gap-2 text-[#5A00D6]"><HelpCircle aria-hidden="true" className="h-5 w-5" /><p className="text-xs font-bold uppercase tracking-[0.18em]">Frequently asked questions</p></div>
+        <h2 className="mt-2 text-2xl font-black tracking-tight text-[#0A2B6D] sm:text-3xl">Clear answers before you choose.</h2>
+        <div className="mt-6 divide-y divide-slate-200">
+          {FAQS.map(({question,answer}) => (
+            <details key={question} className="group py-4">
+              <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 font-bold text-[#0A2B6D] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700">
+                {question}<span aria-hidden="true" className="text-xl text-[#5A00D6] transition group-open:rotate-45">+</span>
+              </summary>
+              <p className="max-w-3xl pb-2 pr-8 text-sm leading-6 text-slate-600">{answer}</p>
+            </details>
+          ))}
         </div>
-      </Reveal>
+      </div>
     </section>
   );
 }
