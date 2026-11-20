@@ -399,7 +399,7 @@ export const GUIDES_PART_1 = {
       { name: 'AI quiz drills', detail: 'AI-generated quiz questions per module for practice and assessment.' },
       { name: 'Competency checklists', detail: 'Skills sign-off checklists per role and module.' },
       { name: 'Capability pathway', detail: 'Progression view showing completed learning, demonstrated skills and the next step.' },
-      { name: 'Training calendar', detail: 'Scheduled sessions, expiries and renewal windows.' },
+      { name: 'Learning calendar', detail: 'Scheduled learning, credentials expiring and renewal windows.' },
       { name: 'Training templates', detail: 'Reusable assignment templates matched to roles.' },
       { name: 'Certificates upload', detail: 'Certificates upload (stored privately) with expiry-based alerts.' },
       { name: 'Team analytics', detail: 'Completion rates, overdue training and per-team insights.' },
