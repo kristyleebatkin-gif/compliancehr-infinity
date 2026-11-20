@@ -23,7 +23,7 @@ export const EMPLOYEE_FILE_SECTIONS = [
     ],
   },
   { name: 'Skill Development Records', icon: GraduationCap, docs: ['Skill Development Record'] },
-  { name: 'Training & Competency', icon: GraduationCap, docs: ['Staff Training Plan', 'Skill Assessment Form'] },
+  { name: 'Skill Development & Competency', icon: GraduationCap, docs: ['Staff Skill Development Plan', 'Skill Assessment Form'] },
   { name: 'Performance Management', icon: ClipboardList, docs: ['Performance Review Schedule', 'Performance Review Form'] },
   { name: 'Workforce Exit & File Management', icon: ShieldCheck, docs: ['Staff Exit Form', 'Staff File Checklist'] },
   { name: 'Vehicle & Safety Compliance', icon: CarFront, docs: ['Car Safety Check Form'] },
