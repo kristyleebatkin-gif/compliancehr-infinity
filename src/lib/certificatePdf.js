@@ -32,7 +32,7 @@ function drawCertificatePage(doc, data) {
   text('This certificate is proudly presented to', 250, 18, 10, 'normal', '#6E6E6E');
   text(data.learnerName || 'Learner', 278, 55, 28, 'bold', NAVY);
   doc.line(center - 130, 341, center + 130, 341);
-  text('for successfully completing the training module', 355, 18, 10, 'normal', '#6E6E6E');
+  text('for successfully completing the skill development module', 355, 18, 10, 'normal', '#6E6E6E');
   text(data.moduleTitle || 'Training Module', 383, 54, 18, 'bold');
   text(`Module ${data.moduleNumber} · ${data.group || ''}`, 446, 30, 10, 'normal', TEAL_HEX);
   const scoreText = data.score != null ? `Achieved a competency score of ${data.score}%` : 'Competency requirements met';
