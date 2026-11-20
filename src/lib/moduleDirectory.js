@@ -71,7 +71,7 @@ const CANONICAL_MODULES = [
   { key: 'review-due', label: 'Review Due Board', path: '/review-due', icon: CalendarClock, group: '7. Compliance, Quality & Documents', blurb: 'Upcoming and overdue compliance, policy, plan and document reviews.' },
   { key: 'user-success', label: 'Evidence & Guidance', path: '/user-success', icon: Sparkles, group: '7. Compliance, Quality & Documents', blurb: 'Personalised role workspaces, automatic 5-point evidence stamp, Manager Review Mode & Audit Mode.' },
 
-  { key: 'training', label: 'Training Centre', path: '/training', icon: GraduationCap, group: '4. Workforce & Training', blurb: 'Learning academy, curriculum, LMS, competency management, skills matrix, learning pathways and workforce development.' },
+  { key: 'training', label: 'Skill Development', path: '/training', icon: GraduationCap, group: '4. Workforce & Capability', blurb: 'Accessible learning, role-based capability pathways, practical skill assessments, qualifications, certificates and renewal tracking.' },
   { key: 'certificates', label: 'Certificates', path: '/certificates', icon: BadgeCheck, group: '4. Workforce & Training', blurb: 'Participant journey, staff journey, employee recognition leaderboard and my certificates in one place.' },
 
   { key: 'invoicing', label: 'Invoicing Centre', path: '/invoicing', icon: FileSpreadsheet, group: '8. Finance, Assets & Growth', blurb: 'NDIS invoicing, funding management, revenue intelligence and payroll reports.' },
