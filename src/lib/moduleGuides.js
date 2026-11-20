@@ -119,7 +119,7 @@ export const moduleGuides = {
   },
   '/training': {
     title: 'Skill Development',
-    purpose: 'Assign, deliver and track role-based skill development from induction through supervised competency.'
+    purpose: 'Assign, deliver and track role-based skill development from induction through supervised competency.',
     steps: [
       'Assign a skill development plan matched to the staff role.',
       'Complete learning modules, quizzes and practical competency checks.',
