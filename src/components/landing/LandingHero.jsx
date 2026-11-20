@@ -1,174 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import {
-  ArrowRight, Calendar, Check, ShieldCheck, Lock, FileCheck2, Building2,
-} from 'lucide-react';
-import { base44 } from '@/api/base44Client';
+import React from 'react';
+import { ArrowRight, Building2, CheckCircle2 } from 'lucide-react';
 import HeroDashboardMockup from '@/components/landing/HeroDashboardMockup';
 
-const GOVERNANCE_PILLARS = [
-  'NDIS Practice Standards (356 Checkpoints)',
-  'Strengthened Aged Care Quality Standards',
-  '100-Point Worker Screening Gate',
-  '24h / 5d Statutory Incident Timers',
-];
-
-const EXECUTIVE_METRICS = [
-  {
-    label: 'Audit Readiness',
-    value: '99.2%',
-    detail: '17 Categories · 356 Checkpoints',
-    icon: ShieldCheck,
-  },
-  {
-    label: 'Workforce Clearance',
-    value: '100%',
-    detail: 'Automated Roster Screening Gate',
-    icon: Lock,
-  },
-  {
-    label: 'Statutory SLA',
-    value: '0 Overdue',
-    detail: '24h & 5d Commission Reporting',
-    icon: FileCheck2,
-  },
+const AUDIENCES = [
+  { label: 'NDIS providers', topic: 'NDIS provider walkthrough' },
+  { label: 'Aged care teams', topic: 'Aged care walkthrough' },
+  { label: 'Allied health', topic: 'Allied health walkthrough' },
 ];
 
 export default function LandingHero({ onBookDemo }) {
-  const [authed, setAuthed] = useState(false);
-
-  useEffect(() => {
-    base44.auth.isAuthenticated().then(setAuthed).catch(() => {});
-  }, []);
-
   return (
-    <section className="relative w-full">
-      <div
-        className="overflow-hidden rounded-2xl p-[2.5px] shadow-xl"
-        style={{
-          background: 'linear-gradient(120deg, #00C6FF 0%, #0072FF 30%, #A855F7 65%, #FF2E9A 100%)',
-        }}
-      >
-        <div
-          className="relative overflow-hidden rounded-[14px]"
-          style={{
-            background: 'linear-gradient(165deg, #061A44 0%, #0A2B6D 55%, #141B4D 100%)',
-          }}
-        >
-          <div className="relative z-10 p-3.5 sm:p-4 text-white space-y-3">
-            {/* 1. Header Always First (One Straight Sentence, Slightly Bigger) -> Sentence -> Blue/Purple Badges After */}
-            <div className="space-y-1 border-b border-[#00C6FF]/50 pb-2.5 text-left">
-              <h1
-                className="font-editorial text-lg sm:text-xl lg:text-2xl font-black tracking-tight text-white leading-tight"
-                style={{ color: '#FFFFFF' }}
-              >
-                The Complete Compliance &amp; Workforce Operating System
-              </h1>
-
-              <p className="text-sm sm:text-[13px] font-semibold leading-relaxed text-white/90">
-                Built for NDIS, Aged Care, and Allied Health executives, compliance managers, and auditors — unifying 45 self-maintaining master registers, 356 audit checkpoints, workforce credentials, rostering, and statutory reporting in one system of record.
-              </p>
-
-              <div className="flex flex-wrap items-center justify-between gap-2 pt-0.5">
-                <div className="inline-flex items-center gap-1.5 rounded-md border border-[#00C6FF]/70 bg-[#0072FF]/25 px-2.5 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wider text-[#00C6FF]">
-                  <span
-                    className="flex h-4 w-4 items-center justify-center rounded-full bg-white/15"
-                    style={{ boxShadow: '0 0 8px 1px rgba(255,255,255,0.9)' }}
-                  >
-                    <Building2 className="h-2.5 w-2.5 text-white" />
-                  </span>
-                  <span>Enterprise Compliance, Governance &amp; Clinical Risk OS</span>
-                </div>
-
-                <div className="flex flex-wrap items-center gap-1.5">
-                  <button
-                    type="button"
-                    onClick={() => onBookDemo && onBookDemo('Executive Platform Demo')}
-                    className="inline-flex min-h-9 sm:min-h-0 sm:h-7 items-center justify-center gap-1.5 rounded-lg border border-white/40 px-3 text-[11px] font-extrabold text-white shadow-md transition hover:opacity-95"
-                    style={{
-                      background: 'linear-gradient(115deg, #0072FF 0%, #5A00D6 55%, #FF2E9A 100%)',
-                    }}
-                  >
-                    <Calendar className="h-3.5 w-3.5 shrink-0 text-white" style={{ filter: 'drop-shadow(0 0 3px #FFFFFF)' }} />
-                    <span>Book Executive Demo</span>
-                  </button>
-
-                  <Link
-                    to={authed ? '/dashboard' : '/register'}
-                    className="inline-flex min-h-9 sm:min-h-0 sm:h-7 items-center justify-center gap-1.5 rounded-lg border-2 border-[#00C6FF] bg-white px-3 text-[11px] font-extrabold text-[#0A2B6D] shadow-sm transition hover:bg-slate-100"
-                  >
-                    <span style={{ color: '#0A2B6D' }}>
-                      {authed ? 'Open Command Centre' : 'Start 14-Day Free Trial'}
-                    </span>
-                    <ArrowRight className="h-3.5 w-3.5 shrink-0 text-[#0072FF]" />
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 items-start gap-3 lg:grid-cols-12 lg:items-stretch">
-              {/* Left Column: Compact Checkpoints & 3 Executive Assurance Cards */}
-              <div className="flex flex-col lg:h-full lg:col-span-5 text-left text-white space-y-2.5">
-                {/* 4 Structured Regulatory Checkpoints with White Lights */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 lg:flex-1 lg:auto-rows-fr">
-                  {GOVERNANCE_PILLARS.map((pillar) => (
-                    <div
-                      key={pillar}
-                      className="flex items-center gap-2 rounded-lg border border-[#00C6FF]/60 bg-[#16468A]/75 backdrop-blur-sm px-2.5 py-2 text-[11px] font-bold text-white"
-                    >
-                      <span
-                        className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-md border border-white/60 bg-[#0072FF]/35"
-                        style={{ boxShadow: '0 0 7px rgba(255,255,255,0.85)' }}
-                      >
-                        <Check className="h-3 w-3 text-white" style={{ filter: 'drop-shadow(0 0 3px #FFFFFF)' }} />
-                      </span>
-                      <span className="leading-snug">{pillar}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* 3 Executive Assurance Cards with White Lights (illustrative figures) */}
-                <p className="text-[10.5px] font-semibold text-white/80">
-                  Illustrative example figures. Not results from a real provider.
-                </p>
-                <div className="grid grid-cols-1 gap-2 sm:grid-cols-3 lg:flex-1">
-                  {EXECUTIVE_METRICS.map((kpi) => {
-                    const Icon = kpi.icon;
-                    return (
-                      <div
-                        key={kpi.label}
-                        className="rounded-xl border border-[#00C6FF]/60 bg-[#16468A]/80 backdrop-blur-sm p-2.5 text-left lg:flex lg:flex-col lg:justify-center"
-                      >
-                        <div className="flex items-center justify-between gap-1.5">
-                          <span className="text-[11px] font-bold text-[#00C6FF]">
-                            {kpi.label}
-                          </span>
-                          <span
-                            className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-white/60 bg-[#0072FF]/30"
-                            style={{ boxShadow: '0 0 7px rgba(255,255,255,0.85)' }}
-                          >
-                            <Icon className="h-3 w-3 text-white" style={{ filter: 'drop-shadow(0 0 3px #FFFFFF)' }} />
-                          </span>
-                        </div>
-                        <div className="mt-1 font-editorial text-lg font-black text-white leading-none">
-                          {kpi.value}
-                        </div>
-                        <div className="mt-1 text-[10.5px] font-semibold text-white/80 leading-snug">
-                          {kpi.detail}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Right Column: 3-Row Enterprise GRC Command Preview */}
-              <div className="lg:col-span-7">
-                <HeroDashboardMockup />
-              </div>
-            </div>
+    <section className="relative overflow-hidden rounded-[2rem] border border-white/15 bg-gradient-to-br from-[#071D4B] via-[#0A2B6D] to-[#34216F] p-5 text-white shadow-[0_24px_70px_rgba(10,43,109,0.22)] sm:p-8 lg:p-10">
+      <div aria-hidden="true" className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#0072FF]/20 blur-3xl" />
+      <div aria-hidden="true" className="pointer-events-none absolute -bottom-28 left-1/3 h-64 w-64 rounded-full bg-[#FF2E9A]/15 blur-3xl" />
+      <div className="relative grid items-center gap-8 lg:grid-cols-[1.05fr_.95fr] lg:gap-10">
+        <div>
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-semibold text-blue-100 backdrop-blur">
+            <Building2 aria-hidden="true" className="h-4 w-4" />
+            For Australian human services organisations
+          </div>
+          <h1 className="mt-5 max-w-2xl text-3xl font-black leading-tight tracking-tight sm:text-4xl lg:text-5xl">Bring compliance, workforce and service delivery into clearer view.</h1>
+          <p className="mt-4 max-w-xl text-base leading-7 text-blue-50/90 sm:text-lg">ComplianceHR Infinity helps teams organise responsibilities, records and follow-up across everyday operations, quality and governance.</p>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <button type="button" onClick={() => onBookDemo?.('Tailored platform walkthrough')} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 font-bold text-[#0A2B6D] shadow-lg transition hover:bg-blue-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+              Book a tailored walkthrough <ArrowRight aria-hidden="true" className="h-4 w-4" />
+            </button>
+            <a href="#solution" className="inline-flex min-h-12 items-center justify-center rounded-xl border border-white/30 bg-white/5 px-5 py-3 font-semibold text-white transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Explore platform areas</a>
+          </div>
+          <div className="mt-7 flex flex-wrap gap-2" aria-label="Choose an industry-specific walkthrough">
+            {AUDIENCES.map((audience) => (
+              <button key={audience.label} type="button" onClick={() => onBookDemo?.(audience.topic)} className="inline-flex min-h-10 items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-2 text-sm font-medium text-blue-50 backdrop-blur transition hover:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+                <CheckCircle2 aria-hidden="true" className="h-4 w-4 text-[#70D7FF]" />{audience.label}
+              </button>
+            ))}
           </div>
         </div>
+        <HeroDashboardMockup />
       </div>
     </section>
   );
