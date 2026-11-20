@@ -93,7 +93,7 @@ export default function Volunteers({ embedded = false } = {}) {
       <ModuleShell
         embedded={embedded}
         title="Volunteering & Student Placement"
-        subtitle="Volunteer register with full staff intake requirements, training records and compliance documents."
+        subtitle="Volunteer register with full staff intake requirements, skill development records and compliance documents."
         icon={HeartHandshake}
         moduleKey="volunteering-placements"
         insightModule={isVolunteer ? undefined : 'volunteers'}
