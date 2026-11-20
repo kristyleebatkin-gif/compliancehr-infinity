@@ -22,7 +22,7 @@ export const EMPLOYEE_FILE_SECTIONS = [
       'NDIS Relevant Qualification',
     ],
   },
-  { name: 'Training Records', icon: GraduationCap, docs: ['Training Record'] },
+  { name: 'Skill Development Records', icon: GraduationCap, docs: ['Skill Development Record'] },
   { name: 'Training & Competency', icon: GraduationCap, docs: ['Staff Training Plan', 'Skill Assessment Form'] },
   { name: 'Performance Management', icon: ClipboardList, docs: ['Performance Review Schedule', 'Performance Review Form'] },
   { name: 'Workforce Exit & File Management', icon: ShieldCheck, docs: ['Staff Exit Form', 'Staff File Checklist'] },
