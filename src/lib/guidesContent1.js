@@ -398,7 +398,7 @@ export const GUIDES_PART_1 = {
       { name: 'LMS learner', detail: 'Self-paced learning with content, quizzes and scenario-based drills.' },
       { name: 'AI quiz drills', detail: 'AI-generated quiz questions per module for practice and assessment.' },
       { name: 'Competency checklists', detail: 'Skills sign-off checklists per role and module.' },
-      { name: 'Training ladder', detail: 'Progression view showing what each worker has completed and what comes next.' },
+      { name: 'Capability pathway', detail: 'Progression view showing completed learning, demonstrated skills and the next step.' },
       { name: 'Training calendar', detail: 'Scheduled sessions, expiries and renewal windows.' },
       { name: 'Training templates', detail: 'Reusable assignment templates matched to roles.' },
       { name: 'Certificates upload', detail: 'Certificates upload (stored privately) with expiry-based alerts.' },
