@@ -108,7 +108,7 @@ export default function Training({ profile, embedded = false } = {}) {
         moduleKey="training"
         tabs={<TrainingNavigation view={view} onChange={setView} personalOnly={employee} />}
         actions={!employee && <Button variant="outline" onClick={exportTrainingRegister} disabled={loading || allCompletions.length === 0}><Download className="mr-2 h-4 w-4" />Export register</Button>}
-        search={<ModuleSearchBar value={query} onChange={(q) => { setQuery(q); if (q.trim()) setView('modules'); }} placeholder="Search training modules..." />}
+        search={<ModuleSearchBar value={query} onChange={(q) => { setQuery(q); if (q.trim()) setView('modules'); }} placeholder="Search skill development modules..." />}
         insightModule={employee ? undefined : 'training'}
       >
 
