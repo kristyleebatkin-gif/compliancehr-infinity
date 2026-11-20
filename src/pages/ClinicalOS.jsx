@@ -145,7 +145,7 @@ export default function ClinicalOS() {
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             <Link to="/evidence" className="rounded-xl border border-border bg-card p-4 text-sm font-bold text-foreground hover:border-primary">Evidence OS · controls and findings</Link>
             <Link to="/knowledge-graph" className="rounded-xl border border-border bg-card p-4 text-sm font-bold text-foreground hover:border-primary">Knowledge Graph OS · traceability</Link>
-            <Link to="/training" className="rounded-xl border border-border bg-card p-4 text-sm font-bold text-foreground hover:border-primary">Training Centre · competency and supervision</Link>
+            <Link to="/training" className="rounded-xl border border-border bg-card p-4 text-sm font-bold text-foreground hover:border-primary">Skill Development · competency and supervision</Link>
             <Link to="/incidents" className="rounded-xl border border-border bg-card p-4 text-sm font-bold text-foreground hover:border-primary">Incidents · clinical incident follow-up</Link>
           </div>
         </TabsContent>
