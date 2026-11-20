@@ -13,7 +13,7 @@ export default function PricingSection({ onContactSales }) {
       <div className="mx-auto max-w-3xl text-center">
         <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#5A00D6]">Pricing and scope</p>
         <h2 className="mt-2 text-2xl font-black tracking-tight text-[#0A2B6D] sm:text-3xl">A clear quote, based on what your organisation needs.</h2>
-        <p className="mt-3 text-base leading-7 text-slate-600">Pricing is being reviewed against team size, locations, chosen modules, onboarding, integrations and support. Request an itemised quote before committing; it should state the billing term, GST, included services, usage limits and any optional costs.</p>
+        <p className="mt-3 text-base leading-7 text-slate-600">Pricing depends on organisation size, locations, selected modules, onboarding, integrations and support. Request a written, itemised quote that states AUD, GST, billing term, included services, usage limits and any optional costs before you decide.</p>
       </div>
       <div className="mt-7 grid gap-4 md:grid-cols-3">
         {QUOTE_PATHS.map(({title,detail,icon:Icon,topic}) => (
@@ -27,7 +27,6 @@ export default function PricingSection({ onContactSales }) {
           </article>
         ))}
       </div>
-      <p className="mx-auto mt-5 max-w-3xl text-center text-xs leading-5 text-slate-500">The previous price schedule and document-payment terms are under review for consistency. No promotional rate or feature entitlement should be treated as final until confirmed in a written quote.</p>
     </section>
   );
 }
