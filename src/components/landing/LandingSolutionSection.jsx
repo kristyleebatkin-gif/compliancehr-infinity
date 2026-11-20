@@ -1,158 +1,32 @@
-import { MODULE_DIRECTORY } from '@/lib/moduleDirectory';
 import React from 'react';
-import { Link } from 'react-router-dom';
-import {
-  Users, CalendarCheck2, ShieldCheck, Briefcase, CheckCircle2, ArrowRight, Layers,
-} from 'lucide-react';
-import Reveal from '@/components/landing/Reveal';
-import LandingSectionHeader from '@/components/landing/LandingSectionHeader';
+import { ArrowRight, BriefcaseBusiness, HeartHandshake, ShieldCheck, UsersRound } from 'lucide-react';
 
-const PILLARS = [
-  {
-    badge: 'PILLAR 01',
-    title: 'People & 360° Profiles',
-    subtitle: 'Complete lifecycle governance for every employee, participant, contractor, and volunteer.',
-    icon: Users,
-    accent: '#0072FF',
-    route: '/our-participants',
-    items: [
-      { name: 'Staff Dossiers', desc: '100-point HR verification, contracts, position descriptions & appraisals.' },
-      { name: 'Participant Profiles', desc: 'NDIS plans, 3-part informed consents, support teams & 10-weekly reviews.' },
-      { name: 'Credential Gate', desc: 'NDIS Worker Screening, Blue Cards, First Aid, CPR & police checks.' },
-      { name: 'Structured Onboarding', desc: 'Online intake forms with 1-click conversion into verified profiles.' },
-    ],
-  },
-  {
-    badge: 'PILLAR 02',
-    title: 'Frontline Service Delivery',
-    subtitle: 'Coordinate disability, aged care, and allied health delivery with real-time compliance gates.',
-    icon: CalendarCheck2,
-    accent: '#5A00D6',
-    route: '/roster',
-    items: [
-      { name: 'Smart Rostering', desc: 'Shift scheduling with automated worker screening and fatigue gates.' },
-      { name: 'Communications', desc: 'Shift handover notes, 6-stage lifecycle tracking, and team diary.' },
-      { name: 'Goal Outcomes', desc: 'Participant NDIS goal tracking linked directly to shift evidence.' },
-      { name: 'Statutory Incidents', desc: '24-hour & 5-day NDIS Commission and Aged Care SIRS timers.' },
-    ],
-  },
-  {
-    badge: 'PILLAR 03',
-    title: 'Compliance, Risk & Audit',
-    subtitle: 'Continuous audit readiness mapped to NDIS Practice Standards and Aged Care Quality Standards.',
-    icon: ShieldCheck,
-    accent: '#FF2E9A',
-    route: '/compliance',
-    items: [
-      { name: 'Master Audits', desc: '17 categories & 356 checkpoints with 1-click PDF evidence packs.' },
-      { name: 'ISO 31000 Risk Matrix', desc: 'Hierarchy of controls, home risk assessments, and Take-5 safety checks.' },
-      { name: 'Competency LMS', desc: 'Interactive training modules, AI quizzes, and certificate tracking.' },
-      { name: 'External Auditor Portal', desc: 'Read-only, consent-gated portal for external NDIS & Aged Care auditors.' },
-    ],
-  },
-  {
-    badge: 'PILLAR 04',
-    title: 'Commercial & Back-Office Operations',
-    subtitle: 'Unify NDIS claiming, SCHADS payroll, procurement, and board-level financial governance.',
-    icon: Briefcase,
-    accent: '#0A2B6D',
-    route: '/invoicing',
-    items: [
-      { name: 'HR & Contracts', desc: 'Employment contracts, leave approvals, supervision, and file completeness.' },
-      { name: 'NDIS Invoicing', desc: 'Price Guide billing, 3-way shift-to-claim matching, and payroll runs.' },
-      { name: 'Procurement & Assets', desc: 'Approved suppliers, 3-way PO matching, fleet maintenance, and MSDS.' },
-      { name: 'Executive Analytics', desc: 'Board packs, compliance trajectory charts, and labour forecasting.' },
-    ],
-  },
+const AREAS = [
+  { title: 'People and relationships', description: 'Organise staff, participant, contact, intake and consent information with clear ownership and access.', icon: UsersRound, topic: 'People and intake walkthrough' },
+  { title: 'Service delivery and workforce', description: 'Connect schedules, frontline records, goals, tasks, programs and follow-up in the workday.', icon: HeartHandshake, topic: 'Service delivery walkthrough' },
+  { title: 'Quality, risk and evidence', description: 'Keep reviews, incidents, controls, documents and improvement actions connected to their evidence.', icon: ShieldCheck, topic: 'Quality and evidence walkthrough' },
+  { title: 'Business and governance', description: 'Bring finance, procurement, assets, projects and governance records into a structured workspace.', icon: BriefcaseBusiness, topic: 'Business and governance walkthrough' },
 ];
 
-export default function LandingSolutionSection() {
+export default function LandingSolutionSection({ onBookDemo }) {
   return (
-    <section id="solution" className="w-full scroll-mt-20">
-      <div className="enterprise-surface rounded-2xl p-3.5 sm:p-4 space-y-3">
-        <LandingSectionHeader
-          badge="Four Architectural Pillars"
-          tone="blue"
-          icon={Layers}
-          title="One Unified Operating System Across Every Department"
-          description="Disconnected point solutions create compliance blind spots — ComplianceHR Infinity connects People, Service Delivery, Governance, and Finance on a single data model."
-          rightTag={`4 Solution Areas · ${MODULE_DIRECTORY.length} Workspaces`}
-        />
-
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 items-stretch">
-          {PILLARS.map((pillar, idx) => {
-            const Icon = pillar.icon;
-            return (
-              <Reveal
-                key={pillar.title}
-                delay={idx * 0.03}
-                className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-3.5 text-left transition hover:border-[#0072FF]"
-              >
-                <div>
-                  {/* Header First -> Sentence -> Blue/Purple Badge & Open Link After */}
-                  <div className="space-y-1 border-b border-slate-100 pb-2">
-                    <div className="flex items-center justify-between gap-2">
-                      <h3 className="font-editorial text-sm sm:text-base font-black text-[#0A2B6D] leading-snug">
-                        {pillar.title}
-                      </h3>
-                      <div
-                        className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-white"
-                        style={{
-                          backgroundColor: pillar.accent,
-                          boxShadow: '0 0 8px 1px rgba(255,255,255,0.85)',
-                        }}
-                      >
-                        <Icon className="h-3.5 w-3.5 text-white" style={{ filter: 'drop-shadow(0 0 3px #FFFFFF)' }} />
-                      </div>
-                    </div>
-
-                    <p className="text-xs font-medium leading-snug text-[#0A2B6D]/80">
-                      {pillar.subtitle}
-                    </p>
-
-                    <div className="flex items-center justify-between gap-2 pt-0.5">
-                      <span
-                        className="rounded px-2 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wider"
-                        style={{ backgroundColor: `${pillar.accent}14`, color: pillar.accent }}
-                      >
-                        {pillar.badge}
-                      </span>
-                      <Link
-                        to={pillar.route}
-                        className="inline-flex shrink-0 items-center gap-1 rounded-md border border-slate-200 bg-slate-50 px-2.5 py-0.5 text-[11px] font-extrabold text-[#0A2B6D] transition hover:border-[#0072FF] hover:bg-[#0A2B6D] hover:text-white"
-                      >
-                        <span>Open</span>
-                        <ArrowRight className="h-3 w-3" />
-                      </Link>
-                    </div>
-                  </div>
-
-                  <div className="mt-2.5 grid grid-cols-1 gap-2 sm:grid-cols-2">
-                    {pillar.items.map((item) => (
-                      <div
-                        key={item.name}
-                        className="rounded-lg border border-slate-200 bg-[#F8FAFC] p-2.5"
-                      >
-                        <div className="flex items-center gap-1.5">
-                          <CheckCircle2
-                            className="h-3.5 w-3.5 shrink-0"
-                            style={{ color: pillar.accent }}
-                          />
-                          <h4 className="text-xs font-extrabold text-[#0A2B6D]">
-                            {item.name}
-                          </h4>
-                        </div>
-                        <p className="mt-0.5 text-[11px] font-medium leading-snug text-[#0A2B6D]/80">
-                          {item.desc}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </Reveal>
-            );
-          })}
-        </div>
+    <section id="solution" className="scroll-mt-24">
+      <div className="mx-auto max-w-4xl text-center">
+        <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#5A00D6]">Explore the platform</p>
+        <h2 className="mt-2 text-2xl font-black tracking-tight text-[#0A2B6D] sm:text-3xl">One connected workspace, organised around real work.</h2>
+        <p className="mx-auto mt-3 max-w-2xl text-base leading-7 text-slate-600">Choose an area to see how its records, responsibilities and next steps fit together. Walkthroughs can be tailored to your organisation and service type.</p>
+      </div>
+      <div className="mt-7 grid gap-4 sm:grid-cols-2">
+        {AREAS.map(({title,description,icon:Icon,topic}) => (
+          <article key={title} className="rounded-2xl border border-slate-200/80 bg-white/80 p-5 shadow-[0_12px_36px_rgba(10,43,109,0.06)] backdrop-blur transition hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-[0_18px_42px_rgba(10,43,109,0.10)]">
+            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-blue-100 to-purple-100 text-[#0A2B6D]"><Icon aria-hidden="true" className="h-5 w-5" /></span>
+            <h3 className="mt-4 text-lg font-bold text-[#0A2B6D]">{title}</h3>
+            <p className="mt-2 min-h-[3rem] text-sm leading-6 text-slate-600">{description}</p>
+            <button type="button" onClick={() => onBookDemo?.(topic)} className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-lg px-3 font-bold text-[#0A54B8] hover:bg-blue-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700">
+              Request this walkthrough <ArrowRight aria-hidden="true" className="h-4 w-4" />
+            </button>
+          </article>
+        ))}
       </div>
     </section>
   );
