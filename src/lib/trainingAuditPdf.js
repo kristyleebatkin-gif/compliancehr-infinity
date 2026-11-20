@@ -195,7 +195,7 @@ export function downloadTrainingAuditReport(data) {
     [
       { label: 'Staff Member', width: 140 },
       { label: 'Role', width: 110 },
-      { label: 'Training Module', width: 210 },
+      { label: 'Skill Development Module', width: 210 },
       { label: 'Completed', width: 90 },
       { label: 'Expiry Date', width: 90 },
       { label: 'Status', width: 150 },
