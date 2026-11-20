@@ -259,7 +259,7 @@ export default function StaffHome({ embedded = false } = {}) {
           <Link to="/training" className="flex items-center gap-1 text-xs font-medium text-brand hover:underline">Skill Development<ArrowRight className="h-3 w-3" /></Link>
         </div>
         {trainings.length === 0 ? (
-          <EmptyState icon={GraduationCap} title="No training completed yet" message="Modules you complete will appear here with scores and expiry dates." />
+          <EmptyState icon={GraduationCap} title="No skill development completed yet" message="Modules you complete will appear here with scores and expiry dates." />
         ) : (
           <div className="space-y-2">
             {trainings.map((t) => {
