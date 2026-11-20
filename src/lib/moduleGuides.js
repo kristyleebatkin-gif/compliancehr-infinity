@@ -121,7 +121,7 @@ export const moduleGuides = {
     title: 'Skill Development',
     purpose: 'Assign, deliver and track role-based skill development from induction through supervised competency.'
     steps: [
-      'Assign a training template matched to the staff role.',
+      'Assign a skill development plan matched to the staff role.',
       'Complete LMS modules, quizzes and competency checklists.',
       'Upload certificates and set expiry dates so alerts fire in time.',
       'Review the training ladder and audit reports monthly.',
