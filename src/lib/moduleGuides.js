@@ -124,7 +124,7 @@ export const moduleGuides = {
       'Assign a skill development plan matched to the staff role.',
       'Complete learning modules, quizzes and practical competency checks.',
       'Upload certificates and set expiry dates so alerts fire in time.',
-      'Review the training ladder and audit reports monthly.',
+      'Review capability pathways and audit reports monthly.',
     ],
   },
   '/certificates': {
