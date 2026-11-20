@@ -193,7 +193,7 @@ export const SUPPORT_RESOURCES = [
 export const SUPPORT_MODULES = [
   'Dashboard', 'Intake Centre', 'Document Vault', 'Company Safe', 'Staff Profiles', 'Participant Profiles',
   'Visual Boards', 'Communication Centre', 'Incident Clinic', 'Risk Reporting', 'Compliance & Report Centre',
-  'Training Centre', 'Certificates', 'Asset Management', 'Rostering', 'Invoicing Centre', 'Goal Progress',
+  'Skill Development', 'Certificates', 'Asset Management', 'Rostering', 'Invoicing Centre', 'Goal Progress',
   'Emergency Response', 'Meeting Centre', 'Data Control Panel', 'Users & Permissions Hub', 'Receipt Hub',
   'Equipment & MSDS', 'Referral & Support', 'NDIS Provider Portal', 'NDIS Updates & News', 'Quote Centre',
   'Program Design Centre', 'Key Personnel Contacts', 'Volunteering & Student Placement', 'Task Dashboard',
