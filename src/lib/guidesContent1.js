@@ -394,7 +394,7 @@ export const GUIDES_PART_1 = {
     tagline: 'From induction to role-ready capability',
     purpose: 'Skill Development assigns, delivers and tracks role-based learning: accessible modules, quizzes and scenario practice, competency checklists, capability pathways, a learning calendar and team progress. Certificates link to verified records and expiry dates so renewal alerts can be actioned.',
     features: [
-      { name: 'Training curriculum', detail: 'A structured library of modules covering induction through advanced practice.' },
+      { name: 'Skill Development curriculum', detail: 'A structured, accessible library of role-based modules from induction through advanced practice.' },
       { name: 'LMS learner', detail: 'Self-paced learning with content, quizzes and scenario-based drills.' },
       { name: 'AI quiz drills', detail: 'AI-generated quiz questions per module for practice and assessment.' },
       { name: 'Competency checklists', detail: 'Skills sign-off checklists per role and module.' },
