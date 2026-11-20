@@ -188,7 +188,7 @@ export const CARESPHERE_12_CAPABILITIES = [
     secondaryRoutes: [
       { label: 'HR Hub', path: '/hr' },
       { label: 'Employee Profiles', path: '/our-employees' },
-      { label: 'Training Centre', path: '/training' },
+      { label: 'Skill Development', path: '/training' },
       { label: 'Certificates', path: '/certificates' },
     ],
     features: [
