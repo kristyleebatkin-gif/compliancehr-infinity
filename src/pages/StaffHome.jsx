@@ -256,7 +256,7 @@ export default function StaffHome({ embedded = false } = {}) {
       <section className="space-y-2">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold">My skill development</h2>
-          <Link to="/training" className="flex items-center gap-1 text-xs font-medium text-brand hover:underline">Training centre<ArrowRight className="h-3 w-3" /></Link>
+          <Link to="/training" className="flex items-center gap-1 text-xs font-medium text-brand hover:underline">Skill Development<ArrowRight className="h-3 w-3" /></Link>
         </div>
         {trainings.length === 0 ? (
           <EmptyState icon={GraduationCap} title="No training completed yet" message="Modules you complete will appear here with scores and expiry dates." />
