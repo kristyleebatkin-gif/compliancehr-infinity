@@ -118,7 +118,7 @@ export const moduleGuides = {
     ],
   },
   '/training': {
-    title: 'Training Centre',
+    title: 'Skill Development',
     purpose: 'Assign, deliver and track training from induction to the training ladder.',
     steps: [
       'Assign a training template matched to the staff role.',
