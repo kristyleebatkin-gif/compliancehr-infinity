@@ -392,7 +392,7 @@ export const GUIDES_PART_1 = {
 
   training: {
     tagline: 'From induction to role-ready capability',
-    purpose: 'The Training Centre assigns, delivers and tracks every piece of learning: a curriculum of training modules, an LMS with quizzes and scenario drills, AI quiz generation, competency checklists, a training ladder, training calendar, templates and team analytics. Certificates upload against records with expiry dates, feeding the training expiry alert workflow.',
+    purpose: 'Skill Development assigns, delivers and tracks role-based learning: accessible modules, quizzes and scenario practice, competency checklists, capability pathways, a learning calendar and team progress. Certificates link to verified records and expiry dates so renewal alerts can be actioned.',
     features: [
       { name: 'Training curriculum', detail: 'A structured library of modules covering induction through advanced practice.' },
       { name: 'LMS learner', detail: 'Self-paced learning with content, quizzes and scenario-based drills.' },
