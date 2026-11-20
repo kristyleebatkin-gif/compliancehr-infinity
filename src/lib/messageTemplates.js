@@ -66,7 +66,7 @@ export const MESSAGE_TEMPLATES = [
     name: 'Skill development renewal reminder',
     category: 'Training & policy',
     subject: 'Reminder: {{training_name}} skill development is due on {{due_date}}',
-    body: 'Hi {{staff_name}},\n\nThe {{training_name}} training module is due to be completed by {{due_date}}. The module is available in the Training Centre and takes approximately 30 minutes.\n\nPlease complete it before the due date, or let us know if you need an extension or support to finish it.\n\nKind regards,\n{{sender_name}}\n{{company_name}}',
+    body: 'Hi {{staff_name}},\n\nYour {{training_name}} skill development module is due by {{due_date}}. Open Skill Development to review the learning and assessment requirements. Please allow enough time for any practical assessment.\n\nPlease complete it before the due date, or let us know if you need an extension or support to finish it.\n\nKind regards,\n{{sender_name}}\n{{company_name}}',
   },
   {
     id: 'policy-review',
