@@ -47,6 +47,7 @@ export default function AppLayout() {
   const [compactHeader, setCompactHeader] = useState(false);
   const [manualCompactOverride, setManualCompactOverride] = useState(null);
   const [onboardingOpen, setOnboardingOpen] = useState(false);
+  const [shortcutsTarget, setShortcutsTarget] = useState(null);
 
   useEffect(() => {
     const onModeChange = (e) => {
@@ -319,7 +320,7 @@ export default function AppLayout() {
             </div>
           )}
 
-          <WorkspaceNavigationTools />
+          <WorkspaceNavigationTools moveShortcuts shortcutsTarget={shortcutsTarget} />
           <div>
             <div className="max-h-[35vh] overflow-y-auto md:max-h-none md:overflow-visible">
               <QuickAppBar workspaceView={workspaceView} onSwitchWorkspaceView={switchWorkspaceView} />
@@ -350,6 +351,7 @@ export default function AppLayout() {
             className={`app-dashboard-canvas mx-auto w-full max-w-[1440px] min-w-0 px-3 py-3${location.pathname === '/dashboard' ? ' dashboard-page' : ''}`}
             style={{ '--module-colour': currentModuleColour }}
           >
+            <div ref={setShortcutsTarget} />
             <ErrorBoundary>
               <Outlet />
             </ErrorBoundary>

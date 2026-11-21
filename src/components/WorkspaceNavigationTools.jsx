@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Link, useLocation } from 'react-router-dom';
+import WorkspaceShortcuts from '@/components/WorkspaceShortcuts';
 import { LayoutGrid, Star, Bell, CircleHelp } from 'lucide-react';
 import { MODULE_DIRECTORY, NAV_GROUPS } from '@/lib/moduleDirectory';
 import { useRole } from '@/lib/useRole';
@@ -8,7 +10,7 @@ import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription } 
 
 const buttonClass = 'inline-flex min-h-11 items-center gap-2 rounded-lg border border-[#0072FF]/30 px-3 text-sm font-semibold focus-visible:ring-2 focus-visible:ring-[#0072FF]';
 
-export default function WorkspaceNavigationTools({ compact = false }) {
+export default function WorkspaceNavigationTools({ compact = false, moveShortcuts = false, shortcutsTarget = null }) {
   const location = useLocation();
   const { user, can, navRole } = useRole();
   const allowed = MODULE_DIRECTORY.filter((item) => can(item.key));
@@ -63,7 +65,7 @@ export default function WorkspaceNavigationTools({ compact = false }) {
     });
   };
 
-  return <section aria-label="Workspace shortcuts" className="app-workspace-shortcuts border-b border-[#0072FF]/20 bg-white px-3 py-3 text-[#0A2B6D] sm:px-6">
+  return <><section aria-label="Workspace shortcuts" className="app-workspace-shortcuts border-b border-[#0072FF]/20 bg-white px-3 py-3 text-[#0A2B6D] sm:px-6">
     <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-3">
       <nav aria-label="Breadcrumb" className={compact ? 'sr-only' : 'text-sm'}><Link to="/dashboard" className="font-semibold text-[#0072FF]">Workspace</Link>{active && <> / <span>{active.group.replace(/^\d+\.\s*/, '')}</span> / <span aria-current="page" className="font-bold">{active.label}</span></>}</nav>
       <div className="flex flex-wrap gap-2">
@@ -90,9 +92,10 @@ export default function WorkspaceNavigationTools({ compact = false }) {
         <Link to="/my-profile" className={buttonClass}>My account</Link>
       </div>
     </div>
-    {!compact && <div className="mx-auto mt-2 flex max-w-[1440px] flex-wrap items-center gap-2 text-sm">
-      <span className="font-bold">Favourites</span>{favourites.length ? favourites.map((key) => allowed.find((item) => item.key === key)).filter(Boolean).map((item) => <Link key={item.key} to={item.path} className="rounded-lg bg-[#0072FF]/10 px-3 py-3 font-semibold">{item.label}</Link>) : <span>Use Find a module to save shortcuts.</span>}
-      {!!recent.length && <><span className="ml-2 font-bold">Recent</span>{recent.map((key) => allowed.find((item) => item.key === key)).filter(Boolean).map((item) => <Link key={item.key} to={item.path} className="rounded-lg px-3 py-3 text-[#5A00D6]">{item.label}</Link>)}</>}
-    </div>}
-  </section>;
+    {!compact && !moveShortcuts && <WorkspaceShortcuts allowed={allowed} favourites={favourites} recent={recent} className="mx-auto mt-2 max-w-[1440px]" />}
+  </section>
+  {!compact && moveShortcuts && shortcutsTarget && createPortal(
+    <WorkspaceShortcuts allowed={allowed} favourites={favourites} recent={recent} className="mb-3 rounded-lg border border-border bg-card px-3 py-2 text-card-foreground" />,
+    shortcutsTarget
+  )}</>;
 }
