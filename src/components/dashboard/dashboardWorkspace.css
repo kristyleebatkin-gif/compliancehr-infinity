@@ -35,4 +35,9 @@
 .goals-workspace .goal-card { box-shadow: none; }
 @media (min-width: 768px) { .app-dashboard-canvas { padding: 0.75rem; } }
 @media (min-width: 1280px) { .app-dashboard-canvas { padding: 0.75rem; } }
+/* On tablets, workspace sections scroll with the page; navigation stays available. */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .app-dashboard-canvas :is(section, div, form, aside, header, nav).sticky { position: static; }
+  .app-readable .workspace-copilot-button { position: static; }
+}
 @media print { .app-dashboard-canvas { padding: 0; } .dashboard-panel [hidden] { display: block !important; } }

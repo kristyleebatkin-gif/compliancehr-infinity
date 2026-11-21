@@ -64,6 +64,10 @@ export default function AppLayout() {
   useEffect(() => {
     const mainEl = document.getElementById('main-workspace-content');
     const handleScroll = () => {
+      if (window.matchMedia('(min-width: 768px) and (max-width: 1023px)').matches) {
+        setCompactHeader(false);
+        return;
+      }
       if (manualCompactOverride !== null) return;
       const y = (mainEl ? mainEl.scrollTop : 0) || window.scrollY || 0;
       if (y > 60) setCompactHeader(true);
@@ -241,7 +245,7 @@ export default function AppLayout() {
         Skip to main content
       </a>
       <aside
-        className="hidden w-64 shrink-0 flex-col bg-workspace-navy md:flex"
+        className="hidden w-64 shrink-0 flex-col bg-workspace-navy md:flex md:max-lg:sticky md:max-lg:top-0 md:max-lg:h-dvh md:max-lg:self-start md:max-lg:overflow-y-auto"
         style={{
           borderRight: '3px solid transparent',
           backgroundImage:
@@ -262,7 +266,7 @@ export default function AppLayout() {
       </Dialog>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="preserve-island-theme sticky top-0 z-40 shrink-0 shadow-md">
+        <header className="preserve-island-theme sticky top-0 z-40 shrink-0 shadow-md md:max-lg:contents">
           {/* Top App-Design Gradient Strip — matches remote top strip */}
           <div
             className="h-1.5 w-full"
@@ -316,18 +320,20 @@ export default function AppLayout() {
           )}
 
           <WorkspaceNavigationTools />
-          <div className="max-h-[35vh] overflow-y-auto lg:hidden [@media(pointer:coarse)]:block">
-            <QuickAppBar workspaceView={workspaceView} onSwitchWorkspaceView={switchWorkspaceView} />
-          </div>
+          <div className="md:max-lg:sticky md:max-lg:top-0 md:max-lg:z-40">
+            <div className="max-h-[35vh] overflow-y-auto lg:hidden [@media(pointer:coarse)]:block">
+              <QuickAppBar workspaceView={workspaceView} onSwitchWorkspaceView={switchWorkspaceView} />
+            </div>
 
-          {/* Continuous App-Design Gradient Divider Line aligned with remote */}
-          <div
-            className="h-[3px] w-full"
-            style={{
-              background:
-                'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
-            }}
-          />
+            {/* Continuous App-Design Gradient Divider Line aligned with remote */}
+            <div
+              className="h-[3px] w-full"
+              style={{
+                background:
+                  'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
+              }}
+            />
+          </div>
         </header>
 
         <main

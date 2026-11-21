@@ -51,7 +51,7 @@ export default function CopilotDock() {
         onClick={() => setOpen(true)}
         aria-expanded={open}
         aria-label="Open Infinity Copilot"
-        className="fixed bottom-20 right-3 z-40 inline-flex items-center gap-1.5 rounded-full px-3.5 py-2.5 text-xs font-extrabold text-white shadow-lg md:bottom-5 md:right-5"
+        className="workspace-copilot-button fixed bottom-20 right-3 z-40 inline-flex items-center gap-1.5 rounded-full px-3.5 py-2.5 text-xs font-extrabold text-white shadow-lg md:bottom-5 md:right-5"
         style={{ background: 'linear-gradient(120deg, #0072FF, #5A00D6)' }}
       >
         <Sparkles className="h-4 w-4" aria-hidden="true" />
