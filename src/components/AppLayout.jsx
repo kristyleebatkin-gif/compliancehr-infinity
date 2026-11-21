@@ -328,7 +328,7 @@ export default function AppLayout() {
 
             {/* Continuous App-Design Gradient Divider Line aligned with remote */}
             <div
-              className="h-[3px] w-full"
+              className="h-[3px] w-full md:hidden lg:block"
               style={{
                 background:
                   'linear-gradient(120deg, #00C6FF 0%, #0072FF 28%, #5A00D6 62%, #FF2E9A 100%)',
