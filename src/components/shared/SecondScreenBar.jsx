@@ -5,7 +5,7 @@ import { SECOND_SCREEN_VIEWS } from '@/lib/secondScreen';
 
 export default function SecondScreenBar({ current, onChange }) {
   return (
-    <header className="sticky top-0 z-20 flex flex-wrap items-center justify-between gap-2 border-b border-border bg-card/95 px-3 py-2 backdrop-blur lg:static">
+    <header className="sticky top-0 z-20 flex flex-wrap items-center justify-between gap-2 border-b border-border bg-card/95 px-3 py-2 backdrop-blur md:static">
       <p className="flex items-center gap-1.5 text-[10.5px] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
         <Monitor className="h-3.5 w-3.5" /> Second screen
       </p>

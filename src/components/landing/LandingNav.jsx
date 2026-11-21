@@ -15,7 +15,7 @@ export default function LandingNav({ onBookDemo }) {
 
   const closeMenu = () => setOpen(false);
   return (
-    <header id="top-landing" className="sticky top-0 z-40 border-b border-white/10 bg-[#0A2B6D]/95 text-white shadow-sm backdrop-blur-xl lg:static">
+    <header id="top-landing" className="sticky top-0 z-40 border-b border-white/10 bg-[#0A2B6D]/95 text-white shadow-sm backdrop-blur-xl md:static">
       <a href="#landing-content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-white focus:p-3 focus:text-[#0A2B6D]">Skip to content</a>
       <div className="mx-auto flex max-w-[1280px] flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
         <Link to="/" aria-label="ComplianceHR Infinity home" className="max-w-[200px]"><BrandLogoLockup size="xs" theme="dark" showSlogan compactSlogan /></Link>

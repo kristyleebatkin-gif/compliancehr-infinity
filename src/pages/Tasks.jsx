@@ -275,7 +275,7 @@ function Tasks() {
       </Tabs>
 
       {selected.length > 0 && (
-        <div className="sticky bottom-4 z-40 flex flex-wrap items-center gap-2 rounded-xl border border-brand/40 bg-card p-3 shadow-xl shadow-brand/10 lg:static">
+        <div className="sticky bottom-4 z-40 flex flex-wrap items-center gap-2 rounded-xl border border-brand/40 bg-card p-3 shadow-xl shadow-brand/10 md:static">
           <span className="rounded-full bg-brand px-3 py-1 text-xs font-bold text-white">{selected.length} selected</span>
           <button onClick={bulkArchive} className="flex items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-sm font-semibold hover:bg-muted"><Archive className="h-4 w-4" />Archive</button>
           <span className="text-xs font-medium text-foreground/40">Move to:</span>

@@ -83,7 +83,7 @@ export default function ExpiryReviewFeed() {
           <ClipboardCheck className="h-4 w-4 text-safe" />{empty}
         </div>
       ) : (
-        <div className="mt-3 max-h-72 space-y-2 overflow-y-auto pr-1">
+        <div className="mt-3 max-h-72 space-y-2 overflow-y-auto pr-1 md:max-h-none md:overflow-visible">
           {items.map(renderItem)}
         </div>
       )}

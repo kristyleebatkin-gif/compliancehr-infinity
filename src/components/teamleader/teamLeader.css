@@ -303,8 +303,8 @@
   }
 }
 
-/* Let the workspace scroll with the page on desktop instead of inside a fixed-height frame. */
-@media (min-width: 1024px) {
+/* Let the workspace scroll with the page on tablet and desktop. */
+@media (min-width: 768px) {
   .tl-phone { height: auto; min-height: 0; overflow: visible; align-items: flex-start; }
   .tl-phone > .tl-scroll { overflow: visible; }
 }
@@ -340,12 +340,5 @@
 
   .tl-key {
     min-height: 52px;
-  }
-}
-
-@media (min-width: 820px) and (max-width: 1023px) and (max-height: 780px) {
-  .tl-phone {
-    height: calc(100dvh - 30px);
-    min-height: 480px;
   }
 }

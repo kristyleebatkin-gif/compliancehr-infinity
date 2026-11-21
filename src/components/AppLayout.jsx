@@ -245,7 +245,7 @@ export default function AppLayout() {
         Skip to main content
       </a>
       <aside
-        className="hidden w-64 shrink-0 flex-col bg-workspace-navy md:flex md:sticky md:top-0 md:h-dvh md:self-start md:overflow-y-auto lg:static lg:h-auto lg:overflow-visible"
+        className="hidden w-64 shrink-0 flex-col bg-workspace-navy md:flex md:self-start"
         style={{
           borderRight: '3px solid transparent',
           backgroundImage:
@@ -320,8 +320,8 @@ export default function AppLayout() {
           )}
 
           <WorkspaceNavigationTools />
-          <div className="md:sticky md:top-0 md:z-40 lg:static">
-            <div className="max-h-[35vh] overflow-y-auto lg:max-h-none lg:overflow-visible">
+          <div>
+            <div className="max-h-[35vh] overflow-y-auto md:max-h-none md:overflow-visible">
               <QuickAppBar workspaceView={workspaceView} onSwitchWorkspaceView={switchWorkspaceView} />
             </div>
 

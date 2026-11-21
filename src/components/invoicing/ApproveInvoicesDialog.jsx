@@ -150,7 +150,7 @@ export default function ApproveInvoicesDialog({ open, onOpenChange, onApproved }
               </section>
             )}
 
-            <div className="sticky bottom-0 space-y-2 border-t bg-background pt-3 lg:static">
+            <div className="sticky bottom-0 space-y-2 border-t bg-background pt-3 md:static">
               {confirming ? (
                 <div role="alert" className="rounded-lg border border-[#5A00D6]/40 bg-[#F5F0FF] p-3 text-sm text-[#0A2B6D]">
                   Approve <strong>{chosen.length}</strong> invoice{chosen.length === 1 ? '' : 's'} totalling <strong>{formatAud(total)}</strong>? They will not be emailed yet.
