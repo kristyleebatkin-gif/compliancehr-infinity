@@ -63,7 +63,7 @@ export default function WorkspaceNavigationTools({ compact = false }) {
     });
   };
 
-  return <section aria-label="Workspace shortcuts" className="border-b border-[#0072FF]/20 bg-white px-3 py-3 text-[#0A2B6D] sm:px-6">
+  return <section aria-label="Workspace shortcuts" className="app-workspace-shortcuts border-b border-[#0072FF]/20 bg-white px-3 py-3 text-[#0A2B6D] sm:px-6">
     <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-3">
       <nav aria-label="Breadcrumb" className={compact ? 'sr-only' : 'text-sm'}><Link to="/dashboard" className="font-semibold text-[#0072FF]">Workspace</Link>{active && <> / <span>{active.group.replace(/^\d+\.\s*/, '')}</span> / <span aria-current="page" className="font-bold">{active.label}</span></>}</nav>
       <div className="flex flex-wrap gap-2">

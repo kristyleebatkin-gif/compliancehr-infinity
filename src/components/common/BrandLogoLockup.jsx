@@ -23,6 +23,7 @@ export default function BrandLogoLockup({
   className = '',
   showSlogan = true,
   compactSlogan = false,
+  logoClassName = '',
 }) {
   const isCustomName = companyName && companyName !== 'ComplianceHR Infinity';
 
@@ -52,7 +53,7 @@ export default function BrandLogoLockup({
       <div className="flex w-full flex-col items-center justify-center bg-transparent px-1 py-0.5">
         {/* LINE 1: ENLARGED (+1CM) UNCLIPPED LOGO & WHITE AREA WITH SLIGHTLY REDUCED WHITE MARGIN */}
         <div
-          className={`${logoSizeClass} aspect-[13/7] max-w-full shrink-0 overflow-hidden rounded-xl bg-white p-0.5 ${lightBackground ? '' : 'border border-[#00C6FF]/60 shadow-[0_0_12px_rgba(255,255,255,0.45)]'}`}
+          className={`${logoSizeClass} ${logoClassName} aspect-[13/7] max-w-full shrink-0 overflow-hidden rounded-xl bg-white p-0.5 ${lightBackground ? '' : 'border border-[#00C6FF]/60 shadow-[0_0_12px_rgba(255,255,255,0.45)]'}`}
         >
           <Image
             src={logoUrl || DEFAULT_BRAND_LOGO}

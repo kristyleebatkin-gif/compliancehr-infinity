@@ -309,7 +309,7 @@ export default function AppLayout() {
                     </button>
                   </div>
                   <Link to="/dashboard" className="inline-flex min-w-0 flex-col items-center text-center transition">
-                    <BrandLogoLockup size="md" theme="light" lightBackground showSlogan={false} />
+                    <BrandLogoLockup size="md" theme="light" lightBackground showSlogan={false} logoClassName="md:w-60 lg:w-52" />
                   </Link>
                   <div className="flex min-w-0 flex-wrap items-center justify-start gap-1">
                   </div>
