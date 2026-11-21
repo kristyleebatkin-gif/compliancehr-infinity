@@ -64,7 +64,7 @@ export default function AppLayout() {
   useEffect(() => {
     const mainEl = document.getElementById('main-workspace-content');
     const handleScroll = () => {
-      if (window.matchMedia('(min-width: 768px) and (max-width: 1023px)').matches) {
+      if (window.matchMedia('(min-width: 768px)').matches) {
         setCompactHeader(false);
         return;
       }
@@ -245,7 +245,7 @@ export default function AppLayout() {
         Skip to main content
       </a>
       <aside
-        className="hidden w-64 shrink-0 flex-col bg-workspace-navy md:flex md:max-lg:sticky md:max-lg:top-0 md:max-lg:h-dvh md:max-lg:self-start md:max-lg:overflow-y-auto"
+        className="hidden w-64 shrink-0 flex-col bg-workspace-navy md:flex md:sticky md:top-0 md:h-dvh md:self-start md:overflow-y-auto"
         style={{
           borderRight: '3px solid transparent',
           backgroundImage:
@@ -266,7 +266,7 @@ export default function AppLayout() {
       </Dialog>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="preserve-island-theme sticky top-0 z-40 shrink-0 shadow-md md:max-lg:contents">
+        <header className="preserve-island-theme sticky top-0 z-40 shrink-0 shadow-md md:contents">
           {/* Top App-Design Gradient Strip — matches remote top strip */}
           <div
             className="h-1.5 w-full"
@@ -320,8 +320,8 @@ export default function AppLayout() {
           )}
 
           <WorkspaceNavigationTools />
-          <div className="md:max-lg:sticky md:max-lg:top-0 md:max-lg:z-40">
-            <div className="max-h-[35vh] overflow-y-auto lg:hidden [@media(pointer:coarse)]:block">
+          <div className="md:sticky md:top-0 md:z-40">
+            <div className="max-h-[35vh] overflow-y-auto">
               <QuickAppBar workspaceView={workspaceView} onSwitchWorkspaceView={switchWorkspaceView} />
             </div>
 
