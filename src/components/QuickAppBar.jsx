@@ -6,6 +6,7 @@ import { PRIMARY_11_OS_NAV, FOCUSED_5_PILLAR_NAV } from '@/components/ObsidianSi
 import { useRole } from '@/lib/useRole';
 import { useAuth } from '@/lib/AuthContext';
 import EnterpriseFloatingWorkspaceDock from '@/components/EnterpriseFloatingWorkspaceDock';
+import TabletQuickAppControls from '@/components/TabletQuickAppControls';
 import '@/components/executive/executiveGlass.css';
 
 const BRAND_GRADIENT =
@@ -158,12 +159,12 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
     <div id="main-view-navigator-remote" className="scroll-mt-48 mx-auto w-full max-w-[1440px] bg-workspace-navy px-3 pt-1.5">
       <section
         aria-label="Quick Access Bar"
-        className="preserve-island-theme executive-glass-surface overflow-hidden rounded-xl border border-header-foreground/20 shadow-panel"
+        className="preserve-island-theme executive-glass-surface overflow-hidden md:overflow-visible lg:overflow-hidden rounded-xl border border-header-foreground/20 shadow-panel"
       >
-        <div className="overflow-hidden rounded-[10px] p-1.5 space-y-1 md:flex md:flex-col lg:block">
+        <div className="overflow-hidden md:overflow-visible lg:overflow-hidden rounded-[10px] p-1.5 space-y-1 md:flex md:flex-col lg:block">
           {/* LINE 1: Quick Access Bar Title + AI Quick Ask & 4 Buttons Next To It + Mode Switcher */}
           <div className="flex flex-wrap items-center justify-start gap-1.5">
-            <div className="flex min-w-0 flex-wrap items-center gap-1.5">
+            <div className="flex min-w-0 flex-wrap items-center gap-1.5 md:hidden lg:flex">
               <div
                 className="inline-flex min-w-0 items-center rounded-full p-[1px]"
                 style={{ background: BRAND_GRADIENT }}
@@ -214,12 +215,13 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
               )}
               </div>
             </div>
+            <TabletQuickAppControls sections={sourceSections} selected={expandedGroup} onSelect={(section) => handleSelectMajorSection(section, true)} mode={remoteMode} onModeChange={switchRemoteMode} moduleCount={allAccessibleModules.length} canParticipants={can('our-participants')} showAiCore={!sourceSections.some((section) => section.id === 'ai-core')} workspaceView={workspaceView} onSwitchWorkspaceView={onSwitchWorkspaceView} />
             <EnterpriseFloatingWorkspaceDock inline />
           </div>
 
           {/* LINE 2: 50%-Reduced Compact Section Modulars (Tight Grid Without Gaps) */}
           <div
-            className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 items-stretch md:order-2 lg:order-none"
+            className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 md:hidden lg:grid lg:grid-cols-6 items-stretch lg:order-none"
           >
             {!sourceSections.some((section) => section.id === 'ai-core') && <Link
               to="/assistant"
@@ -323,7 +325,7 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
             </div>
           )}
           {onSwitchWorkspaceView && (
-            <div className="flex flex-wrap items-center justify-center gap-1.5 border-t border-white/10 pt-1 md:order-1 lg:order-none">
+            <div className="flex flex-wrap items-center justify-center gap-1.5 border-t border-white/10 pt-1 md:hidden lg:flex lg:order-none">
               {can('our-participants') && <Link
                 to="/our-participants"
                 className="inline-flex min-h-9 shrink-0 items-center justify-center gap-1 rounded-full border border-[#00C6FF] bg-[#0072FF] px-3 text-[10px] font-extrabold uppercase tracking-wide text-white shadow-[0_0_10px_rgba(0,114,255,0.5)] transition hover:opacity-95"

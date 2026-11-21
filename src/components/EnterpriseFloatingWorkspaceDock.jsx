@@ -47,7 +47,7 @@ export default function EnterpriseFloatingWorkspaceDock({ inline = false }) {
 
           <Link
             to="/frontline-hub"
-            className="inline-flex min-h-9 items-center gap-1 rounded-full border border-[#A855F7] bg-[#5A00D6] px-3 text-xs font-extrabold text-white transition hover:opacity-90 whitespace-nowrap"
+            className="inline-flex md:hidden lg:inline-flex min-h-9 items-center gap-1 rounded-full border border-[#A855F7] bg-[#5A00D6] px-3 text-xs font-extrabold text-white transition hover:opacity-90 whitespace-nowrap"
           >
             <Activity className="h-3.5 w-3.5 text-[#00C6FF] shrink-0" />
             <span>60s Field Bar</span>
@@ -55,7 +55,7 @@ export default function EnterpriseFloatingWorkspaceDock({ inline = false }) {
 
           <Link
             to="/auditor-portal"
-            className="inline-flex min-h-9 items-center gap-1 rounded-full border border-[#00C6FF] bg-[#0072FF] px-3 text-xs font-extrabold text-white transition hover:opacity-90 whitespace-nowrap"
+            className="inline-flex md:hidden lg:inline-flex min-h-9 items-center gap-1 rounded-full border border-[#00C6FF] bg-[#0072FF] px-3 text-xs font-extrabold text-white transition hover:opacity-90 whitespace-nowrap"
           >
             <ClipboardCheck className="h-3.5 w-3.5 text-white shrink-0" />
             <span>Auditor View</span>
@@ -63,7 +63,7 @@ export default function EnterpriseFloatingWorkspaceDock({ inline = false }) {
 
           <Link
             to="/compliance"
-            className="inline-flex min-h-9 items-center gap-1 rounded-full border border-white/30 bg-[#FF2E9A] px-3 text-xs font-extrabold text-white transition hover:opacity-90 whitespace-nowrap"
+            className="inline-flex md:hidden lg:inline-flex min-h-9 items-center gap-1 rounded-full border border-white/30 bg-[#FF2E9A] px-3 text-xs font-extrabold text-white transition hover:opacity-90 whitespace-nowrap"
           >
             <ShieldCheck className="h-3.5 w-3.5 text-white shrink-0" />
             <span>Audit Ready</span>
@@ -74,7 +74,7 @@ export default function EnterpriseFloatingWorkspaceDock({ inline = false }) {
             onClick={scrollToTop}
             aria-label="Scroll to top"
             title="Scroll to top"
-            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/30 bg-[#00C6FF] text-workspace-navy transition hover:opacity-90"
+            className="inline-flex md:hidden lg:inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/30 bg-[#00C6FF] text-workspace-navy transition hover:opacity-90"
           >
             <ArrowUp className="h-3.5 w-3.5 text-workspace-navy" />
           </button>
