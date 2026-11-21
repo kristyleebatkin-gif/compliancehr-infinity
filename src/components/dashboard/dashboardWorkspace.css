@@ -45,7 +45,7 @@
   .app-readable .app-dashboard-canvas .sticky,
   .app-readable .app-dashboard-canvas .users-workspace .permission-matrix thead { position: static; }
 }
-/* Compact the workspace header at tablet widths without changing the brand name or slogan. */
+/* Compact workspace controls and dashboard details at tablet widths. */
 @media (min-width: 768px) and (max-width: 1023px) {
   .app-workspace-shortcuts { padding: .375rem .75rem; }
   .app-workspace-shortcuts > div { gap: .375rem; }
@@ -58,5 +58,13 @@
   #main-view-navigator-remote > section > div > .grid :is(button, a) span { font-size: .6875rem; }
   #main-view-navigator-remote [aria-label="Workspace AI Quick-Action Bar"] > div > div > :is(button, a) { min-height: 2rem; padding: 0 .5rem; font-size: .6875rem; }
   #main-view-navigator-remote [aria-label="Workspace AI Quick-Action Bar"] [aria-label="Scroll to top"] { width: 2rem; height: 2rem; }
+  .dashboard-page { font-size: .8125rem; }
+  .dashboard-page :is(.text-sm, .sm\:text-sm) { font-size: .8125rem; line-height: 1.25rem; }
+  .dashboard-page :is(.text-base, .sm\:text-base) { font-size: .875rem; line-height: 1.3rem; }
+  .dashboard-page :is(.text-lg, .sm\:text-lg) { font-size: 1rem; line-height: 1.4rem; }
+  .dashboard-page :is(.text-xl, .sm\:text-xl) { font-size: 1.125rem; line-height: 1.5rem; }
+  .dashboard-page :is(.text-2xl, .sm\:text-2xl) { font-size: 1.25rem; line-height: 1.6rem; }
+  .dashboard-page :is(.text-3xl, .sm\:text-3xl) { font-size: 1.5rem; line-height: 1.8rem; }
+  .dashboard-page :is(div, section, article)[class~="p-4"] { padding: .75rem; }
 }
 @media print { .app-dashboard-canvas { padding: 0; } .dashboard-panel [hidden] { display: block !important; } }

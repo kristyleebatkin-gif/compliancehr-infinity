@@ -309,12 +309,12 @@ export default function AppLayout() {
                     </button>
                   </div>
                   <Link to="/dashboard" className="inline-flex min-w-0 flex-col items-center text-center transition">
-                    <BrandLogoLockup size="md" theme="light" lightBackground showSlogan={false} logoClassName="md:w-60 lg:w-52" />
+                    <BrandLogoLockup size="md" theme="light" lightBackground showSlogan={false} logoClassName="md:w-60 lg:w-52" nameClassName="md:text-2xl lg:text-xl" />
                   </Link>
                   <div className="flex min-w-0 flex-wrap items-center justify-start gap-1">
                   </div>
                 </div>
-                <BrandSlogan size="md" lightBackground className="text-[11px] sm:text-sm md:text-base tracking-tight" />
+                <BrandSlogan size="md" lightBackground className="text-[11px] sm:text-sm md:text-xs md:gap-x-1 lg:text-base lg:gap-x-2 tracking-tight" />
               </div>
             </div>
           )}
@@ -347,7 +347,7 @@ export default function AppLayout() {
             <PendingApprovalNotice />
           </div>
           <div
-            className="app-dashboard-canvas mx-auto w-full max-w-[1440px] min-w-0 px-3 py-3"
+            className={`app-dashboard-canvas mx-auto w-full max-w-[1440px] min-w-0 px-3 py-3${location.pathname === '/dashboard' ? ' dashboard-page' : ''}`}
             style={{ '--module-colour': currentModuleColour }}
           >
             <ErrorBoundary>

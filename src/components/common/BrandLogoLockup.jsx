@@ -24,6 +24,7 @@ export default function BrandLogoLockup({
   showSlogan = true,
   compactSlogan = false,
   logoClassName = '',
+  nameClassName = '',
 }) {
   const isCustomName = companyName && companyName !== 'ComplianceHR Infinity';
 
@@ -65,7 +66,7 @@ export default function BrandLogoLockup({
 
         {/* LINE 2: "ComplianceHR Infinity" ON ONE LINE */}
         <div
-          className={`font-editorial ${nameSizeClass} font-extrabold leading-tight tracking-tight whitespace-nowrap`}
+          className={`font-editorial ${nameSizeClass} font-extrabold leading-tight tracking-tight whitespace-nowrap ${nameClassName}`}
         >
           {isCustomName ? (
             <span
