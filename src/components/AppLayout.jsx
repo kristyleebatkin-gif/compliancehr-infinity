@@ -344,7 +344,7 @@ export default function AppLayout() {
             background: 'linear-gradient(165deg, #0A2B6D 0%, #0A2B6D 55%, #5A00D6 100%)',
           }}
         >
-          <div className={location.pathname === '/staff' || location.pathname.startsWith('/staff/') ? 'mx-auto max-w-[1440px] px-3' : 'mx-auto max-w-[1440px] px-3 pt-2'}>
+          <div className={location.pathname === '/staff' || location.pathname.startsWith('/staff/') ? 'mx-auto max-w-[1440px] px-3 empty:hidden' : 'mx-auto max-w-[1440px] px-3 pt-2 empty:hidden'}>
             <PendingApprovalNotice />
           </div>
           <div

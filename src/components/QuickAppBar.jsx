@@ -219,34 +219,25 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
 
           {/* LINE 2: 50%-Reduced Compact Section Modulars (Tight Grid Without Gaps) */}
           <div
-            className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 items-stretch md:order-2 lg:order-none"
+            className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 items-stretch md:order-2 lg:order-none"
           >
-            <Link
+            {!sourceSections.some((section) => section.id === 'ai-core') && <Link
               to="/assistant"
               title="AI Core Hub"
               className="group block w-full rounded-md border border-header-foreground/20 bg-workspace-navy/80 p-[1px] text-left backdrop-blur-md transition-all duration-150"
             >
               <div className="flex min-h-11 items-center justify-between gap-2 rounded-[5px] bg-transparent px-2 py-1.5">
                 <div className="flex min-w-0 flex-1 items-center gap-1">
-                  <span
-                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[3px] bg-[#0A2B6D]/90"
-                    style={{ border: '1px solid #0072FF' }}
-                  >
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[3px] bg-[#0A2B6D]/90" style={{ border: '1px solid #0072FF' }}>
                     <Cpu className="h-3.5 w-3.5 shrink-0" style={{ color: '#0072FF' }} />
                   </span>
-                  <span className="min-w-0 break-words text-xs font-extrabold leading-tight text-header-foreground">
-                    AI Core
-                  </span>
+                  <span className="min-w-0 break-words text-xs font-extrabold leading-tight text-header-foreground">AI Core</span>
                 </div>
-                <span
-                  aria-hidden="true"
-                  className="flex h-2.5 w-2.5 shrink-0 items-center justify-center rounded-[2px] bg-[#0A2B6D]/90"
-                  style={{ border: '1px solid #0072FF' }}
-                >
+                <span aria-hidden="true" className="flex h-2.5 w-2.5 shrink-0 items-center justify-center rounded-[2px] bg-[#0A2B6D]/90" style={{ border: '1px solid #0072FF' }}>
                   <span className="h-1 w-1 rounded-[1px]" style={{ backgroundColor: '#0072FF' }} />
                 </span>
               </div>
-            </Link>
+            </Link>}
 
             {sourceSections.map((item, gIdx) => {
               const isSelectedSection = expandedGroup?.id === item.id;
@@ -291,7 +282,7 @@ export default function QuickAppBar({ workspaceView, onSwitchWorkspaceView }) {
 
           {/* LINE 3: Active Section's 50%-Reduced Compact Module Buttons */}
           {expandedGroup && expandedGroup.modules?.length > 0 && (
-            <div className="grid grid-cols-2 gap-1.5 border-t border-white/10 pt-1.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 items-stretch md:order-3 lg:order-none">
+            <div className="grid grid-cols-2 gap-1.5 border-t border-white/10 pt-1.5 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 items-stretch md:order-3 lg:order-none">
               {expandedGroup.modules.map((module, mIdx) => {
                 const Icon = module.icon;
                 const modActive = isActive(module.path);
