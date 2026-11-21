@@ -304,7 +304,7 @@ export function DevelopmentRegister31Tab({
 
         <div className="max-h-[360px] overflow-auto rounded-xl border-2 border-[#5A00D6]">
           <table className="w-full border-collapse text-left text-[8px]">
-            <thead className="sticky top-0 z-10 text-white" style={{ background: 'var(--header-gradient)' }}>
+            <thead className="sticky lg:static top-0 z-10 text-white" style={{ background: 'var(--header-gradient)' }}>
               <tr>
                 <th className="p-1.5 font-black text-white">Req ID</th>
                 <th className="p-1.5 font-black text-white">Module &amp; Subject</th>

@@ -87,7 +87,7 @@ export default function AccessExplorer() {
 
       <div className="max-h-[28rem] overflow-auto rounded-lg border border-slate-200">
         <table className="w-full text-left text-sm">
-          <thead className="sticky top-0 bg-slate-100 text-xs uppercase text-slate-600">
+          <thead className="sticky lg:static top-0 bg-slate-100 text-xs uppercase text-slate-600">
             <tr><th className="p-2">Module</th><th className="p-2 text-center">Opens</th><th className="p-2">Why</th></tr>
           </thead>
           <tbody>

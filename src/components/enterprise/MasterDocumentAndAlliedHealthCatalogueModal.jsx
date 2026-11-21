@@ -291,7 +291,7 @@ export default function MasterDocumentAndAlliedHealthCatalogueModal({
           </div>
 
           {/* Footer Action Bar */}
-          <div className="sticky bottom-0 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 bg-white pt-3">
+          <div className="sticky bottom-0 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 bg-white pt-3 lg:static">
             <div className="text-xs font-medium text-[#0A2B6D]/75">
               Filing creates an approved <code className="font-mono font-bold">DocumentControl</code> entry, links a verified <code className="font-mono font-bold">Checklist</code>, and records an immutable <code className="font-mono font-bold">AuditLog</code>.
             </div>

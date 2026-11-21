@@ -92,7 +92,7 @@ export default function StaffFileMatrix({ staff, completions, employeeDocs, inta
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b bg-muted/40 text-left text-[11px] uppercase tracking-wide text-muted-foreground">
-                <th className="sticky left-0 bg-muted/40 px-3 py-2">Staff member</th>
+                <th className="sticky lg:static left-0 bg-muted/40 px-3 py-2">Staff member</th>
                 <th className="px-3 py-2">ID</th>
                 {STAFF_COLUMNS.map((column) => <th key={column.label} className="whitespace-nowrap px-2 py-2 text-center">{column.label}</th>)}
                 <th className="px-3 py-2 text-center">Ready</th>
@@ -101,7 +101,7 @@ export default function StaffFileMatrix({ staff, completions, employeeDocs, inta
             <tbody>
               {rows.map(({ member, cells, pct }) => (
                 <tr key={member.id} className="border-b last:border-0">
-                  <td className="sticky left-0 bg-card px-3 py-2 font-medium">{member.full_name}</td>
+                  <td className="sticky lg:static left-0 bg-card px-3 py-2 font-medium">{member.full_name}</td>
                   <td className="px-3 py-2 text-xs text-muted-foreground">{member.employee_number || 'n/a'}</td>
                   {cells.map((done, index) => (
                     <td key={index} className="px-2 py-2 text-center">

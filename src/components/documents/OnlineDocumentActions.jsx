@@ -4,7 +4,7 @@ import { Download, Loader2, Save } from 'lucide-react';
 
 export default function OnlineDocumentActions({ editor, readOnly }) {
   return (
-    <div className="sticky bottom-0 z-10 flex flex-wrap justify-end gap-2.5 border-t border-sky-200 bg-white py-4">
+    <div className="sticky bottom-0 z-10 flex flex-wrap justify-end gap-2.5 border-t border-sky-200 bg-white py-4 lg:static">
       <Button
         type="button"
         variant="outline"

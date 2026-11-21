@@ -15,7 +15,7 @@ export default function TeamLeaderNav({ screen, onSelect }) {
   const navigate = useNavigate();
 
   return (
-    <nav aria-label="Team Leader workspace" className="tl-nav sticky bottom-0 grid grid-cols-6 gap-1 px-1 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-1.5">
+    <nav aria-label="Team Leader workspace" className="tl-nav sticky bottom-0 grid grid-cols-6 gap-1 px-1 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-1.5 lg:static">
       {TABS.map(({ key, label, icon: Icon, path }) => {
         const active = screen === key;
         return (

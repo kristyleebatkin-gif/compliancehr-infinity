@@ -56,7 +56,7 @@ export default function ParticipantFileMatrix({ participants, intakeDocs }) {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b bg-muted/40 text-left text-[11px] uppercase tracking-wide text-muted-foreground">
-                <th className="sticky left-0 bg-muted/40 px-3 py-2">Participant</th>
+                <th className="sticky lg:static left-0 bg-muted/40 px-3 py-2">Participant</th>
                 <th className="px-3 py-2">NDIS number</th>
                 {COLUMNS.map((column) => <th key={column} className="whitespace-nowrap px-2 py-2 text-center">{column}</th>)}
                 <th className="px-3 py-2 text-center">Ready</th>
@@ -65,7 +65,7 @@ export default function ParticipantFileMatrix({ participants, intakeDocs }) {
             <tbody>
               {rows.map(({ participant, cells, pct }) => (
                 <tr key={participant.id} className="border-b last:border-0">
-                  <td className="sticky left-0 bg-card px-3 py-2 font-medium">{participant.full_name}</td>
+                  <td className="sticky lg:static left-0 bg-card px-3 py-2 font-medium">{participant.full_name}</td>
                   <td className="px-3 py-2 text-xs text-muted-foreground">{participant.ndis_number || 'n/a'}</td>
                   {cells.map((done, index) => (
                     <td key={index} className="px-2 py-2 text-center">

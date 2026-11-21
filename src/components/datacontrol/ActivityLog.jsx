@@ -86,7 +86,7 @@ export default function ActivityLog() {
       ) : (
         <div className="max-h-64 overflow-auto rounded-lg border border-border/60">
           <table className="w-full text-xs">
-            <thead className="sticky top-0 bg-muted text-left">
+            <thead className="sticky lg:static top-0 bg-muted text-left">
               <tr>
                 <th className="p-2 font-semibold">When</th>
                 <th className="p-2 font-semibold">Action</th>
