@@ -303,6 +303,12 @@
   }
 }
 
+/* Let the workspace scroll with the page on desktop instead of inside a fixed-height frame. */
+@media (min-width: 1024px) {
+  .tl-phone { height: auto; min-height: 0; overflow: visible; align-items: flex-start; }
+  .tl-phone > .tl-scroll { overflow: visible; }
+}
+
 @media (min-width: 1180px) {
   .tl-phone {
     max-width: 1480px;
@@ -337,7 +343,7 @@
   }
 }
 
-@media (min-width: 820px) and (max-height: 780px) {
+@media (min-width: 820px) and (max-width: 1023px) and (max-height: 780px) {
   .tl-phone {
     height: calc(100dvh - 30px);
     min-height: 480px;

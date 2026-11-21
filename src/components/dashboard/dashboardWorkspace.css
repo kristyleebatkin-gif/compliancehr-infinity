@@ -40,4 +40,9 @@
   .app-dashboard-canvas :is(section, div, form, aside, header, nav).sticky { position: static; }
   .app-readable .workspace-copilot-button { position: static; }
 }
+/* Desktop: table headers and columns also move with their sections. */
+@media (min-width: 1024px) {
+  .app-readable .app-dashboard-canvas .sticky,
+  .app-readable .app-dashboard-canvas .users-workspace .permission-matrix thead { position: static; }
+}
 @media print { .app-dashboard-canvas { padding: 0; } .dashboard-panel [hidden] { display: block !important; } }
