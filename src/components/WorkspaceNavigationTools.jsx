@@ -95,7 +95,7 @@ export default function WorkspaceNavigationTools({ compact = false, moveShortcut
     {!compact && !moveShortcuts && <WorkspaceShortcuts allowed={allowed} favourites={favourites} recent={recent} className="mx-auto mt-2 max-w-[1440px]" />}
   </section>
   {!compact && moveShortcuts && shortcutsTarget && createPortal(
-    <WorkspaceShortcuts allowed={allowed} favourites={favourites} recent={recent} className="mb-3 rounded-lg border border-border bg-card px-3 py-2 text-card-foreground" />,
+    <WorkspaceShortcuts allowed={allowed} favourites={favourites} recent={recent} className="workspace-shortcuts-bar mb-3 rounded-lg border border-border bg-card px-3 py-2 text-card-foreground" />,
     shortcutsTarget
   )}</>;
 }
