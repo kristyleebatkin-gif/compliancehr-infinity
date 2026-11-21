@@ -66,7 +66,7 @@ export default function BrandLogoLockup({
 
         {/* LINE 2: "ComplianceHR Infinity" ON ONE LINE */}
         <div
-          className={`font-editorial ${nameSizeClass} font-extrabold leading-tight tracking-tight whitespace-nowrap ${nameClassName}`}
+          className={`relative z-10 max-w-full break-words font-editorial ${nameSizeClass} font-extrabold leading-tight tracking-tight ${nameClassName}`}
         >
           {isCustomName ? (
             <span
